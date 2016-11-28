@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="TaskTitleArray">
+        <item>未完成</item>
+        <item>已完成</item>
+        <item>全部</item>
+        <item>逾期</item>
+    </string-array>
+    <string-array name="InspectionReadyTitleArray">
+        <item>抄录温湿度</item>
+        <item>危险点</item>
+        <item>工器具</item>
+        <item>巡检线路图</item>
+        <item>现存缺陷</item>
+    </string-array>
+    <string-array name="DefectControlArray">
+        <item>记录缺陷</item>
+        <item>跟踪缺陷</item>
+        <item>消除缺陷</item>
+    </string-array>
+    <string-array name="ChangPartPictureArray">
+        <item>查看大图</item>
+        <item>更换照片</item>
+        <item>恢复默认照片</item>
+        <item>添加巡检标准</item>
+        <item>删除该部件</item>
+    </string-array>
+    <string-array name="ChangStandardArray">
+        <item>查看大图</item>
+        <item>更换照片</item>
+        <item>恢复默认照片</item>
+    </string-array>
+    <string-array name="AddStandardArray">
+        <item>查看大图</item>
+        <item>更换照片</item>
+    </string-array>
+    <string-array name="ReferenceStandardTitle">
+        <item>巡检标准</item>
+        <item>工作标准</item>
+        <item>技术标准</item>
+        <item>管理标准</item>
+    </string-array>
+    <string-array name="ClampTitleArray">
+        <item>保护压板核对</item>
+        <item>定值核对</item>
+    </string-array>
+    <string-array name="IsUploadOrDeleteArray">
+        <item>上传</item>
+        <item>不上传</item>
+        <item>删除</item>
+    </string-array>
+    <string-array name="WordsOneArray">
+        <item>Q</item>
+        <item>W</item>
+        <item>E</item>
+        <item>R</item>
+        <item>T</item>
+        <item>Y</item>
+        <item>U</item>
+        <item>I</item>
+        <item>O</item>
+        <item>P</item>
+    </string-array>
+    <string-array name="WordsTwoArray">
+        <item>A</item>
+        <item>S</item>
+        <item>D</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+    </string-array>
+    <string-array name="WordsThreeArray">
+        <item>Z</item>
+        <item>X</item>
+        <item>C</item>
+        <item>V</item>
+        <item>B</item>
+        <item>N</item>
+        <item>M</item>
+    </string-array>
+    <string-array name="weather">
+        <item>晴</item>
+        <item>阴</item>
+        <item>多云</item>
+        <item>小雨</item>
+        <item>中雨</item>
+        <item>大雨</item>
+        <item>暴雨</item>
+        <item>冻雨</item>
+        <item>雷</item>
+        <item>霜冻</item>
+        <item>小雪</item>
+        <item>中雪</item>
+        <item>大雪</item>
+        <item>暴雪</item>
+        <item>雨夹雪</item>
+        <item>雾</item>
+        <item>浓雾</item>
+        <item>冰冻</item>
+        <item>雹灾</item>
+        <item>大风</item>
+        <item>热带风暴</item>
+        <item>强热带风暴</item>
+        <item>龙卷风</item>
+        <item>飑线风</item>
+        <item>台风</item>
+        <item>沙尘暴</item>
+        <item>扬尘</item>
+        <item>洪水</item>
+        <item>泥石流</item>
+        <item>地震</item>
+        <item>霾</item>
+        <item>雾霾</item>
+        <item>其他</item>
+    </string-array>
+
+    <string-array name="SBXS">
+        <!--<item>正常巡视</item>-->
+        <item>例行巡视</item>
+        <item>全面巡视</item>
+        <item>特殊巡视</item>
+        <item>熄灯巡视</item>
+        <!--<item>夜间巡视</item>-->
+        <item>专业巡视</item>
+        <!--<item>监察巡视</item>-->
+        <!--<item>故障巡视</item>-->
+        <!--<item>交接班巡视</item>-->
+    </string-array>
+    <string-array name="GZP">
+        <item>变电站（发电厂）第一种工作票</item>
+        <item>电力电缆第一种工作票</item>
+        <item>变电站（发电厂）第二种工作票</item>
+        <item>电力电缆第二种工作票</item>
+        <item>变电站（发电厂）带电作业工作票</item>
+        <item>变电站一级动火工作票</item>
+        <item>变电站二级动火工作票</item>
+    </string-array>
+    <string-array name="SBJC">
+        <item>红外测温记录</item>
+        <item>保护屏红外热像检测月度记录</item>
+        <item>室内温湿度记录</item>
+        <item>差动保护差流记录</item>
+        <item>交直流变压器分接开关调整记录</item>
+        <item>收发信机测试记录</item>
+        <item>防小动物措施记录</item>
+        <item>压力检查记录</item>
+        <item>蓄电池检测记录</item>
+        <item>蓄电池内阻检测记录</item>
+        <item>避雷器在线监测记录</item>
+    </string-array>
+    <string-array name="DQSY">
+        <item>事故照明切换试验</item>
+        <item>主变备用冷却器切换试验</item>
+        <item>主变冷却电源自投功能试验</item>
+        <item>站用直流系统备用充电机启动试验</item>
+        <item>故障录波轮换试验</item>
+        <item>漏电保安器试验及通风装置启动试验</item>
+        <item>备用站用变电源试验</item>
+        <item>高频通道测试检查</item>
+        <item>对直流系统设备试验</item>
+        <item>对安消防系统设备试验</item>
+        <item>对排风机或空调设备试验</item>
+        <item>对站用电系统设备试验</item>
+        <item>对其他设备试验</item>
+    </string-array>
+    <string-array name="DQWH">
+        <item>全站卫生清洁</item>
+        <item>交、直流空开、保险检查</item>
+        <item>全站照明检查</item>
+        <item>消防设施检查、清洁</item>
+        <item>蓄电池清扫</item>
+        <item>备品、备件、工器具、仪表清洁</item>
+        <item>安全工器具、防护用品检查、维护</item>
+        <item>通讯设备检查</item>
+        <item>防小动物孔洞检查（上PMS）</item>
+        <item>设备构架、接地装置锈蚀检查</item>
+        <item>五防系统维护</item>
+        <item>电缆沟翻查、防火封堵检查</item>
+        <item>给、排水系统检查、维护</item>
+        <item>保护压板及定制核对</item>
+        <item>机构箱（端子箱）门合页、锁具加油</item>
+        <item>检查更新设备标识</item>
+        <item>空调维护</item>
+        <item>各抽风机卫生清扫</item>
+        <item>更换老鼠药、粘鼠板</item>
+    </string-array>
+    <string-array name="ZXXS">
+        <item>防火封堵专项检查</item>
+        <item>继电保护定置专项核对</item>
+        <item>防污闪专项检查</item>
+        <item>开关柜隐患专项排查</item>
+        <item>GIS隐患专项排查</item>
+        <item>防小动物专项检查</item>
+        <item>五防系统专项检查</item>
+
+    </string-array>
+    <string-array name="JYHYS">
+        <item>油浸式变压器（电抗器）验收</item>
+        <item>断路器验收</item>
+        <item>组合电器验收</item>
+        <item>隔离开关验收</item>
+        <item>开关柜验收</item>
+        <item>电流互感器验收</item>
+        <item>电压互感器验收</item>
+        <item>避雷器验收</item>
+        <item>并联电容器组验收</item>
+        <item>干式电抗器验收</item>
+        <item>串联补偿装置验收</item>
+        <item>母线及绝缘子验收</item>
+        <item>穿墙套管验收</item>
+        <item>电力电缆验收</item>
+        <item>消弧线圈验收</item>
+        <item>高频阻波器验收</item>
+        <item>耦合电容器验收</item>
+        <item>高压熔断器验收</item>
+        <item>中性点隔直装置验收</item>
+        <item>接地装置验收</item>
+        <item>端子箱及检修电源箱验收</item>
+        <item>站用变验收</item>
+        <item>站用交流电源系统验收</item>
+        <item>站用直流电源系统验收</item>
+        <item>构支架验收</item>
+        <item>辅助设施验收</item>
+        <item>土建设施验收</item>
+        <item>避雷针验收</item>
+    </string-array>
+    <string-array name="JYHPJ">
+        <item>变电站运维管理评价</item>
+        <item>油浸式变压器（电抗器）精益化评价</item>
+        <item>断路器精益化评价</item>
+        <item>组合电器精益化评价</item>
+        <item>隔离开关精益化评价</item>
+        <item>开关柜精益化评价</item>
+        <item>电流互感器精益化评价</item>
+        <item>电压互感器精益化评价</item>
+        <item>金属氧化物避雷器精益化评价</item>
+        <item>并联电容器组精益化评价</item>
+        <item>干式并联电抗器精益化评价</item>
+        <item>串补装置精益化评价</item>
+        <item>母线绝缘子精益化评价</item>
+        <item>穿墙套管精益化评价</item>
+        <item>电缆精益化评价</item>
+        <item>消弧线圈精益化评价</item>
+        <item>高频阻波器精益化评价</item>
+        <item>耦合电容器精益化评价</item>
+        <item>熔断器精益化评价</item>
+        <item>中性点隔直装置精益化评价</item>
+        <item>防雷及接地装置精益化评价</item>
+        <item>端子箱精益化评价</item>
+        <item>站用变压器精益化评价</item>
+        <item>站用交流电源系统精益化评价</item>
+        <item>站用直流电源系统精益化评价</item>
+        <item>构支架精益化评价</item>
+        <item>辅助设施精益化评价</item>
+        <item>土建设施精益化评价</item>
+        <item>避雷针精益化评价</item>
+    </string-array>
+
+    <string-array name="PressureDetectionName">
+        <item>SF6气体压力检测</item>
+        <item>液体压力检测</item>
+        <item>气体压力检测</item>
+    </string-array>
+    <string-array name="PressureDetectionType">
+        <item>sf6</item>
+        <item>water</item>
+        <item>gas</item>
+    </string-array>
+
+
+    <string-array name="AnimalPositionArray">
+        <item>主控室</item>
+        <item>高压室</item>
+        <item>一次设备</item>
+        <item>保护室</item>
+        <item>电缆层</item>
+        <item>二次设备</item>
+        <item>其它地点</item>
+    </string-array>
+    <string-array name="XuDianChiJianCe">
+        <item>电压检测</item>
+        <item>内阻检测</item>
+    </string-array>
+    <string-array name="XuDianChiDianya">
+        <item>电压检测</item>
+    </string-array>
+    <string-array name="XuDianChiNeiZu">
+        <item>内阻检测</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fragment_record_defect_content_green_title_background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_strip_minheight"
+        android:gravity="center"
+        android:text="@string/defect_content_str"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/global_text_size" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <TextView
+            android:id="@+id/tv_source_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:lineSpacingExtra="@dimen/global_text_line_spacing"
+            android:minHeight="@dimen/tab_strip_minheight"
+            android:paddingBottom="@dimen/global_padding_top_bottom"
+            android:paddingLeft="@dimen/global_padding_left_right"
+            android:paddingRight="@dimen/global_padding_left_right"
+            android:paddingTop="@dimen/global_padding_top_bottom"
+            android:textColor="@color/deep_grey"
+            android:textSize="@dimen/global_text_size" />
+    </ScrollView>
+
+</LinearLayout>

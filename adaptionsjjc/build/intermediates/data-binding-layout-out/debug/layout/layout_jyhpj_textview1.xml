@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="horizontal">
+    
+    <ImageView
+        android:id="@+id/have_koufen"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_task_unfinish"
+        android:layout_width="35px"
+        android:visibility="gone"
+        android:layout_height="35px" />
+<TextView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:text="test测试"
+    android:textSize="@dimen/tv_text_size"
+    android:gravity="center_vertical"
+    android:id="@+id/text"
+    android:inputType="textMultiLine"
+    android:paddingLeft="@dimen/paddingLeft"
+    android:layout_toLeftOf="@+id/marg"
+    android:textColor="@color/dark_text"
+    android:padding="@dimen/paddingLeft"
+
+     />
+
+    <ImageView
+        android:id="@+id/marg"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
+        android:src="@mipmap/icon_arrow_right"
+        />
+</RelativeLayout>

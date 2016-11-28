@@ -1,0 +1,769 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:2:1-345:12
+	package
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:3:5-29
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+uses-permission#android.permission.GET_TASKS
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:5:5-68
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:5:22-65
+uses-permission#android.permission.INTERNET
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:6:5-67
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:16:5-67
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:6:22-64
+uses-permission#android.permission.CALL_PHONE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:7:5-69
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:7:22-66
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:8:5-79
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:14:5-79
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:8:22-76
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:9:5-75
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:9:22-72
+uses-permission#android.permission.VIBRATE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:10:5-66
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:10:22-63
+uses-permission#android.permission.KILL_BACKGROUND_PROCESSES
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:11:5-84
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:11:22-81
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:13:5-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:13:22-71
+uses-permission#android.permission.BLUETOOTH
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:14:5-68
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:14:22-65
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:15:5-80
+MERGED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:25:5-80
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:15:22-77
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:17:5-81
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:17:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:19:5-79
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:19:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:21:5-76
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:15:5-76
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:21:22-73
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:23:5-76
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:13:5-76
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:23:22-73
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:25:5-81
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:20:5-81
+MERGED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:26:5-81
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:25:22-78
+uses-permission#android.permission.READ_LOGS
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:27:5-68
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:27:22-65
+uses-permission#android.permission.WAKE_LOCK
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:28:5-68
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:17:5-68
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:28:22-65
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:29:5-73
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:29:22-70
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:30:5-79
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:12:5-79
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:30:22-76
+uses-permission#android.permission.READ_CONTACTS
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:31:5-72
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:31:22-69
+uses-permission#android.permission.CAMERA
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:33:5-65
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:33:22-62
+uses-permission#android.permission.READ_SMS
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:34:5-67
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:34:22-64
+uses-permission#android.permission.SEND_SMS
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:35:5-67
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:35:22-64
+uses-permission#android.permission.FLASHLIGHT
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:36:5-69
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:36:22-66
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:37:5-78
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:37:22-75
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:38:5-84
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:38:22-81
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:39:5-71
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:39:22-68
+application
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:41:5-343:19
+MERGED from [XunJian:cnksicore:unspecified] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\XunJian\cnksicore\unspecified\AndroidManifest.xml:11:5-15:19
+MERGED from [com.android.support:design:23.2.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\design\23.2.0\AndroidManifest.xml:22:5-20
+MERGED from [org.xutils:xutils:3.3.22] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\org.xutils\xutils\3.3.22\AndroidManifest.xml:12:5-20
+MERGED from [:flironesdk:] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\flironesdk\AndroidManifest.xml:11:5-14:19
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:22:5-27:19
+MERGED from [com.android.support:appcompat-v7:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-v4:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:28:5-57:19
+	android:label
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:45:9-41
+	android:supportsRtl
+		ADDED from [XunJian:cnksicore:unspecified] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\XunJian\cnksicore\unspecified\AndroidManifest.xml:14:9-35
+	android:allowBackup
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:43:9-35
+	android:icon
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:44:9-40
+	android:theme
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:46:9-40
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:42:9-42
+activity#com.cnksi.sjjc.activity.LoginActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:47:9-57:20
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:51:13-49
+	android:label
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:49:13-45
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:50:13-44
+	android:theme
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:52:13-49
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:48:13-51
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:53:13-56:29
+action#android.intent.action.MAIN
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:54:17-69
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:54:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:55:17-77
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:55:27-74
+activity#com.cnksi.sjjc.activity.LauncherActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:58:9-64:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:63:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:62:13-44
+	android:exported
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:61:13-36
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:64:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:60:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:59:13-54
+activity#com.cnksi.sjjc.activity.TaskRemindActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:65:9-70:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:69:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:68:13-44
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:70:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:67:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:66:13-56
+activity#com.cnksi.sjjc.activity.TransformAdjustmentRecordActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:71:9-75:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:74:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:75:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:73:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:72:13-71
+activity#com.cnksi.sjjc.activity.NewTransformRecordActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:76:9-80:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:79:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:80:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:78:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:77:13-64
+activity#com.cnksi.sjjc.activity.CopyValueReportActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:81:9-87:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:86:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:85:13-44
+	android:exported
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:84:13-36
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:87:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:83:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:82:13-61
+activity#com.cnksi.sjjc.activity.IndoorHumitureRecordActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:88:9-92:67
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:91:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:92:13-64
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:90:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:89:13-66
+activity#com.cnksi.sjjc.activity.CopyBaseDataActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:93:9-98:67
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:97:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:96:13-44
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:98:13-64
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:95:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:94:13-58
+activity#com.cnksi.sjjc.activity.DifferentialMotionRecordActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:99:9-103:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:102:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:103:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:101:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:100:13-70
+activity#com.cnksi.sjjc.activity.DifferentialMotionRecordActivity2
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:104:9-108:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:107:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:108:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:106:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:105:13-71
+activity#com.cnksi.sjjc.activity.AllDeviceListActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:109:9-113:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:112:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:113:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:111:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:110:13-59
+activity#com.cnksi.sjjc.activity.CopyAllValueActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:114:9-119:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:118:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:117:13-44
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:119:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:116:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:115:13-58
+activity#com.cnksi.sjjc.activity.CopyAllValueActivity2
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:120:9-125:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:124:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:123:13-44
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:125:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:122:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:121:13-59
+activity#com.cnksi.sjjc.activity.CopyAllValueActivity3
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:126:9-131:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:130:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:129:13-44
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:131:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:128:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:127:13-59
+activity#com.cnksi.sjjc.activity.DrawCircleImageActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:132:9-136:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:135:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:136:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:134:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:133:13-61
+activity#com.cnksi.sjjc.activity.ImageDetailsActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:137:9-141:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:140:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:141:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:139:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:138:13-58
+activity#com.cnksi.sjjc.activity.HWCWMainActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:142:9-147:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:146:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:145:13-44
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:147:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:144:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:143:13-54
+activity#com.cnksi.sjjc.activity.HwcwPriviewActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:148:9-162:20
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:151:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:152:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:150:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:149:13-57
+activity#com.cnksi.sjjc.activity.AddTaskActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:163:9-167:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:166:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:167:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:165:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:164:13-53
+activity#com.cnksi.sjjc.activity.WorkTicketActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:168:9-172:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:171:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:172:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:170:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:169:13-56
+activity#com.cnksi.sjjc.activity.WorkPiaoActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:173:9-177:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:176:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:177:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:175:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:174:13-54
+activity#com.cnksi.sjjc.activity.WorkPlanInformationActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:178:9-181:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:180:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:181:13-72
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:179:13-65
+activity#com.cnksi.sjjc.activity.JYHPJActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:182:9-185:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:184:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:185:13-72
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:183:13-51
+activity#com.cnksi.sjjc.activity.PJMainActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:186:9-189:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:188:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:189:13-72
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:187:13-52
+activity#com.cnksi.sjjc.activity.HongWaiCeWenReportActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:190:9-195:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:194:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:193:13-43
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:195:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:192:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:191:13-64
+activity#com.cnksi.sjjc.activity.SignNameActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:196:9-200:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:199:13-50
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:200:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:198:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:197:13-54
+activity#com.cnksi.sjjc.activity.TypeListActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:201:9-206:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:205:13-49
+	android:exported
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:204:13-36
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:206:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:203:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:202:13-54
+activity#com.cnksi.sjjc.sync.DataSync
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:207:9-212:84
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:211:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:210:13-44
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:212:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:209:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:208:13-42
+activity#com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:214:9-218:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:217:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:218:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:216:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:215:13-68
+activity#com.cnksi.sjjc.activity.DialogActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:221:9-226:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:224:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:226:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:223:13-74
+	android:theme
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:225:13-49
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:222:13-52
+activity#com.cnksi.sjjc.activity.PlayVideoActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:230:9-234:75
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:233:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:234:13-72
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:232:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:231:13-55
+activity#com.cnksi.sjjc.activity.QinYouShiByqYanShouActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:235:9-239:55
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:238:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:239:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:237:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:236:13-65
+activity#com.cnksi.sjjc.activity.GetSendLetterActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:240:9-244:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:243:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:244:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:242:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:241:13-59
+activity#com.cnksi.sjjc.activity.GetSendLetterReportActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:245:9-249:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:248:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:249:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:247:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:246:13-65
+activity#com.cnksi.sjjc.activity.PreventAnimalActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:251:9-256:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:255:13-49
+	android:launchMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:254:13-44
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:256:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:253:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:252:13-59
+activity#com.cnksi.sjjc.activity.PreventAnimalSecondActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:259:9-263:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:262:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:263:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:261:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:260:13-65
+activity#com.cnksi.sjjc.activity.AnimalReportActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:265:9-269:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:268:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:269:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:267:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:266:13-58
+activity#com.cnksi.sjjc.activity.XianCunHoleActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:271:9-275:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:274:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:275:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:273:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:272:13-57
+activity#com.cnksi.sjjc.activity.DiscoverHoleActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:277:9-281:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:280:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:281:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:279:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:278:13-58
+activity#com.cnksi.sjjc.activity.BatteryTestActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:283:9-288:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:287:13-49
+	android:exported
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:286:13-36
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:288:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:285:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:284:13-57
+activity#com.cnksi.sjjc.activity.BatteryDialogActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:292:9-297:91
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:295:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:297:13-79
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:294:13-74
+	android:theme
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:296:13-49
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:293:13-59
+activity#com.cnksi.sjjc.activity.BatteryFinishActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:301:9-305:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:304:13-49
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:305:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:303:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:302:13-59
+activity#com.cnksi.sjjc.activity.BatteryTestReportActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:308:9-313:64
+	android:screenOrientation
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:312:13-49
+	android:exported
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:311:13-36
+	android:windowSoftInputMode
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:313:13-52
+	android:configChanges
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:310:13-74
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:309:13-63
+receiver#com.cnksi.sjjc.receiver.USBBroardCastReceiver
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:316:9-323:20
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:316:19-65
+intent-filter#android.intent.action.ACTION_POWER_CONNECTED+android.intent.action.ACTION_POWER_DISCONNECTED
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:317:13-322:29
+	android:priority
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:317:28-57
+action#android.intent.action.ACTION_POWER_CONNECTED
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:318:17-87
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:318:25-84
+action#android.intent.action.ACTION_POWER_DISCONNECTED
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:319:17-90
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:319:25-87
+data
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:321:17-47
+	android:scheme
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:321:23-44
+activity#com.cnksi.sjjc.activity.VideoPlayer
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:325:9-58
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:325:19-55
+activity#com.cnksi.core.activity.PermissionActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:326:9-79
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:326:19-76
+activity#com.cnksi.ksynclib.activity.KSyncDebugActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:327:9-83
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:327:19-80
+activity#com.cnksi.ksynclib.activity.KSyncXJActivity
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:328:9-80
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:26:9-80
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:328:19-77
+receiver#com.cnksi.sjjc.receiver.NetWorkDisableReceiver
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:330:9-335:20
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:330:19-80
+intent-filter#android.net.conn.CONNECTIVITY_CHANGE+android.net.wifi.WIFI_STATE_CHANGED
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:331:13-334:29
+	android:priority
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:331:28-57
+action#android.net.wifi.WIFI_STATE_CHANGED
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:332:17-78
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:332:25-75
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:333:17-86
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:333:25-76
+meta-data#design_width
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:337:9-339:36
+	android:value
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:339:13-33
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:338:13-40
+meta-data#design_height
+ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:340:9-342:36
+	android:value
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:342:13-33
+	android:name
+		ADDED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml:341:13-41
+uses-sdk
+INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [XunJian:cnksicore:unspecified] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\XunJian\cnksicore\unspecified\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:design:23.2.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\design\23.2.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.2.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.0\AndroidManifest.xml:20:5-43
+MERGED from [org.xutils:xutils:3.3.22] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\org.xutils\xutils\3.3.22\AndroidManifest.xml:8:5-10:41
+MERGED from [:flironesdk:] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\flironesdk\AndroidManifest.xml:7:5-9:41
+MERGED from [com.cnksi:ksynclib:3.0.12] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:7:5-9:41
+MERGED from [com.zhy:autolayout:1.4.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.zhy\autolayout\1.4.5\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:appcompat-v7:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\AndroidManifest.xml:21:5-43
+MERGED from [com.android.databinding:adapters:1.2.1] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.databinding\adapters\1.2.1\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.databinding:library:1.2.1] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.databinding\library\1.2.1\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:support-v4:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:20:5-22:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.0.0] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+		INJECTED from D:\XunJian\adaptionsjjc\src\main\AndroidManifest.xml
+service#com.squareup.leakcanary.internal.HeapAnalyzerService
+ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:29:9-32:45
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:31:13-36
+	android:process
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:32:13-42
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:30:13-80
+service#com.squareup.leakcanary.DisplayLeakService
+ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:33:9-35:39
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:35:13-36
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:34:13-70
+activity#com.squareup.leakcanary.internal.DisplayLeakActivity
+ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:37:9-49:20
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:39:13-36
+	android:label
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:41:13-71
+	android:icon
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:40:13-54
+	android:theme
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:43:13-63
+	android:taskAffinity
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:42:13-59
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:38:13-80
+activity#com.squareup.leakcanary.internal.RequestStoragePermissionActivity
+ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:50:9-56:68
+	android:enabled
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:52:13-36
+	android:label
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:54:13-82
+	android:icon
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:53:13-54
+	android:theme
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:56:13-65
+	android:taskAffinity
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:55:13-59
+	android:name
+		ADDED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\XunJian\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:51:13-93

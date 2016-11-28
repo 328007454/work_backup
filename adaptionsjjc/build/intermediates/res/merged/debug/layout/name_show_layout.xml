@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="ShowNameBinding"></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/people_container"
+            android:layout_width="360px"
+            android:layout_height="140px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_people_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:paddingLeft="20px"
+                android:text="zhanglin"
+                android:textColor="@color/wt_green_color" />
+
+            <ImageView
+                android:id="@+id/delete_imag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20px"
+                android:background="@drawable/delete_standard_selector" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/stroke_color" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/stroke_color" />
+
+    </LinearLayout>
+</layout>

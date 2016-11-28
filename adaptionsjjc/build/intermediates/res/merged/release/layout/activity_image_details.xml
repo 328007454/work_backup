@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white" >
+
+        <com.cnksi.core.view.HackyViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/filename"
+    android:text="1212213123.jpg"
+    android:layout_above="@+id/page_text"
+    android:textColor="@color/dark_text"
+    android:textSize="@dimen/global_text_size"
+    />
+        <TextView
+            android:id="@+id/page_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/global_padding_top_bottom"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/global_text_size" />
+
+        <ImageButton
+            android:id="@+id/ibtn_delete"
+            android:layout_width="@dimen/title_bar_minheight"
+            android:layout_height="@dimen/title_bar_minheight"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:src="@drawable/delete_image_selector"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+</LinearLayout>

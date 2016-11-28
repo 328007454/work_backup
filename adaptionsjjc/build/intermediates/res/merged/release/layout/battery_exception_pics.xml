@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_marginLeft="30px"
+            android:id="@+id/re_clear_container"
+            android:layout_width="245px"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/img_clearhole"
+                android:layout_width="245px"
+                android:layout_height="245px"
+                android:layout_marginBottom="30px"
+                android:layout_marginRight="8px"
+                android:layout_marginTop="15px"
+                android:scaleType="fitXY"
+                />
+
+            <TextView
+                android:id="@+id/tv_clearhole_num"
+                android:layout_width="@dimen/new_text_width_and_height"
+                android:layout_height="@dimen/new_text_width_and_height"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/text_background_color"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/new_text_picture_size"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginLeft="30px"
+            style="@style/AnimalReportTextViewStyle"
+            android:layout_width="245px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="清除孔洞"
+            />
+
+</LinearLayout>

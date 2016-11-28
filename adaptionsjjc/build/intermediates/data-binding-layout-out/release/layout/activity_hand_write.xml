@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/gray_background_color"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clear1"
+        android:layout_margin="@dimen/global_padding_small_left_right"
+        android:background="@drawable/red_button_background_selector"
+        android:padding="@dimen/global_padding_small_left_right"
+        android:textColor="@color/white"
+        android:textSize="@dimen/btn_text_size"
+        android:text="清除"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/save1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/btn_text_size"
+        android:padding="@dimen/global_padding_small_left_right"
+        android:layout_margin="@dimen/global_padding_small_left_right"
+        android:background="@drawable/grass_green_button_background_selector"
+        android:text="保存并返回"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/change"
+        android:visibility="gone"
+        android:text="改变颜色"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/changewidth"
+        android:visibility="gone"
+        android:text="改变宽度"
+        />
+</LinearLayout>
+
+    <com.cnksi.core.view.LinePathView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/view"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

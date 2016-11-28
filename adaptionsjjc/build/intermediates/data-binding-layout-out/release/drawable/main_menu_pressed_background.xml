@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:bottom="@dimen/seven_oval_size"
+        android:left="@dimen/seven_oval_size"
+        android:right="@dimen/seven_oval_size"
+        android:top="@dimen/seven_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/main_background_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/one_oval_size"
+        android:left="@dimen/one_oval_size"
+        android:right="@dimen/one_oval_size"
+        android:top="@dimen/one_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/main_circle_menu_pressed_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/two_oval_size"
+        android:left="@dimen/two_oval_size"
+        android:right="@dimen/two_oval_size"
+        android:top="@dimen/two_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@android:color/white" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/three_oval_size"
+        android:left="@dimen/three_oval_size"
+        android:right="@dimen/three_oval_size"
+        android:top="@dimen/three_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/main_circle_menu_pressed_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/three_oval_size"
+        android:left="@dimen/three_oval_size"
+        android:right="@dimen/three_oval_size"
+        android:top="@dimen/three_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/main_circle_menu_pressed_color" >
+            </solid>
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="发信电平"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"/>
+
+        <EditText
+            android:id="@+id/et_send_letter_level"
+            style="@style/NewHeatPointEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入发信电平"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginTop="2px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="收信电平"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"/>
+
+        <EditText
+            android:id="@+id/et_get_letter_level"
+            style="@style/NewHeatPointEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入收信电平"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="通道测试"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_yes"
+                style="@style/RadioButtonBaseStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="80px"
+                android:button="@null"
+                android:drawableLeft="@drawable/radio_button_selector"
+                android:text="正常"
+                android:textSize="@dimen/tv_text_size"/>
+
+            <RadioButton
+                android:id="@+id/rb_no"
+                style="@style/RadioButtonBaseStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="40px"
+                android:button="@null"
+                android:drawableLeft="@drawable/radio_button_selector"
+                android:text="不正常"
+                android:textSize="@dimen/tv_text_size"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginTop="2px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:id="@+id/tv_pics"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="异常拍照"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"/>
+
+        <ImageView
+            android:id="@+id/iv_take_pic"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50px"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/camera_button_background"/>
+
+        <ImageView
+            android:id="@+id/iv_show_pic"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_take_pic"
+            />
+
+        <TextView
+            android:id="@+id/tv_pic_num"
+            android:layout_width="@dimen/new_text_width_and_height"
+            android:layout_height="@dimen/new_text_width_and_height"
+            android:layout_alignRight="@id/iv_show_pic"
+            android:layout_alignTop="@id/iv_show_pic"
+            android:background="@drawable/text_background_color"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/new_text_picture_size"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginTop="2px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="备注"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"/>
+
+        <EditText
+            android:id="@+id/et_input_remark"
+            style="@style/NewHeatPointEditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入备注"/>
+    </LinearLayout>
+
+</LinearLayout>

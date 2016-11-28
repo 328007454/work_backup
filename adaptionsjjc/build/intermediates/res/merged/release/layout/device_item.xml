@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/rl_device_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/device_green_border_background_selector"
+        android:minHeight="@dimen/device_item_minheight"
+        android:minWidth="@dimen/device_item_minwidth" >
+
+        <!-- 设备名称 -->
+
+        <TextView
+            android:id="@+id/tv_device_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingLeft="@dimen/device_item_name_padding_left"
+            android:paddingRight="@dimen/device_item_name_padding_right"
+            android:textColor="@color/green_color"
+            android:textSize="@dimen/device_item_name_text_size" />
+
+
+
+
+    </RelativeLayout>
+
+    <!-- 是否有抄录数据 -->
+
+    <TextView
+        android:id="@+id/tv_copy_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/device_item_minheight"
+        android:minWidth="@dimen/device_item_half_minwidht" />
+
+</FrameLayout>

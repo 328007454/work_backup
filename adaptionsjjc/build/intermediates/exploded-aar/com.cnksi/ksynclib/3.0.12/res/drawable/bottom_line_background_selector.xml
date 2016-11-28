@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <item>
+                <shape>
+                    <solid android:color="@color/divider_line_color" />
+                </shape>
+            </item>
+            <item android:bottom="@dimen/divider_line_height">
+                <shape>
+                    <solid android:color="@color/list_item_pressed_color" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_pressed="false">
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <item>
+                <shape>
+                    <solid android:color="@color/divider_line_color" />
+                </shape>
+            </item>
+            <item android:bottom="@dimen/divider_line_height">
+                <shape>
+                    <solid android:color="@android:color/white" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

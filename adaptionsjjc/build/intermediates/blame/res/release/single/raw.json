@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\send.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\send.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\up.wav",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\up.wav"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\swing_appear.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\swing_appear.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\clear.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\clear.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\control_click.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\control_click.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\beep.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\raw\\beep.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\trun.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\trun.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\click.wav",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\click.wav"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\sampleframes.zip",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\sampleframes.zip"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\default_camera_files.zip",
+        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\flironesdk\\res\\raw\\default_camera_files.zip"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\click_center.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\click_center.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\track.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\track.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\input.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\input.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\delete.wav",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\delete.wav"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\printing.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\printing.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\down.wav",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\down.wav"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\click_menu.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\click_menu.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\swing_record.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\swing_record.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\lbpcascade_frontalface.xml",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\lbpcascade_frontalface.xml"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\record.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\record.ogg"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\raw\\print_out.ogg",
+        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\raw\\print_out.ogg"
+    }
+]

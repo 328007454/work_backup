@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loadmore_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/refresh_background_color" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="@dimen/refresh_header_padding"
+        android:paddingTop="@dimen/refresh_header_padding" >
+
+        <ImageView
+            android:id="@+id/pullup_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/refresh_progress_margin_left"
+            android:background="@mipmap/ic_refresh_up_arrow"
+            android:contentDescription="@null" />
+
+        <ImageView
+            android:id="@+id/loading_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/refresh_progress_margin_left"
+            android:background="@mipmap/ic_refresh_loading"
+            android:contentDescription="@null"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/loadstate_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/pullup_to_load"
+            android:textColor="@color/refresh_text_color"
+            android:textSize="@dimen/refresh_text_size" />
+
+        <ImageView
+            android:id="@+id/loadstate_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/refresh_state_icon_margin_right"
+            android:layout_toLeftOf="@id/loadstate_tv"
+            android:contentDescription="@null"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>

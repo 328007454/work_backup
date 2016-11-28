@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_base_dark_green_color">#057671</color>
+    <color name="app_base_green_color">#09AAA0</color>
+    <color name="app_base_green_hover_color">#078B85</color>
+    <color name="black">#333333</color>
+    <color name="btn_cancel_color">#D9534F</color>
+    <color name="btn_cancel_hover_color">#D33834</color>
+    <color name="btn_start_color">#6AB74B</color>
+    <color name="btn_start_hover_color">#5BA341</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="divider_line_color">#BCCCCA</color>
+    <color name="green">#4CB62D</color>
+    <color name="list_item_pressed_color">#F9F1F1</color>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="corner_radius">5dp</dimen>
+    <dimen name="divider_line_half2_height">0.5dp</dimen>
+    <dimen name="divider_line_half_height">0.8dp</dimen>
+    <dimen name="divider_line_height">1dp</dimen>
+    <dimen name="global_button_minheight">35dp</dimen>
+    <dimen name="global_editview_minHeight">35dp</dimen>
+    <dimen name="global_large_text_size">20sp</dimen>
+    <dimen name="global_middle_padding">5dp</dimen>
+    <dimen name="global_middle_text_size">18sp</dimen>
+    <dimen name="global_mmiddle_margin">20dp</dimen>
+    <dimen name="global_padding">15dp</dimen>
+    <dimen name="global_small_padding">5dp</dimen>
+    <dimen name="global_small_text_size">16sp</dimen>
+    <dimen name="global_title_minHeight">40dp</dimen>
+    <dimen name="list_item_minheight">40dp</dimen>
+    <dimen name="list_item_padding">4dp</dimen>
+    <string name="app_name">ksynclib</string>
+    <string name="data_sync_str">数据同步</string>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="@style/BaseAppTheme"> </style>
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="ButtonBaseStyle">
+        <item name="android:minHeight">@dimen/global_button_minheight</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/global_small_text_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="DataSyncProgressBarStyleSmall">
+        <item name="android:minWidth">20dp</item>
+        <item name="android:maxWidth">20dp</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:maxHeight">20dp</item>
+    </style>
+</resources>

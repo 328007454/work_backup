@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WeatherView">
+        <!-- 文本提示 -->
+        <attr name="label" format="string" />
+        <!-- 文本颜色 -->
+        <attr name="label_color" format="color|reference" />
+        <!-- 文本居左 -->
+        <attr name="label_padding_left" format="dimension|reference" />
+        <!-- 文本字体大小 -->
+        <attr name="label_size" format="dimension|reference" />
+        <!-- icon宽度 -->
+        <attr name="icon_width" format="dimension|reference" />
+        <!-- icon资源 -->
+        <attr name="icon_src" format="reference" />
+        <!-- icon margin -->
+        <attr name="icon_margin" format="dimension|reference" />
+        <!-- 天气选项 -->
+        <attr name="selector" format="reference" />
+    </declare-styleable>
+</resources>

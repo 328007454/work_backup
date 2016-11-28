@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.cnksi.sjjc.View.BatteryGridView
+        android:id="@+id/gv_battery_container"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="@dimen/global_padding_left_right"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/global_padding_left_right"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/grid_vertical_spacing" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:layout_marginTop="40px"
+        android:background="@color/text_background"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="20px"
+        android:text="异常电池照片"
+        android:textColor="@color/radio_text_checked_color"
+        android:textSize="@dimen/new_global_text_size" />
+
+    <com.cnksi.sjjc.View.BatteryGridView
+        android:id="@+id/gv_pic_container"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="@dimen/global_padding_left_right"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:gravity="center"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/grid_vertical_spacing" />
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/grass_color"
+    android:layout_width="match_parent" >
+<TextView
+    android:layout_height="90px"
+    android:text="test测试"
+    android:textSize="@dimen/tv_text_size"
+    android:gravity="center_vertical"
+    android:id="@+id/text"
+    android:background="#00000000"
+    android:textColor="@color/green_color"
+    android:paddingLeft="@dimen/paddingLeft"
+    android:layout_width="match_parent"
+     />
+
+</LinearLayout>

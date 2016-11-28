@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants"
+    >
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/text_bantouming_background_item"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/yw_title_gqj_size"/>
+
+    <TextView
+        android:id="@+id/tv_yanshou_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="115dp"
+        android:layout_toRightOf="@id/tv_number"
+        android:gravity="left|center_vertical"
+        android:text="1fdasfasdfadsfadsfasdfadsfasdffdsafasfdasfa"
+        android:textSize="@dimen/yw_title_gqj_size"/>
+
+    <ImageView
+        android:id="@+id/btn_yanshou"
+        style="@style/NewButtonStyle2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="@dimen/hwcw_line_height"
+        android:layout_weight="1"
+        android:background="@mipmap/icon_notshow"
+        android:focusable="false"
+        />
+
+
+    <Button
+        android:id="@+id/btn_extra_function"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/btn_yanshou"
+        android:background="@drawable/liaght_blue_button_background"
+        android:focusable="false"
+        android:gravity="center"
+        android:minHeight="@dimen/new_button_minheight"
+        android:text="验收"
+        android:textColor="@color/white"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/iv_show_qianming"
+        android:layout_width="60dp"
+        android:layout_height="90dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/btn_yanshou"
+        android:gravity="center"
+        android:visibility="gone"/>
+    <View
+        android:layout_alignParentBottom="true"
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_background_color"/>
+
+</RelativeLayout>

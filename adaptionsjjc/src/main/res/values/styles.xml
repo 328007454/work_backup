@@ -1,0 +1,250 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+	-->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- 单选按钮的样式 -->
+    <style name="RadioButtonBaseStyle">
+        <item name="android:textColor">@color/radio_button_text_selector</item>
+        <item name="android:textSize">@dimen/radio_button_text_size</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingLeft">@dimen/drawable_padding</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:button">@drawable/radio_button_selector</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginLeft">@dimen/list_item_left_right_padding</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="LoginAppTheme" parent="AppBaseTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="BaseTextStyle">
+        <item name="android:textSize">@dimen/global_text_size</item>
+    </style>
+    <!-- MainMenuStyle -->
+    <style name="MainMenuTextStyle" parent="BaseTextStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/main_menu_text_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="MainMenuContainerStyle">
+        <item name="android:background">@drawable/main_menu_unpressed_background</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- 自定义进度条 -->
+    <style name="ProgressBar_Mini" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:maxHeight">@dimen/device_item_minheight</item>
+        <item name="android:minHeight">@dimen/device_item_minheight</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:progressDrawable">@drawable/progressbar_background</item>
+    </style>
+
+    <style name="Widget.SeekBar.Normal" parent="@android:style/Widget.SeekBar">
+        <item name="android:maxHeight">8.0dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:progressDrawable">@drawable/seekbar_horizontal</item>
+        <item name="android:minHeight">8.0dip</item>
+        <item name="android:thumb">@drawable/thumb_bar</item>
+        <item name="android:thumbOffset">10.0dip</item>
+    </style>
+
+    <style name="RelativeLayoutItemStyle">
+        <item name="android:minHeight">@dimen/list_item_minheight</item>
+        <item name="android:background">@drawable/bottom_line_background_selector</item>
+        <item name="android:paddingLeft">@dimen/global_padding_left_right</item>
+        <item name="android:paddingRight">@dimen/global_padding_left_right</item>
+    </style>
+
+    <style name="ItemLabelStyle">
+        <item name="android:textColor">@color/global_text_color</item>
+        <item name="android:textSize">@dimen/global_text_size</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:minWidth">@dimen/label_minwidth</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:minHeight">@dimen/edit_text_minheight</item>
+        <item name="android:paddingLeft">@dimen/global_padding_left_right</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/global_base_color</item>
+        <item name="android:textColorHint">@color/global_gray_text_color</item>
+        <item name="android:textSize">@dimen/global_text_size</item>
+    </style>
+
+    <style name="ListItemStyle">
+        <item name="android:minHeight">@dimen/list_item_minheight</item>
+        <item name="android:paddingBottom">@dimen/global_padding_top_bottom</item>
+        <item name="android:paddingTop">@dimen/global_padding_top_bottom</item>
+        <item name="android:paddingRight">@dimen/global_padding_left_right</item>
+        <item name="android:paddingLeft">@dimen/global_padding_left_right</item>
+        <item name="android:background">@drawable/list_item_background_selector</item>
+    </style>
+
+    <style name="DataSyncProgressBarStyleLarge">
+        <item name="android:indeterminateDrawable">@drawable/progress_large</item>
+        <item name="android:minWidth">@dimen/sync_progressbar_width_height</item>
+        <item name="android:maxWidth">@dimen/sync_progressbar_width_height</item>
+        <item name="android:minHeight">@dimen/sync_progressbar_width_height</item>
+        <item name="android:maxHeight">@dimen/sync_progressbar_width_height</item>
+    </style>
+
+    <style name="DataSyncProgressBarStyleSmall">
+        <item name="android:minWidth">@dimen/progressbar_maxheight</item>
+        <item name="android:maxWidth">@dimen/progressbar_maxheight</item>
+        <item name="android:minHeight">@dimen/progressbar_maxheight</item>
+        <item name="android:maxHeight">@dimen/progressbar_maxheight</item>
+    </style>
+
+    <style name="NewHeatPointEditTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:hint">@string/please_input_value_str</item>
+        <item name="android:minWidth">@dimen/new_edit_text_minwidth</item>
+        <item name="android:minHeight">@dimen/new_edit_text_minheight</item>
+        <item name="android:textColor">@color/green_color</item>
+        <item name="android:textColorHint">@color/global_gray_text_color</item>
+        <item name="android:textSize">@dimen/tv_text_size</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+
+    <style name="NewTextViewStyle">
+        <item name="android:minHeight">@dimen/new_edit_text_minheight</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/green_color</item>
+        <item name="android:textSize">@dimen/new_global_text_size</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+
+    <style name="NewButtonStyle">
+        <item name="android:minHeight">@dimen/new_button_minheight</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/new_global_text_size</item>
+    </style>
+    <!--防小动物措施报告 -->
+    <style name="AnimalReportLinearLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/global_padding_left_right</item>
+        <item name="android:layout_marginRight">@dimen/global_padding_left_right</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="AnimalReportTextViewStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textSize">@dimen/global_text_size</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">@dimen/wt_text_padding</item>
+    </style>
+
+    <style name="SmallText" parent="Text">
+        <item name="android:textSize">@dimen/wt_small_text</item>
+        <item name="android:textColor">@color/dark_text</item>
+    </style>
+
+    <style name="LargeGreenText" parent="Text">
+        <item name="android:textSize">@dimen/wt_large_text</item>
+        <item name="android:textColor">@color/wt_green_color</item>
+    </style>
+
+    <style name="LargeDarkText" parent="Text">
+        <item name="android:textSize">@dimen/wt_large_text</item>
+        <item name="android:textColor">@color/dark_text</item>
+    </style>
+
+    <style name="Line">
+        <item name="android:background">#DDE1E4</item>
+    </style>
+
+    <style name="VLine" parent="Line">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/line_width</item>
+    </style>
+
+    <style name="HLine" parent="Line">
+        <item name="android:layout_height">@dimen/line_width</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="PopwindowAnimtionStyle" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="NewButtonStyle2">
+        <item name="android:minHeight">@dimen/new_button_minheight</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/new_global_text_size</item>
+    </style>
+    <!--DialogActivity style-->
+    <style name="MyDialogStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@anim/dialog_exit</item>
+    </style>
+    <style name="DashStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+</resources>

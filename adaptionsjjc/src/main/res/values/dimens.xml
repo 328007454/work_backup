@@ -1,0 +1,331 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="tips_dialog_height">60dp</dimen>
+    <!-- Global -->
+    <dimen name="global_text_size">18sp</dimen>
+    <dimen name="global_text_size_1">48px</dimen>
+    <dimen name="global_text_small_size">16sp</dimen>
+    <dimen name="thumb_img_minheight">60dp</dimen>
+    <dimen name="thumb_img_minwidth">80dp</dimen>
+    <dimen name="image_item_margin">6dp</dimen>
+    <dimen name="thumb_img_padding">1dp</dimen>
+    <dimen name="title_bar_minheight">45dp</dimen>
+    <dimen name="title_text_size">20sp</dimen>
+    <dimen name="login_persons_minheight">40dp</dimen>
+    <dimen name="global_padding_top_bottom">6dp</dimen>
+    <dimen name="global_padding_half_top_bottom">3dp</dimen>
+    <dimen name="global_padding_left_right">8dp</dimen>
+    <dimen name="global_padding_small_left_right">4dp</dimen>
+    <dimen name="global_margin_top">12dp</dimen>
+    <dimen name="global_padding_half_left_right">4dp</dimen>
+    <dimen name="list_item_minheight">50dp</dimen>
+    <dimen name="label_minwidth">75dp</dimen>
+    <dimen name="list_item_eight_minheight">40dp</dimen>
+    <dimen name="corner_radius">3dp</dimen>
+    <dimen name="clock_corner_radius">10dp</dimen>
+    <dimen name="clock_corner_radius2">8dp</dimen>
+    <dimen name="half_corner_radius">3dp</dimen>
+    <dimen name="global_text_line_spacing">9dp</dimen>
+    <dimen name="global_text_large_size">50sp</dimen>
+    <dimen name="global_text_large2_size">35sp</dimen>
+    <dimen name="view_pager_dot_margin_bottom">10dp</dimen>
+    <!--巡检任务提醒 -->
+    <dimen name="list_item_minheight_remind">200px</dimen>
+    <!-- circle -->
+    <dimen name="circle_one">6dp</dimen>
+    <dimen name="circle_two">7dp</dimen>
+    <dimen name="circle_three">8dp</dimen>
+    <dimen name="circle_four">28dp</dimen>
+
+    <!-- MainMenuActivity -->
+    <dimen name="one_oval_size">11dp</dimen>
+    <dimen name="two_oval_size">14dp</dimen>
+    <dimen name="three_oval_size">17dp</dimen>
+    <dimen name="five_oval_size">4dp</dimen>
+    <dimen name="six_oval_size">6dp</dimen>
+    <dimen name="seven_oval_size">8dp</dimen>
+    <dimen name="eight_oval_size">2.5dp</dimen>
+    <dimen name="nine_oval_size">4dp</dimen>
+    <dimen name="twelve_oval_size">5dp</dimen>
+    <dimen name="ten_oval_size">7dp</dimen>
+    <dimen name="main_menu_text_size">19sp</dimen>
+    <dimen name="main_menu_circle_container_width">30dp</dimen>
+
+    <!-- InspectionTaskRemindActivity -->
+    <dimen name="tab_strip_minheight">40dp</dimen>
+
+    <dimen name="line_half_width">0.5dp</dimen>
+    <dimen name="line_eight_width">0.8dp</dimen>
+    <dimen name="line_height">1dp</dimen>
+    <dimen name="task_simple_name_minheight">55dp</dimen>
+    <dimen name="inspection_time_text_size">16sp</dimen>
+
+    <!-- InspectionReady -->
+    <dimen name="button_minheight">36dp</dimen>
+    <dimen name="temperature_margin_top">55dp</dimen>
+    <dimen name="danger_point_num_minwidth">35dp</dimen>
+    <dimen name="edit_text_minwidth">50dp</dimen>
+    <dimen name="edit_text_minheight">35dp</dimen>
+    <dimen name="edit_text_maxheight">60dp</dimen>
+    <dimen name="inspection_type_child_item_padding_left">25dp</dimen>
+    <dimen name="inspection_type_child_item_minheight">40dp</dimen>
+
+    <!-- DeviceActivity -->
+    <dimen name="device_item_minwidth">90dp</dimen>
+    <dimen name="device_item_half_minwidht">45dp</dimen>
+    <dimen name="new_device_item_half_minwidth">70dp</dimen>
+    <dimen name="new_device_item_maxwidth">100dp</dimen>
+    <dimen name="device_item_minheight">35dp</dimen>
+    <dimen name="device_item_name_padding_left">8dp</dimen>
+    <dimen name="device_item_name_padding_right">12dp</dimen>
+    <dimen name="device_defect_count_text_size">12sp</dimen>
+    <dimen name="device_defect_count_minheight">15dp</dimen>
+    <dimen name="device_gps_tips_minheight">8dp</dimen>
+    <dimen name="grid_vertical_spacing">10dp</dimen>
+    <dimen name="device_item_name_text_size">14sp</dimen>
+    <dimen name="device_item_name_text_size_1">38px</dimen>
+    <dimen name="battery_voltage_text_size">12sp</dimen>
+    <dimen name="device_item_name_text_small_size">14sp</dimen>
+    <dimen name="device_photo_tips_minheight">20dp</dimen>
+    <dimen name="device_part_photo_container_minheight">90dp</dimen>
+    <dimen name="drawable_padding">3dp</dimen>
+    <dimen name="text_button_padding_left">15dp</dimen>
+    <dimen name="text_button_padding_half_left">8dp</dimen>
+    <dimen name="text_button_padding_top">3dp</dimen>
+    <dimen name="swipe_menu_text_size">14sp</dimen>
+    <dimen name="device_part_img_minheight">60dp</dimen>
+    <dimen name="device_part_img_minwidth">90dp</dimen>
+    <dimen name="clamp_img_minheight">80dp</dimen>
+    <dimen name="clamp_img_minwidth">70dp</dimen>
+    <dimen name="device_part_image_name_text_size">15sp</dimen>
+    <dimen name="device_photo_maxheight">95dp</dimen>
+    <dimen name="twice_horizontal_spacing">10dp</dimen>
+    <dimen name="twice_vertical_spacing">12dp</dimen>
+    <dimen name="device_danger_button_minheight">25dp</dimen>
+    <dimen name="device_top_photo_maxheight">115dp</dimen>
+    <dimen name="battery_voltage_padding_top">1.5dp</dimen>
+
+    <!-- InspectionReportActivity -->
+    <dimen name="report_padding_top">15dp</dimen>
+    <dimen name="playback_button_margin">12dp</dimen>
+    <dimen name="dot_line_height">30dp</dimen>
+    <dimen name="inspection_result_minheight">60dp</dimen>
+    <dimen name="hwcw_line_height">10dp</dimen>
+    <!-- DefectControlActivity -->
+    <dimen name="content_minheight">45dp</dimen>
+    <dimen name="history_defect_photo_height">45dp</dimen>
+    <dimen name="new_defect_photo_height">35dp</dimen>
+    <dimen name="track_defect_button_minheight">22dp</dimen>
+    <dimen name="find_question_button_minheight">25dp</dimen>
+    <dimen name="history_defect_level_text_size">15sp</dimen>
+    <dimen name="report_generate_text_size">22sp</dimen>
+    <dimen name="report_generate_drawable_padding">12dp</dimen>
+    <dimen name="defect_count_width">13dp</dimen>
+    <dimen name="defect_count_text_size">10sp</dimen>
+    <dimen name="audio_length_text_size">12sp</dimen>
+
+    <!-- ReportLeader -->
+    <dimen name="report_edit_text_minheight">120dp</dimen>
+    <dimen name="inspection_standard_padding_top">12dp</dimen>
+
+    <!-- WindInspectionActivity -->
+    <!-- CopyAllValueActivity -->
+    <dimen name="copy_all_value_container_height">110dp</dimen>
+    <dimen name="button_margin_top">10dp</dimen>
+    <dimen name="standards_text_paddleft">10dp</dimen>
+
+    <!-- ReferenceStandardActivity -->
+    <dimen name="standard_source_text_size">16sp</dimen>
+    <dimen name="search_container_minheight">70dp</dimen>
+    <dimen name="clamp_tips_height">45dp</dimen>
+    <dimen name="drawable_padding_left">20dp</dimen>
+    <dimen name="regular_step_text_size">10sp</dimen>
+    <dimen name="regular_step_num_text_size">16sp</dimen>
+    <dimen name="regular_menu_height">35dp</dimen>
+    <dimen name="regular_menu_half_height">13dp</dimen>
+    <dimen name="regular_arcmenu_minheight">110dp</dimen>
+    <dimen name="regular_arcmenu_radius">75dp</dimen>
+
+    <!-- login -->
+    <dimen name="sys_name_minheigth">50dp</dimen>
+    <dimen name="sys_name_text_size">28sp</dimen>
+    <dimen name="app_main_padding">12dp</dimen>
+    <dimen name="waiting_area_text_size">18sp</dimen>
+    <dimen name="waiting_area_padding_bottom">16dp</dimen>
+    <dimen name="waiting_area_minheight">22dp</dimen>
+    <dimen name="btn_login_minheight">40dp</dimen>
+    <dimen name="btn_radius_size">5dp</dimen>
+    <dimen name="sys_copyrights_text_size">14sp</dimen>
+    <dimen name="portrait_thum_minheight">120dp</dimen>
+    <dimen name="portrait_thum_margin">10dp</dimen>
+    <dimen name="portrait_thum_padding">3dp</dimen>
+    <dimen name="main_view_height">30dp</dimen>
+    <dimen name="main_view_margintop">-22dp</dimen>
+    <dimen name="et_user_edit_minheight">40dp</dimen>
+    <dimen name="et_hint_text_size">18sp</dimen>
+    <dimen name="main_hr_bg_margin">0dp</dimen>
+    <dimen name="et_drawable_padding_left">12dp</dimen>
+    <dimen name="btn_add_user_margin">20dp</dimen>
+    <dimen name="btn_text_size">18sp</dimen>
+    <dimen name="sys_min_minheight">100dp</dimen>
+    <dimen name="sys_min_center_minheight">500dp</dimen>
+    <dimen name="step_num_margin_bottom">2dp</dimen>
+    <dimen name="regular_grid_item_height">26dp</dimen>
+    <dimen name="regular_grid_item_width">40dp</dimen>
+    <dimen name="regular_grid_item_container_width">48dp</dimen>
+    <dimen name="current_time_text_size">35sp</dimen>
+    <dimen name="media_content_minheight">60dp</dimen>
+    <dimen name="defect_count_width_height">25dp</dimen>
+    <dimen name="defect_count_number_height">22dp</dimen>
+
+    <!-- keyboard -->
+    <dimen name="keyboard_text_size">22sp</dimen>
+    <dimen name="keyboard_horizontal_padding">2dp</dimen>
+    <dimen name="keyboard_left_padding">1dp</dimen>
+    <dimen name="keyboard_vertical_padding">4dp</dimen>
+    <dimen name="keyboard_horizontal_space">3dp</dimen>
+    <dimen name="keyboard_vertical_space">8dp</dimen>
+
+    <!-- KeyBoard -->
+    <dimen name="key_height">40dp</dimen>
+    <dimen name="key_vertical_gap">6dp</dimen>
+    <dimen name="keyboard_padding_top">6dp</dimen>
+    <dimen name="key_text_size">20sp</dimen>
+    <dimen name="seekbar_height">20dp</dimen>
+    <dimen name="min_max_value_text_size">23sp</dimen>
+    <dimen name="exclusive_menu_height">50dp</dimen>
+    <dimen name="exclusive_media_margin_bottom">10dp</dimen>
+    <dimen name="keyboard_offset">22dp</dimen>
+    <dimen name="seek_number_text_size">15sp</dimen>
+
+    <!-- 水印字体大小 -->
+    <dimen name="water_text_size">10sp</dimen>
+    <!-- 报告中ListView的高度 -->
+    <dimen name="report_list_height">300dp</dimen>
+    <dimen name="battery_report_list_height">100dp</dimen>
+    <dimen name="report_margin_top">-500dp</dimen>
+    <!-- 数据同步 -->
+    <dimen name="app_name_marginbottom">50dp</dimen>
+    <dimen name="data_sync_text_size">35sp</dimen>
+    <dimen name="sync_progressbar_width_height">300dp</dimen>
+    <dimen name="progressbar_maxheight">20dp</dimen>
+    <dimen name="standard_image_minheight">100dp</dimen>
+    <dimen name="list_standard_image_minheight">115dp</dimen>
+    <dimen name="list_standard_image_minwidth">120dp</dimen>
+    <dimen name="list_copy_value_container_minwidth">180dp</dimen>
+    <dimen name="history_imagebutton_minheight">25dp</dimen>
+    <dimen name="yw_adapter_margin">8dp</dimen>
+    <!-- 运维一体化 -->
+    <dimen name="yw_slid_linear_padding">12dp</dimen>
+    <dimen name="yw_textview_margin">5dp</dimen>
+    <dimen name="yw_textview_marginleft">10dp</dimen>
+    <dimen name="yw_textview_padding">3dp</dimen>
+    <dimen name="yw_dialog_edittext_margin">10dp</dimen>
+    <dimen name="yw_dialog_edittext_padding">10dp</dimen>
+    <dimen name="yw_dialog_edittext_height">180dp</dimen>
+    <dimen name="yw_title_gqj_size">16sp</dimen>
+    <dimen name="yw_title_gqj_padding">5sp</dimen>
+    <dimen name="yw_checkbox_w">50dp</dimen>
+    <dimen name="yw_checkbox_s">20dp</dimen>
+    <dimen name="yw_imageView_h">100dp</dimen>
+    <dimen name="yw_imageView_m">5dp</dimen>
+    <dimen name="yw_audio_w">70dp</dimen>
+    <dimen name="yw_audio_h">30dp</dimen>
+    <dimen name="yw_imageView_w">100dp</dimen>
+    <dimen name="yw_hlistview_h">70dp</dimen>
+    <dimen name="yw_hlistview_mtb">5dp</dimen>
+    <dimen name="yw_hlistview_audio_h">44dp</dimen>
+    <dimen name="yw_gqj_adapter_margin">10dp</dimen>
+    <dimen name="yw_desc_blank_h">8dp</dimen>
+    <dimen name="yw_vedio_learh">24dp</dimen>
+    <dimen name="yw_vedio_p">3dp</dimen>
+    <dimen name="yw_vedio_textsize">14sp</dimen>
+
+    <!-- 操作票 -->
+
+    <dimen name="czp_margin">24dp</dimen>
+    <dimen name="operate_content_minheight">80dp</dimen>
+    <dimen name="operate_function_height">150dp</dimen>
+    <dimen name="radio_button_circle_radius_one">2dp</dimen>
+    <dimen name="radio_button_circle_radius_two">3.5dp</dimen>
+    <dimen name="radio_button_circle_radius_three">10dp</dimen>
+    <dimen name="radio_button_circle_radius_four">6dp</dimen>
+    <dimen name="dot_width_height">8dp</dimen>
+    <dimen name="operate_function_text_size">13sp</dimen>
+    <dimen name="operate_item_number_minheight">35dp</dimen>
+    <dimen name="operate_sign_container_minheight">100dp</dimen>
+    <dimen name="czp_sign_minheight">26dp</dimen>
+    <dimen name="czp_download_text_size">23sp</dimen>
+    <dimen name="czp_tips_download_padding_bottom">35dp</dimen>
+    <dimen name="czp_start_button_width">90dp</dimen>
+
+    <!-- 新增发热布局使用px -->
+    <dimen name="new_global_text_size">36px</dimen>
+    <dimen name="new_drawable_half_padding">12px</dimen>
+    <dimen name="new_linear_data_information">40px</dimen>
+    <dimen name="new_edit_text_minheight">60px</dimen>
+    <dimen name="new_edit_text_minwidth">200px</dimen>
+    <dimen name="new_divider_line_width">2px</dimen>
+    <dimen name="new_view_diver_line_margintop">40px</dimen>
+    <dimen name="new_devider_margin">20px</dimen>
+    <dimen name="new_button_minheight">90px</dimen>
+    <dimen name="new_text_width_and_height">30px</dimen>
+    <dimen name="new_text_picture_size">16px</dimen>
+    <dimen name="new_button_layout_height">160px</dimen>
+    <dimen name="new_layout_title_height">100px</dimen>
+    <dimen name="new_text_minwidth">200px</dimen>
+    <dimen name="new_text_minheight">140px</dimen>
+    <dimen name="text_minheight">70px</dimen>
+    <dimen name="new_global_padding_left_right">24px</dimen>
+    <dimen name="new_image_margintop">240px</dimen>
+    <dimen name="list_item_left_right_padding">10dp</dimen>
+    <!-- 单选按钮的字体大小 -->
+    <dimen name="radio_button_text_size">30px</dimen>
+
+
+    <!--###################### px常量 ######################-->
+    <!--标题文字大小-->
+    <dimen name="tv_title_text_size">52px</dimen>
+    <!--普通文字大小-->
+    <dimen name="tv_text_size">42px</dimen>
+    <dimen name="tv_text_size_1">42px</dimen>
+    <dimen name="text_size_38">42px</dimen>
+    <dimen name="layout_padding_left">30px</dimen>
+    <dimen name="layout_padding_right">30px</dimen>
+    <!--layout行高-->
+    <dimen name="layout_height">144px</dimen>
+    <dimen name="layout_large_height">167px</dimen>
+    <dimen name="layout_small_height">80px</dimen>
+    <dimen name="icon">70px</dimen>
+    <!--label行高-->
+    <dimen name="label_height">80px</dimen>
+    <dimen name="paddingLeft">30px</dimen>
+    <dimen name="paddingRight">20px</dimen>
+    <!-- WorkTicket-->
+    <dimen name="wt_small_text">35px</dimen>
+    <dimen name="wt_large_text">42px</dimen>
+    <dimen name="wt_header_height">168px</dimen>
+    <dimen name="wt_gray_height">34px</dimen>
+    <dimen name="wt_header_padding">25px</dimen>
+    <dimen name="wt_text_padding">5px</dimen>
+    <dimen name="line_width">5px</dimen>
+    <dimen name="image_height">100dp</dimen>
+    <dimen name="jyhpj_gqj_pic_width">120px</dimen>
+    <dimen name="jyhpj_gqj_pic_height">90px</dimen>
+    <dimen name="jyhpj_gqj_left_margin">88px</dimen>
+    <!-- 缩略图的宽度 -->
+    <dimen name="middle_thumb_image_width">80dp</dimen>
+    <!-- 分割线宽度 -->
+    <dimen name="divider_line_width">1dp</dimen>
+    <!-- 缩略图的高度 -->
+    <dimen name="middle_thumb_image_height">60dp</dimen>
+    <dimen name="textview_minheight">52dp</dimen>
+    <dimen name="list_item_top_bottom_half_padding">5dp</dimen>
+    <dimen name="grid_view_horizontalSpacing">2dp</dimen>
+    <dimen name="grid_view_verticalSpacing">5dp</dimen>
+    <dimen name="list_item_three_minheight">30dp</dimen>
+    <dimen name="global_text_small_small_size">15sp</dimen>
+</resources>

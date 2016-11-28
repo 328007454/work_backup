@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/gray_background_color"
+    android:layout_height="match_parent">
+
+<!-- 拍照-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginTop="2px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:id="@+id/tv_pics"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="拍照"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size" />
+
+        <ImageView
+            android:id="@+id/iv_show_take_picture"
+            android:layout_width="120px"
+            android:layout_height="90px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="88px"
+            android:layout_toRightOf="@+id/tv_pics"
+            />
+        <TextView
+            android:id="@+id/tv_pic_num"
+            android:layout_width="@dimen/new_text_width_and_height"
+            android:layout_height="@dimen/new_text_width_and_height"
+            android:layout_alignRight="@id/iv_show_take_picture"
+            android:layout_alignTop="@id/iv_show_take_picture"
+            android:background="@drawable/text_background_color"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:visibility="invisible"
+            android:textSize="@dimen/new_text_picture_size" />
+
+        <ImageView
+            android:id="@+id/ibtn_take_picture"
+            android:layout_width="@dimen/icon"
+            android:layout_height="@dimen/icon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50px"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/camera_button_background" />
+    </RelativeLayout>
+    <!--录音-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginTop="2px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight">
+
+        <TextView
+
+            android:id="@+id/tv_qm_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="录音"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/jyhpj_gqj_left_margin"
+            android:id="@+id/tv_audio"
+            android:layout_width="120px"
+            android:layout_height="90px"
+            android:background="@drawable/grass_green_button_background_selector"
+            android:drawableLeft="@mipmap/ic_audio"
+            android:gravity="center"
+            android:paddingLeft="@dimen/global_padding_top_bottom"
+            android:visibility="invisible"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/audio_length_text_size" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/img_pc"
+            android:layout_marginLeft="@dimen/app_main_padding"
+            android:layout_width="@dimen/icon"
+            android:layout_height="@dimen/icon"
+            android:src="@mipmap/icon_record_audio"
+            />
+    </LinearLayout>
+
+    <!--录像-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginTop="2px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight">
+
+        <TextView
+            android:id="@+id/tv_lxtips"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="录像"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size" />
+
+        <RelativeLayout
+            android:id="@+id/rl_veido"
+            android:layout_width="@dimen/jyhpj_gqj_pic_width"
+            android:layout_height="@dimen/jyhpj_gqj_pic_height"
+            android:layout_marginLeft="@dimen/jyhpj_gqj_left_margin"
+            android:visibility="invisible"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_yellow_unfinish" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32px"
+                android:layout_alignBottom="@+id/img"
+                android:layout_alignLeft="@+id/img"
+                android:background="#80DDE9E7"
+                android:padding="2px" >
+
+                <ImageView
+                    android:layout_width="28px"
+                    android:layout_height="26px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_luxiang" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="25px"
+                    android:textColor="@color/white_text" />
+            </LinearLayout>
+
+        </RelativeLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/img_lx"
+            android:layout_marginLeft="@dimen/app_main_padding"
+            android:layout_width="@dimen/icon"
+            android:layout_height="@dimen/icon"
+            android:src="@mipmap/icon_record_vedio"
+            />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="arm64-v8a,armeabi-v7a,armeabi"
+    api-level="22"
+    density="xhdpi"
+    format="8"
+    plugin-version="2.2.2"
+    timestamp="17557419186081"
+    token="-8243227805559066780"
+    verifier="COLD_SWAP_REQUESTED" >
+
+    <task
+        name="javac"
+        duration="22748" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="132" />
+    <task
+        name="verifier"
+        duration="40" />
+
+    <artifact
+        location="D:\XunJian\adaptionsjjc\build\intermediates\transforms\dex\debug\folders\1000\5\slice_6\classes.dex"
+        type="DEX" />
+
+    <build
+        timestamp="11499262816244"
+        verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="E:\android_release_xunjian\APK\boohee_v2.0.9_2016-11-24_---aa20edee-e7a6-4fdb-ac3f-ec3bd23f8cee.apk"
+            type="MAIN" />
+    </build>
+    <build
+        timestamp="17557419186081"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="D:\XunJian\adaptionsjjc\build\intermediates\transforms\dex\debug\folders\1000\5\slice_6\classes.dex"
+            type="DEX" />
+    </build>
+
+</instant-run>

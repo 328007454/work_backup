@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_item_background_selector"
+        android:minHeight="@dimen/list_item_minheight_remind" >
+
+        <ImageView
+            android:id="@+id/iv_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_task_unfinish"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/global_padding_top_bottom"
+            android:layout_marginLeft="@dimen/global_padding_half_left_right"
+            android:layout_marginRight="@dimen/global_padding_left_right"
+            android:layout_marginTop="@dimen/global_padding_top_bottom" >
+
+            <TextView
+                android:id="@+id/tv_task_simple_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/comprehensive_task_name_tips_background"
+                android:gravity="center"
+                android:minHeight="@dimen/task_simple_name_minheight"
+                android:minWidth="@dimen/task_simple_name_minheight"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/global_text_size" />
+
+            <ImageView
+                android:id="@+id/iv_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/global_padding_left_right"
+                android:contentDescription="@null" />
+
+            <LinearLayout
+                android:id="@+id/ll_middle_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@id/iv_upload"
+                android:layout_toRightOf="@id/tv_task_simple_name"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:text="220kv范坝变电站"
+                        android:id="@+id/tv_task_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/global_text_color"
+                        android:textSize="@dimen/global_text_size" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_inspection_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/global_gray_text_color"
+                    android:textSize="@dimen/inspection_time_text_size" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_gray_task"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_task_item_background_color"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+</FrameLayout>

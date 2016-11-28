@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/layout_large_height"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <View android:layout_height="2px"
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:background="@color/gray_background_color" />
+        <LinearLayout
+            android:padding="@dimen/paddingLeft"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="检查结果"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/tv_text_size"/>
+
+            <EditText
+                android:id="@+id/et_input"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:hint="请输入"
+                android:gravity="center_vertical|right"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+</LinearLayout>

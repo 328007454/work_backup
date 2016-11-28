@@ -1,0 +1,28 @@
+[
+    {
+        "outputFile": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v19\\values-v19.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 6,
+                    "endColumn": 12,
+                    "endOffset": 268
+                },
+                "from": {
+                    "file": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\values-v19\\styles.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 90,
+                        "endLine": 7,
+                        "endColumn": 12,
+                        "endOffset": 307
+                    }
+                }
+            }
+        ]
+    }
+]

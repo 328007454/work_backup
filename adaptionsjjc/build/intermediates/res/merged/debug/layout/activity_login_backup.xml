@@ -1,0 +1,245 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_bg_color"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:keepScreenOn="true"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:padding="@dimen/app_main_padding" >
+
+        <!-- logo -->
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_logo" />
+
+        <!-- key -->
+
+        <ImageButton
+            android:id="@+id/ib_change_loginway"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_face"
+            android:visibility="gone"/>
+
+        <!-- app名称 -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sys_name_text_size"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp" >
+
+        <!-- 遮挡 -->
+        <!-- 登录框 -->
+
+        <LinearLayout
+            android:id="@+id/ll_login_edit_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/app_main_padding"
+            android:layout_marginRight="@dimen/app_main_padding"
+            android:layout_marginTop="@dimen/app_main_padding"
+            android:background="@drawable/login_box_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/app_main_padding"
+            android:visibility="visible" >
+
+            <!-- 用户名 -->
+
+            <EditText
+                android:id="@+id/et_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/ic_user_ico"
+                android:drawablePadding="@dimen/et_drawable_padding_left"
+                android:hint="@string/et_user_hint_str"
+                android:inputType="text"
+                android:minHeight="@dimen/et_user_edit_minheight"
+                android:textColorHint="@color/et_hint_color"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/main_hr_bg_margin"
+                android:layout_marginTop="@dimen/main_hr_bg_margin"
+                android:background="@color/main_hr_bg_color" />
+
+            <!-- 密码 -->
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/ic_pwd_ico"
+                android:drawablePadding="@dimen/et_drawable_padding_left"
+                android:hint="@string/et_password_hint_str"
+                android:inputType="textPassword"
+                android:minHeight="@dimen/et_user_edit_minheight"
+                android:textColorHint="@color/et_hint_color"
+                android:textSize="@dimen/et_hint_text_size" />
+        </LinearLayout>
+
+        <!-- 添加 -->
+
+        <Button
+            android:id="@+id/b_add_people_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_login_minheight"
+            android:layout_below="@id/ll_login_edit_box"
+            android:layout_marginLeft="@dimen/app_main_padding"
+            android:layout_marginRight="@dimen/app_main_padding"
+            android:layout_marginTop="@dimen/btn_add_user_margin"
+            android:background="@drawable/btn_add_user_bg_selector"
+            android:text="@string/btn_add_user_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/btn_text_size"
+            android:visibility="visible" />
+
+        <!-- 正在扫描（waiting_area_str） 和巡检人员（inspectorattendant_text_str） -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_view_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/main_view_margintop"
+            android:background="@color/app_main_bg_color" />
+
+        <TextView
+            android:id="@+id/msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ic_waiting_area"
+            android:gravity="center_horizontal"
+            android:minHeight="@dimen/waiting_area_minheight"
+            android:text="@string/inspectorattendant_text_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/waiting_area_text_size" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/app_main_padding" >
+
+            <!-- 登录人员缩略图 -->
+
+            <LinearLayout
+                android:id="@+id/ll_portrait_thum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/app_main_padding" >
+
+                <RelativeLayout
+                    android:layout_width="110dp"
+                    android:layout_height="110dp" >
+
+                    <ImageView
+                        android:id="@+id/user1_img"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/portrait_thum_bg"
+                        android:contentDescription="@null"
+                        android:padding="@dimen/portrait_thum_padding"
+                        android:src="@mipmap/ic_portrait_thum" />
+
+                    <ImageButton
+                        android:id="@+id/ib_delete1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:contentDescription="@null"
+                        android:src="@mipmap/icon_delete"
+                         android:visibility="invisible" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="110dp"
+                    android:layout_height="110dp" >
+
+                    <ImageView
+                        android:id="@+id/user2_img"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/portrait_thum_bg"
+                        android:contentDescription="@null"
+                        android:padding="@dimen/portrait_thum_padding"
+                        android:src="@mipmap/ic_portrait_thum" />
+
+                    <ImageButton
+                        android:id="@+id/ib_delete2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:contentDescription="@null"
+                        android:src="@mipmap/icon_delete"
+                        android:visibility="invisible"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- 登录按钮 -->
+
+            <Button
+                android:id="@+id/b_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_login_minheight"
+                android:background="@drawable/btn_login_bg_selector"
+                android:text="@string/login_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_text_size" />
+        </LinearLayout>
+
+        <!-- 版权 -->
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/global_padding_top_bottom"
+            android:layout_marginTop="@dimen/global_padding_top_bottom"
+            android:gravity="center"
+            android:textColor="@color/sys_copyrights_text_color"
+            android:textSize="@dimen/sys_copyrights_text_size" />
+    </RelativeLayout>
+
+</LinearLayout>

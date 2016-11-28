@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/2002/xmlspec/dtd/2.10/xmlspec.dtd">
+<project basedir="." default="copy" name="sjjc-android" xmlns:sonar="antlib:org.sonar.ant">
+	<property name="download.dir" value="D:\apache-tomcat-7"/>
+       
+    <!-- copy -->
+  	<target name="copy" description="copy到指定目录以供下载">
+        <echo message="copy到${download.dir}"/>
+        <copy includeemptydirs="false" todir="${download.dir}">
+            <fileset dir="${basedir}/build/outputs/apk">
+                <include name="*.apk"/>
+            </fileset>
+        </copy>
+    </target> 
+</project>

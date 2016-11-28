@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+                                                        
+
+    
+
+                                           
+
+                 
+                       
+                                                    
+
+                 
+                         
+                                                
+
+                 
+                          
+                                       
+           
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" android:tag="layout/activity_hwcw_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ScrollView
+            android:id="@+id/ll_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="false"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_height"
+                    android:background="@color/layout_color_gray"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2px">
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20px"
+                            android:gravity="center"
+                            android:text="温度（℃）"
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <EditText
+                            android:id="@+id/et_temp"
+                            style="@style/NewHeatPointEditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="numberSigned|numberDecimal"
+                            android:paddingRight="20px"
+                            android:tag="binding_1"               />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2px"
+                        android:layout_weight="1"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/new_drawable_half_padding"
+                            android:text="湿度（%RH）"
+
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <EditText
+                            android:id="@+id/et_humidity"
+                            style="@style/NewHeatPointEditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="numberDecimal"
+                            android:paddingRight="20px"
+                            android:tag="binding_2"            />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <com.cnksi.sjjc.View.WeatherView
+                    android:id="@+id/weatherView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_height"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="2px"
+                    android:paddingLeft="20px"
+                    app:icon_margin="20px"
+                    app:icon_src="@mipmap/ic_arrow_right"
+                    app:icon_width="60px"
+                    app:label="@string/weather"
+                    app:label_size="@dimen/tv_text_size"
+                    app:selector="@array/weather" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="#EFEFEF" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="40px"
+                    android:background="@color/layout_color_gray" />
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/layout_color_gray"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tv_add_new_protect"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/label_height"
+                        android:background="@color/green_color"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/layout_padding_left"
+                        android:text="新增发热点"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/tv_text_size" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height"
+                        android:background="@color/white"
+                        android:paddingLeft="20px"
+                        android:paddingRight="20px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="发热设备"
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <TextView
+                            android:id="@+id/tv_heat_devices"
+                            style="@style/NewTextViewStyle"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <ImageView
+                            android:id="@+id/select_device"
+                            android:layout_width="60px"
+                            android:layout_height="60px"
+                            android:layout_gravity="center_vertical"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/icon_arrow" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height"
+                        android:layout_marginTop="2px"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20px"
+                        android:paddingRight="20px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="发热部位"
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <EditText
+                            android:id="@+id/et_input_heat_part"
+                            style="@style/NewHeatPointEditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                    <!-- 发热部位温度 -->
+
+                    <LinearLayout
+                        android:id="@+id/ll_heat_part1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height"
+                        android:layout_marginTop="2px"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20px"
+                        android:paddingRight="20px"
+                        android:tag="binding_3"                               >
+
+                        <TextView
+                            android:id="@+id/tv_show_heat_part_tempt1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:tag="binding_4"                                 
+
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <EditText
+                            android:id="@+id/et_input_heat_part_tempt1"
+                            style="@style/NewHeatPointEditTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:inputType="numberDecimal" />
+
+                        <ImageView
+                            android:id="@+id/iv_show_temp1_picture"
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:layout_centerVertical="true" />
+
+                        <ImageView
+                            android:id="@+id/ibtn_temp1"
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10px"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@null"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/icon_cw" />
+                    </LinearLayout>
+                    <!-- 发热部位温度 -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height"
+                        android:layout_marginTop="2px"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20px"
+                        android:paddingRight="20px">
+
+                        <TextView
+                            android:id="@+id/tv_show_heat_part_tempt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:tag="binding_5"                                 
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <EditText
+                            android:id="@+id/et_input_heat_part_tempt"
+                            style="@style/NewHeatPointEditTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:inputType="numberDecimal" />
+
+                        <ImageView
+                            android:id="@+id/iv_show_temp_picture"
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:layout_centerVertical="true"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/ibtn_temp"
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10px"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@null"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/icon_cw" />
+                    </LinearLayout>
+
+                    <!-- 环境参照体温度 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height"
+                        android:layout_marginTop="2px"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20px"
+                        android:paddingRight="20px">
+
+                        <TextView
+                            android:id="@+id/tv_show_environ_temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="环境参照体温度（℃）"
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <EditText
+                            android:id="@+id/et_input_environ_temp"
+                            style="@style/NewHeatPointEditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="numberDecimal" />
+                    </LinearLayout>
+
+                    <!-- 温差 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2px"
+
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="@dimen/layout_height"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="20px"
+                            android:paddingRight="20px">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="温差（K）"
+                                android:textColor="@color/global_text_color"
+                                android:textSize="@dimen/tv_text_size" />
+
+                            <TextView
+                                android:id="@+id/tv_environ_temp_dif"
+                                style="@style/NewTextViewStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical|right" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="@dimen/layout_height"
+                            android:layout_marginLeft="2px"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="20px"
+                            android:paddingRight="20px">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="相对温差（%）"
+                                android:textColor="@color/global_text_color"
+                                android:textSize="@dimen/tv_text_size" />
+
+                            <TextView
+                                android:id="@+id/tv_relative_environ_temp"
+                                style="@style/NewTextViewStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical|right" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <!-- 电流 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2px"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="@dimen/layout_height"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="20px"
+                            android:paddingRight="20px">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="负荷电流（A）"
+                                android:textColor="@color/global_text_color"
+                                android:textSize="@dimen/tv_text_size" />
+
+                            <EditText
+                                android:id="@+id/et_load_electric"
+                                style="@style/NewHeatPointEditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="numberDecimal" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="@dimen/layout_height"
+                            android:layout_marginLeft="2px"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="20px"
+                            android:paddingRight="20px">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="额定电流（A）/\n额定电压（kV）"
+                                android:textColor="@color/global_text_color"
+                                android:textSize="@dimen/tv_text_size" />
+
+                            <EditText
+                                android:id="@+id/et_rated_electric"
+                                style="@style/NewHeatPointEditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="numberDecimal" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- 风速 -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2px"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="@dimen/layout_height"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="20px"
+                            android:paddingRight="20px">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="测试仪器"
+                                android:textColor="@color/global_text_color"
+                                android:textSize="@dimen/tv_text_size" />
+
+                            <EditText
+                                android:id="@+id/et_test_instrument"
+                                style="@style/NewHeatPointEditTextStyle"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="@dimen/layout_height"
+                            android:layout_marginLeft="2px"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="20px"
+                            android:paddingRight="20px">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="风速（m/s）"
+                                android:textColor="@color/global_text_color"
+                                android:textSize="@dimen/tv_text_size" />
+
+                            <EditText
+                                android:id="@+id/tv_wind_speed"
+                                style="@style/NewHeatPointEditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="numberDecimal" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- 可见光 -->
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height"
+                        android:layout_marginTop="2px"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20px"
+                        android:paddingRight="20px">
+
+                        <TextView
+                            android:id="@+id/tv_pics"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:text="可见光图"
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <ImageView
+                            android:id="@+id/iv_show_take_picture"
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/ibtn_take_picture" />
+
+                        <TextView
+                            android:id="@+id/tv_pic_num"
+                            android:layout_width="@dimen/new_text_width_and_height"
+                            android:layout_height="@dimen/new_text_width_and_height"
+                            android:layout_alignRight="@id/iv_show_take_picture"
+                            android:layout_alignTop="@id/iv_show_take_picture"
+                            android:background="@drawable/text_background_color"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/new_text_picture_size"
+                            android:visibility="invisible" />
+
+                        <ImageView
+                            android:id="@+id/ibtn_take_picture"
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="50px"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@null"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/camera_button_background" />
+                    </RelativeLayout>
+                    <!-- 备注 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layout_height"
+                        android:layout_marginTop="2px"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20px"
+                        android:paddingRight="20px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="备注"
+                            android:textColor="@color/global_text_color"
+                            android:textSize="@dimen/tv_text_size" />
+
+                        <EditText
+                            android:id="@+id/tv_remark_infor"
+                            style="@style/NewHeatPointEditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2px"
+                        android:background="@color/layout_color_gray"
+                        android:orientation="horizontal"
+                        android:padding="20px">
+
+                        <Button
+                            android:id="@+id/btn_cancel"
+                            style="@style/NewButtonStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="100px"
+                            android:layout_marginRight="@dimen/global_padding_half_left_right"
+                            android:layout_weight="1"
+                            android:background="@drawable/red_button_background_selector"
+                            android:text="@string/dialog_cancel_text_str" />
+
+                        <Button
+                            android:id="@+id/btn_confirm"
+                            style="@style/NewButtonStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="100px"
+                            android:layout_marginLeft="@dimen/global_padding_half_left_right"
+                            android:layout_weight="1"
+                            android:background="@drawable/grass_green_button_background_selector"
+                            android:text="@string/confirm_str" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_heat_record_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/label_height"
+                    android:background="@color/green_color"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20px"
+                    android:text="发热记录"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/tv_text_size" />
+
+                <com.cnksi.sjjc.View.MyScrollVListView
+                    android:id="@+id/lv_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="600px"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:divider="@color/line_color"
+                    android:dividerHeight="2px"
+                    android:listSelector="@android:color/transparent" />
+
+                <LinearLayout
+                    android:id="@+id/ll_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/new_button_layout_height"
+                    android:layout_gravity="bottom"
+                    android:background="#EFEFEF"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20px"
+                    android:paddingRight="20px">
+
+                    <Button
+                        android:id="@+id/btn_confirm_save"
+                        style="@style/NewButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="100px"
+                        android:layout_marginLeft="20px"
+                        android:layout_weight="1"
+                        android:background="@drawable/grass_green_button_background_selector"
+                        android:text="@string/complete_test_text" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+         

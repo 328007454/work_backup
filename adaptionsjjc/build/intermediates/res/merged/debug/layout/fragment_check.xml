@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/label_height"
+        android:layout_marginTop="30px"
+        android:background="@color/gray_background_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:text="检查方式"
+        android:textColor="@color/wt_green_color"
+        android:textSize="@dimen/tv_text_size" />
+
+    <TextView
+        android:id="@+id/tv_jcfs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/marg"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/paddingLeft"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:text="test测试"
+        android:textColor="@color/dark_text"
+        android:textSize="@dimen/tv_text_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/label_height"
+        android:background="@color/gray_background_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:text="检查结果"
+        android:textColor="@color/wt_green_color"
+        android:textSize="@dimen/tv_text_size" />
+
+    <LinearLayout
+        android:id="@+id/ll_jcjg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/paddingLeft">
+
+            <TextView
+                android:id="@+id/tv_pics"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="检查结果"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/tv_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_yes"
+                    style="@style/RadioButtonBaseStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="80px"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_button_selector"
+                    android:text="是"
+                    android:textSize="@dimen/tv_text_size" />
+
+                <RadioButton
+                    android:id="@+id/rb_no"
+                    style="@style/RadioButtonBaseStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="40px"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_button_selector"
+                    android:text="否"
+                    android:textSize="@dimen/tv_text_size" />
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/label_height"
+        android:background="@color/gray_background_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:text="扣分原则"
+        android:textColor="@color/wt_green_color"
+        android:textSize="@dimen/tv_text_size" />
+
+    <TextView
+        android:id="@+id/tv_kfyz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/marg"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/paddingLeft"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:text="test测试"
+        android:textColor="@color/dark_text"
+        android:textSize="@dimen/tv_text_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/label_height"
+        android:background="@color/gray_background_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:text="扣分"
+        android:textColor="@color/wt_green_color"
+        android:textSize="@dimen/tv_text_size" />
+
+    <EditText
+        android:id="@+id/et_kf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/marg"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:hint="请输入扣分值"
+        android:inputType="numberDecimal"
+        android:padding="@dimen/paddingLeft"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:textColor="@color/dark_text"
+        android:textSize="@dimen/tv_text_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/label_height"
+        android:background="@color/gray_background_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:text="备注"
+        android:textColor="@color/wt_green_color"
+        android:textSize="@dimen/tv_text_size" />
+
+    <EditText
+        android:id="@+id/et_bz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/marg"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:hint="请输入备注"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/paddingLeft"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:textColor="@color/dark_text"
+        android:textSize="@dimen/tv_text_size" />
+</LinearLayout>
+</ScrollView>

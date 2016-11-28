@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_green_title_background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_strip_minheight"
+        android:gravity="center"
+        android:text="@string/tips_str"
+        android:textSize="@dimen/tv_text_size" />
+
+    <TextView
+        android:id="@+id/tv_jcfs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_top_line_background"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/global_padding_top_bottom"
+        android:paddingLeft="@dimen/global_padding_left_right"
+        android:paddingRight="@dimen/global_padding_left_right"
+        android:paddingTop="@dimen/global_padding_top_bottom"
+        android:textColor="@color/tools_name_text_selector"
+        android:textSize="@dimen/swipe_menu_text_size"
+        android:text="检查方式"/>
+    <TextView
+        android:id="@+id/tv_jcfsxx"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="left|center_vertical"
+        android:lineSpacingExtra="@dimen/global_text_line_spacing"
+        android:minHeight="@dimen/tab_strip_minheight"
+        android:paddingBottom="@dimen/global_padding_top_bottom"
+        android:paddingLeft="@dimen/global_padding_left_right"
+        android:paddingRight="@dimen/global_padding_left_right"
+        android:paddingTop="@dimen/global_padding_top_bottom"
+        android:textColor="@color/deep_grey"
+        android:textSize="@dimen/global_text_size" />
+
+
+
+    <TextView
+        android:id="@+id/tv_ysbz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_top_line_background"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/global_padding_top_bottom"
+        android:paddingLeft="@dimen/global_padding_left_right"
+        android:paddingRight="@dimen/global_padding_left_right"
+        android:paddingTop="@dimen/global_padding_top_bottom"
+        android:textColor="@color/tools_name_text_selector"
+        android:textSize="@dimen/swipe_menu_text_size"
+        android:text="验收标准"
+        />
+
+    <TextView
+        android:id="@+id/tv_ysbzxx"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="left|center_vertical"
+        android:lineSpacingExtra="@dimen/global_text_line_spacing"
+        android:minHeight="@dimen/tab_strip_minheight"
+        android:paddingBottom="@dimen/global_padding_top_bottom"
+        android:paddingLeft="@dimen/global_padding_left_right"
+        android:paddingRight="@dimen/global_padding_left_right"
+        android:paddingTop="@dimen/global_padding_top_bottom"
+        android:textColor="@color/deep_grey"
+        android:textSize="@dimen/global_text_size" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/global_padding_top_bottom"
+        android:layout_marginTop="@dimen/global_padding_top_bottom"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_confirm"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/global_padding_left_right"
+            android:layout_marginRight="@dimen/global_padding_left_right"
+            android:layout_weight="1"
+            android:background="@drawable/grass_green_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/button_minheight"
+            android:text="确定"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/tv_text_size" />
+    </LinearLayout>
+
+</LinearLayout>

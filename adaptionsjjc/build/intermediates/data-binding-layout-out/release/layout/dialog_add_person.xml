@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+                                                                   
+
+    
+           
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="810px"
+        android:background="@drawable/diaglog_shape"
+        android:orientation="vertical" android:tag="layout/dialog_add_person_0" xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="115px"
+            android:background="@drawable/textview_background_show"
+            android:gravity="center"
+            android:paddingLeft="@dimen/global_padding_half_left_right"
+            android:paddingRight="@dimen/global_padding_half_left_right"
+            android:text="添加人员"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/lv_people"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130px"
+                android:layout_marginBottom="60px"
+                android:layout_marginLeft="45px"
+                android:layout_marginRight="45px"
+                android:layout_marginTop="60px"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_name"
+                    style="@style/NewHeatPointEditTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:hint="请输入人员姓名"
+                    android:paddingLeft="33px"
+                    android:paddingRight="20px"/>
+
+                <TextView
+                    android:id="@+id/tv_new_person"
+                    android:layout_width="190px"
+                    android:layout_height="70px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="60px"
+                    android:background="@drawable/green_button_background_selector"
+                    android:gravity="center"
+                    android:text="新增"
+                    android:textColor="@color/white_text"
+                    android:textSize="@dimen/global_text_small_size"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+         

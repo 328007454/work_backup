@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:bottom="@dimen/five_oval_size"
+        android:left="@dimen/five_oval_size"
+        android:right="@dimen/five_oval_size"
+        android:top="@dimen/five_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/comprehensive_inspection_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/six_oval_size"
+        android:left="@dimen/six_oval_size"
+        android:right="@dimen/six_oval_size"
+        android:top="@dimen/six_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@android:color/white" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/seven_oval_size"
+        android:left="@dimen/seven_oval_size"
+        android:right="@dimen/seven_oval_size"
+        android:top="@dimen/seven_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/comprehensive_inspection_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/seven_oval_size"
+        android:left="@dimen/seven_oval_size"
+        android:right="@dimen/seven_oval_size"
+        android:top="@dimen/seven_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/comprehensive_inspection_color" >
+            </solid>
+        </shape>
+    </item>
+
+</layer-list>

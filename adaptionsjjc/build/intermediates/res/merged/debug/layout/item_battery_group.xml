@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Button
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/battery"
+    android:layout_width="match_parent"
+    android:layout_height="400px"
+    android:background="@drawable/battery_group_item_background"
+    android:gravity="center"
+    android:text="第一组蓄电池"
+    android:paddingLeft="10px"
+    android:paddingRight="10px"
+    android:textColor="@color/battery_tab_color"
+    android:textSize="44px" />
+
+

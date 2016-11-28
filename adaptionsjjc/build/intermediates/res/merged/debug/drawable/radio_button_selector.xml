@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true">
+        <layer-list>
+            <item android:bottom="@dimen/one_oval_size" android:left="@dimen/one_oval_size" android:right="@dimen/one_oval_size" android:top="@dimen/one_oval_size">
+                <shape android:shape="oval">
+                    <solid android:color="@color/radio_text_checked_color"></solid>
+                </shape>
+            </item>
+            <item android:bottom="@dimen/eight_oval_size" android:left="@dimen/eight_oval_size" android:right="@dimen/eight_oval_size" android:top="@dimen/eight_oval_size">
+                <shape android:shape="oval">
+                    <solid android:color="@color/radio_text_checked_color"></solid>
+                </shape>
+            </item>
+            <item android:bottom="@dimen/nine_oval_size" android:left="@dimen/nine_oval_size" android:right="@dimen/nine_oval_size" android:top="@dimen/nine_oval_size">
+                <shape android:shape="oval">
+                    <solid android:color="@android:color/white"></solid>
+                </shape>
+            </item>
+            <item android:bottom="@dimen/twelve_oval_size" android:left="@dimen/twelve_oval_size" android:right="@dimen/twelve_oval_size" android:top="@dimen/twelve_oval_size">
+                <shape android:shape="oval">
+                    <solid android:color="@color/radio_text_checked_color"></solid>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_checked="false">
+        <layer-list>
+            <item android:bottom="@dimen/one_oval_size" android:left="@dimen/one_oval_size" android:right="@dimen/one_oval_size" android:top="@dimen/one_oval_size">
+                <shape android:shape="oval">
+                    <solid android:color="@color/radio_text_un_check_color"></solid>
+                </shape>
+            </item>
+            <item android:bottom="@dimen/eight_oval_size" android:left="@dimen/eight_oval_size" android:right="@dimen/eight_oval_size" android:top="@dimen/eight_oval_size">
+                <shape android:shape="oval">
+                    <solid android:color="@color/radio_text_un_check_color"></solid>
+                </shape>
+            </item>
+            <item android:bottom="@dimen/nine_oval_size" android:left="@dimen/nine_oval_size" android:right="@dimen/nine_oval_size" android:top="@dimen/nine_oval_size">
+                <shape android:shape="oval">
+                    <solid android:color="@android:color/white"></solid>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

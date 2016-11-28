@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <shape android:shape="oval" >
+            <solid android:color="@color/app_base_green_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/radio_button_circle_radius_one"
+        android:left="@dimen/radio_button_circle_radius_one"
+        android:right="@dimen/radio_button_circle_radius_one"
+        android:top="@dimen/radio_button_circle_radius_one">
+        <shape android:shape="oval" >
+            <solid android:color="@android:color/white" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/radio_button_circle_radius_two"
+        android:left="@dimen/radio_button_circle_radius_two"
+        android:right="@dimen/radio_button_circle_radius_two"
+        android:top="@dimen/radio_button_circle_radius_two">
+        <shape android:shape="oval" >
+            <solid android:color="@color/app_base_green_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/radio_button_circle_radius_three"
+        android:left="@dimen/radio_button_circle_radius_three"
+        android:right="@dimen/radio_button_circle_radius_three"
+        android:top="@dimen/radio_button_circle_radius_three">
+        <shape android:shape="oval" >
+            <solid android:color="@android:color/white" >
+            </solid>
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\ic_notification_app.png",
+        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\mipmap-xhdpi-v4\\ic_notification_app.png"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\ic_add.png",
+        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\mipmap-xhdpi-v4\\ic_add.png"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\scan_mask.png",
+        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\mipmap-xhdpi-v4\\scan_mask.png"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\scan_line.png",
+        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\mipmap-xhdpi-v4\\scan_line.png"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\ic_tips_background.9.png",
+        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\mipmap-xhdpi-v4\\ic_tips_background.9.png"
+    },
+    {
+        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\ic_launcher.png",
+        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\mipmap-xhdpi-v4\\ic_launcher.png"
+    }
+]
