@@ -106,7 +106,7 @@
                 android:drawablePadding="@dimen/et_drawable_padding_left"
                 android:hint="@string/et_user_hint_str"
                 android:inputType="text"
-                android:text="00030493"
+                android:text=""
                 android:minHeight="@dimen/et_user_edit_minheight"
                 android:textColorHint="@color/et_hint_color"
                 android:textSize="@dimen/et_hint_text_size" />
@@ -130,7 +130,7 @@
                 android:hint="@string/et_password_hint_str"
                 android:inputType="textPassword"
                 android:minHeight="@dimen/et_user_edit_minheight"
-                android:text="nx123456*"
+                android:text=""
                 android:textColorHint="@color/et_hint_color"
                 android:textSize="@dimen/et_hint_text_size" />
         </LinearLayout>

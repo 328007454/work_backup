@@ -1,998 +1,998 @@
 [
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\linearlayout_rectangle_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\linearlayout_rectangle_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radiobutton_text_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\radiobutton_text_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\rules_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\rules_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_dark.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_item_background_holo_dark.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_edit_text_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_edit_text_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\regular_record_defect_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\regular_record_defect_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\danger_point_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\danger_point_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\seekbar_horizontal.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\seekbar_horizontal.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_vector_test.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\record_audio_dialog_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\record_audio_dialog_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_seek_bkg.9.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\ic_seek_bkg.9.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_tile_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\notification_tile_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\particular_device_item_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\particular_device_item_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\email_register_bacground_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\email_register_bacground_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_yellow_border_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_yellow_border_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\add_task_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\add_task_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_bottom_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\menudialog_bottom_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\exclusive_menu_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\exclusive_menu_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_right_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\dialog_right_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_day_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_day_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\light_green_halfcorner_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\light_green_halfcorner_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\liaght_blue_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\liaght_blue_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_maintain.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_maintain.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fill_grey.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\fill_grey.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\return_main_menu_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\return_main_menu_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\inspection_standard_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\inspection_standard_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\text_bantouming_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\text_bantouming_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\notification_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_seekbar_track_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\tint_blue_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\tint_blue_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_orange_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\circle_orange_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\txt_back_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\txt_back_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\sync_upload_textview.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\drawable\\sync_upload_textview.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\boder_line_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\boder_line_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_add_user_bg_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\btn_add_user_bg_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_textfield_search_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_textfield_search_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\copy_all_value_item_selected_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\copy_all_value_item_selected_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\camera_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\camera_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\eliminate_sign_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\eliminate_sign_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_go_search_api_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_go_search_api_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\clock_container_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\clock_container_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\type_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\type_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\thumb_bar.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\thumb_bar.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\history_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\history_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\keyboard_words_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\keyboard_words_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_syncdata.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_syncdata.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\gray_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\copy_temperture_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\copy_temperture_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_green_title_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\dialog_green_title_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\keyboard_key_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\keyboard_key_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_defect_green_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_defect_green_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\camera_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\camera_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_yellow_border_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\battery_yellow_border_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_color_horizontal.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\progress_color_horizontal.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\top_bottom_line_gray_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\top_bottom_line_gray_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_sbys.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_sbys.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_dialog_material_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_ab_back_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_ab_back_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_status_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\work_status_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_keyboard_key.9.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\ic_keyboard_key.9.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\clear_mark_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\clear_mark_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_status_daixunke_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\work_status_daixunke_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_search_api_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_search_api_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_voltage_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\battery_voltage_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\bottom_line_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\bottom_line_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\save_mark_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\save_mark_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\pdf_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\pdf_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\main_menu_circle_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\main_menu_circle_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_jyhys.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_jyhys.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_switch.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_switch.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\comprehensive_task_name_tips_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\comprehensive_task_name_tips_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\bottom_line_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\bottom_line_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\pre_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\pre_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\new_product_editing_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\new_product_editing_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_ywyth.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_ywyth.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_gzp.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_gzp.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\green_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_sbxs.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_sbxs.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\text_background_color.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\text_background_color.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fillet_green.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\fillet_green.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_yellow_border_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\battery_yellow_border_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fill_grey.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\fill_grey.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_status_biangengzhong_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\work_status_biangengzhong_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_text_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\circle_text_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\copy_all_value_item_unselected_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\copy_all_value_item_unselected_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\text_bantouming_background_item.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\text_bantouming_background_item.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\design_snackbar_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\drawable\\design_snackbar_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\regular_audio_record_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\regular_audio_record_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\swipe_menu_reference_photo_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\swipe_menu_reference_photo_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\tv_background_yellow.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\tv_background_yellow.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\gray_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\gray_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\add_mark_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\add_mark_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\deep_green_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\deep_green_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_red_border_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\battery_red_border_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\test_step_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\test_step_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_text_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\circle_text_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\green_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\clamp_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\clamp_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_other_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_other_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_radio_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\green_radio_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\regular_position_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\regular_position_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_regular_switch_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_regular_switch_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\message_register_bacground_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\message_register_bacground_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_green_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\battery_green_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_menu_overflow_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_halfcorner_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\green_halfcorner_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\main_menu_unpressed_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\main_menu_unpressed_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_other_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_other_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\design_snackbar_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\drawable\\design_snackbar_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_uploaddone_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\work_uploaddone_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\portrait_thum_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\portrait_thum_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_circle_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\red_circle_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_button_border_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\green_button_border_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\light_green_halfcorner_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\light_green_halfcorner_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_item_background_holo_dark.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_green_title_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\dialog_green_title_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_icon_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\notification_icon_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_green_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_green_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_dark.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_list_selector_holo_dark.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_jyhpj.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_jyhpj.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_green_border_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_green_border_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_tile_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\notification_tile_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_keyboard_key_hover.9.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\ic_keyboard_key_hover.9.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\txt_back_svg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\txt_back_svg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_text_cursor_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_text_cursor_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_left_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\dialog_left_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_bottom_line_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\gray_bottom_line_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_text_cursor_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_text_cursor_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_edit_text_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_edit_text_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\check_source_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\check_source_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\text_bantouming_background_item.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\text_bantouming_background_item.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\design_fab_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\drawable\\design_fab_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\list_item_gray_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\list_item_gray_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_button_unenabled_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\red_button_unenabled_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_dzhczp.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_dzhczp.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ratingbar_indicator_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\record_audio_anim.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\record_audio_anim.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\remote_video_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\remote_video_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_yellow_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\circle_yellow_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\red_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\sync_download_textview.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\drawable\\sync_download_textview.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\clock_container_unsync_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\clock_container_unsync_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\delete_image_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\delete_image_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg_low.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\notification_bg_low.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ratingbar_small_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_tab_indicator_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_tab_indicator_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_thumb_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_seekbar_thumb_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\progressbar_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\progressbar_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\message_register_bacground_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\message_register_bacground_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\revoke_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\revoke_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_vector_test.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_information_show.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\dialog_information_show.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_clear_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_clear_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\title_tab_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\title_tab_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\revoke_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\revoke_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\loading_dialog_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\loading_dialog_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_maintain.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_maintain.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\record_audio_dialog_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\record_audio_dialog_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\more_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\more_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_exclusive_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_exclusive_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\eliminate_date_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\eliminate_date_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_center_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\menudialog_center_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\core_dialog_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\core_dialog_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_red_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_red_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\top_bottom_line_gray_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\top_bottom_line_gray_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_gps_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_gps_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\seek_bar_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\seek_bar_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_waiting_area.9.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\ic_waiting_area.9.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\return_main_menu_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\return_main_menu_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\copy_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\copy_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\leak_canary_toast_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.squareup.leakcanary\\leakcanary-android\\1.5\\res\\drawable\\leak_canary_toast_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_keyboard_key_hover.9.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\ic_keyboard_key_hover.9.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_sbys.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_sbys.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\orgage_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\orgage_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_list_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_list_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_defect_yellow_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_defect_yellow_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\gray_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\keyboard_bt_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\keyboard_bt_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radius_shape_textview.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\drawable\\radius_shape_textview.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\inspection_standard_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\inspection_standard_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_colored_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_colored_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ratingbar_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_status_daixunke_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\work_status_daixunke_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\swipe_menu_record_defect_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\swipe_menu_record_defect_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_check_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_check_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_ywyth.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_ywyth.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_check.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_check.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\edit_text_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\edit_text_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_green_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_green_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radiobutton_text_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\radiobutton_text_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\keyboard_words_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\keyboard_words_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\regular_record_defect_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\regular_record_defect_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_group_item_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\battery_group_item_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\about_us_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\about_us_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_large.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\progress_large.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_radio_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\save_mark_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\save_mark_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_add_user_bg_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\btn_add_user_bg_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\rb_img_btn_selector_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\rb_img_btn_selector_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_bottom2_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\menudialog_bottom2_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_sbxs.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_sbxs.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_switch_thumb_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\tv_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\tv_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\exclusive_menu_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\exclusive_menu_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_gray_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_gray_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dotted_line_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\dotted_line_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\checkbox_green_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\checkbox_green_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\type_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\type_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fillet_conner.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\fillet_conner.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\history_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\history_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_switch.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_switch.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_bomb_box_bg1.9.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\dialog_bomb_box_bg1.9.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_defect_green_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_defect_green_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_colored_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_colored_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_borderless_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_borderless_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\search_edit_text_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\search_edit_text_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_copyed.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_copyed.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\phone_register_bacground_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\phone_register_bacground_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\regular_take_picture_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\regular_take_picture_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_red_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\circle_red_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\login_box_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\login_box_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_zxxs.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_zxxs.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_down_arrow.9.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\ic_down_arrow.9.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_images_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_images_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\tv_background_yellow.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\tv_background_yellow.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_orange_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\circle_orange_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_keyboard_key.9.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\ic_keyboard_key.9.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_cab_background_top_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_dzhczp.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_dzhczp.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\exit_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\exit_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_light.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_item_background_holo_light.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_switch_thumb_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_orange_border_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_orange_border_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\gray_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\inspection_standard_expand_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\inspection_standard_expand_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_list_selector_holo_light.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\eliminate_work_ticket_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\eliminate_work_ticket_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\main_menu_pressed_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\main_menu_pressed_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_item_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\task_item_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\list_item_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\list_item_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\grass_green_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\grass_green_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\red_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_halfcorner_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\green_halfcorner_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\swipe_menu_reference_standard_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\swipe_menu_reference_standard_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\list_item_gray_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\list_item_gray_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\linearlayout_rectangle_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\linearlayout_rectangle_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\more_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\more_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\title_tab_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\title_tab_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\red_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_top_line_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\gray_top_line_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\email_register_bacground_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\email_register_bacground_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\regular_audio_record_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\regular_audio_record_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\pdf_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\pdf_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_header_pic_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_header_pic_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_color_horizontal.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\progress_color_horizontal.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_defect_orange_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_defect_orange_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_light.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_item_background_holo_light.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\record_audio_anim.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\record_audio_anim.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\swipe_menu_record_defect_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\swipe_menu_record_defect_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\checkbox_green_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\checkbox_green_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_center_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\menudialog_center_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\diaglog_shape.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\diaglog_shape.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\delete_standard_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\delete_standard_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\inspection_standard_no_expand_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\inspection_standard_no_expand_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_voltage_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\battery_voltage_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_button_unenabled_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\red_button_unenabled_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_status_yixuke_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\work_status_yixuke_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_regular_switch_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_regular_switch_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\textview_grass_conner.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\textview_grass_conner.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\deep_green_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\deep_green_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_orange_border_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\battery_orange_border_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\main_menu_unpressed_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\main_menu_unpressed_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\copy_all_value_item_selected_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\copy_all_value_item_selected_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\textview_background_show.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\textview_background_show.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_red_border_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\battery_red_border_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_jyhpj.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_jyhpj.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\textview_background_show.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\textview_background_show.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\inspection_trains_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\inspection_trains_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_group_item_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\battery_group_item_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radiogroup_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\radiogroup_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_regular_maintain_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_regular_maintain_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_seek.9.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\ic_seek.9.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\sync_download_textview.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\drawable\\sync_download_textview.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_regular_maintain_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_regular_maintain_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\register_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\register_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_login_bg_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\btn_login_bg_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\linearlayout_stroke.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\linearlayout_stroke.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\search_edit_text_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\search_edit_text_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_dialog_material_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_orange_border_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_orange_border_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_circle_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\gray_circle_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\rb_list_btn_selector_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\rb_list_btn_selector_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\main_menu_pressed_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\main_menu_pressed_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_bottom2_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\menudialog_bottom2_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_bottom3_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\menudialog_bottom3_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\check_source_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\check_source_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_circle_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\red_circle_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\edit_text_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\edit_text_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\top_bottom_line_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\top_bottom_line_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_orange_border_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\battery_orange_border_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\keyboard_delete_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\keyboard_delete_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\register_content_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\register_content_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_uploaddone_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\work_uploaddone_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_internal_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_cab_background_internal_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\regular_take_picture_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\regular_take_picture_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\clock_container_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\clock_container_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\add_defect_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\drawable\\add_defect_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\grass_green_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\grass_green_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\copy_temperture_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\copy_temperture_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_defect_yellow_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_defect_yellow_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_red_border_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_red_border_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_information_show.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\dialog_information_show.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_down_arrow.9.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\ic_down_arrow.9.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\history_defect_item_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\history_defect_item_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\login_box_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\login_box_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_group_background1.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\battery_group_background1.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_app.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\ic_app.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_yellow_border_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_yellow_border_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\swipe_menu_reference_photo_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\swipe_menu_reference_photo_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_defect_red_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_defect_red_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fillet_conner.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\fillet_conner.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\eliminate_sign_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\eliminate_sign_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\wheel_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_bottom3_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\menudialog_bottom3_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\inspection_trains_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\inspection_trains_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\boder_line_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\boder_line_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_yellow_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\circle_yellow_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\add_defect_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\drawable\\add_defect_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\register_content_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\register_content_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\danger_point_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\danger_point_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\add_task_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\add_task_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\eliminate_work_ticket_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\eliminate_work_ticket_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_top_line_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\gray_top_line_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_red_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\circle_red_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\copy_all_value_item_unselected_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\copy_all_value_item_unselected_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\txt_back_svg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\txt_back_svg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fillet_white.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\fillet_white.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_ab_back_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_ab_back_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\clamp_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\clamp_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_dot_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\red_dot_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_status_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\work_status_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_seek_bkg.9.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\ic_seek_bkg.9.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_login_bg_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\btn_login_bg_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\checkbox_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\checkbox_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_copyed.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_copyed.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\linearlayout_stroke.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\linearlayout_stroke.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_list_selector_holo_light.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_item_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\task_item_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\loading_progress.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\loading_progress.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\portrait_thum_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\portrait_thum_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\checkbox_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\checkbox_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_bomb_box_bg1.9.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\dialog_bomb_box_bg1.9.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_spinner_textfield_background_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_red_border_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_red_border_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_search_api_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_search_api_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\orgage_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\orgage_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_defect_red_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_defect_red_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\keyboard_bt_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\keyboard_bt_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\gray_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\thumb_bar.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\thumb_bar.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_list_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_list_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fillet_white.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\fillet_white.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\circle_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\new_product_editing_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\new_product_editing_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_borderless_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_borderless_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\rules_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\rules_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_group_background1.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\battery_group_background1.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_menu_overflow_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_cab_background_top_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\test_step_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\test_step_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\text_background_color.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\text_background_color.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fragment_record_defect_content_green_title_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\fragment_record_defect_content_green_title_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_voice_search_api_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_defect_orange_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_defect_orange_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_syncdata.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_syncdata.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_zxxs.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_zxxs.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ratingbar_small_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\numberseekbar_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\numberseekbar_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\exit_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\exit_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_val.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\wheel_val.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\liaght_blue_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\liaght_blue_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_confirm_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\dialog_confirm_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\top_bottom_line_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\top_bottom_line_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_radio_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\green_radio_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_top_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\menudialog_top_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\list_item_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\list_item_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\keyboard_delete_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\keyboard_delete_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_cab_background_internal_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\text_bantouming_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\text_bantouming_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\tv_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\tv_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_circle_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\gray_circle_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_thumb_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_seekbar_thumb_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\tint_blue_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\tint_blue_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_seekbar_track_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\clock_container_unsync_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\clock_container_unsync_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\swipe_menu_reference_standard_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\swipe_menu_reference_standard_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_gzp.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_gzp.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\clear_mark_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\clear_mark_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\wheel_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_green_border_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_green_border_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_app.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\ic_app.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\copy_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\copy_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_gps_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\device_gps_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_icon_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\notification_icon_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_exclusive_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_exclusive_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\pre_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\pre_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\register_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\register_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\delete_image_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\delete_image_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\red_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_confirm_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\dialog_confirm_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\delete_standard_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\delete_standard_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\next_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\next_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_status_yixuke_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\work_status_yixuke_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\progressbar_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\progressbar_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_check.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_check.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_waiting_area.9.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\ic_waiting_area.9.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radiogroup_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\radiogroup_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_red_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_red_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_large.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\progress_large.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg_low.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\notification_bg_low.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\numberseekbar_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\numberseekbar_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dotted_line_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\dotted_line_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\rb_img_btn_selector_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\rb_img_btn_selector_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_button_border_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\green_button_border_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fragment_record_defect_content_green_title_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\fragment_record_defect_content_green_title_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\textview_grass_conner.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\textview_grass_conner.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_clear_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_clear_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\main_menu_circle_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\main_menu_circle_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\sync_upload_textview.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\drawable\\sync_upload_textview.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\regular_position_button_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\regular_position_button_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\launcher_jyhys.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\launcher_jyhys.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\green_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_check_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_check_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\notification_bg.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\device_header_pic_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\device_header_pic_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_images_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_images_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\cancel_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\cancel_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\remote_video_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\remote_video_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\gray_bottom_line_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\gray_bottom_line_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\about_us_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\about_us_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_val.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\wheel_val.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\inspection_standard_expand_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\inspection_standard_expand_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\work_status_biangengzhong_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\work_status_biangengzhong_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\txt_back_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\txt_back_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\next_button_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\next_button_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_tab_indicator_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_tab_indicator_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\green_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\green_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_bottom_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\menudialog_bottom_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\eliminate_date_button_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\eliminate_date_button_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\loading_dialog_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\loading_dialog_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\keyboard_key_button_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\keyboard_key_button_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_left_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\dialog_left_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\task_name_tips_day_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\task_name_tips_day_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\leak_canary_toast_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.squareup.leakcanary\\leakcanary-android\\1.5\\res\\drawable\\leak_canary_toast_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\menudialog_top_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\menudialog_top_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\phone_register_bacground_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\phone_register_bacground_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\comprehensive_task_name_tips_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\comprehensive_task_name_tips_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ratingbar_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\seekbar_horizontal.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\seekbar_horizontal.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\cancel_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\cancel_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\history_defect_item_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\history_defect_item_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\seek_bar_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\seek_bar_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_btn_radio_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_button_gray_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\radio_button_gray_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\diaglog_shape.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\diaglog_shape.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\core_dialog_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\drawable\\core_dialog_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\design_fab_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\drawable\\design_fab_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_seek.9.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\ic_seek.9.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\circle_button_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\circle_button_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_list_selector_holo_dark.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_right_button_background_selector.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\dialog_right_button_background_selector.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\add_mark_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\add_mark_background_selector.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\loading_progress.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\drawable\\loading_progress.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_go_search_api_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_ic_go_search_api_material.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\particular_device_item_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\particular_device_item_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\red_dot_background.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\red_dot_background.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\fillet_green.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\fillet_green.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\rb_list_btn_selector_bg.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\rb_list_btn_selector_bg.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\inspection_standard_no_expand_background.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\drawable\\inspection_standard_no_expand_background.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\radius_shape_textview.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.cnksi\\ksynclib\\3.0.12\\res\\drawable\\radius_shape_textview.xml"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_textfield_search_material.xml",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\drawable\\abc_textfield_search_material.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\drawable\\battery_green_background_selector.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\drawable\\battery_green_background_selector.xml"
     }
 ]

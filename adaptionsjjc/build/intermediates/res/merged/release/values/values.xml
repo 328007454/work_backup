@@ -1068,6 +1068,7 @@
     <dimen name="new_edit_text_minwidth">200px</dimen>
     <dimen name="new_global_padding_left_right">24px</dimen>
     <dimen name="new_global_text_size">36px</dimen>
+    <dimen name="new_global_text_size_1">12sp</dimen>
     <dimen name="new_image_margintop">240px</dimen>
     <dimen name="new_layout_title_height">100px</dimen>
     <dimen name="new_linear_data_information">40px</dimen>

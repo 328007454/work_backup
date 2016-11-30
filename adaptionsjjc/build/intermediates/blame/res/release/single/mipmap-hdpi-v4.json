@@ -1,14 +1,14 @@
 [
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi-v4\\ic_tips_background.9.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\mipmap-hdpi-v4\\ic_tips_background.9.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi-v4\\icon_map.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\mipmap-hdpi-v4\\icon_map.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi-v4\\icon_map.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\mipmap-hdpi-v4\\icon_map.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi-v4\\ic_clear.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\mipmap-hdpi-v4\\ic_clear.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi-v4\\ic_clear.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\exploded-aar\\XunJian\\cnksicore\\unspecified\\res\\mipmap-hdpi-v4\\ic_clear.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi-v4\\ic_tips_background.9.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\mipmap-hdpi-v4\\ic_tips_background.9.png"
     }
 ]

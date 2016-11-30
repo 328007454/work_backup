@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/jzl_title_container"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:background="@color/special_tips_background_color">
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/jzl_title_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/special_tips_background_color"
+    android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="40px"
         android:id="@+id/jzl_title"
         android:layout_width="match_parent"
         android:layout_height="95px"
+        android:layout_marginTop="40px"
         android:background="@color/text_background"
         android:gravity="center_vertical|left"
         android:paddingLeft="20px"
         android:text="基本信息"
         android:textColor="@color/radio_text_checked_color"
-        android:textSize="@dimen/new_global_text_size"/>
+        android:textSize="@dimen/new_global_text_size" />
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/ll_bcds_container"
         android:layout_width="match_parent"
         android:layout_height="160px"
         android:background="@color/white"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <TextView
             android:id="@+id/copy_part_one"
-            android:paddingLeft="20px"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="调整后档位"
             android:gravity="center_vertical"
+            android:paddingLeft="20px"
+            android:text="调整后档位"
             android:textColor="@color/global_text_color"
-            android:textSize="@dimen/global_text_size"/>
+            android:textSize="@dimen/global_text_size_1" />
 
 
         <EditText
@@ -46,10 +45,10 @@
             android:focusable="true"
             android:inputType="numberSigned|numberDecimal"
             android:paddingRight="30px"
-            android:textSize="@dimen/global_text_size"
-            android:visibility="visible"/>
+            android:textSize="@dimen/global_text_size_1"
+            android:visibility="visible" />
 
-    </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 
     <View
         android:id="@+id/view_line"
@@ -57,25 +56,25 @@
         android:layout_height="2px"
         android:layout_below="@id/ll_container"
         android:background="@color/gray_background_color"
-        android:visibility="visible"/>
+        android:visibility="visible" />
+
     <LinearLayout
         android:id="@+id/ll_dongzuo_container"
         android:layout_width="match_parent"
         android:layout_height="160px"
         android:background="@color/white"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <TextView
             android:id="@+id/copy_part_two"
-            android:paddingLeft="20px"
-            android:text="动作次数"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_vertical"
+            android:paddingLeft="20px"
+            android:text="动作次数"
             android:textColor="@color/global_text_color"
-            android:textSize="@dimen/global_text_size"/>
+            android:textSize="@dimen/global_text_size_1" />
 
 
         <EditText
@@ -86,9 +85,9 @@
             android:focusable="true"
             android:inputType="numberSigned|numberDecimal"
             android:paddingRight="30px"
-            android:textSize="@dimen/global_text_size"
-            android:visibility="visible"/>
+            android:textSize="@dimen/global_text_size_1"
+            android:visibility="visible" />
 
     </LinearLayout>
 
-</LinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

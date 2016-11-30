@@ -1,46 +1,46 @@
 [
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_notshow.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_notshow.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_video.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_video.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_key.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_key.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_pwd_ico.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_pwd_ico.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_addshow.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_addshow.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_face.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_face.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_face.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_face.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_addshow.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_addshow.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_video.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_video.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_launcher.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_pwd_ico.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_pwd_ico.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_record.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_record.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_delete.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_delete.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_notshow.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_notshow.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_launcher.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_user_ico.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_user_ico.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_record.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_record.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\icon_delete.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\icon_delete.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_logo.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_logo.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_key.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_key.png"
     },
     {
-        "merged": "D:\\XunJian\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_user_ico.png",
-        "source": "D:\\XunJian\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_user_ico.png"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-hdpi\\ic_logo.png",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-hdpi\\ic_logo.png"
     }
 ]

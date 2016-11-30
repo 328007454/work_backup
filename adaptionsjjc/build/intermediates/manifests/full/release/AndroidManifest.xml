@@ -51,6 +51,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+
+        <!-- 正式版 	gPpRHaLdvkWH6nUr2w3xLfUU -->
+        <!-- 测试版 	cuYspoGjbHoSOKFx99Qv0cONtoVtZdxG -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="gPpRHaLdvkWH6nUr2w3xLfUU" />
+
         <activity
             android:name="com.cnksi.sjjc.activity.LoginActivity"
             android:label="@string/app_name"
@@ -341,6 +348,20 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" />
+            </intent-filter>
+        </service>
+        <service android:name="com.cnksi.sjjc.service.androidservice.LocatoinService" >
+            <intent-filter>
+                <action android:name="com.cnksi.sjjc.service.androidservice.LocatoinService" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="design_width"

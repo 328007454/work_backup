@@ -264,6 +264,7 @@
 
     <!-- 新增发热布局使用px -->
     <dimen name="new_global_text_size">36px</dimen>
+    <dimen name="new_global_text_size_1">12sp</dimen>
     <dimen name="new_drawable_half_padding">12px</dimen>
     <dimen name="new_linear_data_information">40px</dimen>
     <dimen name="new_edit_text_minheight">60px</dimen>

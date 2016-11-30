@@ -450,21 +450,21 @@ public final class R {
 		public static final int hint_pressed_alpha_material_light = 0x7f0800e3;
 		public static final int list_item_minheight = 0x7f08010f;
 		public static final int list_item_padding = 0x7f080111;
-		public static final int notification_action_icon_size = 0x7f080135;
-		public static final int notification_action_text_size = 0x7f080136;
-		public static final int notification_big_circle_margin = 0x7f080137;
+		public static final int notification_action_icon_size = 0x7f080136;
+		public static final int notification_action_text_size = 0x7f080137;
+		public static final int notification_big_circle_margin = 0x7f080138;
 		public static final int notification_content_margin_start = 0x7f08001d;
-		public static final int notification_large_icon_height = 0x7f080138;
-		public static final int notification_large_icon_width = 0x7f080139;
+		public static final int notification_large_icon_height = 0x7f080139;
+		public static final int notification_large_icon_width = 0x7f08013a;
 		public static final int notification_main_column_padding_top = 0x7f08001e;
 		public static final int notification_media_narrow_margin = 0x7f08001f;
-		public static final int notification_right_icon_size = 0x7f08013a;
+		public static final int notification_right_icon_size = 0x7f08013b;
 		public static final int notification_right_side_padding_top = 0x7f08001b;
-		public static final int notification_small_icon_background_padding = 0x7f08013b;
-		public static final int notification_small_icon_size_as_large = 0x7f08013c;
-		public static final int notification_subtext_size = 0x7f08013d;
-		public static final int notification_top_pad = 0x7f08013e;
-		public static final int notification_top_pad_large_text = 0x7f08013f;
+		public static final int notification_small_icon_background_padding = 0x7f08013c;
+		public static final int notification_small_icon_size_as_large = 0x7f08013d;
+		public static final int notification_subtext_size = 0x7f08013e;
+		public static final int notification_top_pad = 0x7f08013f;
+		public static final int notification_top_pad_large_text = 0x7f080140;
 	}
 	public static final class drawable {
 		public static final int abc_ab_share_pack_mtrl_alpha = 0x7f020000;
