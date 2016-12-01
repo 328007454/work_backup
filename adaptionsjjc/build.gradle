@@ -1,0 +1,105 @@
+apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+def uuid(){
+    return "---"+UUID.randomUUID().toString();
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        applicationId "com.cnksi.sjjc"
+        minSdkVersion 18
+        targetSdkVersion 23
+        versionCode 20
+        versionName "2.0.9"
+        vectorDrawables.useSupportLibrary = true
+    }
+    dataBinding {
+        enabled true
+    }
+    signingConfigs {
+        release {
+            keyAlias "四川金信石技术有限公司"
+            keyPassword "kingston"
+            storeFile file("D:\\sjjc_android\\adaptionsjjc\\kingston.keystore")
+            storePassword "kingston"
+        }
+        debug {
+            //No debug
+        }
+    }
+    // 移除lint检查的error
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            shrinkResources false//需要同minifyEnabled 共同使用
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为boohee_v1.0_2015-01-15.apk
+                        def fileName = "boohee_v${defaultConfig.versionName}_${releaseTime()}_${ uuid()}.apk"
+                        output.outputFile = new File("E:\\android_release_xunjian\\APK", fileName)
+                    }
+                }
+            }
+        }
+    }
+
+    //需要编译的源码
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            java.srcDirs = ['src/main/java']
+        }
+    }
+    //打开泛型和过时API编译报警告 相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391
+    tasks.withType(JavaCompile) {
+        //-Xlint:none 关闭所有警告
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+
+    compileOptions {
+        sourceCompatibility org.gradle.api.JavaVersion.VERSION_1_7
+        targetCompatibility org.gradle.api.JavaVersion.VERSION_1_7
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+}
+
+repositories { flatDir { dirs 'libs' } }
+dependencies {
+
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':cnksicore')
+    testCompile 'junit:junit:4.12'
+    compile(name: 'flironesdk', ext: 'aar')
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    compile('com.cnksi:ksynclib:3.0.12') {
+        exclude module: 'fastjson'
+    }
+    compile 'com.zhy:autolayout:1.4.5'
+}
