@@ -680,12 +680,12 @@
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\imageview.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\layout\\activity_image_details.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\activity_image_details.xml"
-    },
-    {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\layout\\inspection_task_item.xml",
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\inspection_task_item.xml"
+    },
+    {
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\layout\\activity_image_details.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\activity_image_details.xml"
     },
     {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\layout\\battery_test_layout.xml",

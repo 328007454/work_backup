@@ -133,19 +133,19 @@ ADDED from D:\sjjc_android\adaptionsjjc\src\main\AndroidManifest.xml:39:5-71
 application
 ADDED from D:\sjjc_android\adaptionsjjc\src\main\AndroidManifest.xml:41:5-364:19
 MERGED from [sjjc_android:cnksicore:unspecified] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\sjjc_android\cnksicore\unspecified\AndroidManifest.xml:11:5-15:19
+MERGED from [com.android.support:support-v4:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:design:23.2.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\design\23.2.0\AndroidManifest.xml:22:5-20
 MERGED from [org.xutils:xutils:3.3.22] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\org.xutils\xutils\3.3.22\AndroidManifest.xml:12:5-20
 MERGED from [:flironesdk:] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\flironesdk\AndroidManifest.xml:11:5-14:19
 MERGED from [com.cnksi:ksynclib:3.0.12] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:22:5-27:19
-MERGED from [com.android.support:appcompat-v7:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:animated-vector-drawable:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-vector-drawable:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\AndroidManifest.xml:23:5-20
-MERGED from [com.android.support:support-v4:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-fragment:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-media-compat:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-ui:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-utils:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-compat:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\AndroidManifest.xml:25:5-20
 MERGED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:28:5-57:19
 	android:label
 		ADDED from D:\sjjc_android\adaptionsjjc\src\main\AndroidManifest.xml:45:9-41
@@ -729,26 +729,26 @@ ADDED from D:\sjjc_android\adaptionsjjc\src\main\AndroidManifest.xml:361:9-363:3
 uses-sdk
 INJECTED from D:\sjjc_android\adaptionsjjc\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [sjjc_android:cnksicore:unspecified] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\sjjc_android\cnksicore\unspecified\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:support-v4:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-compat:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-media-compat:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-fragment:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:appcompat-v7:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-vector-drawable:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:design:23.2.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\design\23.2.0\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:recyclerview-v7:23.2.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.0\AndroidManifest.xml:20:5-43
 MERGED from [org.xutils:xutils:3.3.22] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\org.xutils\xutils\3.3.22\AndroidManifest.xml:8:5-10:41
 MERGED from [:flironesdk:] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\flironesdk\AndroidManifest.xml:7:5-9:41
 MERGED from [com.cnksi:ksynclib:3.0.12] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.cnksi\ksynclib\3.0.12\AndroidManifest.xml:7:5-9:41
 MERGED from [com.zhy:autolayout:1.4.5] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.zhy\autolayout\1.4.5\AndroidManifest.xml:8:5-10:41
-MERGED from [com.android.support:appcompat-v7:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:animated-vector-drawable:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\AndroidManifest.xml:21:5-43
 MERGED from [com.android.databinding:adapters:1.2.1] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.databinding\adapters\1.2.1\AndroidManifest.xml:22:5-24:41
 MERGED from [com.android.databinding:library:1.2.1] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.databinding\library\1.2.1\AndroidManifest.xml:22:5-24:41
-MERGED from [com.android.support:support-v4:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-fragment:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-media-compat:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-core-ui:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-utils:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-compat:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\AndroidManifest.xml:21:5-23:58
 MERGED from [com.squareup.leakcanary:leakcanary-android:1.5] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.squareup.leakcanary\leakcanary-android\1.5\AndroidManifest.xml:20:5-22:41
 	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\AndroidManifest.xml:23:9-75
+		ADDED from [com.android.support:support-v4:25.0.0] D:\sjjc_android\adaptionsjjc\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\AndroidManifest.xml:23:9-51
 	android:targetSdkVersion
 		INJECTED from D:\sjjc_android\adaptionsjjc\src\main\AndroidManifest.xml
 		INJECTED from D:\sjjc_android\adaptionsjjc\src\main\AndroidManifest.xml

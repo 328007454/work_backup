@@ -1,4 +1,4 @@
-#Wed Nov 30 11:23:53 CST 2016
+#Thu Dec 01 11:39:35 CST 2016
 base.0=D\:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\transforms\\dex\\release\\folders\\1000\\1f\\main
 renamed.0=classes.dex
 file.0=D\:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\transforms\\dex\\release\\folders\\1000\\1f\\main\\classes.dex

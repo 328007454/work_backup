@@ -297,6 +297,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/global_padding_top_bottom"
         android:gravity="center"
+        android:visibility="gone"
         android:textColor="@color/sys_copyrights_text_color"
         android:textSize="@dimen/sys_copyrights_text_size" />
 

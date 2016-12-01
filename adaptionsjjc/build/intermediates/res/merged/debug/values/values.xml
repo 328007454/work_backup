@@ -169,8 +169,8 @@
         <item>管理标准</item>
     </string-array>
     <string-array name="SBJC">
-        <item>红外测温记录</item>
-        <item>保护屏红外热像检测月度记录</item>
+        <!--<item>红外测温记录</item>-->
+        <!--<item>保护屏红外热像检测月度记录</item>-->
         <item>室内温湿度记录</item>
         <item>差动保护差流记录</item>
         <item>交直流变压器分接开关调整记录</item>
