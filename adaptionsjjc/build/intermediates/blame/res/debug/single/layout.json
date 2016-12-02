@@ -48,12 +48,12 @@
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\fragment_check.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\group_item.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\group_item.xml"
-    },
-    {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_customer_radio.xml",
         "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\layout\\dialog_customer_radio.xml"
+    },
+    {
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\group_item.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\group_item.xml"
     },
     {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\activity_webview.xml",
@@ -148,12 +148,12 @@
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\activity_draw_circle.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\report_hwcw.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\report_hwcw.xml"
-    },
-    {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\wt_child_header.xml",
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\wt_child_header.xml"
+    },
+    {
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\report_hwcw.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\report_hwcw.xml"
     },
     {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_item_more_information.xml",
@@ -216,12 +216,12 @@
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\work_piao_list_item.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout\\select_dialog_singlechoice_material.xml"
-    },
-    {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_up_container.xml",
         "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout\\select_dialog_singlechoice_material.xml"
     },
     {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_yanshou.xml",
@@ -256,12 +256,12 @@
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\activity_indoor_humiture.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\ys_tips_dialog.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\ys_tips_dialog.xml"
-    },
-    {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\imageview.xml",
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\imageview.xml"
+    },
+    {
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\ys_tips_dialog.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\ys_tips_dialog.xml"
     },
     {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\activity_register.xml",
@@ -364,20 +364,20 @@
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\item_tab.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout\\abc_activity_chooser_view.xml"
-    },
-    {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\item_exception_pic.xml",
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\item_exception_pic.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\animal_layout.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\animal_layout.xml"
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout\\abc_activity_chooser_view.xml"
     },
     {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\dongtai_tianjia_view.xml",
         "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\dongtai_tianjia_view.xml"
+    },
+    {
+        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\animal_layout.xml",
+        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\layout\\animal_layout.xml"
     },
     {
         "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_icon.xml",
