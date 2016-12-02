@@ -1,7 +1,6 @@
 package com.cnksi.sjjc.activity;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,7 +16,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -315,8 +313,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         });
     }
 
-    ViewHolder holder;
-    Dialog dialog;
+//    ViewHolder holder;
+//    Dialog dialog;
     @Override
     protected void onResume() {
         super.onResume();
@@ -351,18 +349,18 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 //            });
 //        }
     }
-    class ViewHolder {
-        @ViewInject(com.cnksi.sjjc.R.id.btn_sure)
-        private Button btSure;
-        @ViewInject(com.cnksi.sjjc.R.id.tv_dialog_title)
-        private TextView tvTitle;
-        @ViewInject(R.id.tv_dialog_content)
-        private TextView tvContent;
-
-        @ViewInject(com.cnksi.sjjc.R.id.btn_cancel)
-        private Button btCancel;
-
-    }
+//    class ViewHolder {
+//        @ViewInject(com.cnksi.sjjc.R.id.btn_sure)
+//        private Button btSure;
+//        @ViewInject(com.cnksi.sjjc.R.id.tv_dialog_title)
+//        private TextView tvTitle;
+//        @ViewInject(R.id.tv_dialog_content)
+//        private TextView tvContent;
+//
+//        @ViewInject(com.cnksi.sjjc.R.id.btn_cancel)
+//        private Button btCancel;
+//
+//    }
 
 
     @Override
