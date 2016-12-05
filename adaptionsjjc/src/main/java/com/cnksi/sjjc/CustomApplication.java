@@ -13,7 +13,6 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.crash.CrashHandler;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
-import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.XZip;
 import com.iflytek.cloud.SpeechConstant;
@@ -22,7 +21,6 @@ import com.tendcloud.tenddata.TCAgent;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import org.xutils.DbManager;
-import org.xutils.ex.DbException;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
@@ -94,7 +92,7 @@ public class CustomApplication extends CoreApplication {
         mInstance = this;
         AutoLayoutConifg.getInstance().useDeviceSize().init(this);
         TCAgent.LOG_ON = true;
-        TCAgent.init(this,"70961CDA8A5045B89CB4215349CA8A78","内部测试");
+        TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
         TCAgent.setReportUncaughtExceptions(true);
         // 应用程序入口处调用,避免手机内存过小，杀死后台进程,造成SpeechUtility对象为null
         // 注意：此接口在非主进程调用会返回null对象，如需在非主进程使用语音功能，请增加参数：SpeechConstant.FORCE_LOGIN+"=true"
@@ -115,11 +113,12 @@ public class CustomApplication extends CoreApplication {
         }
     }
 
-    public void  initApp(){
+    public void initApp() {
         FileUtils.initFile(filePathArray);
         copyAssetsToSDCard();
         TCAgent.onError(mInstance, CrashHandler.getInstance().getUncaughtException());
     }
+
     /**
      * 得到数据库管理者
      *
@@ -132,6 +131,18 @@ public class CustomApplication extends CoreApplication {
         return mDbManager;
     }
 
+    public static void closeDbConnection() {
+        if (mDbManager != null) {
+            try {
+                FileUtils.deleteAllFiles(new File(Config.DATABASE_FOLDER+Config.DATABASE_NAME+"-journal"));
+                mDbManager.close();
+                mDbManager = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * 得到验收数据库管理
      */
@@ -142,7 +153,7 @@ public class CustomApplication extends CoreApplication {
                         @Override
                         public void onDbOpened(DbManager db) {
                             // 开启WAL, 对写入加速提升巨大
-                            //db.getDatabase().enableWriteAheadLogging();
+                            ///  db.getDatabase().enableWriteAheadLogging();
                         }
                     })
                     .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
@@ -201,17 +212,17 @@ public class CustomApplication extends CoreApplication {
                     @Override
                     public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
                         // TODO: ...
-                        try {
-                            db.addColumn(HoleRecord.class, "clear_images");
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+////                            db.addColumn(HoleRecord.class, "clear_images");
+//                        } catch (DbException e) {
+//                            e.printStackTrace();
+//                        }
                         // db.dropTable(...);
                         // ...
                         // or
                         // db.dropDb();
                     }
-                });
+                }).setAllowTransaction(true);
         return config;
     }
 

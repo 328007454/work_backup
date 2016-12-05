@@ -10,6 +10,7 @@ import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Users;
 import com.cnksi.sjjc.enmu.InspectionType;
@@ -87,6 +88,7 @@ public class LauncherActivity extends BaseActivity {
             //定期试验
             case R.id.dqsy:
 //                intent.putExtra(Config.CURRENT_INSPECTION_VALUE, InspectionType.switchover.value);
+                CustomApplication.closeDbConnection();
                 Intent intent4 = new Intent();
                 ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
                 String typeName4 = InspectionType.switchover.name();
@@ -99,6 +101,7 @@ public class LauncherActivity extends BaseActivity {
             //定期维护
             case R.id.dqwh:
 //                intent.putExtra(Config.CURRENT_INSPECTION_VALUE, InspectionType.maintenance.value);
+                CustomApplication.closeDbConnection();
                 Intent intent3 = new Intent();
                 ComponentName componentName3 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
                 String typeName3 = InspectionType.maintenance.name();

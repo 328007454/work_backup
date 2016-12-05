@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.TypeAdapter;
 import com.cnksi.sjjc.enmu.InspectionType;
@@ -114,6 +115,7 @@ public class TypeListActivity extends BaseActivity {
                 ComponentName componentName;
                 switch (mInspectionType) {
                     case SBXS:
+                        CustomApplication.closeDbConnection();
                         componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
                         //正常巡视
                         if ("正常巡视".equals(s)) {

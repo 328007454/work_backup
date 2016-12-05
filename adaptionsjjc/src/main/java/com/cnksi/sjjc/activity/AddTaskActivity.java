@@ -164,9 +164,9 @@ public class AddTaskActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    String bdzId = PreferencesUtils.getString(_this,Config.LASTTIEM_CHOOSE_BDZNAME,"");
-                    if(!TextUtils.isEmpty(bdzId)){
-                        mTaskBDZ = CustomApplication.getDbManager().selector(Bdz.class).where(Bdz.BDZID,"=",bdzId).and(Bdz.DLT,"=",0).findFirst();
+                    String bdzId = PreferencesUtils.getString(_this, Config.LASTTIEM_CHOOSE_BDZNAME, "");
+                    if (!TextUtils.isEmpty(bdzId)) {
+                        mTaskBDZ = CustomApplication.getDbManager().selector(Bdz.class).where(Bdz.BDZID, "=", bdzId).and(Bdz.DLT, "=", 0).findFirst();
                     }
                     mBdzList = CustomApplication.getDbManager().selector(Bdz.class).where(Bdz.DLT, "=", 0).findAll();
                     mHandler.sendEmptyMessage(LOAD_BDZ_DATA);
@@ -184,6 +184,8 @@ public class AddTaskActivity extends BaseActivity {
             case R.id.tv_select_power_station:
                 if (null != mPowerStationDialog)
                     mPowerStationDialog.show();
+                else
+                    CToast.showLong(_this, "变电站为空");
                 break;
             //选择检测日期
             case R.id.ibtn_select_inspection_date:
@@ -217,8 +219,8 @@ public class AddTaskActivity extends BaseActivity {
         switch (msg.what) {
             //初始化变电站
             case LOAD_BDZ_DATA:
-                if(null!=mTaskBDZ)
-                mTvBDZ.setText(mTaskBDZ.name);
+                if (null != mTaskBDZ)
+                    mTvBDZ.setText(mTaskBDZ.name);
                 initBDZDialog();
                 break;
         }
@@ -259,8 +261,8 @@ public class AddTaskActivity extends BaseActivity {
         ViewHolder holder = new ViewHolder(this, mLLRootContainer, R.layout.content_list_dialog, false);
         ListView mListView = holder.getView(R.id.lv_container);
         holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
-        final String[] types={InspectionType.SBJC_06_sf6.name(),InspectionType.SBJC_06_water.name(),InspectionType.SBJC_06_gas.name()};
-        final String[] names={InspectionType.SBJC_06_sf6.value,InspectionType.SBJC_06_water.value,InspectionType.SBJC_06_gas.value};
+        final String[] types = {InspectionType.SBJC_06_sf6.name(), InspectionType.SBJC_06_water.name(), InspectionType.SBJC_06_gas.name()};
+        final String[] names = {InspectionType.SBJC_06_sf6.value, InspectionType.SBJC_06_water.value, InspectionType.SBJC_06_gas.value};
 
         DialogPressAdapter adapter = new DialogPressAdapter(this, Arrays.asList(names), R.layout.dialog_content_child_item);
 
@@ -339,7 +341,7 @@ public class AddTaskActivity extends BaseActivity {
             if (taskExpand != null) {
                 CustomApplication.getDbManager().save(taskExpand);
             }
-            PreferencesUtils.put(_this,Config.LASTTIEM_CHOOSE_BDZNAME,mTaskBDZ.bdzid);
+            PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, mTaskBDZ.bdzid);
             setResult(RESULT_OK);
             this.finish();
         } catch (DbException e) {

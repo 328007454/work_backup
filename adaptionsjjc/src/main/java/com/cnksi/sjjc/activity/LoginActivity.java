@@ -32,6 +32,7 @@ import com.cnksi.core.utils.UpdateUtils;
 import com.cnksi.ksynclib.KSyncConfig;
 import com.cnksi.ksynclib.activity.KSyncDebugActivity;
 import com.cnksi.ksynclib.activity.KSyncXJActivity;
+import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -161,6 +162,10 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 });
             }
         });
+        if(BuildConfig.DEBUG){
+            autoCompleteTextView.setText("00030493");
+            mEtPassword.setText("nx123456*");
+        }
     }
 
     @Event(value = {R.id.b_add_people_button, R.id.mask_wifi, R.id.ib_delete1, R.id.ib_delete2, R.id.b_login_button, R.id.ivLogo})

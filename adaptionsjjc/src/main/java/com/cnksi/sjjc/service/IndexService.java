@@ -23,6 +23,7 @@ import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.bean.ReportSignname;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.bean.Spacing;
+import com.cnksi.sjjc.bean.StandardStepConfirm;
 import com.cnksi.sjjc.bean.SwitchPic;
 import com.cnksi.sjjc.bean.Transceiver;
 import com.cnksi.sjjc.bean.upload.UploadDefectDefine;
@@ -105,7 +106,7 @@ public class IndexService {
     private Class<?>[] TableArray = {ModifyRecord.class, Device.class, Spacing.class, DevicePart.class,
             DeviceStandards.class, Report.class, DefectRecord.class, DefectDefine.class, SwitchPic.class,
             ReportHwcw.class, ErrorLogBean.class, ReportCdbhcl.class, ReportJzlbyqfjkg.class, ReportSnwsd.class, Placed.class,
-            Transceiver.class, BatteryRecord.class, HoleRecord.class, PreventionRecord.class, BatteryGroup.class,ReportSignname.class, CopyResult.class
+            Transceiver.class, BatteryRecord.class, HoleRecord.class, PreventionRecord.class, BatteryGroup.class, ReportSignname.class, CopyResult.class, StandardStepConfirm.class
     };
 
     /**
@@ -144,26 +145,23 @@ public class IndexService {
                     tableClass = UploadDefectDefine.class;
                     selector = CustomApplication.getDbManager().selector(tableClass).expr("defectid in " + selectionSql);
                 } else if (Report.class.equals(tableClass)
-                            || SwitchPic.class.equals(tableClass)
-                            || PreventionRecord.class.equals(tableClass)
-                            || BatteryRecord.class.equals(tableClass)
-                            || Transceiver.class.equals(tableClass)||BatteryGroup.class.equals(tableClass)||CopyResult.class.equals(tableClass)
+                        || SwitchPic.class.equals(tableClass)
+                        || PreventionRecord.class.equals(tableClass)
+                        || BatteryRecord.class.equals(tableClass)
+                        || StandardStepConfirm.class.equals(tableClass)
+                        || Transceiver.class.equals(tableClass) || BatteryGroup.class.equals(tableClass) || CopyResult.class.equals(tableClass)
                         ) {
                     selector = CustomApplication.getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql);
-                }
-                else if( HoleRecord.class.equals(tableClass))
-                {
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql +" or "+HoleRecord.CLEAR_REPORTID+" in " + uploadReportSql );
+                } else if (HoleRecord.class.equals(tableClass)) {
+                    selector = CustomApplication.getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql + " or " + HoleRecord.CLEAR_REPORTID + " in " + uploadReportSql);
                 }
                 //同步defect record表
-                else if (DefectRecord.class.equals(tableClass)){
-                    selector= CustomApplication.getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql+" or defectid in " + selectionSql );
-                }
-
-                else if (Placed.class.equals(tableClass)) {
+                else if (DefectRecord.class.equals(tableClass)) {
+                    selector = CustomApplication.getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql + " or defectid in " + selectionSql);
+                } else if (Placed.class.equals(tableClass)) {
                     selector = CustomApplication.getDbManager().selector(tableClass).expr("report_id in " + uploadReportSql);
                 } else if (ReportHwcw.class.equals(tableClass)
-                        || ReportSignname.class.equals(tableClass)||
+                        || ReportSignname.class.equals(tableClass) ||
                         ReportCdbhcl.class.equals(tableClass) || ReportJzlbyqfjkg.class.equals(tableClass) || ReportSnwsd.class.equals(tableClass)) {
                     selector = CustomApplication.getDbManager().selector(tableClass).expr("report_id in " + uploadReportSql);
                 }
@@ -179,10 +177,9 @@ public class IndexService {
                     entities = CustomApplication.getDbManager().findAll(tableClass);
                 }
                 if (entities != null && !entities.isEmpty())
-                    if (tableClass.equals(ModifyRecord.class))
-                    {
+                    if (tableClass.equals(ModifyRecord.class)) {
                         dbManager.save(entities);
-                    }else{
+                    } else {
                         dbManager.saveOrUpdate(entities);
                     }
 

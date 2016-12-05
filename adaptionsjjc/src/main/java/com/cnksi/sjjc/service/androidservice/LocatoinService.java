@@ -25,7 +25,7 @@ public class LocatoinService extends BaseService {
     private Context mContext;
     private Timer timer;
     private Handler handler = new Handler();
-    private Intent intent;
+    private Intent mTimeIntent;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -68,7 +68,9 @@ public class LocatoinService extends BaseService {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
+            //获取当前系统时间
             String systemTime = DateUtils.getCurrentShortTime();
+            //服务器获取时间
             String locationTime = DateUtils.getFormatterTime(location.getTime());
             if (location.getLocType() == BDLocation.TypeGpsLocation)
                 CToast.showLong(getApplicationContext(), location.getAddrStr() + ":" + location.getRadius() + ";" + location.getSatelliteNumber() + ":" + location.getAltitude() + ":" + location.getTime()+":"+locationTime);
@@ -79,9 +81,9 @@ public class LocatoinService extends BaseService {
             boolean isSame = DateUtils.compareDate(systemTime, locationTime, "yyyy-MM-dd");
             if (!isSame) {
                 CToast.showLong(getApplicationContext(), "必须确保系统当前时间是当前北京时间，请设置！");
-                intent = new Intent(Settings.ACTION_DATE_SETTINGS);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                Intent mTimeIntent = new Intent(Settings.ACTION_DATE_SETTINGS);//时间设置
+                mTimeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(mTimeIntent);
             } else {
 //                handler.removeCallbacks(runnable);
 //                mLocationClient.stop();
