@@ -1,838 +1,838 @@
 [
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_zb.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_zb.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_no_upload.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_no_upload.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_task_unfinish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_task_unfinish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_position.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_position.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_sign_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_sign_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_zxxs.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_zxxs.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_btn_list.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_btn_list.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_device_detail_top_bg.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_device_detail_top_bg.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_unfinish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_unfinish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_eliminate_defect_date_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_eliminate_defect_date_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_upload.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_upload.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_unfinish_report.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_unfinish_report.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_no_upload.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_no_upload.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pre.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pre.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_source.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_source.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pdf.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pdf.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_continue_inspection.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_continue_inspection.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio_2.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio_2.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_image.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_image.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_report_exit.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_report_exit.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_button_circle.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_button_circle.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_sign_find_hole.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_sign_find_hole.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_down.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_down.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_trains.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_trains.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_xieloudianliu.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_xieloudianliu.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_stop.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_stop.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_stop.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_stop.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_bianyaqiyouwei.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_bianyaqiyouwei.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_remote_video.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_remote_video.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_btn_list.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_btn_list.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_trains_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_trains_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_data_progress.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_data_progress.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_jyhpj.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_jyhpj.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_start.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_start.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_generate_problem.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_generate_problem.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_danqiguandaoyali.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_danqiguandaoyali.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_open.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_open.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio_4.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio_4.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_change_pic.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_change_pic.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_take_picture_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_take_picture_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_general_defect.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_general_defect.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_default_pic.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_default_pic.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_amplify.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_amplify.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_next.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_next.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_image_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_image_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_history_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_history_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_launcher_syncdata.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_launcher_syncdata.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_button_circle_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_button_circle_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_sbjc.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_sbjc.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy_temperature_background.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy_temperature_background.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_btn_image_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_btn_image_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\select_dot.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\select_dot.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_reference_photo.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_reference_photo.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_record_defect.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_record_defect.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_main_nav_bg.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_main_nav_bg.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_camera_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_camera_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_device_detail_top_bg.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_device_detail_top_bg.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_exit_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_exit_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_record_vedio.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_record_vedio.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_green_finish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_green_finish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_recording.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_recording.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_luxiang.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_luxiang.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_camera_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_camera_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_return_home_press.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_return_home_press.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_source_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_source_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_smart_keyboard.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_smart_keyboard.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_green_finish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_green_finish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_start_group_inspection_wave.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_start_group_inspection_wave.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_video.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_video.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_check.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_check.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_orange_finish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_orange_finish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_remote_video_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_remote_video_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_history_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_history_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_rules_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_rules_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_notshow.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_notshow.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_add_task_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_add_task_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_finish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_finish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_unupload.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_unupload.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_luxiang.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_luxiang.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_narrow.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_narrow.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_start.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_start.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_add_task.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_add_task.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_stop.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_stop.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_check_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_check_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_notification_app.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_notification_app.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_change_pic.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_change_pic.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_ywyth.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_ywyth.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_orange_unfinish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_orange_unfinish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_check.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_check.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_eliminate_defect_date.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_eliminate_defect_date.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_expand.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_expand.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_camera.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_camera.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_position_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_position_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_dzhczp.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_dzhczp.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_danqiguandaoyali.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_danqiguandaoyali.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_notshow.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_notshow.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_words.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_words.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_video_record.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_video_record.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_ywyth_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_ywyth_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_recording.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_recording.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_next.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_next.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_words.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_words.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_finish_report.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_finish_report.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_danger_point_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_danger_point_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pause.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pause.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pause.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pause.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_danqipingyali.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_danqipingyali.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_report_generate.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_report_generate.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_dzhczp.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_dzhczp.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_media_record.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_media_record.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_return_home.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_return_home.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_step_background.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_step_background.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_jyhys.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_jyhys.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_czp.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_czp.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_report_background.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_report_background.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_amplify.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_amplify.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_narrow.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_narrow.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_eliminate_work_ticket.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_eliminate_work_ticket.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_btn_list_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_btn_list_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_more.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_more.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_no_expand.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_no_expand.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_popup_container.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_popup_container.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_camera.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_camera.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_unchecked.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_unchecked.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_outside_circle.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_outside_circle.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_record_audio.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_record_audio.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_bianyaqiyouwei.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_bianyaqiyouwei.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_pic.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_pic.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_arrow_right.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_arrow_right.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_image.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_image.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio_1.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio_1.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_record_defect.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_record_defect.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_kongmudianya.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_kongmudianya.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_gzp.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_gzp.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_progress.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_progress.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_btn_list_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_btn_list_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy_temperature.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy_temperature.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_dqsy.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_dqsy.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_danger_point_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_danger_point_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_play_back.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_play_back.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_czp.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_czp.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_jyhys.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_jyhys.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_standard.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_standard.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\unselect_dot.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\unselect_dot.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy_temperature_background.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy_temperature_background.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_outside_circle.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_outside_circle.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_portrait_thum.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_portrait_thum.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_paizhao.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_paizhao.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_trains.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_trains.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_trains_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_trains_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_data_progress.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_data_progress.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_expand.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_expand.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_add.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_add.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_sign.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_sign.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_eliminate_defect_date_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_eliminate_defect_date_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_eliminate_work_ticket.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_eliminate_work_ticket.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_cancel_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_cancel_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_revoke.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_revoke.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\video_bg.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\video_bg.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_record_defect.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_record_defect.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_yellow_unfinish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_yellow_unfinish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_drop_down_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_drop_down_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_progress_background.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_progress_background.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_yellow_finish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_yellow_finish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_addshow.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_addshow.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_cancel.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_cancel.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_zb.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_zb.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_smart_keyboard.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_smart_keyboard.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_sign.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_sign.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_eliminate_work_ticket_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_eliminate_work_ticket_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_red_unfinish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_red_unfinish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_add_task_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_add_task_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_about_us_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_about_us_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_add_task.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_add_task.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_add_defect.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_add_defect.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_upload.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_upload.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\data_sync_background.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\data_sync_background.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_amplify.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_amplify.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\phone.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\phone.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_regular_menu_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_regular_menu_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_search.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_search.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_drop_down.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_drop_down.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_add.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_add.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_record_defect_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_record_defect_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clear_default.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clear_default.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_about_us.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_about_us.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_open.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_open.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_more_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_more_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_record.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_record.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_camera_standard.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_camera_standard.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_xieloudianliu.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_xieloudianliu.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_no_expand_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_no_expand_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_next_page.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_next_page.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_luying.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_luying.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_more_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_more_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_red_unfinish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_red_unfinish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_standard_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_standard_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_gray_up.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_gray_up.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_video.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_video.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_zxxs.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_zxxs.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_position.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_position.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_crisis_defect.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_crisis_defect.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_btn_image_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_btn_image_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_checked_small.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_checked_small.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\default_header.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\default_header.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_center_circle.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_center_circle.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_launcher_syncdata.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_launcher_syncdata.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_cancel.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_cancel.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_unfinish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_unfinish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_test_unit.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_test_unit.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_camera.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_camera.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_task_finish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_task_finish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_seek_bar.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_seek_bar.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_add_defect.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_add_defect.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_narrow.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_narrow.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_dqsy.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_dqsy.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_red_finish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_red_finish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_substract.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_substract.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio_1.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio_1.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_green_unfinish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_green_unfinish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_arrow_right.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_arrow_right.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_red_finish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_red_finish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pdf_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pdf_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_czp_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_czp_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_shrink.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_shrink.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_take_picture.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_take_picture.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_drop_down.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_drop_down.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_unupload.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_unupload.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_crisis_defect.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_crisis_defect.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_sign_find_hole.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_sign_find_hole.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_ywyth.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_ywyth.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_return_home_press.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_return_home_press.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_cancel.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_cancel.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_revoke_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_revoke_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_exit.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_exit.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pdf_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pdf_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_general_defect.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_general_defect.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy_temperature_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy_temperature_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_record_vedio.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_record_vedio.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_button_circle_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_button_circle_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_jyhpj.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_jyhpj.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_unfinish_report.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_unfinish_report.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_hemudianya.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_hemudianya.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_ywyth.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_ywyth.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\nfc.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\nfc.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_take_picture_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_take_picture_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_danger_point.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_danger_point.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_up.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_up.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_green_unfinish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_green_unfinish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_history.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_history.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_historydata.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_historydata.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_launcher.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_reference_photo.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_reference_photo.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pre_page.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pre_page.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_source_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_source_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_cw.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_cw.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_danqipingyali.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_danqipingyali.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_source.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_source.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\data_sync_background.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\data_sync_background.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_eliminate_work_ticket_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_eliminate_work_ticket_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_record_audio.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_record_audio.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_finish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_finish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\select_dot.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\select_dot.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_btn_image.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_btn_image.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_cancel_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_cancel_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_report_background.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_report_background.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_gray_drop_down.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_gray_drop_down.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_rules.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_rules.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_seek_bar.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_seek_bar.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_return_home.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_return_home.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_rules_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_rules_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_ywyth_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_ywyth_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_standard_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_standard_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_portrait_thum.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_portrait_thum.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_default_pic.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_default_pic.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pre_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pre_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_orange_unfinish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_orange_unfinish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_expand_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_expand_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_jiaoliushurudianya.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_jiaoliushurudianya.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_app.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_app.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_step_background.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_step_background.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_record_defect_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_record_defect_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_uploaddone.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_uploaddone.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_arrow.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_arrow.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_reference_standard.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_reference_standard.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_up.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_up.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_media_record_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_media_record_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_luying.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_luying.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\nfc.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\nfc.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_amplify.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_amplify.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio_4.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio_4.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio_3.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio_3.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_report_exit.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_report_exit.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_sbxs.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_sbxs.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_exit_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_exit_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_uploaddone.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_uploaddone.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_report_generate.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_report_generate.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_finish_report.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_finish_report.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_rules.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_rules.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_arrow_right.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_arrow_right.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_btn_image.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_btn_image.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_serious_defect.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_serious_defect.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_checked.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_checked.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_orange_finish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_orange_finish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_remote_video_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_remote_video_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_notification_app.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_notification_app.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_info.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_info.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_ywyth.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_ywyth.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pre_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pre_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_checked.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_checked.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_next_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_next_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_dqwh.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_dqwh.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_record_audio.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_record_audio.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_revoke_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_revoke_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_pic.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_pic.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_checked_small.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_checked_small.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\video_bg.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\video_bg.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_remote_video.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_remote_video.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_record.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_record.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_gray_up.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_gray_up.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_gzp.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_gzp.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_sbjc.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_sbjc.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\unselect_dot.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\unselect_dot.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clamp_take_picture.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clamp_take_picture.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_media_record.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_media_record.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_sign_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_sign_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_sign.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_sign.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_next_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_next_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_narrow.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_narrow.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_drop_down_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_drop_down_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_popup_container.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_popup_container.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_center_circle.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_center_circle.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_expand_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_expand_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_sbys.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_sbys.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_eliminate_defect_date.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_eliminate_defect_date.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_button_circle.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_button_circle.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_video_record.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_video_record.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_jiaoliushurudianya.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_jiaoliushurudianya.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_camera.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_camera.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_reference_standard.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_reference_standard.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_search.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_search.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_about_us.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_about_us.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_sbxs.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_sbxs.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_record_audio.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_record_audio.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_about_us_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_about_us_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_cancel.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_cancel.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_danger_point.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_danger_point.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_standard.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_standard.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_serious_defect.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_serious_defect.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_long_press.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_long_press.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_add.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_add.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_gray_drop_down.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_gray_drop_down.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_progress_background.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_progress_background.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pre_page.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pre_page.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_check_hover.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_check_hover.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_info.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_info.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_yellow_unfinish.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_yellow_unfinish.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_main_nav_bg.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_main_nav_bg.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_paizhao.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_paizhao.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_white_stop.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_white_stop.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio_2.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio_2.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_no_expand.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_no_expand.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_hemudianya.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_hemudianya.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_media_record_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_media_record_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_unchecked.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_unchecked.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_history.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_history.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_clear_default.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_clear_default.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_regular_menu.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_regular_menu.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_play_back.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_play_back.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_test_unit.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_test_unit.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pdf.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pdf.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_more.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_more.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_down.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_down.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_record_defect.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_record_defect.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_delete_image_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_delete_image_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_regular_menu.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_regular_menu.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_no_expand_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_no_expand_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_addshow.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_addshow.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_camera_standard.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_camera_standard.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_sbys.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_sbys.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_generate_problem.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_generate_problem.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\launcher_dqwh.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\launcher_dqwh.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_regular_menu_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_regular_menu_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\phone.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\phone.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_sign.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_sign.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_add.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_add.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_kongmudianya.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_kongmudianya.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\default_header.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\default_header.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_continue_inspection.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_continue_inspection.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_start_group_inspection_wave.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_start_group_inspection_wave.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_czp_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_czp_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_audio_3.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_audio_3.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_revoke.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_revoke.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_app.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_app.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_task_finish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_task_finish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_arrow.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_arrow.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_cw.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_cw.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_shrink.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_shrink.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy_temperature.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy_temperature.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\icon_arrow_right.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\icon_arrow_right.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_copy_temperature_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_copy_temperature_hover.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_long_press.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_long_press.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_progress.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_progress.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_pre.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_pre.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_task_unfinish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_task_unfinish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_exit.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_exit.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_yellow_finish.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_yellow_finish.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\test_historydata.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\test_historydata.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_substract.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_substract.png"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_next_page.png",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_next_page.png"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\release\\mipmap-xxhdpi\\ic_position_hover.png",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\mipmap-xxhdpi\\ic_position_hover.png"
     }
 ]

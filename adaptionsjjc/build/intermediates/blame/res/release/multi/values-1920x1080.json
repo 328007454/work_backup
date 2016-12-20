@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-1920x1080\\values-1920x1080.xml",
+        "outputFile": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-1920x1080\\values-1920x1080.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 108
                 },
                 "from": {
-                    "file": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\values-1920x1080\\dimens.xml",
+                    "file": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\values-1920x1080\\dimens.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 164
                 },
                 "from": {
-                    "file": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\values-1920x1080\\dimens.xml",
+                    "file": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\values-1920x1080\\dimens.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 213
                 },
                 "from": {
-                    "file": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\values-1920x1080\\dimens.xml",
+                    "file": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\values-1920x1080\\dimens.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,

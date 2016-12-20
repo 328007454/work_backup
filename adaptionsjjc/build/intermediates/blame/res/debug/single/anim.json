@@ -1,134 +1,134 @@
 [
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_slide_in_bottom.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\rotating.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\rotating.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\rotating.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\rotating.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\rotate_anim.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\rotate_anim.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\popwindow_pull_up_dismiss.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\popwindow_pull_up_dismiss.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_dismiss.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\dialog_dismiss.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\fade_out.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\fade_out.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\fade_out.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\fade_out.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\activity_open.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\anim\\activity_open.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_in.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_bottom_sheet_slide_in.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_in.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_fab_in.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\popwindow_show.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\popwindow_show.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\popwindow_dismiss.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\popwindow_dismiss.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_show.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\dialog_show.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_out.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_snackbar_out.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_out.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_bottom_sheet_slide_out.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_slide_in_bottom.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\popwindow_pull_down_show.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\popwindow_pull_down_show.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\activity_close.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\anim\\activity_close.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\topitem_in.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\topitem_in.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\rotate_anim.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\rotate_anim.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\popwindow_pull_up_dismiss.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\popwindow_pull_up_dismiss.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_popup_exit.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_popup_enter.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\fade_in.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\fade_in.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_slide_out_top.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\reverse_anim.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\reverse_anim.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_enter.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\anim\\dialog_enter.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\topitem_in.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\topitem_in.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\fade_in.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\fade_in.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\popwindow_dismiss.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\popwindow_dismiss.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_in.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_bottom_sheet_slide_in.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_slide_out_bottom.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_slide_in_top.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_exit.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\anim\\dialog_exit.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_slide_out_bottom.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\bottomitem_in.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\bottomitem_in.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\reverse_anim.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\reverse_anim.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_out.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_snackbar_out.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_fade_in.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_fab_out.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_popup_exit.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_enter.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\anim\\dialog_enter.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_fade_out.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_slide_out_top.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\popwindow_show.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\popwindow_show.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_fade_in.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_exit.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\anim\\dialog_exit.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\popwindow_pull_down_show.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\popwindow_pull_down_show.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\bottomitem_in.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\bottomitem_in.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_snackbar_in.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_slide_in_top.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_fade_out.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_snackbar_in.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_in.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_fab_in.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\activity_close.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\anim\\activity_close.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\anim\\abc_popup_enter.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_fab_out.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_dismiss.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\dialog_dismiss.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_out.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\anim\\design_bottom_sheet_slide_out.xml"
     },
     {
-        "merged": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\activity_open.xml",
-        "source": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\anim\\activity_open.xml"
+        "merged": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_show.xml",
+        "source": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\exploded-aar\\sjjc_android\\cnksicore\\unspecified\\res\\anim\\dialog_show.xml"
     }
 ]

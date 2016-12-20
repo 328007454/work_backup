@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v19\\values-v19.xml",
+        "outputFile": "F:\\sjjc_android\\adaptionsjjc\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-v19\\values-v19.xml",
         "map": [
             {
                 "to": {
@@ -12,7 +12,7 @@
                     "endOffset": 268
                 },
                 "from": {
-                    "file": "D:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\values-v19\\styles.xml",
+                    "file": "F:\\sjjc_android\\adaptionsjjc\\src\\main\\res\\values-v19\\styles.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
