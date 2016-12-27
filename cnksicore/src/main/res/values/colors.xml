@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#09AAA0</color>
+    <color name="colorPrimaryDark">#09AAA0</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- 注册界面 -->
+    <color name="register_content_text_color">#434A54</color>
+    <color name="register_line_color">#A0A5AC</color>
+    <color name="register_background_color">#F5F5F5</color>
+    <color name="register_button_pressed_color">#3C424A</color>
+    <color name="register_button_unpressed_color">#434A54</color>
+    <color name="register_way_unpressed_color">#A0A5AC</color>
+    <color name="register_way_pressed_color">#8A9199</color>
+
+    <!-- 下拉刷新 -->
+    <color name="refresh_text_color">#FFFFFF</color>
+    <color name="refresh_background_color">#43C7F4</color>
+    <color name="progress_horizontal_background_color">#7A7A7A</color>
+    <color name="progress_horizontal_color">#31BDD8</color>
+
+    <!-- 下拉刷新 -->
+    <!-- New CustomerDialog -->
+    <color name="dialog_cancel_button_text_color">#333333</color>
+    <color name="dialog_confirm_button_text_color">#333333</color>
+    <color name="dialog_content_text_color">#333333</color>
+    <color name="dialog_title_text_color">#333333</color>
+    <color name="radio_item_unpressed_color">#ffffff</color>
+    <color name="radio_item_pressed_color">#e6e6e6</color>
+    <color name="dialog_loading_background_color">#5A5A5A</color>
+    <color name="tab_strip_text_color">#D9534F</color>
+    <color name="tab_strip_background_color">#DDE9E7</color>
+    <color name="global_text_color">#333333</color>
+    <color name="background_tab_pressed">#000000</color>
+
+
+    <!-- sidebar 颜色 -->
+    <color name="app_head_background">#03B9A0</color>
+    <color name="app_head_background_hover_color">#029B88</color>
+
+</resources>

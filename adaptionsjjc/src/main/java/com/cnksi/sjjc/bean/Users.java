@@ -22,6 +22,13 @@ public class Users {
     @Column(name = PWD)
     public String pwd;
 
+    // 用户密码旧密码
+    public static final String OLDPWD = "old_pwd";
+    @Column(name = OLDPWD)
+    public String oldPwd;
+
+
+
     // 用户性别
     public static final String SEX = "sex";
     @Column(name = SEX)

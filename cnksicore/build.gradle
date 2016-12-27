@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            moduleName "encrypt"  //设置库(so)文件名称
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+            //输出指定三种abi体系结构下的so库,如果没有这句的话，lib下面就没有so文件
+            ldLibs "log" //增加log的lib库
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked"
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            java.srcDirs = ['src/main/java', 'src/main/java_compat']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility org.gradle.api.JavaVersion.VERSION_1_7
+        targetCompatibility org.gradle.api.JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:23.2.0'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.android.support:design:23.2.0'
+    compile 'com.alibaba:fastjson:1.2.8'
+    compile 'org.xutils:xutils:3.3.22'
+    testCompile 'junit:junit:4.12'
+
+}

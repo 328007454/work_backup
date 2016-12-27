@@ -3,8 +3,9 @@ apply plugin: 'com.android.application'
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
-def uuid(){
-    return "---"+UUID.randomUUID().toString();
+
+def uuid() {
+    return "---" + UUID.randomUUID().toString();
 }
 
 android {
@@ -16,7 +17,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 23
         versionCode 20
-        versionName "2.0.9"
+        versionName "2.1.1"
         vectorDrawables.useSupportLibrary = true
     }
     dataBinding {
@@ -26,7 +27,7 @@ android {
         release {
             keyAlias "四川金信石技术有限公司"
             keyPassword "kingston"
-            storeFile file("D:\\sjjc_android\\adaptionsjjc\\kingston.keystore")
+            storeFile file("F:\\sjjc_android\\adaptionsjjc\\kingston.keystore")
             storePassword "kingston"
         }
         debug {
@@ -48,9 +49,16 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        // 输出apk名称为boohee_v1.0_2015-01-15.apk
-                        def fileName = "boohee_v${defaultConfig.versionName}_${releaseTime()}_${ uuid()}.apk"
-                        output.outputFile = new File("E:\\android_release_xunjian\\APK", fileName)
+                        if (variant.buildType.name.equals("release")) {
+                            // 输出apk名称为boohee_v1.0_2015-01-15.apk
+                            def fileName = "sjjc_${defaultConfig.versionName}_release.apk"
+                            output.outputFile = new File("E:\\android_release_xunjian\\APK", fileName)
+                        }else {
+                            // 输出apk名称为boohee_v1.0_2015-01-15.apk
+                            def fileName = "sjjc_${defaultConfig.versionName}_debug}.apk"
+                            output.outputFile = new File("E:\\android_release_xunjian\\APK", fileName)
+                        }
+
                     }
                 }
             }

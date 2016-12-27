@@ -1,0 +1,86 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/BaseAppTheme">
+
+    </style>
+
+    <style name="LoadingProgressStyle">
+        <item name="android:indeterminateDrawable">@drawable/loading_progress</item>
+        <item name="android:minWidth">40dip</item>
+        <item name="android:maxWidth">40dip</item>
+        <item name="android:minHeight">40dip</item>
+        <item name="android:maxHeight">40dip</item>
+    </style>
+
+    <!-- 自定义进度条样式 -->
+    <style name="ProgressBarHorizontalStyle" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/progress_color_horizontal</item>
+        <item name="android:minHeight">5dip</item>
+        <item name="android:maxHeight">5dip</item>
+    </style>
+
+    <style name="ImageloadingDialogStyle" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 对话框是否有遮盖 -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- Dialog样式 -->
+    <style name="DialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="DialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_show</item>
+        <item name="android:windowExitAnimation">@anim/dialog_dismiss</item>
+    </style>
+
+    <style name="DialogFadeAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="Divider_horizontal">
+
+        <!-- 水平分割线 -->
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">0.01dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Divider_vertical">
+
+        <!-- 垂直分割线 -->
+        <item name="android:layout_width">0.01dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:orientation">vertical</item>
+
+    </style>
+
+</resources>

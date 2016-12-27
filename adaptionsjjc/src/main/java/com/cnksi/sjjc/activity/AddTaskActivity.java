@@ -238,7 +238,7 @@ public class AddTaskActivity extends BaseActivity {
         adapter.setItemClickListener(new ItemClickListener<Bdz>() {
             @Override
             public void itemClick(View v, Bdz bdz, int position) {
-                if (!bdz.name.contains("(")) {
+                if (!bdz.name.contains("未激活")) {
                     mTaskBDZ = bdz;
                     mTvBDZ.setText(bdz.name);
                     mPowerStationDialog.dismiss();
