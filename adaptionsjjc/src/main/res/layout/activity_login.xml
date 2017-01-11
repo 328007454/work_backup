@@ -202,7 +202,6 @@
                         android:layout_gravity="center">
 
                         <ImageView
-                            app:layout_auto_basewidth="height"
                             android:id="@+id/user1_img"
                             android:layout_width="265px"
                             android:layout_height="265px"
@@ -211,12 +210,12 @@
                             android:contentDescription="@null"
                             android:padding="10px"
                             android:scaleType="fitXY"
+                            app:layout_auto_basewidth="height"
                             app:srcCompat="@drawable/ic_portrait_thum" />
 
                     </RelativeLayout>
 
                     <ImageButton
-                        app:layout_auto_basewidth="height"
                         android:id="@+id/ib_delete1"
                         android:layout_width="60px"
                         android:layout_height="60px"
@@ -225,7 +224,8 @@
                         android:background="@null"
                         android:contentDescription="@null"
                         android:src="@mipmap/icon_delete"
-                        android:visibility="invisible" />
+                        android:visibility="invisible"
+                        app:layout_auto_basewidth="height" />
                 </FrameLayout>
 
                 <FrameLayout
@@ -238,7 +238,6 @@
                         android:layout_gravity="center">
 
                         <ImageView
-                            app:layout_auto_basewidth="height"
                             android:id="@+id/user2_img"
                             android:layout_width="265px"
                             android:layout_height="265px"
@@ -247,11 +246,11 @@
                             android:contentDescription="@null"
                             android:padding="10px"
                             android:scaleType="fitXY"
+                            app:layout_auto_basewidth="height"
                             app:srcCompat="@drawable/ic_portrait_thum" />
                     </RelativeLayout>
 
                     <ImageButton
-                        app:layout_auto_basewidth="height"
                         android:id="@+id/ib_delete2"
                         android:layout_width="60px"
                         android:layout_height="60px"
@@ -260,28 +259,33 @@
                         android:background="@null"
                         android:contentDescription="@null"
                         android:src="@mipmap/icon_delete"
-                        android:visibility="invisible" />
+                        android:visibility="invisible"
+                        app:layout_auto_basewidth="height" />
                 </FrameLayout>
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/txt_user_layout"
-                android:layout_width="630px"
+                android:layout_width="650px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="30px"
                 android:paddingBottom="30px"
                 android:visibility="visible">
 
                 <TextView
+                    android:layout_marginLeft="20px"
                     android:id="@+id/txt_loggin_first"
                     android:layout_width="300px"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="48px"
+                    android:text=""
                     android:visibility="gone" />
 
                 <TextView
+                    android:text="1233"
                     android:id="@+id/txt_loggin_second"
                     android:layout_width="300px"
                     android:layout_height="wrap_content"
@@ -297,7 +301,10 @@
                 android:id="@+id/b_login_button"
                 android:layout_width="match_parent"
                 android:layout_height="120px"
+                android:layout_marginBottom="40px"
                 android:background="@drawable/btn_login_bg_selector"
+                android:layout_marginLeft="35px"
+                android:layout_marginRight="35px"
                 android:text="@string/login_str"
                 android:textColor="@android:color/white"
                 android:textSize="48px" />
