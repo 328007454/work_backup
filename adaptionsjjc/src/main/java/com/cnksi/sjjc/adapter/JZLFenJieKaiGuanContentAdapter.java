@@ -13,6 +13,7 @@ import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.enmu.InspectionType;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.view.annotation.ViewInject;
@@ -48,6 +49,7 @@ public class JZLFenJieKaiGuanContentAdapter extends SimpleBaseAdapter {
             holder = new ViewHolder();
             x.view().inject(holder, convertView);
             convertView.setTag(holder);
+            AutoUtils.autoSize(convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

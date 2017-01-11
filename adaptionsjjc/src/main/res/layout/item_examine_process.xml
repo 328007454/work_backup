@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/layout_height"
-                android:layout_marginTop="2px"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingRight="20px">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/layout_height"
+    android:layout_marginTop="2px"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:paddingRight="20px">
 
     <ImageView
         android:id="@+id/iv_sign_find_hole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_sign_find_hole"/>
+        android:src="@mipmap/ic_sign_find_hole" />
 
     <TextView
         android:id="@+id/tv_examine_area"
@@ -23,7 +24,7 @@
         android:gravity="center"
         android:text="检查区域"
         android:textColor="@color/global_text_color"
-        android:textSize="@dimen/tv_text_size_1"/>
+        android:textSize="@dimen/tv_text_size_1" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -36,7 +37,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/iv_take_pic"
             android:scaleType="fitXY"
-            />
+            app:layout_auto_baseheight="width" />
 
         <TextView
             android:id="@+id/tv_hole_num"
@@ -49,19 +50,21 @@
             android:background="@drawable/text_background_color"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/new_text_picture_size"/>
+            android:textSize="@dimen/new_text_picture_size"
+            app:layout_auto_baseheight="width" />
 
         <ImageView
             android:id="@+id/iv_take_pic"
-            android:layout_width="80px"
-            android:layout_height="80px"
+            style="@style/svgButtonCamera"
+            android:layout_width="135px"
+            android:layout_height="135px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20px"
             android:background="@android:color/transparent"
             android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="@drawable/camera_button_background"/>
+            app:srcCompat="@drawable/camera_button_background" />
     </RelativeLayout>
 
 

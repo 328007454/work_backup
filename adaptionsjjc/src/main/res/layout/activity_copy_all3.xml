@@ -6,7 +6,7 @@
     <LinearLayout
         android:id="@+id/ll_root_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:orientation="vertical">
 
@@ -21,11 +21,11 @@
                 android:id="@+id/gv_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/global_padding_left_right"
+                android:layout_margin="@dimen/global_padding_left_right_px"
                 android:layout_weight="1"
                 android:cacheColorHint="@android:color/transparent"
                 android:gravity="center"
-                android:horizontalSpacing="@dimen/global_padding_left_right"
+                android:horizontalSpacing="@dimen/global_padding_left_right_px"
                 android:listSelector="@android:color/transparent"
                 android:numColumns="2"
                 android:stretchMode="columnWidth"
@@ -37,16 +37,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/global_padding_left_right"
+                android:layout_margin="@dimen/global_padding_left_right_px"
                 android:background="@drawable/gray_button_background_selector"
                 android:contentDescription="@null"
-                android:padding="@dimen/twelve_oval_size"
+                android:padding="@dimen/twelve_oval_size_px"
                 android:src="@mipmap/ic_amplify" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/line_eight_width"
+            android:layout_height="@dimen/line_eight_width_px"
             android:background="@color/line_color" />
 
         <RelativeLayout
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/btn_layout"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="30px">
 
                 <LinearLayout
                     android:id="@+id/copy_container"
@@ -81,44 +81,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/global_padding_top_bottom"
-                android:layout_marginLeft="@dimen/global_padding_left_right"
-                android:layout_marginRight="@dimen/global_padding_left_right"
-                android:layout_marginTop="@dimen/global_padding_top_bottom"
+                android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
+                android:layout_marginLeft="@dimen/global_padding_left_right_px"
+                android:layout_marginRight="@dimen/global_padding_left_right_px"
+                android:layout_marginTop="@dimen/global_padding_top_bottom_px"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_pre"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/global_padding_left_right_px"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/grass_green_button_background_selector"
                     android:drawableLeft="@mipmap/ic_pre_page"
                     android:gravity="center"
-                    android:minHeight="@dimen/button_minheight"
-                    android:paddingLeft="@dimen/global_padding_left_right"
+                    android:minHeight="@dimen/button_minheight_px"
+                    android:paddingLeft="@dimen/global_padding_left_right_px"
                     android:text="@string/pre"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/global_text_size" />
+                    android:textSize="@dimen/global_text_size_px" />
 
                 <Button
                     android:id="@+id/btn_next"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/global_padding_left_right_px"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/global_padding_left_right"
+                    android:layout_marginLeft="@dimen/global_padding_left_right_px"
                     android:layout_weight="1"
                     android:background="@drawable/grass_green_button_background_selector"
                     android:drawableRight="@mipmap/ic_next_page"
                     android:gravity="center"
-                    android:minHeight="@dimen/button_minheight"
-                    android:paddingRight="@dimen/global_padding_left_right"
+                    android:minHeight="@dimen/button_minheight_px"
+                    android:paddingRight="@dimen/global_padding_left_right_px"
                     android:text="@string/next"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/global_text_size" />
+                    android:textSize="@dimen/global_text_size_px" />
             </LinearLayout>
 
             <LinearLayout
@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white_text"
-                    android:textSize="@dimen/global_text_size" />
+                    android:textSize="@dimen/global_text_size_px" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -36,41 +37,41 @@ public class TypeAdapter extends BaseAdapter<String> {
         ImageView typeImage = holder.getView(R.id.type_image);
         switch (inspectionType) {
             case SBXS:
-                typeImage.setImageResource(R.mipmap.launcher_sbxs);
-                typeImage.setBackgroundResource(R.drawable.launcher_sbxs);
+                typeImage.setImageResource(R.drawable.launcher_sbxs);
+                typeImage.setBackgroundResource(R.drawable.launcher_sbxs_background);
                 setClickable(holder, item, Integer.MAX_VALUE, position);
                 break;
             case GZP:
-                typeImage.setImageResource(R.mipmap.launcher_gzp);
-                typeImage.setBackgroundResource(R.drawable.launcher_gzp);
+                typeImage.setImageResource(R.drawable.launcher_gzp);
+                typeImage.setBackgroundResource(R.drawable.launcher_gzp_background);
                 setClickable(holder, item, 1, position);
                 break;
             case SBJC:
-                typeImage.setImageResource(R.mipmap.launcher_sbjc);
-                typeImage.setBackgroundResource(R.drawable.launcher_check);
+                typeImage.setImageResource(R.drawable.launcher_sbjc);
+                typeImage.setBackgroundResource(R.drawable.launcher_check_background);
                 setClickable(holder, item, Integer.MAX_VALUE, position);
                 break;
             case maintenance:
-                typeImage.setImageResource(R.mipmap.launcher_dqwh);
-                typeImage.setBackgroundResource(R.drawable.launcher_maintain);
+                typeImage.setImageResource(R.drawable.launcher_dqwh);
+                typeImage.setBackgroundResource(R.drawable.launcher_maintain_background);
                 break;
             case switchover:
-                typeImage.setImageResource(R.mipmap.launcher_dqsy);
-                typeImage.setBackgroundResource(R.drawable.launcher_switch);
+                typeImage.setImageResource(R.drawable.launcher_dqsy);
+                typeImage.setBackgroundResource(R.drawable.launcher_switch_background);
                 break;
             case exclusive:
-                typeImage.setImageResource(R.mipmap.launcher_zxxs);
-                typeImage.setBackgroundResource(R.drawable.launcher_zxxs);
+                typeImage.setImageResource(R.drawable.launcher_zxxs);
+                typeImage.setBackgroundResource(R.drawable.launcher_zxxs_background);
                 setClickable(holder, item, 0, position);
                 break;
             case JYHPJ:
-                typeImage.setImageResource(R.mipmap.launcher_jyhpj);
-                typeImage.setBackgroundResource(R.drawable.launcher_jyhpj);
+                typeImage.setImageResource(R.drawable.launcher_jyhpj);
+                typeImage.setBackgroundResource(R.drawable.launcher_jyhpj_background);
                 setClickable(holder, item, 1, position);
                 break;
             case JYHYS:
-                typeImage.setImageResource(R.mipmap.launcher_jyhys);
-                typeImage.setBackgroundResource(R.drawable.launcher_jyhys);
+                typeImage.setImageResource(R.drawable.launcher_jyhys);
+                typeImage.setBackgroundResource(R.drawable.launcher_jyhys_background);
                 setClickable(holder, item, 1, position);
                 break;
         }
@@ -84,7 +85,8 @@ public class TypeAdapter extends BaseAdapter<String> {
      */
     public void setClickable(ViewHolder holder, final String item, final int maxPosition, final int position) {
         if (position >= maxPosition) {
-            holder.getRootView().setBackgroundColor(context.getResources().getColor(R.color.global_gray_text_color));
+//            context.getResources().getColor(R.color.global_gray_text_color)
+            holder.getRootView().setBackgroundColor(ContextCompat.getColor(context, R.color.global_gray_text_color));
         } else {
             holder.getRootView().setBackgroundResource(R.drawable.task_item_background_selector);
         }

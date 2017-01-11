@@ -1,26 +1,25 @@
 package com.cnksi.sjjc.adapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-
-import com.cnksi.core.utils.RelayoutUtil;
-import com.cnksi.core.view.FollowListView;
-import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.Spacing;
-
-
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.cnksi.core.utils.RelayoutUtil;
+import com.cnksi.core.view.FollowListView;
+import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.bean.Spacing;
+
 import org.xutils.db.table.DbModel;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Spacing, DbModel>
@@ -177,7 +176,8 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
                 mContext.getResources().getDimensionPixelSize(R.dimen.global_padding_top_bottom),
                 mContext.getResources().getDimensionPixelSize(R.dimen.global_padding_left_right),
                 mContext.getResources().getDimensionPixelSize(R.dimen.global_padding_top_bottom));
-        holder.mTvDeviceInterval.setTextColor(mContext.getResources().getColor(R.color.green_color));
+        //mContext.getResources().getColor(R.color.green_color)
+        holder.mTvDeviceInterval.setTextColor(ContextCompat.getColor(mContext,R.color.green_color));
 
 //		if (getChildrenCountByGroup(groupPosition) > 1) {
         if (true) {

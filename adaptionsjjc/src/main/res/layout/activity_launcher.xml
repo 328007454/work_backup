@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#EFEFEF"
@@ -22,11 +23,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_sbxs"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_sbxs"
+                android:background="@drawable/launcher_sbxs_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_sbxs"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -34,7 +37,7 @@
                 android:gravity="center"
                 android:text="@string/sbxs"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -46,11 +49,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_sbjc"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_check"
+                android:background="@drawable/launcher_check_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_sbjc"/>
+                android:id="@+id/imageView2" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -58,7 +63,7 @@
                 android:gravity="center"
                 android:text="@string/sbjc"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -70,11 +75,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_dqsy"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_switch"
+                android:background="@drawable/launcher_switch_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_dqsy"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -82,7 +89,7 @@
                 android:gravity="center"
                 android:text="@string/dqsy"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
 
@@ -103,11 +110,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_dqwh"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_maintain"
+                android:background="@drawable/launcher_maintain_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_dqwh"/>
+               />
 
             <TextView
                 android:layout_width="match_parent"
@@ -115,7 +124,7 @@
                 android:gravity="center"
                 android:text="@string/dqwh"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -127,11 +136,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_ywyth"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_ywyth"
+                android:background="@drawable/launcher_ywyth_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_ywyth"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -139,7 +150,7 @@
                 android:gravity="center"
                 android:text="@string/ywyth"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -151,12 +162,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_dzhczp"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_dzhczp"
-
+                android:background="@drawable/launcher_dzhczp_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_dzhczp"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -164,7 +176,7 @@
                 android:gravity="center"
                 android:text="@string/dzhczp"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
 
         </LinearLayout>
 
@@ -186,11 +198,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_zxxs"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_zxxs"
+                android:background="@drawable/launcher_zxxs_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_zxxs"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -198,7 +212,7 @@
                 android:gravity="center"
                 android:text="@string/zxxs"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -210,11 +224,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_jyhpj"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_jyhpj"
+                android:background="@drawable/launcher_jyhpj_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_jyhpj"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -222,7 +238,7 @@
                 android:gravity="center"
                 android:text="@string/jyhpj"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -234,11 +250,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_jyhys"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_jyhys"
+                android:background="@drawable/launcher_jyhys_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_jyhys"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -246,7 +264,7 @@
                 android:gravity="center"
                 android:text="@string/jyhys"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
 
         </LinearLayout>
 
@@ -269,11 +287,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_gzp"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_gzp"
+                android:background="@drawable/launcher_gzp_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_gzp"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -281,7 +301,7 @@
                 android:gravity="center"
                 android:text="@string/gzp"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -293,11 +313,13 @@
             android:orientation="vertical">
 
             <ImageView
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/icon_launcher_syncdata"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_syncdata"
+                android:background="@drawable/launcher_syncdata_background"
                 android:padding="50px"
-                android:src="@mipmap/icon_launcher_syncdata"/>
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -305,7 +327,7 @@
                 android:gravity="center"
                 android:text="@string/sjtb"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -318,9 +340,10 @@
             android:visibility="invisible">
 
             <ImageView
+                app:layout_auto_baseheight="width"
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_sbys"
+                android:background="@drawable/launcher_sbys_background"
                 android:padding="50px"
                 android:src="@mipmap/launcher_sbys"/>
 
@@ -330,7 +353,7 @@
                 android:gravity="center"
                 android:text="@string/sbys"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size"/>
+                android:textSize="@dimen/standard_source_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -344,7 +367,7 @@
             <ImageView
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@drawable/launcher_sbxs"/>
+                android:background="@mipmap/launcher_sbys"/>
 
             <TextView
                 android:layout_width="match_parent"

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/fill_grey"
-              android:orientation="vertical"
-              android:padding="10px">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/fill_grey"
+    android:orientation="vertical"
+    android:padding="10px">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,13 +32,13 @@
                 android:textSize="@dimen/tv_text_size"/>
 
 
-            <RadioGroup
+            <com.zhy.autolayout.AutoRadioGroup
                 android:id="@+id/radio_status"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <RadioButton
+                <com.cnksi.sjjc.View.CustomRadioButton
                     android:id="@+id/status_yes"
                     style="@style/RadioButtonBaseStyle"
                     android:layout_width="wrap_content"
@@ -46,11 +47,13 @@
                     android:layout_marginRight="80px"
                     android:button="@null"
                     android:checked="true"
-                    android:drawableLeft="@drawable/radio_button_selector"
+                    android:clickable="true"
+                    app:drawableLeft="@drawable/radio_button_selector"
+                    app:drawableSize="48px"
                     android:text="正常"
                     android:textSize="@dimen/tv_text_size"/>
 
-                <RadioButton
+                <com.cnksi.sjjc.View.CustomRadioButton
                     android:id="@+id/status_no"
                     style="@style/RadioButtonBaseStyle"
                     android:layout_width="wrap_content"
@@ -58,10 +61,13 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginRight="40px"
                     android:button="@null"
-                    android:drawableLeft="@drawable/radio_button_selector"
+                    android:checked="true"
+                    android:clickable="true"
+                    app:drawableLeft="@drawable/radio_button_selector"
+                    app:drawableSize="48px"
                     android:text="不正常"
                     android:textSize="@dimen/tv_text_size"/>
-            </RadioGroup>
+            </com.zhy.autolayout.AutoRadioGroup>
         </LinearLayout>
 
 
@@ -109,8 +115,8 @@
                 android:layout_width="0dp"
                 android:layout_height="100px"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/global_padding_half_left_right"
-                android:layout_marginRight="@dimen/global_padding_half_left_right"
+                android:layout_marginLeft="@dimen/global_padding_half_left_right_px"
+                android:layout_marginRight="@dimen/global_padding_half_left_right_px"
                 android:layout_weight="1"
                 android:background="@drawable/red_button_background_selector"
                 android:text="取消"
@@ -122,8 +128,8 @@
                 android:layout_width="0dp"
                 android:layout_height="100px"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/global_padding_half_left_right"
-                android:layout_marginRight="@dimen/global_padding_half_left_right"
+                android:layout_marginLeft="@dimen/global_padding_half_left_right_px"
+                android:layout_marginRight="@dimen/global_padding_half_left_right_px"
                 android:layout_weight="1"
                 android:background="@drawable/grass_green_button_background_selector"
                 android:text="确认"

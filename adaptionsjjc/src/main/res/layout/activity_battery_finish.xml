@@ -40,7 +40,7 @@
                 android:gravity="center"
                 android:text="添加人员"
                 android:textColor="@color/white_text"
-                android:textSize="@dimen/global_text_small_size" />
+                android:textSize="@dimen/global_text_small_size_px" />
         </RelativeLayout>
 
         <GridView
@@ -83,7 +83,7 @@
                 android:gravity="center"
                 android:text="添加人员"
                 android:textColor="@color/white_text"
-                android:textSize="@dimen/global_text_small_size" />
+                android:textSize="@dimen/global_text_small_size_px" />
         </RelativeLayout>
 
         <GridView
@@ -128,6 +128,7 @@
             android:minHeight="180px"
             android:paddingLeft="33px"
             android:paddingRight="20px"
+            android:textSize="@dimen/new_global_text_size"
             android:textColor="@color/wt_green_color"
             android:textColorHint="@color/et_hint_color" />
     </LinearLayout>
@@ -137,12 +138,12 @@
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/device_photo_tips_minheight"
-        android:layout_marginLeft="@dimen/global_padding_left_right"
-        android:layout_marginRight="@dimen/global_padding_left_right"
+        android:layout_marginBottom="@dimen/device_photo_tips_minheight_px"
+        android:layout_marginLeft="@dimen/global_padding_left_right_px"
+        android:layout_marginRight="@dimen/global_padding_left_right_px"
         android:background="@drawable/red_button_background_selector"
         android:gravity="center"
         android:text="确认完成"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/global_text_size" />
+        android:textSize="@dimen/global_text_size_px" />
 </LinearLayout>

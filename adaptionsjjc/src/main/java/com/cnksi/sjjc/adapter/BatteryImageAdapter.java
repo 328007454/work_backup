@@ -8,7 +8,6 @@ import com.cnksi.core.adapter.BaseAdapter;
 import com.cnksi.core.adapter.ViewHolder;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.inter.ItemClickListener;
@@ -52,7 +51,8 @@ public class BatteryImageAdapter extends BaseAdapter<BatteryRecord> {
         }
         if (!voltageList.isEmpty()) {
             holder.setVisable(R.id.img_battery,View.VISIBLE);
-            x.image().bind(((ImageView) holder.getView(R.id.img_battery)), Config.RESULT_PICTURES_FOLDER + voltageList.get(0), CustomApplication.getImageOPtions());
+//            x.image().bind(((ImageView) holder.getView(R.id.img_battery)), Config.RESULT_PICTURES_FOLDER + voltageList.get(0), CustomApplication.getImageOPtions());
+            x.image().bind(((ImageView) holder.getView(R.id.img_battery)), Config.RESULT_PICTURES_FOLDER + voltageList.get(0));
         }else {
             ((ImageView) holder.getView(R.id.img_battery)).setImageBitmap(null);
             holder.setVisable(R.id.tv_battery_number, View.GONE);

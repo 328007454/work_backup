@@ -44,9 +44,9 @@ public abstract class BaseReportActivity extends BaseActivity {
         setContentView(R.layout.activity_base_report);
         rlContainer = FindViewById(R.id.llbase);
         reportView = setReportView();
+        rlContainer.addView(reportView,new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT));
         AutoUtils.autoSize(reportView);
         reportView.setVisibility(View.INVISIBLE);
-        rlContainer.addView(reportView);
         x.view().inject(_this);
         getIntentValue();
         initTitleBar();
@@ -92,7 +92,7 @@ public abstract class BaseReportActivity extends BaseActivity {
                 break;
         }
     }
-
+    @SuppressWarnings("unchecked")
     protected <T extends View> T FindViewById(int id) {
         return (T) findViewById(id);
     }

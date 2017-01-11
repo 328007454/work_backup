@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -177,9 +178,11 @@ public class PJMainActivity extends BaseActivity {
         // 设置Tab标题文字的大小
         mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, NumberUtil.convertFloatToInt(DisplayUtil.getInstance().getTextScale() * 40), mDisplayMetrics));
         // 设置Tab Indicator的颜色
-        mPagerTabStrip.setIndicatorColor(getResources().getColor(R.color.tab_strip_text_color));
+//        getResources().getColor(R.color.tab_strip_text_color)
+        mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(_this,R.color.tab_strip_text_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-        mPagerTabStrip.setSelectedTextColor(getResources().getColor(R.color.tab_strip_text_color));
+//        getResources().getColor(R.color.tab_strip_text_color)
+        mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(_this,R.color.tab_strip_text_color));
         // 取消点击Tab时的背景色
         mPagerTabStrip.setTabBackground(0);
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -25,10 +26,12 @@ public class DotView extends View {
 		super(context);
 		init(context);
 	}
+	@SuppressWarnings("unchecked")
 	private void init(Context context){
 		p = new Paint(Paint.ANTI_ALIAS_FLAG);
 		p.setStyle(Style.FILL);
-		p.setColor(context.getResources().getColor(R.color.gray_stroke_color));
+//		context.getResources().getColor(R.color.gray_stroke_color)
+		p.setColor(ContextCompat.getColor(context,R.color.gray_stroke_color));
 
 		final float scale = context.getResources().getDisplayMetrics().density;
 		dash=(int) (6 * scale + 0.5f);

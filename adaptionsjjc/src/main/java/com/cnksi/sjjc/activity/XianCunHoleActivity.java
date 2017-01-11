@@ -114,6 +114,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case LOAD_DATA:

@@ -30,7 +30,7 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.WeatherView;
+import com.cnksi.sjjc.View.WeatherView1;
 import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Spacing;
@@ -65,8 +65,8 @@ public class GetSendLetterActivity extends BaseActivity {
     public static final int LOAD_DEVICE_FAILURE = 0x101;
     private final static int ACTION_IMAGE = 0x300;
 
-    @ViewInject(R.id.weatherView)
-    private WeatherView weather;
+    @ViewInject(R.id.weatherView1)
+    private WeatherView1 weather;
 
     @ViewInject(R.id.tab_strip)
     private HorizontalScrollView horizontalScrollView;
@@ -123,14 +123,6 @@ public class GetSendLetterActivity extends BaseActivity {
         x.view().inject(_this);
         tvTitle.setText("收发信机测试");
         getIntentValue();
-//
-//        radioGroupChannel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                currentTransceiver.channelStatus = (checkedId == R.id.radio_normal) ? 0 : 1;
-//            }
-//        });
-
         initData();
     }
 
@@ -180,15 +172,19 @@ public class GetSendLetterActivity extends BaseActivity {
                 e.printStackTrace();
             }
             //设置item的格式和点击动画
-            TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tab, null, false);
-            AutoUtils.autoTextSize(textView);
+            View view =  LayoutInflater.from(this).inflate(R.layout.item_tab, null, false);
+            TextView textView = (TextView) view.findViewById(R.id.tv_tab);
+//            textView.setTextSize(AutoUtils.getPercentHeightSizeBigger(44));
+            AutoUtils.autoSize(view);
             textView.setTag(transceiverDevice);
 //            textView.setText(Html.fromHtml(transceiverDevice.name));
             textView.setText(transceiverDevice.name);
-            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(400, LinearLayout.LayoutParams.MATCH_PARENT);
-            textView.setLayoutParams(p);
-            tabContainer.addView(textView);
-            textView.setOnClickListener(new View.OnClickListener() {
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(AutoUtils.getPercentWidthSizeBigger(400), LinearLayout.LayoutParams.MATCH_PARENT);
+//            textView.setLayoutParams(p);
+            p.leftMargin=AutoUtils.getPercentHeightSizeBigger(30);
+            view.setLayoutParams(p);
+            tabContainer.addView(view);
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     TranslateAnimation animation = new TranslateAnimation(imageLocation.getLeft(), v.getLeft(), 0, 0);
@@ -320,9 +316,11 @@ public class GetSendLetterActivity extends BaseActivity {
     private void changeTab(View v) {
         for (int i = 0; i < tabContainer.getChildCount(); i++) {
             View childView = tabContainer.getChildAt(i);
+            TextView tvView = (TextView) childView.findViewById(R.id.tv_tab);
             if (v.equals(childView)) {
-                childView.setSelected(true);
-                currentDevice = (Device) v.getTag();
+//                childView.setSelected(true);
+                tvView.setSelected(true);
+                currentDevice = (Device) tvView.getTag();
                 try {
                     //从缓存中查询当前设备记录
                     currentTransceiver = exitTransceiverMap.get(currentDevice.deviceid);
@@ -339,7 +337,8 @@ public class GetSendLetterActivity extends BaseActivity {
                     e.printStackTrace();
                 }
             } else
-                childView.setSelected(false);
+//                childView.setSelected(false);
+                tvView.setSelected(false);
         }
 
         imageName = null;

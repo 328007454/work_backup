@@ -37,6 +37,7 @@ public abstract class SimpleBindingAdatpter<T> extends BaseAdapter {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T getItem(int i) {
         return null==list?null:  (T)Arrays.asList(list.toArray()).get(i);
     }

@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,7 +26,8 @@ public class DiscoverHoleAdapter extends BaseAdapter<String> {
     @Override
     public void convert(ViewHolder holder, final String item, final int position) {
         TextView tvPosition = holder.getView(R.id.tv_child_item);
-        tvPosition.setTextColor(context.getResources().getColor(R.color.green_color));
+//        context.getResources().getColor(R.color.green_color)
+        tvPosition.setTextColor(ContextCompat.getColor(context,R.color.green_color));
         tvPosition.setText(item);
         tvPosition.setOnClickListener(new View.OnClickListener() {
             @Override

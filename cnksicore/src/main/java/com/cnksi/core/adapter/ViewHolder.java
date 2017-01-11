@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.core.utils.RelayoutUtil;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.x;
 
@@ -81,6 +82,7 @@ public class ViewHolder {
         ViewHolder holder;
         if (null == convertView) {
             holder = new ViewHolder(context, parent, layoutId, position);
+            AutoUtils.autoSize(holder.getRootView());
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

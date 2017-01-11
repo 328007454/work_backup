@@ -3,6 +3,7 @@ package com.cnksi.sjjc.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -127,7 +128,8 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
             for (HoleRecord record : exitHoleRecords) {
                 if (location.equals(record.location)) {
                     holder.setVisibility(R.id.iv_sign_find_hole, View.VISIBLE);
-                    ((TextView) holder.getView(R.id.tv_examine_area)).setTextColor(context.getResources().getColor(R.color.yellow_color));
+//                    context.getResources().getColor(R.color.yellow_color)
+                    ((TextView) holder.getView(R.id.tv_examine_area)).setTextColor(ContextCompat.getColor(context,R.color.yellow_color));
                     break;
                 }
             }

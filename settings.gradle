@@ -1,1 +1,2 @@
-include ':app',  ':cnksicore', ':adaptionsjjc', ':resjjc'
+include ':cnksicore', ':adaptionsjjc', ':myapplication'
+include ':autolayout'

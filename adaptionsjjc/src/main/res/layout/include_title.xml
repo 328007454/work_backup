@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,30 +11,32 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_bar_minheight"
+            android:layout_height="@dimen/title_bar_minheight_px"
             android:background="@color/global_base_color">
 
             <ImageButton
                 android:id="@+id/btn_back"
-                android:layout_width="@dimen/title_bar_minheight"
-                android:layout_height="@dimen/title_bar_minheight"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/title_bar_minheight_px"
+                android:layout_height="@dimen/title_bar_minheight_px"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
-                android:src="@drawable/cancel_button_background"
-                android:visibility="visible" />
+                android:visibility="visible"
+                app:srcCompat="@drawable/cancel_button_background" />
 
             <ImageButton
                 android:id="@+id/ibtn_exit"
-                android:layout_width="@dimen/title_bar_minheight"
-                android:layout_height="@dimen/title_bar_minheight"
+                style="@style/svgButtonExit"
+                android:layout_width="@dimen/title_bar_minheight_px"
+                android:layout_height="@dimen/title_bar_minheight_px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
-                android:src="@drawable/exit_button_background"
-                android:visibility="gone" />
+                android:visibility="gone"
+                app:srcCompat="@drawable/exit_button_background" />
 
 
             <TextView
@@ -41,17 +44,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/title_bar_minheight"
-                android:layout_marginRight="@dimen/title_bar_minheight"
+                android:layout_marginLeft="@dimen/title_bar_minheight_px"
+                android:layout_marginRight="@dimen/title_bar_minheight_px"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/title_text_size" />
+                android:textSize="@dimen/title_text_size_px" />
 
             <TextView
                 android:id="@+id/tv_title_yanshou"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="15px"
                 android:layout_toRightOf="@id/btn_back"
                 android:layout_weight="1"
                 android:ellipsize="end"
@@ -62,14 +65,16 @@
 
             <ImageButton
                 android:id="@+id/btn_right"
-                android:layout_width="@dimen/title_bar_minheight"
-                android:layout_height="@dimen/title_bar_minheight"
+                style="@style/svgButtonRight"
+                android:layout_width="@dimen/title_bar_minheight_px"
+                android:layout_height="@dimen/title_bar_minheight_px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
-                android:src="@drawable/cancel_button_background"
-                android:visibility="gone" />
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                app:srcCompat="@drawable/cancel_button_background" />
 
 
             <TextView
@@ -78,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/global_padding_left_right"
+                android:layout_marginRight="@dimen/global_padding_left_right_px"
                 android:background="@drawable/textview_grass_conner"
                 android:paddingBottom="20px"
                 android:paddingLeft="40px"
@@ -86,7 +91,7 @@
                 android:paddingTop="20px"
                 android:text="提交"
                 android:textColor="@color/white_text"
-                android:textSize="@dimen/global_text_small_size"
+                android:textSize="@dimen/global_text_small_size_px"
                 android:visibility="gone" />
 
         </RelativeLayout>
@@ -103,9 +108,9 @@
     <RelativeLayout
         android:id="@+id/shadom_rela"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="135px"
         android:background="#80000000"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone"></RelativeLayout>
+        android:visibility="gone" />
 </FrameLayout>

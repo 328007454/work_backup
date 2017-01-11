@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -67,13 +68,14 @@ public class DiscoverHoleActivity extends BaseActivity {
     private ListView positionLv;
     private Dialog positionDialog;
 
-    private static final int TAKEPIC_REQUEST =LOAD_DATA+1;
+    private static final int TAKEPIC_REQUEST = LOAD_DATA + 1;
     private static final int VIDEO_REQUEST = TAKEPIC_REQUEST + 1;
-    private static final int REFRESH_UI = VIDEO_REQUEST+1;
+    private static final int REFRESH_UI = VIDEO_REQUEST + 1;
     private String imgName;
     private ArrayList<String> picList = new ArrayList<>();
 
     private Bitmap bmPicture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +91,7 @@ public class DiscoverHoleActivity extends BaseActivity {
     }
 
     private void initData() {
-         areaList = Arrays.asList(getResources().getStringArray(R.array.AnimalPositionArray));
+        areaList = Arrays.asList(getResources().getStringArray(R.array.AnimalPositionArray));
         mHandler.sendEmptyMessage(LOAD_DATA);
     }
 
@@ -107,7 +109,8 @@ public class DiscoverHoleActivity extends BaseActivity {
             @Override
             public void itemClick(View v, String s, int position) {
                 tvHolePosition.setText(s);
-                tvHolePosition.setTextColor(_this.getResources().getColor(R.color.green_color));
+//                _this.getResources().getColor(R.color.green_color)
+                tvHolePosition.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
                 positionDialog.dismiss();
             }
 
@@ -123,9 +126,9 @@ public class DiscoverHoleActivity extends BaseActivity {
 
     @Override
     protected void onRefresh(Message msg) {
-        switch (msg.what){
+        switch (msg.what) {
             case LOAD_DATA:
-               initPostionDialog();
+                initPostionDialog();
                 break;
             default:
                 break;
@@ -133,11 +136,12 @@ public class DiscoverHoleActivity extends BaseActivity {
 
     }
 
-    @Event({R.id.tv_discoverhole_position,R.id.iv_take_pic,R.id.img_discoverhole_pic,R.id.btn_save})
-    private void clickEvent(View view){
-        switch (view.getId()){
+    @Event({R.id.tv_discoverhole_position, R.id.iv_take_pic, R.id.img_discoverhole_pic, R.id.btn_save, R.id.position_container})
+    private void clickEvent(View view) {
+        switch (view.getId()) {
             case R.id.tv_discoverhole_position:
-                if(positionDialog!=null){
+            case R.id.position_container:
+                if (positionDialog != null) {
                     positionDialog.show();
                 }
                 break;
@@ -145,24 +149,24 @@ public class DiscoverHoleActivity extends BaseActivity {
                 FunctionUtils.takePicture(this, imgName = FunctionUtil.getCurrentImageName(_this), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
                 break;
             case R.id.img_discoverhole_pic:
-                showImageDetails(_this, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(picList, Config.RESULT_PICTURES_FOLDER), true,false);
-        break;
+                showImageDetails(_this, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(picList, Config.RESULT_PICTURES_FOLDER), true, false);
+                break;
             case R.id.btn_save:
                 String picAll = StringUtils.ArrayListToString(picList);
-                if(TextUtils.isEmpty(tvHolePosition.getText().toString())){
-                    CToast.showShort(_this,"请选择发现位置");
+                if (TextUtils.isEmpty(tvHolePosition.getText().toString())) {
+                    CToast.showShort(_this, "请选择发现位置");
                     return;
                 }
-                if(TextUtils.isEmpty(etPosition.getText().toString())){
-                    CToast.showShort(_this,"请输入详细位置");
+                if (TextUtils.isEmpty(etPosition.getText().toString())) {
+                    CToast.showShort(_this, "请输入详细位置");
                     return;
                 }
-                if(TextUtils.isEmpty(picAll)){
-                    CToast.showShort(_this,"请拍摄孔洞照片");
+                if (TextUtils.isEmpty(picAll)) {
+                    CToast.showShort(_this, "请拍摄孔洞照片");
                     return;
                 }
-                HoleRecord holeRecord = new HoleRecord(currentReportId,currentBdzId,currentBdzName,tvHolePosition.getText().toString(),
-                        etPosition.getText().toString(),picAll);
+                HoleRecord holeRecord = new HoleRecord(currentReportId, currentBdzId, currentBdzName, tvHolePosition.getText().toString(),
+                        etPosition.getText().toString(), picAll);
                 try {
                     db.save(holeRecord);
                 } catch (DbException e) {
@@ -178,25 +182,25 @@ public class DiscoverHoleActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Bitmap bm=null;
-        if(resultCode==RESULT_OK){
-            if(requestCode==TAKEPIC_REQUEST){
-                File file = new File(Config.RESULT_PICTURES_FOLDER,imgName);
+        Bitmap bm = null;
+        if (resultCode == RESULT_OK) {
+            if (requestCode == TAKEPIC_REQUEST) {
+                File file = new File(Config.RESULT_PICTURES_FOLDER, imgName);
                 if (file.exists()) {
                     BitmapUtil.compressImage(file.getAbsolutePath(), 3);
-                    String pictureContent = DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8)+"\n"+tvHolePosition.getText()
-                            +etPosition.getText().toString()+"\n"+ PreferencesUtils.getString(_this,Config.CURRENT_LOGIN_USER,"");
+                    String pictureContent = DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) + "\n" + tvHolePosition.getText()
+                            + etPosition.getText().toString() + "\n" + PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_USER, "");
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                     picList.add(imgName);
                 }
 
-            }else if(requestCode==CANCEL_RESULT_LOAD_IMAGE){
+            } else if (requestCode == CANCEL_RESULT_LOAD_IMAGE) {
                 ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
                 for (String imageUrl : cancleImagList) {
-                   picList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
+                    picList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
                 }
                 showPicture();
-            }else if(requestCode==LOAD_DATA){
+            } else if (requestCode == LOAD_DATA) {
                 bm = BitmapUtil.getOptimizedBitmap(Config.RESULT_PICTURES_FOLDER + imgName);
                 imgHole.setImageBitmap(bm);
                 showPicture();
@@ -212,7 +216,7 @@ public class DiscoverHoleActivity extends BaseActivity {
     }
 
     private void showPicture() {
-        if(picList.size()!=0) {
+        if (picList.size() != 0) {
             imgName = picList.get(0);
             bmPicture = BitmapUtil.getOptimizedBitmap(Config.RESULT_PICTURES_FOLDER + imgName);
             if (picList.size() == 1) {
@@ -223,7 +227,7 @@ public class DiscoverHoleActivity extends BaseActivity {
             }
             imgHole.setVisibility(View.VISIBLE);
             imgHole.setImageBitmap(bmPicture);
-        }else if(picList.size()==0){
+        } else if (picList.size() == 0) {
             tvHoleNum.setVisibility(View.GONE);
             imgHole.setVisibility(View.GONE);
         }

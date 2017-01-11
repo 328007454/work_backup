@@ -10,14 +10,14 @@
         android:layout_height="wrap_content"
         android:background="@color/gray_background_color"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/text_button_padding_top"
-        android:paddingLeft="@dimen/global_padding_left_right"
-        android:paddingTop="@dimen/text_button_padding_top"
+        android:paddingBottom="@dimen/text_button_padding_top_px"
+        android:paddingLeft="@dimen/global_padding_left_right_px"
+        android:paddingTop="@dimen/text_button_padding_top_px"
         android:textColor="@color/green_color"
-        android:textSize="@dimen/global_text_size" />
+        android:textSize="@dimen/global_text_size_px" />
 
     <ImageView
         android:layout_width="match_parent"
         android:background="@color/line_color"
-        android:layout_height="@dimen/line_half_width" />
+        android:layout_height="@dimen/line_half_width_px" />
 </LinearLayout>

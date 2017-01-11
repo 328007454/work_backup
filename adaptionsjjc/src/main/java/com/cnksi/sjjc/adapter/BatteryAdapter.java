@@ -2,6 +2,7 @@ package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -53,7 +54,8 @@ public class BatteryAdapter extends BaseAdapter<String> {
         holder.getView(R.id.rl_battery_container).setSelected(false);
         holder.getView(R.id.tv_voltage).setVisibility(View.GONE);
         TextView batteryName = holder.getView(R.id.tv_battery_name);
-        batteryName.setTextColor(context.getResources().getColor(R.color.green_color));
+//        context.getResources().getColor(R.color.green_color)
+        batteryName.setTextColor(ContextCompat.getColor(context,R.color.green_color));
         BatteryRecord record = exitRecordMap.get(item);
 
         if (0 == checkType) {

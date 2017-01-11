@@ -3,6 +3,7 @@ package com.cnksi.sjjc.View;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -78,7 +79,8 @@ public class ChartDialog {
         chart.setNoDataTextDescription("无图形数据");
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(context.getResources().getColor(R.color.mpchart_asia_color));
+//        context.getResources().getColor(R.color.mpchart_asia_color)
+        xAxis.setTextColor(ContextCompat.getColor(context,R.color.mpchart_asia_color));
         xAxis.setTextSize(8f);
         xAxis.setDrawGridLines(false);
 
@@ -87,7 +89,7 @@ public class ChartDialog {
         yAxis.enableGridDashedLine(10f, 0f, 0f);
         yAxis.setDrawZeroLine(false);
         yAxis.setDrawLimitLinesBehindData(true);
-        yAxis.setTextColor(context.getResources().getColor(R.color.mpchart_asia_color));
+        yAxis.setTextColor(ContextCompat.getColor(context,R.color.mpchart_asia_color));
         yAxis.setTextSize(8f);
 
         chart.getAxisRight().setEnabled(false);
@@ -106,14 +108,15 @@ public class ChartDialog {
             LineDataSet dataSet = new LineDataSet(entryList, key.getKey());
 
             dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-            dataSet.setColor(context.getResources().getColor(yColors.get(index)));
-            dataSet.setCircleColor(context.getResources().getColor(yColors.get(index)));
+//            context.getResources().getColor(yColors.get(index)
+            dataSet.setColor(ContextCompat.getColor(context,yColors.get(index)));
+            dataSet.setCircleColor(ContextCompat.getColor(context,yColors.get(index)));
             dataSet.setLineWidth(2f);
-            dataSet.setValueTextColor(context.getResources().getColor(yColors.get(index)));
+            dataSet.setValueTextColor(ContextCompat.getColor(context,yColors.get(index)));
             dataSet.setCircleRadius(3f);
             dataSet.setFillAlpha(65);
-            dataSet.setFillColor(context.getResources().getColor(yColors.get(index)));
-            dataSet.setHighLightColor(context.getResources().getColor(yColors.get(index)));
+            dataSet.setFillColor(ContextCompat.getColor(context,yColors.get(index)));
+            dataSet.setHighLightColor(ContextCompat.getColor(context,yColors.get(index)));
             dataSet.setDrawCircleHole(false);
 
             dataSets.add(dataSet);

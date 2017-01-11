@@ -1,16 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:state_pressed="false">
-    <shape  android:shape="oval">
-        <size android:width="50px" android:height="50px"/>
-        <solid android:color="#3cbc7f"/>
-    </shape>
-</item>
-    <item android:state_pressed="true">
-        <shape  android:shape="oval">
-            <size android:width="50px" android:height="50px"/>
-            <solid android:color="#34A570"/>
-        </shape>
-    </item>
-</selector>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="158px"
+        android:height="158px"
+        android:viewportWidth="158.0"
+        android:viewportHeight="158.0">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M144.23,109.44C132.76,133.99 107.88,151 79,151C48.41,151 22.29,131.91 11.86,105L20.52,105C30.49,127.39 52.91,143 79,143C104.52,143 126.54,128.05 136.81,106.43L125,101.64L146.73,89.01L153.01,113L144.23,109.44ZM79,46C106.06,46 128,73.18 128,79C128,84.82 106.06,112 79,112C51.94,112 30,84.82 30,79C30,73.16 51.94,46 79,46ZM79,101C91.15,101 101,91.15 101,79C101,66.85 91.15,57 79,57C66.85,57 57,66.85 57,79C57,91.15 66.85,101 79,101ZM79,79L75.61,65.43C76.7,65.16 77.83,65 79,65C86.73,65 93,71.27 93,79C93,86.73 86.73,93 79,93C71.27,93 65,86.73 65,79C65,77 65.42,75.11 66.18,73.39L79,79ZM79,15C53.47,15 31.46,29.96 21.18,51.58L33,56.39L11.27,69L5.01,45L13.76,48.56C25.23,24.02 50.12,7 79,7C109.59,7 135.71,26.09 146.14,53L137.48,53C127.51,30.61 105.09,15 79,15Z"/>
+</vector>

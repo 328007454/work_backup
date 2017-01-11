@@ -3,6 +3,7 @@ package com.cnksi.sjjc.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import com.cnksi.sjjc.bean.Transceiver;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.SpacingService;
 import com.cnksi.sjjc.service.TransceiverService;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.Event;
@@ -143,6 +145,7 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
                     llException.setVisibility(View.VISIBLE);
                     final List<String> imageList = StringUtils.string2List(img);
                     ViewHolder holder = new ViewHolder(this, null, R.layout.item_exception_pic, false);
+                    AutoUtils.autoSize(holder.getRootView());
                     if (1 < imageList.size()) {
                         holder.setText(R.id.tv_exception_num, imageList.size() + "");
                         holder.setVisable(R.id.tv_exception_num, View.VISIBLE);
@@ -152,7 +155,7 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
                     holder.setText(R.id.tv_device_name, spName + "——" + transceiver.deviceName);
                     x.image().bind((ImageView) holder.getView(R.id.iv_exception_pic), Config.RESULT_PICTURES_FOLDER + imageList.get(0), CustomApplication.getLargeImageOptions());
                     LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    p.leftMargin = 60;
+                    p.leftMargin = AutoUtils.getPercentHeightSizeBigger(60);
                     llExceptionPic.addView(holder.getRootView(), p);
                     //点击显示大图
                     //声明一个存放图片完整路径的集合
@@ -199,7 +202,8 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
         SpannableStringBuilder builder = new SpannableStringBuilder(str);
 
         while (index >= 0) {
-            ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().getColor(R.color.red_unpressed_color));
+//            getResources().getColor(R.color.red_unpressed_color)
+            ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.red_unpressed_color));
             builder.setSpan(redSpan, index, index + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             index = str.indexOf(filter, index + 2);
         }

@@ -1,12 +1,13 @@
 package com.cnksi.sjjc.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
@@ -52,7 +53,7 @@ import java.util.concurrent.Executors;
  * Created by han on 2016/5/11.
  * 蓄电池检测\蓄电池内阻检测电池item点击后Activity
  */
-public class BatteryDialogActivity extends Activity {
+public class BatteryDialogActivity extends AppCompatActivity {
     private static final String LAYOUT_LINEARLAYOUT = "LinearLayout";
     private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
@@ -119,9 +120,18 @@ public class BatteryDialogActivity extends Activity {
      * */
     private String currentInspectionType;
 
+    /**
+     * 开启svg格式图片兼容
+     * */
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,  WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        View titleView = this.findViewById(android.R.id.title);
+//        titleView.setVisibility(View.GONE);
         setContentView(R.layout.activity_battery_item_dialog);
         x.view().inject(this);
         mServerice = Executors.newCachedThreadPool();

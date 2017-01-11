@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.inter.ItemClickListenerPicture;
@@ -62,7 +61,7 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         final TextView tvClearNum = holder.getView(R.id.tv_clearhole_num);
         holder.setText(R.id.tv_hole, item.location + "_" + item.hole_detail);
         if (listPicXC != null) {
-            x.image().bind(((ImageView)holder.getView(R.id.img_discoverhole_pic)),Config.RESULT_PICTURES_FOLDER+listPicXC.get(0),CustomApplication.getLargeImageOptions());
+            x.image().bind(((ImageView)holder.getView(R.id.img_discoverhole_pic)),Config.RESULT_PICTURES_FOLDER+listPicXC.get(0));
             if (listPicXC.size() == 0 || listPicXC.size() == 1) {
                 tvDiscoverNum.setVisibility(View.GONE);
             } else {
@@ -71,7 +70,7 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
             }
         }
         if (listPicClear != null) {
-            x.image().bind(((ImageView)holder.getView(R.id.img_clearhole_pic)),Config.RESULT_PICTURES_FOLDER+listPicClear.get(0), CustomApplication.getLargeImageOptions());
+            x.image().bind(((ImageView)holder.getView(R.id.img_clearhole_pic)),Config.RESULT_PICTURES_FOLDER+listPicClear.get(0));
             if (listPicClear.size() == 0 || listPicClear.size() == 1) {
                 tvClearNum.setVisibility(View.GONE);
             } else {

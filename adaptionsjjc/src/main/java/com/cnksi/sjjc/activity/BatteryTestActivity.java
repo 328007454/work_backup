@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -351,10 +352,11 @@ public class BatteryTestActivity extends BaseActivity {
                     String resistance = "已抄录\t" + resistanceMap.get(currentBattery.bid) + "/" + currentBattery.amount;
                     SpannableString spanVoltage = new SpannableString(voltage);
                     SpannableString spanResistance = new SpannableString(resistance);
-                    spanVoltage.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanResistance.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanVoltage.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red_unpressed_color)), 3, spanVoltage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanResistance.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red_unpressed_color)), 3, resistance.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    getResources().getColor(R.color.radio_text_checked_color)
+                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.red_unpressed_color)), 3, spanVoltage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.red_unpressed_color)), 3, resistance.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     txtResistanceTotal.setText(spanResistance);
                     txtVoltageTotal.setText(spanVoltage);
                 }

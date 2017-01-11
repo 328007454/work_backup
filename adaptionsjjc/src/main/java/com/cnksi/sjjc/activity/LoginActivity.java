@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -56,9 +55,7 @@ import java.util.List;
  * 登录界面
  */
 public class LoginActivity extends BaseActivity implements GrantPermissionListener {
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
+
 
     private static final String TAG = "LoginActivity";
     public static final int SAME_ACCOUNT = 0x01111;//添加账号相同
@@ -205,7 +202,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case R.id.ib_delete1:
                 mCurrentUserOne = null;
                 delete1.setVisibility(View.INVISIBLE);
-                user1ImageView.setImageResource(R.mipmap.ic_portrait_thum);
+                user1ImageView.setImageResource(R.drawable.ic_portrait_thum);
                 txtLogFirst.setVisibility(View.GONE);
                 if (delete2.getVisibility() == View.INVISIBLE)
                     userLayout.setVisibility(View.INVISIBLE);
@@ -215,7 +212,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case R.id.ib_delete2:
                 mCurrentUserTwo = null;
                 delete2.setVisibility(View.INVISIBLE);
-                user2ImageView.setImageResource(R.mipmap.ic_portrait_thum);
+                user2ImageView.setImageResource(R.drawable.ic_portrait_thum);
                 txtLogSecond.setVisibility(View.GONE);
                 if (delete1.getVisibility() == View.INVISIBLE)
                     userLayout.setVisibility(View.INVISIBLE);

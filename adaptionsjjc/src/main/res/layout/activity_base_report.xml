@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_root_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_minheight"
+        android:layout_height="@dimen/title_bar_minheight_px"
         android:background="@color/global_base_color" >
 
         <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="@dimen/title_bar_minheight"
-            android:layout_height="@dimen/title_bar_minheight"
+            style="@style/svgButtonBack"
+            android:layout_width="@dimen/title_bar_minheight_px"
+            android:layout_height="@dimen/title_bar_minheight_px"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            app:srcCompat="@drawable/cancel_button_background"
             android:background="@android:color/transparent"
             android:contentDescription="@null"
             android:src="@drawable/cancel_button_background"
@@ -27,21 +30,22 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/title_bar_minheight"
-            android:layout_marginRight="@dimen/title_bar_minheight"
+            android:layout_marginLeft="@dimen/title_bar_minheight_px"
+            android:layout_marginRight="@dimen/title_bar_minheight_px"
             android:singleLine="true"
             android:textColor="@android:color/white"
             android:textSize="@dimen/tv_title_text_size" />
 
         <ImageButton
+            style="@style/svgButtonAdd"
             android:id="@+id/btn_right"
-            android:layout_width="@dimen/title_bar_minheight"
-            android:layout_height="@dimen/title_bar_minheight"
+            android:layout_width="@dimen/title_bar_minheight_px"
+            android:layout_height="@dimen/title_bar_minheight_px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@android:color/transparent"
             android:contentDescription="@null"
-            android:src="@drawable/return_main_menu_selector"
+            app:srcCompat="@drawable/return_main_menu_selector"
             />
 
 
@@ -51,11 +55,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/global_padding_left_right"
-        android:paddingRight="@dimen/global_padding_left_right"
-        android:paddingTop="@dimen/report_padding_top" >
+        android:paddingLeft="@dimen/global_padding_left_right_px"
+        android:paddingRight="@dimen/global_padding_left_right_px"
+        android:paddingTop="@dimen/report_padding_top_px" >
 
         <ImageView
+            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
@@ -65,8 +70,8 @@
             android:id="@+id/llbase"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/global_padding_top_bottom"
-            android:layout_marginTop="@dimen/global_padding_half_left_right" >
+            android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
+            android:layout_marginTop="@dimen/global_padding_half_left_right_px" >
 
             <!--  -->
 
@@ -76,11 +81,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:drawableLeft="@mipmap/ic_report_generate"
-                android:drawablePadding="@dimen/report_generate_drawable_padding"
+                android:drawablePadding="@dimen/report_generate_drawable_padding_px"
                 android:gravity="center"
                 android:text="@string/report_generating_str"
                 android:textColor="@color/global_gray_text_color"
-                android:textSize="@dimen/report_generate_text_size" />
+                android:textSize="@dimen/report_generate_text_size_px" />
         </RelativeLayout>
     </RelativeLayout>
 

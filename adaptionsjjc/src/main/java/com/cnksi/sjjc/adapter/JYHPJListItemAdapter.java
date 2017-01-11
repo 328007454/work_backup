@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,10 +131,12 @@ public class JYHPJListItemAdapter extends SimpleBaseAdapter {
 			currentParent=position;
 			if (item.getFloat(EvaluationItemReport.DISCOUNT_SCORE)>0) {
 				convertView.setBackgroundResource(R.color.dis_score_item2);
-				holderParent.tv.setTextColor(mContext.getResources().getColor(R.color.dis_score_text_item2));
+//				mContext.getResources().getColor(R.color.dis_score_text_item2)
+				holderParent.tv.setTextColor(ContextCompat.getColor(mContext,R.color.dis_score_text_item2));
 			}else{
 				convertView.setBackgroundResource(R.color.grass_color);
-				holderParent.tv.setTextColor(mContext.getResources().getColor(R.color.green_color));
+//				mContext.getResources().getColor(R.color.green_color)
+				holderParent.tv.setTextColor(ContextCompat.getColor(mContext,R.color.green_color));
 			}
 		}
 		return convertView;

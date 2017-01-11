@@ -1,42 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/layout_color_gray"
-              android:orientation="vertical">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_color_gray"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="755px"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="187px"
+        android:layout_marginTop="114px"
         android:contentDescription="@null"
-        android:src="@mipmap/ic_copy_temperature_background"/>
+        android:src="@mipmap/ic_copy_temperature_background" />
+
+
+
+    <com.cnksi.sjjc.View.WeatherView
+        android:id="@+id/weatherView1"
+        android:layout_width="match_parent"
+        android:layout_height="140px"
+        android:layout_marginTop="114px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        app:icon_height="48px"
+        app:icon_width="28px"
+        app:icon_margin="25px"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        app:icon_src="@drawable/ic_arrow_right"
+        app:label="当前天气             "
+        app:label_size="44px"
+        app:selector="@array/weather" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="114px"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingBottom="2px"
         android:paddingTop="2px">
-
-        <com.cnksi.sjjc.View.WeatherView
-            android:id="@+id/weatherView1"
-            android:layout_width="match_parent"
-            android:layout_height="140px"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="20px"
-            app:icon_margin="25px"
-            app:icon_src="@mipmap/ic_arrow_right"
-            app:label="@string/weather"
-            app:label_size="@dimen/new_global_text_size"
-            app:selector="@array/weather"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +63,7 @@
                 android:gravity="left|center_vertical"
                 android:text="当前温度（℃）"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/new_global_text_size"/>
+                android:textSize="@dimen/new_global_text_size" />
 
             <EditText
                 android:id="@+id/et_test_instrument"
@@ -67,10 +72,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:inputType="numberSigned|numberDecimal"
                 android:gravity="right|center_vertical"
                 android:hint="请输入当前温度"
-                />
+                android:inputType="numberSigned|numberDecimal" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,7 +93,7 @@
                 android:gravity="left|center_vertical"
                 android:text="当前湿度（%RH）"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/new_global_text_size"/>
+                android:textSize="@dimen/new_global_text_size" />
 
             <EditText
                 android:id="@+id/et_current_humidity"
@@ -98,10 +102,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:inputType="numberSigned|numberDecimal"
                 android:gravity="right|center_vertical"
                 android:hint="请输入当前湿度"
-                />
+                android:inputType="numberSigned|numberDecimal" />
         </LinearLayout>
     </LinearLayout>
 
@@ -122,7 +125,7 @@
             android:gravity="center"
             android:text="完成记录"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/global_text_size_1"/>
+            android:textSize="@dimen/global_text_size_1" />
     </RelativeLayout>
 
 

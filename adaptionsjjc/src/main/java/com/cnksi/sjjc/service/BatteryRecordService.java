@@ -46,6 +46,7 @@ public class BatteryRecordService extends BaseService<BatteryRecord> {
     /**
      * 查询蓄电池各项最新记录最新值
      */
+    @SuppressWarnings("unchecked")
     public List<BatteryRecord> getBatteryRecordLatest( String reportId ,String batteryGroupId, boolean inReport) throws DbException {
         String   operate = (inReport) ? "=" : "!=";
         Selector selector = CustomApplication.getDbManager().selector(BatteryRecord.class).where(BatteryRecord.REPORTID,operate,reportId)

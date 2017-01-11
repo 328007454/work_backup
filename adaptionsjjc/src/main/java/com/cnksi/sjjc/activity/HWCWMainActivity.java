@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -133,18 +134,21 @@ public class HWCWMainActivity extends BaseActivity {
                     if (currentSelect == -1) {
                         currentSelect = position;
                         currentHwcw = mReportHwcwList.get(position);
-                        view.setBackgroundColor(_this.getResources().getColor(R.color.grass_color));
+//                        _this.getResources().getColor(R.color.grass_color)
+                        view.setBackgroundColor(ContextCompat.getColor(_this,R.color.grass_color));
                         tv.setVisibility(View.VISIBLE);
                     } else if (currentSelect != position) {
                         View v = binding.lvContainer.getChildAt(currentSelect);
                         v.findViewById(R.id.tv_editting_show).setVisibility(View.GONE);
-                        v.setBackgroundColor(_this.getResources().getColor(R.color.tran));
-                        view.setBackgroundColor(_this.getResources().getColor(R.color.grass_color));
+//                        _this.getResources().getColor(R.color.tran)
+                        v.setBackgroundColor(ContextCompat.getColor(_this,R.color.tran));
+//                        _this.getResources().getColor(R.color.grass_color)
+                        view.setBackgroundColor(ContextCompat.getColor(_this,R.color.grass_color));
                         tv.setVisibility(View.VISIBLE);
                         currentSelect = position;
                         currentHwcw = mReportHwcwList.get(position);
                     } else {
-                        view.setBackgroundColor(_this.getResources().getColor(R.color.tran));
+                        view.setBackgroundColor(ContextCompat.getColor(_this,R.color.tran));
                         tv.setVisibility(View.GONE);
                         currentSelect = -1;
                         currentHwcw = null;
@@ -162,18 +166,20 @@ public class HWCWMainActivity extends BaseActivity {
                             if (currentSelect == -1) {
                                 currentSelect = position;
                                 currentHwcw = mReportHwcwList.get(position);
-                                view.setBackgroundColor(_this.getResources().getColor(R.color.grass_color));
+//                                _this.getResources().getColor(R.color.grass_color)
+                                view.setBackgroundColor(ContextCompat.getColor(_this,R.color.grass_color));
                                 tv.setVisibility(View.VISIBLE);
                             } else if (currentSelect != position) {
                                 View v = binding.lvContainer.getChildAt(currentSelect);
                                 v.findViewById(R.id.tv_editting_show).setVisibility(View.GONE);
-                                v.setBackgroundColor(_this.getResources().getColor(R.color.tran));
-                                view.setBackgroundColor(_this.getResources().getColor(R.color.grass_color));
+//                                _this.getResources().getColor(R.color.tran)
+                                v.setBackgroundColor(ContextCompat.getColor(_this,R.color.tran));
+                                view.setBackgroundColor(ContextCompat.getColor(_this,R.color.grass_color));
                                 tv.setVisibility(View.VISIBLE);
                                 currentSelect = position;
                                 currentHwcw = mReportHwcwList.get(position);
                             } else {
-                                view.setBackgroundColor(_this.getResources().getColor(R.color.tran));
+                                view.setBackgroundColor(ContextCompat.getColor(_this,R.color.tran));
                                 tv.setVisibility(View.GONE);
                                 currentSelect = -1;
                                 currentHwcw = null;

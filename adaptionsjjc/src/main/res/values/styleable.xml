@@ -11,6 +11,8 @@
         <attr name="label_size" format="dimension|reference" />
         <!-- icon宽度 -->
         <attr name="icon_width" format="dimension|reference" />
+        <!-- icon高度-->
+        <attr name="icon_height" format="dimension"/>
         <!-- icon资源 -->
         <attr name="icon_src" format="reference" />
         <!-- icon margin -->

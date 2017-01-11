@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -61,13 +62,15 @@ public class CopyDeviceItemAdapter extends SimpleBaseAdapter {
 		holder.mTvDeviceName.setText(device.getString(Device.NAME));
 
 		if (currentSelectedPosition == position) {
+//			mContext.getResources().getColor(android.R.color.white)
 			holder.mRlDeviceContainer.setBackgroundResource(R.drawable.copy_all_value_item_selected_background);
-			holder.mTvDeviceName.setTextColor(mContext.getResources().getColor(android.R.color.white));
+			holder.mTvDeviceName.setTextColor(ContextCompat.getColor(mContext, android.R.color.white));
 			holder.mTvDeviceName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_white_unfinish, 0, 0, 0);
 		} else {
 			holder.mRlDeviceContainer
 					.setBackgroundResource(R.drawable.copy_all_value_item_unselected_background_selector);
-			holder.mTvDeviceName.setTextColor(mContext.getResources().getColor(R.color.green_color));
+//			mContext.getResources().getColor(R.color.green_color)
+			holder.mTvDeviceName.setTextColor(ContextCompat.getColor(mContext,R.color.green_color));
 			holder.mTvDeviceName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_green_unfinish, 0, 0, 0);
 		}
 

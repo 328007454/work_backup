@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -159,41 +160,42 @@ public class AnimalReportActivity extends BaseReportActivity {
                 String otherPic = preventionRecord.other_images;
                 if (0==preventionRecord.switchStatus) {
                     tvKaiGuan.setText("正常");
-                    tvKaiGuan.setTextColor(getResources().getColor(R.color.green_color));
+                    //getResources().getColor(R.color.green_color)
+                    tvKaiGuan.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
                 } else {
                     tvKaiGuan.setText("不正常");
                     tvKaiGuan.setTextColor(Color.RED);
                 }
                 if (0==preventionRecord.inroomStatus) {
-                    tvInroom.setTextColor(getResources().getColor(R.color.green_color));
+                    tvInroom.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
                     tvInroom.setText("正常");
                 } else {
                     tvInroom.setText("不正常");
                     tvInroom.setTextColor(Color.RED);
                 }
                 if (0==preventionRecord.outroomStatus) {
-                    tvOutRoom.setTextColor(getResources().getColor(R.color.green_color));
+                    tvOutRoom.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
                     tvOutRoom.setText("正常");
                 } else {
                     tvOutRoom.setText("不正常");
                     tvOutRoom.setTextColor(Color.RED);
                 }
                 if (0==preventionRecord.doorWindowStatus) {
-                    tvMen.setTextColor(getResources().getColor(R.color.green_color));
+                    tvMen.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
                     tvMen.setText("正常");
                 } else {
                     tvMen.setText("不正常");
                     tvMen.setTextColor(Color.RED);
                 }
                 if (0==preventionRecord.ratsbaneStatus) {
-                    tvShuYao.setTextColor(getResources().getColor(R.color.green_color));
+                    tvShuYao.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
                     tvShuYao.setText("正常");
                 } else {
                     tvShuYao.setText("不正常");
                     tvShuYao.setTextColor(Color.RED);
                 }
                 if (0==preventionRecord.mousetrapStatus) {
-                    tvBuShu.setTextColor(getResources().getColor(R.color.green_color));
+                    tvBuShu.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
                     tvBuShu.setText("正常");
                 } else {
                     tvBuShu.setText("不正常");

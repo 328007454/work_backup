@@ -1,16 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:state_pressed="false">
-        <shape  android:shape="oval">
-            <size android:width="50px" android:height="50px"/>
-            <solid android:color="#D8AA57"/>
-        </shape>
-    </item>
-    <item android:state_pressed="true">
-        <shape  android:shape="oval">
-            <size android:width="50px" android:height="50px"/>
-            <solid android:color="#C7922E"/>
-        </shape>
-    </item>
-</selector>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportHeight="158.0"
+    android:viewportWidth="158.0">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M117,155L41,155C34.37,155 29,149.63 29,143L29,15C29,8.37 34.37,3 41,3L117,3C123.63,3 129,8.37 129,15L129,143C129,149.63 123.63,155 117,155ZM79,150C82.31,150 85,147.31 85,144C85,140.69 82.31,138 79,138C75.69,138 73,140.69 73,144C73,147.31 75.69,150 79,150ZM121,12L37,12L37,132L121,132L121,12ZM49,29L51,29C53.21,29 55,30.79 55,33C55,35.21 53.21,37 51,37L49,37C46.79,37 45,35.21 45,33C45,30.79 46.79,29 49,29ZM49,49L51,49C53.21,49 55,50.79 55,53C55,55.21 53.21,57 51,57L49,57C46.79,57 45,55.21 45,53C45,50.79 46.79,49 49,49ZM49,69L51,69C53.21,69 55,70.79 55,73C55,75.21 53.21,77 51,77L49,77C46.79,77 45,75.21 45,73C45,70.79 46.79,69 49,69ZM49,89L51,89C53.21,89 55,90.79 55,93C55,95.21 53.21,97 51,97L49,97C46.79,97 45,95.21 45,93C45,90.79 46.79,89 49,89ZM67,29L109,29C111.21,29 113,30.79 113,33C113,35.21 111.21,37 109,37L67,37C64.79,37 63,35.21 63,33C63,30.79 64.79,29 67,29ZM67,49L93,49C95.21,49 97,50.79 97,53C97,55.21 95.21,57 93,57L67,57C64.79,57 63,55.21 63,53C63,50.79 64.79,49 67,49ZM67,69L109,69C111.21,69 113,70.79 113,73C113,75.21 111.21,77 109,77L67,77C64.79,77 63,75.21 63,73C63,70.79 64.79,69 67,69ZM67,89L109,89C111.21,89 113,90.79 113,93C113,95.21 111.21,97 109,97L67,97C64.79,97 63,95.21 63,93C63,90.79 64.79,89 67,89Z" />
+</vector>

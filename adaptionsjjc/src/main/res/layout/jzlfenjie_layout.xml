@@ -4,19 +4,19 @@
     android:id="@+id/ll_report_content_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/global_padding_top_bottom"
+    android:layout_height="1920px"
+    android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
     android:background="@mipmap/ic_report_background"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/global_padding_half_left_right"
-    android:paddingRight="@dimen/global_padding_half_left_right"
-    android:paddingTop="@dimen/report_padding_top">
+    android:paddingLeft="@dimen/global_padding_half_left_right_px"
+    android:paddingRight="@dimen/global_padding_half_left_right_px"
+    android:paddingTop="@dimen/report_padding_top_px">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_padding_left_right"
-        android:layout_marginRight="@dimen/global_padding_left_right"
+        android:layout_marginLeft="@dimen/global_padding_left_right_px"
+        android:layout_marginRight="@dimen/global_padding_left_right_px"
         android:orientation="horizontal">
 
         <TextView
@@ -26,7 +26,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/work_start_time_str"
             android:textColor="@color/global_gray_text_color"
-            android:textSize="@dimen/device_item_name_text_size"/>
+            android:textSize="@dimen/device_item_name_text_size_1"/>
 
         <TextView
             android:id="@+id/tv_inspection_start_time"
@@ -41,8 +41,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_padding_left_right"
-        android:layout_marginRight="@dimen/global_padding_left_right"
+        android:layout_marginLeft="@dimen/global_padding_left_right_px"
+        android:layout_marginRight="@dimen/global_padding_left_right_px"
         android:orientation="horizontal">
 
         <TextView
@@ -52,7 +52,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/work_end_time_str"
             android:textColor="@color/global_gray_text_color"
-            android:textSize="@dimen/device_item_name_text_size"/>
+            android:textSize="@dimen/device_item_name_text_size_1"/>
 
         <TextView
             android:id="@+id/tv_inspection_end_time"
@@ -67,8 +67,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/global_padding_left_right"
-        android:layout_marginRight="@dimen/global_padding_left_right"
+        android:layout_marginLeft="@dimen/global_padding_left_right_px"
+        android:layout_marginRight="@dimen/global_padding_left_right_px"
         android:orientation="horizontal">
 
         <TextView
@@ -78,7 +78,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/work_persons_str"
             android:textColor="@color/global_gray_text_color"
-            android:textSize="@dimen/device_item_name_text_size"/>
+            android:textSize="@dimen/device_item_name_text_size_1"/>
 
         <TextView
             android:id="@+id/tv_inspection_person"
@@ -98,8 +98,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/global_padding_left_right"
-            android:layout_marginRight="@dimen/global_padding_left_right"
+            android:layout_marginLeft="@dimen/global_padding_left_right_px"
+            android:layout_marginRight="@dimen/global_padding_left_right_px"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -112,7 +112,7 @@
                 android:text="@string/work_temperature_jcstr"
                 android:singleLine="true"
                 android:textColor="@color/global_gray_text_color"
-                android:textSize="@dimen/device_item_name_text_size"/>
+                android:textSize="@dimen/device_item_name_text_size_1"/>
 
             <TextView
                 android:id="@+id/tv_inspection_temperature"
@@ -121,14 +121,14 @@
                 android:layout_weight="1.5"
                 android:gravity="left|center_vertical"
                 android:textColor="@color/green_color"
-                android:textSize="@dimen/global_text_size"/>
+                android:textSize="@dimen/global_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/global_padding_left_right"
-            android:layout_marginRight="@dimen/global_padding_left_right"
+            android:layout_marginLeft="@dimen/global_padding_left_right_px"
+            android:layout_marginRight="@dimen/global_padding_left_right_px"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -141,7 +141,7 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/work_humidity_jcstr"
                 android:textColor="@color/global_gray_text_color"
-                android:textSize="@dimen/device_item_name_text_size"/>
+                android:textSize="@dimen/device_item_name_text_size_1"/>
 
             <TextView
                 android:id="@+id/tv_inspection_humidity"
@@ -150,14 +150,14 @@
                 android:layout_weight="1.5"
                 android:gravity="left|center_vertical"
                 android:textColor="@color/green_color"
-                android:textSize="@dimen/global_text_size"/>
+                android:textSize="@dimen/global_text_size_px"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/global_padding_left_right"
-            android:layout_marginRight="@dimen/global_padding_left_right"
+            android:layout_marginLeft="@dimen/global_padding_left_right_px"
+            android:layout_marginRight="@dimen/global_padding_left_right_px"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -170,7 +170,7 @@
                 android:text="@string/work_weather_jcstr"
                 android:singleLine="true"
                 android:textColor="@color/global_gray_text_color"
-                android:textSize="@dimen/device_item_name_text_size"/>
+                android:textSize="@dimen/device_item_name_text_size_1"/>
 
             <TextView
                 android:id="@+id/tv_inspection_weather"
@@ -179,7 +179,7 @@
                 android:layout_weight="1.5"
                 android:gravity="left|center_vertical"
                 android:textColor="@color/green_color"
-                android:textSize="@dimen/global_text_size"/>
+                android:textSize="@dimen/global_text_size_px"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -200,19 +200,19 @@
         android:id="@+id/ll_jiance_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/global_padding_left_right"
+        android:layout_margin="@dimen/global_padding_left_right_px"
         android:background="@color/gray_background_color"
         android:baselineAligned="false"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/inspection_result_minheight"
+        android:minHeight="@dimen/inspection_result_minheight_px"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/global_padding_small_left_right"
-        android:paddingTop="@dimen/global_padding_small_left_right">
+        android:paddingBottom="@dimen/global_padding_small_left_right_px"
+        android:paddingTop="@dimen/global_padding_small_left_right_px">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/global_padding_left_right"
+            android:layout_marginLeft="@dimen/global_padding_left_right_px"
             android:layout_weight="1.2"
             android:gravity="center_vertical|left"
             android:orientation="vertical">
@@ -230,7 +230,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/global_padding_left_right"
+            android:layout_marginLeft="@dimen/global_padding_left_right_px"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -239,16 +239,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="@dimen/global_padding_left_right"
+                android:layout_marginRight="@dimen/global_padding_left_right_px"
                 android:background="@drawable/red_button_background_selector"
                 android:clickable="true"
                 android:drawableLeft="@mipmap/ic_continue_inspection"
-                android:drawablePadding="@dimen/drawable_padding"
+                android:drawablePadding="@dimen/drawable_padding_px"
                 android:gravity="center"
-                android:paddingBottom="@dimen/text_button_padding_top"
-                android:paddingLeft="@dimen/text_button_padding_left"
-                android:paddingRight="@dimen/text_button_padding_left"
-                android:paddingTop="@dimen/text_button_padding_top"
+                android:paddingBottom="@dimen/drawable_padding_px"
+                android:paddingLeft="@dimen/text_button_padding_left_px"
+                android:paddingRight="@dimen/text_button_padding_left_px"
+                android:paddingTop="@dimen/drawable_padding_px"
                 android:text="@string/work_continue_str"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/device_item_name_text_size_1"/>
@@ -260,13 +260,13 @@
     <ListView
         android:id="@+id/lv_report_content"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="900px"
         android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/re_viewpager_container"
         android:layout_width="wrap_content"
-        android:layout_height="260dp"
+        android:layout_height="780px"
         >
 
         <android.support.v4.view.ViewPager

@@ -52,6 +52,7 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (null == convertView){

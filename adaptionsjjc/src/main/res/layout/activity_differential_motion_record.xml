@@ -45,7 +45,7 @@
         style="@style/NewButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="100px"
-        android:textSize="@dimen/global_text_size"
+        android:textSize="@dimen/global_text_size_px"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20px"
         android:layout_marginLeft="20px"

@@ -98,6 +98,7 @@ public class ViewHolder {
      * @param <T>
      * @return
      */
+    @SuppressWarnings("unchecked")
     public <T extends View> T getView(int id) {
         View view = rootView.findViewById(id);
         if (null == view) {

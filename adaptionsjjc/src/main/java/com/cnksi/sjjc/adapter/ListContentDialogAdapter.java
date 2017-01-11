@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
 import com.cnksi.sjjc.R;
@@ -73,7 +74,8 @@ public class ListContentDialogAdapter extends BaseAdapter<String> {
 //			holder.mTvDefectContent.setText(spacing.name);
 //		} else {
         TextView tv = holder.getView(R.id.tv_child_item);
-        tv.setTextColor(context.getResources().getColor(R.color.green_color));
+//        context.getResources().getColor(R.color.green_color)
+        tv.setTextColor(ContextCompat.getColor(context,R.color.green_color));
         tv.setText(getItem(position).toString());
 //		}
     }

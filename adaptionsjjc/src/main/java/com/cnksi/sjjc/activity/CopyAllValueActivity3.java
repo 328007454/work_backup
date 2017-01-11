@@ -37,6 +37,7 @@ import com.cnksi.sjjc.service.CopyResultService;
 import com.cnksi.sjjc.service.CopyTypeService;
 import com.cnksi.sjjc.util.CopyViewUtil;
 import com.cnksi.sjjc.util.DialogUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -98,10 +99,11 @@ public class CopyAllValueActivity3 extends BaseActivity {
 
     private DbModel currentDevice;
     //当前报告抄录结果
+
     private List<CopyResult> reportResultList;
 
     private HashMap<String, CopyResult> copyResultMap;
-    private boolean isSpread;
+    private boolean isSpread = true;
     private boolean isFinish;
 
     private Dialog tipsDialog;
@@ -125,6 +127,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
         super.onCreate(savedInstanceState);
         setChildView(R.layout.activity_copy_all3);
         x.view().inject(this);
+        setDeviceListDisplay();
         initUI();
         initData();
     }
@@ -457,16 +460,18 @@ public class CopyAllValueActivity3 extends BaseActivity {
      */
     private void setDeviceListDisplay() {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) deviceLayout.getLayoutParams();
-        if (isSpread = !isSpread) {
+        if (!isSpread) {
             btnSpread.setImageResource(R.mipmap.ic_narrow);
             copyContainer.setVisibility(View.GONE);
             params.height = LinearLayout.LayoutParams.MATCH_PARENT;
         } else {
             btnSpread.setImageResource(R.mipmap.ic_amplify);
             copyContainer.setVisibility(View.VISIBLE);
-            params.height = getResources().getDimensionPixelSize(R.dimen.copy_all_value_container_height);
+//            params.height = getResources().getDimensionPixelSize(R.dimen.copy_all_value_container_height);
+            params.height = AutoUtils.getPercentHeightSizeBigger((int) getResources().getDimension(R.dimen.copy_all_value_container_height_px));
         }
         deviceLayout.setLayoutParams(params);
+        isSpread = !isSpread;
     }
 
     class ViewCompleteHolder {

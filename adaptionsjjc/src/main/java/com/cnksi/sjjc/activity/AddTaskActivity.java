@@ -84,6 +84,9 @@ public class AddTaskActivity extends BaseActivity {
     private TextView mTvInspectionType;
     @ViewInject(R.id.tv_yljc)
     private TextView mTvPressureDetection;
+
+    @ViewInject(R.id.type_jiance_ll_container)
+    private LinearLayout typeLinearLayout;
     private String mPressureDetectionType = "";
     private String mPressureDetectionName = "";
     private List<Bdz> mBdzList;
@@ -141,6 +144,7 @@ public class AddTaskActivity extends BaseActivity {
         //如果是压力检测则增加选择类型
         if (mInspectionType.equals(InspectionType.SBJC_06)) {
             mTvPressureDetection.setVisibility(View.VISIBLE);
+            typeLinearLayout.setVisibility(View.VISIBLE);
             initPressDialog();
         }
         //蓄电池检测添加任务
@@ -177,10 +181,11 @@ public class AddTaskActivity extends BaseActivity {
         });
     }
 
-    @Event(value = {R.id.btn_back, R.id.btn_cancel, R.id.btn_confirm, R.id.tv_select_power_station, R.id.ibtn_select_inspection_date, R.id.tv_yljc})
+    @Event(value = {R.id.btn_back, R.id.btn_cancel, R.id.btn_confirm, R.id.tv_select_power_station, R.id.ibtn_select_inspection_date, R.id.tv_yljc, R.id.bdz_contanier, R.id.type_jiance_ll_container})
     private void onClick(View v) {
         switch (v.getId()) {
             //选择变电站
+            case R.id.bdz_contanier:
             case R.id.tv_select_power_station:
                 if (null != mPowerStationDialog)
                     mPowerStationDialog.show();
@@ -205,6 +210,7 @@ public class AddTaskActivity extends BaseActivity {
             case R.id.btn_confirm:
                 saveTask();
                 break;
+            case R.id.type_jiance_ll_container:
             case R.id.tv_yljc://检测类别
                 if (null != mPressDialog) {
                     mPressDialog.show();

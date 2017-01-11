@@ -4,10 +4,10 @@
     android:layout_height="120px"
     android:background="@drawable/list_item_background_selector"
     android:minHeight="120px"
-    android:paddingBottom="@dimen/global_padding_top_bottom"
-    android:paddingLeft="@dimen/global_padding_left_right"
-    android:paddingRight="@dimen/global_padding_left_right"
-    android:paddingTop="@dimen/global_padding_top_bottom" >
+    android:paddingBottom="@dimen/global_padding_top_bottom_px"
+    android:paddingLeft="@dimen/global_padding_left_right_px"
+    android:paddingRight="@dimen/global_padding_left_right_px"
+    android:paddingTop="@dimen/global_padding_top_bottom_px" >
 
     <ImageView
         android:id="@+id/img_child_item_bt"
@@ -28,6 +28,6 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/img_child_item_bt"
         android:textColor="@color/global_text_color"
-        android:textSize="@dimen/global_text_size" />
+        android:textSize="@dimen/global_text_size_px" />
 
 </RelativeLayout>

@@ -11,6 +11,8 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -164,6 +166,12 @@ public abstract class BaseActivity extends BaseCoreActivity {
     protected SpeechSynthesizer mTts;
     public Vibrator mVibrator;
 
+    /**
+     * 开启svg格式图片兼容
+     * */
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,15 +194,12 @@ public abstract class BaseActivity extends BaseCoreActivity {
 
     @Override
     public void setContentView(View view) {
-//        RelayoutUtil.reLayoutViewHierarchy(view);
         super.setContentView(view);
         x.view().inject(this);
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
-//        RelayoutUtil.reLayoutViewHierarchy(view);
-//        RelayoutUtil.relayoutLayoutParams(params);
         super.setContentView(view, params);
         x.view().inject(this);
     }
@@ -216,7 +221,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * @param view
      */
     public void setChildView(View view) {
-//        RelayoutUtil.reLayoutViewHierarchy(view);
         rootContainer.addView(view);
         x.view().inject(this);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -478,10 +482,10 @@ public abstract class BaseActivity extends BaseCoreActivity {
         mPagerTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics));
         // 设置Tab标题文字的大小
         mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, _this.getResources().getDimensionPixelOffset(R.dimen.tab_strip_text_size), mDisplayMetrics));
-        // 设置Tab Indicator的颜色
-        mPagerTabStrip.setIndicatorColor(_this.getResources().getColor(R.color.tab_strip_text_color));
-        // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-        mPagerTabStrip.setSelectedTextColor(_this.getResources().getColor(R.color.tab_strip_text_color));
+        // 设置Tab Indicator的颜色  _this.getResources().getColor(R.color.tab_strip_text_color)
+        mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(_this,R.color.tab_strip_background_color));
+        // 设置选中Tab文字的颜色 (这是我自定义的一个方法)_this.getResources().getColor(R.color.tab_strip_text_color)
+        mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(_this,R.color.tab_strip_text_color));
         // 取消点击Tab时的背景色
         mPagerTabStrip.setTabBackground(0);
     }

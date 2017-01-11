@@ -136,7 +136,7 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
                 break;
         }
     }
-
+    @SuppressWarnings("unchecked")
     private void saveData() {
         ReportCdbhcl mCdReport;
         String bdzName = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");

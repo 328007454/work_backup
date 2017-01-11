@@ -9,7 +9,7 @@ def uuid() {
 }
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "24.0.2"
 
     defaultConfig {
@@ -52,11 +52,11 @@ android {
                         if (variant.buildType.name.equals("release")) {
                             // 输出apk名称为boohee_v1.0_2015-01-15.apk
                             def fileName = "sjjc_${defaultConfig.versionName}_release.apk"
-                            output.outputFile = new File("E:\\android_release_xunjian\\APK", fileName)
+                            output.outputFile = new File("E:\\CompanyProject\\SJJCAPK", fileName)
                         }else {
                             // 输出apk名称为boohee_v1.0_2015-01-15.apk
-                            def fileName = "sjjc_${defaultConfig.versionName}_debug}.apk"
-                            output.outputFile = new File("E:\\android_release_xunjian\\APK", fileName)
+                            def fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
+                            output.outputFile = new File("E:\\CompanyProject\\SJJCAPK", fileName)
                         }
 
                     }
@@ -72,9 +72,9 @@ android {
             java.srcDirs = ['src/main/java']
         }
     }
-    //打开泛型和过时API编译报警告 相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391
+    //打开泛型和过时API编译报警�?相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391
     tasks.withType(JavaCompile) {
-        //-Xlint:none 关闭所有警告
+        //-Xlint:none 关闭所有警�?
         options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }
 
@@ -109,5 +109,5 @@ dependencies {
     compile('com.cnksi:ksynclib:3.0.12') {
         exclude module: 'fastjson'
     }
-    compile 'com.zhy:autolayout:1.4.5'
+    compile project(':autolayout')
 }

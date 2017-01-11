@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,15 +11,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="390px"
         android:padding="@dimen/app_main_padding">
 
         <!-- logo -->
 
         <ImageView
             android:id="@+id/ivLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="399px"
+            android:layout_height="115px"
             android:layout_alignParentLeft="true"
             android:contentDescription="@null"
             android:src="@mipmap/ic_logo" />
@@ -46,7 +47,7 @@
             android:gravity="center"
             android:text="@string/app_name"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sys_name_text_size"
+            android:textSize="77px"
             android:textStyle="bold" />
 
         <TextView
@@ -57,13 +58,13 @@
             android:gravity="center"
             android:text="@string/app_tips"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="48px"
             android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="235dp">
+        android:layout_height="705px">
 
         <!-- 遮挡 -->
         <!-- 登录框 -->
@@ -72,12 +73,12 @@
             android:id="@+id/ll_login_edit_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/app_main_padding"
+            android:layout_marginLeft="36px"
             android:layout_marginRight="@dimen/app_main_padding"
-            android:layout_marginTop="@dimen/app_main_padding"
+            android:layout_marginTop="36px"
             android:background="@drawable/login_box_bg"
             android:orientation="vertical"
-            android:padding="@dimen/app_main_padding"
+            android:padding="36px"
             android:visibility="visible">
 
             <!-- 用户名 -->
@@ -88,13 +89,13 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:drawableLeft="@mipmap/ic_user_ico"
-                android:drawablePadding="@dimen/et_drawable_padding_left"
+                android:drawablePadding="36px"
                 android:hint="@string/et_user_hint_str"
                 android:inputType="text"
-                android:minHeight="@dimen/et_user_edit_minheight"
+                android:minHeight="120px"
                 android:text="admin"
                 android:textColorHint="@color/et_hint_color"
-                android:textSize="@dimen/et_hint_text_size"
+                android:textSize="48px"
                 android:visibility="gone" />
 
             <AutoCompleteTextView
@@ -103,19 +104,17 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:drawableLeft="@mipmap/ic_user_ico"
-                android:drawablePadding="@dimen/et_drawable_padding_left"
+                android:drawablePadding="36px"
                 android:hint="@string/et_user_hint_str"
                 android:inputType="text"
+                android:minHeight="120px"
                 android:text=""
-                android:minHeight="@dimen/et_user_edit_minheight"
                 android:textColorHint="@color/et_hint_color"
-                android:textSize="@dimen/et_hint_text_size" />
+                android:textSize="48px" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/main_hr_bg_margin"
-                android:layout_marginTop="@dimen/main_hr_bg_margin"
+                android:layout_height="3px"
                 android:background="@color/main_hr_bg_color" />
 
             <!-- 密码 -->
@@ -126,13 +125,13 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:drawableLeft="@mipmap/ic_pwd_ico"
-                android:drawablePadding="@dimen/et_drawable_padding_left"
+                android:drawablePadding="36px"
                 android:hint="@string/et_password_hint_str"
                 android:inputType="textPassword"
-                android:minHeight="@dimen/et_user_edit_minheight"
+                android:minHeight="120px"
                 android:text=""
                 android:textColorHint="@color/et_hint_color"
-                android:textSize="@dimen/et_hint_text_size" />
+                android:textSize="48px" />
         </LinearLayout>
 
         <!-- 添加 -->
@@ -140,37 +139,37 @@
         <Button
             android:id="@+id/b_add_people_button"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/btn_login_minheight"
+            android:layout_height="120px"
             android:layout_below="@id/ll_login_edit_box"
-            android:layout_marginLeft="@dimen/app_main_padding"
-            android:layout_marginRight="@dimen/app_main_padding"
-            android:layout_marginTop="@dimen/btn_add_user_margin"
+            android:layout_marginLeft="36px"
+            android:layout_marginRight="36px"
+            android:layout_marginTop="36px"
             android:background="@drawable/btn_add_user_bg_selector"
             android:text="@string/btn_add_user_str"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/btn_text_size"
+            android:textSize="48px"
             android:visibility="visible" />
 
         <!-- 正在扫描（waiting_area_str） 和巡检人员（inspectorattendant_text_str） -->
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/btn_add_user_margin"
+            android:layout_height="66px"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/main_view_margintop"
+            android:layout_marginTop="-66px"
             android:background="@drawable/txt_back_selector" />
 
         <TextView
-            android:paddingBottom="8dp"
             android:id="@+id/msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal"
-            android:paddingLeft="6dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="18px"
             android:text="@string/inspectorattendant_text_str"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/waiting_area_text_size" />
+            android:textSize="48px" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -180,8 +179,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/app_main_padding">
+            android:layout_marginTop="35px"
+            android:orientation="vertical">
 
             <!-- 登录人员缩略图 -->
 
@@ -190,91 +189,106 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/app_main_padding">
+                android:layout_marginLeft="30px"
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="110dp"
-                    android:layout_height="100dp">
+                <FrameLayout
+                    android:layout_width="325px"
+                    android:layout_height="325px">
 
-                    <ImageView
-                        android:id="@+id/user1_img"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@drawable/portrait_thum_bg"
-                        android:contentDescription="@null"
-                        android:padding="@dimen/portrait_thum_padding"
-                        android:src="@mipmap/ic_portrait_thum" />
+                    <RelativeLayout
+                        android:layout_width="265px"
+                        android:layout_height="265px"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            app:layout_auto_basewidth="height"
+                            android:id="@+id/user1_img"
+                            android:layout_width="265px"
+                            android:layout_height="265px"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/portrait_thum_bg"
+                            android:contentDescription="@null"
+                            android:padding="10px"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_portrait_thum" />
+
+                    </RelativeLayout>
 
                     <ImageButton
+                        app:layout_auto_basewidth="height"
                         android:id="@+id/ib_delete1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60px"
+                        android:layout_height="60px"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="260px"
                         android:background="@null"
                         android:contentDescription="@null"
                         android:src="@mipmap/icon_delete"
                         android:visibility="invisible" />
+                </FrameLayout>
 
-                </RelativeLayout>
+                <FrameLayout
+                    android:layout_width="325px"
+                    android:layout_height="325px">
 
-                <RelativeLayout
-                    android:layout_width="110dp"
-                    android:layout_height="100dp">
+                    <RelativeLayout
+                        android:layout_width="265px"
+                        android:layout_height="265px"
+                        android:layout_gravity="center">
 
-                    <ImageView
-                        android:id="@+id/user2_img"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@drawable/portrait_thum_bg"
-                        android:contentDescription="@null"
-                        android:padding="@dimen/portrait_thum_padding"
-                        android:src="@mipmap/ic_portrait_thum" />
+                        <ImageView
+                            app:layout_auto_basewidth="height"
+                            android:id="@+id/user2_img"
+                            android:layout_width="265px"
+                            android:layout_height="265px"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/portrait_thum_bg"
+                            android:contentDescription="@null"
+                            android:padding="10px"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_portrait_thum" />
+                    </RelativeLayout>
 
                     <ImageButton
+                        app:layout_auto_basewidth="height"
                         android:id="@+id/ib_delete2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60px"
+                        android:layout_height="60px"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="260px"
                         android:background="@null"
                         android:contentDescription="@null"
                         android:src="@mipmap/icon_delete"
                         android:visibility="invisible" />
-
-                </RelativeLayout>
-
+                </FrameLayout>
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/txt_user_layout"
-                android:layout_width="210dp"
+                android:layout_width="630px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:paddingBottom="10dp"
+                android:paddingBottom="30px"
                 android:visibility="visible">
 
                 <TextView
                     android:id="@+id/txt_loggin_first"
-                    android:layout_width="100dp"
+                    android:layout_width="300px"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/waiting_area_text_size"
+                    android:textSize="48px"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txt_loggin_second"
-                    android:layout_width="100dp"
+                    android:layout_width="300px"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/waiting_area_text_size"
+                    android:textSize="48px"
                     android:visibility="gone" />
             </RelativeLayout>
             <!-- 登录按钮 -->
@@ -282,11 +296,11 @@
             <Button
                 android:id="@+id/b_login_button"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/btn_login_minheight"
+                android:layout_height="120px"
                 android:background="@drawable/btn_login_bg_selector"
                 android:text="@string/login_str"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/btn_text_size" />
+                android:textSize="48px" />
         </LinearLayout>
     </RelativeLayout>
     <!-- 版权 -->
@@ -295,10 +309,10 @@
         android:id="@+id/tv_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/global_padding_top_bottom"
+        android:layout_marginBottom="18px"
         android:gravity="center"
-        android:visibility="visible"
         android:textColor="@color/sys_copyrights_text_color"
-        android:textSize="@dimen/sys_copyrights_text_size" />
+        android:textSize="38px"
+        android:visibility="visible" />
 
 </LinearLayout>

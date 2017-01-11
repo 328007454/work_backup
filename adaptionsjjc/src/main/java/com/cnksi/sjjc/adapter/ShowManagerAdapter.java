@@ -27,6 +27,7 @@ public class ShowManagerAdapter extends SimpleBindingAdatpter<String>{
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void convert(ViewDataBinding dataBinding, final String item, final int position) {
         setNameBinding((ShowNameBinding)dataBinding);
         nameBinding.getRoot().setTag(nameBinding);

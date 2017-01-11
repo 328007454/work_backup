@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="WeatherBinding">
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="36px" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyler_hori_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+
+        <ImageView
+            android:id="@+id/iv_select"
+            android:layout_width="28px"
+            android:layout_height="49px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="40px"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_arrow_right" />
+
+    </LinearLayout>
+</layout>

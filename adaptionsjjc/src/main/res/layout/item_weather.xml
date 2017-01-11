@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <RadioButton
+    <com.cnksi.sjjc.View.CustomRadioButton
         android:id="@+id/weather"
         style="@style/RadioButtonBaseStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:button="@null"
-        android:drawableLeft="@drawable/radio_button_selector"
-        android:textSize="@dimen/tv_text_size" />
+        android:clickable="true"
+        android:textSize="42px"
+        app:drawableLeft="@drawable/radio_button_selector"
+        app:drawableSize="48px" />
 
 </LinearLayout>

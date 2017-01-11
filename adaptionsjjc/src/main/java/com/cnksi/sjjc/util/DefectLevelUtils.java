@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.util;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
@@ -87,11 +88,14 @@ public class DefectLevelUtils {
 	{
 		int color;
 		if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
-			color =context.getResources().getColor(R.color.level_one);
+//			color =context.getResources().getColor(R.color.level_one);
+			color = ContextCompat.getColor(context,R.color.level_one);
 		} else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
-			color =context.getResources().getColor(R.color.level_two);
+//			color =context.getResources().getColor(R.color.level_two);
+			color = ContextCompat.getColor(context,R.color.level_two);
 		} else {
-			color =context.getResources().getColor(R.color.level_three);
+//			color =context.getResources().getColor(R.color.level_three);
+			color = ContextCompat.getColor(context,R.color.level_three);
 		}
 		return  color;
 	}

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    app:layout_auto_basewidth="height"
     android:layout_width="180px"
     android:layout_height="190px"
-    android:layout_marginLeft="10px"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="10px">
 
     <ImageView
         android:id="@+id/img_battery"
@@ -14,6 +15,7 @@
         android:scaleType="fitXY" />
 
     <TextView
+        app:layout_auto_baseheight="width"
         android:layout_marginTop="30px"
         android:id="@+id/image_num"
         android:layout_width="@dimen/new_text_width_and_height"

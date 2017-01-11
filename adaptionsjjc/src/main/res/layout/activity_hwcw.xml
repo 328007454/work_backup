@@ -111,7 +111,7 @@
                     android:paddingBottom="2px"
                     android:paddingLeft="20px"
                     app:icon_margin="20px"
-                    app:icon_src="@mipmap/ic_arrow_right"
+                    app:icon_src="@drawable/ic_arrow_right"
                     app:icon_width="60px"
                     app:label="@string/weather"
                     app:label_size="@dimen/tv_text_size"
@@ -172,12 +172,13 @@
                             android:textSize="@dimen/tv_text_size" />
 
                         <ImageView
+
                             android:id="@+id/select_device"
                             android:layout_width="60px"
                             android:layout_height="60px"
                             android:layout_gravity="center_vertical"
                             android:scaleType="centerInside"
-                            android:src="@mipmap/icon_arrow" />
+                            android:src="@drawable/ic_arrow_right" />
                     </LinearLayout>
 
 

@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,7 +29,8 @@ public class DialogBDZAdapter extends BaseAdapter<Bdz> {
     @Override
     public void convert(ViewHolder holder, final Bdz item, final int position) {
         TextView tvBDZ = holder.getView(R.id.tv_child_item);
-        tvBDZ.setTextColor(context.getResources().getColor(R.color.green_color));
+//        context.getResources().getColor(R.color.green_color)
+        tvBDZ.setTextColor(ContextCompat.getColor(context,R.color.green_color));
         tvBDZ.setText(item.name);
         holder.getRootView().setOnClickListener(new View.OnClickListener() {
             @Override

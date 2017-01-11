@@ -26,6 +26,7 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
         this.itemClickListener = itemClickListener;
     }
     @Override
+    @SuppressWarnings("unchecked")
     public void convert(ViewDataBinding dataBinding, final String item, final int position) {
         setNameBinding((ShowNameBinding)dataBinding);
         nameBinding.getRoot().setTag(nameBinding);

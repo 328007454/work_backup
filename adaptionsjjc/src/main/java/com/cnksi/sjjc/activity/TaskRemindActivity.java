@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -18,6 +19,7 @@ import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.fragment.TaskRemindFragment;
 import com.cnksi.sjjc.inter.OnFragmentEventListener;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -163,11 +165,12 @@ public class TaskRemindActivity extends BaseActivity {
         // 设置Tab Indicator的高度
         mPagerTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics));
         // 设置Tab标题文字的大小
-        mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, mCurrentActivity.getResources().getDimensionPixelOffset(R.dimen.tab_strip_text_size), mDisplayMetrics));
-        // 设置Tab Indicator的颜色
-        mPagerTabStrip.setIndicatorColor(getResources().getColor(R.color.tab_strip_text_color));
+        int textSize = AutoUtils.getPercentHeightSizeBigger((int) mCurrentActivity.getResources().getDimension(R.dimen.tab_strip_text_size_px));
+        mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, textSize, mDisplayMetrics));
+        // 设置Tab Indicator的颜色getResources().getColor(R.color.tab_strip_text_color)
+        mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(_this,R.color.tab_strip_text_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-        mPagerTabStrip.setSelectedTextColor(getResources().getColor(R.color.tab_strip_text_color));
+        mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(_this,R.color.tab_strip_text_color));
         // 取消点击Tab时的背景色
         mPagerTabStrip.setTabBackground(0);
     }

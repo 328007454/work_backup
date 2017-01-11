@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,23 +23,24 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/global_padding_top_bottom"
-            android:layout_marginLeft="@dimen/global_padding_half_left_right"
-            android:layout_marginRight="@dimen/global_padding_left_right"
-            android:layout_marginTop="@dimen/global_padding_top_bottom" >
+            android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
+            android:layout_marginLeft="@dimen/global_padding_half_left_right_px"
+            android:layout_marginRight="@dimen/global_padding_left_right_px"
+            android:layout_marginTop="@dimen/global_padding_top_bottom_px" >
 
             <TextView
+                app:layout_auto_baseheight="width"
                 android:id="@+id/tv_task_simple_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/task_simple_name_minheight_px"
+                android:layout_height="@dimen/task_simple_name_minheight_px"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/comprehensive_task_name_tips_background"
                 android:gravity="center"
-                android:minHeight="@dimen/task_simple_name_minheight"
-                android:minWidth="@dimen/task_simple_name_minheight"
+                android:minHeight="@dimen/task_simple_name_minheight_px"
+                android:minWidth="@dimen/task_simple_name_minheight_px"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/global_text_size" />
+                android:textSize="@dimen/global_text_size_px" />
 
             <ImageView
                 android:id="@+id/iv_upload"
@@ -46,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/global_padding_left_right"
+                android:layout_marginRight="@dimen/global_padding_left_right_px"
                 android:contentDescription="@null" />
 
             <LinearLayout
@@ -70,7 +72,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:textColor="@color/global_text_color"
-                        android:textSize="@dimen/global_text_size" />
+                        android:textSize="@dimen/global_text_size_px" />
                 </RelativeLayout>
 
                 <TextView
@@ -78,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/global_gray_text_color"
-                    android:textSize="@dimen/inspection_time_text_size" />
+                    android:textSize="@dimen/inspection_time_text_size_px" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
