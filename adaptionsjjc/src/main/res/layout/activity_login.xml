@@ -166,7 +166,6 @@
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal"
             android:paddingBottom="8dp"
-            android:paddingLeft="18px"
             android:text="@string/inspectorattendant_text_str"
             android:textColor="@android:color/white"
             android:textSize="48px" />
@@ -189,14 +188,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="30px"
                 android:orientation="horizontal">
 
                 <FrameLayout
+                    app:layout_auto_basewidth="height"
                     android:layout_width="325px"
                     android:layout_height="325px">
 
                     <RelativeLayout
+                        app:layout_auto_basewidth="height"
                         android:layout_width="265px"
                         android:layout_height="265px"
                         android:layout_gravity="center">
@@ -229,10 +229,12 @@
                 </FrameLayout>
 
                 <FrameLayout
+                    app:layout_auto_basewidth="height"
                     android:layout_width="325px"
                     android:layout_height="325px">
 
                     <RelativeLayout
+                        app:layout_auto_basewidth="height"
                         android:layout_width="265px"
                         android:layout_height="265px"
                         android:layout_gravity="center">
@@ -269,14 +271,12 @@
                 android:layout_width="650px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="30px"
                 android:paddingBottom="30px"
                 android:visibility="visible">
 
                 <TextView
-                    android:layout_marginLeft="20px"
                     android:id="@+id/txt_loggin_first"
-                    android:layout_width="300px"
+                    android:layout_width="325px"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/white"
@@ -285,9 +285,9 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:text="1233"
+                    android:text=""
                     android:id="@+id/txt_loggin_second"
-                    android:layout_width="300px"
+                    android:layout_width="325px"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center"

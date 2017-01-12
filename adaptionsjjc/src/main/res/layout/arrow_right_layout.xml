@@ -9,8 +9,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
         <ImageView
             android:id="@+id/arrow"
             android:layout_width="28px"

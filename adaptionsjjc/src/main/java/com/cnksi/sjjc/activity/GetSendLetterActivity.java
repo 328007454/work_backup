@@ -30,7 +30,7 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.WeatherView1;
+import com.cnksi.sjjc.View.WeatherView;
 import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Spacing;
@@ -66,7 +66,7 @@ public class GetSendLetterActivity extends BaseActivity {
     private final static int ACTION_IMAGE = 0x300;
 
     @ViewInject(R.id.weatherView1)
-    private WeatherView1 weather;
+    private WeatherView weather;
 
     @ViewInject(R.id.tab_strip)
     private HorizontalScrollView horizontalScrollView;

@@ -49,7 +49,7 @@
             app:icon_margin="25px"
             app:icon_src="@drawable/ic_arrow_right"
             app:label="当前天气             "
-            app:label_size="44px"
+            app:label_size="36px"
             app:selector="@array/weather" />
 
         <LinearLayout

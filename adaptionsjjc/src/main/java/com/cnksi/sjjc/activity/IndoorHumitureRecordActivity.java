@@ -14,7 +14,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.WeatherView1;
+import com.cnksi.sjjc.View.WeatherView;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.bean.Task;
@@ -37,7 +37,7 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
     private TextView tvTitle;
 
     @ViewInject(R.id.weatherView1)
-    private WeatherView1 weatherView;
+    private WeatherView weatherView;
 
     //当前温度
     @ViewInject(R.id.et_current_humidity)

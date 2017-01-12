@@ -28,6 +28,7 @@ import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.databinding.ArrowBinding;
 import com.cnksi.sjjc.databinding.WeatherTitleBinding;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -121,17 +122,19 @@ public class WeatherView extends LinearLayout {
         this.setOrientation(HORIZONTAL);
         if (bingding == null) {
             bingding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.arrow_right_layout, null, false);
+            AutoUtils.autoSize(bingding.getRoot());
             titleBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.weather_title_layout, null, false);
+            AutoUtils.autoSize(titleBinding.getRoot());
         }
 
 //        mLabel = new TextView(getContext());
         mLabel = titleBinding.title;
-        LayoutParams leftLayoutParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        LayoutParams leftLayoutParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         mLabel.setText(mLabelStr);
 //        mLabel.setGravity(Gravity.CENTER);
         mLabel.setTextColor(mLabelColor);
         mLabel.setPadding(mLabelPaddingLeft, 0, 0, 0);
-
+        mLabel.setLayoutParams(leftLayoutParam);
         mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelSize);
 //        this.addView(mLabel, leftLayoutParam);
         this.addView(titleBinding.getRoot());
