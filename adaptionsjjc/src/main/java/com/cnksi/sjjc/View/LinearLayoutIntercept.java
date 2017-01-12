@@ -4,11 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.zhy.autolayout.AutoLinearLayout;
+
 /**
  * Created by han on 2017/1/7.
  */
 
-public class LinearLayoutIntercept extends com.zhy.autolayout.AutoLinearLayout {
+public class LinearLayoutIntercept extends AutoLinearLayout {
     public LinearLayoutIntercept(Context context) {
         this(context,null);
     }

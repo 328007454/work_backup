@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.cnksi.sjjc.adapter.BaseAdapter;
 import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.databinding.ArrowBinding;
 import com.cnksi.sjjc.databinding.WeatherTitleBinding;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.Arrays;
@@ -73,7 +71,6 @@ public class WeatherView extends LinearLayout {
     private int iconWidth;
 
     private int iconMargin;
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
 
     public WeatherView(Context context) {
         this(context, null);
@@ -122,58 +119,24 @@ public class WeatherView extends LinearLayout {
         this.setOrientation(HORIZONTAL);
         if (bingding == null) {
             bingding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.arrow_right_layout, null, false);
-            AutoUtils.autoSize(bingding.getRoot());
+            AutoUtils.auto(bingding.getRoot());
             titleBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.weather_title_layout, null, false);
-            AutoUtils.autoSize(titleBinding.getRoot());
+            AutoUtils.auto(titleBinding.getRoot());
         }
-
-//        mLabel = new TextView(getContext());
-        mLabel = titleBinding.title;
-        LayoutParams leftLayoutParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        mLabel.setText(mLabelStr);
-//        mLabel.setGravity(Gravity.CENTER);
-        mLabel.setTextColor(mLabelColor);
-        mLabel.setPadding(mLabelPaddingLeft, 0, 0, 0);
-        mLabel.setLayoutParams(leftLayoutParam);
-        mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelSize);
-//        this.addView(mLabel, leftLayoutParam);
-        this.addView(titleBinding.getRoot());
-
         mRecyclerView = new RecyclerView(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         adapter1 = new WeatherAdapter(mRecyclerView, Arrays.asList(weatherSelector), R.layout.item_weather);
         mRecyclerView.setAdapter(adapter1);
         LayoutParams middleLayoutParam = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         middleLayoutParam.weight = 1;
-
         this.addView(mRecyclerView, middleLayoutParam);
-
-//        mIcon = new ImageView(getContext());
-//        mIcon.setImageResource(iconResource);
-//        mIcon.setScaleType(ImageView.ScaleType.FIT_XY);
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(iconWidth,iconHeight);
-//        layoutParams.setMargins(iconWidth,0,0,0);
-//        mIcon.setLayoutParams(layoutParams);
-//        this.addView(mIcon);
         this.addView(bingding.getRoot());
-
-
-//        mIcon.setPadding(0, 10, 0, 10);
-//        LayoutParams rightLayoutParam = new LayoutParams(AutoUtils.getPercentWidthSizeBigger(29), AutoUtils.getPercentHeightSizeBigger(48));
-//        LayoutParams rightLayoutParam = new LayoutParams(29, 48);
-//        LayoutParams rightLayoutParam = new LayoutParams(iconWidth, LayoutParams.MATCH_PARENT);
-//        rightLayoutParam.gravity = Gravity.CENTER_VERTICAL;
-//        rightLayoutParam.rightMargin = iconMargin;
-//        rightLayoutParam.leftMargin=iconMargin;
-//        this.addView(mIcon, rightLayoutParam);
         bingding.arrow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 showWeatherDialog();
             }
         });
-//        int textSize = AutoUtils.getPercentWidthSizeBigger(mLabelSize);
-//        mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
     }
 
     class WeatherAdapter extends BaseRecyclerAdapter<String> {

@@ -212,7 +212,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/global_padding_left_right_px"
                 android:textColor="@color/global_gray_text_color"
-                android:textSize="48px"
+                android:textSize="@dimen/device_item_name_text_size_1"
                 />
         </LinearLayout>
 

@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/line_color"
-                    android:dividerHeight="@dimen/line_half_width"
+                    android:dividerHeight="@dimen/line_half_width_px"
                     android:orientation="vertical"
                     android:showDividers="middle" />
             </ScrollView>
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
+
                 android:layout_marginLeft="@dimen/global_padding_left_right_px"
                 android:layout_marginRight="@dimen/global_padding_left_right_px"
                 android:layout_marginTop="@dimen/global_padding_top_bottom_px"
@@ -91,8 +91,9 @@
                     android:id="@+id/btn_pre"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/global_padding_left_right_px"
+                    android:layout_height="@dimen/button_minheight_px"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
                     android:layout_weight="1"
                     android:background="@drawable/grass_green_button_background_selector"
                     android:drawableLeft="@mipmap/ic_pre_page"
@@ -107,8 +108,9 @@
                     android:id="@+id/btn_next"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/global_padding_left_right_px"
+                    android:layout_height="@dimen/button_minheight_px"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
                     android:layout_marginLeft="@dimen/global_padding_left_right_px"
                     android:layout_weight="1"
                     android:background="@drawable/grass_green_button_background_selector"
@@ -141,6 +143,7 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/shadom_1"
         android:layout_width="match_parent"

@@ -43,9 +43,9 @@ public class TaskRemindAdapter extends BaseAdapter<Task> {
         if (item.isFinish()) {
             imageUpload.setVisibility(View.VISIBLE);
             if ("Y".equalsIgnoreCase(item.isUpload))
-                imageUpload.setImageResource(R.mipmap.ic_upload);
+                imageUpload.setImageResource(R.drawable.ic_upload);
             else {
-                imageUpload.setImageResource(R.mipmap.ic_no_upload);
+                imageUpload.setImageResource(R.drawable.ic_no_upload);
             }
         } else {
             imageUpload.setVisibility(View.GONE);

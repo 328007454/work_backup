@@ -81,7 +81,7 @@ public class ChartDialog {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 //        context.getResources().getColor(R.color.mpchart_asia_color)
         xAxis.setTextColor(ContextCompat.getColor(context,R.color.mpchart_asia_color));
-        xAxis.setTextSize(8f);
+        xAxis.setTextSize(10);
         xAxis.setDrawGridLines(false);
 
         YAxis yAxis = chart.getAxisLeft();
@@ -90,7 +90,7 @@ public class ChartDialog {
         yAxis.setDrawZeroLine(false);
         yAxis.setDrawLimitLinesBehindData(true);
         yAxis.setTextColor(ContextCompat.getColor(context,R.color.mpchart_asia_color));
-        yAxis.setTextSize(8f);
+        yAxis.setTextSize(10);
 
         chart.getAxisRight().setEnabled(false);
         chart.animateXY(3000, 3000);
@@ -118,7 +118,6 @@ public class ChartDialog {
             dataSet.setFillColor(ContextCompat.getColor(context,yColors.get(index)));
             dataSet.setHighLightColor(ContextCompat.getColor(context,yColors.get(index)));
             dataSet.setDrawCircleHole(false);
-
             dataSets.add(dataSet);
             index++;
 

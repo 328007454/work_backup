@@ -43,9 +43,10 @@
                 android:textSize="@dimen/global_text_size_px" />
 
             <ImageView
+                android:scaleType="centerInside"
                 android:id="@+id/iv_upload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="52px"
+                android:layout_height="43px"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/global_padding_left_right_px"
