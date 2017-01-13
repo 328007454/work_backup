@@ -29,7 +29,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_sbxs_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -55,7 +55,8 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_check_background"
                 android:padding="50px"
-                android:id="@+id/imageView2" />
+                android:id="@+id/imageView2"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -81,7 +82,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_switch_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -116,7 +117,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_maintain_background"
                 android:padding="50px"
-               />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -142,7 +143,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_ywyth_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -168,7 +169,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_dzhczp_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -204,7 +205,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_zxxs_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -230,7 +231,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_jyhpj_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -256,7 +257,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_jyhys_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -293,7 +294,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_gzp_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -319,7 +320,7 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_syncdata_background"
                 android:padding="50px"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -345,7 +346,8 @@
                 android:layout_height="250px"
                 android:background="@drawable/launcher_sbys_background"
                 android:padding="50px"
-                android:src="@mipmap/launcher_sbys"/>
+                android:src="@mipmap/launcher_sbys"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -367,7 +369,8 @@
             <ImageView
                 android:layout_width="250px"
                 android:layout_height="250px"
-                android:background="@mipmap/launcher_sbys"/>
+                android:background="@mipmap/launcher_sbys"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"

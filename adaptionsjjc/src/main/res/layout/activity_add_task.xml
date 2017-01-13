@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL, AndroidElementNotAllowed, AndroidElementNotAllowed -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_root_container"
@@ -20,6 +21,7 @@
             android:background="@drawable/bottom_line_background_selector"
             android:orientation="horizontal">
 
+            <!--suppress AndroidElementNotAllowed -->
             <TextView
                 android:id="@+id/tv_select_power_station"
                 android:layout_width="0dp"
@@ -32,6 +34,7 @@
                 android:textColorHint="@color/global_gray_text_color"
                 android:textSize="@dimen/tv_text_size" />
 
+            <!--suppress AndroidElementNotAllowed -->
             <ImageView
                 android:layout_width="28px"
                 android:layout_height="49px"

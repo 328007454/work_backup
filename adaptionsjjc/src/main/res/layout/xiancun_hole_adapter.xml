@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -67,7 +68,7 @@
                 android:id="@+id/img_discoverhole_pic"
                 android:layout_marginLeft="30px"
                 android:scaleType="fitXY"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 app:layout_auto_baseheight="width"
@@ -118,7 +119,7 @@
                 android:layout_width="365px"
                 android:layout_height="245px"
                 android:scaleType="fitXY"
-               />
+                tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/tv_clearhole_num"

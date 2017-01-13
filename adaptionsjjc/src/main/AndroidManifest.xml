@@ -104,15 +104,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".activity.DifferentialMotionRecordActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
-        <activity
             android:name=".activity.DifferentialMotionRecordActivity2"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.AllDeviceListActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -151,7 +146,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.HwcwPriviewActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -176,47 +171,47 @@
             android:name=".activity.WorkTicketActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.WorkPiaoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.WorkPlanInformationActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.JYHPJActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.PJMainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.HongWaiCeWenReportActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.SignNameActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".activity.TypeListActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".sync.DataSync"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- 室内温湿度报告 -->
         <activity
             android:name=".activity.JZLFenJieKaiGuanReportActivity"
@@ -248,7 +243,7 @@
             android:name=".activity.GetSendLetterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.GetSendLetterReportActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"

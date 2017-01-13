@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     app:layout_auto_basewidth="height"
     android:layout_width="180px"
     android:layout_height="190px"
@@ -7,6 +8,7 @@
     android:layout_marginLeft="10px">
 
     <ImageView
+        tools:ignore="ContentDescription"
         android:id="@+id/img_battery"
         android:layout_width="150px"
         android:layout_height="100px"

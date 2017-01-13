@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--android:layout_marginTop="@dimen/report_margin_top"-->
-<LinearLayout android:id="@+id/ll_report_content_container"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_report_content_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -473,7 +474,7 @@
                             android:layout_marginTop="15px"
                             android:scaleType="fitXY"
 
-                            />
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             app:layout_auto_baseheight="width"
@@ -521,7 +522,7 @@
                             android:layout_marginRight="8px"
                             android:layout_marginTop="15px"
                             android:scaleType="fitXY"
-                            />
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             app:layout_auto_baseheight="width"
@@ -569,7 +570,7 @@
                             android:layout_marginRight="8px"
                             android:layout_marginTop="15px"
                             android:scaleType="fitXY"
-                            />
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             app:layout_auto_baseheight="width"

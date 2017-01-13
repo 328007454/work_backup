@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -133,7 +134,8 @@
                     android:layout_marginLeft="15px"
                     android:layout_marginRight="15px"
                     android:layout_marginBottom="15px"
-                    android:layout_alignParentTop="true" />
+                    android:layout_alignParentTop="true"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/tv_hole_num"

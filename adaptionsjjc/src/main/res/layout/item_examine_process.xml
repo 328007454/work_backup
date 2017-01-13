@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/layout_height"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="2px"
     android:background="@color/white"
     android:gravity="center_vertical"
     android:paddingRight="20px">
 
     <ImageView
+        tools:ignore="ContentDescription"
         android:id="@+id/iv_sign_find_hole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +39,8 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/iv_take_pic"
             android:scaleType="fitXY"
-            app:layout_auto_baseheight="width" />
+            app:layout_auto_baseheight="width"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_hole_num"

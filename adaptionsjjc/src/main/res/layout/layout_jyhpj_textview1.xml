@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="horizontal">
-    
+
     <ImageView
+        tools:ignore="ContentDescription"
         android:id="@+id/have_koufen"
+        android:layout_width="35px"
+        android:layout_height="35px"
         android:layout_alignParentRight="true"
         android:src="@mipmap/ic_task_unfinish"
-        android:layout_width="35px"
-        android:visibility="gone"
-        android:layout_height="35px" />
-<TextView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:text="test测试"
-    android:textSize="@dimen/tv_text_size"
-    android:gravity="center_vertical"
-    android:id="@+id/text"
-    android:inputType="textMultiLine"
-    android:paddingLeft="@dimen/paddingLeft"
-    android:layout_toLeftOf="@+id/marg"
-    android:textColor="@color/dark_text"
-    android:padding="@dimen/paddingLeft"
+        android:visibility="gone" />
 
-     />
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/marg"
+        android:gravity="center_vertical"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/paddingLeft"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:text="test测试"
+        android:textColor="@color/dark_text"
+        android:textSize="@dimen/tv_text_size"
+
+        />
 
     <ImageView
         android:id="@+id/marg"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
         android:layout_width="@dimen/icon"
         android:layout_height="@dimen/icon"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:src="@mipmap/icon_arrow_right"
-        />
+        tools:ignore="ContentDescription" />
 </RelativeLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -93,7 +94,8 @@
                     android:layout_height="90px"
                     android:layout_marginRight="10px"
                     android:layout_marginTop="15px"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     app:layout_auto_baseheight="width"

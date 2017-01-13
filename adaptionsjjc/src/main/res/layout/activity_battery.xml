@@ -51,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="15dp"
-                android:background="@mipmap/icon_up" />
+                android:background="@mipmap/icon_up"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <LinearLayout
@@ -594,7 +595,8 @@
                 android:layout_width="360px"
                 android:layout_height="4px"
                 android:layout_marginLeft="80px"
-                android:background="@color/red_unpressed_color" />
+                android:background="@color/red_unpressed_color"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <GridView

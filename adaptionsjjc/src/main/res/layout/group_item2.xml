@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -19,5 +20,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:background="@color/line_color"
-        android:layout_height="@dimen/line_half_width_px" />
+        android:layout_height="@dimen/line_half_width_px"
+        tools:ignore="ContentDescription" />
 </LinearLayout>

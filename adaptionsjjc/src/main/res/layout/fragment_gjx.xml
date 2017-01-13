@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/gray_background_color"
     android:layout_height="match_parent">
@@ -32,7 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="88px"
             android:layout_toRightOf="@+id/tv_pics"
-            />
+            tools:ignore="ContentDescription" />
         <TextView
             android:id="@+id/tv_pic_num"
             android:layout_width="@dimen/new_text_width_and_height"
@@ -100,7 +101,7 @@
             android:layout_width="@dimen/icon"
             android:layout_height="@dimen/icon"
             android:src="@mipmap/icon_record_audio"
-            />
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <!--录像-->
@@ -135,7 +136,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@mipmap/ic_yellow_unfinish" />
+                android:src="@mipmap/ic_yellow_unfinish"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,7 +151,8 @@
                     android:layout_width="28px"
                     android:layout_height="26px"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/icon_luxiang" />
+                    android:src="@mipmap/icon_luxiang"
+                    tools:ignore="ContentDescription" />
 
                 <View
                     android:layout_width="0dp"
@@ -175,6 +178,6 @@
             android:layout_width="@dimen/icon"
             android:layout_height="@dimen/icon"
             android:src="@mipmap/icon_record_vedio"
-            />
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 </LinearLayout>

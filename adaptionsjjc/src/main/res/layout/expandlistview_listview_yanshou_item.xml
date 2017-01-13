@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
                 android:descendantFocusability="blocksDescendants"
@@ -44,7 +45,7 @@
         android:layout_weight="1"
         android:background="@mipmap/icon_notshow"
         android:focusable="false"
-        />
+        tools:ignore="ContentDescription" />
 
 
     <Button
@@ -68,7 +69,8 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/btn_yanshou"
         android:gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
     <View
         android:layout_alignParentBottom="true"
         android:id="@+id/view"

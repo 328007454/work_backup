@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="HwcwBinding">
@@ -178,7 +179,8 @@
                             android:layout_height="60px"
                             android:layout_gravity="center_vertical"
                             android:scaleType="centerInside"
-                            android:src="@drawable/ic_arrow_right" />
+                            android:src="@drawable/ic_arrow_right"
+                            tools:ignore="ContentDescription" />
                     </LinearLayout>
 
 
@@ -242,7 +244,8 @@
                             android:id="@+id/iv_show_temp1_picture"
                             android:layout_width="80px"
                             android:layout_height="80px"
-                            android:layout_centerVertical="true" />
+                            android:layout_centerVertical="true"
+                            tools:ignore="ContentDescription" />
 
                         <ImageView
                             android:id="@+id/ibtn_temp1"
@@ -291,7 +294,7 @@
                             android:layout_height="80px"
                             android:layout_centerVertical="true"
 
-                            />
+                            tools:ignore="ContentDescription" />
 
                         <ImageView
                             android:id="@+id/ibtn_temp"
@@ -540,7 +543,8 @@
                             android:layout_width="80px"
                             android:layout_height="80px"
                             android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@+id/ibtn_take_picture" />
+                            android:layout_toLeftOf="@+id/ibtn_take_picture"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             android:id="@+id/tv_pic_num"
