@@ -8,25 +8,25 @@
     <LinearLayout
         android:layout_width="840px"
         android:layout_height="wrap_content"
-        android:background="@drawable/fillet_white"
+        android:background="@drawable/fragment_record_defect_content_green_title_background"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="112px"
-            android:background="@drawable/fillet_green"
+            android:background="@drawable/bdz_background_select"
             android:gravity="center"
-            android:paddingLeft="@dimen/global_padding_half_left_right"
-            android:paddingRight="@dimen/global_padding_half_left_right"
+            android:paddingLeft="@dimen/global_padding_half_left_right_px"
+            android:paddingRight="@dimen/global_padding_half_left_right_px"
             android:text="@string/gp_remark"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="44px" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120px"
-            android:layout_marginTop="-3dp"
+            android:layout_marginTop="-9px"
             android:background="@color/gray_background_color"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -52,20 +52,20 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="center"
-                android:minHeight="@dimen/edit_text_minheight"
-                android:minWidth="@dimen/edit_text_minwidth"
+                android:minHeight="@dimen/edit_text_minheight_px"
+                android:minWidth="@dimen/edit_text_minwidth_px"
                 android:text="@string/cannot_see_copyvalue"
                 android:textColor="@color/green_color"
                 android:textColorHint="@color/global_gray_text_color"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/global_text_size" />
+                android:textSize="@dimen/global_text_size_px" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/global_padding_top_bottom"
-            android:layout_marginTop="@dimen/global_padding_top_bottom"
+            android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
+            android:layout_marginTop="@dimen/global_padding_top_bottom_px"
             android:orientation="horizontal" >
 
             <Button
@@ -81,7 +81,7 @@
                 android:gravity="center"
                 android:text="@string/dialog_cancle_str"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/global_text_size" />
+                android:textSize="@dimen/global_text_size_px" />
 
             <Button
                 android:id="@+id/btn_sure"
@@ -96,7 +96,7 @@
                 android:gravity="center"
                 android:text="@string/dialog_sure_str"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/global_text_size" />
+                android:textSize="@dimen/global_text_size_px" />
         </LinearLayout>
     </LinearLayout>
 

@@ -10,14 +10,15 @@
     <LinearLayout
         android:layout_width="840px"
         android:layout_height="wrap_content"
-        android:background="@drawable/fillet_white"
+        android:background="@drawable/fragment_record_defect_content_green_title_background"
         android:orientation="vertical">
 
         <TextView
+
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="112px"
-            android:background="@drawable/fillet_green"
+            android:background="@drawable/bdz_background_select"
             android:gravity="center"
             android:paddingLeft="@dimen/global_padding_half_left_right_px"
             android:paddingRight="@dimen/global_padding_half_left_right_px"

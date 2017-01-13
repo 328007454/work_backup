@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/dialog_divider_margin_top" >
+    android:paddingBottom="@dimen/dialog_divider_margin_top_px" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/dialog_content_margin"
-        android:layout_marginRight="@dimen/dialog_content_margin"
+        android:layout_marginLeft="@dimen/dialog_content_margin_px"
+        android:layout_marginRight="@dimen/dialog_content_margin_px"
         android:background="@drawable/core_dialog_background"
         android:orientation="vertical" >
 
@@ -18,10 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:minHeight="@dimen/dialog_button_minheight"
+            android:minHeight="@dimen/dialog_button_minheight_px"
             android:text="@string/select_time_str"
             android:textColor="@color/dialog_title_text_color"
-            android:textSize="@dimen/dialog_title_text_size" />
+            android:textSize="@dimen/dialog_title_text_size_px" />
 
         <LinearLayout
             android:id="@+id/ll_date_container"
@@ -29,13 +29,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dialog_content_margin"
-            android:paddingRight="@dimen/dialog_content_margin" />
+            android:paddingLeft="@dimen/dialog_content_margin_px"
+            android:paddingRight="@dimen/dialog_content_margin_px" />
 
         <TextView
             android:id="@+id/divider_line"
             style="@style/Divider_horizontal"
-            android:layout_marginTop="@dimen/dialog_divider_margin_top" />
+            android:layout_marginTop="@dimen/dialog_divider_margin_top_px" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,10 +50,10 @@
                 android:background="@drawable/dialog_left_button_background_selector"
                 android:clickable="true"
                 android:gravity="center"
-                android:minHeight="@dimen/dialog_button_minheight"
+                android:minHeight="@dimen/dialog_button_minheight_px"
                 android:text="@string/dialog_cancel_text_str"
                 android:textColor="@color/dialog_cancel_button_text_color"
-                android:textSize="@dimen/dialog_button_text_size" />
+                android:textSize="@dimen/dialog_button_text_size_px" />
 
             <TextView
                 android:id="@+id/divider"
@@ -68,10 +68,10 @@
                 android:background="@drawable/dialog_right_button_background_selector"
                 android:clickable="true"
                 android:gravity="center"
-                android:minHeight="@dimen/dialog_button_minheight"
+                android:minHeight="@dimen/dialog_button_minheight_px"
                 android:text="@string/dialog_confirm_text_str"
                 android:textColor="@color/dialog_confirm_button_text_color"
-                android:textSize="@dimen/dialog_button_text_size" />
+                android:textSize="@dimen/dialog_button_text_size_px" />
         </LinearLayout>
     </LinearLayout>
 

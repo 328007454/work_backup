@@ -48,5 +48,9 @@
     <dimen name="side_bar_width">20dp</dimen>
     <dimen name="side_bar_text_size">14sp</dimen>
     <dimen name="tab_strip_text_size_px">55px</dimen>
-
+    <dimen name="dialog_divider_margin_top_px">24px</dimen>
+    <dimen name="dialog_button_minheight_px">120px</dimen>
+    <dimen name="dialog_content_margin_px">24px</dimen>
+    <dimen name="dialog_title_text_size_px">48px</dimen>
+    <dimen name="dialog_button_text_size_px">44px</dimen>
 </resources>
