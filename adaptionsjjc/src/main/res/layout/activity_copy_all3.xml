@@ -81,10 +81,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-
                 android:layout_marginLeft="@dimen/global_padding_left_right_px"
                 android:layout_marginRight="@dimen/global_padding_left_right_px"
                 android:layout_marginTop="@dimen/global_padding_top_bottom_px"
+                android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
                 android:orientation="horizontal">
 
                 <Button
@@ -93,6 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_minheight_px"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/global_padding_top_bottom_px"
                     android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
                     android:layout_weight="1"
                     android:background="@drawable/grass_green_button_background_selector"
@@ -110,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_minheight_px"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/global_padding_top_bottom_px"
                     android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
                     android:layout_marginLeft="@dimen/global_padding_left_right_px"
                     android:layout_weight="1"

@@ -35,7 +35,7 @@ public class UserService {
     public Users findUserByNameAndPwd(String username, String pwd) {
         Users t = null;
         try {
-            t = CustomApplication.getDbManager().selector(Users.class).expr("lower(" + Users.ACCOUNT + ") = '" + username.toLowerCase(Locale.CHINA) + "'").and(Users.PWD, "=", pwd).or(Users.OLDPWD,"=",pwd).findFirst();
+            t = CustomApplication.getDbManager().selector(Users.class).expr("lower(" + Users.ACCOUNT + ") = '" + username.toLowerCase(Locale.CHINA) + "'").and(Users.PWD, "=", pwd).expr("and (pwd = '"+ pwd+"' or old_pwd = '"+ pwd+"') ").findFirst();
         } catch (DbException e) {
             e.printStackTrace();
         }

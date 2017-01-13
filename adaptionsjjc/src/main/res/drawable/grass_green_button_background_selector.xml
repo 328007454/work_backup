@@ -2,12 +2,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true"><shape>
-            <corners android:radius="@dimen/corner_radius" />
+            <corners android:radius="@dimen/corner_radius_px" />
 
             <solid android:color="@color/grass_green_pressed_color" />
         </shape></item>
     <item android:state_pressed="false"><shape>
-            <corners android:radius="@dimen/corner_radius" />
+            <corners android:radius="@dimen/corner_radius_px" />
 
             <solid android:color="@color/grass_green_unpressed_color" />
         </shape></item>

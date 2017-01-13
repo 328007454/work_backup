@@ -138,7 +138,7 @@ public class WeatherView1 extends LinearLayout {
         mLabelSize = AutoUtils.getPercentHeightSizeBigger(mLabelSize);
         mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelSize);
 //        this.addView(mLabel, leftLayoutParam);
-        this.addView(titleBinding.getRoot());
+//        this.addView(titleBinding.getRoot());
 
         mRecyclerView = new RecyclerView(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));

@@ -376,4 +376,5 @@
     <dimen name="device_item_name_padding_right_px">36px</dimen>
     <dimen name="edit_text_minheight_px">105px</dimen>
     <dimen name="edit_text_minwidth_px">150px</dimen>
+    <dimen name="corner_radius_px">9px</dimen>
 </resources>
