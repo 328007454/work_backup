@@ -14,7 +14,7 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.WeatherView;
+import com.cnksi.sjjc.View.WeatherView1;
 import com.cnksi.sjjc.bean.Report;
 
 import org.xutils.ex.DbException;
@@ -33,7 +33,7 @@ public class CopyBaseDataActivity extends BaseActivity {
     private TextView tvTitle;
 
     @ViewInject(R.id.weatherView1)
-    private WeatherView weatherView;
+    private WeatherView1 weatherView;
 
     //当前温度
     @ViewInject(R.id.et_current_humidity)
