@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="390px"
-        android:padding="@dimen/app_main_padding">
+        android:padding="@dimen/app_main_padding_px">
 
         <!-- logo -->
 
@@ -64,7 +64,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="705px">
+        android:layout_height="650px">
 
         <!-- 遮挡 -->
         <!-- 登录框 -->
@@ -74,8 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="36px"
-            android:layout_marginRight="@dimen/app_main_padding"
-            android:layout_marginTop="36px"
+            android:layout_marginRight="@dimen/app_main_padding_px"
+            android:layout_marginTop="20px"
             android:background="@drawable/login_box_bg"
             android:orientation="vertical"
             android:padding="36px"
@@ -143,7 +143,7 @@
             android:layout_below="@id/ll_login_edit_box"
             android:layout_marginLeft="36px"
             android:layout_marginRight="36px"
-            android:layout_marginTop="36px"
+            android:layout_marginTop="30px"
             android:background="@drawable/btn_add_user_bg_selector"
             android:text="@string/btn_add_user_str"
             android:textColor="@android:color/white"
@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal"
-            android:paddingBottom="8dp"
+            android:paddingBottom="24px"
             android:text="@string/inspectorattendant_text_str"
             android:textColor="@android:color/white"
             android:textSize="48px" />
