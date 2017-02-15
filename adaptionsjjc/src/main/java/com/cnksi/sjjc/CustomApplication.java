@@ -13,6 +13,10 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.crash.CrashHandler;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
+import com.cnksi.sjjc.bean.HoleRecord;
+import com.cnksi.sjjc.bean.PreventionRecord;
+import com.cnksi.sjjc.bean.ReportCdbhcl;
+import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.XZip;
 import com.iflytek.cloud.SpeechConstant;
@@ -21,6 +25,7 @@ import com.tendcloud.tenddata.TCAgent;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import org.xutils.DbManager;
+import org.xutils.ex.DbException;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
@@ -134,7 +139,7 @@ public class CustomApplication extends CoreApplication {
     public static void closeDbConnection() {
         if (mDbManager != null) {
             try {
-                FileUtils.deleteAllFiles(new File(Config.DATABASE_FOLDER+Config.DATABASE_NAME+"-journal"));
+                FileUtils.deleteAllFiles(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME + "-journal"));
                 mDbManager.close();
                 mDbManager = null;
             } catch (Exception e) {
@@ -200,7 +205,7 @@ public class CustomApplication extends CoreApplication {
      */
 
     protected static DbManager.DaoConfig getDaoConfig() {
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(9)
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(12)
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override
                     public void onDbOpened(DbManager db) {
@@ -221,6 +226,18 @@ public class CustomApplication extends CoreApplication {
                         // ...
                         // or
                         // db.dropDb();
+                        try {
+                            db.addColumn(HoleRecord.class, "problem");
+                            db.addColumn(PreventionRecord.class, "clear_info");
+                            db.addColumn(PreventionRecord.class, "mousetrap_info");
+                            db.addColumn(ReportCdbhcl.class, "dclz_a");
+                            db.addColumn(ReportCdbhcl.class, "dclz_b");
+                            db.addColumn(ReportCdbhcl.class, "dclz_c");
+                            db.addColumn(ReportCdbhcl.class, "dclz_o");
+                            db.addColumn(ReportSnwsd.class, "location");
+                        } catch (DbException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }).setAllowTransaction(true);
         return config;

@@ -361,6 +361,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 style="@style/AnimalReportLinearLayoutStyle"
                 android:gravity="center_vertical"
                 android:minHeight="90px">
@@ -387,7 +388,7 @@
                 <TextView
                     style="@style/AnimalReportTextViewStyle"
                     android:layout_weight="1"
-                    android:text="捕鼠器放置情况"
+                    android:text="鼠药及捕鼠器具\n放置情况"
                     />
 
                 <TextView

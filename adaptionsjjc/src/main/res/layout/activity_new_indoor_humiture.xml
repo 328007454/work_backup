@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="IndoorBinding">
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.cnksi.sjjc.View.WeatherView1
+            android:id="@+id/weatherView1"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:layout_toRightOf="@id/tv_weather_id"
+            android:gravity="center_vertical"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            app:icon_height="48px"
+            app:icon_margin="25px"
+            app:icon_src="@drawable/ic_arrow_right"
+            app:icon_width="28px"
+            app:label="当前天气"
+            app:label_size="36px"
+            app:selector="@array/weather" />
+
+        <LinearLayout
+            android:id="@+id/ll_container1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/weatherView1"
+            android:layout_marginBottom="160px"
+            android:visibility="visible">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ll_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+            </ScrollView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="69px">
+
+            <Button
+                android:id="@+id/btn_confirm_save"
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom|center"
+                android:layout_marginLeft="@dimen/new_global_padding_left_right"
+                android:layout_marginRight="@dimen/new_global_padding_left_right"
+                android:background="@drawable/red_button_background_selector"
+                android:gravity="center"
+                android:text="完成记录"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/global_text_size_1" />
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

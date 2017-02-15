@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -61,6 +60,9 @@ public class DiscoverHoleActivity extends BaseActivity {
     //孔洞照片数量
     @ViewInject(R.id.tv_hole_num)
     private TextView tvHoleNum;
+    //问题描述
+    @ViewInject(R.id.et_input_problem)
+    private TextView etInputProblem;
 
 
     //所有孔洞位置集合
@@ -109,8 +111,7 @@ public class DiscoverHoleActivity extends BaseActivity {
             @Override
             public void itemClick(View v, String s, int position) {
                 tvHolePosition.setText(s);
-//                _this.getResources().getColor(R.color.green_color)
-                tvHolePosition.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                tvHolePosition.setTextColor(_this.getResources().getColor(R.color.green_color));
                 positionDialog.dismiss();
             }
 
@@ -136,10 +137,9 @@ public class DiscoverHoleActivity extends BaseActivity {
 
     }
 
-    @Event({R.id.tv_discoverhole_position, R.id.iv_take_pic, R.id.img_discoverhole_pic, R.id.btn_save, R.id.position_container})
+    @Event({R.id.position_container, R.id.iv_take_pic, R.id.img_discoverhole_pic, R.id.btn_save})
     private void clickEvent(View view) {
         switch (view.getId()) {
-            case R.id.tv_discoverhole_position:
             case R.id.position_container:
                 if (positionDialog != null) {
                     positionDialog.show();
@@ -161,12 +161,16 @@ public class DiscoverHoleActivity extends BaseActivity {
                     CToast.showShort(_this, "请输入详细位置");
                     return;
                 }
-                if (TextUtils.isEmpty(picAll)) {
-                    CToast.showShort(_this, "请拍摄孔洞照片");
+//                if (TextUtils.isEmpty(picAll)) {
+//                    CToast.showShort(_this, "请拍摄孔洞照片");
+//                    return;
+//                }
+                if (TextUtils.isEmpty(etInputProblem.getText().toString())) {
+                    CToast.showShort(_this, "请输入问题描述");
                     return;
                 }
                 HoleRecord holeRecord = new HoleRecord(currentReportId, currentBdzId, currentBdzName, tvHolePosition.getText().toString(),
-                        etPosition.getText().toString(), picAll);
+                        etPosition.getText().toString(), picAll,etInputProblem.getText().toString());
                 try {
                     db.save(holeRecord);
                 } catch (DbException e) {

@@ -25,6 +25,7 @@
         android:background="@color/white"
         android:gravity="center">
 
+
         <TextView
             android:id="@+id/copy_part_one"
             android:layout_width="0dp"

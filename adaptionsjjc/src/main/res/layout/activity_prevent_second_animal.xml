@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/special_tips_background_color"
     android:orientation="vertical"
     tools:context=".activity.PreventAnimalSecondActivity">
@@ -24,7 +24,7 @@
             android:gravity="center"
             android:text="检查结果"
             android:textColor="@color/wt_green_color"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px" />
     </RelativeLayout>
     <!--开关柜孔洞 -->
 
@@ -45,18 +45,17 @@
             android:gravity="center_vertical"
             android:text="开关柜孔洞"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px" />
 
         <com.zhy.autolayout.AutoRadioGroup
+            android:id="@+id/radio_switch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/radio_switch"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/switch_yes"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -64,16 +63,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:checked="true"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/switch_no"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -81,20 +80,20 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="不正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
         </com.zhy.autolayout.AutoRadioGroup>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/gray_background_color"
-        />
+        android:background="@color/gray_background_color" />
     <!--室内孔洞 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,6 +104,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="80px"
             android:layout_marginLeft="@dimen/paddingRight"
@@ -112,18 +112,16 @@
             android:gravity="center_vertical"
             android:text="室内孔洞"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/global_text_small_size_px"
-            android:id="@+id/textView2" />
+            android:textSize="@dimen/global_text_small_size_px" />
 
         <com.zhy.autolayout.AutoRadioGroup
+            android:id="@+id/radio_indoor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/radio_indoor"
             android:orientation="horizontal">
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/indoor_yes"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -131,16 +129,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:checked="true"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/indoor_no"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -148,20 +146,20 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="不正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
         </com.zhy.autolayout.AutoRadioGroup>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/gray_background_color"
-        />
+        android:background="@color/gray_background_color" />
     <!--室外孔洞 -->
 
     <LinearLayout
@@ -181,17 +179,16 @@
             android:gravity="center_vertical"
             android:text="室外孔洞"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px" />
 
         <com.zhy.autolayout.AutoRadioGroup
+            android:id="@+id/radio_outdoor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/radio_outdoor"
             android:orientation="horizontal">
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/outdoor_yes"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -199,16 +196,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:checked="true"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/outdoor_no"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -216,20 +213,20 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="不正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
         </com.zhy.autolayout.AutoRadioGroup>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/gray_background_color"
-        />
+        android:background="@color/gray_background_color" />
     <!--门窗孔洞 -->
 
     <LinearLayout
@@ -249,17 +246,16 @@
             android:gravity="center_vertical"
             android:text="门窗孔洞"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px" />
 
         <com.zhy.autolayout.AutoRadioGroup
+            android:id="@+id/radio_window"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/radio_window"
             android:orientation="horizontal">
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/window_yes"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -267,16 +263,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:checked="true"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/window_no"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -284,12 +280,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="不正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
         </com.zhy.autolayout.AutoRadioGroup>
     </LinearLayout>
 
@@ -297,7 +294,7 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:background="@color/gray_background_color"
-        />
+        android:visibility="gone" />
     <!--鼠药器放置情况 -->
 
     <LinearLayout
@@ -305,7 +302,8 @@
         android:layout_height="140px"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="0dp"
@@ -317,17 +315,16 @@
             android:gravity="center_vertical"
             android:text="鼠药器放置情况"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px" />
 
         <com.zhy.autolayout.AutoRadioGroup
+            android:id="@+id/radio_ratsbane"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/radio_ratsbane"
             android:orientation="horizontal">
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/ratsbane_yes"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -335,16 +332,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:checked="true"
+                android:background="@null"
                 android:button="@null"
+                android:checked="true"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/ratsbane_no"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -352,12 +349,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="不正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
         </com.zhy.autolayout.AutoRadioGroup>
     </LinearLayout>
 
@@ -365,7 +363,7 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:background="@color/gray_background_color"
-        />
+        android:visibility="gone" />
     <!--投鼠器放置情况 -->
 
     <LinearLayout
@@ -373,7 +371,8 @@
         android:layout_height="140px"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="0dp"
@@ -385,17 +384,16 @@
             android:gravity="center_vertical"
             android:text="投鼠器放置情况"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px" />
 
         <com.zhy.autolayout.AutoRadioGroup
+            android:id="@+id/radio_mousetrap"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/radio_mousetrap"
             android:orientation="horizontal">
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/mousetrap_yes"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -403,16 +401,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:checked="true"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
 
             <com.cnksi.sjjc.View.CustomRadioButton
-                android:background="@null"
                 android:id="@+id/mousetrap_no"
                 style="@style/RadioButtonBaseStyle"
                 android:layout_width="0dp"
@@ -420,28 +418,70 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="@null"
                 android:button="@null"
                 android:clickable="true"
-                app:drawableLeft="@drawable/radio_button_selector"
-                app:drawableSize="48px"
                 android:text="不正常"
-                android:textSize="@dimen/global_text_small_size_px"/>
+                android:textSize="@dimen/global_text_small_size_px"
+                app:drawableLeft="@drawable/radio_button_selector"
+                app:drawableSize="48px" />
         </com.zhy.autolayout.AutoRadioGroup>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
+        android:background="@color/gray_background_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:minHeight="140px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/paddingRight"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="鼠药及捕鼠器具\n放置情况"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/global_text_small_size_px" />
+
+        <EditText
+            android:id="@+id/et_mouse_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/paddingRight"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:text="已按规定放置"
+            android:textColor="@color/wt_green_color"
+            android:textSize="@dimen/global_text_small_size_px" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
         android:background="@color/gray_background_color"
-        />
+        android:visibility="visible" />
     <!--发现问题 -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="140px"
         android:background="@color/white"
         android:gravity="center_vertical"
+        android:minHeight="140px"
         android:orientation="vertical">
 
         <TextView
@@ -454,10 +494,9 @@
             android:gravity="center_vertical"
             android:text="发现问题地点"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/tv_discover_position"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -467,22 +506,22 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:textColor="@color/wt_green_color"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px"
+            android:visibility="gone" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/gray_background_color"
-        />
+        android:background="@color/gray_background_color" />
     <!--清除情况 -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="140px"
         android:background="@color/white"
         android:gravity="center_vertical"
+        android:minHeight="140px"
         android:orientation="vertical">
 
         <TextView
@@ -496,10 +535,9 @@
             android:gravity="center_vertical"
             android:text="清除情况"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/tv_clear_position"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -509,7 +547,8 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:textColor="@color/wt_green_color"
-            android:textSize="@dimen/global_text_small_size_px"/>
+            android:textSize="@dimen/global_text_small_size_px"
+            android:visibility="gone" />
     </LinearLayout>
 
     <RelativeLayout
@@ -520,10 +559,10 @@
         >
 
         <Button
-            android:layout_alignParentBottom="true"
             android:id="@+id/btn_next"
             android:layout_width="match_parent"
             android:layout_height="100px"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/device_photo_tips_minheight_px"
             android:layout_marginLeft="@dimen/global_padding_left_right_px"
@@ -533,6 +572,6 @@
             android:gravity="center"
             android:text="完成检查"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/global_text_size_px"/>
+            android:textSize="@dimen/global_text_size_px" />
     </RelativeLayout>
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -30,8 +29,8 @@ import org.xutils.view.annotation.ViewInject;
  *
  * */
 public class IndoorHumitureRecordActivity extends BaseActivity {
-    @ViewInject(R.id.btn_complete_record)
-    private Button btDone;
+//    @ViewInject(R.id.btn_complete_record)
+//    private Button btDone;
     //标题
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;

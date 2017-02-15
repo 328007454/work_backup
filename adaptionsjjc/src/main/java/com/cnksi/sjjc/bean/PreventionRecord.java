@@ -16,7 +16,7 @@ public class PreventionRecord implements Serializable {
      * Id
      */
     public static final String ID = "id";
-    @Column(name = ID,isId = true)
+    @Column(name = ID, isId = true)
     public String id = UUID.randomUUID().toString();
     /**
      * 报告Id
@@ -77,67 +77,80 @@ public class PreventionRecord implements Serializable {
     @Column(name = SECOND_DEVICE_IMAGES)
     public String second_device_images;
     /**
-     *其他到位
+     * 其他到位
      */
     public static final String OTHER_IMAGES = "other_images";
     @Column(name = OTHER_IMAGES)
     public String other_images;
     /**
-     *开关柜孔洞情况
+     * 开关柜孔洞情况
      */
     public static final String SWITCH_STATUS = "switch_status";
     @Column(name = SWITCH_STATUS)
     public int switchStatus;
     /**
-     *室内孔洞情况
+     * 室内孔洞情况
      */
     public static final String INROOM_STATUS = "inroom_status";
     @Column(name = INROOM_STATUS)
     public int inroomStatus;
     /**
-     *室外孔洞情况
+     * 室外孔洞情况
      */
     public static final String OUTROOM_STATUS = "outroom_status";
     @Column(name = OUTROOM_STATUS)
     public int outroomStatus;
     /**
-     *门窗严密情况
+     * 门窗严密情况
      */
     public static final String DOOR_WINDOW_STATUS = "door_window_status";
     @Column(name = DOOR_WINDOW_STATUS)
     public int doorWindowStatus;
     /**
-     *鼠药器放置情况
+     * 鼠药器放置情况
      */
     public static final String RATSBANE_STATUS = "ratsbane_status";
     @Column(name = RATSBANE_STATUS)
     public int ratsbaneStatus;
     /**
-     *捕鼠器放置情况
+     * 捕鼠器放置情况
      */
     public static final String MOUSETRAP_STATUS = "mousetrap_status";
     @Column(name = MOUSETRAP_STATUS)
     public int mousetrapStatus;
     /**
-     *备注
+     * 清除情况
+     */
+    public static final String CLEAR_INFO = "clear_info";
+    @Column(name = CLEAR_INFO)
+    public String clearInfo;
+    /**
+     * 鼠药及捕鼠器具放置情况
+     */
+    public static final String MOUSETRAP_INFO = "mousetrap_info";
+    @Column(name = MOUSETRAP_INFO)
+    public String mousetrapInfo;
+    /**
+     * 备注
      */
     public static final String REMARK = "remark";
     @Column(name = REMARK)
     public String remark;
     /**
-     *是否删除
+     * 是否删除
      */
     public static final String DLT = "dlt";
     @Column(name = DLT)
     public int dlt;
     /**
-     *更新时间
+     * 更新时间
      */
     public static final String LAST_MODIFY_TIME = "last_modify_time";
     @Column(name = LAST_MODIFY_TIME)
     public String last_modify_time;
 
-    public PreventionRecord(){}
+    public PreventionRecord() {
+    }
 
     public PreventionRecord(String currentReportId, String currentBdzId, String currentBdzName) {
         this.reportId = currentReportId;

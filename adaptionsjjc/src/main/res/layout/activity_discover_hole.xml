@@ -108,8 +108,7 @@
             android:background="@drawable/bottom_line_background_selector"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="20px"
-            >
+            android:paddingLeft="20px">
 
             <TextView
                 android:id="@+id/tv_inspection_date"
@@ -129,12 +128,12 @@
                     android:id="@+id/img_discoverhole_pic"
                     android:layout_width="80px"
                     android:layout_height="80px"
-                    android:scaleType="fitXY"
-                    app:layout_auto_baseheight="width"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="15px"
                     android:layout_marginLeft="15px"
                     android:layout_marginRight="15px"
-                    android:layout_marginBottom="15px"
-                    android:layout_alignParentTop="true"
+                    android:scaleType="fitXY"
+                    app:layout_auto_baseheight="width"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -159,6 +158,40 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
                 app:srcCompat="@drawable/camera_button_background" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height"
+            android:background="@drawable/bottom_line_background_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_discover_problem"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="20px"
+                android:text="详细位置"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/tv_text_size" />
+
+
+            <EditText
+                android:id="@+id/et_input_problem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20px"
+                android:background="@android:color/transparent"
+                android:gravity="right|center_vertical"
+                android:hint="请输入问题描述"
+                android:inputType="text"
+                android:minHeight="@dimen/et_user_edit_minheight_px"
+                android:textColor="@color/green_color"
+                android:textColorHint="@color/et_hint_color"
+                android:textSize="@dimen/et_hint_text_size_px" />
         </LinearLayout>
 
 

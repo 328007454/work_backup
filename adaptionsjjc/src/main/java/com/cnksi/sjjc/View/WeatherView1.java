@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,6 +147,7 @@ public class WeatherView1 extends LinearLayout {
         mRecyclerView.setAdapter(adapter1);
         LayoutParams middleLayoutParam = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         middleLayoutParam.weight = 1;
+        middleLayoutParam.gravity= Gravity.CENTER_VERTICAL;
 
         this.addView(mRecyclerView, middleLayoutParam);
 

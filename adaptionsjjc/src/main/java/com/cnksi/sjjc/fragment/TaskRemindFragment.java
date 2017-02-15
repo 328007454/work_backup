@@ -34,8 +34,9 @@ import com.cnksi.sjjc.activity.GetSendLetterActivity;
 import com.cnksi.sjjc.activity.GetSendLetterReportActivity;
 import com.cnksi.sjjc.activity.HWCWMainActivity;
 import com.cnksi.sjjc.activity.HongWaiCeWenReportActivity;
-import com.cnksi.sjjc.activity.IndoorHumitureRecordActivity;
+import com.cnksi.sjjc.activity.IndoorHumitureReportActivity;
 import com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity;
+import com.cnksi.sjjc.activity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.activity.NewTransformRecordActivity;
 import com.cnksi.sjjc.activity.PreventAnimalActivity;
 import com.cnksi.sjjc.activity.TaskRemindActivity;
@@ -329,7 +330,8 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         break;
                     //室内温湿度记录
                     case SBJC_03:
-                        intent.setClass(getContext(), IndoorHumitureRecordActivity.class);
+//                        intent.setClass(getContext(), IndoorHumitureRecordActivity.class);
+                        intent.setClass(getContext(), NewIndoorHumitureRecordActivity.class);
                         break;
                     //差动保护
                     case SBJC_04:
@@ -388,7 +390,8 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         break;
                     //室内温湿度记录
                     case SBJC_03:
-                        intent.setClass(getContext(), JZLFenJieKaiGuanReportActivity.class);
+//                        intent.setClass(getContext(), JZLFenJieKaiGuanReportActivity.class);
+                        intent.setClass(getContext(), IndoorHumitureReportActivity.class);
                         break;
                     //差动保护
                     case SBJC_04:

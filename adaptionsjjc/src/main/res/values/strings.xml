@@ -45,8 +45,8 @@
     <string name="inspection_humidity_str">巡检时湿度：</string>
     <string name="inspection_weather_str">巡检时天气：</string>
     <!--设备检测-->
-    <string name="work_temperature_jcstr">温度：</string>
-    <string name="work_humidity_jcstr">湿度：</string>
+    <string name="work_temperature_jcstr">温度:</string>
+    <string name="work_humidity_jcstr">湿度:</string>
     <string name="work_weather_jcstr">天气：</string>
     <string name="work_start_time_str">检测开始时间：</string>
     <string name="work_end_time_str">检测结束时间：</string>

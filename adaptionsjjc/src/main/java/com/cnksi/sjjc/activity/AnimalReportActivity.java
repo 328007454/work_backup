@@ -187,20 +187,22 @@ public class AnimalReportActivity extends BaseReportActivity {
                     tvMen.setText("不正常");
                     tvMen.setTextColor(Color.RED);
                 }
-                if (0==preventionRecord.ratsbaneStatus) {
-                    tvShuYao.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
-                    tvShuYao.setText("正常");
-                } else {
-                    tvShuYao.setText("不正常");
-                    tvShuYao.setTextColor(Color.RED);
-                }
-                if (0==preventionRecord.mousetrapStatus) {
-                    tvBuShu.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
-                    tvBuShu.setText("正常");
-                } else {
-                    tvBuShu.setText("不正常");
-                    tvBuShu.setTextColor(Color.RED);
-                }
+//                if (0==preventionRecord.ratsbaneStatus) {
+//                    tvShuYao.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+//                    tvShuYao.setText("正常");
+//                } else {
+//                    tvShuYao.setText("不正常");
+//                    tvShuYao.setTextColor(Color.RED);
+//                }
+//                if (0==preventionRecord.mousetrapStatus) {
+//                    tvBuShu.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+//                    tvBuShu.setText("正常");
+//                } else {
+//                    tvBuShu.setText("不正常");
+//                    tvBuShu.setTextColor(Color.RED);
+//                }
+                tvBuShu.setTextColor(getResources().getColor(R.color.green_color));
+                tvBuShu.setText(preventionRecord.mousetrapInfo);
                 jianChaPics = (mainPic == null ? "" : mainPic) + (gaoYaPic == null ? "" : "," + gaoYaPic) +
                         (oneDevicePic == null ? "" : "," + oneDevicePic) + (protectPic == null ? "" : "," + protectPic) +
                         (dianLanPic == null ? "" : "," + dianLanPic) + (secondDevicPic == null ? "" : "," + secondDevicPic) +

@@ -49,6 +49,13 @@ public class ReportSnwsd {
 	public static final String SD = "sd";
 	@Column(name = SD)
 	public String sd;
+
+	/**
+	 * 地域
+	 */
+	public static final String LOCATION = "location";
+	@Column(name = LOCATION)
+	public String location;
 	
 	/**插入时间*/
 	public static final String INSERT_TIME = "insert_time";
@@ -67,6 +74,14 @@ public class ReportSnwsd {
 
 
 	public ReportSnwsd(){
+		this.insert_time = DateUtils.getCurrentLongTime();
+		this.dlt = "0";
+	}
+
+	public ReportSnwsd(String currentReportId, String currentBdzId, String currentBdzName) {
+		this.report_id = currentReportId;
+		this.bdz_id = currentBdzId;
+		this.bdz_name=currentBdzName;
 		this.insert_time = DateUtils.getCurrentLongTime();
 		this.dlt = "0";
 	}

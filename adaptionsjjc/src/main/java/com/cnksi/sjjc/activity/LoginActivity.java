@@ -160,8 +160,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             }
         });
         if(BuildConfig.DEBUG){
-            autoCompleteTextView.setText("FanY0010");
-            mEtPassword.setText("fy030010@");
+            autoCompleteTextView.setText("LinLP0128");
+            mEtPassword.setText("my12345678.");
         }
     }
 

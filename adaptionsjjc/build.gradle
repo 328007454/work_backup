@@ -50,11 +50,11 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         if (variant.buildType.name.equals("release")) {
-                            // 输出apk名称为boohee_v1.0_2015-01-15.apk
+                            // 输出apk名称
                             def fileName = "sjjc_${defaultConfig.versionName}_release.apk"
                             output.outputFile = new File("E:\\CompanyProject\\SJJCAPK", fileName)
                         }else {
-                            // 输出apk名称为boohee_v1.0_2015-01-15.apk
+                            // 输出apk名称
                             def fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
                             output.outputFile = new File("E:\\CompanyProject\\SJJCAPK", fileName)
                         }
@@ -110,4 +110,5 @@ dependencies {
         exclude module: 'fastjson'
     }
     compile project(':autolayout')
+    compile 'com.android.support:cardview-v7:22.2.1'
 }

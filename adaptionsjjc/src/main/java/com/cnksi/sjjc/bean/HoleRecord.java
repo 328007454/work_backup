@@ -85,6 +85,12 @@ public class HoleRecord {
     @Column(name = REMARK)
     public String remark;
     /**
+     *发现问题
+     */
+    public static final String PROBLEM = "problem";
+    @Column(name = PROBLEM)
+    public String problem;
+    /**
      *是否删除 0 不删除 1 删除
      */
     public static final String DLT = "dlt";
@@ -100,7 +106,7 @@ public class HoleRecord {
 
     public HoleRecord(){}
 
-    public HoleRecord(String currentReportId, String currentBdzId, String currentBdzName, String position, String morePosition,String allPic) {
+    public HoleRecord(String currentReportId, String currentBdzId, String currentBdzName, String position, String morePosition,String allPic,String problem) {
         this.reportId=currentReportId;
         this.bdzid = currentBdzId;
         this.bdz = currentBdzName;
@@ -110,6 +116,7 @@ public class HoleRecord {
         this.dlt = "0";
         this.status ="0";
         this.hole_images = allPic;
+        this.problem= problem;
         this.id = UUID.randomUUID().toString();
     }
 }

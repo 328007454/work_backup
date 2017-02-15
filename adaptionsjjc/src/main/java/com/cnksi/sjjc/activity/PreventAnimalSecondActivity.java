@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cnksi.core.common.ScreenManager;
+import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.sjjc.R;
@@ -67,6 +68,12 @@ public class PreventAnimalSecondActivity extends BaseActivity {
 
     @ViewInject(R.id.radio_mousetrap)
     private RadioGroup radioGroupMousetrap;
+
+    /**
+     * 鼠药及捕鼠器具放置情况
+     */
+    @ViewInject(R.id.et_mouse_info)
+    private TextView etMouseInfo;
 
     private PreventionRecord preventionRecord;
     //
@@ -147,6 +154,10 @@ public class PreventAnimalSecondActivity extends BaseActivity {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.btn_next:
+                if (TextUtils.isEmpty(etMouseInfo.getText().toString())) {
+                    CToast.showShort(_this, "请输入鼠药及捕鼠器具放置情况");
+                    return;
+                }
                 showSureDialog();
                 break;
 
@@ -179,16 +190,18 @@ public class PreventAnimalSecondActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    preventionRecord.mousetrapInfo = etMouseInfo.getText().toString();
+                    preventionRecord.clearInfo=tvClear.getText().toString().trim();
                     preventionRecord.last_modify_time = DateUtils.getCurrentLongTime();
                     db.saveOrUpdate(preventionRecord);
                     report.endtime = DateUtils.getCurrentLongTime();
                     db.saveOrUpdate(report);
-                    db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS,Task.TaskStatus.done.name()));
+                    db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(_this, AnimalReportActivity.class);
-                isNeedUpdateTaskState=true;
+                isNeedUpdateTaskState = true;
                 startActivity(intent);
                 _this.finish();
                 mSureDialog.dismiss();
@@ -251,20 +264,25 @@ public class PreventAnimalSecondActivity extends BaseActivity {
         String problemPosition = "";
         String morePostion = "";
         if (mHoleList != null && mHoleList.size() > 0) {
-
+            int i = 0;
+            int countCurrentReportId = 0;
             for (HoleRecord record : mHoleList) {
-                if(currentReportId.equals(record.reportId)){
-                    problemPosition += record.location + ",";
+                if (currentReportId.equals(record.reportId)) {
+                    if (countCurrentReportId >= 1)
+                        problemPosition = problemPosition + "\n";
+                    problemPosition += ++countCurrentReportId +"、"+ record.location + "_" + record.hole_detail + "_" + record.problem;
                 }
-                if(currentReportId.equals(record.clear_reportid)&&"1".equals(record.status)){
-                    morePostion += record.location + "_" + record.hole_detail + ",";
+                if (currentReportId.equals(record.clear_reportid) && "1".equals(record.status)) {
+                    if (i >= 1)
+                        morePostion = morePostion + "\n";
+                    morePostion += ++i + "、" + record.location + "_" + record.hole_detail+ "_" + record.problem+"_"+"已清除";
                 }
             }
             if (problemPosition.endsWith(",")) {
-                problemPosition = problemPosition.substring(0, problemPosition.length()-1);
+                problemPosition = problemPosition.substring(0, problemPosition.length() - 1);
             }
             if (morePostion.endsWith(",")) {
-                morePostion = morePostion.substring(0, morePostion.length()-1);
+                morePostion = morePostion.substring(0, morePostion.length() - 1);
             }
         }
         if (!TextUtils.isEmpty(problemPosition)) {
