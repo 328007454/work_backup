@@ -50,7 +50,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="69px">
+            android:layout_marginBottom="20px">
 
             <Button
                 android:id="@+id/btn_confirm_save"

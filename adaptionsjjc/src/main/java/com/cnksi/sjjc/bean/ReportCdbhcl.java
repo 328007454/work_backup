@@ -62,6 +62,32 @@ public class ReportCdbhcl {
     public String dclz;
 
     /**
+     * 大差流值O
+     */
+    public static final String DCLZO = "dclz_o";
+    @Column(name = DCLZO)
+    public String dclzO;
+    /**
+     * 大差流值A
+     */
+    public static final String DCLZA = "dclz_a";
+    @Column(name = DCLZA)
+    public String dclzA;
+    /**
+     * 大差流值B
+     */
+    public static final String DCLZB = "dclz_b";
+    @Column(name = DCLZB)
+    public String dclzB;
+    /**
+     * 大差流值C
+     */
+    public static final String DCLZC = "dclz_c";
+    @Column(name = DCLZC)
+    public String dclzC;
+
+
+    /**
      * 插入时间
      */
     public static final String INSERT_TIME = "insert_time";
@@ -96,9 +122,32 @@ public class ReportCdbhcl {
         this.insert_time = insert_time;
     }
 
-    ;
-//	public ReportCdbhcl(String ){
-//
-//	}
+    public ReportCdbhcl(CdbhclValue value, String reportId, String bdzName, String bdzId) {
+        this.report_id = reportId;
+        this.bdz_id = bdzId;
+        this.bdz_name = bdzName;
+        this.device_name = value.getDeviceName().substring(0, value.getDeviceName().length() - 1);
+        this.device_id = value.getId();
+        this.insert_time = DateUtils.getCurrentLongTime();
+        addValue(value);
 
+    }
+
+    public void addValue(CdbhclValue value) {
+        if (value.getName().equals("val")) {
+            this.dclz = value.getValue();
+        }
+        if (value.getName().equals("val_a")) {
+            this.dclzA = value.getValue();
+        }
+        if (value.getName().equals("val_b")) {
+            this.dclzB = value.getValue();
+        }
+        if (value.getName().equals("val_c")) {
+            this.dclzC = value.getValue();
+        }
+        if (value.getName().equals("val_o")) {
+            this.dclzO = value.getValue();
+        }
+    }
 }

@@ -250,7 +250,7 @@ public class CustomApplication extends CoreApplication {
      */
     public static ImageOptions getLargeImageOptions() {
         return new ImageOptions.Builder()
-                .setSize(0, 0).setUseMemCache(false).setImageScaleType(ImageView.ScaleType.CENTER_INSIDE)
+                .setSize(0, 0).setUseMemCache(false).setImageScaleType(ImageView.ScaleType.CENTER_CROP)
                 // .setRadius(DensityUtil.dip2px(5))
                 // 如果ImageView的大小不是定义为wrap_content, 不要crop.
                 //  .setCrop(true) // 很多时候设置了合适的scaleType也不需要它.

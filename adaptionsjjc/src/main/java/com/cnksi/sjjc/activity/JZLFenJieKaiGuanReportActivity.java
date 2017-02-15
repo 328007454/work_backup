@@ -15,6 +15,8 @@ import com.cnksi.core.view.InnerListView;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.JZLFenJieKaiGuanContentAdapter;
+import com.cnksi.sjjc.bean.CdbhclValue;
+import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
@@ -135,7 +137,8 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
     private List<DbModel> listDbModel;
     private List<DbModel> copyTotalDbmodel;
     private JZLFenJieKaiGuanContentAdapter fenJieKaiGuanContentAdapter;
-
+    private int countCopyCdbhcl;
+    private List<CdbhclValue> cdbhclValueList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,15 +213,23 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                                                     listDevice = DeviceService.getInstance().getDevicesByName(currentBdzId, "保护差流");
                                                 exitCdbhclList = ReportCdbhclService.getIntance().getReportCdbhclList(currentBdzId, currentReportId);
                                                 for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
-                                                    if (TextUtils.isEmpty(reportCdbhcl.dclz)) {
-                                                        changedCdbhcList.add(reportCdbhcl);
-                                                    }
+                                                    CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
                                                 }
-                                                exitCdbhclList.removeAll(changedCdbhcList);
+                                                for (DbModel modle : listDevice) {
+                                                    if (modle.getString(CopyItem.VAL).equalsIgnoreCase("Y"))
+                                                        countCopyCdbhcl += 1;
+                                                    if (modle.getString(CopyItem.VAL_A).equalsIgnoreCase("Y"))
+                                                        countCopyCdbhcl += 1;
+                                                    if (modle.getString(CopyItem.VAL_B).equalsIgnoreCase("Y"))
+                                                        countCopyCdbhcl += 1;
+                                                    if (modle.getString(CopyItem.VAL_C).equalsIgnoreCase("Y"))
+                                                        countCopyCdbhcl += 1;
+                                                    if (modle.getString(CopyItem.VAL_O).equalsIgnoreCase("Y"))
+                                                        countCopyCdbhcl += 1;
+                                                }
                                             } catch (DbException e) {
                                                 e.printStackTrace();
                                             }
-
                                         }
 
                                         mHandler.sendEmptyMessage(LOAD_DATA);
@@ -277,18 +288,31 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                         if (!TextUtils.isEmpty(cdbhcl.dclz)) {
                             i += 1;
                         }
+                        if (!TextUtils.isEmpty(cdbhcl.dclzA)) {
+                            i += 1;
+                        }
+                        if (!TextUtils.isEmpty(cdbhcl.dclzB)) {
+                            i += 1;
+                        }
+                        if (!TextUtils.isEmpty(cdbhcl.dclzC)) {
+                            i += 1;
+                        }
+                        if (!TextUtils.isEmpty(cdbhcl.dclzO)) {
+                            i += 1;
+                        }
+
                     }
-                    mTvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + listDevice.size());
+                    mTvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + countCopyCdbhcl);
                     if (i == listDevice.size()) {
                         mTvInspectionContinue.setText("查看详情");
                     } else {
                         mTvInspectionContinue.setText("继续记录");
                     }
                     if (fenJieKaiGuanContentAdapter == null) {
-                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, exitCdbhclList, currentInspectionType);
+                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, cdbhclValueList, currentInspectionType);
                         lvResultContent.setAdapter(fenJieKaiGuanContentAdapter);
                     } else {
-                        fenJieKaiGuanContentAdapter.setList(exitCdbhclList);
+                        fenJieKaiGuanContentAdapter.setList(cdbhclValueList);
                     }
                 }
                 break;

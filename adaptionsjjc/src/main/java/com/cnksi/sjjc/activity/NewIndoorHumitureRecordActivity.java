@@ -66,7 +66,8 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
             public void run() {
                 try {
                     mReport = db.selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
-                    mReport.starttime = DateUtils.getCurrentLongTime();
+                    if (null != mReport)
+                        mReport.starttime = DateUtils.getCurrentLongTime();
                     mReportList = (ArrayList<ReportSnwsd>) db.selector(ReportSnwsd.class).where(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
                     if (null == mReportList || mReportList.isEmpty())
                         mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
