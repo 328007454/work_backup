@@ -139,6 +139,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
     private JZLFenJieKaiGuanContentAdapter fenJieKaiGuanContentAdapter;
     private int countCopyCdbhcl;
     private List<CdbhclValue> cdbhclValueList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

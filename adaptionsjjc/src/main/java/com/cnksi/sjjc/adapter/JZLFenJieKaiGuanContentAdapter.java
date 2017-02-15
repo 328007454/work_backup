@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.bean.CdbhclValue;
 import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
@@ -28,7 +29,7 @@ public class JZLFenJieKaiGuanContentAdapter extends SimpleBaseAdapter {
     private String currentInspectionType;
     private DbModel model;
     private ReportCdbhcl mCdbhcl;
-
+    private CdbhclValue value;
     public JZLFenJieKaiGuanContentAdapter(Context context, List<? extends Object> dataList, String currentInspectionType) {
         super(context, dataList);
         this.currentInspectionType = currentInspectionType;
@@ -41,7 +42,8 @@ public class JZLFenJieKaiGuanContentAdapter extends SimpleBaseAdapter {
         if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
             model = (DbModel) getItem(position);
         } else if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
-            mCdbhcl = (ReportCdbhcl) getItem(position);
+//            mCdbhcl = (ReportCdbhcl) getItem(position);
+            value = (CdbhclValue) getItem(position);
         }
 
         if (convertView == null) {
@@ -74,8 +76,8 @@ public class JZLFenJieKaiGuanContentAdapter extends SimpleBaseAdapter {
             }
 
         } else if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
-            holder.txtCdbhTitle.setText(mCdbhcl.device_name);
-            holder.txtCdbhContent.setText(mCdbhcl.dclz);
+            holder.txtCdbhTitle.setText(value.getName());
+            holder.txtCdbhContent.setText(value.getValue());
             holder.jzlContainer.setVisibility(View.GONE);
         }
 

@@ -245,7 +245,7 @@ public class DeviceService {
      */
     public List<DbModel> getDevicesByNameWays(String bdzId, String key) {
         List<DbModel> dbModelList = null;
-        String sql = "select d.deviceid,d.device_name name from copy_item d where d.bdzid = '"+bdzId +"' and d.type_key = '"+key +"' order by d.deviceid ASC";
+        String sql = "select d.deviceid,d.device_name name,d.val,d.val_a,d.val_b,d.val_c,d.val_O  from copy_item d where d.bdzid = '"+bdzId +"' and d.type_key = '"+key +"' order by d.deviceid ASC";
         try {
             dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {

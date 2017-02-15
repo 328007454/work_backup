@@ -87,7 +87,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
             case LOAD_DATA:
                 indoorWeatherAdapter = new IndoorWeathearAdapter(_this, mReportList, binding.llContainer, R.layout.adapter_indoor_item);
                 indoorWeatherAdapter.setItemClickListener(this);
-                indoorWeatherAdapter.setLocation(currentBdzName);
+                indoorWeatherAdapter.setLocation("全站");
                 break;
             default:
                 break;
