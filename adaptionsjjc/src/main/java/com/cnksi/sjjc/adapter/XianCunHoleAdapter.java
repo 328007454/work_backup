@@ -27,6 +27,8 @@ import java.util.Collection;
 public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
 
     private ItemClickListenerPicture<HoleRecord> itemClickListener;
+    ArrayList<String> listPicXC = new ArrayList<>();
+    ArrayList<String> listPicClear = new ArrayList<>();
 
     public void setItemClickListener(ItemClickListenerPicture<HoleRecord> itemClickListener) {
         this.itemClickListener = itemClickListener;
@@ -39,12 +41,12 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
 
     @Override
     public void convert(ViewHolder holder, final HoleRecord item, final int position) {
-        ArrayList<String> listPicXC=null;
-        ArrayList<String> listPicClear=null;
-        if(!TextUtils.isEmpty(item.hole_images)){
+        listPicClear.clear();
+        listPicXC.clear();
+        if (!TextUtils.isEmpty(item.hole_images)) {
             listPicXC = StringUtils.string2List(item.hole_images);
         }
-        if(!TextUtils.isEmpty(item.clear_images)){
+        if (!TextUtils.isEmpty(item.clear_images)) {
             listPicClear = StringUtils.string2List(item.clear_images);
         }
         //发现孔洞照片数量
@@ -62,24 +64,27 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         final TextView tvClearNum = holder.getView(R.id.tv_clearhole_num);
         holder.setText(R.id.tv_hole, item.location + "_" + item.hole_detail);
         if (listPicXC != null) {
-            x.image().bind(((ImageView)holder.getView(R.id.img_discoverhole_pic)),Config.RESULT_PICTURES_FOLDER+listPicXC.get(0), CustomApplication.getLargeImageOptions());
+            x.image().bind(((ImageView) holder.getView(R.id.img_discoverhole_pic)), Config.RESULT_PICTURES_FOLDER + listPicXC.get(0), CustomApplication.getLargeImageOptions());
             if (listPicXC.size() == 0 || listPicXC.size() == 1) {
                 tvDiscoverNum.setVisibility(View.GONE);
             } else {
                 tvDiscoverNum.setVisibility(View.VISIBLE);
                 holder.setText(R.id.tv_discoverhole_num, listPicXC.size() + "");
             }
+        } else {
+            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_clear_default);
+            ((ImageView) holder.getView(R.id.img_discoverhole_pic)).setImageBitmap(bm);
         }
         if (listPicClear != null) {
-            x.image().bind(((ImageView)holder.getView(R.id.img_clearhole_pic)),Config.RESULT_PICTURES_FOLDER+listPicClear.get(0),CustomApplication.getLargeImageOptions());
+            x.image().bind(((ImageView) holder.getView(R.id.img_clearhole_pic)), Config.RESULT_PICTURES_FOLDER + listPicClear.get(0), CustomApplication.getLargeImageOptions());
             if (listPicClear.size() == 0 || listPicClear.size() == 1) {
                 tvClearNum.setVisibility(View.GONE);
             } else {
                 tvClearNum.setVisibility(View.VISIBLE);
                 tvClearNum.setText(listPicClear.size() + "");
             }
-        }else {
-            Bitmap bm = BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_clear_default);
+        } else {
+            Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_clear_default);
             imgClear.setImageBitmap(bm);
             ibClearPhoto.setVisibility(View.GONE);
             tvClearNum.setVisibility(View.INVISIBLE);
@@ -95,16 +100,16 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         ibClearPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemClickListener!=null){
-                    itemClickListener.itemClick(view,item,position);
+                if (itemClickListener != null) {
+                    itemClickListener.itemClick(view, item, position);
                 }
             }
         });
         imgClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemClickListener!=null){
-                    itemClickListener.itemClick(view,item,position);
+                if (itemClickListener != null) {
+                    itemClickListener.itemClick(view, item, position);
                 }
             }
         });
@@ -112,8 +117,8 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         imgDiscover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemClickListener!=null){
-                    itemClickListener.itemClick(view,item,position);
+                if (itemClickListener != null) {
+                    itemClickListener.itemClick(view, item, position);
                 }
             }
         });

@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * Created by han on 2016/6/7.
+ * 交直流分接开关适配器
  */
 public class JZLFenJieKaiGuanContentAdapter extends SimpleBaseAdapter {
     private String currentInspectionType;

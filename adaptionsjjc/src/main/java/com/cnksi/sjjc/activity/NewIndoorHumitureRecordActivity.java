@@ -26,6 +26,8 @@ import org.xutils.view.annotation.Event;
 
 import java.util.ArrayList;
 
+import static com.cnksi.sjjc.R.id.add_indoor_weather;
+
 /**
  * 修改后的室内温湿度界面
  */
@@ -44,9 +46,9 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
         binding = DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.activity_new_indoor_humiture, null, false);
         RelayoutUtil.reLayoutViewHierarchy(binding.getRoot());
         setChildView(binding.getRoot());
+        getIntentValue();
         initUI();
         initData();
-        getIntentValue();
     }
 
     private void initUI() {
@@ -138,8 +140,18 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
 
     @Override
     public void itemClick(View v, Object o, int position) {
-        mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
-        indoorWeatherAdapter.notifyDataSetChanged();
+        switch (v.getId()) {
+            case add_indoor_weather:
+                mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
+                break;
+            case R.id.delete_indoor_weather:
+                mReportList.remove(position);
+                break;
+            default:
+                break;
+        }
+        indoorWeatherAdapter.setList(mReportList);
+
     }
 
     @Override

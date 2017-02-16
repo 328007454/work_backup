@@ -18,11 +18,14 @@ import java.util.List;
 
 /**
  * Created by han on 2017/2/13.
+ * 室内温湿度适配器
  */
 
 public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> {
     private String location;
     private ItemClickListener itemClickListener;
+
+    private final static String TAG = "indoor_weather_adapter";
 
     public IndoorWeathearAdapter(Context context, List data, LinearLayout container, int layoutId) {
         super(context, data, container, layoutId);
@@ -42,10 +45,28 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         EditText etTempreture = holder.getView(R.id.et_tempreture);
         EditText etHumidity = holder.getView(R.id.et_current_humidity);
         ImageButton imageButton = holder.getView(R.id.add_indoor_weather);
+        ImageButton deleteButton = holder.getView(R.id.delete_indoor_weather);
 
-        etLocation.setTag(ReportSnwsd.LOCATION);
-        etTempreture.setTag(ReportSnwsd.WD);
-        etHumidity.setTag(ReportSnwsd.SD);
+        MyTextWatcher watcherLocation = (MyTextWatcher) etLocation.getTag();
+        if (watcherLocation == null) {
+            etLocation.addTextChangedListener(watcherLocation = new MyTextWatcher(etLocation, position, ReportSnwsd.LOCATION));
+            etLocation.setTag(watcherLocation);
+        } else watcherLocation.update(position, ReportSnwsd.LOCATION);
+
+
+        MyTextWatcher watcherTempreture = (MyTextWatcher) etTempreture.getTag();
+        if (watcherTempreture == null) {
+            etTempreture.addTextChangedListener(watcherTempreture = new MyTextWatcher(etTempreture, position, ReportSnwsd.WD));
+            etTempreture.setTag(watcherTempreture);
+        } else watcherTempreture.update(position, ReportSnwsd.WD);
+
+
+        MyTextWatcher watcherHumidity = (MyTextWatcher) etHumidity.getTag();
+        if (watcherHumidity == null) {
+            etHumidity.addTextChangedListener(watcherHumidity = new MyTextWatcher(etHumidity, position, ReportSnwsd.SD));
+            etHumidity.setTag(watcherHumidity);
+        } else watcherHumidity.update(position, ReportSnwsd.SD);
+
 
         if (position == getCount() - 1)
             imageButton.setVisibility(View.VISIBLE);
@@ -54,15 +75,15 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
 
         if (0 == position) {
             etLocation.setText(TextUtils.isEmpty(item.location) ? getLocation() : item.location);
-            item.location = getLocation();
-        } else
+            deleteButton.setVisibility(View.GONE);
+        } else {
             etLocation.setText(item.location);
+            deleteButton.setVisibility(View.VISIBLE);
+        }
         etTempreture.setText(item.wd);
         etHumidity.setText(item.sd);
 
-        etLocation.addTextChangedListener(new MyTextWatcher(etLocation, position));
-        etTempreture.addTextChangedListener(new MyTextWatcher(etTempreture, position));
-        etHumidity.addTextChangedListener(new MyTextWatcher(etHumidity, position));
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,17 +91,30 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
                     itemClickListener.itemClick(v, item, position);
             }
         });
-
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != itemClickListener)
+                    itemClickListener.itemClick(view, item, position);
+            }
+        });
 
     }
 
     class MyTextWatcher implements TextWatcher {
         private int position;
         private EditText inputEdittext;
+        private String tag;
 
-        public MyTextWatcher(EditText editText, int position) {
+        public MyTextWatcher(EditText editText, int position, String tag) {
             this.position = position;
+            this.tag = tag;
             this.inputEdittext = editText;
+        }
+
+        public void update(int position, String tag) {
+            this.position = position;
+            this.tag = tag;
         }
 
         @Override
@@ -95,11 +129,11 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         @Override
         public void afterTextChanged(Editable s) {
             ReportSnwsd reportSnwsd = (ReportSnwsd) getItem(position);
-            if (ReportSnwsd.LOCATION.equalsIgnoreCase(inputEdittext.getTag().toString()))
+            if (ReportSnwsd.LOCATION.equalsIgnoreCase(tag))
                 reportSnwsd.location = s.toString();
-            if (ReportSnwsd.WD.equalsIgnoreCase(inputEdittext.getTag().toString()))
+            if (ReportSnwsd.WD.equalsIgnoreCase(tag))
                 reportSnwsd.wd = s.toString();
-            if (ReportSnwsd.SD.equalsIgnoreCase(inputEdittext.getTag().toString()))
+            if (ReportSnwsd.SD.equalsIgnoreCase(tag))
                 reportSnwsd.sd = s.toString();
         }
     }

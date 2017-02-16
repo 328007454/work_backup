@@ -107,7 +107,7 @@ public class AnimalReportActivity extends BaseReportActivity {
     private PreventionRecord preventionRecord  ;
     //
     private List<HoleRecord> mHoleList;
-
+    private int discoverHoleCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,6 +211,8 @@ public class AnimalReportActivity extends BaseReportActivity {
                     jianChaPics = jianChaPics.substring(1,jianChaPics.length());
                 }
                 for (HoleRecord record : mHoleList) {
+                    if (currentReportId.equalsIgnoreCase(record.reportId))
+                        discoverHoleCount++;
                     if (!TextUtils.isEmpty(record.hole_images)&&currentReportId.equals(record.reportId)) {
                         if (TextUtils.isEmpty(disHolePics)) {
                             disHolePics += record.hole_images;
@@ -259,10 +261,12 @@ public class AnimalReportActivity extends BaseReportActivity {
             tvJianChaNum.setVisibility(View.GONE);
             imgJianCha.setVisibility(View.INVISIBLE);
         }
+
+        tvDiscover.setText(discoverHoleCount == 0 ? "无" : discoverHoleCount + "");
         if (!TextUtils.isEmpty(disHolePics)) {
 
            disList = StringUtils.string2List(disHolePics);
-            tvDiscover.setText(disList.size()+"");
+//            tvDiscover.setText(disList.size()+"");
             String picName = disList.get(0);
             imgDisHole.setVisibility(View.VISIBLE);
             Bitmap bmPicture = BitmapUtil.getOptimizedBitmap(Config.RESULT_PICTURES_FOLDER + picName);
@@ -276,7 +280,7 @@ public class AnimalReportActivity extends BaseReportActivity {
                 tvDisNum.setVisibility(View.INVISIBLE);
             }
         }else {
-            tvDiscover.setText("无");
+//            tvDiscover.setText("无");
             tvDisNum.setVisibility(View.GONE);
             imgDisHole.setVisibility(View.INVISIBLE);
         }
