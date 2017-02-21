@@ -63,7 +63,7 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         //清除照片的数量
         final TextView tvClearNum = holder.getView(R.id.tv_clearhole_num);
         holder.setText(R.id.tv_hole, item.location + "_" + item.hole_detail);
-        if (listPicXC != null) {
+        if (listPicXC != null&&!listPicXC.isEmpty()) {
             x.image().bind(((ImageView) holder.getView(R.id.img_discoverhole_pic)), Config.RESULT_PICTURES_FOLDER + listPicXC.get(0), CustomApplication.getLargeImageOptions());
             if (listPicXC.size() == 0 || listPicXC.size() == 1) {
                 tvDiscoverNum.setVisibility(View.GONE);
@@ -75,7 +75,7 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
             Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_clear_default);
             ((ImageView) holder.getView(R.id.img_discoverhole_pic)).setImageBitmap(bm);
         }
-        if (listPicClear != null) {
+        if (listPicClear != null&&!listPicClear.isEmpty()) {
             x.image().bind(((ImageView) holder.getView(R.id.img_clearhole_pic)), Config.RESULT_PICTURES_FOLDER + listPicClear.get(0), CustomApplication.getLargeImageOptions());
             if (listPicClear.size() == 0 || listPicClear.size() == 1) {
                 tvClearNum.setVisibility(View.GONE);
