@@ -27,7 +27,7 @@ android {
         release {
             keyAlias "四川金信石技术有限公司"
             keyPassword "kingston"
-            storeFile file("F:\\sjjc_android\\adaptionsjjc\\kingston.keystore")
+            storeFile file("D:\\Android\\NewMyWork\\sjjc-all\\adaptionsjjc\\kingston.keystore")
             storePassword "kingston"
         }
         debug {
