@@ -50,6 +50,12 @@ public class StringUtils {
         return m.matches();
     }
 
+    public static boolean isUrl(String url) {
+        Pattern p = Pattern.compile("^((http|ftp|https)://)(([a-zA-Z0-9\\._-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\\&%_\\./-~-]*)?");
+        Matcher m = p.matcher(url);
+        return m.matches();
+    }
+
     /**
      * @param current 当前值
      * @param total   总值

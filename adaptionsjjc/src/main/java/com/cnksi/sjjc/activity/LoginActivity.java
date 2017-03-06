@@ -1,7 +1,9 @@
 package com.cnksi.sjjc.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.UpdateUtils;
 import com.cnksi.ksynclib.activity.KSyncAJActivity;
 import com.cnksi.sjjc.BuildConfig;
@@ -33,9 +36,11 @@ import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Users;
+import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
 import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.sync.DataSync;
+import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 import com.iflytek.cloud.SpeechSynthesizer;
 
@@ -160,6 +165,14 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             autoCompleteTextView.setText("00030417");
             mEtPassword.setText("1");
         }
+
+        findViewById(R.id.ivLogo).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                modifySyncURL();
+                return true;
+            }
+        });
     }
 
     @Event(value = {R.id.b_add_people_button, R.id.mask_wifi, R.id.ib_delete1, R.id.ib_delete2, R.id.b_login_button, R.id.ivLogo})
@@ -237,6 +250,40 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         }
     }
 
+    /**
+     * 显示修改服务器同步地址的对话框，该对话框由长安同步按钮触发
+     */
+    private void modifySyncURL() {
+        final ModifySyncUrlBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_modify_iphost, null, false);
+        final Dialog dialog = DialogUtils.createDialog(mCurrentActivity, binding, true);
+        binding.tvOldUrl.setText(Config.SYNC_URL);
+
+        binding.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        binding.btnSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getText(binding.etNewUrl).trim();
+                if (url.startsWith("http://") || url.startsWith("https://")) {
+
+                } else {
+                    url = "http://" + url;
+                }
+                if (StringUtils.isUrl(url)) {
+                    Config.SYNC_URL = url;
+                    PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
+                    dialog.dismiss();
+                } else {
+                    CToast.showShort(mCurrentActivity, "请输入一个有效的URL");
+                }
+            }
+        });
+        dialog.show();
+    }
 
     /**
      * 登录

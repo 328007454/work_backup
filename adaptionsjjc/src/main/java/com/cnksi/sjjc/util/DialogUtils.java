@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -43,9 +44,26 @@ public class DialogUtils {
      * @return Dialog
      */
     public static Dialog createDialog(Context context, ViewHolder holder, int width, int height, boolean cancelable) {
+        return createDialog(context, holder.getRootView(), width, height, cancelable);
+    }
+
+
+    /**
+     * 创建dialog
+     *
+     * @param context
+     * @param holder     ViewHolder
+     * @param cancelable 是否可以点击dialog以外的地方dismissdialog
+     * @return Dialog
+     */
+    public static Dialog createDialog(Context context, ViewDataBinding holder, boolean cancelable) {
+        return createDialog(context, holder.getRoot(), 0, 0, cancelable);
+    }
+
+    public static Dialog createDialog(Context context, View v, int width, int height, boolean cancelable) {
         dialog = new Dialog(context, R.style.DialogStyle);
         dialog.setCanceledOnTouchOutside(cancelable);
-        dialog.setContentView(holder.getRootView());
+        dialog.setContentView(v);
         Window mWindow = dialog.getWindow();
         if (width > 0 && height > 0) {
 
@@ -54,11 +72,11 @@ public class DialogUtils {
             lp.width = width;
             mWindow.setAttributes(lp);
         }
-
         // 添加动画
         mWindow.setWindowAnimations(R.style.DialogAnim);
         return dialog;
     }
+
 
     /**
      * 创建dialog
@@ -70,14 +88,14 @@ public class DialogUtils {
      * @param cancelable 是否可以点击dialog以外的地方dismissdialog
      * @return Dialog
      */
-    public static Dialog createDialog(Context context, ViewGroup parent, int resource, Object holder, int width, int height, boolean cancelable){
+    public static Dialog createDialog(Context context, ViewGroup parent, int resource, Object holder, int width, int height, boolean cancelable) {
         dialog = new Dialog(context, R.style.DialogStyle);
         dialog.setCanceledOnTouchOutside(cancelable);
         View view = LayoutInflater.from(context).inflate(resource, parent, false);
         x.view().inject(holder, view);
         dialog.setContentView(view);
         Window mWindow = dialog.getWindow();
-        if (width !=0  || height !=0) {
+        if (width != 0 || height != 0) {
 
             WindowManager.LayoutParams lp = mWindow.getAttributes();
             lp.height = height;
@@ -89,49 +107,46 @@ public class DialogUtils {
         mWindow.setWindowAnimations(R.style.DialogAnim);
         return dialog;
     }
+
     /**
      * 创建dialog
      *
      * @param context
      * @param title
      * @param text
-     * @param btnText  按键文本 数组必须大于2
-     * @param listeners   点击事件 数组必须大于2
+     * @param btnText    按键文本 数组必须大于2
+     * @param listeners  点击事件 数组必须大于2
      * @param cancelable 是否可以点击dialog以外的地方dismissdialog
      * @return Dialog
      */
     public static Dialog createTipsDialog(Context context, String title, String text, String[] btnText, final View.OnClickListener[] listeners, boolean cancelable) {
-       final Dialog dialog = new Dialog(context, R.style.DialogStyle);
+        final Dialog dialog = new Dialog(context, R.style.DialogStyle);
         dialog.setCanceledOnTouchOutside(cancelable);
         View view = LayoutInflater.from(context).inflate(R.layout.tips_dialog, null, false);
-        ( (TextView) view.findViewById(R.id.tv_dialog_title)).setText(title);
-        ( (TextView) view.findViewById(R.id.tv_text)).setText(text);
-        Button btnCancel= (Button) view.findViewById(R.id.btn_cancel);
-        Button btnSure= (Button) view.findViewById(R.id.btn_confirm);
+        ((TextView) view.findViewById(R.id.tv_dialog_title)).setText(title);
+        ((TextView) view.findViewById(R.id.tv_text)).setText(text);
+        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        Button btnSure = (Button) view.findViewById(R.id.btn_confirm);
         btnCancel.setText("取消");
         btnSure.setText("确定");
-        if (btnText!=null)
-        {
-            if (btnText.length==1)
-            {
+        if (btnText != null) {
+            if (btnText.length == 1) {
                 btnSure.setText(btnText[0]);
             }
-            if (btnText.length>1) {
+            if (btnText.length > 1) {
                 btnCancel.setText(btnText[0]);
                 btnSure.setText(btnText[1]);
             }
         }
 
-        if (listeners!=null)
-        {
-            if (listeners.length==1)
-            {
+        if (listeners != null) {
+            if (listeners.length == 1) {
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                    dialog.dismiss();
+                        dialog.dismiss();
                     }
-                } );
+                });
                 btnSure.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -140,8 +155,7 @@ public class DialogUtils {
                     }
                 });
             }
-            if (listeners.length>1)
-            {
+            if (listeners.length > 1) {
                 btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -157,7 +171,7 @@ public class DialogUtils {
                     }
                 });
             }
-        }else {
+        } else {
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -174,8 +188,8 @@ public class DialogUtils {
         return dialog;
     }
 
-    public static Dialog createTipsDialog(Context context, String text, View.OnClickListener listener, boolean cancelable){
-     return    createTipsDialog(context,"提示",text,new String[]{"取消","确定"},new View.OnClickListener[]{listener},cancelable);
+    public static Dialog createTipsDialog(Context context, String text, View.OnClickListener listener, boolean cancelable) {
+        return createTipsDialog(context, "提示", text, new String[]{"取消", "确定"}, new View.OnClickListener[]{listener}, cancelable);
     }
 
     /**
@@ -314,9 +328,8 @@ public class DialogUtils {
     }
 
 
-
     public interface DialogItemClickListener {
-         void confirm(String result, int position);
+        void confirm(String result, int position);
     }
 
     static class TipsViewHolder {
@@ -350,19 +363,20 @@ public class DialogUtils {
             }
         }
     }
+
     /**
-     * @author  yj
+     * @author yj
      * 通过databing来生成Dialog
-     *  2016/8/10 11:40
-    */
-    public static Dialog creatDialog(Context context,View view,int width,int height){
+     * 2016/8/10 11:40
+     */
+    public static Dialog creatDialog(Context context, View view, int width, int height) {
         Dialog dialog = new Dialog(context, R.style.DialogStyle);
         dialog.setContentView(view);
         dialog.setCanceledOnTouchOutside(true);
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();
-        windowParams.width=width;
-        windowParams.height=height;
+        windowParams.width = width;
+        windowParams.height = height;
         dialogWindow.setAttributes(windowParams);
 
         return dialog;

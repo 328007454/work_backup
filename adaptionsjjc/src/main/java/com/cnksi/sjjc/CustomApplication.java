@@ -414,11 +414,23 @@ public class CustomApplication extends CoreApplication implements IKSync {
         Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
     }
 
+    private KNConfig syncConfig;
+
+    private void initSync() {
+        String deviceId = DeviceUtils.getSerialNumber(getApplicationContext());
+        syncConfig = new KNConfig(getApplicationContext(), Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
+                Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
+        syncConfig.configDynicParam("account", "1");
+    }
+
+
+    public KNConfig getSyncConfig() {
+        if (syncConfig == null) initSync();
+        return syncConfig;
+    }
+
     @Override
     public KSync getKSync() {
-        String deviceId = DeviceUtils.getSerialNumber(getApplicationContext());
-        KNConfig config = new KNConfig(getApplicationContext(), Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
-                Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
-        return KSync.create(config);
+        return KSync.create(getSyncConfig());
     }
 }
