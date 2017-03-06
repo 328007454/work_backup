@@ -17,6 +17,7 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -77,6 +78,10 @@ public class BatteryTestActivity extends BaseActivity {
 
     @ViewInject(R.id.layout_battery)
     private LinearLayout layoutBattery;
+
+    @ViewInject(R.id.container_horizantal)
+    private HorizontalScrollView containerHorizantal;
+
     //当前测试类型
     @ViewInject(R.id.current_test_type)
     private TextView txtCheckType;
@@ -236,13 +241,13 @@ public class BatteryTestActivity extends BaseActivity {
                     e.printStackTrace();
                     Log.i("BatteryTestActivity", "返回键数据保存出错");
                 }
-                if("maintenance_xdcdyjc".equalsIgnoreCase( PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY,""))&&task.status.equalsIgnoreCase("done")){
-                    PreferencesUtils.put(_this,Config.CURRENT_MAINTANENCE_BATTERY,"");
+                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done")) {
+                    PreferencesUtils.put(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
                     Intent intent = new Intent();
                     ComponentName componentName;
                     componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
                     intent.setComponent(componentName);
-                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE,currentInspectionType);
+                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
                     startActivity(intent);
                 }
                 KeyBoardUtils.closeKeybord(_this);
@@ -353,10 +358,10 @@ public class BatteryTestActivity extends BaseActivity {
                     SpannableString spanVoltage = new SpannableString(voltage);
                     SpannableString spanResistance = new SpannableString(resistance);
 //                    getResources().getColor(R.color.radio_text_checked_color)
-                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.red_unpressed_color)), 3, spanVoltage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this,R.color.red_unpressed_color)), 3, resistance.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.red_unpressed_color)), 3, spanVoltage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.red_unpressed_color)), 3, resistance.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     txtResistanceTotal.setText(spanResistance);
                     txtVoltageTotal.setText(spanVoltage);
                 }
@@ -405,7 +410,7 @@ public class BatteryTestActivity extends BaseActivity {
         layoutBattery.setMinimumWidth(DisplayUtil.getInstance().getWidth());
         for (final Battery battery : batteryList) {
             ViewHolder holder = new ViewHolder(this, null, R.layout.item_battery_group, false);
-            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             p.weight = 1;
             holder.getRootView().setLayoutParams(p);
             AutoUtils.autoSize(holder.getRootView());
@@ -423,8 +428,10 @@ public class BatteryTestActivity extends BaseActivity {
                 changeBatteryTab(holder.getRootView());
             index++;
         }
-        if (1 == batteryList.size())
+        if (1 == batteryList.size()) {
+            containerHorizantal.setVisibility(View.GONE);
             layoutBattery.setVisibility(View.GONE);
+        }
 
     }
 

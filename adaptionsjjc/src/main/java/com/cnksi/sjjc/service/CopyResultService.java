@@ -66,7 +66,7 @@ public class CopyResultService {
             String operate = (inReport) ? "=" : "!=";
             Selector<CopyResult> selector = CustomApplication.getDbManager().selector(CopyResult.class).where(CopyResult.DEVICEID, "=", deviceId)
                     .and(CopyResult.REPORTID, operate, reportId).
-            expr(" and " + CopyItem.TYPE_KEY+" in('"+ type+"')  group by " + CopyResult.ITEM_ID + " order by " + CopyResult.UPDATE_TIME + "," + CopyResult.CREATE_TIME);
+            expr(" and " + CopyItem.TYPE_KEY+" in('"+ type+"')  and create_time in ( select max(create_time) from copy_result group by item_id)  group by " + CopyResult.ITEM_ID + " order by " + CopyResult.UPDATE_TIME + "," + CopyResult.CREATE_TIME);
             return selector.findAll();
         } catch (DbException e) {
             e.printStackTrace();
