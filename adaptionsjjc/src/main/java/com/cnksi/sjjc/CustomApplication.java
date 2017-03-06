@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.widget.ImageView;
 
 import com.cnksi.core.application.CoreApplication;
+import com.cnksi.core.common.DeviceUtils;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.DisplayUtil;
@@ -13,6 +14,9 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.crash.CrashHandler;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
+import com.cnksi.ksynclib.IKSync;
+import com.cnksi.ksynclib.KNConfig;
+import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
@@ -43,7 +47,7 @@ import java.util.List;
  * @auth luoxy
  * @date 16/4/20
  */
-public class CustomApplication extends CoreApplication {
+public class CustomApplication extends CoreApplication implements IKSync {
     private String[] filePathArray = {
             Config.BDZ_INSPECTION_FOLDER,
             Config.DATABASE_FOLDER,
@@ -113,9 +117,10 @@ public class CustomApplication extends CoreApplication {
         CLog.init(true);
         PlaySound.initPlay(this);
         CrashReportUploadHandler.init(mInstance, Config.LOGFOLDER).start();
-        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true)) {
+        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true) || BuildConfig.USE_NETWORK_SYNC) {
             com.cnksi.core.utils.NetWorkUtil.disableNetWork(this);
         }
+        initRuntimeVar();
     }
 
     public void initApp() {
@@ -403,5 +408,17 @@ public class CustomApplication extends CoreApplication {
         } catch (Exception e) {
             Runtime.getRuntime().exit(-1);
         }
+    }
+
+    private void initRuntimeVar() {
+        Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
+    }
+
+    @Override
+    public KSync getKSync() {
+        String deviceId = DeviceUtils.getSerialNumber(getApplicationContext());
+        KNConfig config = new KNConfig(getApplicationContext(), Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
+                Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
+        return KSync.create(config);
     }
 }

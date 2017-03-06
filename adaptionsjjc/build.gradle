@@ -40,6 +40,11 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField 'boolean', "USE_NETWORK_SYNC", "flase";
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "String", "SYNC_APP_ID", "\"bdzinspection\""
+            buildConfigField "String", "SYNC_URL", "\"http://211.149.155.181:9090/\""
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
@@ -49,11 +54,11 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        if (variant.buildType.name.equals("release")) {
+                        if (variant.buildType.name == "release") {
                             // 输出apk名称
                             def fileName = "sjjc_${defaultConfig.versionName}_release.apk"
                             output.outputFile = new File("E:\\CompanyProject\\SJJCAPK", fileName)
-                        }else {
+                        } else {
                             // 输出apk名称
                             def fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
                             output.outputFile = new File("E:\\CompanyProject\\SJJCAPK", fileName)
@@ -62,6 +67,12 @@ android {
                     }
                 }
             }
+        }
+        debug {
+            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "SYNC_APP_ID", "\"bdzinspection\""
+            buildConfigField "String", "SYNC_URL", "\"http://211.149.155.181:9090/\""
         }
     }
 
@@ -75,7 +86,8 @@ android {
     //打开泛型和过时API编译报警�?相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391
     tasks.withType(JavaCompile) {
         //-Xlint:none 关闭所有警�?
-        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+//        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        options.compilerArgs << "-Xlint:none"
     }
 
     compileOptions {
@@ -106,7 +118,7 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    compile('com.cnksi:ksynclib:3.0.12') {
+    compile('com.cnksi:ksynclib:3.1.2') {
         exclude module: 'fastjson'
     }
     compile project(':autolayout')

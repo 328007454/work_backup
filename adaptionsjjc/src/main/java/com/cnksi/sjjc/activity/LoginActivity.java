@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -28,9 +27,7 @@ import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.UpdateUtils;
-import com.cnksi.ksynclib.KSyncConfig;
-import com.cnksi.ksynclib.activity.KSyncDebugActivity;
-import com.cnksi.ksynclib.activity.KSyncXJActivity;
+import com.cnksi.ksynclib.activity.KSyncAJActivity;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -159,7 +156,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 });
             }
         });
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             autoCompleteTextView.setText("00030417");
             mEtPassword.setText("1");
         }
@@ -224,21 +221,11 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             //跳转数据同步
             case R.id.ivLogo:
-                if(false){
-                    String appId = "com.cnksi.sjjc";
-                    String url = "http://192.168.199.219:8080";
-                    String serialNumber = Build.SERIAL;
-                    KSyncConfig.initConfig(getApplicationContext(), CustomApplication.getDbManager().getDatabase(), appId, url, serialNumber, Config.BDZ_INSPECTION_FOLDER);
-                    KSyncConfig.addDyincParam("account", "00030493");
-                    KSyncDebugActivity.uploadFolder = "log,signimg,upload_database";
-                    KSyncConfig.isDebug = true;
-                    if (KSyncConfig.isDebug) {
-                        startActivity(new Intent(mCurrentActivity, KSyncDebugActivity.class));
-                    } else {
-                        startActivity(new Intent(mCurrentActivity, KSyncXJActivity.class));
-                    }
-
-                }else{
+                if (BuildConfig.USE_NETWORK_SYNC) {
+                    Intent intent;
+                    intent = new Intent(mCurrentActivity, KSyncAJActivity.class);
+                    startActivity(intent);
+                } else {
                     ScreenManager.getScreenManager().popAllActivityExceptOne(LoginActivity.class);
                     Intent newIntent = new Intent(LoginActivity.this, DataSync.class);
                     newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
@@ -315,7 +302,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         });
     }
 
-//    ViewHolder holder;
+    //    ViewHolder holder;
 //    Dialog dialog;
     @Override
     protected void onResume() {
@@ -483,7 +470,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         compeletlyExitSystem();
     }
 
@@ -495,7 +482,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
     @Override
     public void allPermissionsGranted() {
-        PreferencesUtils.put(_this,Config.PERMISSION_STASTUS,true);
+        PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
         CustomApplication.getInstance().initApp();
         checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, null, "0");
     }
