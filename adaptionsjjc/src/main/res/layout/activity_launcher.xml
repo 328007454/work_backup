@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#EFEFEF"
-              android:orientation="vertical"
-              android:padding="45px"
-              tools:context=".activity.LauncherActivity">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF"
+    android:orientation="vertical"
+    android:padding="45px"
+    tools:context=".activity.LauncherActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="360px"
         android:orientation="horizontal">
-
         <LinearLayout
             android:id="@+id/sbxs"
             android:layout_width="0px"
@@ -21,25 +19,22 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_sbxs"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_sbxs_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_sbxs"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/sbxs"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/sbjc"
             android:layout_width="0px"
@@ -47,26 +42,23 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_sbjc"
+                android:id="@+id/imageView2"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_check_background"
                 android:padding="50px"
-                android:id="@+id/imageView2"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_sbjc"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/sbjc"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/dqsy"
             android:layout_width="0px"
@@ -74,34 +66,28 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_dqsy"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_switch_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_dqsy"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/dqsy"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
-
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="360px"
         android:layout_marginTop="45px"
         android:orientation="horizontal">
-
         <LinearLayout
             android:id="@+id/dqwh"
             android:layout_width="0px"
@@ -109,25 +95,22 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_dqwh"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_maintain_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_dqwh"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/dqwh"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/ywyth"
             android:layout_width="0px"
@@ -135,25 +118,22 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_ywyth"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_ywyth_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_ywyth"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/ywyth"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/dzhgzp"
             android:layout_width="0px"
@@ -161,35 +141,28 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_dzhczp"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_dzhczp_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_dzhczp"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/dzhczp"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
-
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
-
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="360px"
         android:layout_marginTop="45px"
         android:orientation="horizontal">
-
         <LinearLayout
             android:id="@+id/zxxs"
             android:layout_width="0px"
@@ -197,25 +170,22 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_zxxs"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_zxxs_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_zxxs"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/zxxs"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/jyhpj"
             android:layout_width="0px"
@@ -223,25 +193,22 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_jyhpj"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_jyhpj_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_jyhpj"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/jyhpj"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/jyhys"
             android:layout_width="0px"
@@ -249,36 +216,29 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_jyhys"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_jyhys_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_jyhys"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/jyhys"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
-
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
-
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="360px"
         android:layout_marginTop="45px"
-        android:weightSum="3"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:weightSum="3">
         <LinearLayout
             android:id="@+id/gzp"
             android:layout_width="0px"
@@ -286,25 +246,22 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/launcher_gzp"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_gzp_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_gzp"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/gzp"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/layout_data_sync"
             android:layout_width="0px"
@@ -312,25 +269,45 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-
             <ImageView
-                app:layout_auto_baseheight="width"
-                app:srcCompat="@drawable/icon_launcher_syncdata"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_syncdata_background"
                 android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/icon_launcher_syncdata"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/sjtb"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
+        <LinearLayout
+            android:id="@+id/tjwt"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="250px"
+                android:layout_height="250px"
+                android:background="@drawable/launcher_tjwt_background"
+                android:padding="50px"
+                app:layout_auto_baseheight="width"
+                app:srcCompat="@drawable/launcher_tjwt"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:gravity="center"
+                android:text="@string/tjwt"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/standard_source_text_size_px" />
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/sbys"
             android:layout_width="0px"
@@ -338,26 +315,23 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="invisible">
-
+            android:visibility="gone">
             <ImageView
-                app:layout_auto_baseheight="width"
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@drawable/launcher_sbys_background"
                 android:padding="50px"
                 android:src="@mipmap/launcher_sbys"
+                app:layout_auto_baseheight="width"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80px"
                 android:gravity="center"
                 android:text="@string/sbys"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/standard_source_text_size_px"/>
+                android:textSize="@dimen/standard_source_text_size_px" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
@@ -365,20 +339,15 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="invisible">
-
             <ImageView
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:background="@mipmap/launcher_sbys"
                 tools:ignore="ContentDescription" />
-
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="80px"/>
-
+                android:layout_height="80px" />
         </LinearLayout>
-
-
     </LinearLayout>
 
 

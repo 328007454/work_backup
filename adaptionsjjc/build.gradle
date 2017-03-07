@@ -53,7 +53,7 @@ android {
                             // 输出apk名称
                             def fileName = "sjjc_${defaultConfig.versionName}_release.apk"
                             output.outputFile = new File("E:\\CompanyProject\\SJJCAPK", fileName)
-                        }else {
+                        } else {
                             // 输出apk名称
                             def fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
                             output.outputFile = new File("E:\\CompanyProject\\SJJCAPK", fileName)
@@ -101,14 +101,15 @@ dependencies {
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':cnksicore')
-    testCompile 'junit:junit:4.12'
     compile(name: 'flironesdk', ext: 'aar')
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     compile('com.cnksi:ksynclib:3.0.12') {
         exclude module: 'fastjson'
     }
     compile project(':autolayout')
-    compile 'com.android.support:cardview-v7:22.2.1'
+    compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

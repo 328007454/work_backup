@@ -259,6 +259,11 @@
         <item>土建设施精益化评价</item>
         <item>避雷针精益化评价</item>
     </string-array>
+    <string-array name="TJWT">
+        <item >AAA</item>
+        <item >BBB</item>
+        <item >CCC</item>
+    </string-array>
 
     <string-array name="PressureDetectionName">
         <item>SF6气体压力检测</item>

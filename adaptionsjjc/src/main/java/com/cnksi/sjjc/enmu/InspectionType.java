@@ -89,9 +89,10 @@ public enum InspectionType {
     SBJC_12("收发信机测试"),
 
     JYHYS("精益化验收"),
-    JYHPJ("精益化评价");
+    JYHPJ("精益化评价"),
 
 
+    TJWT("图解五通");
 
 
     public final String value;
@@ -160,6 +161,8 @@ public enum InspectionType {
             return InspectionType.JYHPJ;
         }else if (InspectionType.JYHYS.value.equals(value)) {
             return InspectionType.JYHYS;
+        }else if(InspectionType.TJWT.value.equals(value)){
+            return InspectionType.TJWT;
         }
         return null;
     }

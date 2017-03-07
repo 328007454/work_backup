@@ -239,6 +239,7 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowAnimationStyle">@anim/dialog_exit</item>
     </style>
+
     <style name="DashStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">3px</item>
@@ -253,6 +254,7 @@
         <item name="android:paddingRight">49.5px</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
     <style name="svgButtonExit">
         <item name="android:paddingBottom">35.5px</item>
         <item name="android:paddingTop">35.5px</item>
@@ -260,6 +262,7 @@
         <item name="android:paddingRight">37.5px</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
     <style name="svgButtonRight">
         <item name="android:paddingBottom">37.5px</item>
         <item name="android:paddingTop">37.5px</item>
@@ -267,6 +270,7 @@
         <item name="android:paddingRight">37.5px</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
     <style name="svgButtonDate">
         <item name="android:paddingBottom">37.5px</item>
         <item name="android:paddingTop">37.5px</item>
@@ -274,10 +278,12 @@
         <item name="android:paddingRight">25.5px</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
     <style name="svgButtonAdd">
         <item name="android:padding">37.5px</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
     <style name="svgButtonCamera">
         <item name="android:paddingBottom">38px</item>
         <item name="android:paddingTop">38px</item>
@@ -285,4 +291,8 @@
         <item name="android:paddingRight">35.5px</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

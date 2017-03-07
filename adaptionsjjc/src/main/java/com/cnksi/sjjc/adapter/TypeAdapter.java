@@ -74,6 +74,11 @@ public class TypeAdapter extends BaseAdapter<String> {
                 typeImage.setBackgroundResource(R.drawable.launcher_jyhys_background);
                 setClickable(holder, item, 1, position);
                 break;
+            case TJWT: //图解五通
+                typeImage.setImageResource(R.drawable.launcher_tjwt);
+                typeImage.setBackgroundResource(R.drawable.launcher_tjwt_background);
+                setClickable(holder, item, Integer.MAX_VALUE, position);
+                break;
         }
         holder.setText(R.id.type_value, item);
     }

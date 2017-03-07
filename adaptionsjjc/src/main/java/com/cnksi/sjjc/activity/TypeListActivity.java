@@ -84,6 +84,9 @@ public class TypeListActivity extends BaseActivity {
             case JYHPJ:
                 typeList = Arrays.asList(getResources().getStringArray(R.array.JYHPJ));
                 break;
+            case TJWT: //图解五通
+                typeList = Arrays.asList(getResources().getStringArray(R.array.TJWT));
+                break;
             case operation:
 
         }
@@ -232,6 +235,9 @@ public class TypeListActivity extends BaseActivity {
                         if (position == 0)
                             intent.setClass(_this, WorkPlanInformationActivity.class);
                         else return;
+                        break;
+                    case TJWT: //图解五通
+                        intent.setClass(_this,TJWTActivity.class);
                         break;
                 }
                 startActivity(intent);
