@@ -27,7 +27,7 @@ android {
         release {
             keyAlias "四川金信石技术有限公司"
             keyPassword "kingston"
-            storeFile file("D:\\Android\\NewMyWork\\sjjc-all\\adaptionsjjc\\kingston.keystore")
+            storeFile file("kingston.keystore")
             storePassword "kingston"
         }
         debug {
@@ -40,9 +40,9 @@ android {
     }
     buildTypes {
         release {
-            buildConfigField 'boolean', "USE_NETWORK_SYNC", "flase";
+            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "false"
-            buildConfigField "String", "SYNC_APP_ID", "\"bdzinspection\""
+            buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
             buildConfigField "String", "SYNC_URL", "\"http://211.149.155.181:9090/\""
 
             minifyEnabled false
@@ -71,7 +71,7 @@ android {
         debug {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "true"
-            buildConfigField "String", "SYNC_APP_ID", "\"bdzinspection\""
+            buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
             buildConfigField "String", "SYNC_URL", "\"http://211.149.155.181:9090/\""
         }
     }

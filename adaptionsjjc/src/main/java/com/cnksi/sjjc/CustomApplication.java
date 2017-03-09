@@ -117,7 +117,7 @@ public class CustomApplication extends CoreApplication implements IKSync {
         CLog.init(true);
         PlaySound.initPlay(this);
         CrashReportUploadHandler.init(mInstance, Config.LOGFOLDER).start();
-        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true) || BuildConfig.USE_NETWORK_SYNC) {
+        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true) && !BuildConfig.USE_NETWORK_SYNC) {
             com.cnksi.core.utils.NetWorkUtil.disableNetWork(this);
         }
         initRuntimeVar();
@@ -210,7 +210,7 @@ public class CustomApplication extends CoreApplication implements IKSync {
      */
 
     protected static DbManager.DaoConfig getDaoConfig() {
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(12)
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME)
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override
                     public void onDbOpened(DbManager db) {

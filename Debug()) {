@@ -1,0 +1,200 @@
+[33mcommit d766bf87cc2fff9e90f3045197295b0541ccf081[m
+Author: Wastrel <907972944@qq.com>
+Date:   Mon Mar 6 18:04:23 2017 +0800
+
+    add Modify Url Dilaog
+
+[33mcommit 44ed1857cc85100d137f056cd5eee77a4ca18ca1[m
+Author: Wastrel <907972944@qq.com>
+Date:   Mon Mar 6 16:23:26 2017 +0800
+
+    引入新的同步框架
+
+[33mcommit f8cd73d805dea4fd8dfeaa676038ed2c4b5abd15[m
+Merge: b246dce e6eba80
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Mon Mar 6 10:26:44 2017 +0800
+
+    Merge branch 'sjjc-all' of https://git.oschina.net/kingschemexj/sjjc_android into sjjc-all
+
+[33mcommit b246dce71a9967331b892d42d2c685409439f44d[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Mon Mar 6 10:26:23 2017 +0800
+
+    修改蓄电池检测模块
+
+[33mcommit e6eba8001a4b182a1d753c0bcf6d124a6554bcde[m
+Author: liwei <564141923@qq.com>
+Date:   Mon Feb 27 15:51:43 2017 +0800
+
+    Signed-off-by: liwei <564141923@qq.com>测试
+
+[33mcommit bdb332dd5badfc038914c60bfb6021d94eb4ce76[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Tue Feb 21 10:20:56 2017 +0800
+
+    修改防小动物现存孔洞没有拍照情况下报空指针异常
+
+[33mcommit afaeffd3732dac8926f76cc0620b662f5952b944[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Thu Feb 16 17:29:33 2017 +0800
+
+    修改室内温湿度报告以及防小动物现存孔洞问题
+
+[33mcommit 338ff6a89a7f9d7f6de30ae5b0cfb7c267e85ee8[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Wed Feb 15 14:35:22 2017 +0800
+
+    修改差动保护差流报告
+
+[33mcommit 461f09023c36e79ebffc82e89dfe4a5c1d35fcd3[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Wed Feb 15 13:33:43 2017 +0800
+
+    差动保护差流
+
+[33mcommit a4511c2b58852561da120763eaabf4e33981c21e[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Wed Feb 15 10:57:40 2017 +0800
+
+    修改防小动物，室内温湿度
+
+[33mcommit 375d95b4446b8bc2891de5577d29c4971c213038[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Tue Jan 17 13:31:48 2017 +0800
+
+    修改登录界面copyRight会被遮挡额可能性
+
+[33mcommit bdbb9347db004e3e415125bbdd4e053bd2cd7686[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Fri Jan 13 15:25:24 2017 +0800
+
+    修改适配中存在的问题
+
+[33mcommit 257b18efd1b787772e24d09a872f18327d81dbc3[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Fri Jan 13 13:15:30 2017 +0800
+
+    去掉无用资源以及收发信息机制点击奔溃
+
+[33mcommit a45f56e8f550a7c423e6c9b7b6edce5c3db541d9[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Fri Jan 13 10:40:51 2017 +0800
+
+    修改压力检查温度界面奔溃问题
+
+[33mcommit 28eca1cae43b47df98faa78c0c42b1dd2122f2b5[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Fri Jan 13 10:10:18 2017 +0800
+
+    修改所有的登陆查询新旧密码
+
+[33mcommit 04c43ed7b49734024127ac9999e8cebfc04af1e4[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Thu Jan 12 16:58:47 2017 +0800
+
+    修改数据检测适配bug
+
+[33mcommit b397fbc99b47fde3cd22026f52a319e08adc5f19[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Thu Jan 12 09:59:16 2017 +0800
+
+    修改登录界面以及崩溃问题
+
+[33mcommit 391202a201de6775c5e289f1832ab87c395bd11c[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Wed Jan 11 17:13:59 2017 +0800
+
+    修改的登陆界面
+
+[33mcommit 5062c20d208339230795ee320c0b8f1019898d93[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Wed Jan 11 16:51:56 2017 +0800
+
+    适配数据检测第一次提交
+
+[33mcommit be7a988c9cd65b93698dda0f57dd1e4a61f0ad73[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Tue Dec 27 15:27:57 2016 +0800
+
+    修改登录密码查询方式可以按照用户的新旧密码登录，更新忽略文件不提交build，修改变电站未激活的情况下无法选择该变电站
+
+[33mcommit 5efa467baa7b367c08106ff0760117a6dbe39418[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Tue Dec 20 11:33:59 2016 +0800
+
+    nothing changes
+
+[33mcommit daacac5b7a1db55a221fd522304712d8b014738a[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Mon Dec 5 11:37:00 2016 +0800
+
+    添加同步确认时间表
+
+[33mcommit 3900cdc57398d439022beb989c36dc64c8952758[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Fri Dec 2 10:09:53 2016 +0800
+
+    去掉登陆界面无用代码
+
+[33mcommit d311bc414fd30c373c1afad030ab4c1f10a203f8[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Fri Dec 2 10:04:15 2016 +0800
+
+    提交配置文件
+
+[33mcommit 7fdd6480a914445da05353278f4160132fb19f9a[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Fri Dec 2 10:03:10 2016 +0800
+
+    提交忽略文件
+
+[33mcommit 66e292fe31942a27d2e6022b2dfc4e8a79e7a0cb[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Thu Dec 1 17:51:44 2016 +0800
+
+    删除操作的数据库
+
+[33mcommit c59f88185b6692b200a56688f0066c3ef054c924[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Thu Dec 1 16:07:07 2016 +0800
+
+    提交所有的java类
+
+[33mcommit 0fe5e527725d81207053bfd1d06e309bd1c1c619[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Thu Dec 1 14:51:40 2016 +0800
+
+    add
+
+[33mcommit bde115ad0c327e5a330419cc1c76d1e302948d9f[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Thu Dec 1 13:12:36 2016 +0800
+
+    提交忽略文件
+
+[33mcommit ef9d80c140a27f34059a37d2cb47de47e940e28d[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Thu Dec 1 12:41:55 2016 +0800
+
+    提交所有java类
+
+[33mcommit 5d58ae6ef913327dca38027ee68bd2f8beda44dd[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Wed Nov 30 13:54:04 2016 +0800
+
+    修改适配
+
+[33mcommit 7ac4204a960b169bff77e75b4a09f21c09f62b2f[m
+Author: junjundeyuanwang <515334730@qq.com>
+Date:   Mon Nov 28 17:52:33 2016 +0800
+
+    提交设备检测项目到git
+
+[33mcommit 3d51882e791f7596a5c0c3218b0baf523b99e12c[m
+Author: 都城 <982505818@qq.com>
+Date:   Thu Nov 17 18:28:26 2016 +0800
+
+    Initial commit
+warning: inexact rename detection was skipped due to too many files.
+warning: you may want to set your diff.renameLimit variable to at least 5959 and retry the command.
