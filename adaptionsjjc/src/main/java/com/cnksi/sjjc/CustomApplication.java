@@ -69,6 +69,8 @@ public class CustomApplication extends CoreApplication implements IKSync {
     private static DbManager PJDbManager = null;
     private static DbManager yanShouDbManager = null;
 
+    private static int oldDbVersion=0;
+
     public HashMap<String, String> getCopyedMap() {
         if (copyedMap == null)
             copyedMap = new HashMap<>();
@@ -210,17 +212,21 @@ public class CustomApplication extends CoreApplication implements IKSync {
      */
 
     protected static DbManager.DaoConfig getDaoConfig() {
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME)
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(0)
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override
                     public void onDbOpened(DbManager db) {
                         // 开启WAL, 对写入加速提升巨大
                         //db.getDatabase().enableWriteAheadLogging();
+                        //此处不处理数据库版本更新  全权交给同步框架处理。
+                        db.getDaoConfig().setDbVersion(db.getDatabase().getVersion());
                     }
                 })
                 .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
                     @Override
                     public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
+                        oldDbVersion =oldVersion;
+//                        PreferencesUtils.put(mInstance,"DbVersion",newVersion);
                         // TODO: ...
 //                        try {
 ////                            db.addColumn(HoleRecord.class, "clear_images");
@@ -414,23 +420,13 @@ public class CustomApplication extends CoreApplication implements IKSync {
         Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
     }
 
-    private KNConfig syncConfig;
-
-    private void initSync() {
-        String deviceId = DeviceUtils.getSerialNumber(getApplicationContext());
-        syncConfig = new KNConfig(getApplicationContext(), Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
-                Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
-        syncConfig.configDynicParam("account", "1");
-    }
-
-
-    public KNConfig getSyncConfig() {
-        if (syncConfig == null) initSync();
-        return syncConfig;
-    }
-
     @Override
     public KSync getKSync() {
-        return KSync.create(getSyncConfig());
+        String deviceId = DeviceUtils.getSerialNumber(getApplicationContext());
+        KNConfig   syncConfig = new KNConfig(getApplicationContext(), Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
+                Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
+        syncConfig.configDebug(true);
+        syncConfig.configDynicParam("account", "1");
+        return new KSync(syncConfig,null);
     }
 }
