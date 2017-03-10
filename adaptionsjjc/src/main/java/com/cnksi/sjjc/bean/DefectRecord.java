@@ -17,7 +17,7 @@ import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 @Table(name = "defect_record")
-public class DefectRecord {
+public class DefectRecord extends BaseModel {
 
     public static final String TABLENAME = "defect_record";
     // 结果ID
@@ -197,10 +197,7 @@ public class DefectRecord {
     public static final String STADIDSWICHERID = "stand_switch_id";
     @Column(name = STADIDSWICHERID)
     public String standSwitchId;
-    // 是否已消除
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt = "0";
+
     // 消除时间
     public static final String REMOVE_DATE = "remove_date";
     @Column(name = REMOVE_DATE)

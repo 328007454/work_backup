@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.bean.BaseModel;
 import com.cnksi.sjjc.enmu.InspectionType;
 
 import org.xutils.db.annotation.Column;
@@ -16,7 +17,7 @@ import org.xutils.db.annotation.Table;
  * @author Oliver
  */
 @Table(name = "device_standards")
-public class UploadDeviceStandards {
+public class UploadDeviceStandards extends BaseModel {
 
     public UploadDeviceStandards() {
         this.dlt = "0";
@@ -91,10 +92,7 @@ public class UploadDeviceStandards {
     @Column(name = KIND)
     public String kind;
 
-    // 逻辑删除
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt;
+
 
     // 是否是定值核对
     public static final String ISDZ = "isdz";

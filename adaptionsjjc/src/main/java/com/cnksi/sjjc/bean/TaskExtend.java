@@ -7,7 +7,7 @@ import java.util.UUID;
 
 
 @Table(name = "task_extend")
-public class TaskExtend {
+public class TaskExtend  {
 
     // ID
     public static final String ID = "id";

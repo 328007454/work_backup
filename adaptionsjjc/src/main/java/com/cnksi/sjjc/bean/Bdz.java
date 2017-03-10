@@ -5,7 +5,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "bdz")
-public class Bdz {
+public class Bdz extends BaseModel{
 
     // 变电站编号
     public static final String BDZID = "bdzid";
@@ -32,10 +32,7 @@ public class Bdz {
     @Column(name = ADDR)
     public String addr;
 
-    // 逻辑删
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt;
+
 
     public static final String FOLDER = "folder_name";
     @Column(name = FOLDER)

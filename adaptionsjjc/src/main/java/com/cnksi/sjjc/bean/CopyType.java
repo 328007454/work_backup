@@ -5,7 +5,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "copy_type")
-public class CopyType {
+public class CopyType extends BaseModel {
 
     //ID
     public static final String ID = "id";

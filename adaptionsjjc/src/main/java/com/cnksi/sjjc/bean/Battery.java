@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 蓄电池
  */
 @Table(name = "battery")
-public class Battery implements Serializable {
+public class Battery extends BaseModel implements Serializable {
     //电池组编号
     public static final String BID = "bid";
     @Column(name = BID)

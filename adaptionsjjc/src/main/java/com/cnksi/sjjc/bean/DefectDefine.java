@@ -5,7 +5,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "defect_define")
-public class DefectDefine {
+public class DefectDefine extends BaseModel {
 
 	public DefectDefine() {
 		this.dlt = "0";
@@ -56,9 +56,6 @@ public class DefectDefine {
 	@Column(name = CREATER)
 	public String creater;
 
-	// 逻辑删除
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	public String dlt;
+
 
 }

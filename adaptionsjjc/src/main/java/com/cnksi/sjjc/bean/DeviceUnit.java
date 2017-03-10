@@ -9,7 +9,7 @@ import org.xutils.db.annotation.Table;
 
 
 @Table(name = "device_unit")
-public class DeviceUnit {
+public class DeviceUnit extends BaseModel{
 
 	// 设备部件编号
 	public static final String DUID = "duid";
@@ -36,10 +36,7 @@ public class DeviceUnit {
 	@Column(name = SORT)
 	public String sort;
 
-	// 逻辑删除
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	public String dlt;
+
 
 	// 更新时间
 	public static final String CREATE_TIME = "createtime";

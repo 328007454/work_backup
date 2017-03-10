@@ -9,7 +9,7 @@ import org.xutils.db.annotation.Table;
  */
 
 @Table(name = "department")
-public class Department {
+public class Department extends BaseModel{
 
 	public static final String ID = "id";
 	@Column(name = ID,isId = true)

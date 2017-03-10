@@ -8,7 +8,7 @@ import org.xutils.db.annotation.Table;
 import java.util.UUID;
 
 @Table(name = "standard_step_confirm")
-public class StandardStepConfirm {
+public class StandardStepConfirm extends BaseModel{
 
 	// ID
 	public static final String ID = "id";
@@ -39,10 +39,7 @@ public class StandardStepConfirm {
 	public String confirm_date;
 
 
-	// 逻辑删
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	public String dlt;
+
 	public static final String CREATETIME = "create_time";
 	@Column(name = CREATETIME)
 	public String createtime;

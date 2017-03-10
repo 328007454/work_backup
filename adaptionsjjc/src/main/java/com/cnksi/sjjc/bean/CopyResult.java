@@ -12,7 +12,7 @@ import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 @Table(name = "copy_result")
-public class CopyResult {
+public class CopyResult extends BaseModel {
 
     // ID
     public static final String ID = "id";
@@ -144,9 +144,7 @@ public class CopyResult {
     @Column(name = UPDATE_TIME)
     public String update_time;
 
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt = "0";
+
 
     public static final String VAL_SPECIAL = "val_special";
     @Column(name = VAL_SPECIAL)

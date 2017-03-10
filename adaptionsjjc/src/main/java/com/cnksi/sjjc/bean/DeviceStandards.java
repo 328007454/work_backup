@@ -17,7 +17,7 @@ import org.xutils.db.annotation.Table;
  * @author Oliver
  */
 @Table(name = "device_standards")
-public class DeviceStandards {
+public class DeviceStandards extends BaseModel{
 
     public DeviceStandards() {
         this.dlt = "0";
@@ -92,10 +92,7 @@ public class DeviceStandards {
     @Column(name = KIND)
     public String kind;
 
-    // 逻辑删除
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt;
+
 
     // 是否是定值核对
     public static final String ISDZ = "isdz";

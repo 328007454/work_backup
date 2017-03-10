@@ -1,11 +1,9 @@
 package com.cnksi.sjjc.bean;
 
+import android.text.TextUtils;
+
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FunctionUtils;
-import com.cnksi.sjjc.bean.Department;
-import com.cnksi.sjjc.bean.Users;
-
-import android.text.TextUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -16,7 +14,7 @@ import org.xutils.db.table.DbModel;
  * @date 创建时间：2016年8月10日 上午9:33:33 TODO
  */
 @Table(name = "report_signname")
-public class ReportSignname {
+public class ReportSignname extends BaseModel{
 	// ID
 	public static final String ID = "id";
 	@Column(name = ID,isId = true)
@@ -53,10 +51,7 @@ public class ReportSignname {
 	public static final String CREATETIME = "create_time";
 	@Column(name = CREATETIME)
 	private String createTime;
-	//
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	private int dlt = 0;
+
 
 	public ReportSignname() {
 
@@ -74,7 +69,7 @@ public class ReportSignname {
 	 * @param dlt
 	 */
 	public ReportSignname(String id, String reportId, String dpetId, String dpetName, String name, String signName,
-						  String img, String createTime, int dlt) {
+						  String img, String createTime, String dlt) {
 		super();
 		this.id = id;
 		this.reportId = reportId;
@@ -236,7 +231,7 @@ public class ReportSignname {
 	/**
 	 * @return the dlt
 	 */
-	public int getDlt() {
+	public String getDlt() {
 		return dlt;
 	}
 
@@ -244,7 +239,7 @@ public class ReportSignname {
 	 * @param dlt
 	 *            the dlt to set
 	 */
-	public void setDlt(int dlt) {
+	public void setDlt(String dlt) {
 		this.dlt = dlt;
 	}
 

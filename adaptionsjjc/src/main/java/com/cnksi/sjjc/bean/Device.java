@@ -7,7 +7,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "device")
-public class Device {
+public class Device extends BaseModel{
 
 	public Device() {
 	}
@@ -69,10 +69,7 @@ public class Device {
 	@Column(name = CHANGE_PIC)
 	public String change_pic;
 
-	// 逻辑删除
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	public String dlt;
+
 
 	// 电压等级从lookup表中查询type=voltage
 	public static final String VOLTAGE = "voltage";

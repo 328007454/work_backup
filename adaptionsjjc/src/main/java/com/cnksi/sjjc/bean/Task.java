@@ -1,18 +1,18 @@
 package com.cnksi.sjjc.bean;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import android.annotation.SuppressLint;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 @Table(name = "task")
-public class Task {
+public class Task extends BaseModel{
 
     // 任务编号
     public static final String TASKID = "taskid";

@@ -8,7 +8,7 @@ import org.xutils.db.annotation.Table;
 import java.io.Serializable;
 
 @Table(name = "report_hwcw_frd")
-public class ReportHwcw implements Serializable {
+public class ReportHwcw extends BaseModel implements Serializable {
 
 	/***/
 	public static final String ID = "id";
@@ -152,10 +152,7 @@ public class ReportHwcw implements Serializable {
 	@Column(name = LAST_MODIFY_TIME)
 	public String last_modify_time;
 
-	/**是否删除（0-可用，1-不可用）*/
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	public String dlt;
+
 	/**红外测温图片，逗号分隔*/
 	public static final String HWTX = "hwtx";
 	@Column(name = HWTX)

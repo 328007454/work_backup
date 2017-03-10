@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 
 @Table(name = "sbjc_prevention")
-public class PreventionRecord implements Serializable {
+public class PreventionRecord extends BaseModel implements Serializable {
     /**
      * Id
      */
@@ -136,12 +136,7 @@ public class PreventionRecord implements Serializable {
     public static final String REMARK = "remark";
     @Column(name = REMARK)
     public String remark;
-    /**
-     * 是否删除
-     */
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public int dlt;
+
     /**
      * 更新时间
      */

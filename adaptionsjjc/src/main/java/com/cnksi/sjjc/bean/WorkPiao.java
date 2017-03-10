@@ -9,7 +9,7 @@ import java.util.UUID;
  * Created by han on 2016/5/5.
  */
 @Table(name = "workpiao")
-public class WorkPiao {
+public class WorkPiao extends BaseModel {
 
     /***/
     public static final String ID = "id";

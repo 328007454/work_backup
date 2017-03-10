@@ -12,7 +12,7 @@ import java.util.UUID;
  * @author luoxy
  */
 @Table(name = "placed")
-public class Placed {
+public class Placed extends BaseModel{
 
     /**
      * id

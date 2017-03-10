@@ -5,7 +5,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "lookup")
-public class Lookup {
+public class Lookup extends BaseModel{
 
 	//
 	public static final String ID = "id";
