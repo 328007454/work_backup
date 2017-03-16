@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.ksynclib.activity.KSyncAJActivity;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -158,12 +157,7 @@ public class LauncherActivity extends BaseActivity {
 
                 return;
             case R.id.layout_data_sync:
-//                ScreenManager.getScreenManager().popAllActivityExceptOne(LauncherActivity.class);
-//                Intent intentData = new Intent(mCurrentActivity, DataSync.class);
-//                intentData.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
-//                intentData.putExtra(Config.SYNC_COME_FROM, Config.LAUNCHERACTIVITY_TO_SYNC);
-//                startActivity(intentData);
-                startActivity(new Intent(this, KSyncAJActivity.class));
+                startSync(null, null);
                 return;
             default:
                 break;

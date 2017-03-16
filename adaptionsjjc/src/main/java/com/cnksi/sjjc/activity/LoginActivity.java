@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.CoreConfig;
@@ -30,7 +29,6 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.UpdateUtils;
-import com.cnksi.ksynclib.activity.KSyncAJActivity;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -39,7 +37,6 @@ import com.cnksi.sjjc.bean.Users;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
 import com.cnksi.sjjc.service.UserService;
-import com.cnksi.sjjc.sync.DataSync;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 import com.iflytek.cloud.SpeechSynthesizer;
@@ -234,18 +231,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             //跳转数据同步
             case R.id.ivLogo:
-                if (BuildConfig.USE_NETWORK_SYNC) {
-                    Intent intent;
-                    intent = new Intent(mCurrentActivity, KSyncAJActivity.class);
-                    startActivity(intent);
-                } else {
-                    ScreenManager.getScreenManager().popAllActivityExceptOne(LoginActivity.class);
-                    Intent newIntent = new Intent(LoginActivity.this, DataSync.class);
-                    newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
-                    newIntent.putExtra(Config.SYNC_COME_FROM, Config.LOGACTIVITY_TO_SYNC);
-                    startActivity(newIntent);
-                }
-
+                startSync(null, null);
                 break;
         }
     }
@@ -475,6 +461,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         }
         autoCompleteTextView.setText("");
         mEtPassword.setText("");
+
     }
 
 
@@ -504,6 +491,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         Intent intent = new Intent(_this, LauncherActivity.class);
         startActivity(intent);
         LoginActivity.this.finish();
+        String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
+        CustomApplication.dept_id = dept_id;
     }
 
     /**

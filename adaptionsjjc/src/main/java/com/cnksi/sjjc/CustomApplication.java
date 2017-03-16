@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.widget.ImageView;
 
 import com.cnksi.core.application.CoreApplication;
-import com.cnksi.core.common.DeviceUtils;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.DisplayUtil;
@@ -14,9 +13,6 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.crash.CrashHandler;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
-import com.cnksi.ksynclib.IKSync;
-import com.cnksi.ksynclib.KNConfig;
-import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
@@ -47,7 +43,7 @@ import java.util.List;
  * @auth luoxy
  * @date 16/4/20
  */
-public class CustomApplication extends CoreApplication implements IKSync {
+public class CustomApplication extends CoreApplication {
     private String[] filePathArray = {
             Config.BDZ_INSPECTION_FOLDER,
             Config.DATABASE_FOLDER,
@@ -62,14 +58,12 @@ public class CustomApplication extends CoreApplication implements IKSync {
             Config.BAK_FOLDER,
             Config.NFC_FOLDER,
             Config.WWWROOT_FOLDER};
-    //数据库配置
-    protected static DbManager.DaoConfig mDaoConfig = null;
+
     //数据库管理者
     private static DbManager mDbManager = null;
     private static DbManager PJDbManager = null;
     private static DbManager yanShouDbManager = null;
 
-    private static int oldDbVersion=0;
 
     public HashMap<String, String> getCopyedMap() {
         if (copyedMap == null)
@@ -225,18 +219,6 @@ public class CustomApplication extends CoreApplication implements IKSync {
                 .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
                     @Override
                     public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
-                        oldDbVersion =oldVersion;
-//                        PreferencesUtils.put(mInstance,"DbVersion",newVersion);
-                        // TODO: ...
-//                        try {
-////                            db.addColumn(HoleRecord.class, "clear_images");
-//                        } catch (DbException e) {
-//                            e.printStackTrace();
-//                        }
-                        // db.dropTable(...);
-                        // ...
-                        // or
-                        // db.dropDb();
                         try {
                             db.addColumn(HoleRecord.class, "problem");
                             db.addColumn(PreventionRecord.class, "clear_info");
@@ -291,16 +273,16 @@ public class CustomApplication extends CoreApplication implements IKSync {
                 .build();
     }
 
-    private static int DataVerSion = 13;
+    private static int DataVersion = 13;
 
     private void copyAssetsToSDCard() {
-        if (PreferencesUtils.getInt(mInstance, "DataVersion", 0) < DataVerSion)
+        if (PreferencesUtils.getInt(mInstance, "DataVersion", 0) < DataVersion)
             mExcutorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     delAllFile(Config.WWWROOT_FOLDER);
                     if (copyAssetsToSDCard(mInstance, "www", Config.WWWROOT_FOLDER)) {
-                        PreferencesUtils.put(mInstance, "DataVersion", DataVerSion);
+                        PreferencesUtils.put(mInstance, "DataVersion", DataVersion);
                         try {
                             XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
                         } catch (Exception e) {
@@ -420,13 +402,7 @@ public class CustomApplication extends CoreApplication implements IKSync {
         Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
     }
 
-    @Override
-    public KSync getKSync() {
-        String deviceId = DeviceUtils.getSerialNumber(getApplicationContext());
-        KNConfig   syncConfig = new KNConfig(getApplicationContext(), Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
-                Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
-        syncConfig.configDebug(true);
-        syncConfig.configDynicParam("account", "1");
-        return new KSync(syncConfig,null);
-    }
+    public static String dept_id = "-1";
+
+
 }

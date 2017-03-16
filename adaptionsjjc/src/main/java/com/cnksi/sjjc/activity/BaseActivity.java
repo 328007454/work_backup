@@ -34,9 +34,12 @@ import com.cnksi.core.utils.KeyBoardUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.core.view.PagerSlidingTabStrip;
+import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.sync.DataSync;
+import com.cnksi.sjjc.sync.KSyncConfig;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
@@ -53,6 +56,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -483,9 +487,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
         // 设置Tab标题文字的大小
         mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, _this.getResources().getDimensionPixelOffset(R.dimen.tab_strip_text_size), mDisplayMetrics));
         // 设置Tab Indicator的颜色  _this.getResources().getColor(R.color.tab_strip_text_color)
-        mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(_this,R.color.tab_strip_background_color));
+        mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(_this, R.color.tab_strip_background_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)_this.getResources().getColor(R.color.tab_strip_text_color)
-        mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(_this,R.color.tab_strip_text_color));
+        mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(_this, R.color.tab_strip_text_color));
         // 取消点击Tab时的背景色
         mPagerTabStrip.setTabBackground(0);
     }
@@ -540,5 +544,21 @@ public abstract class BaseActivity extends BaseCoreActivity {
     protected void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+    }
+
+    protected void startSync(List<String> downFolder, List<String> uploadFolder) {
+        if (BuildConfig.USE_NETWORK_SYNC) {
+            KSyncConfig.getInstance()
+                    .setDept_id(CustomApplication.dept_id)
+                    .setDownFolder(downFolder)
+                    .setUploadFolder(uploadFolder)
+                    .startNetWorkSync(mCurrentActivity);
+        } else {
+            ScreenManager.getScreenManager().popAllActivityExceptOne(LoginActivity.class);
+            Intent newIntent = new Intent(mCurrentActivity, DataSync.class);
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
+            newIntent.putExtra(Config.SYNC_COME_FROM, Config.LOGACTIVITY_TO_SYNC);
+            startActivity(newIntent);
+        }
     }
 }

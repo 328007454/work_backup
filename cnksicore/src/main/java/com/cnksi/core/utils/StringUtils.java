@@ -582,4 +582,21 @@ public class StringUtils {
         return "";
     }
 
+    public static String BlankToDefault(String str, String... defaultValue) {
+        String rs = str;
+        if (TextUtils.isEmpty(str)) {
+            for (String s : defaultValue) {
+                if (!TextUtils.isEmpty(s)) {
+                    rs = s;
+                    break;
+                }
+            }
+        }
+        return rs;
+    }
+
+    public static String NullToBlank(String str) {
+        return BlankToDefault(str, "");
+    }
+
 }
