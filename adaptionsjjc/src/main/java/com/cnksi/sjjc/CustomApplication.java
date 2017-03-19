@@ -402,7 +402,6 @@ public class CustomApplication extends CoreApplication {
         Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
     }
 
-    public static String dept_id = "-1";
 
 
 }

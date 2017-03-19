@@ -546,12 +546,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
-    protected void startSync(List<String> downFolder, List<String> uploadFolder) {
+    protected void startSync() {
         if (BuildConfig.USE_NETWORK_SYNC) {
             KSyncConfig.getInstance()
-                    .setDept_id(CustomApplication.dept_id)
-                    .setDownFolder(downFolder)
-                    .setUploadFolder(uploadFolder)
                     .startNetWorkSync(mCurrentActivity);
         } else {
             ScreenManager.getScreenManager().popAllActivityExceptOne(LoginActivity.class);

@@ -23,6 +23,9 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * launcher界面
  */
@@ -157,7 +160,9 @@ public class LauncherActivity extends BaseActivity {
 
                 return;
             case R.id.layout_data_sync:
-                startSync(null, null);
+                List<String> upload = new ArrayList<>();
+                upload.add("admin/ningxiashizuishan/buqiao");
+                startSync();
                 return;
             default:
                 break;

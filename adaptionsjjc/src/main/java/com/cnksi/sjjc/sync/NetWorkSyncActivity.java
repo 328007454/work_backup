@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.cnksi.core.common.DeviceUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
@@ -20,8 +19,6 @@ import com.cnksi.ksynclib.KSync;
 import com.cnksi.ksynclib.adapter.SyncInfoAdapter;
 import com.cnksi.ksynclib.model.SyncInfo;
 import com.cnksi.ksynclib.utils.KNetUtil;
-import com.cnksi.sjjc.BuildConfig;
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
@@ -36,7 +33,6 @@ import java.util.concurrent.Executors;
 
 import static com.cnksi.ksynclib.KSync.SYNC_ERROR;
 import static com.cnksi.ksynclib.KSync.SYNC_PING;
-import static com.cnksi.sjjc.CustomApplication.getDbManager;
 
 public class NetWorkSyncActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,6 +49,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
     NetWorkSyncActivity currentActivity;
     String dept_id;
     boolean hasError = false;
+    private boolean isSyncFile = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,19 +64,11 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void initKsync() {
-        dept_id = StringUtils.BlankToDefault(getIntent().getStringExtra("dept_id"), "-1");
-        String downFolder = getIntent().getStringExtra("down_folder");
-        String uploadFolder = getIntent().getStringExtra("upload_folder");
-        String deviceId = DeviceUtils.getSerialNumber(getApplicationContext());
-        binding.tvSerialNumber.setText("设备ID:" + deviceId);
-        config = new KNConfig(getApplicationContext(), Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
-                Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
-        config.configDebug(BuildConfig.DEBUG);
-        config.configDownFolder(StringUtils.NullToBlank(downFolder));
-        config.configUploadFolder(StringUtils.NullToBlank(uploadFolder));
-        config.configDynicParam("dept_id", dept_id);
+        config = KSyncConfig.getInstance().getKNConfig(this);
+        binding.tvSerialNumber.setText("设备ID:" + config.getClientid());
         ksync = new KSync(config, handler);
         String deptName = "无";
+        dept_id = KSyncConfig.getInstance().getDept_id();
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
             if (department != null)
@@ -94,10 +83,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         ping("ping -i 3 " + url, handler);
     }
 
-    private boolean isHaveDept() {
-        return !(TextUtils.isEmpty(dept_id) || dept_id.equals("-1"));
-    }
-
 
     @Override
     public void onClick(View view) {
@@ -108,10 +93,10 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         }
         switch (view.getId()) {
             case R.id.tv_download: //下载数据
-                SyncMenuUtils.ShowTipsDialog(currentActivity, isHaveDept() ? " 确认要从服务器端更新数据么?" : "确认从服务器端更新基础数据？", new View.OnClickListener() {
+                SyncMenuUtils.ShowTipsDialog(currentActivity, KSyncConfig.getInstance().isHaveDept() ? " 确认要从服务器端更新数据么?" : "当前是未登陆状态，仅同步基础数据。\n确认从服务器端更新基础数据？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!isHaveDept()) {
+                        if (!KSyncConfig.getInstance().isHaveDept()) {
                             handler.sendMessage(handler.obtainMessage(KSync.SYNC_INFO, "当前没有登陆，本次同步仅同步基础数据！"));
                         }
                         download();
@@ -130,7 +115,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                 SyncMenuUtils.showMenuPopWindow(currentActivity, binding.ibtnSyncMenu, R.array.NetSyncMenuArray, new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                         switch (position) {
                             case 0:// 切换到USB同步
                                 SyncMenuUtils.changeSync(currentActivity);
@@ -173,6 +157,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             public void run() {
                 ksync.uploadData();
                 if (config.isUploadFile()) {
+                    isSyncFile = true;
                     if (TextUtils.isEmpty(config.getUploadFolder())) {
                         ksync.uploadFile();
                     } else {
@@ -189,7 +174,11 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void run() {
                 ksync.download();
+
                 if (config.isDownFile()) {
+                    isSyncFile = true;
+                    KSyncConfig.getInstance().initFolder();
+                    config.configDownFolder(KSyncConfig.getInstance().getDownFolderString());
                     if (TextUtils.isEmpty(config.getDownFolder())) {
                         ksync.downFile();
                     } else {
@@ -231,7 +220,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case KSync.SYNC_SUCCESS:
                     info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
-                    setButtonStyle(true);
                     break;
                 case KSync.SYNC_PING:
                     setNetwork(msg);
@@ -246,14 +234,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case KSync.SYNC_FINISH:
                     Toast.makeText(currentActivity, String.valueOf(msg.obj), Toast.LENGTH_SHORT).show();
-                    if (!hasError) {
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                finish();
-                            }
-                        }, 2000);
-                    }
+                    setButtonStyle(true);
                     break;
             }
             if (info != null) {

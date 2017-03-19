@@ -37,6 +37,7 @@ import com.cnksi.sjjc.bean.Users;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
 import com.cnksi.sjjc.service.UserService;
+import com.cnksi.sjjc.sync.KSyncConfig;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 import com.iflytek.cloud.SpeechSynthesizer;
@@ -159,8 +160,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             }
         });
         if (BuildConfig.DEBUG) {
-            autoCompleteTextView.setText("00030417");
-            mEtPassword.setText("1");
+            autoCompleteTextView.setText("00030493");
+            mEtPassword.setText("nx123456*");
         }
 
         findViewById(R.id.ivLogo).setOnLongClickListener(new View.OnLongClickListener() {
@@ -231,7 +232,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             //跳转数据同步
             case R.id.ivLogo:
-                startSync(null, null);
+                startSync();
                 break;
         }
     }
@@ -340,6 +341,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     @Override
     protected void onResume() {
         super.onResume();
+        KSyncConfig.getInstance().setDept_id("-1");
 //        boolean diff = true;
 //        try {
 //            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -492,7 +494,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         startActivity(intent);
         LoginActivity.this.finish();
         String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
-        CustomApplication.dept_id = dept_id;
+        KSyncConfig.getInstance().setDept_id(dept_id);
     }
 
     /**

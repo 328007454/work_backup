@@ -9,21 +9,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.cnksi.core.common.DeviceUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.ksynclib.KUsbSync;
-import com.cnksi.sjjc.BuildConfig;
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.databinding.ActivityUsbSyncBinding;
 import com.cnksi.sjjc.service.DepartmentService;
 
 import static com.cnksi.ksynclib.activity.KSyncAJActivity.DELETE_FINISHED;
-import static com.cnksi.sjjc.CustomApplication.getDbManager;
 
 /**
  * USB桌面同步
@@ -53,18 +49,11 @@ public class UsbSyncActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initKsync() {
-        dept_id = StringUtils.BlankToDefault(getIntent().getStringExtra("dept_id"), "-1");
-        String downFolder = getIntent().getStringExtra("down_folder");
-        String uploadFolder = getIntent().getStringExtra("upload_folder");
-        String deviceId = DeviceUtils.getSerialNumber(getApplicationContext());
-        config = new KNConfig(getApplicationContext(), Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
-                Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
-        config.configDebug(BuildConfig.DEBUG);
-        config.configDownFolder(StringUtils.NullToBlank(downFolder));
-        config.configUploadFolder(StringUtils.NullToBlank(uploadFolder));
-        config.configDynicParam("dept_id", dept_id);
+
+        config = KSyncConfig.getInstance().getKNConfig(this);
         kSync = new KSync(config, handler);
         usbSync = KUsbSync.open(config);
+        dept_id = KSyncConfig.getInstance().getDept_id();
         String deptName = "无";
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);

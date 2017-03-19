@@ -43,7 +43,7 @@ android {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
-            buildConfigField "String", "SYNC_URL", "\"http://211.149.155.181:9090\""
+            buildConfigField "String", "SYNC_URL", "\"http://192.168.199.219:9090\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -72,7 +72,7 @@ android {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
-            buildConfigField "String", "SYNC_URL", "\"http://211.149.155.181:9090\""
+            buildConfigField "String", "SYNC_URL", "\"http://192.168.199.219:9090\""
         }
     }
 
@@ -118,7 +118,7 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    compile('com.cnksi:ksynclib:3.1.3') {
+    compile('com.cnksi:ksynclib:3.1.5') {
         exclude module: 'fastjson'
     }
     compile project(':autolayout')

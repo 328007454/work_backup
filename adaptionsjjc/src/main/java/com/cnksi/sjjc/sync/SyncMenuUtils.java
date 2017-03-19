@@ -34,6 +34,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static com.cnksi.core.utils.ScreenUtils.getScreenHeight;
 import static com.cnksi.core.utils.ScreenUtils.getScreenWidth;
@@ -168,8 +169,8 @@ public class SyncMenuUtils {
                     public void run() {
                         // 删除两个月之前的备份文件
                         long time = 60l * 24l * 60l * 60l * 1000l;
-                        List<String> uploadFolder = KSyncConfig.getInstance().getUploadFolder();
-                        List<String> downFolder = KSyncConfig.getInstance().getDownFolder();
+                        Set<String> uploadFolder = KSyncConfig.getInstance().getUploadFolder();
+                        Set<String> downFolder = KSyncConfig.getInstance().getDownFolder();
                         uploadFolder.removeAll(downFolder);//如果该文件夹是下载文件夹则忽略
                         for (String s : uploadFolder) {
                             FileUtils.deleteBakFiles(ksync.getKnConfig().getBaseFolder() + s, time);
