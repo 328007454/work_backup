@@ -73,7 +73,7 @@ public class LauncherActivity extends BaseActivity {
     }
 
     //
-    @Event(value = {R.id.sbxs, R.id.sbjc, R.id.dqsy, R.id.dqwh, R.id.ywyth, R.id.dzhgzp, R.id.zxxs, R.id.sbys, R.id.jyhys, R.id.jyhpj, R.id.gzp, R.id.ibtn_exit, R.id.btn_back, R.id.layout_data_sync})
+    @Event(value = {R.id.sbxs, R.id.sbjc, R.id.dqsy, R.id.dqwh, R.id.ywyth, R.id.dzhgzp, R.id.zxxs, R.id.sbys, R.id.jyhys, R.id.jyhpj, R.id.gzp, R.id.ibtn_exit, R.id.btn_back, R.id.layout_data_sync,R.id.tjwt})
     private void onClick(View view) {
         Intent intent = new Intent(this, TypeListActivity.class);
         switch (view.getId()) {
@@ -164,6 +164,10 @@ public class LauncherActivity extends BaseActivity {
                 intentData.putExtra(Config.SYNC_COME_FROM, Config.LAUNCHERACTIVITY_TO_SYNC);
                 startActivity(intentData);
                 return;
+            //图解五通
+            case R.id.tjwt:
+                intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.TJWT.name());
+                break;
             default:
                 break;
         }

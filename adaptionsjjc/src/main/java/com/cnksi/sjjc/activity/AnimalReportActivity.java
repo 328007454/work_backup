@@ -144,6 +144,7 @@ public class AnimalReportActivity extends BaseReportActivity {
     }
 
     private ArrayList<String> clearHole = new ArrayList<>();
+    @SuppressWarnings("unchecked")
     @Override
     protected void onRefresh(Message msg) {
        super.onRefresh(msg);
