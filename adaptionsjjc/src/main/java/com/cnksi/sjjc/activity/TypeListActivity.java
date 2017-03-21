@@ -12,8 +12,10 @@ import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.TypeAdapter;
+import com.cnksi.sjjc.bean.TJWT;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.service.TJWTService;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -33,8 +35,12 @@ public class TypeListActivity extends BaseActivity {
     private ListView typeListView;
 
     private List<String> data;
-
     private TypeAdapter adapter;
+
+    /**图解五通title*/
+    private List<String> titleList = new ArrayList<>();
+    /**图解五通数据集*/
+    private List<TJWT> tjwtList;
 
 
     @Override
@@ -85,7 +91,13 @@ public class TypeListActivity extends BaseActivity {
                 typeList = Arrays.asList(getResources().getStringArray(R.array.JYHPJ));
                 break;
             case TJWT: //图解五通
-                typeList = Arrays.asList(getResources().getStringArray(R.array.TJWT));
+                tjwtList = TJWTService.getInstance().findAllTJWT();
+                if(tjwtList != null && tjwtList.size() != 0){
+                    for(TJWT tjwt : tjwtList){
+                        titleList.add(tjwt.name);
+                    }
+                }
+                typeList = titleList;
                 break;
             case operation:
 
@@ -238,6 +250,8 @@ public class TypeListActivity extends BaseActivity {
                         break;
                     case TJWT: //图解五通
                         intent.setClass(_this,TJWTActivity.class);
+                        intent.putExtra("title",titleList.get(position));
+                        intent.putExtra("pic",tjwtList.get(position).pic);
                         break;
                 }
                 startActivity(intent);

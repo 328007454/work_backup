@@ -1,14 +1,14 @@
 package com.cnksi.sjjc.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.cnksi.core.utils.CToast;
-import com.cnksi.core.view.photo.PhotoView;
+import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 
 import org.xutils.common.Callback;
@@ -21,7 +21,7 @@ import org.xutils.view.annotation.ViewInject;
 public class TJWTActivity extends BaseActivity {
     /**图片容器*/
     @ViewInject(R.id.zoom_image_view)
-    private PhotoView zoomImageView;
+    private ImageView zoomImageView;
     /**进度条*/
     @ViewInject(R.id.loading)
     private ProgressBar progress;
@@ -39,9 +39,15 @@ public class TJWTActivity extends BaseActivity {
      * 初始化UI
      */
     private void initUI() {
-        tvTitle.setText("图片详情");
+        Intent intent = getIntent();
+        //标题
+        String title = intent.getStringExtra("title");
+        //路径（此路径只到/lib/wt/xxx.png）
+        String pic = intent.getStringExtra("pic");
+        //全路径
+        String imgUrl = Config.BDZ_INSPECTION_FOLDER + pic;
+        tvTitle.setText(title);
 
-        String imgUrl = Environment.getExternalStorageDirectory().getAbsolutePath()+"/aa.png";
         mBitmapUtils.bind(zoomImageView,imgUrl,getLargeImageOptions(), new Callback.ProgressCallback<Drawable>() {
             @Override
             public void onSuccess(Drawable result) {

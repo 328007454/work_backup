@@ -46,6 +46,7 @@ public class Config extends CoreConfig {
     public static final String AUDIO_FOLDER = BDZ_INSPECTION_FOLDER + "audio/";
     public static final String VIDEO_FOLDER = BDZ_INSPECTION_FOLDER + "video/";
     public static final String NFC_FOLDER = BDZ_INSPECTION_FOLDER + "nfc/";
+    public static final String TJWT_FOLDER = BDZ_INSPECTION_FOLDER + "lib/wt/";
     public static final String WORKTICKIT_PIC = WWWROOT_FOLDER + "pic/";
 
     public static final String PAD_SYNC_FOLDER = "audio,customer_pictures,upload_database,result_pictures,pictures,log";
