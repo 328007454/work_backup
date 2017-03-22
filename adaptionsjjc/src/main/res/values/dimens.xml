@@ -377,4 +377,5 @@
     <dimen name="edit_text_minheight_px">105px</dimen>
     <dimen name="edit_text_minwidth_px">150px</dimen>
     <dimen name="corner_radius_px">9px</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -408,6 +408,7 @@
     <string name="jyhpj">精益化评价</string>
     <string name="sjtb">数据同步</string>
     <string name="gzp">工作票</string>
+    <string name="tjwt">图解五通</string>
     <!--QinYouShiActivity -->
 
     <string name="yanshou_type">验收类型</string>
@@ -426,6 +427,7 @@
     <string name="bhpzmwd">保护屏正面温度（℃）</string>
     <string name="bhpbmwd">保护屏背面温度（℃）</string>
     <string name="fzbwwd">发热部位温度（℃）</string>
+    <string name="title_activity_tjwt">TJWTActivity</string>
 
 
 </resources>
