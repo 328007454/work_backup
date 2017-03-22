@@ -76,6 +76,7 @@ public class KSyncConfig {
     }
 
     public KNConfig getKNConfig(Context context) {
+        initFolder();
         String deviceId = DeviceUtils.getSerialNumber(context);
         KNConfig config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
                 Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);

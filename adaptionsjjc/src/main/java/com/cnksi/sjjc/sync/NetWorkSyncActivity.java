@@ -177,8 +177,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
 
                 if (config.isDownFile()) {
                     isSyncFile = true;
-                    KSyncConfig.getInstance().initFolder();
-                    config.configDownFolder(KSyncConfig.getInstance().getDownFolderString());
+                    //第一次同步的时候直接同步变电站数据 不需要再次初始化。
+//                    KSyncConfig.getInstance().initFolder();
+//                    config.configDownFolder(KSyncConfig.getInstance().getDownFolderString());
                     if (TextUtils.isEmpty(config.getDownFolder())) {
                         ksync.downFile();
                     } else {

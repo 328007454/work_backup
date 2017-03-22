@@ -36,6 +36,7 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Users;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
+import com.cnksi.sjjc.service.DepartmentService;
 import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.sync.KSyncConfig;
 import com.cnksi.sjjc.util.DialogUtils;
@@ -493,8 +494,17 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         Intent intent = new Intent(_this, LauncherActivity.class);
         startActivity(intent);
         LoginActivity.this.finish();
-        String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
+        final String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
         KSyncConfig.getInstance().setDept_id(dept_id);
+        if ("-1".equals(dept_id)) {
+            CToast.showLong(mCurrentActivity, "当前登录帐号无任何班组信息！");
+        } else
+            mExcutorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    DepartmentService.getInstance().deleteOtherDataByDept(dept_id);
+                }
+            });
     }
 
     /**
