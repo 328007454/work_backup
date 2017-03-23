@@ -8,13 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.core.fragment.BaseCoreFragment;
+import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.bean.TaskStatistic;
 import com.cnksi.sjjc.databinding.FragmentMaintenanceBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.service.TaskService;
+
+import org.xutils.ex.DbException;
+
+import java.util.List;
 
 /**
  * Created by han on 2017/3/22.
@@ -83,5 +89,39 @@ public class MaintenanceFragment extends BaseCoreFragment {
                 });
             }
         });
+        mExcutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<Task> result = null;
+                try {
+                    result = TaskService.getInstance().findTaskListByLimit(InspectionType.maintenance.name(), 3);
+                } catch (DbException e) {
+                    CLog.e(e);
+                }
+                mHandler.post(new MainRunnable(result));
+            }
+        });
     }
+
+    class MainRunnable implements Runnable {
+        List<Task> taskList;
+
+        public MainRunnable(List<Task> task) {
+            this.taskList = task;
+        }
+
+        @Override
+        public void run() {
+            if (taskList == null || taskList.size() == 0) {
+                maintenanceBinding.llMaintenance.setVisibility(View.GONE);
+            } else {
+                maintenanceBinding.llMaintenance.setVisibility(View.VISIBLE);
+                //maintenanceBinding.listMaintenance.setAdapter();
+                // TODO: 2017/3/23
+            }
+        }
+    }
+
+    //   class TaskItemAdapter extends BaseBindingAdapter
+
 }

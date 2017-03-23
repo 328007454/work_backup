@@ -16,6 +16,8 @@ import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
+import java.util.List;
+
 /**
  * Created by han on 2016/6/8.
  */
@@ -216,4 +218,9 @@ public class TaskService extends BaseService<Task> {
         }
         return result;
     }
+
+    public List<Task> findTaskListByLimit(String inspectionType, int limit) throws DbException {
+        return from(Task.class).expr(" and inspection like '%" + inspectionType + "%' ").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+    }
+
 }
