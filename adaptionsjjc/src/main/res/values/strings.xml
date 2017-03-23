@@ -429,5 +429,12 @@
     <string name="fzbwwd">发热部位温度（℃）</string>
     <string name="title_activity_tjwt">TJWTActivity</string>
 
+    <!-- 新的launcher界面 -->
+    <string name="menu_unify">运维一体化</string>
+    <string name="menu_operate">倒闸操作</string>
+    <string name="menu_record">首页</string>
+    <string name="menu_maintenance">设备维护</string>
+    <string name="menu_tour">设备巡视</string>
+
 
 </resources>

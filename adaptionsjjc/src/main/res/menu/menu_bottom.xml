@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_tour"
+        android:checked="true"
+        android:icon="@drawable/launcher_dqsy"
+        android:title="@string/menu_tour" />
+    <item
+        android:id="@+id/menu_maintenance"
+        android:icon="@drawable/launcher_dqsy"
+        android:title="@string/menu_maintenance" />
+    <item
+        android:id="@+id/menu_record"
+        android:icon="@drawable/launcher_dqsy"
+        android:title="@string/menu_record" />
+    <item
+        android:id="@+id/menu_operate"
+        android:icon="@drawable/launcher_dqsy"
+        android:title="@string/menu_operate" />
+    <item
+        android:id="@+id/menu_unify"
+        android:icon="@drawable/launcher_dqsy"
+        android:title="@string/menu_unify" />
+</menu>

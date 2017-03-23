@@ -161,4 +161,9 @@
     <color name="battery_linearlayout_color">#ECF3F2</color>
     <color name="copy_battery_text_color">#A1B5B2</color>
 
+    <!-- NewLauncher-->
+    <color name="new_launcher_title">#fd5f54</color>
+    <color name="new_launcher_bottom_back">#f9f9f9</color>
+
+
 </resources>

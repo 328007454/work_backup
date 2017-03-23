@@ -378,4 +378,6 @@
     <dimen name="edit_text_minwidth_px">150px</dimen>
     <dimen name="corner_radius_px">9px</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="txt_bottom32px">32px</dimen>
+    <dimen name="txt_size38px">38px</dimen>
 </resources>

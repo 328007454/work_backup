@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data class=""></data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/lancher_title"
+            layout="@layout/launcher_include" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragmen_pager"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:id="@+id/main_radioGroupLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/main_line_textView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentTop="true"
+                android:background="#dfdfdf" />
+
+            <RadioGroup
+                android:background="@color/new_launcher_bottom_back"
+                android:id="@+id/main_radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="165px"
+                android:layout_gravity="left|bottom"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:textSize="@dimen/txt_bottom32px"
+                    android:id="@+id/menu_record"
+                    style="@style/NewRadioButtonBaseStyle"
+                    android:drawableTop="@drawable/icon_operate_hover"
+                    android:text="@string/menu_record" />
+
+                <RadioButton
+                    android:textSize="@dimen/txt_bottom32px"
+                    android:id="@+id/menu_tour"
+                    style="@style/NewRadioButtonBaseStyle"
+                    android:checked="true"
+                    android:drawableTop="@mipmap/ic_launcher"
+                    android:text="@string/menu_tour" />
+
+                <RadioButton
+                    android:textSize="@dimen/txt_bottom32px"
+                    android:id="@+id/menu_maintenance"
+                    style="@style/NewRadioButtonBaseStyle"
+                    android:drawableTop="@mipmap/ic_launcher"
+                    android:text="@string/menu_maintenance" />
+
+
+                <RadioButton
+                    android:textSize="@dimen/txt_bottom32px"
+                    android:id="@+id/menu_operate"
+                    style="@style/NewRadioButtonBaseStyle"
+                    android:drawableTop="@mipmap/ic_launcher"
+                    android:text="@string/menu_operate" />
+
+                <RadioButton
+                    android:textSize="@dimen/txt_bottom32px"
+                    android:id="@+id/menu_unify"
+                    style="@style/NewRadioButtonBaseStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/ic_launcher"
+                    android:text="@string/menu_unify" />
+            </RadioGroup>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

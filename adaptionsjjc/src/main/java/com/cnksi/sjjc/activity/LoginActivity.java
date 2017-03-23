@@ -159,9 +159,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 });
             }
         });
-        if(BuildConfig.DEBUG){
-            autoCompleteTextView.setText("00030496");
-            mEtPassword.setText("1");
+        if (BuildConfig.DEBUG) {
+            autoCompleteTextView.setText("00030443");
+            mEtPassword.setText("qhs2016**");
         }
     }
 
@@ -224,7 +224,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             //跳转数据同步
             case R.id.ivLogo:
-                if(false){
+                if (false) {
                     String appId = "com.cnksi.sjjc";
                     String url = "http://192.168.199.219:8080";
                     String serialNumber = Build.SERIAL;
@@ -238,7 +238,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                         startActivity(new Intent(mCurrentActivity, KSyncXJActivity.class));
                     }
 
-                }else{
+                } else {
                     ScreenManager.getScreenManager().popAllActivityExceptOne(LoginActivity.class);
                     Intent newIntent = new Intent(LoginActivity.this, DataSync.class);
                     newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
@@ -315,7 +315,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         });
     }
 
-//    ViewHolder holder;
+    //    ViewHolder holder;
 //    Dialog dialog;
     @Override
     protected void onResume() {
@@ -467,7 +467,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         PreferencesUtils.put(_this, Config.CURRENT_LOGIN_ACCOUNT, userAccout);
         //保存登录班组和账号
         PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
-        Intent intent = new Intent(_this, LauncherActivity.class);
+//        Intent intent = new Intent(_this, LauncherActivity.class);
+        Intent intent = new Intent(_this, NewLauncherActivity.class);
         startActivity(intent);
         LoginActivity.this.finish();
     }
@@ -483,7 +484,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         compeletlyExitSystem();
     }
 
@@ -495,7 +496,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
     @Override
     public void allPermissionsGranted() {
-        PreferencesUtils.put(_this,Config.PERMISSION_STASTUS,true);
+        PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
         CustomApplication.getInstance().initApp();
         checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, null, "0");
     }
