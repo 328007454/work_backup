@@ -8,6 +8,7 @@ import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.SwitchPic;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.bean.TaskExtend;
+import com.cnksi.sjjc.bean.TaskStatistic;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -18,7 +19,7 @@ import org.xutils.ex.DbException;
 /**
  * Created by han on 2016/6/8.
  */
-public class TaskService {
+public class TaskService extends BaseService<Task> {
 
     private static TaskService instance;
 
@@ -99,8 +100,9 @@ public class TaskService {
 
     /**
      * 查询应抄录总数（避雷针部分）
+     *
      * @param bdzId
-     * @param filterName  设备过滤名字
+     * @param filterName     设备过滤名字
      * @param filterStandard 标准过滤名字
      * @return
      */
@@ -131,27 +133,26 @@ public class TaskService {
 
     /**
      * 查询应抄录总数（压力部分）
+     *
      * @param bdzId
-     * @param filter  设备过滤条件（sql格式）
+     * @param filter         设备过滤条件（sql格式）
      * @param filterStandard 标准过滤名字
      * @return
      */
-    public long queryCopyDataTatalPress(String bdzId,String filter,String filterStandard) {
+    public long queryCopyDataTatalPress(String bdzId, String filter, String filterStandard) {
         long count = 0;
-        String sql="select count(*) as rs from standards s left JOIN device_unit du on s.duid = du.duid " +
+        String sql = "select count(*) as rs from standards s left JOIN device_unit du on s.duid = du.duid " +
                 "LEFT JOIN device_type dt on dt.dtid = du.dtid " +
                 "left JOIN device d on d.dtid = dt.dtid " +
                 " where  s.resulttype = '1' and s.dlt='0' and d.bdzid=?  and d.device_type='one' ";
-        if (!TextUtils.isEmpty(filter))
-        {
-            sql=sql+" "+filter;
+        if (!TextUtils.isEmpty(filter)) {
+            sql = sql + " " + filter;
         }
-        if (!TextUtils.isEmpty(filterStandard))
-        {
-            sql=sql+" and s.description like '%"+filterStandard+"%'";
+        if (!TextUtils.isEmpty(filterStandard)) {
+            sql = sql + " and s.description like '%" + filterStandard + "%'";
         }
-        SqlInfo sqlInfo=new SqlInfo(sql);
-        sqlInfo.addBindArg(new KeyValue("bdzId",bdzId));
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
         try {
             DbModel mDbModel = CustomApplication.getDbManager().findDbModelFirst(sqlInfo);
             if (mDbModel != null) {
@@ -162,6 +163,7 @@ public class TaskService {
         }
         return count;
     }
+
     /**
      * 标记是否不上传计划任务
      */
@@ -176,5 +178,42 @@ public class TaskService {
 
     public Task getTask(String taskId) throws DbException {
         return CustomApplication.getDbManager().findById(Task.class, taskId);
+    }
+
+    public TaskStatistic getTaskStatistic(String inspectionType) {
+        TaskStatistic result = new TaskStatistic();
+        String inspectionExpr = " and inspection like '%" + inspectionType + "%' ";
+        String todayTimeExpr = " and schedule_time BETWEEN datetime('now','localtime','start of day') AND datetime('now','localtime','start of day','+1 day','-1 second') ";
+        String mothTimeExpr = " and schedule_time BETWEEN datetime('now','localtime','start of month') AND datetime('now','localtime','start of month','+1 month','-1 second') ";
+        String doneExpr = " and status='" + Task.TaskStatus.done.name() + "' ";
+        long count = 0;
+        try {
+            //今日维护任务
+            count = from(Task.class).expr(inspectionExpr).expr(todayTimeExpr).count();
+            result.setTodayTaskCount(count);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        try {
+            count = from(Task.class).expr(doneExpr).expr(inspectionExpr).expr(todayTimeExpr).count();
+            result.setTodayTaskFinish(count);
+        } catch (DbException e) {
+            e.printStackTrace();
+
+        }
+        try {
+            //今日维护任务
+            count = from(Task.class).expr(inspectionExpr).expr(mothTimeExpr).count();
+            result.setMonthTaskCount(count);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        try {
+            count = from(Task.class).expr(doneExpr).expr(inspectionExpr).expr(mothTimeExpr).count();
+            result.setMonthTaskFinish(count);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

@@ -58,7 +58,7 @@
     <!-- MainMenuActivity -->
     <color name="main_background_color">#efefef</color>
     <color name="main_bottom_menu_text_color">#5D6261</color>
-<color name="light_red">#F46A6A</color>
+    <color name="light_red">#F46A6A</color>
     <!-- InspectionTaskRemindActivity -->
     <color name="line_color">#D3DFDE</color>
     <color name="red">#FF0000</color>
@@ -164,6 +164,7 @@
     <!-- NewLauncher-->
     <color name="new_launcher_title">#fd5f54</color>
     <color name="new_launcher_bottom_back">#f9f9f9</color>
-
+    <color name="new_launcher_gray_bg">#F0F0F0</color>
+    <color name="new_launcher_line_bg">#E0E0E0</color>
 
 </resources>

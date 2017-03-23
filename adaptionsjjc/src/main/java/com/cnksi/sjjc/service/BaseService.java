@@ -2,6 +2,7 @@ package com.cnksi.sjjc.service;
 
 import com.cnksi.sjjc.CustomApplication;
 
+import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
 /**
@@ -16,5 +17,9 @@ public class BaseService<T> {
         return CustomApplication.getDbManager().findById(clazz, id);
     }
 
+    public Selector from(Class clz) throws DbException {
+        //暂留1=1条件 合并同步之后采用dlt
+        return CustomApplication.getDbManager().selector(clz).where("1", "=", "1");
+    }
 
 }

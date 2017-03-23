@@ -3,17 +3,401 @@
 
     <data class="">
 
+        <variable
+            name="event"
+            type="com.cnksi.sjjc.fragment.launcher.MaintenanceFragment" />
+
+        <variable
+            name="maintenance"
+            type="com.cnksi.sjjc.bean.TaskStatistic" />
+
+        <variable
+            name="switchover"
+            type="com.cnksi.sjjc.bean.TaskStatistic" />
+
+        <import type="com.cnksi.sjjc.enmu.InspectionType" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="维护" />
+            android:background="@color/white"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="40px"
+                android:background="@color/new_launcher_gray_bg" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:background="@color/new_launcher_line_bg" />
+
+            <TextView
+                android:layout_width="200px"
+                android:layout_height="50px"
+                android:layout_marginTop="20px"
+                android:background="@drawable/new_launch_maintenance_bg"
+                android:gravity="center_vertical"
+                android:paddingLeft="40px"
+                android:text="日常维护"
+                android:textColor="@color/white"
+                android:textSize="36px" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="244px"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="124px"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="40px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{maintenance.todayTaskCount+`项`}"
+                            android:textColor="#05c8b8"
+                            android:textSize="44px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="今日维护任务"
+                            android:textColor="#c0bab9"
+                            android:textSize="34px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="40px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{maintenance.todayTaskFinish+`项`}"
+                            android:textColor="#05c8b8"
+                            android:textSize="44px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="今日已完成"
+                            android:textColor="#c0bab9"
+                            android:textSize="34px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="40px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{maintenance.monthTaskCount+`项`}"
+                            android:textColor="#05c8b8"
+                            android:textSize="44px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="本月维护任务"
+                            android:textColor="#c0bab9"
+                            android:textSize="34px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="40px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{maintenance.monthTaskFinish+`项`}"
+                            android:textColor="#05c8b8"
+                            android:textSize="44px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="本月已完成"
+                            android:textColor="#c0bab9"
+                            android:textSize="34px" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120px">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3px"
+                        android:layout_marginTop="50px"
+                        android:background="@color/new_launcher_line_bg" />
+
+                    <ImageView
+                        android:id="@+id/iv_maintenance_list"
+                        android:layout_width="90px"
+                        android:layout_height="90px"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="40px"
+                        android:layout_marginTop="5px"
+                        android:onClick="@{()->event.gotoTaskList(InspectionType.maintenance.name())}"
+                        android:src="@mipmap/icon_more_task" />
+
+                    <TextView
+                        android:layout_width="200px"
+                        android:layout_height="50px"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/new_launch_switchover_bg"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="40px"
+                        android:text="轮换实验"
+                        android:textColor="@color/white"
+                        android:textSize="36px" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="244px"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="124px"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="40px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{switchover.todayTaskCount+`项`}"
+                            android:textColor="#05c8b8"
+                            android:textSize="44px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="今日试验任务"
+                            android:textColor="#c0bab9"
+                            android:textSize="34px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="40px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{switchover.todayTaskFinish+`项`}"
+                            android:textColor="#05c8b8"
+                            android:textSize="44px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="今日已完成"
+                            android:textColor="#c0bab9"
+                            android:textSize="34px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="40px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{switchover.monthTaskCount+`项`}"
+                            android:textColor="#05c8b8"
+                            android:textSize="44px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="本月试验任务"
+                            android:textColor="#c0bab9"
+                            android:textSize="34px" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="40px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{switchover.monthTaskFinish+`项`}"
+                            android:textColor="#05c8b8"
+                            android:textSize="44px" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="本月已完成"
+                            android:textColor="#c0bab9"
+                            android:textSize="34px" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100px">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3px"
+                        android:layout_marginTop="50px"
+                        android:background="@color/new_launcher_line_bg" />
+
+                    <ImageView
+                        android:id="@+id/iv_switchover_list"
+                        android:layout_width="90px"
+                        android:layout_height="90px"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="40px"
+                        android:layout_marginTop="5px"
+                        android:onClick="@{()->event.gotoTaskList(InspectionType.switchover.name())}"
+                        android:src="@mipmap/icon_more_task" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40px"
+                android:layout_marginBottom="60px"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:max="100"
+                android:progress="50" />
+
+            <LinearLayout
+                android:id="@+id/ll_maintenance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:background="@color/new_launcher_line_bg" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="126px"
+                    android:background="@color/new_launcher_gray_bg"
+                    android:orientation="horizontal"
+                    android:paddingLeft="40px">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="60px"
+                        android:text="日常维护任务"
+                        android:textColor="#b3afaf"
+                        android:textSize="40px" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:background="@color/new_launcher_line_bg" />
+
+                <com.cnksi.sjjc.View.MyScrollVListView
+                    android:id="@+id/list_maintenance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/new_launcher_line_bg"
+                    android:dividerHeight="3px" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_switchover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:background="@color/new_launcher_line_bg" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="126px"
+                    android:background="@color/new_launcher_gray_bg"
+                    android:orientation="horizontal"
+                    android:paddingLeft="40px">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="60px"
+                        android:text="轮换实验任务"
+                        android:textColor="#b3afaf"
+                        android:textSize="40px" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:background="@color/new_launcher_line_bg" />
+
+                <com.cnksi.sjjc.View.MyScrollVListView
+                    android:id="@+id/list_switchover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/new_launcher_line_bg"
+                    android:dividerHeight="3px" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </layout>
