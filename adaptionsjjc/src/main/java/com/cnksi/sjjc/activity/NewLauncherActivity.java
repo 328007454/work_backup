@@ -103,6 +103,7 @@ public class NewLauncherActivity extends BaseActivity {
 
     private void initBaseData() {
         getIntentValue();
+        currentSelectPosition = getIntent().getIntExtra("position", 0);
         String date = com.cnksi.core.utils.DateUtils.getCurrentTime("yyy年MM月dd日") + " " + DateUtils.getCurrentWeekDay();
         launcherBinding.lancherTitle.txtTime.setText(date);
         launcherBinding.lancherTitle.txtPerson.setText(PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_USER, ""));

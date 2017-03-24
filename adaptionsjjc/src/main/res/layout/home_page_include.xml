@@ -3,9 +3,9 @@
 
     <data class="">
 
-        <variable
-            name="typeClick"
-            type="com.cnksi.sjjc.activity.HomeActivity" />
+        <!--<variable-->
+            <!--name="typeClick"-->
+            <!--type="com.cnksi.sjjc.activity.HomeActivity" />-->
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,10 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="220px"
             android:orientation="horizontal">
-
             <RelativeLayout
                 android:id="@+id/device_xunshi"
-                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_xunshi)}"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -49,7 +47,7 @@
 
             <RelativeLayout
                 android:id="@+id/device_weihu"
-                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_weihu)}"
+
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -76,7 +74,6 @@
 
             <RelativeLayout
                 android:id="@+id/device_operate"
-                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_operate)}"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -100,10 +97,9 @@
                     android:textColor="@color/color_626262" />
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:id="@+id/device_unify"
-                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_unify)}"
+
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -137,7 +133,7 @@
 
             <RelativeLayout
                 android:id="@+id/device_defect"
-                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_defect)}"
+
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -163,7 +159,6 @@
 
             <RelativeLayout
                 android:id="@+id/device_copy"
-                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_copy)}"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -190,7 +185,6 @@
 
             <RelativeLayout
                 android:id="@+id/device_tjwt"
-                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_tjwt)}"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -217,7 +211,6 @@
 
             <RelativeLayout
                 android:id="@+id/device_sycn"
-                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_sycn)}"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
