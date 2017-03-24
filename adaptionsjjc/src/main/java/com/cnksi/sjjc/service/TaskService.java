@@ -223,4 +223,23 @@ public class TaskService extends BaseService<Task> {
         return from(Task.class).expr(" and inspection like '%" + inspectionType + "%' ").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
     }
 
+    public float statisticProgress(String... inspections) {
+        DbModel model = null;
+        StringBuilder expr = new StringBuilder();
+        expr.append(" and (");
+        for (String inspection : inspections) {
+            expr.append(" inspection like '%").append(inspection).append("%'  ").append("or");
+        }
+        expr.delete(expr.length() - 2, expr.length());
+        expr.append(")");
+        try {
+            model = from(Task.class).select(" sum(case when `status`='done' then 1.0 else 0 end)/count(1) as progress ").expr(inspections.length > 0 ? expr.toString() : " ").findFirst();
+            return model.getFloat("progress");
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return 1.0f;
+    }
+
+
 }
