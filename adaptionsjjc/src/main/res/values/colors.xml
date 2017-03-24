@@ -169,4 +169,9 @@
     <color name="progress_color_1">#00bddb</color>
     <color name="progress_color_2">#05c8b8</color>
     <color name="progress_backgroud">#e0e0e0</color>
+    <color name="search_color">#c0bab9</color>
+    <color name="color_626262">#626262</color>
+    <color name="color_3fcab7">#3fcab7</color>
+    <color name="color_fd5552">#fd5552</color>
+    <color name="color_f4f0ef">#f4f0ef</color>
 </resources>

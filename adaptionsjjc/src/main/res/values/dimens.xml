@@ -380,4 +380,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="txt_bottom32px">32px</dimen>
     <dimen name="txt_size38px">38px</dimen>
+    <dimen name="txt_size36px">36px</dimen>
 </resources>

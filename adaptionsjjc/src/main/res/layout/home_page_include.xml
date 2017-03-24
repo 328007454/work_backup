@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data class="">
+
+        <variable
+            name="typeClick"
+            type="com.cnksi.sjjc.activity.HomeActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="482px"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="220px"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/device_xunshi"
+                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_xunshi)}"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/icon_tour" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    android:text="设备巡视"
+                    android:textColor="@color/color_626262" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/device_weihu"
+                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_weihu)}"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/icon_maintence" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    android:text="设备维护"
+                    android:textColor="@color/color_626262" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/device_operate"
+                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_operate)}"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/icon_operate" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    android:text="倒闸操作"
+                    android:textColor="@color/color_626262" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/device_unify"
+                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_unify)}"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/icon_unify" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    android:text="运维一体化"
+                    android:textColor="@color/color_626262" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="260px"
+            android:orientation="horizontal"
+            android:paddingBottom="40px">
+
+            <RelativeLayout
+                android:id="@+id/device_defect"
+                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_defect)}"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/icon_defct" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    android:text="缺陷管理"
+                    android:textColor="@color/color_626262" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/device_copy"
+                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_copy)}"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/icon_copy" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    android:text="数据抄录"
+                    android:textColor="@color/color_626262" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/device_tjwt"
+                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_tjwt)}"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/icon_tjwt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    android:text="图解五通"
+                    android:textColor="@color/color_626262" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/device_sycn"
+                android:onClick="@{()->typeClick.goToInspectionPage(R.id.device_sycn)}"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="30px"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/icon_sync" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom"
+                    android:text="数据同步"
+                    android:textColor="@color/color_626262" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="265px"
-        android:background="@color/new_launcher_title"
+        android:background="@color/battery_color_type"
         android:orientation="vertical">
 
         <LinearLayout

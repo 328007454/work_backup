@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data class="">
+
+        <variable
+            name="typeClick"
+            type="com.cnksi.sjjc.activity.HomeActivity" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/battery_color_type"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90px"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:layout_marginTop="22px"
+                android:background="@drawable/search_back_ground"
+                android:orientation="horizontal"
+                android:paddingLeft="36px">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="39px"
+                    android:layout_height="41px"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/icon_search" />
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30px"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="请输入搜索内容"
+                    android:textColor="@color/search_color"
+                    android:textSize="@dimen/txt_size36px" />
+            </LinearLayout>
+
+            <com.cnksi.sjjc.View.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="400px"
+                android:layout_marginTop="22px"
+                android:background="@color/white" />
+
+            <include
+                bind:clickType="@{clickType}"
+                android:id="@+id/home_include"
+                layout="@layout/home_page_include" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40px"
+                android:background="#f0f2f2" />
+
+            <!--剑锋从这里布局 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="735px"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100px">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="作业计划"
+                        android:textColor="#19b99d"
+                        android:textSize="40px" />
+
+                    <ImageView
+                        android:id="@+id/iv_more"
+                        android:layout_width="90px"
+                        android:layout_height="90px"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="30px"
+                        android:src="@mipmap/icon_more_task" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="20px"
+                        android:layout_toLeftOf="@id/iv_more"
+                        android:gravity="center"
+                        android:text="查看更多"
+                        android:textColor="#c0bab9"
+                        android:textSize="32px" />
+                </RelativeLayout>
+
+                <com.cnksi.core.view.PagerSlidingTabStrip
+                    android:id="@+id/tab_strip"
+                    android:layout_width="match_parent"
+                    android:layout_height="100px"
+                    android:background="@color/tab_strip_background_color" />
+
+                <LinearLayout
+                    android:id="@+id/data_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="535px"
+                    android:orientation="vertical"></LinearLayout>
+
+            </LinearLayout>
+            <!-- -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40px"
+                android:background="#f0f2f2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="102px"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="显存缺陷"
+                android:textColor="@color/color_fd5552"
+                android:textSize="40px" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:background="@color/color_f4f0ef"
+                android:paddingBottom="20px"
+                android:paddingLeft="40px"
+                android:paddingTop="20px">
+
+                <LinearLayout
+                    android:layout_width="500px"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/home_include_background"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/bdz_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30px"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="220kV桥沟变电站" />
+
+                    <ImageView
+
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20px"
+                        android:src="@mipmap/icon_pull" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/crisis"
+                    android:layout_width="120px"
+                    android:layout_height="85px"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/home_page_button"
+                    android:gravity="center"
+                    android:text="危机"
+                    android:textColor="#958c8c"
+                    android:textSize="@dimen/global_text_size_1" />
+
+                <Button
+                    android:id="@+id/serious"
+                    android:layout_width="120px"
+                    android:layout_height="85px"
+                    android:layout_marginRight="30px"
+                    android:layout_toLeftOf="@id/crisis"
+                    android:background="@drawable/home_page_button"
+                    android:gravity="center"
+                    android:text="严重"
+                    android:textColor="#958c8c"
+                    android:textSize="@dimen/global_text_size_1" />
+
+                <Button
+                    android:id="@+id/common"
+                    android:layout_width="120px"
+                    android:layout_height="85px"
+                    android:layout_marginRight="30px"
+                    android:layout_toLeftOf="@id/serious"
+                    android:background="@drawable/home_page_button"
+                    android:gravity="center"
+                    android:text="一般"
+                    android:textColor="#958c8c"
+                    android:textSize="@dimen/global_text_size_1" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50px"
+                android:background="@color/white" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recy_defect"
+                android:layout_width="match_parent"
+                android:layout_height="210px" />
+        </LinearLayout>
+    </ScrollView>
+</layout>
