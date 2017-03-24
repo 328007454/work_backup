@@ -56,7 +56,6 @@
                 android:background="@color/white" />
 
             <include
-                bind:clickType="@{clickType}"
                 android:id="@+id/home_include"
                 layout="@layout/home_page_include" />
 
