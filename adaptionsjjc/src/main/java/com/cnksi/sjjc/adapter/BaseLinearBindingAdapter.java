@@ -1,6 +1,9 @@
 package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -15,7 +18,7 @@ import java.util.List;
  * 所有子类必须实现{@link #convert(ViewHolder, Object, int)}<br/>
  * Created by luoxy on 16/4/15.
  */
-public abstract class BaseLinearLayoutAdapter<T> extends android.widget.BaseAdapter {
+public abstract class BaseLinearBindingAdapter<D extends ViewDataBinding, T> extends android.widget.BaseAdapter {
 
     public List<T> data;
 
@@ -27,7 +30,7 @@ public abstract class BaseLinearLayoutAdapter<T> extends android.widget.BaseAdap
 
     public LinearLayout container;
 
-    public BaseLinearLayoutAdapter(Context context, List<T> data, LinearLayout container, int layoutId) {
+    public BaseLinearBindingAdapter(Context context, List<T> data, LinearLayout container, int layoutId) {
         this.context = context;
         this.data = data;
         this.container = container;
@@ -57,16 +60,16 @@ public abstract class BaseLinearLayoutAdapter<T> extends android.widget.BaseAdap
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-      ViewHolder holder = null;
-        if(convertView==null){
-            holder =ViewHolder.get(context, convertView, parent, layoutId, position);
-            AutoUtils.autoSize(holder.getRootView());
-        }else{
-            holder = (ViewHolder) convertView.getTag();
+        D binding;
+        if (convertView == null) {
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, parent, false);
+            AutoUtils.autoSize(binding.getRoot());
+        } else {
+            binding = DataBindingUtil.findBinding(convertView);
         }
         T t = getItem(position);
-        convert(holder, t, position);
-        return holder.getRootView();
+        convert(binding, t, position);
+        return binding.getRoot();
     }
 
     /**
@@ -76,31 +79,28 @@ public abstract class BaseLinearLayoutAdapter<T> extends android.widget.BaseAdap
      * @param item
      * @param position
      */
-    public abstract void convert(ViewHolder holder, T item, int position);
+    public abstract void convert(D holder, T item, int position);
 
 
     @Override
     public void notifyDataSetChanged() {
         int viewCount = container.getChildCount();
-        int  size = getCount();
+        int size = getCount();
         for (int i = 0; i < size; i++) {
             if (i < viewCount) {
                 getView(i, container.getChildAt(i), container);
             } else {
-                View v=null;
-                if (detachViews.size()>0)
-                {
-                   v= detachViews.get(0);
+                View v = null;
+                if (detachViews.size() > 0) {
+                    v = detachViews.get(0);
                     detachViews.remove(0);
                 }
                 v = getView(i, v, container);
                 container.addView(v);
             }
         }
-        if (viewCount>size)
-        {
-            for (int i=viewCount-1;i>=size;i--)
-            {
+        if (viewCount > size) {
+            for (int i = viewCount - 1; i >= size; i--) {
                 detachViews.add(container.getChildAt(i));
                 container.removeViewAt(i);
             }

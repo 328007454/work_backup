@@ -3,7 +3,13 @@ package com.cnksi.sjjc.activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
+import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
+import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.databinding.ActivityHomePageBinding;
+import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.sjjc.service.TaskService;
+
+import java.util.List;
 
 
 /**
@@ -12,6 +18,7 @@ import com.cnksi.sjjc.databinding.ActivityHomePageBinding;
 
 public class HomeActivity extends BaseActivity {
     ActivityHomePageBinding homePageBinding;
+    HomeTaskItemAdapter taskItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +26,28 @@ public class HomeActivity extends BaseActivity {
         homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
         setContentView(homePageBinding.getRoot());
         initUI();
+        initData();
     }
 
     private void initUI() {
         homePageBinding.setTypeClick(this);
+        taskItemAdapter = new HomeTaskItemAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
+    }
+
+
+    private void initData() {
+        mExcutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                final List<Task> taskList = TaskService.getInstance().findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name());
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        taskItemAdapter.setList(taskList);
+                    }
+                });
+            }
+        });
     }
 
 //    public void goToInspectionPage(int id) {

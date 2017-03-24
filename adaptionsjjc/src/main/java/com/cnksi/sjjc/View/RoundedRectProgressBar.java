@@ -24,7 +24,7 @@ public class RoundedRectProgressBar extends View {
     private int backColor;
     private int textColor;
     private float radius;
-
+    int colorLift, colorRight;
     int progress = 0;
 
     public RoundedRectProgressBar(Context context, AttributeSet attrs, int defStyle) {
@@ -49,6 +49,8 @@ public class RoundedRectProgressBar extends View {
 
         }
         a.recycle();
+        colorLift = getResources().getColor(R.color.progress_color_1);
+        colorRight = getResources().getColor(R.color.progress_color_2);
     }
 
     public RoundedRectProgressBar(Context context, AttributeSet attrs) {
@@ -67,6 +69,8 @@ public class RoundedRectProgressBar extends View {
 
 
     Paint paint = new Paint();
+    RectF backgroundRectF, progressRectF = new RectF();
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -74,19 +78,27 @@ public class RoundedRectProgressBar extends View {
         //背景
         mPaint.setColor(backColor);
         mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRoundRect(new RectF(0, 0, this.getMeasuredWidth(), this.getMeasuredHeight()), radius, radius, mPaint);
+        canvas.drawRoundRect(backgroundRectF, radius, radius, mPaint);
         //进度条
         paint.setStyle(Paint.Style.FILL);
-        LinearGradient gradient = new LinearGradient(0, 0, this.getMeasuredWidth() * progress / 100f, 0, getResources().getColor(R.color.progress_color_1), getResources().getColor(R.color.progress_color_2), Shader.TileMode.MIRROR);
+        float x = this.getMeasuredWidth() * progress / 100f;
+        LinearGradient gradient = new LinearGradient(0, 0, x, 0, colorLift, colorRight, Shader.TileMode.MIRROR);
         paint.setShader(gradient);
-        canvas.drawRoundRect(new RectF(0, 0, this.getMeasuredWidth() * progress / 100f, this.getMeasuredHeight()), radius, radius, paint);
+        progressRectF.set(0, 0, x, this.getMeasuredHeight());
+        canvas.drawRoundRect(progressRectF, radius, radius, paint);
         //进度
         mPaint.setColor(textColor);
         mPaint.setTextSize(this.getMeasuredHeight() / 1.2f);
         String text = "" + progress + "%";
-        float x = this.getMeasuredWidth() * progress / 100 - mPaint.measureText(text) - 10;
+        x = x - mPaint.measureText(text) - 10;
         float y = this.getMeasuredHeight() / 2f - mPaint.getFontMetrics().ascent / 2f - mPaint.getFontMetrics().descent / 2f;
         canvas.drawText(text, x, y, mPaint);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        backgroundRectF = new RectF(0, 0, this.getMeasuredWidth(), this.getMeasuredHeight());
     }
 
     /*设置进度条进度, 外部调用*/
@@ -100,4 +112,5 @@ public class RoundedRectProgressBar extends View {
         }
         postInvalidate();
     }
+
 }

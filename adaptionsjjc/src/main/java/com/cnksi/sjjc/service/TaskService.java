@@ -16,6 +16,7 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -260,12 +261,24 @@ public class TaskService extends BaseService<Task> {
         return tasks;
     }
 
-    public List<Task> findTaskListByLimit(String inspectionType, int limit) throws DbException {
-        return from(Task.class).expr(" and inspection like '%" + inspectionType + "%' ").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+    public List<Task> findTaskListByLimit(int limit, String... inspections) {
+        StringBuilder expr = new StringBuilder();
+        expr.append(" and (");
+        for (String inspection : inspections) {
+            expr.append(" inspection like '%").append(inspection).append("%'  ").append("or");
+        }
+        expr.delete(expr.length() - 2, expr.length());
+        expr.append(") ");
+        try {
+            return from(Task.class).expr(inspections.length > 0 ? expr.toString() : "").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public float statisticProgress(String... inspections) {
-        DbModel model = null;
+        DbModel model;
         StringBuilder expr = new StringBuilder();
         expr.append(" and (");
         for (String inspection : inspections) {
