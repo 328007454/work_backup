@@ -41,6 +41,10 @@ public class NewLauncherActivity extends BaseActivity {
             switch (id) {
                 case R.id.menu_record:
 //                    launcherBinding.fragmenPager.setCurrentItem(0);
+                    Intent homeIntent = new Intent();
+                    homeIntent.setClass(getApplicationContext(), HomeActivity.class);
+                    startActivity(homeIntent);
+
                     break;
                 case R.id.menu_tour:
                     launcherBinding.fragmenPager.setCurrentItem(0);
