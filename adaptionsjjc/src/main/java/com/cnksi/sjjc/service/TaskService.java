@@ -16,7 +16,6 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -233,7 +232,6 @@ public class TaskService extends BaseService<Task> {
 
     public List<Task> getUnDoSpecialTask(String inspectionType) {
         List<Task> tasks = new ArrayList<>();
-//        String sql = isXideng ? "" : "' ";
         try {
             tasks = CustomApplication.getDbManager().selector(Task.class).expr(" inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
         } catch (DbException e) {
@@ -244,7 +242,6 @@ public class TaskService extends BaseService<Task> {
 
     public List<Task> getAllTask() {
         List<Task> tasks = new ArrayList<>();
-//        String sql = isXideng ? "" : "' ";
         try {
             tasks = CustomApplication.getDbManager().selector(Task.class).findAll();
         } catch (DbException e) {
@@ -262,4 +259,9 @@ public class TaskService extends BaseService<Task> {
         }
         return tasks;
     }
+
+    public List<Task> findTaskListByLimit(String inspectionType, int limit) throws DbException {
+        return from(Task.class).expr(" and inspection like '%" + inspectionType + "%' ").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+    }
+
 }

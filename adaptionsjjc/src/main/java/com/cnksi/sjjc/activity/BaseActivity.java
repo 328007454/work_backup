@@ -389,11 +389,13 @@ public abstract class BaseActivity extends BaseCoreActivity {
 
     // 设置应用程序的字体大小不会随 系统字体大小而变化
     @Override
+    @SuppressWarnings("deprecation")
     public Resources getResources() {
         Resources res = super.getResources();
         Configuration config = new Configuration();
         // config.setToDefaults();
         config.fontScale = 0.85f;
+
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
     }
