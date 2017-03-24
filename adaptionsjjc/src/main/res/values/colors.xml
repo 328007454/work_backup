@@ -166,5 +166,7 @@
     <color name="new_launcher_bottom_back">#f9f9f9</color>
     <color name="new_launcher_gray_bg">#F0F0F0</color>
     <color name="new_launcher_line_bg">#E0E0E0</color>
-
+    <color name="progress_color_1">#00bddb</color>
+    <color name="progress_color_2">#05c8b8</color>
+    <color name="progress_backgroud">#e0e0e0</color>
 </resources>

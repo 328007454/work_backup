@@ -120,5 +120,9 @@ public class Department {
 	public static final String IS_SELECTED = "is_selected";
 	public boolean isSelected = false;
 
+	// 是否选择
+	public static final String DLT = "dlt";
+	public int dlt;
+
 	public String fullName = "";
 }
