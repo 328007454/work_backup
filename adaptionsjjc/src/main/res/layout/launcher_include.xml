@@ -58,9 +58,9 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="45px"
+                    android:layout_height="67px"
                     android:layout_marginLeft="42px"
                     app:srcCompat="@drawable/icon_bdz_location" />
 
@@ -96,11 +96,12 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_size38px" />
 
-                <ImageView
-                    android:layout_width="29dp"
-                    android:layout_height="30dp"
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/exit_system"
+                    android:layout_width="60px"
+                    android:layout_height="65px"
                     android:layout_marginRight="40px"
-                    android:background="@mipmap/ic_launcher" />
+                    app:srcCompat="@drawable/icon_exit_system" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

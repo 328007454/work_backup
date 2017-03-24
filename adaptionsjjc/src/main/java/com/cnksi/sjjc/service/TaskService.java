@@ -9,12 +9,16 @@ import com.cnksi.sjjc.bean.SwitchPic;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.bean.TaskStatistic;
+import com.cnksi.sjjc.enmu.InspectionType;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by han on 2016/6/8.
@@ -182,7 +186,7 @@ public class TaskService extends BaseService<Task> {
 
     public TaskStatistic getTaskStatistic(String inspectionType) {
         TaskStatistic result = new TaskStatistic();
-        String inspectionExpr = " and inspection like '%" + inspectionType + "%' ";
+        String inspectionExpr = TextUtils.isEmpty(inspectionType) ? " and (inspection like '%" + InspectionType.routine.name() + "%' or inspection like '%" + InspectionType.full.name() + "%' or inspection like '%" + InspectionType.special.name() + "%') " : " and inspection like '%" + inspectionType + "%' ";
         String todayTimeExpr = " and schedule_time BETWEEN datetime('now','localtime','start of day') AND datetime('now','localtime','start of day','+1 day','-1 second') ";
         String mothTimeExpr = " and schedule_time BETWEEN datetime('now','localtime','start of month') AND datetime('now','localtime','start of month','+1 month','-1 second') ";
         String doneExpr = " and status='" + Task.TaskStatus.done.name() + "' ";
@@ -215,5 +219,47 @@ public class TaskService extends BaseService<Task> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public List<Task> getUnDoTask(String inspectionType) {
+        List<Task> tasks = new ArrayList<>();
+        try {
+            tasks = CustomApplication.getDbManager().selector(Task.class).where(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return tasks;
+    }
+
+    public List<Task> getUnDoSpecialTask(String inspectionType) {
+        List<Task> tasks = new ArrayList<>();
+//        String sql = isXideng ? "" : "' ";
+        try {
+            tasks = CustomApplication.getDbManager().selector(Task.class).expr(" inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return tasks;
+    }
+
+    public List<Task> getAllTask() {
+        List<Task> tasks = new ArrayList<>();
+//        String sql = isXideng ? "" : "' ";
+        try {
+            tasks = CustomApplication.getDbManager().selector(Task.class).findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return tasks;
+    }
+
+    public List<Task> getFinishedTask() {
+        List<Task> tasks = new ArrayList<>();
+        try {
+            tasks = CustomApplication.getDbManager().selector(Task.class).where(Task.STATUS, "=", "undo").findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return tasks;
     }
 }
