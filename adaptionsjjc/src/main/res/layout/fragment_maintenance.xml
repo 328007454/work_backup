@@ -31,7 +31,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3px"
+                android:layout_height="2px"
                 android:background="@color/new_launcher_line_bg" />
 
             <TextView
@@ -152,7 +152,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="3px"
+                        android:layout_height="2px"
                         android:layout_marginTop="50px"
                         android:background="@color/new_launcher_line_bg" />
 
@@ -288,7 +288,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="3px"
+                        android:layout_height="2px"
                         android:layout_marginTop="50px"
                         android:background="@color/new_launcher_line_bg" />
 
@@ -325,7 +325,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="3px"
+                    android:layout_height="2px"
                     android:background="@color/new_launcher_line_bg" />
 
                 <LinearLayout
@@ -346,7 +346,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="3px"
+                    android:layout_height="2px"
                     android:background="@color/new_launcher_line_bg" />
 
                 <com.cnksi.sjjc.View.MyScrollVListView
@@ -354,7 +354,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/new_launcher_line_bg"
-                    android:dividerHeight="3px" />
+                    android:dividerHeight="2px" />
             </LinearLayout>
 
             <LinearLayout
@@ -365,7 +365,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="3px"
+                    android:layout_height="2px"
                     android:background="@color/new_launcher_line_bg" />
 
                 <LinearLayout
@@ -379,14 +379,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="60px"
-                        android:text="轮换实验任务"
+                        android:text="轮换试验任务"
                         android:textColor="#b3afaf"
                         android:textSize="40px" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="3px"
+                    android:layout_height="2px"
                     android:background="@color/new_launcher_line_bg" />
 
                 <com.cnksi.sjjc.View.MyScrollVListView
@@ -394,7 +394,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/new_launcher_line_bg"
-                    android:dividerHeight="3px" />
+                    android:dividerHeight="2px" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

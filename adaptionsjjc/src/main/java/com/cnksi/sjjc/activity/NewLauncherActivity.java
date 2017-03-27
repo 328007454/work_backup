@@ -32,9 +32,8 @@ import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
-
+import com.cnksi.sjjc.util.OnViewClickListener;
 import org.xutils.ex.DbException;
-
 import java.util.ArrayList;
 
 /**
@@ -98,7 +97,15 @@ public class NewLauncherActivity extends BaseActivity {
         launcherBinding.lancherTitle.exitSystem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                compeletlyExitSystem();
+                DialogUtils.showSureTipsDialog(_this, null, "是否退出登录?", "确定", "取消", new OnViewClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        super.onClick(v);
+                        Intent intent = new Intent(_this, LoginActivity.class);
+                        startActivity(intent);
+                        mCurrentActivity.finish();
+                    }
+                });
             }
         });
         launcherBinding.lancherTitle.bdzLocationContainer.setOnClickListener(new View.OnClickListener() {

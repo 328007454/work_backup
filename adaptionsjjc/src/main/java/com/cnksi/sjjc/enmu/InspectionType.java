@@ -71,7 +71,7 @@ public enum InspectionType {
     exclusive_07("防小动物专项检查"),
     exclusive_08("五防系统专项检查"),
 
-    SBJC("设备检测"),
+    SBJC("数据抄录"),
     NEWSBJC("数据抄录"),
     SBJC_01("红外测温"),
     SBJC_02("保护屏红外热像检测"),
@@ -163,6 +163,8 @@ public enum InspectionType {
             return InspectionType.TJWT;
         } else if (InspectionType.JYHPJ.value.equals(value)) {
             return InspectionType.TJWT;
+        }else if (InspectionType.NEWSBJC.value.equals(value)) {
+            return InspectionType.NEWSBJC;
         }
         return null;
     }

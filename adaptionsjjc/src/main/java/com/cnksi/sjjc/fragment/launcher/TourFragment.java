@@ -47,6 +47,12 @@ public class TourFragment extends BaseCoreFragment {
     int i = 0;
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    @Override
     protected void initData() {
         mExcutorService.execute(new Runnable() {
             @Override

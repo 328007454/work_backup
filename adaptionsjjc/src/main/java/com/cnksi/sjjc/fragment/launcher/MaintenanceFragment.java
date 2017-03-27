@@ -51,6 +51,12 @@ public class MaintenanceFragment extends BaseCoreFragment {
         maintenanceBinding.setEvent(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
     /**
      * XML中调用方法
      *

@@ -182,6 +182,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
+        for (TaskType tab : tabs) {
+            tab.init();
+        }
+        loadData();
     }
 
     @Override

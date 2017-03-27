@@ -54,7 +54,7 @@ public class MyWebChromeClient extends WebChromeClient{
 		// TODO Auto-generated method stub
 		return super.onJsBeforeUnload(view, url, message, result);
 	}
-
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onJsTimeout() {
 		// TODO Auto-generated method stub
