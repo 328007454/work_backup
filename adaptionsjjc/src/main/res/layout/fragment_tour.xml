@@ -217,6 +217,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
+                android:onClick="@{()->event.toTaskPlan(InspectionType.routine.name())}"
                 android:orientation="vertical">
 
                 <TextView
@@ -243,8 +244,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="68px"
                     android:layout_marginTop="66px"
-                    android:background="@mipmap/icon_rotinue"
-                    android:onClick="@{()->event.toTaskPlan(InspectionType.routine.name())}" />
+                    android:background="@mipmap/icon_rotinue" />
             </LinearLayout>
 
             <View
@@ -263,6 +263,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:onClick="@{()->event.toTaskPlan(InspectionType.full.name())}"
                     android:orientation="horizontal"
                     android:paddingLeft="42px">
 
@@ -300,8 +301,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="38px"
-                        android:background="@mipmap/icon_overall"
-                        android:onClick="@{()->event.toTaskPlan(InspectionType.full.name())}" />
+                        android:background="@mipmap/icon_overall" />
                 </LinearLayout>
 
                 <View
@@ -313,6 +313,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:onClick="@{()->event.toTaskPlan(InspectionType.special.name())}"
                     android:orientation="horizontal"
                     android:paddingLeft="42px">
 
@@ -349,7 +350,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="38px"
-                        android:onClick="@{()->event.toTaskPlan(InspectionType.special.name())}"
+
                         android:src="@mipmap/icon_special" />
                 </LinearLayout>
             </LinearLayout>
@@ -369,6 +370,7 @@
                 android:layout_width="0dp"
                 android:layout_height="275px"
                 android:layout_weight="1"
+                android:onClick="@{()->event.toTaskPlan(InspectionType.special_xideng.name())}"
                 android:orientation="horizontal"
                 android:paddingLeft="42px">
 
@@ -403,7 +405,7 @@
                     android:layout_height="140px"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="38px"
-                    android:onClick="@{()->event.toTaskPlan(InspectionType.special_xideng.name())}"
+
                     android:src="@mipmap/icon_night" />
             </LinearLayout>
 
@@ -453,5 +455,10 @@
                     android:src="@mipmap/icon_professionnal" />
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="75px"
+            android:background="#f0f0f0" />
     </LinearLayout>
 </layout>

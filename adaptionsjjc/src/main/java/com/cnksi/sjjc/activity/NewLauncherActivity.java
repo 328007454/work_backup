@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -8,19 +9,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 
+import com.cnksi.core.adapter.ViewHolder;
+import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.DisplayUtil;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
+import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.databinding.ActivityLauncherNewBinding;
 import com.cnksi.sjjc.fragment.launcher.MaintenanceFragment;
 import com.cnksi.sjjc.fragment.launcher.TourFragment;
+import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.util.ActivityUtil;
+import com.cnksi.sjjc.util.DialogUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 
@@ -35,6 +46,9 @@ public class NewLauncherActivity extends BaseActivity {
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
     private int currentSelectPosition;
     private boolean isFromHomeActivity = true;
+    private ListView mPowerStationListView;
+    private Dialog mPowerStationDialog = null;
+    private ArrayList<Bdz> bdzList;
     RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
@@ -52,7 +66,7 @@ public class NewLauncherActivity extends BaseActivity {
                     launcherBinding.fragmenPager.setCurrentItem(1);
                     break;
                 case R.id.menu_operate:
-                    isFromHomeActivity =false;
+                    isFromHomeActivity = false;
                     ActivityUtil.startOperateActivity(_this);
                     break;
 
@@ -74,7 +88,7 @@ public class NewLauncherActivity extends BaseActivity {
         setContentView(launcherBinding.getRoot());
         initUI();
         initFragments();
-        setFragmentToPager();
+        setFragmentToHomePager();
         initBaseData();
 
     }
@@ -85,6 +99,12 @@ public class NewLauncherActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 compeletlyExitSystem();
+            }
+        });
+        launcherBinding.lancherTitle.bdzLocationContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPowerStationDialog.show();
             }
         });
     }
@@ -99,12 +119,15 @@ public class NewLauncherActivity extends BaseActivity {
             public void run() {
                 String deparmentId = PreferencesUtils.get(_this, Config.CURRENT_DEPARTMENT_ID, "");
                 try {
+                    bdzList = (ArrayList<Bdz>) CustomApplication.getDbManager().findAll(Bdz.class);
                     final Department department = CustomApplication.getDbManager().selector(Department.class).where(Department.ID, "=", deparmentId).and(Department.DLT, "<>", 1).findFirst();
                     if (null != department)
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 launcherBinding.lancherTitle.txtTeam.setText(department.name);
+                                initBDZDialog();
+                                launcherBinding.lancherTitle.txtBdz.setText(bdzList.get(0).name);
                             }
                         });
                 } catch (DbException e) {
@@ -113,7 +136,7 @@ public class NewLauncherActivity extends BaseActivity {
         });
     }
 
-    private void setFragmentToPager() {
+    private void setFragmentToHomePager() {
         launcherBinding.fragmenPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), fragmentList));
         launcherBinding.fragmenPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -159,5 +182,32 @@ public class NewLauncherActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    private void initBDZDialog() {
+        int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
+        int dialogHeight = bdzList.size() > 8 ? DisplayUtil.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
+        final ViewHolder holder = new ViewHolder(this, null, R.layout.content_list_dialog, false);
+        AutoUtils.autoSize(holder.getRootView());
+        mPowerStationListView = holder.getView(R.id.lv_container);
+        holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
+        DialogBDZAdapter adapter = new DialogBDZAdapter(this, bdzList, R.layout.dialog_content_child_item);
+        adapter.setItemClickListener(new ItemClickListener<Bdz>() {
+            @Override
+            public void itemClick(View v, Bdz bdz, int position) {
+                if (!bdz.name.contains("未激活")) {
+                    launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
+                    mPowerStationDialog.dismiss();
+                } else
+                    CToast.showShort(_this, "该变电站未激活");
+            }
+
+            @Override
+            public void itemLongClick(View v, Bdz bdz, int position) {
+
+            }
+        });
+        mPowerStationListView.setAdapter(adapter);
+        mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
     }
 }

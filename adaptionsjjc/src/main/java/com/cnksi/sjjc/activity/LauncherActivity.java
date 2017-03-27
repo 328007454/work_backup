@@ -83,7 +83,7 @@ public class LauncherActivity extends BaseActivity {
                 break;
             //设备检测
             case R.id.sbjc:
-                intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC.name());
+                intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.NEWSBJC.name());
                 break;
             //定期试验
             case R.id.dqsy:

@@ -47,7 +47,6 @@
             android:background="#f0f0f0" />
 
         <RelativeLayout
-            android:layout_marginTop="75px"
             android:id="@+id/main_radioGroupLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

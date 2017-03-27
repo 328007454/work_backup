@@ -50,6 +50,7 @@
             android:paddingRight="40px">
 
             <LinearLayout
+                android:id="@+id/bdz_location_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15px"
