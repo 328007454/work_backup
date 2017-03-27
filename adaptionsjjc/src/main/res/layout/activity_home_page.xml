@@ -129,7 +129,7 @@
                 android:layout_height="102px"
                 android:background="@color/white"
                 android:gravity="center"
-                android:text="显存缺陷"
+                android:text="现存缺陷"
                 android:textColor="@color/color_fd5552"
                 android:textSize="40px" />
 
@@ -142,7 +142,9 @@
                 android:paddingTop="20px">
 
                 <LinearLayout
-                    android:layout_width="500px"
+                    android:id="@+id/bdz_all_name"
+                    android:layout_width="wrap_content"
+                    android:minWidth="500px"
                     android:layout_height="match_parent"
                     android:background="@drawable/home_include_background"
                     android:orientation="horizontal">
@@ -150,6 +152,7 @@
                     <TextView
                         android:id="@+id/bdz_name"
                         android:layout_width="0dp"
+                        android:background="@null"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="30px"
                         android:layout_weight="1"
@@ -174,7 +177,7 @@
                     android:background="@drawable/home_page_button"
                     android:gravity="center"
                     android:text="危机"
-                    android:textColor="#958c8c"
+                    android:textColor="@drawable/defec_type_textcolor_selector"
                     android:textSize="@dimen/global_text_size_1" />
 
                 <Button
@@ -186,7 +189,7 @@
                     android:background="@drawable/home_page_button"
                     android:gravity="center"
                     android:text="严重"
-                    android:textColor="#958c8c"
+                    android:textColor="@drawable/defec_type_textcolor_selector"
                     android:textSize="@dimen/global_text_size_1" />
 
                 <Button
@@ -198,7 +201,7 @@
                     android:background="@drawable/home_page_button"
                     android:gravity="center"
                     android:text="一般"
-                    android:textColor="#958c8c"
+                    android:textColor="@drawable/defec_type_textcolor_selector"
                     android:textSize="@dimen/global_text_size_1" />
             </RelativeLayout>
 
@@ -208,9 +211,14 @@
                 android:background="@color/white" />
 
             <android.support.v7.widget.RecyclerView
+                android:background="@color/white"
                 android:id="@+id/recy_defect"
                 android:layout_width="match_parent"
-                android:layout_height="210px" />
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="#f0f2f2" />
         </LinearLayout>
     </ScrollView>
 </layout>

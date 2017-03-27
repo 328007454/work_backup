@@ -4,7 +4,16 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.HomeActivity;
+import com.cnksi.sjjc.activity.NewLauncherActivity;
+import com.cnksi.sjjc.activity.TypeListActivity;
+import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.sjjc.sync.DataSync;
 
 /**
  * Created by lyndon on 2016/9/12.
@@ -29,5 +38,51 @@ public class ActivityUtil {
             CToast.showShort(activity, "请安装变电运维智能移动作业平台");
         }
 
+    }
+
+    public static void startDeviceTourActivity(Activity activity, int id) {
+        Intent intent = new Intent(activity, NewLauncherActivity.class);
+        intent.putExtra("position", id == R.id.device_xunshi ? 0 : 1);
+        activity.startActivity(intent);
+    }
+
+    public static void startOperateActivity(Activity activity) {
+        ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
+        Intent intent2 = new Intent();
+        intent2.setComponent(componentName);
+        intent2.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
+        intent2.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        activity.startActivity(intent2);
+    }
+
+    public static void startUnifyActivity(Activity activity) {
+        Intent intent1 = new Intent();
+        ComponentName componentName1 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+        String typeName = InspectionType.operation.name();
+        intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
+        intent1.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
+        intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent1.setComponent(componentName1);
+        activity.startActivity(intent1);
+    }
+
+    public static void startShuJuJianCe(Activity activity) {
+        Intent intent = new Intent(activity, TypeListActivity.class);
+        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC.name());
+        activity.startActivity(intent);
+    }
+
+    public static void startWTYCActiviy(Activity activity) {
+        Intent intent = new Intent(activity, TypeListActivity.class);
+        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.TJWT.name());
+        activity.startActivity(intent);
+    }
+
+    public static void startSyncActivity(Activity activity) {
+        ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+        Intent intentData = new Intent(activity, DataSync.class);
+        intentData.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
+        intentData.putExtra(Config.SYNC_COME_FROM, Config.LAUNCHERACTIVITY_TO_SYNC);
+        activity.startActivity(intentData);
     }
 }

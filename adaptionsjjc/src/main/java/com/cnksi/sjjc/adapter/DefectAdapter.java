@@ -1,0 +1,72 @@
+package com.cnksi.sjjc.adapter;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.cnksi.core.Base.RecyclerViewHolder;
+import com.cnksi.core.utils.CoreConfig;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.bean.DefectRecord;
+
+import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * Created by han on 2017/3/27.
+ */
+
+public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+    private List<DefectRecord> data;
+
+    private Context context;
+
+    private int layoutId;
+
+    public DefectAdapter(Context context, List<DefectRecord> data, int layoutId) {
+        this.context = context;
+        this.data = data;
+        this.layoutId = layoutId;
+    }
+
+
+    @Override
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewHolder viewHolder = new ViewHolder(context, parent, layoutId, false);
+        return new RecyclerViewHolder(viewHolder.getRootView());
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+        ImageView defectImage = holder.getView(R.id.iv_defect_image);
+        DefectRecord defectRecord = data.get(position);
+        String[] defectPicArray = StringUtils.cleanString(defectRecord.pics).split(CoreConfig.COMMA_SEPARATOR);
+        if (defectPicArray != null && defectPicArray.length > 0
+                && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
+            x.image().bind(defectImage, Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), CustomApplication.getLargeImageOptions());
+        } else {
+            defectImage.setImageResource(R.drawable.ic_app);
+        }
+        ((TextView) holder.getView(R.id.tv_device_name)).setText(defectRecord.devcie);
+        ((TextView) holder.getView(R.id.tv_defect_discover_time)).setText(defectRecord.discovered_date);
+    }
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+    public void setList(ArrayList<DefectRecord> defectRecords) {
+        this.data = defectRecords;
+        notifyDataSetChanged();
+    }
+}

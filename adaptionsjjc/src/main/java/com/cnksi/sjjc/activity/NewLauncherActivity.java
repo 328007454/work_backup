@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.activity;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -19,9 +18,9 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
 import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.databinding.ActivityLauncherNewBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.fragment.launcher.MaintenanceFragment;
 import com.cnksi.sjjc.fragment.launcher.TourFragment;
+import com.cnksi.sjjc.util.ActivityUtil;
 
 import org.xutils.ex.DbException;
 
@@ -35,16 +34,16 @@ public class NewLauncherActivity extends BaseActivity {
     private ActivityLauncherNewBinding launcherBinding;
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
     private int currentSelectPosition;
+    private boolean isFromHomeActivity = true;
     RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
             switch (id) {
                 case R.id.menu_record:
-//                    launcherBinding.fragmenPager.setCurrentItem(0);
                     Intent homeIntent = new Intent();
                     homeIntent.setClass(getApplicationContext(), HomeActivity.class);
                     startActivity(homeIntent);
-
+                    NewLauncherActivity.this.finish();
                     break;
                 case R.id.menu_tour:
                     launcherBinding.fragmenPager.setCurrentItem(0);
@@ -53,23 +52,13 @@ public class NewLauncherActivity extends BaseActivity {
                     launcherBinding.fragmenPager.setCurrentItem(1);
                     break;
                 case R.id.menu_operate:
-                    ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
-                    Intent intent2 = new Intent();
-                    intent2.setComponent(componentName);
-                    intent2.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
-                    intent2.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
-                    startActivity(intent2);
+                    isFromHomeActivity =false;
+                    ActivityUtil.startOperateActivity(_this);
                     break;
 
                 case R.id.menu_unify:
-                    Intent intent1 = new Intent();
-                    ComponentName componentName1 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
-                    String typeName = InspectionType.operation.name();
-                    intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
-                    intent1.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
-                    intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
-                    intent1.setComponent(componentName1);
-                    startActivity(intent1);
+                    isFromHomeActivity = false;
+                    ActivityUtil.startUnifyActivity(_this);
                     break;
                 default:
                     break;
@@ -92,18 +81,16 @@ public class NewLauncherActivity extends BaseActivity {
 
     private void initUI() {
         launcherBinding.mainRadioGroup.setOnCheckedChangeListener(checkedChangeListener);
-        launcherBinding.mainRadioGroup.check(R.id.menu_tour);
         launcherBinding.lancherTitle.exitSystem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.exit(0);
+                compeletlyExitSystem();
             }
         });
     }
 
     private void initBaseData() {
         getIntentValue();
-        currentSelectPosition = getIntent().getIntExtra("position", 0);
         String date = com.cnksi.core.utils.DateUtils.getCurrentTime("yyy年MM月dd日") + " " + DateUtils.getCurrentWeekDay();
         launcherBinding.lancherTitle.txtTime.setText(date);
         launcherBinding.lancherTitle.txtPerson.setText(PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_USER, ""));
@@ -137,16 +124,6 @@ public class NewLauncherActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 currentSelectPosition = position;
-                switch (position) {
-                    case 0:
-                        launcherBinding.mainRadioGroup.check(R.id.menu_tour);
-                        break;
-                    case 1:
-                        launcherBinding.mainRadioGroup.check(R.id.menu_maintenance);
-                        break;
-                    default:
-                        break;
-                }
             }
 
             @Override
@@ -166,6 +143,9 @@ public class NewLauncherActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        if (getIntent() != null && isFromHomeActivity) {
+            currentSelectPosition = getIntent().getIntExtra("position", 0);
+        }
         super.onResume();
         switch (currentSelectPosition) {
             case 0:

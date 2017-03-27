@@ -1,17 +1,54 @@
 package com.cnksi.sjjc.activity;
 
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
+import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.View.Banner;
+import com.cnksi.sjjc.adapter.BdzAdapter;
+import com.cnksi.sjjc.adapter.DefectAdapter;
+import com.cnksi.sjjc.bean.Bdz;
+import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.databinding.ActivityHomePageBinding;
+import com.cnksi.sjjc.databinding.BdzPopwindowBinding;
+import com.cnksi.sjjc.service.DefectRecordService;
+import com.cnksi.sjjc.util.ActivityUtil;
+
+import org.xutils.ex.DbException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
  * Created by han on 2017/3/24.
  */
 
-public class HomeActivity extends BaseActivity {
-    ActivityHomePageBinding homePageBinding;
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
+    private ActivityHomePageBinding homePageBinding;
+    private BdzPopwindowBinding bdzPopwindowBinding;
+    private ArrayList<Integer> bannerMapUrl = new ArrayList<>();
+    private BdzAdapter bdzAdapter;
+    private PopupWindow mPop;
+    private List<Bdz> bdzList;
+    private int[] location = new int[2];
+    private DefectAdapter defectAdapter;
+    private Map<String, ArrayList<DefectRecord>> mCrisisMap = new HashMap<>();
+    private Map<String, ArrayList<DefectRecord>> mSerioutMap = new HashMap<>();
+    private Map<String, ArrayList<DefectRecord>> mCommonMap = new HashMap<>();
+    private String currentSelectBdzId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,40 +56,163 @@ public class HomeActivity extends BaseActivity {
         homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
         setContentView(homePageBinding.getRoot());
         initUI();
+        loadData();
+    }
+
+    ArrayList<DefectRecord> records;
+
+    private void loadData() {
+        mFixedThreadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    bdzList = CustomApplication.getDbManager().findAll(Bdz.class);
+                    final List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList();
+                    for (DefectRecord mDefectRecord : defectList) {
+                        if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                            if (mCrisisMap.get(mDefectRecord.bdzid) == null) {
+                                records = new ArrayList<DefectRecord>();
+                                records.add(mDefectRecord);
+                            } else
+                                records.add(mDefectRecord);
+                            mCrisisMap.put(mDefectRecord.bdzid, records);
+                        } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                            if (mSerioutMap.get(mDefectRecord.bdzid) == null) {
+                                records = new ArrayList<DefectRecord>();
+                                records.add(mDefectRecord);
+                            } else
+                                records.add(mDefectRecord);
+                            mSerioutMap.put(mDefectRecord.bdzid, records);
+                        } else if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                            if (mCommonMap.get(mDefectRecord.bdzid) == null) {
+                                records = new ArrayList<DefectRecord>();
+                                records.add(mDefectRecord);
+                            } else
+                                records.add(mDefectRecord);
+                            mCommonMap.put(mDefectRecord.bdzid, records);
+                        }
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (bdzAdapter == null) {
+                                bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
+                                bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
+                            } else
+                                bdzAdapter.setList(bdzList);
+                            if (defectAdapter == null) {
+                                homePageBinding.common.setSelected(true);
+                                currentSelectBdzId = bdzList.get(0).bdzid;
+                                defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
+                                homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
+                                homePageBinding.recyDefect.setAdapter(defectAdapter);
+                            }
+                            homePageBinding.bdzName.setText(bdzList.get(0).name);
+                        }
+                    });
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initUI() {
-        homePageBinding.setTypeClick(this);
+        bannerMapUrl.add(R.mipmap.banner);
+        bannerMapUrl.add(R.mipmap.capture);
+        bannerMapUrl.add(R.mipmap.ic_button_circle);
+        homePageBinding.banner.setFocusable(false);
+        homePageBinding.banner.setBannerStyle(Banner.BannerConfig.CIRCLE_INDICATOR);
+        homePageBinding.banner.setIndicatorGravity(Banner.BannerConfig.CENTER);
+        homePageBinding.banner.setImages(bannerMapUrl);
+        homePageBinding.homeInclude.deviceXunshi.setOnClickListener(this);
+        homePageBinding.homeInclude.deviceWeihu.setOnClickListener(this);
+        homePageBinding.homeInclude.deviceOperate.setOnClickListener(this);
+        homePageBinding.homeInclude.deviceUnify.setOnClickListener(this);
+        homePageBinding.homeInclude.deviceDefect.setOnClickListener(this);
+        homePageBinding.homeInclude.deviceCopy.setOnClickListener(this);
+        homePageBinding.homeInclude.deviceTjwt.setOnClickListener(this);
+        homePageBinding.homeInclude.deviceSycn.setOnClickListener(this);
+        homePageBinding.common.setOnClickListener(this);
+        homePageBinding.serious.setOnClickListener(this);
+        homePageBinding.crisis.setOnClickListener(this);
+        homePageBinding.bdzAllName.setOnClickListener(this);
+        bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
+        mPop = new PopupWindow(bdzPopwindowBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        mPop.setBackgroundDrawable(new BitmapDrawable());
+        bdzPopwindowBinding.llContainer.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        mPop.setOutsideTouchable(true);
+        bdzPopwindowBinding.lvBzd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                homePageBinding.bdzName.setText(bdzList.get(i).name);
+                currentSelectBdzId = bdzList.get(i).bdzid;
+                homePageBinding.common.setSelected(true);
+                defectAdapter.setList(mCommonMap.get(currentSelectBdzId));
+                mPop.dismiss();
+            }
+        });
     }
 
-//    public void goToInspectionPage(int id) {
-//        Intent intent = null;
-//        switch (id) {
-//            case R.id.device_xunshi:
-//            case R.id.device_weihu:
-//                intent = new Intent(_this, NewLauncherActivity.class);
-//                intent.putExtra("position", id == R.id.device_xunshi ? 0 : 1);
-//                startActivity(intent);
-//                break;
-//            case R.id.device_operate:
-//                ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
-//                Intent intent2 = new Intent();
-//                intent2.setComponent(componentName);
-//                intent2.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
-//                intent2.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
-//                break;
-//            case R.id.device_unify:
-//                break;
-//            case R.id.device_defect:
-//                break;
-//            case R.id.device_copy:
-//                break;
-//            case R.id.device_tjwt:
-//                break;
-//            case R.id.device_sycn:
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = null;
+        switch (view.getId()) {
+            case R.id.device_xunshi:
+            case R.id.device_weihu:
+                ActivityUtil.startDeviceTourActivity(_this, view.getId());
+                break;
+            case R.id.device_operate:
+                ActivityUtil.startOperateActivity(_this);
+                break;
+            case R.id.device_unify:
+                ActivityUtil.startUnifyActivity(_this);
+                break;
+            case R.id.device_defect:
+                //undo
+                break;
+            case R.id.device_copy:
+                ActivityUtil.startShuJuJianCe(_this);
+                break;
+            case R.id.device_tjwt:
+                ActivityUtil.startWTYCActiviy(_this);
+                break;
+            case R.id.device_sycn:
+                ActivityUtil.startSyncActivity(_this);
+                break;
+            case R.id.bdz_all_name:
+                view.getLocationOnScreen(location);
+                int popupHeight = 0;
+                int popupWidth = 0;
+                popupHeight = bdzPopwindowBinding.llContainer.getMeasuredHeight();
+                popupWidth = bdzPopwindowBinding.llContainer.getMeasuredWidth();
+                mPop.showAtLocation(homePageBinding.bdzAllName, Gravity.NO_GRAVITY, (location[0] + homePageBinding.bdzAllName.getWidth() / 2) - popupWidth / 2, location[1] - popupHeight);
+                break;
+            case R.id.common:
+                homePageBinding.common.setSelected(true);
+                homePageBinding.crisis.setSelected(false);
+                homePageBinding.serious.setSelected(false);
+                defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
+                break;
+            case R.id.serious:
+                homePageBinding.common.setSelected(false);
+                homePageBinding.crisis.setSelected(false);
+                homePageBinding.serious.setSelected(true);
+                defectAdapter.setList(mSerioutMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mSerioutMap.get(currentSelectBdzId));
+                break;
+            case R.id.crisis:
+                homePageBinding.common.setSelected(false);
+                homePageBinding.serious.setSelected(false);
+                homePageBinding.crisis.setSelected(true);
+                defectAdapter.setList(mCrisisMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCrisisMap.get(currentSelectBdzId));
+                break;
+            default:
+                break;
+        }
+    }
 }

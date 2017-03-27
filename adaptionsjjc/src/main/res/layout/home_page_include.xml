@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-
+            android:onClick="goToInspectionPage"
             android:layout_width="match_parent"
             android:layout_height="220px"
             android:orientation="horizontal">
@@ -47,7 +47,6 @@
 
             <RelativeLayout
                 android:id="@+id/device_weihu"
-
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -99,7 +98,6 @@
 
             <RelativeLayout
                 android:id="@+id/device_unify"
-
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -133,7 +131,6 @@
 
             <RelativeLayout
                 android:id="@+id/device_defect"
-
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -210,6 +207,7 @@
 
 
             <RelativeLayout
+
                 android:id="@+id/device_sycn"
                 android:layout_width="0px"
                 android:layout_height="match_parent"

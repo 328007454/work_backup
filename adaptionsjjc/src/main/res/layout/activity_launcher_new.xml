@@ -28,7 +28,7 @@
 
         <com.cnksi.sjjc.View.NoScrollViewPager
             android:id="@+id/fragmen_pager"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             />
@@ -73,9 +73,9 @@
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/menu_record"
                     style="@style/NewRadioButtonBaseStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:checked="true"
                     android:clickable="true"
                     android:drawablePadding="20px"
                     android:drawableTop="@drawable/ic_hompage_selector"
@@ -84,11 +84,12 @@
 
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/menu_tour"
+                    android:paddingTop="10px"
                     style="@style/NewRadioButtonBaseStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:clickable="true"
-                    android:drawablePadding="20px"
                     android:drawableTop="@drawable/ic_tour_selector"
                     android:text="@string/menu_tour"
                     android:textSize="@dimen/txt_bottom32px" />
@@ -96,7 +97,8 @@
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/menu_maintenance"
                     style="@style/NewRadioButtonBaseStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:drawablePadding="20px"
@@ -108,7 +110,8 @@
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/menu_operate"
                     style="@style/NewRadioButtonBaseStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:drawablePadding="20px"
@@ -119,7 +122,8 @@
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/menu_unify"
                     style="@style/NewRadioButtonBaseStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:drawablePadding="20px"

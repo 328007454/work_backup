@@ -31,8 +31,8 @@
 
     <style name="NewRadioButtonBaseStyle">
         <item name="android:textColor">@color/radio_button_text_selector</item>
-        <item name="android:gravity">center</item>
         <item name="android:background">@null</item>
+        <item name="android:gravity">bottom|center_horizontal</item>
         <item name="android:layout_weight">1</item>
         <item name="android:button">@null</item>
     </style>

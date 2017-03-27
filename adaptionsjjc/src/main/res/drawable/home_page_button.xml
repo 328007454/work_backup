@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/new_launcher_title" android:state_pressed="true"/>
-    <item android:drawable="@color/new_launcher_title" android:state_selected="true"/>
-    <item android:drawable="@color/white" />
+    <item android:state_pressed="true">
+        <shape>
+            <corners android:radius="@dimen/corner_radius" />
 
+            <solid android:color="@color/new_launcher_title" />
+        </shape>
+    </item>
+    <item android:state_selected="true">
+        <shape>
+            <corners android:radius="@dimen/corner_radius" />
 
+            <solid android:color="@color/new_launcher_title" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <corners android:radius="@dimen/corner_radius" />
+
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
 </selector>
