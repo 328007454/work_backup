@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="">
 
@@ -105,11 +104,65 @@
                         android:textSize="32px" />
                 </RelativeLayout>
 
-                <com.cnksi.core.view.PagerSlidingTabStrip
-                    android:id="@+id/tab_strip"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="100px"
-                    android:background="@color/tab_strip_background_color" />
+                    android:background="#eaf4f2"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_device_inspection"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+
+                        <com.cnksi.sjjc.View.UnderLineTextView
+                            android:id="@+id/tv_device_inspection"
+                            style="@style/UnderLineTextViewStyle"
+                            android:text="设备巡视" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_device_maintenance"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+
+                        <com.cnksi.sjjc.View.UnderLineTextView
+                            android:id="@+id/tv_device_maintenance"
+                            style="@style/UnderLineTextViewStyle"
+                            android:text="设备维护" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_transfer_switching"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+
+                        <com.cnksi.sjjc.View.UnderLineTextView
+                            android:id="@+id/tv_transfer_switching"
+                            style="@style/UnderLineTextViewStyle"
+                            android:text="倒闸操作" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_operations"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+
+                        <com.cnksi.sjjc.View.UnderLineTextView
+                            android:id="@+id/tv_operations"
+                            style="@style/UnderLineTextViewStyle"
+                            android:text="运维一体化" />
+                    </LinearLayout>
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/data_container"

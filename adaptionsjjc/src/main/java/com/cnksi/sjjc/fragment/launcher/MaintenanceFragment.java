@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.cnksi.core.fragment.BaseCoreFragment;
-import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
@@ -25,8 +24,6 @@ import com.cnksi.sjjc.databinding.FragmentMaintenanceBinding;
 import com.cnksi.sjjc.databinding.NewLaunchTaskItemBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.service.TaskService;
-
-import org.xutils.ex.DbException;
 
 import java.util.List;
 
@@ -75,11 +72,13 @@ public class MaintenanceFragment extends BaseCoreFragment {
         mExcutorService.execute(new Runnable() {
             @Override
             public void run() {
-                final TaskStatistic result = TaskService.getInstance().getTaskStatistic(InspectionType.maintenance.name());
+                final TaskStatistic maintenance = TaskService.getInstance().getTaskStatistic(InspectionType.maintenance.name());
+                final TaskStatistic switchover = TaskService.getInstance().getTaskStatistic(InspectionType.switchover.name());
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        maintenanceBinding.setMaintenance(result);
+                        maintenanceBinding.setSwitchover(switchover);
+                        maintenanceBinding.setMaintenance(maintenance);
                     }
                 });
             }
@@ -87,11 +86,17 @@ public class MaintenanceFragment extends BaseCoreFragment {
         mExcutorService.execute(new Runnable() {
             @Override
             public void run() {
-                final TaskStatistic result = TaskService.getInstance().getTaskStatistic(InspectionType.switchover.name());
+                final float progress = TaskService.getInstance().statisticProgress(InspectionType.maintenance.name(), InspectionType.switchover.name());
                 mHandler.post(new Runnable() {
+                    int i = 0;
+
                     @Override
                     public void run() {
-                        maintenanceBinding.setSwitchover(result);
+                        maintenanceBinding.progress.setProgress(i);
+                        i++;
+                        if (i < progress * 100) {
+                            mHandler.postDelayed(this, 100);
+                        }
                     }
                 });
             }
@@ -110,13 +115,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
         @Override
         public void run() {
 
-            List<Task> result = null;
-            try {
-                result = TaskService.getInstance().findTaskListByLimit(inspectionType.name(), 3);
-            } catch (DbException e) {
-                CLog.e(e);
-            }
-            final List<Task> taskList = result;
+            final List<Task> taskList = TaskService.getInstance().findTaskListByLimit(3, inspectionType.name());
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {

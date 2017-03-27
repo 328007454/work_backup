@@ -41,7 +41,7 @@ public abstract class BaseLinearLayoutAdapter<T> extends android.widget.BaseAdap
     }
 
     @Override
-    public Object getItem(int position) {
+    public T getItem(int position) {
         return null == data ? null : data.get(position);
     }
 
@@ -57,14 +57,14 @@ public abstract class BaseLinearLayoutAdapter<T> extends android.widget.BaseAdap
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-      ViewHolder holder =null;
+      ViewHolder holder = null;
         if(convertView==null){
             holder =ViewHolder.get(context, convertView, parent, layoutId, position);
             AutoUtils.autoSize(holder.getRootView());
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-        @SuppressWarnings("unchecked") T t = (T) getItem(position);
+        T t = getItem(position);
         convert(holder, t, position);
         return holder.getRootView();
     }

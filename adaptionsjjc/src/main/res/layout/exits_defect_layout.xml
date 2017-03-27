@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="280px"
-    android:layout_height="410px"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="30px"
     android:background="@color/white"
     android:gravity="center_horizontal"
+    android:minHeight="410px"
     android:orientation="vertical">
 
     <ImageView
+        android:layout_marginBottom="30px"
         android:id="@+id/iv_defect_image"
         android:layout_width="280px"
         android:layout_height="210px"
@@ -21,6 +23,7 @@
         app:layout_auto_baseheight="width" />
 
     <TextView
+        android:layout_marginBottom="16px"
         android:id="@+id/tv_device_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +33,7 @@
         android:textSize="38px" />
 
     <TextView
+        android:layout_marginBottom="35px"
         android:id="@+id/tv_defect_discover_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

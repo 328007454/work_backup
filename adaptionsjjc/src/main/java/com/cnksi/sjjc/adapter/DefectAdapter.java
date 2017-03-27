@@ -3,6 +3,7 @@ package com.cnksi.sjjc.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.DefectRecord;
+import com.cnksi.sjjc.inter.ItemClickListener;
 
 import org.xutils.x;
 
@@ -27,7 +29,7 @@ import java.util.List;
 
 public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private List<DefectRecord> data;
-
+    private ItemClickListener clickListener;
     private Context context;
 
     private int layoutId;
@@ -38,6 +40,9 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         this.layoutId = layoutId;
     }
 
+    public void setItemClickListener(ItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,9 +51,9 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerViewHolder holder, final int position) {
         ImageView defectImage = holder.getView(R.id.iv_defect_image);
-        DefectRecord defectRecord = data.get(position);
+        final DefectRecord defectRecord = data.get(position);
         String[] defectPicArray = StringUtils.cleanString(defectRecord.pics).split(CoreConfig.COMMA_SEPARATOR);
         if (defectPicArray != null && defectPicArray.length > 0
                 && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
@@ -58,6 +63,13 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         }
         ((TextView) holder.getView(R.id.tv_device_name)).setText(defectRecord.devcie);
         ((TextView) holder.getView(R.id.tv_defect_discover_time)).setText(defectRecord.discovered_date);
+        defectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (clickListener != null)
+                    clickListener.itemClick(view, defectRecord, position);
+            }
+        });
     }
 
     @Override

@@ -100,4 +100,6 @@ public class StringUtils {
 		}
 		return plan_id + DateUtils.getCurrentTime(CoreConfig.dateFormat6) + uuidStr + Config.VIDEO_TYPE_MP4;
 	}
+
+
 }

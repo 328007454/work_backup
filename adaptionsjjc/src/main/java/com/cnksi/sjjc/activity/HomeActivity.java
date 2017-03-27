@@ -1,15 +1,18 @@
 package com.cnksi.sjjc.activity;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -17,12 +20,18 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.View.Banner;
 import com.cnksi.sjjc.adapter.BdzAdapter;
 import com.cnksi.sjjc.adapter.DefectAdapter;
+import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
 import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
+import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.databinding.ActivityHomePageBinding;
 import com.cnksi.sjjc.databinding.BdzPopwindowBinding;
+import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.DefectRecordService;
+import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
+import com.cnksi.sjjc.util.StringUtils;
 
 import org.xutils.ex.DbException;
 
@@ -36,7 +45,7 @@ import java.util.Map;
  * Created by han on 2017/3/24.
  */
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener, ItemClickListener {
     private ActivityHomePageBinding homePageBinding;
     private BdzPopwindowBinding bdzPopwindowBinding;
     private ArrayList<Integer> bannerMapUrl = new ArrayList<>();
@@ -49,6 +58,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private Map<String, ArrayList<DefectRecord>> mSerioutMap = new HashMap<>();
     private Map<String, ArrayList<DefectRecord>> mCommonMap = new HashMap<>();
     private String currentSelectBdzId;
+    HomeTaskItemAdapter taskItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         setContentView(homePageBinding.getRoot());
         initUI();
         loadData();
+        initTabs();
     }
 
     ArrayList<DefectRecord> records;
@@ -152,6 +163,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 mPop.dismiss();
             }
         });
+
+        homePageBinding.setTypeClick(this);
+        taskItemAdapter = new HomeTaskItemAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
+        taskItemAdapter.setItemClickListener(new ItemClickListener<Task>() {
+            @Override
+            public void itemClick(View v, Task task, int position) {
+                startTask(task);
+            }
+
+            @Override
+            public void itemLongClick(View v, Task task, int position) {
+
+            }
+        });
     }
 
     @Override
@@ -214,5 +239,134 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void itemClick(View v, Object o, int position) {
+        DefectRecord defectRecord = (DefectRecord) o;
+        if (!TextUtils.isEmpty(defectRecord.pics)) {
+            ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.string2List(defectRecord.pics);
+            showImageDetails(_this, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
+        }
+    }
+
+    @Override
+    public void itemLongClick(View v, Object o, int position) {
+
+    }
+
+
+    class TaskType {
+        TabType type;
+        TextView tv;
+        List<Task> tasks = new ArrayList<>();
+
+        public TaskType(TextView tv, TabType type) {
+            this.type = type;
+            this.tv = tv;
+            tv.setText(type.zhName);
+            init();
+        }
+
+        public void init() {
+            mExcutorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    List<Task> taskList = null;
+                    switch (type) {
+                        case inspection:
+                            taskList = TaskService.getInstance().
+                                    findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name());
+                            break;
+                        case maintenance:
+                            taskList = TaskService.getInstance().
+                                    findTaskListByLimit(3, InspectionType.maintenance.name(), InspectionType.switchover.name());
+                            break;
+                        case operations:
+                            taskList = TaskService.getInstance().
+                                    findTaskListByLimit(3, InspectionType.operation.name());
+                            break;
+                        case switching:
+                            taskList = TaskService.getInstance().findWorkTicketTask();
+                            break;
+                    }
+                    final List<Task> temp = taskList;
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            tasks.clear();
+                            if (temp != null && temp.size() > 0) tasks.addAll(temp);
+                            if (currentDataType == TaskType.this)
+                                taskItemAdapter.setList(tasks);
+                        }
+                    });
+                }
+            });
+        }
+
+
+        void setSelected(boolean isSelect) {
+            if (tv.isSelected() != isSelect)
+                tv.setSelected(isSelect);
+        }
+
+        void setOnClickListener(View.OnClickListener listener) {
+            tv.setOnClickListener(listener);
+        }
+    }
+
+    enum TabType {
+        inspection("设备巡视"), maintenance("设备维护"), switching("倒闸操作"), operations("运维一体化");
+        String zhName;
+
+        TabType(String zhName) {
+            this.zhName = zhName;
+        }
+    }
+
+
+    private TaskType currentDataType;
+    private TaskType[] tabs;
+
+    private void initTabs() {
+        tabs = new TaskType[4];
+        tabs[0] = new TaskType(homePageBinding.tvDeviceInspection, TabType.inspection);
+        tabs[1] = new TaskType(homePageBinding.tvDeviceMaintenance, TabType.maintenance);
+        tabs[2] = new TaskType(homePageBinding.tvTransferSwitching, TabType.switching);
+        tabs[3] = new TaskType(homePageBinding.tvOperations, TabType.operations);
+        //  tabs[3] = new DataType(binding.tvAcceptanceReport, PicType.acceptance_report);
+        select(tabs[0]);
+        for (final TaskType tab : tabs) {
+            tab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    select(tab);
+                }
+            });
+        }
+    }
+
+    private void select(TaskType dataType) {
+        if (currentDataType == dataType) return;
+
+        currentDataType = dataType;
+        for (TaskType tab : tabs) {
+            tab.setSelected(tab == dataType);
+        }
+        taskItemAdapter.setList(currentDataType.tasks);
+    }
+
+    private void startTask(Task task) {
+        CustomApplication.closeDbConnection();
+        Intent intent = new Intent();
+        ComponentName componentName;
+        if ("workticket".equals(task.inspection))
+            componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
+        else
+            componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+        intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);
+        intent.setComponent(componentName);
+        intent.putExtra("task_id", task.taskid);
+        startActivity(intent);
     }
 }

@@ -16,6 +16,7 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -260,8 +261,62 @@ public class TaskService extends BaseService<Task> {
         return tasks;
     }
 
-    public List<Task> findTaskListByLimit(String inspectionType, int limit) throws DbException {
-        return from(Task.class).expr(" and inspection like '%" + inspectionType + "%' ").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+    public List<Task> findTaskListByLimit(int limit, String... inspections) {
+        StringBuilder expr = new StringBuilder();
+        expr.append(" and (");
+        for (String inspection : inspections) {
+            expr.append(" inspection like '%").append(inspection).append("%'  ").append("or");
+        }
+        expr.delete(expr.length() - 2, expr.length());
+        expr.append(") ");
+        try {
+            return from(Task.class).expr(inspections.length > 0 ? expr.toString() : "").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
+    public float statisticProgress(String... inspections) {
+        DbModel model;
+        StringBuilder expr = new StringBuilder();
+        expr.append(" and (");
+        for (String inspection : inspections) {
+            expr.append(" inspection like '%").append(inspection).append("%'  ").append("or");
+        }
+        expr.delete(expr.length() - 2, expr.length());
+        expr.append(")");
+        try {
+            model = from(Task.class).select(" sum(case when `status`='done' then 1.0 else 0 end)/count(1) as progress ").expr(inspections.length > 0 ? expr.toString() : " ").findFirst();
+            return model.getFloat("progress");
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return 1.0f;
+    }
+
+    public List<Task> findWorkTicketTask() {
+        try {
+            List<DbModel> models = getDbManager().findDbModelAll(new SqlInfo("SELECT * FROM operate_tick limit 3"));
+            if (models != null & models.size() > 0) {
+                List<Task> tasks = new ArrayList<>();
+                for (DbModel model : models) {
+                    Task t = new Task();
+                    t.taskid = model.getString("id");
+                    t.bdzname = model.getString("task");
+                    t.schedule_time = model.getString("time_operate_start");
+                    t.status = model.getString("status");
+                    t.inspection_name = "倒闸操作";
+                    t.inspection = "workticket";
+                    tasks.add(t);
+                }
+                return tasks;
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
