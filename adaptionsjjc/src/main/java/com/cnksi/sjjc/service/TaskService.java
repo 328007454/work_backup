@@ -307,11 +307,15 @@ public class TaskService extends BaseService<Task> {
         expr.append(")");
         try {
             model = from(Task.class).select(" sum(case when `status`='done' then 1.0 else 0 end)/count(1) as progress ").expr(inspections.length > 0 ? expr.toString() : " ").findFirst();
-            return model.getFloat("progress");
+            String str = model.getString("progress");
+            if (!TextUtils.isEmpty(str))
+                return Float.valueOf(str);
         } catch (DbException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return 1.0f;
+        return 0.0f;
     }
 
     public List<Task> findWorkTicketTask() {

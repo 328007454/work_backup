@@ -92,17 +92,16 @@ public class MaintenanceFragment extends BaseCoreFragment {
         mExcutorService.execute(new Runnable() {
             @Override
             public void run() {
-                final float progress = TaskService.getInstance().statisticProgress(InspectionType.maintenance.name(), InspectionType.switchover.name());
+                float progress = TaskService.getInstance().statisticProgress(InspectionType.maintenance.name(), InspectionType.switchover.name());
+                final int percent = (int) (progress * 100);
                 mHandler.post(new Runnable() {
                     int i = 0;
 
                     @Override
                     public void run() {
-                        maintenanceBinding.progress.setProgress(i+1);
-                        i++;
-                        if (i <=progress * 100) {
+                        maintenanceBinding.progress.setProgress(i <= (int) percent ? i++ : percent);
+                        if (i <= percent)
                             mHandler.postDelayed(this, 100);
-                        }
                     }
                 });
             }

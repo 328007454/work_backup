@@ -457,11 +457,6 @@
         </LinearLayout>
 
         <View
-            android:layout_width="2px"
-            android:layout_height="275px"
-            android:background="#e0e0e0" />
-
-        <View
             android:layout_width="match_parent"
             android:layout_height="78px"
             android:background="#f0f0f0" />
