@@ -36,11 +36,9 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_launcher);
-        x.view().inject(_this);
-        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
-            initSpeech(this);
-        }
+        /**
+         * 第三方程序拉起接口
+         */
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             String account = bundle.getString("u_account", "");
@@ -58,6 +56,22 @@ public class LauncherActivity extends BaseActivity {
             }
 
         }
+        /**
+         * Home界面拦截  为了演示。
+         */
+        if (Boolean.TRUE.booleanValue()) {
+            startActivity(new Intent(mCurrentActivity, HomeActivity.class));
+            finish();
+            return;
+        }
+
+
+        setChildView(R.layout.activity_launcher);
+        x.view().inject(_this);
+        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
+            initSpeech(this);
+        }
+
 
         mTts.startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)), null);
 
@@ -73,7 +87,7 @@ public class LauncherActivity extends BaseActivity {
     }
 
     //
-    @Event(value = {R.id.sbxs, R.id.sbjc, R.id.dqsy, R.id.dqwh, R.id.ywyth, R.id.dzhgzp, R.id.zxxs, R.id.sbys, R.id.jyhys, R.id.jyhpj, R.id.gzp, R.id.ibtn_exit, R.id.btn_back, R.id.layout_data_sync,R.id.tjwt})
+    @Event(value = {R.id.sbxs, R.id.sbjc, R.id.dqsy, R.id.dqwh, R.id.ywyth, R.id.dzhgzp, R.id.zxxs, R.id.sbys, R.id.jyhys, R.id.jyhpj, R.id.gzp, R.id.ibtn_exit, R.id.btn_back, R.id.layout_data_sync, R.id.tjwt})
     private void onClick(View view) {
         Intent intent = new Intent(this, TypeListActivity.class);
         switch (view.getId()) {

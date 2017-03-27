@@ -21,6 +21,8 @@ import com.cnksi.sjjc.databinding.ActivityLauncherNewBinding;
 import com.cnksi.sjjc.fragment.launcher.MaintenanceFragment;
 import com.cnksi.sjjc.fragment.launcher.TourFragment;
 import com.cnksi.sjjc.util.ActivityUtil;
+import com.cnksi.sjjc.util.DialogUtils;
+import com.cnksi.sjjc.util.OnViewClickListener;
 
 import org.xutils.ex.DbException;
 
@@ -52,7 +54,7 @@ public class NewLauncherActivity extends BaseActivity {
                     launcherBinding.fragmenPager.setCurrentItem(1);
                     break;
                 case R.id.menu_operate:
-                    isFromHomeActivity =false;
+                    isFromHomeActivity = false;
                     ActivityUtil.startOperateActivity(_this);
                     break;
 
@@ -84,7 +86,15 @@ public class NewLauncherActivity extends BaseActivity {
         launcherBinding.lancherTitle.exitSystem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                compeletlyExitSystem();
+                DialogUtils.showSureTipsDialog(_this, null, "是否退出登录?", "确定", "取消", new OnViewClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        super.onClick(v);
+                        Intent intent = new Intent(_this, LoginActivity.class);
+                        startActivity(intent);
+                        mCurrentActivity.finish();
+                    }
+                });
             }
         });
     }
