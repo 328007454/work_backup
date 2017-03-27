@@ -222,21 +222,29 @@ public class TaskService extends BaseService<Task> {
     }
 
     public List<Task> getUnDoTask(String inspectionType) {
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = null;
         try {
             tasks = CustomApplication.getDbManager().selector(Task.class).where(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").findAll();
+            if (null == tasks)
+                tasks = new ArrayList<>();
         } catch (DbException e) {
             e.printStackTrace();
+            if (null == tasks)
+                tasks = new ArrayList<>();
         }
         return tasks;
     }
 
     public List<Task> getUnDoSpecialTask(String inspectionType) {
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks =null;
         try {
             tasks = CustomApplication.getDbManager().selector(Task.class).expr(" inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
+            if (null == tasks)
+                tasks = new ArrayList<>();
         } catch (DbException e) {
             e.printStackTrace();
+            if (null == tasks)
+                tasks = new ArrayList<>();
         }
         return tasks;
     }
