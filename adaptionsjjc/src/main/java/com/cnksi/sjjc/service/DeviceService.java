@@ -22,7 +22,7 @@ import static com.cnksi.ksynclib.sqlite.KSyncDao.KSYNC_MODIFY_TABLENAME;
 /**
  * Created by han on 2016/4/27.
  */
-public class DeviceService {
+public class DeviceService extends BaseService<Device> {
 
     private static DeviceService mDevices;
 
@@ -32,10 +32,8 @@ public class DeviceService {
     public static DeviceService getInstance() {
         if (mDevices == null) {
             mDevices = new DeviceService();
-            return mDevices;
-        } else {
-            return mDevices;
         }
+        return mDevices;
     }
 
     /**
@@ -45,7 +43,7 @@ public class DeviceService {
     public List<Device> getDevicesProtect(String bdzId) {
         List<Device> deviceList = new ArrayList<Device>();
         try {
-            deviceList = CustomApplication.getDbManager().selector(Device.class).where(Device.NAME, "like", "%保护%").and(Device.BDZID, "=", bdzId).and(Device.DLT, "<>", "1").findAll();
+            deviceList = selector(Device.class).and(Device.NAME, "like", "%保护%").and(Device.BDZID, "=", bdzId).and(Device.DLT, "<>", "1").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -59,9 +57,9 @@ public class DeviceService {
     public List<DbModel> getDevicesByName(String bdzId, String name) {
         List<DbModel> dbModelList = null;
         try {
-            SqlInfo sqlInfo = new SqlInfo("SELECT d.deviceid,d.name FROM device d WHERE d.bdzid = '" + bdzId + "' AND dtid IN ( SELECT dtid FROM device_unit WHERE duid IN ( SELECT s.duid FROM standards s WHERE s.description LIKE " +
+            SqlInfo sqlInfo = new SqlInfo("SELECT d.deviceid,d.name FROM device d WHERE d.bdzid = '" + bdzId + "' and d.dlt='0' AND dtid IN ( SELECT dtid FROM device_unit WHERE dlt='0' and  duid IN ( SELECT s.duid FROM standards s WHERE dlt='0' and s.description LIKE " +
                     "'%" + name + "%')) order by d.deviceid ");
-            dbModelList = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+            dbModelList = findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -84,13 +82,13 @@ public class DeviceService {
         String filter = TextUtils.isEmpty(nameFilter) ? "" : " and d.name LIKE '%" + nameFilter + "%'";
         SqlInfo sqlInfo = new SqlInfo(
                 "SELECT d.* FROM device d LEFT JOIN spacing s on s.spid=d.spid WHERE dtid IN " +
-                        "( SELECT DISTINCT dt.dtid FROM ( SELECT duid FROM standards WHERE resulttype = 1 AND dlt = 0 ) AS ds" +
+                        "( SELECT DISTINCT dt.dtid FROM ( SELECT duid FROM standards WHERE resulttype = 1 AND dlt = '0' ) AS ds" +
                         " LEFT JOIN device_unit dp ON ds.duid = dp.duid LEFT JOIN device_type dt ON dt.dtid = dp.dtid " +
-                        " where dp.dlt<>'1' and dt.dlt<>'1') AND d.bdzid = ? AND d.device_type = ?" + filter +
+                        " where dp.dlt<>'1' and dt.dlt<>'1') AND d.bdzid = ? AND d.dlt='0' AND d.device_type = ?" + filter +
                         " ORDER BY s." + sort + ", d.sort");
         sqlInfo.addBindArg(new KeyValue("bdzid", bdzId));
         sqlInfo.addBindArg(new KeyValue("deviceType", deviceType));
-        List<DbModel> mDeviceList = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+        List<DbModel> mDeviceList = findDbModelAll(sqlInfo);
         return mDeviceList;
     }
 

@@ -1,7 +1,6 @@
 package com.cnksi.sjjc.service;
 
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.CopyItem;
 
 import org.xutils.common.util.KeyValue;
@@ -12,7 +11,7 @@ import org.xutils.ex.DbException;
 
 import java.util.List;
 
-public class CopyItemService {
+public class CopyItemService extends BaseService<CopyItem> {
     public static CopyItemService mInstance;
 
     private CopyItemService() {
@@ -34,7 +33,7 @@ public class CopyItemService {
      */
     public List<CopyItem> getDeviceCopyItem(String bdzId, String deviceId) {
         try {
-            Selector<CopyItem> selector = CustomApplication.getDbManager().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId)
+            Selector<CopyItem> selector = selector(CopyItem.class).and(CopyItem.BDZID, "=", bdzId)
                     .and(CopyItem.DEVICEID, "=", deviceId).orderBy(CopyItem.ID);
             return selector.findAll();
         } catch (DbException e) {
@@ -46,8 +45,8 @@ public class CopyItemService {
 
     public List<CopyItem> getDeviceCopyItem(String bdzId, String deviceId, String copyType) {
         try {
-            Selector<CopyItem> selector = CustomApplication.getDbManager().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId)
-                    .and(CopyItem.DEVICEID, "=", deviceId).expr(" and " +CopyItem.TYPE_KEY+" in('"+ copyType+"') ").orderBy(CopyItem.ID);
+            Selector<CopyItem> selector = selector(CopyItem.class).and(CopyItem.BDZID, "=", bdzId)
+                    .and(CopyItem.DEVICEID, "=", deviceId).expr(" and " + CopyItem.TYPE_KEY + " in('" + copyType + "') ").orderBy(CopyItem.ID);
             return selector.findAll();
         } catch (DbException e) {
             e.printStackTrace();
@@ -57,12 +56,12 @@ public class CopyItemService {
 
 
     public List<DbModel> getCopyDeviceList(String bdzId, String deviceType) {
-        String sql = "select d.deviceid,d.name,d.latitude,d.longitude from device d where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=?) and device_type=?";
+        String sql = "select d.deviceid,d.name,d.latitude,d.longitude from device d where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and dlt='0') and device_type=? and d.dlt='0'";
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         sqlInfo.addBindArg(new KeyValue("", deviceType));
         try {
-            return CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+            return findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -71,7 +70,7 @@ public class CopyItemService {
 
     public CopyItem getItem(String itemId) {
         try {
-            return CustomApplication.getDbManager().findById(CopyItem.class, itemId);
+            return getDbManager().findById(CopyItem.class, itemId);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -90,11 +89,11 @@ public class CopyItemService {
                 + "count(case when val_b = 'Y' then 1 else null end)+"
                 + "count(case when val_c = 'Y' then 1 else null end)+"
                 + "count(case when val_o = 'Y' then 1 else null end)"
-                + " as copyCount from copy_item item where item.bdzid=?";
+                + " as copyCount from copy_item item where item.bdzid=? and item.dlt='0'";
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
-            DbModel dbModel = CustomApplication.getDbManager().findDbModelFirst(sqlInfo);
+            DbModel dbModel = findDbModelFirst(sqlInfo);
             return dbModel.getLong("copyCount");
         } catch (DbException e) {
             e.printStackTrace();
@@ -115,11 +114,11 @@ public class CopyItemService {
 //                + "count(case when val_c = 'Y' then 1 else null end)+"
 //                + "count(case when val_o = 'Y' then 1 else null end)"
 //                + " as copyCount from copy_item item where item.bdzid=? and item.type_key in('"+itemKeyType+"')";
-        String sql = "select count(1) AS copyCount from copy_item item where item.bdzid=? and type_key in ('"+ itemKeyType +"') ";
+        String sql = "select count(1) AS copyCount from copy_item item where item.bdzid=? and type_key in ('" + itemKeyType + "') and item.dlt=0";
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
-            DbModel dbModel = CustomApplication.getDbManager().findDbModelFirst(sqlInfo);
+            DbModel dbModel = findDbModelFirst(sqlInfo);
             return dbModel.getLong("copyCount");
         } catch (DbException e) {
             e.printStackTrace();
