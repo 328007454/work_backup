@@ -2,6 +2,8 @@ package com.cnksi.sjjc.activity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
 import com.cnksi.sjjc.bean.Task;
@@ -80,4 +82,61 @@ public class HomeActivity extends BaseActivity {
 //                break;
 //        }
 //    }
+
+
+    class TaskType {
+        String type;
+        TextView tv;
+        List<Task> tasks;
+
+        public TaskType(TextView tv, String type) {
+            this.type = type;
+            this.tv = tv;
+        }
+
+        void setSelected(boolean isSelect) {
+            if (tv.isSelected() != isSelect)
+                tv.setSelected(isSelect);
+        }
+
+        void setOnClickListener(View.OnClickListener listener) {
+            tv.setOnClickListener(listener);
+        }
+    }
+
+    enum TabType {
+        inspection, maintenance, switching, operations
+    }
+
+
+    private TaskType currentDataType;
+    private TaskType[] tabs;
+
+    private void initTabs() {
+        tabs = new TaskType[4];
+        tabs[0] = new TaskType(homePageBinding.tvDeviceInspection, "inspection");
+        tabs[1] = new TaskType(homePageBinding.tvDeviceMaintenance, "maintenance");
+        tabs[2] = new TaskType(homePageBinding.tvTransferSwitching, "switching");
+        tabs[3] = new TaskType(homePageBinding.tvOperations, "operations");
+        //  tabs[3] = new DataType(binding.tvAcceptanceReport, PicType.acceptance_report);
+        select(tabs[0]);
+        for (final TaskType tab : tabs) {
+            tab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    select(tab);
+                }
+            });
+        }
+    }
+
+    private void select(TaskType dataType) {
+        if (currentDataType == dataType) return;
+
+        currentDataType = dataType;
+        for (TaskType tab : tabs) {
+            tab.setSelected(tab == dataType);
+        }
+        taskItemAdapter.setList(currentDataType.tasks);
+    }
 }

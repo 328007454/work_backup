@@ -299,7 +299,18 @@
         <item name="android:paddingRight">35.5px</item>
         <item name="android:scaleType">centerInside</item>
     </style>
-
+    <style name="UnderLineTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">30px</item>
+        <item name="android:paddingRight">40px</item>
+        <item name="android:textSize">36px</item>
+        <item name="android:textColor">#a8abaa</item>
+        <item name="lineColor">#1bbc9b</item>
+        <item name="textSelectColor">#1bbc9b</item>
+        <item name="lineHeight">4px</item>
+    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

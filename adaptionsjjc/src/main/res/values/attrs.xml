@@ -29,6 +29,6 @@
     <declare-styleable name="UnderLineTextView">
         <attr name="lineColor" format="color" />
         <attr name="lineHeight" format="dimension" />
-        <attr name="textColor" format="color" />
+        <attr name="textSelectColor" format="color" />
     </declare-styleable>
 </resources>
