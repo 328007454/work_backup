@@ -27,7 +27,7 @@ public class BdzService extends BaseService<Bdz> {
     public List<String> findUpdloadPictureFolder() {
         List<String> folder = new ArrayList<>();
         try {
-            SqlInfo sqlInfo = new SqlInfo("select distinct(folder_name) from bdz");
+            SqlInfo sqlInfo = new SqlInfo("select distinct(folder_name) from bdz where dlt='0'");
             List<DbModel> folderList = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
             if (null != folderList && !folderList.isEmpty()) {
                 for (DbModel model : folderList)

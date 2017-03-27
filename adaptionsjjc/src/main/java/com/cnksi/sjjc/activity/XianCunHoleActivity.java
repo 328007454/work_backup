@@ -66,7 +66,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     private static final int TAKEPIC_REQUEST = LOAD_DATA + 1;
     private static final int VIDEO_REQUEST = TAKEPIC_REQUEST + 1;
     private static final int REFRESH_UI = VIDEO_REQUEST + 1;
-    //点击当前清除拍照时对应的HolrRecord
+    //点击当前清除拍照时对应的HoleRecord
     private HoleRecord item;
     //判断是否是返回键
     private boolean isBack=false;

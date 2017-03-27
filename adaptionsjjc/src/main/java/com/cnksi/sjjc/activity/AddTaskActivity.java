@@ -266,7 +266,7 @@ public class AddTaskActivity extends BaseActivity {
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         ViewHolder holder = new ViewHolder(this, mLLRootContainer, R.layout.content_list_dialog, false);
         ListView mListView = holder.getView(R.id.lv_container);
-        holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
+        holder.setText(R.id.tv_dialog_title, "请选择压力检测类型");
         final String[] types = {InspectionType.SBJC_06_sf6.name(), InspectionType.SBJC_06_water.name(), InspectionType.SBJC_06_gas.name()};
         final String[] names = {InspectionType.SBJC_06_sf6.value, InspectionType.SBJC_06_water.value, InspectionType.SBJC_06_gas.value};
 
