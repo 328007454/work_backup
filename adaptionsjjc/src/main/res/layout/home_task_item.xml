@@ -41,6 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="220KV桥沟变电站"
+                        android:maxLines="1"
                         android:textColor="#626262"
                         android:textSize="40px" />
 

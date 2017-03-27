@@ -295,5 +295,28 @@ public class TaskService extends BaseService<Task> {
         return 1.0f;
     }
 
+    public List<Task> findWorkTicketTask() {
+        try {
+            List<DbModel> models = getDbManager().findDbModelAll(new SqlInfo("SELECT * FROM operate_tick limit 3"));
+            if (models != null & models.size() > 0) {
+                List<Task> tasks = new ArrayList<>();
+                for (DbModel model : models) {
+                    Task t = new Task();
+                    t.taskid = model.getString("id");
+                    t.bdzname = model.getString("task");
+                    t.schedule_time = model.getString("time_operate_start");
+                    t.status = model.getString("status");
+                    t.inspection_name = "倒闸操作";
+                    t.inspection = "workticket";
+                    tasks.add(t);
+                }
+                return tasks;
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

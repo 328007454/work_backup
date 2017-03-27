@@ -3,6 +3,7 @@ package com.cnksi.core.utils;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -94,6 +95,27 @@ public class StringUtils {
         } else {
             return true;
         }
+    }
+
+    public static CharSequence changeTextColor(CharSequence content, @ColorInt int color) {
+        if (content.length() > 0)
+            return changePartTextColor(content, color, 0, content.length());
+        else return "";
+    }
+
+    /**
+     * 改变部分字体的颜色
+     *
+     * @param content     需要改变的内容
+     * @param color       颜色值
+     * @param startOffset 开始位置
+     * @param endOffset   结束位置
+     * @return
+     */
+    public static SpannableStringBuilder changePartTextColor(CharSequence content, @ColorInt int color, int startOffset, int endOffset) {
+        SpannableStringBuilder style = new SpannableStringBuilder(content);
+        style.setSpan(new ForegroundColorSpan(color), startOffset, endOffset, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return style;
     }
 
     /**
