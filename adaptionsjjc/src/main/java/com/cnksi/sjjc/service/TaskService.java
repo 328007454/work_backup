@@ -261,6 +261,16 @@ public class TaskService extends BaseService<Task> {
         return tasks;
     }
 
+    public List<Task> findOperationTaskByLimit(int limit) {
+
+        try {
+            return from(Task.class).and(Task.TYPE, "=", InspectionType.operation.name()).orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Task> findTaskListByLimit(int limit, String... inspections) {
         StringBuilder expr = new StringBuilder();
         expr.append(" and (");
@@ -276,6 +286,7 @@ public class TaskService extends BaseService<Task> {
         }
         return null;
     }
+
 
     public float statisticProgress(String... inspections) {
         DbModel model;

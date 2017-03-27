@@ -44,7 +44,7 @@ public class NewLauncherActivity extends BaseActivity {
     private ActivityLauncherNewBinding launcherBinding;
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
     private int currentSelectPosition;
-    private boolean isFromHomeActivity = true;
+    public boolean isFromHomeActivity = true;
     private ListView mPowerStationListView;
     private Dialog mPowerStationDialog = null;
     private ArrayList<Bdz> bdzList;
@@ -175,6 +175,7 @@ public class NewLauncherActivity extends BaseActivity {
     protected void onResume() {
         if (getIntent() != null && isFromHomeActivity) {
             currentSelectPosition = getIntent().getIntExtra("position", 0);
+            isFromHomeActivity = false;
         }
         super.onResume();
         switch (currentSelectPosition) {

@@ -97,4 +97,6 @@ public class TourFragment extends BaseCoreFragment {
         intent.setComponent(componentName4);
         startActivity(intent);
     }
+
+
 }

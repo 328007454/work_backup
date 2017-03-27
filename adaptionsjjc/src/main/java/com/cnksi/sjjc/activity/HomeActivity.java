@@ -330,7 +330,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                             break;
                         case operations:
                             taskList = TaskService.getInstance().
-                                    findTaskListByLimit(3, InspectionType.operation.name());
+                                    findOperationTaskByLimit(3);
                             break;
                         case switching:
                             taskList = TaskService.getInstance().findWorkTicketTask();
