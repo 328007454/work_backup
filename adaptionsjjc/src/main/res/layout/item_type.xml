@@ -30,7 +30,7 @@
         android:paddingLeft="10px"
         android:singleLine="true"
         android:textColor="@color/global_text_color"
-        android:textSize="48px" />
+        android:textSize="45px" />
 
     <ImageView
         android:layout_width="28px"

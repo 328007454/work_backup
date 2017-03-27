@@ -51,15 +51,13 @@ public class TourFragment extends BaseCoreFragment {
         mExcutorService.execute(new Runnable() {
             @Override
             public void run() {
-                List<Task> totalTasks = TaskService.getInstance().getAllTask();
-                List<Task> finishTotalTasks = TaskService.getInstance().getFinishedTask();
-                int totalPercent = finishTotalTasks.size() % totalTasks.size();
-                final int percent = 57;
                 final TaskStatistic result = TaskService.getInstance().getTaskStatistic("");
                 final List<Task> rountTasks = TaskService.getInstance().getUnDoTask(InspectionType.routine.name());
                 final List<Task> fullTask = TaskService.getInstance().getUnDoTask(InspectionType.full.name());
                 final List<Task> specialCount = TaskService.getInstance().getUnDoSpecialTask(InspectionType.special.name());
                 final List<Task> lightCout = TaskService.getInstance().getUnDoTask(InspectionType.special_xideng.name());
+                int totalPercent = (int) (((float)result.getMonthTaskFinish()/ result.getMonthTaskCount())*100);
+                final int percent = totalPercent;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -74,8 +72,8 @@ public class TourFragment extends BaseCoreFragment {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        tourBinding.progress.setProgress(i <= percent ? ++i : percent);
-                        if (i < percent)
+                        tourBinding.progress.setProgress(i <= (int)percent ? i++ : percent);
+                        if (i <= percent)
                             mHandler.postDelayed(this, 100);
                     }
                 });

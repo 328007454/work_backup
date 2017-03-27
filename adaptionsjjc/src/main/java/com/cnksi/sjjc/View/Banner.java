@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -109,8 +110,8 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         mIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_width, BannerConfig.INDICATOR_SIZE);
         mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_height, BannerConfig.INDICATOR_SIZE);
         mIndicatorMargin = typedArray.getDimensionPixelSize(R.styleable.Banner_indicator_margin, BannerConfig.PADDING_SIZE);
-        mIndicatorSelectedResId = typedArray.getResourceId(R.styleable.Banner_indicator_drawable_selected, R.drawable.banner_dot_focused);
-        mIndicatorUnselectedResId = typedArray.getResourceId(R.styleable.Banner_indicator_drawable_unselected, R.drawable.banner_dot_normal);
+        mIndicatorSelectedResId = typedArray.getResourceId(R.styleable.Banner_indicator_drawable_selected, R.drawable.icon_dot_hover);
+        mIndicatorUnselectedResId = typedArray.getResourceId(R.styleable.Banner_indicator_drawable_unselected, R.drawable.icon_dot);
         defaultImage = typedArray.getResourceId(R.styleable.Banner_default_image, defaultImage);
         delayTime = typedArray.getDimensionPixelSize(R.styleable.Banner_delay_time, BannerConfig.TIME);
         isAutoPlay = typedArray.getBoolean(R.styleable.Banner_is_auto_play, BannerConfig.IS_AUTO_PLAY);
@@ -277,7 +278,7 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         indicatorImages.clear();
         indicator.removeAllViews();
         for (int i = 0; i < count; i++) {
-            ImageView imageView = new ImageView(context);
+            AppCompatImageView imageView = new AppCompatImageView(context);
             imageView.setScaleType(ScaleType.CENTER_CROP);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mIndicatorWidth, mIndicatorHeight);
             params.leftMargin = mIndicatorMargin;

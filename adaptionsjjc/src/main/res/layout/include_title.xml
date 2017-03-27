@@ -92,7 +92,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/title_text_size_px"
+                android:textSize="@dimen/et_hint_text_size_px"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
 

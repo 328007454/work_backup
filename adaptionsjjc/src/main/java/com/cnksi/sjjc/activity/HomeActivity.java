@@ -1,25 +1,29 @@
 package com.cnksi.sjjc.activity;
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.cnksi.core.adapter.ViewHolder;
+import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.DisplayUtil;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.View.Banner;
 import com.cnksi.sjjc.adapter.BdzAdapter;
 import com.cnksi.sjjc.adapter.DefectAdapter;
+import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
 import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
@@ -31,7 +35,8 @@ import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.DefectRecordService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
-import com.cnksi.sjjc.util.StringUtils;
+import com.cnksi.sjjc.util.DialogUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 
@@ -58,11 +63,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private Map<String, ArrayList<DefectRecord>> mSerioutMap = new HashMap<>();
     private Map<String, ArrayList<DefectRecord>> mCommonMap = new HashMap<>();
     private String currentSelectBdzId;
-    HomeTaskItemAdapter taskItemAdapter;
+    private HomeTaskItemAdapter taskItemAdapter;
+    private ListView mPowerStationListView;
+    private Dialog mPowerStationDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changedStatusColor();
         homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
         setContentView(homePageBinding.getRoot());
         initUI();
@@ -106,6 +114,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            initBDZDialog();
                             if (bdzAdapter == null) {
                                 bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
                                 bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
@@ -114,7 +123,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                             if (defectAdapter == null) {
                                 homePageBinding.common.setSelected(true);
                                 currentSelectBdzId = bdzList.get(0).bdzid;
+                                showRecyclerDefect(mCommonMap);
                                 defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
+                                defectAdapter.setItemClickListener(HomeActivity.this);
                                 homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
                                 homePageBinding.recyDefect.setAdapter(defectAdapter);
                             }
@@ -129,9 +140,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initUI() {
-        bannerMapUrl.add(R.mipmap.banner);
-        bannerMapUrl.add(R.mipmap.capture);
-        bannerMapUrl.add(R.mipmap.ic_button_circle);
+        bannerMapUrl.add(R.mipmap.banner1);
+        bannerMapUrl.add(R.mipmap.banner2);
+        bannerMapUrl.add(R.mipmap.banner3);
         homePageBinding.banner.setFocusable(false);
         homePageBinding.banner.setBannerStyle(Banner.BannerConfig.CIRCLE_INDICATOR);
         homePageBinding.banner.setIndicatorGravity(Banner.BannerConfig.CENTER);
@@ -153,17 +164,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         mPop.setBackgroundDrawable(new BitmapDrawable());
         bdzPopwindowBinding.llContainer.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         mPop.setOutsideTouchable(true);
-        bdzPopwindowBinding.lvBzd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                homePageBinding.bdzName.setText(bdzList.get(i).name);
-                currentSelectBdzId = bdzList.get(i).bdzid;
-                homePageBinding.common.setSelected(true);
-                defectAdapter.setList(mCommonMap.get(currentSelectBdzId));
-                mPop.dismiss();
-            }
-        });
-
         homePageBinding.setTypeClick(this);
         taskItemAdapter = new HomeTaskItemAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
         taskItemAdapter.setItemClickListener(new ItemClickListener<Task>() {
@@ -211,26 +211,24 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 ActivityUtil.startSyncActivity(_this);
                 break;
             case R.id.bdz_all_name:
-                view.getLocationOnScreen(location);
-                int popupHeight = 0;
-                int popupWidth = 0;
-                popupHeight = bdzPopwindowBinding.llContainer.getMeasuredHeight();
-                popupWidth = bdzPopwindowBinding.llContainer.getMeasuredWidth();
-                mPop.showAtLocation(homePageBinding.bdzAllName, Gravity.NO_GRAVITY, (location[0] + homePageBinding.bdzAllName.getWidth() / 2) - popupWidth / 2, location[1] - popupHeight);
+                mPowerStationDialog.show();
                 break;
             case R.id.common:
+                showRecyclerDefect(mCommonMap);
                 homePageBinding.common.setSelected(true);
                 homePageBinding.crisis.setSelected(false);
                 homePageBinding.serious.setSelected(false);
                 defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
                 break;
             case R.id.serious:
+                showRecyclerDefect(mSerioutMap);
                 homePageBinding.common.setSelected(false);
                 homePageBinding.crisis.setSelected(false);
                 homePageBinding.serious.setSelected(true);
                 defectAdapter.setList(mSerioutMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mSerioutMap.get(currentSelectBdzId));
                 break;
             case R.id.crisis:
+                showRecyclerDefect(mCrisisMap);
                 homePageBinding.common.setSelected(false);
                 homePageBinding.serious.setSelected(false);
                 homePageBinding.crisis.setSelected(true);
@@ -239,6 +237,50 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             default:
                 break;
         }
+    }
+
+    public void showRecyclerDefect(Map<String, ArrayList<DefectRecord>> defectMap) {
+        if (defectMap.get(currentSelectBdzId) == null) {
+            homePageBinding.recyDefect.setVisibility(View.GONE);
+            homePageBinding.defectContainer.setVisibility(View.VISIBLE);
+        } else {
+            homePageBinding.recyDefect.setVisibility(View.VISIBLE);
+            homePageBinding.defectContainer.setVisibility(View.GONE);
+        }
+    }
+
+    private void initBDZDialog() {
+        int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
+        int dialogHeight = bdzList.size() > 8 ? DisplayUtil.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
+        final ViewHolder holder = new ViewHolder(this, null, R.layout.content_list_dialog, false);
+        AutoUtils.autoSize(holder.getRootView());
+        mPowerStationListView = holder.getView(R.id.lv_container);
+        holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
+        DialogBDZAdapter adapter = new DialogBDZAdapter(this, bdzList, R.layout.dialog_content_child_item);
+        adapter.setItemClickListener(new ItemClickListener<Bdz>() {
+            @Override
+            public void itemClick(View v, Bdz bdz, int position) {
+                if (!bdz.name.contains("未激活")) {
+                    homePageBinding.bdzName.setText(bdz.name);
+                    mPowerStationDialog.dismiss();
+                    homePageBinding.bdzName.setText(bdzList.get(position).name);
+                    currentSelectBdzId = bdzList.get(position).bdzid;
+                    homePageBinding.common.setSelected(true);
+                    homePageBinding.serious.setSelected(false);
+                    homePageBinding.crisis.setSelected(false);
+                    showRecyclerDefect(mCommonMap);
+                    defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
+                } else
+                    CToast.showShort(_this, "该变电站未激活");
+            }
+
+            @Override
+            public void itemLongClick(View v, Bdz bdz, int position) {
+
+            }
+        });
+        mPowerStationListView.setAdapter(adapter);
+        mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
     }
 
     @Override

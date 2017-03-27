@@ -55,7 +55,7 @@ public class TJWTActivity extends BaseActivity {
         String pic = intent.getStringExtra("pic");
         //全路径
         String imgUrl = Config.BDZ_INSPECTION_FOLDER + pic;
-        tvTitle.setText(title);
+        tvTitle.setText("教育培训");
 
         Bitmap bitmap = BitmapFactory.decodeFile(imgUrl);
         zoomImageView.setImageBitmap(bitmap);

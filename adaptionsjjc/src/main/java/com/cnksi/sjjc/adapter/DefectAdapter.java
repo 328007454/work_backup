@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cnksi.core.Base.RecyclerViewHolder;
 import com.cnksi.core.utils.CoreConfig;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -59,10 +60,11 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
                 && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
             x.image().bind(defectImage, Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), CustomApplication.getLargeImageOptions());
         } else {
-            defectImage.setImageResource(R.drawable.ic_app);
+            defectImage.setScaleType(ImageView.ScaleType.CENTER);
+            defectImage.setImageResource(R.mipmap.icon_nodefect);
         }
         ((TextView) holder.getView(R.id.tv_device_name)).setText(defectRecord.devcie);
-        ((TextView) holder.getView(R.id.tv_defect_discover_time)).setText(defectRecord.discovered_date);
+        ((TextView) holder.getView(R.id.tv_defect_discover_time)).setText(DateUtils.getFormatterTime(defectRecord.discovered_date));
         defectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

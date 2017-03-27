@@ -10,16 +10,14 @@
     android:orientation="vertical">
 
     <ImageView
+        android:background="#1bbc9b"
         android:layout_marginBottom="30px"
         android:id="@+id/iv_defect_image"
         android:layout_width="280px"
         android:layout_height="210px"
         android:contentDescription="@null"
-        android:gravity="center"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_main_nav_bg"
+        android:src="@mipmap/icon_nodefect"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/global_text_size_px"
         app:layout_auto_baseheight="width" />
 
     <TextView

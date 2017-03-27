@@ -193,7 +193,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
                     android:background="@android:color/transparent"
-                    android:src="@mipmap/icon_tjwt" />
+                    android:src="@mipmap/icon_education" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -201,7 +201,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="bottom"
-                    android:text="图解五通"
+                    android:text="教育培训"
                     android:textColor="@color/color_626262" />
             </RelativeLayout>
 
