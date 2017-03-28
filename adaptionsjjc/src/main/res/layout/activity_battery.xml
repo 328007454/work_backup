@@ -14,10 +14,11 @@
 
         <HorizontalScrollView
             android:id="@+id/container_horizantal"
-            android:layout_marginTop="30px"
             android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginTop="30px"
             android:background="@drawable/battery_group_background1"
-            android:layout_height="150px">
+            android:scrollbars="none">
 
             <LinearLayout
                 android:id="@+id/layout_battery"
@@ -365,8 +366,8 @@
                         android:gravity="center_vertical|left"
                         android:paddingLeft="33px"
                         android:paddingRight="33px"
-                        android:textSize="@dimen/new_global_text_size"
-                        android:textColor="@color/global_battery_color" />
+                        android:textColor="@color/global_battery_color"
+                        android:textSize="@dimen/new_global_text_size" />
                 </LinearLayout>
             </LinearLayout>
 
