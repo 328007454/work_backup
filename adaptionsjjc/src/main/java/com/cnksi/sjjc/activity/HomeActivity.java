@@ -411,8 +411,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         else
             componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
         intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);
-        intent.setComponent(componentName);
+        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, task.inspection.split("_|-")[0]);
         intent.putExtra("task_id", task.taskid);
+        intent.setComponent(componentName);
         startActivity(intent);
     }
 }
