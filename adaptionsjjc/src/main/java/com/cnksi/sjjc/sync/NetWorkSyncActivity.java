@@ -87,6 +87,41 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         hasError = false;
+        if (view.getId() == R.id.ibtn_sync_menu) {
+            SyncMenuUtils.showMenuPopWindow(currentActivity, binding.ibtnSyncMenu, R.array.NetSyncMenuArray, new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    switch (position) {
+                        case 0:// 切换到USB同步
+                            SyncMenuUtils.changeSync(currentActivity);
+                            break;
+                        case 1:// 删除数据库
+                            SyncMenuUtils.dropDb(currentActivity, ksync, handler);
+                            break;
+                        case 2: // 删除文件
+                            SyncMenuUtils.deleteBakFile(currentActivity, ksync, handler);
+                            break;
+                        case 3: // 上传数据库
+                            SyncMenuUtils.uploadDatabase(currentActivity, ksync, handler, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mSyncInfos.clear();
+                                    mSyncInfoAdapter.notifyDataSetChanged();
+                                }
+                            });
+                            break;
+                        case 4://删除除本班组以外的数据
+                            SyncMenuUtils.deleteOtherDepartmentData(currentActivity, handler, dept_id);
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                }
+            });
+            return;
+        }
         if (!KNetUtil.isNetworkConnected(getApplicationContext())) {
             handler.sendMessage(handler.obtainMessage(KSync.SYNC_ERROR, "网络未连接,请检查手机网络!"));
             return;
@@ -108,40 +143,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onClick(View v) {
                         upload();
-                    }
-                });
-                break;
-            case R.id.ibtn_sync_menu://工具箱
-                SyncMenuUtils.showMenuPopWindow(currentActivity, binding.ibtnSyncMenu, R.array.NetSyncMenuArray, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        switch (position) {
-                            case 0:// 切换到USB同步
-                                SyncMenuUtils.changeSync(currentActivity);
-                                break;
-                            case 1:// 删除数据库
-                                SyncMenuUtils.dropDb(currentActivity, ksync, handler);
-                                break;
-                            case 2: // 删除文件
-                                SyncMenuUtils.deleteBakFile(currentActivity, ksync, handler);
-                                break;
-                            case 3: // 上传数据库
-                                SyncMenuUtils.uploadDatabase(currentActivity, ksync, handler, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        mSyncInfos.clear();
-                                        mSyncInfoAdapter.notifyDataSetChanged();
-                                    }
-                                });
-                                break;
-                            case 4://删除除本班组以外的数据
-                                SyncMenuUtils.deleteOtherDepartmentData(currentActivity, handler, dept_id);
-                                break;
-
-                            default:
-                                break;
-                        }
-
                     }
                 });
                 break;
