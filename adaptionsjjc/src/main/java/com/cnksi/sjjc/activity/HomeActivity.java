@@ -27,12 +27,17 @@ import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
 import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
+import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.databinding.ActivityHomePageBinding;
 import com.cnksi.sjjc.databinding.BdzPopwindowBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.service.CopyItemService;
+import com.cnksi.sjjc.service.CopyResultService;
 import com.cnksi.sjjc.service.DefectRecordService;
+import com.cnksi.sjjc.service.PlacedService;
+import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
@@ -311,7 +316,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             this.type = type;
             this.tv = tv;
             tv.setText(type.zhName);
-            init();
+            //onResume会执行
+            // init();
         }
 
         public void init() {
@@ -323,6 +329,26 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         case inspection:
                             taskList = TaskService.getInstance().
                                     findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name());
+                            if (taskList != null && taskList.size() > 0)
+                                for (Task task : taskList) {
+                                    try {
+                                        Report report = ReportService.getInstance().getReportByTask(task.taskid);
+                                        if (report != null) {
+                                            String str = "";
+                                            if (InspectionType.full.name().equals(task.inspection)) {
+                                                long copyTotal = CopyItemService.getInstance().getCopyItemCount(task.bdzid);
+                                                long copyCount = CopyResultService.getInstance().getReportCopyCount(report.reportid);
+                                                str = String.format("抄录：%d/%d", copyCount, copyTotal);
+                                            }
+                                            String arrivedStr = PlacedService.getInstance().findPlacedSpace(report);
+                                            if (!TextUtils.isEmpty(arrivedStr))
+                                                str = str + "   " + "到位：" + arrivedStr;
+                                            task.remark = str;
+                                        }
+                                    } catch (DbException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             break;
                         case maintenance:
                             taskList = TaskService.getInstance().

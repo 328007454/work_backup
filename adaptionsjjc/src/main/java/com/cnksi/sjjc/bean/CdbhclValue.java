@@ -108,35 +108,35 @@ public class CdbhclValue {
         }
     }
 
-    public static void reportChangeValue(ReportCdbhcl cdbhcl, List list){
+    public static void reportChangeValue(ReportCdbhcl cdbhcl, List<CdbhclValue> list) {
         CdbhclValue cdbhclValue;
-        if(!TextUtils.isEmpty(cdbhcl.dclz)){
+        if (!TextUtils.isEmpty(cdbhcl.dclz)) {
             cdbhclValue = new CdbhclValue();
             cdbhclValue.setName(cdbhcl.device_name);
             cdbhclValue.setValue(cdbhcl.dclz);
             list.add(cdbhclValue);
         }
-        if(!TextUtils.isEmpty(cdbhcl.dclzA)){
+        if (!TextUtils.isEmpty(cdbhcl.dclzA)) {
             cdbhclValue = new CdbhclValue();
-            cdbhclValue.setName(cdbhcl.device_name+"A");
+            cdbhclValue.setName(cdbhcl.device_name + "A");
             cdbhclValue.setValue(cdbhcl.dclzA);
             list.add(cdbhclValue);
         }
-        if(!TextUtils.isEmpty(cdbhcl.dclzB)){
+        if (!TextUtils.isEmpty(cdbhcl.dclzB)) {
             cdbhclValue = new CdbhclValue();
-            cdbhclValue.setName(cdbhcl.device_name+"B");
+            cdbhclValue.setName(cdbhcl.device_name + "B");
             cdbhclValue.setValue(cdbhcl.dclzB);
             list.add(cdbhclValue);
         }
-        if(!TextUtils.isEmpty(cdbhcl.dclzC)){
+        if (!TextUtils.isEmpty(cdbhcl.dclzC)) {
             cdbhclValue = new CdbhclValue();
-            cdbhclValue.setName(cdbhcl.device_name+"C");
+            cdbhclValue.setName(cdbhcl.device_name + "C");
             cdbhclValue.setValue(cdbhcl.dclzC);
             list.add(cdbhclValue);
         }
-        if(!TextUtils.isEmpty(cdbhcl.dclzO)){
+        if (!TextUtils.isEmpty(cdbhcl.dclzO)) {
             cdbhclValue = new CdbhclValue();
-            cdbhclValue.setName(cdbhcl.device_name+"O");
+            cdbhclValue.setName(cdbhcl.device_name + "O");
             cdbhclValue.setValue(cdbhcl.dclzO);
             list.add(cdbhclValue);
         }

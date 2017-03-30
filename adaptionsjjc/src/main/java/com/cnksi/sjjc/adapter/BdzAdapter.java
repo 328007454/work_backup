@@ -13,16 +13,16 @@ import java.util.Collection;
  * Created by han on 2017/3/26.
  */
 
-public class BdzAdapter extends BaseAdapter {
+public class BdzAdapter extends BaseAdapter<Bdz> {
 
-    public BdzAdapter(Context context, Collection data, int layoutId) {
+    public BdzAdapter(Context context, Collection<Bdz> data, int layoutId) {
         super(context, data, layoutId);
     }
 
     @Override
-    public void convert(ViewHolder holder, Object item, int position) {
+    public void convert(ViewHolder holder, Bdz item, int position) {
 
-        ((TextView) holder.getView(R.id.tv_child_item)).setText(((Bdz) item).name);
+        ((TextView) holder.getView(R.id.tv_child_item)).setText(item.name);
 
     }
 }

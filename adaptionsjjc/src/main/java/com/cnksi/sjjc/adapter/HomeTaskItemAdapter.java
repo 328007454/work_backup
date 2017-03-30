@@ -43,6 +43,7 @@ public class HomeTaskItemAdapter extends BaseLinearBindingAdapter<HomeTaskItemBi
         Object[] result = getTaskObject(item.inspection);
         binding.tvBdzShort.setBackground((Drawable) result[0]);
         binding.tvBdz.setText(item.bdzname + result[1]);
+        binding.tvOther.setText(item.remark);
     }
 
 
