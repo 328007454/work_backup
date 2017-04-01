@@ -62,6 +62,7 @@ public class ActivityUtil {
         intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
         intent1.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
         intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent1.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(activity, Config.CURRENT_DEPARTMENT_ID,""));
         intent1.setComponent(componentName1);
         activity.startActivity(intent1);
     }

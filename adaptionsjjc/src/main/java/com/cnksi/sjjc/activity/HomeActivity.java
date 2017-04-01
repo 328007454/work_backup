@@ -33,6 +33,7 @@ import com.cnksi.sjjc.databinding.BdzPopwindowBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.DefectRecordService;
+import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
@@ -73,6 +74,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         changedStatusColor();
         homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
         setContentView(homePageBinding.getRoot());
+        mFixedThreadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                DeviceService.getInstance().refreshDeviceHasCopy();
+            }
+        });
         initUI();
         initTabs();
     }
