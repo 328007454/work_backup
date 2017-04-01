@@ -453,22 +453,23 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         if (mCurrentUserOne != null && mCurrentUserTwo != null) {
             username = mCurrentUserOne.username + Config.COMMA_SEPARATOR + mCurrentUserTwo.username;
             userAccout = mCurrentUserOne.account + Config.COMMA_SEPARATOR + mCurrentUserTwo.account;
-
+            PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
         } else if (mCurrentUserOne != null) {
             username = mCurrentUserOne.username;
             userAccout = mCurrentUserOne.account;
+            PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
         } else if (mCurrentUserTwo != null) {
             username = mCurrentUserTwo.username;
             userAccout = mCurrentUserTwo.account;
+            PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserTwo.dept_id);
         } else {
             return;
         }
         PreferencesUtils.put(_this, Config.CURRENT_LOGIN_USER, username);
         PreferencesUtils.put(_this, Config.CURRENT_LOGIN_ACCOUNT, userAccout);
         //保存登录班组和账号
-        PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
+
 //        Intent intent = new Intent(_this, LauncherActivity.class);
-//        Intent intent = new Intent(_this, NewLauncherActivity.class);
         Intent intent = new Intent(_this, HomeActivity.class);
         startActivity(intent);
         LoginActivity.this.finish();

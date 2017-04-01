@@ -133,6 +133,7 @@ public class LauncherActivity extends BaseActivity {
                 intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
                 intent1.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(this, Config.CURRENT_LOGIN_USER, ""));
                 intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(this, Config.CURRENT_LOGIN_ACCOUNT, ""));
+                intent1.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(this, Config.CURRENT_DEPARTMENT_ID,""));
                 intent1.setComponent(componentName1);
                 startActivity(intent1);
                 return;

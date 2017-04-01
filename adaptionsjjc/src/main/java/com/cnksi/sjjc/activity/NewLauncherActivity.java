@@ -83,6 +83,7 @@ public class NewLauncherActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changedStatusColor();
         launcherBinding = DataBindingUtil.inflate(LayoutInflater.from(getApplicationContext()), R.layout.activity_launcher_new, null, false);
         setContentView(launcherBinding.getRoot());
         initUI();

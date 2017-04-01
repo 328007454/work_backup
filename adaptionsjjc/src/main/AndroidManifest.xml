@@ -75,7 +75,6 @@
             android:name=".activity.NewLauncherActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -83,8 +82,8 @@
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity

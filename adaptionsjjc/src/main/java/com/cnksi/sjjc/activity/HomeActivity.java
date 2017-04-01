@@ -56,7 +56,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private ArrayList<Integer> bannerMapUrl = new ArrayList<>();
     private BdzAdapter bdzAdapter;
     private PopupWindow mPop;
-    private List<Bdz> bdzList;
+    private List<Bdz> bdzList = new ArrayList<>();
     private int[] location = new int[2];
     private DefectAdapter defectAdapter;
     private Map<String, ArrayList<DefectRecord>> mCrisisMap = new HashMap<>();
@@ -74,41 +74,46 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
         setContentView(homePageBinding.getRoot());
         initUI();
-        loadData();
         initTabs();
     }
 
-    ArrayList<DefectRecord> records;
+    ArrayList<DefectRecord> recordCrisis;
+    ArrayList<DefectRecord> recordSerious;
+    ArrayList<DefectRecord> recordCommon;
 
     private void loadData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 try {
+                    mCrisisMap.clear();
+                    mCommonMap.clear();
+                    mSerioutMap.clear();
+                    bdzList.clear();
                     bdzList = CustomApplication.getDbManager().findAll(Bdz.class);
                     final List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList();
                     for (DefectRecord mDefectRecord : defectList) {
                         if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
                             if (mCrisisMap.get(mDefectRecord.bdzid) == null) {
-                                records = new ArrayList<DefectRecord>();
-                                records.add(mDefectRecord);
+                                recordCrisis = new ArrayList<DefectRecord>();
+                                recordCrisis.add(mDefectRecord);
                             } else
-                                records.add(mDefectRecord);
-                            mCrisisMap.put(mDefectRecord.bdzid, records);
+                                recordCrisis.add(mDefectRecord);
+                            mCrisisMap.put(mDefectRecord.bdzid, recordCrisis);
                         } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
                             if (mSerioutMap.get(mDefectRecord.bdzid) == null) {
-                                records = new ArrayList<DefectRecord>();
-                                records.add(mDefectRecord);
+                                recordSerious = new ArrayList<DefectRecord>();
+                                recordSerious.add(mDefectRecord);
                             } else
-                                records.add(mDefectRecord);
-                            mSerioutMap.put(mDefectRecord.bdzid, records);
+                                recordSerious.add(mDefectRecord);
+                            mSerioutMap.put(mDefectRecord.bdzid, recordSerious);
                         } else if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
                             if (mCommonMap.get(mDefectRecord.bdzid) == null) {
-                                records = new ArrayList<DefectRecord>();
-                                records.add(mDefectRecord);
+                                recordCommon = new ArrayList<DefectRecord>();
+                                recordCommon.add(mDefectRecord);
                             } else
-                                records.add(mDefectRecord);
-                            mCommonMap.put(mDefectRecord.bdzid, records);
+                                recordCommon.add(mDefectRecord);
+                            mCommonMap.put(mDefectRecord.bdzid, recordCommon);
                         }
                     }
                     runOnUiThread(new Runnable() {
