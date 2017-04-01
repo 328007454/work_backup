@@ -18,7 +18,7 @@ public class BaseService<T> {
         return getDbManager().findById(clazz, id);
     }
 
-    public Selector from(Class clz) throws DbException {
+    public <D> Selector<D> from(Class<D> clz) throws DbException {
         //暂留1=1条件 合并同步之后采用dlt
         return getDbManager().selector(clz).where("1", "=", "1");
     }

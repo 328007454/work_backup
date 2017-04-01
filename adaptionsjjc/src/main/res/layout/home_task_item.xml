@@ -40,8 +40,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="220KV桥沟变电站"
                         android:maxLines="1"
+                        android:text="220KV桥沟变电站"
                         android:textColor="#626262"
                         android:textSize="40px" />
 
@@ -64,7 +64,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="时间：2017-03-22"
                         android:textColor="#c0bab9"
                         android:textSize="40px" />
 
@@ -72,9 +71,9 @@
                         android:id="@+id/tv_other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="待执行"
-                        android:textSize="34px"
-                        android:visibility="gone" />
+                        android:textColor="#c0bab9"
+                        android:textSize="40px"
+                        android:visibility="visible" />
                 </LinearLayout>
             </LinearLayout>
 

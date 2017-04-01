@@ -27,7 +27,7 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
 
     private final static String TAG = "indoor_weather_adapter";
 
-    public IndoorWeathearAdapter(Context context, List data, LinearLayout container, int layoutId) {
+    public IndoorWeathearAdapter(Context context, List<ReportSnwsd> data, LinearLayout container, int layoutId) {
         super(context, data, container, layoutId);
     }
 
