@@ -34,7 +34,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="#f0f0f0"
         android:orientation="vertical">
 
         <View
@@ -43,6 +43,7 @@
             android:background="#e0e0e0" />
 
         <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="412px">
 
@@ -198,16 +199,19 @@
             android:background="#e0e0e0" />
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="50px"
             android:background="#f0f0f0" />
 
         <View
+            android:layout_marginTop="50px"
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="#e0e0e0" />
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="550px"
             android:orientation="horizontal">
@@ -362,6 +366,7 @@
             android:background="#e0e0e0" />
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="275px"
             android:orientation="horizontal">
@@ -455,8 +460,13 @@
                     android:src="@mipmap/icon_professionnal" />
             </LinearLayout>
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#e0e0e0" />
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="78px"
             android:background="#f0f0f0" />
