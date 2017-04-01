@@ -27,7 +27,6 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.UpdateUtils;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
@@ -160,7 +159,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 });
             }
         });
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             autoCompleteTextView.setText("00030493");
             mEtPassword.setText("1");
         }
@@ -261,13 +260,13 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 } else {
                     url = "http://" + url;
                 }
-                if (StringUtils.isUrl(url)) {
-                    Config.SYNC_URL = url;
-                    PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
-                    dialog.dismiss();
-                } else {
-                    CToast.showShort(mCurrentActivity, "请输入一个有效的URL");
-                }
+                //  if (StringUtils.isUrl(url)) {
+                Config.SYNC_URL = url;
+                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
+                dialog.dismiss();
+                //} else {
+                //  CToast.showShort(mCurrentActivity, "请输入一个有效的URL");
+                //}
             }
         });
         dialog.show();
