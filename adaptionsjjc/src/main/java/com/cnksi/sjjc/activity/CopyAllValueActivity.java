@@ -48,7 +48,7 @@ import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ModifyRecordService;
 import com.cnksi.sjjc.util.DefectLevelUtils;
 import com.cnksi.sjjc.util.DialogUtils;
-import com.iflytek.cloud.SpeechSynthesizer;
+import com.cnksi.sjjc.util.TTSUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -215,10 +215,10 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
         tvRight.setText(processor.getFinishString());
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
-        if ((mTts = SpeechSynthesizer.getSynthesizer()) == null) {
-            // 初始化语音
-            initSpeech(mCurrentActivity);
-        }
+//        if ((mTts = SpeechSynthesizer.getSynthesizer()) == null) {
+//            // 初始化语音
+//            initSpeech(mCurrentActivity);
+//        }
 
         initFragmentList();
     }
@@ -261,8 +261,8 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
             public void run() {
                 copyMap = processor.getCopyMap(
                         currentBdzId, pmsDeviceTypeList.get(currentSelectedPosition).k);
-                if (copyMap==null)
-                    copyMap=new HashMap<String, Boolean>();
+                if (copyMap == null)
+                    copyMap = new HashMap<String, Boolean>();
                 mHandler.sendEmptyMessage(LOAD_COPY_MAP);
             }
         });
@@ -309,7 +309,7 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
                 break;
             case INIT_SPEECH:
                 // 读取内容
-                mTts.startSpeaking(speakContent, null);
+                TTSUtils.getInstance().startSpeak(speakContent);
                 break;
             case CLICK_FINISH_CODE:
                 this.finish();
@@ -410,7 +410,7 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
 
                 break;
             case R.id.ibtn_history_data:
-                processor.showHistoryDialog(_this,mStandardModel,mCurrentDevice,currentBdzId);
+                processor.showHistoryDialog(_this, mStandardModel, mCurrentDevice, currentBdzId);
                 break;
             default:
                 break;
@@ -482,7 +482,7 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
             imageResourceId = R.mipmap.test_danqipingyali;
         } else if (title.contains("氮气管道压力")) {
             imageResourceId = R.mipmap.test_danqiguandaoyali;
-        }else if (title.contains("控母电压")) {
+        } else if (title.contains("控母电压")) {
             imageResourceId = R.mipmap.test_kongmudianya;
         } else if (title.contains("合母电压")) {
             imageResourceId = R.mipmap.test_hemudianya;

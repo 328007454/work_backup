@@ -1,0 +1,86 @@
+package com.cnksi.sjjc.util;
+
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
+
+import com.cnksi.core.utils.CToast;
+import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.tts.ISpeakInterface;
+
+/**
+ * @version 1.0
+ * @auth wastrel
+ * @date 2017/4/1 13:36
+ * @copyRight 四川金信石信息技术有限公司
+ * @since 1.0
+ */
+public class TTSUtils {
+    private final static String TAG = "TTSUtils";
+    private final static TTSUtils instance = new TTSUtils();
+
+    public static TTSUtils getInstance() {
+        return instance;
+    }
+
+    private ISpeakInterface speakInterface;
+    private boolean isConnect = false;
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            instance.speakInterface = ISpeakInterface.Stub.asInterface(service);
+            instance.isConnect = true;
+            Log.i(TAG, "Connect to TTServer successful");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            instance.isConnect = false;
+            instance.speakInterface = null;
+            Log.i(TAG, "Disconnect to TTServer.");
+        }
+    };
+
+    public static void init(Context context) {
+        if (instance.isConnect) {
+            Log.w(TAG, "TTServer is connect.Skip to init");
+            return;
+        }
+        Intent intent = new Intent();
+        intent.setPackage("com.cnksi.sjjc");
+        intent.setAction("android.intent.action.TTService");
+        context.bindService(intent, instance.connection, Context.BIND_AUTO_CREATE);
+    }
+
+    public void startSpeak(String content) {
+        if (!isConnect) {
+            CToast.showShort(CustomApplication.getAppContext(), "没有连接到TTS服务。");
+        } else try {
+            speakInterface.speak(content);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopSpeak()
+    {
+        if (!isConnect()) return;
+        try {
+            speakInterface.stopSpeak();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public boolean isConnect() {
+        if (!isConnect)  CToast.showShort(CustomApplication.getAppContext(), "没有连接到TTS服务。");
+        return isConnect;
+    }
+}

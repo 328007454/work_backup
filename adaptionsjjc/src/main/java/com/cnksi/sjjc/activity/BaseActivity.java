@@ -40,10 +40,6 @@ import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.sync.DataSync;
 import com.cnksi.sjjc.sync.KSyncConfig;
-import com.iflytek.cloud.ErrorCode;
-import com.iflytek.cloud.InitListener;
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -56,7 +52,6 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -167,7 +162,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @ViewInject(R.id.shadom_rela)
     protected RelativeLayout layoutRelat;
 
-    protected SpeechSynthesizer mTts;
+ //   protected SpeechSynthesizer mTts;
     public Vibrator mVibrator;
 
     /**
@@ -400,36 +395,36 @@ public abstract class BaseActivity extends BaseCoreActivity {
         return res;
     }
 
-    /**
-     * 初始化语音引擎
-     */
-    protected void initSpeech(Context context) {
-        // 初始化合成对象
-        mTts = SpeechSynthesizer.createSynthesizer(context, new InitListener() {
-            @Override
-            public void onInit(int code) {
-                if (code == ErrorCode.SUCCESS) {
-                    // 清空参数
-                    mTts.setParameter(SpeechConstant.PARAMS, null);
-                    // 设置本地合成
-                    mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL);
-                    // 设置发音人资源路径
-                    mTts.setParameter(ResourceUtil.TTS_RES_PATH, getResourcePath());
-                    // 设置发音人 voicer为空默认通过语音+界面指定发音人。
-                    mTts.setParameter(SpeechConstant.VOICE_NAME, voicer);
-                    // 设置语速
-                    mTts.setParameter(SpeechConstant.SPEED, "50");
-                    // 设置音调
-                    mTts.setParameter(SpeechConstant.PITCH, "50");
-                    // 设置音量
-                    mTts.setParameter(SpeechConstant.VOLUME, "100");
-                    // 设置播放器音频流类型
-                    mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");
-                    mHandler.sendEmptyMessage(INIT_SPEECH);
-                }
-            }
-        });
-    }
+//    /**
+//     * 初始化语音引擎
+//     */
+//    protected void initSpeech(Context context) {
+//        // 初始化合成对象
+//        mTts = SpeechSynthesizer.createSynthesizer(context, new InitListener() {
+//            @Override
+//            public void onInit(int code) {
+//                if (code == ErrorCode.SUCCESS) {
+//                    // 清空参数
+//                    mTts.setParameter(SpeechConstant.PARAMS, null);
+//                    // 设置本地合成
+//                    mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL);
+//                    // 设置发音人资源路径
+//                    mTts.setParameter(ResourceUtil.TTS_RES_PATH, getResourcePath());
+//                    // 设置发音人 voicer为空默认通过语音+界面指定发音人。
+//                    mTts.setParameter(SpeechConstant.VOICE_NAME, voicer);
+//                    // 设置语速
+//                    mTts.setParameter(SpeechConstant.SPEED, "50");
+//                    // 设置音调
+//                    mTts.setParameter(SpeechConstant.PITCH, "50");
+//                    // 设置音量
+//                    mTts.setParameter(SpeechConstant.VOLUME, "100");
+//                    // 设置播放器音频流类型
+//                    mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");
+//                    mHandler.sendEmptyMessage(INIT_SPEECH);
+//                }
+//            }
+//        });
+//    }
 
     // 获取发音人资源路径
     private String getResourcePath() {
@@ -451,14 +446,14 @@ public abstract class BaseActivity extends BaseCoreActivity {
         System.exit(0);
     }
 
-    /**
-     * 停止说话
-     */
-    protected void stopSpeaking() {
-        if (mTts != null) {
-            mTts.stopSpeaking();
-        }
-    }
+//    /**
+//     * 停止说话
+//     */
+//    protected void stopSpeaking() {
+//        if (mTts != null) {
+//            mTts.stopSpeaking();
+//        }
+//    }
 
     /**
      * 可以标记图片

@@ -17,7 +17,7 @@ import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.OnViewClickListener;
-import com.iflytek.cloud.SpeechSynthesizer;
+import com.cnksi.sjjc.util.TTSUtils;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -39,9 +39,9 @@ public class LauncherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setChildView(R.layout.activity_launcher);
         x.view().inject(_this);
-        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
-            initSpeech(this);
-        }
+//        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
+//            initSpeech(this);
+//        }
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             String account = bundle.getString("u_account", "");
@@ -60,7 +60,7 @@ public class LauncherActivity extends BaseActivity {
 
         }
 
-        mTts.startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)), null);
+        TTSUtils.getInstance().startSpeak(String.format("欢迎使用%1$s", getString(R.string.app_name)));
 
         tvTitle.setText(R.string.app_name);
         exitProject.setImageResource(R.drawable.exit_button_background);
@@ -75,7 +75,7 @@ public class LauncherActivity extends BaseActivity {
     }
 
     //
-    @Event(value = {R.id.sbxs, R.id.sbjc, R.id.dqsy, R.id.dqwh, R.id.ywyth, R.id.dzhgzp, R.id.zxxs, R.id.sbys, R.id.jyhys, R.id.jyhpj, R.id.gzp, R.id.ibtn_exit, R.id.btn_back, R.id.layout_data_sync,R.id.tjwt})
+    @Event(value = {R.id.sbxs, R.id.sbjc, R.id.dqsy, R.id.dqwh, R.id.ywyth, R.id.dzhgzp, R.id.zxxs, R.id.sbys, R.id.jyhys, R.id.jyhpj, R.id.gzp, R.id.ibtn_exit, R.id.btn_back, R.id.layout_data_sync, R.id.tjwt})
     private void onClick(View view) {
         Intent intent = new Intent(this, TypeListActivity.class);
         switch (view.getId()) {

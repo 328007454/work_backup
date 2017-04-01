@@ -40,7 +40,7 @@ import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.sync.KSyncConfig;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
-import com.iflytek.cloud.SpeechSynthesizer;
+import com.cnksi.sjjc.util.TTSUtils;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -128,9 +128,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private void initUI() {
         //设置版本信息
         mTvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(_this)));
-        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
-            initSpeech(_this);
-        }
+//        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
+//            initSpeech(_this);
+//        }
         //上次登录人员信息
 //        String userName = PreferencesUtils.getString(_this, Users.ACCOUNT, "");
         String userName = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
@@ -394,7 +394,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case INIT_SPEECH:
                 // 读取内容
                 if (!TextUtils.isEmpty(speakContent))
-                    mTts.startSpeaking(speakContent, null);
+                    TTSUtils.getInstance().startSpeak(speakContent);
                 break;
             //添加已登录账号
             case SAME_ACCOUNT:

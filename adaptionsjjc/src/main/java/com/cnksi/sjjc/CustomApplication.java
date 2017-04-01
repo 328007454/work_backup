@@ -18,9 +18,8 @@ import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.util.PlaySound;
+import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechUtility;
 import com.tendcloud.tenddata.TCAgent;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
@@ -103,12 +102,12 @@ public class CustomApplication extends CoreApplication {
         // 注意：此接口在非主进程调用会返回null对象，如需在非主进程使用语音功能，请增加参数：SpeechConstant.FORCE_LOGIN+"=true"
         // 参数间使用“,”分隔。
         // 设置你申请的应用appid
-        StringBuffer param = new StringBuffer();
-        param.append("appid=" + getString(R.string.app_id));
-        param.append(",");
-        // 设置使用v5+
-        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
-        SpeechUtility.createUtility(CustomApplication.this, param.toString());
+//        StringBuffer param = new StringBuffer();
+//        param.append("appid=" + getString(R.string.app_id));
+//        param.append(",");
+//        // 设置使用v5+
+//        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
+//        SpeechUtility.createUtility(CustomApplication.this, param.toString());
         DisplayUtil.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
         CLog.init(true);
         PlaySound.initPlay(this);
@@ -117,6 +116,7 @@ public class CustomApplication extends CoreApplication {
             com.cnksi.core.utils.NetWorkUtil.disableNetWork(this);
         }
         initRuntimeVar();
+        TTSUtils.init(getAppContext());
     }
 
     public void initApp() {
@@ -401,7 +401,6 @@ public class CustomApplication extends CoreApplication {
     private void initRuntimeVar() {
         Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
     }
-
 
 
 }
