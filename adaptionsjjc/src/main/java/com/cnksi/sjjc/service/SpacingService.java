@@ -8,6 +8,8 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
+import java.util.List;
+
 /**
  * Created by ironGe on 2016/6/23.
  */
@@ -37,5 +39,19 @@ public class SpacingService extends BaseService<Spacing> {
         return "";
     }
 
+    /**
+     * 通过间隔查询当前变电站
+     */
+    public List<DbModel> findBdzBySpacing(){
+        List<DbModel> spacingList;
+        SqlInfo sqlInfo = new SqlInfo("select * from spacing where dlt <> 1 and (latitude <> '' or latitude not null) and (longitude <> '' or longitude not null)");
+        try {
+            spacingList = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+            return spacingList;
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
