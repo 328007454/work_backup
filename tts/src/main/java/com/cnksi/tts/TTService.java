@@ -30,15 +30,41 @@ public class TTService extends Service {
     private SpeechSynthesizer mTts;
     private boolean isPrepare = false;
     private String speaker = "xiaoyan";
-    ISpeakInterface.Stub stub = new ISpeakInterface.Stub() {
+    ISpeakCallback DEFAULT = new ISpeakCallback.Stub() {
         @Override
-        public int speak(final String content) throws RemoteException {
+        public void onSpeakBegin() throws RemoteException {
+        }
+
+        @Override
+        public void onSpeakPaused() throws RemoteException {
+
+        }
+
+        @Override
+        public void onSpeakResumed() throws RemoteException {
+
+        }
+
+        @Override
+        public void onCompleted(String error) throws RemoteException {
+
+        }
+    };
+    ISpeakInterface.Stub stub = new ISpeakInterface.Stub() {
+
+        @Override
+        public int speak(final String content, ISpeakCallback callback) throws RemoteException {
             if (isPrepare()) {
+                final ISpeakCallback mCallback = callback != null ? callback : DEFAULT;
                 if (mTts.isSpeaking()) mTts.stopSpeaking();
                 mTts.startSpeaking(content, new SynthesizerListener() {
                     @Override
                     public void onSpeakBegin() {
-                        log("onSpeakBegin：" + content);
+                        try {
+                            mCallback.onSpeakBegin();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
@@ -48,12 +74,20 @@ public class TTService extends Service {
 
                     @Override
                     public void onSpeakPaused() {
-                        log("onSpeakPaused");
+                        try {
+                            mCallback.onSpeakPaused();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
                     public void onSpeakResumed() {
-                        log("onSpeakResumed");
+                        try {
+                            mCallback.onSpeakResumed();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
@@ -63,9 +97,10 @@ public class TTService extends Service {
 
                     @Override
                     public void onCompleted(SpeechError speechError) {
-                        log("onCompleted：" + content);
-                        if (speechError != null) {
-                            speechError.printStackTrace();
+                        try {
+                            mCallback.onCompleted(speechError == null ? null : speechError.getMessage());
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
                         }
                     }
 

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Message;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cnksi.core.utils.AppUtils;
+import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.FileUtils;
@@ -42,6 +44,7 @@ import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 import com.cnksi.sjjc.util.TTSUtils;
+import com.cnksi.tts.ISpeakCallback;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -394,7 +397,27 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case INIT_SPEECH:
                 // 读取内容
                 if (!TextUtils.isEmpty(speakContent))
-                    TTSUtils.getInstance().startSpeaking(speakContent);
+                    TTSUtils.getInstance().startSpeaking(speakContent, new ISpeakCallback.Stub() {
+                        @Override
+                        public void onSpeakBegin() throws RemoteException {
+                            CLog.e();
+                        }
+
+                        @Override
+                        public void onSpeakPaused() throws RemoteException {
+                            CLog.e();
+                        }
+
+                        @Override
+                        public void onSpeakResumed() throws RemoteException {
+                            CLog.e();
+                        }
+
+                        @Override
+                        public void onCompleted(String error) throws RemoteException {
+                            CLog.e();
+                        }
+                    });
                 break;
             //添加已登录账号
             case SAME_ACCOUNT:

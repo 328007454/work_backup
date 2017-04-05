@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.cnksi.core.utils.CToast;
 import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.tts.ISpeakCallback;
 import com.cnksi.tts.ISpeakInterface;
 
 /**
@@ -58,12 +59,19 @@ public class TTSUtils {
     }
 
     public void startSpeaking(String content) {
+        startSpeaking(content, null);
+    }
+
+
+    public void startSpeaking(String content, ISpeakCallback callback) {
         if (isConnect()) {
             try {
-                speakInterface.speak(content);
+                speakInterface.speak(content, callback);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+        } else {
+            init(CustomApplication.getAppContext());
         }
     }
 
