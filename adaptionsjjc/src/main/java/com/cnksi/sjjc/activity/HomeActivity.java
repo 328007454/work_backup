@@ -139,7 +139,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                 bdzAdapter.setList(bdzList);
                             if (defectAdapter == null) {
                                 homePageBinding.common.setSelected(true);
-                                currentSelectBdzId = bdzList.get(0).bdzid;
+                                if (!bdzList.isEmpty())
+                                    currentSelectBdzId = bdzList.get(0).bdzid;
                                 showRecyclerDefect(mCommonMap);
                                 defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
                                 defectAdapter.setItemClickListener(HomeActivity.this);
@@ -282,7 +283,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void itemClick(View v, Bdz bdz, int position) {
                 if (!bdz.name.contains("未激活")) {
-                    homePageBinding.bdzName.setText(bdz.name+"");
+                    homePageBinding.bdzName.setText(bdz.name + "");
                     mPowerStationDialog.dismiss();
                     currentSelectBdzId = bdzList.get(position).bdzid;
                     homePageBinding.common.setSelected(true);
@@ -354,7 +355,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                             }
                                         }
                                         String arrivedStr = PlacedService.getInstance().findPlacedSpace("", task.bdzid);
-                                        if (!TextUtils.isEmpty(arrivedStr))
+                                        if (!TextUtils.isEmpty(arrivedStr) && !task.inspection.contains("special"))
                                             str = str + "   " + "到位：" + arrivedStr;
                                         task.remark = str;
                                     } catch (DbException e) {

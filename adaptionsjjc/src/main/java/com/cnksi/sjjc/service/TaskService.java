@@ -6,7 +6,6 @@ import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.SwitchPic;
 import com.cnksi.sjjc.bean.Task;
-import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.bean.TaskStatistic;
 import com.cnksi.sjjc.enmu.InspectionType;
 
@@ -211,7 +210,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoSpecialTask(String inspectionType) {
         List<Task> tasks =null;
         try {
-            tasks = selector().expr(" inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
+            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {
