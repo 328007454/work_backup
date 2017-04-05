@@ -136,8 +136,6 @@ public class TaskRemindFragment extends BaseCoreFragment {
 
     @Override
     protected void initData() {
-        currentFunctionModel = getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
-        mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
         query();
     }
 
@@ -147,6 +145,8 @@ public class TaskRemindFragment extends BaseCoreFragment {
             @Override
             public void run() {
                 try {
+                    currentFunctionModel = getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
+                    mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
                     // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                     WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1");
                     if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {

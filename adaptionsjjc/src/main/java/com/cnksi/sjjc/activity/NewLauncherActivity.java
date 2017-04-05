@@ -13,6 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
+import com.baidu.location.BDLocation;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.cnksi.core.adapter.ViewHolder;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
@@ -25,22 +29,27 @@ import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
 import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.Department;
+import com.cnksi.sjjc.bean.Spacing;
 import com.cnksi.sjjc.databinding.ActivityLauncherNewBinding;
 import com.cnksi.sjjc.fragment.launcher.MaintenanceFragment;
 import com.cnksi.sjjc.fragment.launcher.TourFragment;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.inter.LocationListener;
+import com.cnksi.sjjc.service.BdzService;
+import com.cnksi.sjjc.service.SpacingService;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
-import com.zhy.autolayout.utils.AutoUtils;
+import com.cnksi.sjjc.util.LocationUtil;
 import com.cnksi.sjjc.util.OnViewClickListener;
+import com.zhy.autolayout.utils.AutoUtils;
+
+import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
+
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by han on 2017/3/22.
- */
-
-public class NewLauncherActivity extends BaseActivity {
+public class NewLauncherActivity extends BaseActivity implements LocationListener{
     private ActivityLauncherNewBinding launcherBinding;
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
     private int currentSelectPosition;
@@ -80,6 +89,14 @@ public class NewLauncherActivity extends BaseActivity {
         }
     };
 
+    /**变电站定位runnable*/
+    private Runnable locationTask = new Runnable() {
+        public void run() {
+            LocationUtil.getInstance().init(NewLauncherActivity.this).setLocationListener(NewLauncherActivity.this).requestLocation(NewLauncherActivity.this);
+            mHandler.postDelayed(this, 30000);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +132,8 @@ public class NewLauncherActivity extends BaseActivity {
                 mPowerStationDialog.show();
             }
         });
+
+        mHandler.post(locationTask);
     }
 
     private void initBaseData() {
@@ -218,5 +237,43 @@ public class NewLauncherActivity extends BaseActivity {
         });
         mPowerStationListView.setAdapter(adapter);
         mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
+    }
+
+    @Override
+    public void locationSuccess(BDLocation location) {
+        List<DbModel> spacingModels = SpacingService.getInstance().findBdzBySpacing();
+        if(spacingModels != null && spacingModels.size() != 0){
+            for(DbModel dbModel : spacingModels){
+                String latitude = dbModel.getString(Spacing.LATITUDE);
+                String longtitude = dbModel.getString(Spacing.LONGITUDE);
+                LatLng spaceLocation = new LatLng(Double.valueOf(latitude), Double.valueOf(longtitude));
+                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                // 200米范围内
+                if (DistanceUtil.getDistance(currentLocation, spaceLocation) < 200) {
+                    String bdzid = dbModel.getString(Spacing.BDZID);
+                    try {
+                        Bdz bdz =  BdzService.getInstance().findById(Bdz.class,bdzid);
+                        if(bdz != null){
+                            launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
+                            break;
+                        }
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void locationFailure(int code, String message) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocationUtil.getInstance().stopLocationRequest();
+        mHandler.removeCallbacks(locationTask);
     }
 }

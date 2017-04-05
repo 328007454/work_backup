@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.cnksi.core.application.CoreApplication;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CLog;
@@ -94,6 +95,10 @@ public class CustomApplication extends CoreApplication {
 //            return;
 //        }
 //        LeakCanary.install(this);
+
+        //初始化百度地图
+        SDKInitializer.initialize(getApplicationContext());
+
         mInstance = this;
         AutoLayoutConifg.getInstance().useDeviceSize().init(this);
         TCAgent.LOG_ON = true;
