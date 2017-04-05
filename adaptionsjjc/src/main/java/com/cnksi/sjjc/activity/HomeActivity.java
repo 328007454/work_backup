@@ -229,7 +229,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 ActivityUtil.startWTYCActiviy(_this);
                 break;
             case R.id.device_sycn:
-                ActivityUtil.startSyncActivity(_this);
+                ActivityUtil.startSync(mCurrentActivity);
                 break;
             case R.id.bdz_all_name:
                 mPowerStationDialog.show();

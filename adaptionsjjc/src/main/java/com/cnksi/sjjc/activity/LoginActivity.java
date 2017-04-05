@@ -38,6 +38,7 @@ import com.cnksi.sjjc.inter.GrantPermissionListener;
 import com.cnksi.sjjc.service.DepartmentService;
 import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.sync.KSyncConfig;
+import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 import com.cnksi.sjjc.util.TTSUtils;
@@ -232,7 +233,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             //跳转数据同步
             case R.id.ivLogo:
-                startSync();
+                ActivityUtil.startSync(mCurrentActivity);
 
                 break;
         }
@@ -395,7 +396,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case INIT_SPEECH:
                 // 读取内容
                 if (!TextUtils.isEmpty(speakContent))
-                    TTSUtils.getInstance().startSpeak(speakContent);
+                    TTSUtils.getInstance().startSpeaking(speakContent);
                 break;
             //添加已登录账号
             case SAME_ACCOUNT:

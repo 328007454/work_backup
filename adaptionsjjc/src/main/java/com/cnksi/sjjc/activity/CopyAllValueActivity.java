@@ -309,7 +309,7 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
                 break;
             case INIT_SPEECH:
                 // 读取内容
-                TTSUtils.getInstance().startSpeak(speakContent);
+                TTSUtils.getInstance().startSpeaking(speakContent);
                 break;
             case CLICK_FINISH_CODE:
                 this.finish();
