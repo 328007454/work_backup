@@ -42,6 +42,7 @@ import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
+import com.cnksi.sjjc.util.TTSUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
@@ -87,6 +88,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         });
         initUI();
         initTabs();
+        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
     }
 
     ArrayList<DefectRecord> recordCrisis;
