@@ -85,23 +85,18 @@ public class MaintenanceFragment extends BaseCoreFragment {
                     public void run() {
                         maintenanceBinding.setSwitchover(switchover);
                         maintenanceBinding.setMaintenance(maintenance);
-                    }
-                });
-            }
-        });
-        mExcutorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                float progress = TaskService.getInstance().statisticProgress(InspectionType.maintenance.name(), InspectionType.switchover.name());
-                final int percent = (int) (progress * 100);
-                mHandler.post(new Runnable() {
-                    int i = 0;
+                        final int percent = (int) ((maintenance.getMonthTaskFinish() + switchover.getMonthTaskFinish())
+                                / (maintenance.getMonthTaskCount() + switchover.getMonthTaskCount() + 0.0f) * 100);
+                        mHandler.post(new Runnable() {
+                            int i = 0;
 
-                    @Override
-                    public void run() {
-                        maintenanceBinding.progress.setProgress(i <= (int) percent ? i++ : percent);
-                        if (i <= percent)
-                            mHandler.postDelayed(this, 100);
+                            @Override
+                            public void run() {
+                                maintenanceBinding.progress.setProgress(i <= (int) percent ? i++ : percent);
+                                if (i <= percent)
+                                    mHandler.postDelayed(this, 100);
+                            }
+                        });
                     }
                 });
             }
