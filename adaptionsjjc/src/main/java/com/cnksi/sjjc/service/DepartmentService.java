@@ -17,6 +17,7 @@ public class DepartmentService extends BaseService<Department> {
     private static DepartmentService mInstance;
 
     public DepartmentService() {
+        super(Department.class);
     }
 
     public static DepartmentService getInstance() {
@@ -35,7 +36,7 @@ public class DepartmentService extends BaseService<Department> {
     public Department findDepartmentById(String id) {
         Department mDepartment = null;
         try {
-            mDepartment = findById(Department.class, id);
+            mDepartment = findById(id);
         } catch (DbException e) {
             e.printStackTrace();
         }

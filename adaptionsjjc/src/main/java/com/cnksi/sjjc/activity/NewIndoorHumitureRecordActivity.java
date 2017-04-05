@@ -18,13 +18,16 @@ import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.databinding.IndoorBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.service.BaseService;
+import com.cnksi.sjjc.service.ReportService;
+import com.cnksi.sjjc.service.TaskService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.Event;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static com.cnksi.sjjc.R.id.add_indoor_weather;
 
@@ -34,7 +37,7 @@ import static com.cnksi.sjjc.R.id.add_indoor_weather;
 public class NewIndoorHumitureRecordActivity extends BaseActivity implements ItemClickListener {
 
     //报告表
-    private ArrayList<ReportSnwsd> mReportList;
+    private List<ReportSnwsd> mReportList;
     private IndoorBinding binding;
     private IndoorWeathearAdapter indoorWeatherAdapter;
     //报告表
@@ -67,10 +70,10 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
             @Override
             public void run() {
                 try {
-                    mReport = db.selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
+                    mReport = ReportService.getInstance().findById(currentReportId);
                     if (null != mReport)
                         mReport.starttime = DateUtils.getCurrentLongTime();
-                    mReportList = (ArrayList<ReportSnwsd>) db.selector(ReportSnwsd.class).where(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
+                    mReportList = BaseService.getInstance(ReportSnwsd.class).selector().and(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
                     if (null == mReportList || mReportList.isEmpty())
                         mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
                     mHandler.sendEmptyMessage(LOAD_DATA);
@@ -115,11 +118,12 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
                 return;
             }
             reportSnwsd.last_modify_time = DateUtils.getCurrentLongTime();
-            try {
-                db.saveOrUpdate(reportSnwsd);
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
+
+        }
+        try {
+            BaseService.getInstance(ReportSnwsd.class).saveOrUpdate(mReportList);
+        } catch (DbException e) {
+            e.printStackTrace();
         }
         mReport.tq = binding.weatherView1.getSelectWeather().isEmpty() ? "" : binding.weatherView1.getSelectWeather();
         mReport.temperature = mReportList.get(0).wd;
@@ -127,8 +131,8 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
         mReport.endtime = DateUtils.getCurrentLongTime();
 
         try {
-            db.saveOrUpdate(mReport);
-            db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            ReportService.getInstance().saveOrUpdate(mReport);
+            TaskService.getInstance().update( WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
         } catch (DbException e) {
             e.printStackTrace();
         }

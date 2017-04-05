@@ -19,6 +19,7 @@ public class DevicePartService extends  BaseService<DeviceUnit> {
 	public static DevicePartService mInstance;
 
 	private DevicePartService() {
+		super(DeviceUnit.class);
 	}
 
 	public static DevicePartService getInstance() {
@@ -33,7 +34,7 @@ public class DevicePartService extends  BaseService<DeviceUnit> {
 	public List<DevicePart> getDevicePartListFromDb(String dtid) {
 		List<DevicePart> devicePart = new ArrayList<DevicePart>();
 		try {
-			List<DeviceUnit> list = selector(DeviceUnit.class).and(DeviceUnit.DTID, "=", dtid).and(DeviceUnit.DLT, "!=",
+			List<DeviceUnit> list = selector().and(DeviceUnit.DTID, "=", dtid).and(DeviceUnit.DLT, "!=",
 					"1").findAll();
             if (null != list && !list.isEmpty()) {
                 for (DeviceUnit unit : list)
@@ -51,7 +52,7 @@ public class DevicePartService extends  BaseService<DeviceUnit> {
      */
     public List<DevicePart> getDevicePartList(String deviceid) {
         try {
-            return getInstance(DevicePart.class).selector(DevicePart.class).and(DevicePart.DEVICEID, "=", deviceid)
+            return getInstance(DevicePart.class).selector().and(DevicePart.DEVICEID, "=", deviceid)
                     .and(DevicePart.DLT, "!=", "1").findAll();
         } catch (DbException e) {
             e.printStackTrace();

@@ -12,6 +12,10 @@ import java.util.List;
 public class BatteryService extends BaseService<Battery> {
     private static BatteryService mBatteryInstance;
 
+    private BatteryService() {
+        super(Battery.class);
+    }
+
     public static BatteryService getInstance() {
         if (mBatteryInstance == null) {
             mBatteryInstance = new BatteryService();
@@ -25,6 +29,6 @@ public class BatteryService extends BaseService<Battery> {
      */
 
     public List<Battery> getAllBattery(String bdzId) throws DbException {
-        return selector(Battery.class).and(Battery.BDZID, "=", bdzId).orderBy(Battery.BID, false).findAll();
+        return selector().and(Battery.BDZID, "=", bdzId).orderBy(Battery.BID, false).findAll();
     }
 }

@@ -13,6 +13,7 @@ public class CopyTypeService extends BaseService<CopyType> {
     public static CopyTypeService mInstance;
 
     private CopyTypeService() {
+        super(CopyType.class);
     }
 
     public static CopyTypeService getInstance() {
@@ -25,7 +26,7 @@ public class CopyTypeService extends BaseService<CopyType> {
     public Map<String, String> getAllCopyType() {
         Map<String, String> typeMap = new HashMap<>();
         try {
-            List<CopyType> list = selector(CopyType.class).and(CopyType.SELECTED_ABLE, "=", "Y").findAll();
+            List<CopyType> list = selector().and(CopyType.SELECTED_ABLE, "=", "Y").findAll();
             if (null != list && !list.isEmpty()) {
                 for (CopyType type : list)
                     typeMap.put(type.key, type.name);

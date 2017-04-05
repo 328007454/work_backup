@@ -16,6 +16,7 @@ import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.View.WeatherView1;
 import com.cnksi.sjjc.bean.Report;
+import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.Event;
@@ -66,7 +67,7 @@ public class CopyBaseDataActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    mReport = db.selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
+                    mReport = ReportService.getInstance().findById(currentReportId);
                     if (mReport!=null) {
                         mReport.starttime =TextUtils.isEmpty(mReport.starttime)? DateUtils.getCurrentLongTime():mReport.starttime;
                         mHandler.sendEmptyMessage(LOAD_DATA);
@@ -107,7 +108,7 @@ public class CopyBaseDataActivity extends BaseActivity {
                 mReport.humidity =etCurHumidiyt.getText().toString();
                 mReport.endtime = DateUtils.getCurrentLongTime();
                 try {
-                    db.saveOrUpdate(mReport);
+                    ReportService.getInstance().saveOrUpdate(mReport);
                     } catch (DbException e) {
                     e.printStackTrace();
                 }

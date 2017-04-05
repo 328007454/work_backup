@@ -43,7 +43,7 @@ android {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
-            buildConfigField "String", "SYNC_URL", "\"http://192.168.199.219:9090\""
+            buildConfigField "String", "SYNC_URL", "\"http://192.168.199.10:9101\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -72,7 +72,7 @@ android {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
-            buildConfigField "String", "SYNC_URL", "\"http://192.168.199.219:9090\""
+            buildConfigField "String", "SYNC_URL", "\"http://192.168.199.10:9101\""
         }
     }
 

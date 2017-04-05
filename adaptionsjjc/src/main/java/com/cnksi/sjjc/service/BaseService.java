@@ -13,8 +13,6 @@ import com.cnksi.sjjc.bean.BaseModel;
 import com.cnksi.sjjc.util.FunctionUtil;
 
 import org.xutils.DbManager;
-
-
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
@@ -34,50 +32,87 @@ import java.util.concurrent.Executors;
 public class BaseService<T> {
 
     public static <K> BaseService<K> getInstance(Class<K> clz) {
-        return new BaseService<>();
+        return new BaseService<>(clz);
     }
 
     protected Handler mHandler = new Handler(Looper.getMainLooper());
-    protected ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    protected static ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+    protected Class<T> clz;
+
+    protected BaseService(Class<T> clz) {
+        this.clz = clz;
+    }
 
     public void saveOrUpdate(T t) throws DbException {
-        getDbManager().saveOrUpdate(t);
-    }
-
-    public T findById(Class<T> clazz, Object id) throws DbException {
-        return getDbManager().findById(clazz, id);
-    }
-
-    protected Selector<T> selector(Class<T> clz) throws DbException {
-        return getDbManager().selector(clz).where(BaseModel.DLT, "=", "0");
-    }
-
-    protected DbManager getDbManager() {
-        return CustomApplication.getDbManager();
-    }
-
-    /**
-     * 逻辑删除
-     *
-     * @param clz
-     * @param id
-     * @return
-     */
-    public int logicDelete(Class<?> clz, Object id) throws DbException {
         try {
-            TableEntity entity = getDbManager().getTable(clz);
-            String idName = entity.getId().getName();
-            return getDbManager().update(clz, WhereBuilder.b(idName, "=", id), new KeyValue(BaseModel.DLT, "1"));
+            getDbManager().saveOrUpdate(t);
         } catch (DbException e) {
             RecordException(e);
             throw e;
         }
     }
 
-    public <D> Selector<D> from(Class<D> clz) throws DbException {
-        //暂留1=1条件 合并同步之后采用dlt
-        return getDbManager().selector(clz).where("1", "=", "1");
+    public void saveOrUpdate(List<T> t) throws DbException {
+        try {
+            getDbManager().saveOrUpdate(t);
+        } catch (DbException e) {
+            RecordException(e);
+            throw e;
+        }
+
+    }
+
+    public T findById(Object id) throws DbException {
+        try {
+            return getDbManager().findById(clz, id);
+        } catch (DbException e) {
+            RecordException(e);
+            throw e;
+        }
+    }
+
+    public Selector<T> selector() throws DbException {
+        try {
+            return getDbManager().selector(clz).where(BaseModel.DLT, "=", "0");
+        } catch (DbException e) {
+            RecordException(e);
+            throw e;
+        }
+    }
+
+
+    protected DbManager getDbManager() {
+        return CustomApplication.getDbManager();
+    }
+
+    public TableEntity<T> getTable() throws DbException {
+        return getDbManager().getTable(clz);
+    }
+
+    /**
+     * 逻辑删除
+     *
+     * @param id
+     * @return
+     */
+    public int logicDeleteById(Object id) throws DbException {
+        TableEntity entity = getDbManager().getTable(clz);
+        String idName = entity.getId().getName();
+        return logicDelete(WhereBuilder.b(idName, "=", id));
+    }
+
+    public int logicDelete(WhereBuilder whereBuilder) throws DbException {
+        return logicDelete(clz, whereBuilder);
+    }
+
+    public int logicDelete(Class clz, WhereBuilder whereBuilder) throws DbException {
+        try {
+            return update(clz, whereBuilder, new KeyValue(BaseModel.DLT, "1"));
+        } catch (DbException e) {
+            RecordException(e);
+            throw e;
+        }
     }
 
 
@@ -108,9 +143,13 @@ public class BaseService<T> {
         }
     }
 
-    public void update(Class<?> entityType, WhereBuilder whereBuilder, KeyValue... nameValuePairs) throws DbException {
+    public int update(WhereBuilder whereBuilder, KeyValue... nameValuePairs) throws DbException {
+        return update(clz, whereBuilder, nameValuePairs);
+    }
+
+    public int update(Class clz, WhereBuilder whereBuilder, KeyValue... nameValuePairs) throws DbException {
         try {
-            getDbManager().update(entityType, whereBuilder, nameValuePairs);
+            return getDbManager().update(clz, whereBuilder, nameValuePairs);
         } catch (DbException e) {
             RecordException(e);
             throw e;
@@ -150,5 +189,14 @@ public class BaseService<T> {
                         AbstractCrashReportHandler.buildBody(CustomApplication.getInstance()), e.getMessage(), e);
             }
         });
+    }
+
+    public List<T> findAll() throws DbException {
+        try {
+            return selector().findAll();
+        } catch (DbException e) {
+            RecordException(e);
+            throw e;
+        }
     }
 }

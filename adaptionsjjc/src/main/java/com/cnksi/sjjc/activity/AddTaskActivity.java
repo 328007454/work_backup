@@ -18,7 +18,6 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtil;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.DialogPressAdapter;
@@ -27,6 +26,9 @@ import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.service.BdzService;
+import com.cnksi.sjjc.service.TaskExtendService;
+import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -170,9 +172,9 @@ public class AddTaskActivity extends BaseActivity {
                 try {
                     String bdzId = PreferencesUtils.getString(_this, Config.LASTTIEM_CHOOSE_BDZNAME, "");
                     if (!TextUtils.isEmpty(bdzId)) {
-                        mTaskBDZ = CustomApplication.getDbManager().selector(Bdz.class).where(Bdz.BDZID, "=", bdzId).and(Bdz.DLT, "=", 0).findFirst();
+                        mTaskBDZ = BdzService.getInstance().findById(bdzId);
                     }
-                    mBdzList = CustomApplication.getDbManager().selector(Bdz.class).where(Bdz.DLT, "=", 0).findAll();
+                    mBdzList = BdzService.getInstance().findAll();
                     mHandler.sendEmptyMessage(LOAD_BDZ_DATA);
                 } catch (DbException e) {
                     e.printStackTrace();
@@ -343,9 +345,9 @@ public class AddTaskActivity extends BaseActivity {
             }
         }
         try {
-            CustomApplication.getDbManager().save(task);
+            TaskService.getInstance().saveOrUpdate(task);
             if (taskExpand != null) {
-                CustomApplication.getDbManager().save(taskExpand);
+                TaskExtendService.getInstance().saveOrUpdate(taskExpand);
             }
             PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, mTaskBDZ.bdzid);
             setResult(RESULT_OK);

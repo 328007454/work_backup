@@ -17,6 +17,9 @@ import com.cnksi.sjjc.View.WeatherView1;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.bean.Task;
+import com.cnksi.sjjc.service.BaseService;
+import com.cnksi.sjjc.service.ReportService;
+import com.cnksi.sjjc.service.TaskService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -26,10 +29,9 @@ import org.xutils.view.annotation.ViewInject;
 
 /**
  * 室内温湿度界面
- *
- * */
+ */
 public class IndoorHumitureRecordActivity extends BaseActivity {
-//    @ViewInject(R.id.btn_complete_record)
+    //    @ViewInject(R.id.btn_complete_record)
 //    private Button btDone;
     //标题
     @ViewInject(R.id.tv_title)
@@ -57,7 +59,7 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View containerView=getLayoutInflater().inflate(R.layout.activity_indoor_humiture,null,false);
+        View containerView = getLayoutInflater().inflate(R.layout.activity_indoor_humiture, null, false);
         RelayoutUtil.reLayoutViewHierarchy(containerView);
         setChildView(containerView);
         initUI();
@@ -77,7 +79,7 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    mReport = db.selector(Report.class).where(Report.REPORTID, "=", reportId).findFirst();
+                    mReport = ReportService.getInstance().findById(reportId);
                     mReport.starttime = DateUtils.getCurrentLongTime();
                 } catch (DbException e) {
                     e.printStackTrace();
@@ -91,8 +93,8 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
     private void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.btn_complete_record:
-                if(TextUtils.isEmpty(etCurInstrument.getText().toString())||TextUtils.isEmpty(etCurHumidiyt.getText().toString())){
-                    CToast.showLong(_this,"请输入完整信息");
+                if (TextUtils.isEmpty(etCurInstrument.getText().toString()) || TextUtils.isEmpty(etCurHumidiyt.getText().toString())) {
+                    CToast.showLong(_this, "请输入完整信息");
                     return;
                 }
                 ReportSnwsd snwsd = new ReportSnwsd();
@@ -107,19 +109,19 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
                 mReport.humidity = snwsd.sd;
                 mReport.endtime = DateUtils.getCurrentLongTime();
                 try {
-                    db.saveOrUpdate(snwsd);
-                    db.saveOrUpdate(mReport);
-                    } catch (DbException e) {
+                    BaseService.getInstance(ReportSnwsd.class).saveOrUpdate(snwsd);
+                    ReportService.getInstance().saveOrUpdate(mReport);
+                } catch (DbException e) {
                     e.printStackTrace();
                 }
-                if(!TextUtils.isEmpty(snwsd.sd)&&!TextUtils.isEmpty(snwsd.wd)){
+                if (!TextUtils.isEmpty(snwsd.sd) && !TextUtils.isEmpty(snwsd.wd)) {
                     try {
-                        db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                        TaskService.getInstance().update( WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
                 }
-                Intent intent  = new Intent (_this,JZLFenJieKaiGuanReportActivity.class);
+                Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
                 startActivity(intent);
                 setResult(RESULT_OK);
                 this.finish();

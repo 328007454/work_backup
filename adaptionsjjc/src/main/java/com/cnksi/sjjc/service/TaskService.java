@@ -2,7 +2,6 @@ package com.cnksi.sjjc.service;
 
 import android.text.TextUtils;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.SwitchPic;
@@ -27,6 +26,10 @@ public class TaskService extends BaseService<Task> {
 
     private static TaskService instance;
 
+    private TaskService() {
+        super(Task.class);
+    }
+
     public static TaskService getInstance() {
         if (null == instance) instance = new TaskService();
         return instance;
@@ -41,11 +44,11 @@ public class TaskService extends BaseService<Task> {
         String[] tableClassId = {Report.REPORTID, DefectRecord.REPORTID, SwitchPic.REPORTID};
         boolean isSuccess = false;
         try {
-            CustomApplication.getDbManager().deleteById(Task.class, idValue);
-            Report mReport = CustomApplication.getDbManager().selector(Report.class).where(Report.TASK_ID, "=", idValue).findFirst();
+           logicDeleteById( idValue);
+            Report mReport =getInstance(Report.class).selector().and(Report.TASK_ID, "=", idValue).findFirst();
             if (mReport != null) {
                 for (int i = 0, count = tableClassArray.length; i < count; i++) {
-                    CustomApplication.getDbManager().delete(tableClassArray[i], WhereBuilder.b(tableClassId[i], "=", mReport.reportid));
+                    logicDelete(tableClassArray[i], WhereBuilder.b(tableClassId[i], "=", mReport.reportid));
                 }
             }
             isSuccess = true;
@@ -55,38 +58,9 @@ public class TaskService extends BaseService<Task> {
         return isSuccess;
     }
 
-    /**
-     * 从当前的任务扩展表中查询当前检测类型
-     */
-    public TaskExtend getCurrentTask(String taskId) {
-        TaskExtend task = null;
-        try {
-            task = CustomApplication.getDbManager().selector(TaskExtend.class).where(TaskExtend.TASK_ID, "=", taskId).findFirst();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return task;
-    }
 
-    /**
-     * 查询任务计划的状态
-     *
-     * @param currentTaskId
-     * @return
-     */
-    public String getTaskStatus(String currentTaskId) {
 
-        Task task = null;
-        try {
-            task = CustomApplication.getDbManager().findById(Task.class, currentTaskId);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        if (task != null && Task.TaskStatus.done.name().equalsIgnoreCase(task.status)) {
-            return "已完成";
-        }
-        return "未完成";
-    }
+
 
     /**
      * 查询数据抄录情况
@@ -95,7 +69,7 @@ public class TaskService extends BaseService<Task> {
         long count = 0;
         try {
 
-            count = CustomApplication.getDbManager().selector(DefectRecord.class).expr(DefectRecord.VAL + " is not null").and(DefectRecord.DLT, "<>", "1").and(DefectRecord.REPORTID, "=", currentReportId).count();
+            count = selector().expr(" and "+DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId).count();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -125,7 +99,7 @@ public class TaskService extends BaseService<Task> {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
         try {
-            DbModel mDbModel = CustomApplication.getDbManager().findDbModelFirst(sqlInfo);
+            DbModel mDbModel =findDbModelFirst(sqlInfo);
             if (mDbModel != null) {
                 count = mDbModel.getLong("rs");
             }
@@ -158,7 +132,7 @@ public class TaskService extends BaseService<Task> {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
         try {
-            DbModel mDbModel = CustomApplication.getDbManager().findDbModelFirst(sqlInfo);
+            DbModel mDbModel = findDbModelFirst(sqlInfo);
             if (mDbModel != null) {
                 count = mDbModel.getLong("rs");
             }
@@ -173,16 +147,15 @@ public class TaskService extends BaseService<Task> {
      */
     public void isUploadCurrentTask(Task mTask, boolean IsUpload) {
         try {
-            CustomApplication.getDbManager().update(Report.class, WhereBuilder.b(Report.TASK_ID, "=", mTask.taskid), new KeyValue(Report.IS_UPLOAD, mTask.isUpload = (IsUpload ? "Y" : "N")));
+           update(WhereBuilder.b(Report.TASK_ID, "=", mTask.taskid), new KeyValue(Report.IS_UPLOAD, mTask.isUpload = (IsUpload ? "Y" : "N")));
         } catch (DbException e) {
             e.printStackTrace();
         }
     }
 
 
-    public Task getTask(String taskId) throws DbException {
-        return CustomApplication.getDbManager().findById(Task.class, taskId);
-    }
+
+
 
     public TaskStatistic getTaskStatistic(String inspectionType) {
         TaskStatistic result = new TaskStatistic();
@@ -193,13 +166,13 @@ public class TaskService extends BaseService<Task> {
         long count = 0;
         try {
             //今日维护任务
-            count = from(Task.class).expr(inspectionExpr).expr(todayTimeExpr).count();
+            count = selector().expr(inspectionExpr).expr(todayTimeExpr).count();
             result.setTodayTaskCount(count);
         } catch (DbException e) {
             e.printStackTrace();
         }
         try {
-            count = from(Task.class).expr(doneExpr).expr(inspectionExpr).expr(todayTimeExpr).count();
+            count = selector().expr(doneExpr).expr(inspectionExpr).expr(todayTimeExpr).count();
             result.setTodayTaskFinish(count);
         } catch (DbException e) {
             e.printStackTrace();
@@ -207,13 +180,13 @@ public class TaskService extends BaseService<Task> {
         }
         try {
             //今日维护任务
-            count = from(Task.class).expr(inspectionExpr).expr(mothTimeExpr).count();
+            count = selector().expr(inspectionExpr).expr(mothTimeExpr).count();
             result.setMonthTaskCount(count);
         } catch (DbException e) {
             e.printStackTrace();
         }
         try {
-            count = from(Task.class).expr(doneExpr).expr(inspectionExpr).expr(mothTimeExpr).count();
+            count = selector().expr(doneExpr).expr(inspectionExpr).expr(mothTimeExpr).count();
             result.setMonthTaskFinish(count);
         } catch (DbException e) {
             e.printStackTrace();
@@ -224,7 +197,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks = CustomApplication.getDbManager().selector(Task.class).where(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").findAll();
+            tasks =selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {
@@ -238,7 +211,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoSpecialTask(String inspectionType) {
         List<Task> tasks =null;
         try {
-            tasks = CustomApplication.getDbManager().selector(Task.class).expr(" inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
+            tasks = selector().expr(" inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {
@@ -252,7 +225,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getAllTask() {
         List<Task> tasks = new ArrayList<>();
         try {
-            tasks = CustomApplication.getDbManager().selector(Task.class).findAll();
+            tasks = findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -262,7 +235,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getFinishedTask() {
         List<Task> tasks = new ArrayList<>();
         try {
-            tasks = CustomApplication.getDbManager().selector(Task.class).where(Task.STATUS, "=", "undo").findAll();
+            tasks =selector().where(Task.STATUS, "=", "undo").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -272,7 +245,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> findOperationTaskByLimit(int limit) {
 
         try {
-            return from(Task.class).and(Task.TYPE, "=", InspectionType.operation.name()).orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+            return selector().and(Task.TYPE, "=", InspectionType.operation.name()).orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -288,7 +261,7 @@ public class TaskService extends BaseService<Task> {
         expr.delete(expr.length() - 2, expr.length());
         expr.append(") ");
         try {
-            return from(Task.class).expr(inspections.length > 0 ? expr.toString() : "").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
+            return selector().expr(inspections.length > 0 ? expr.toString() : "").orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -306,7 +279,7 @@ public class TaskService extends BaseService<Task> {
         expr.delete(expr.length() - 2, expr.length());
         expr.append(")");
         try {
-            model = from(Task.class).select(" sum(case when `status`='done' then 1.0 else 0 end)/count(1) as progress ").expr(inspections.length > 0 ? expr.toString() : " ").findFirst();
+            model = selector().select(" sum(case when `status`='done' then 1.0 else 0 end)/count(1) as progress ").expr(inspections.length > 0 ? expr.toString() : " ").findFirst();
             String str = model.getString("progress");
             if (!TextUtils.isEmpty(str))
                 return Float.valueOf(str);
@@ -340,6 +313,4 @@ public class TaskService extends BaseService<Task> {
         }
         return null;
     }
-
-
 }

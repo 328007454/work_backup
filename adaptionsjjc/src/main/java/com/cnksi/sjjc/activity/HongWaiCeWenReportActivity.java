@@ -20,6 +20,8 @@ import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportHwcw;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.fragment.HongWaiCeWenFragment;
+import com.cnksi.sjjc.service.BaseService;
+import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.ViewInject;
@@ -186,8 +188,8 @@ public class HongWaiCeWenReportActivity extends BaseReportActivity {
             @Override
             public void run() {
                 try {
-                    report = db.findById(Report.class, currentReportId);
-                    mReportList=db.selector(ReportHwcw.class).where(ReportHwcw.REPORT_ID,"=",currentReportId).findAll();
+                    report = ReportService.getInstance().findById(currentReportId);
+                    mReportList= BaseService.getInstance(ReportHwcw.class).selector().and(ReportHwcw.REPORT_ID,"=",currentReportId).findAll();
                 } catch (DbException e) {
                     e.printStackTrace(System.out);
                 }

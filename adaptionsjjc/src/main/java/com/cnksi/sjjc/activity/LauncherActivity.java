@@ -15,6 +15,7 @@ import com.cnksi.sjjc.bean.Users;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.UserService;
+import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.OnViewClickListener;
 import com.cnksi.sjjc.util.TTSUtils;
@@ -28,7 +29,9 @@ import java.util.List;
 
 /**
  * launcher界面
+ * 使用新的首页
  */
+@Deprecated
 public class LauncherActivity extends BaseActivity {
     @ViewInject(R.id.ibtn_exit)
     private ImageButton exitProject;
@@ -71,7 +74,7 @@ public class LauncherActivity extends BaseActivity {
 
         setChildView(R.layout.activity_launcher);
         x.view().inject(_this);
-        TTSUtils.getInstance().startSpeak(String.format("欢迎使用%1$s", getString(R.string.app_name)));
+        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
 
         tvTitle.setText(R.string.app_name);
         exitProject.setImageResource(R.drawable.exit_button_background);
@@ -132,7 +135,7 @@ public class LauncherActivity extends BaseActivity {
                 intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
                 intent1.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(this, Config.CURRENT_LOGIN_USER, ""));
                 intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(this, Config.CURRENT_LOGIN_ACCOUNT, ""));
-                intent1.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(this, Config.CURRENT_DEPARTMENT_ID,""));
+                intent1.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(this, Config.CURRENT_DEPARTMENT_ID, ""));
                 intent1.setComponent(componentName1);
                 startActivity(intent1);
                 return;
@@ -174,7 +177,7 @@ public class LauncherActivity extends BaseActivity {
             case R.id.layout_data_sync:
                 List<String> upload = new ArrayList<>();
                 upload.add("admin/ningxiashizuishan/buqiao");
-                startSync();
+                ActivityUtil.startSync(mCurrentActivity);
                 return;
             //图解五通
             case R.id.tjwt:

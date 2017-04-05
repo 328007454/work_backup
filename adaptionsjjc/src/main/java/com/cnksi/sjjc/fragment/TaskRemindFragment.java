@@ -20,7 +20,6 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.SqliteUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.AnimalReportActivity;
 import com.cnksi.sjjc.activity.BatteryTestActivity;
@@ -164,10 +163,10 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     if (null != mInspectionType) {
                         whereBuilder.expr("AND " + Task.INSPECTION + " like '%" + mInspectionType.name() + "%'");
                     }
-                    mDataList = CustomApplication.getDbManager().selector(Task.class).where(whereBuilder).orderBy(Task.SCHEDULE_TIME).findAll();
+                    mDataList = TaskService.getInstance().selector().and(whereBuilder).orderBy(Task.SCHEDULE_TIME).findAll();
                     // 遍历当前已完成的任务，查询是否有新增缺陷
                     if (mDataList != null) {
-                        DbModel model = CustomApplication.getDbManager().findDbModelFirst(new SqlInfo("SELECT group_concat(taskid) as rs FROM report where is_upload='N'"));
+                        DbModel model = ReportService.getInstance().findDbModelFirst(new SqlInfo("SELECT group_concat(taskid) as rs FROM report where is_upload='N'"));
                         String rs = model.getString("rs");
                         if (!TextUtils.isEmpty(rs)) {
                             String taskIds[] = rs.split(CoreConfig.COMMA_SEPARATOR);
@@ -300,14 +299,14 @@ public class TaskRemindFragment extends BaseCoreFragment {
 
             Report report = ReportService.getInstance().getReportByTask(task.taskid);
 
-            Bdz bdz = BdzService.getInstance().findById(Bdz.class, task.bdzid);
+            Bdz bdz = BdzService.getInstance().findById(task.bdzid);
             if (!FileUtils.isFileExists(Config.BDZ_INSPECTION_FOLDER + bdz.folder))
                 FileUtils.makeDirectory(Config.BDZ_INSPECTION_FOLDER + bdz.folder);
             if (null == report) {
                 String loginUser = PreferencesUtils.getString(getContext(), Config.CURRENT_LOGIN_USER, "");
                 report = new Report(task.taskid, task.bdzid, task.bdzname, task.inspection, loginUser);
                 ReportService.getInstance().saveOrUpdate(report);
-                ModifyRecordService.getInstance().saveOrUpdateModifyRecord(report.reportid, Report.REPORTID, CustomApplication.getDbManager().getTable(Report.class).getName(), Config.ModifyOperation.add.name());
+                ModifyRecordService.getInstance().saveOrUpdateModifyRecord(report.reportid, Report.REPORTID, ReportService.getInstance().getTable().getName(), Config.ModifyOperation.add.name());
             }
             PreferencesUtils.put(getActivity(), Config.CURRENT_TASK_ID, task.taskid);
             PreferencesUtils.put(getActivity(), Config.CURRENT_REPORT_ID, report.reportid);

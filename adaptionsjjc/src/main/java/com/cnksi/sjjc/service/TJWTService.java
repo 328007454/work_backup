@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.TJWT;
 
 import org.xutils.ex.DbException;
@@ -10,8 +9,12 @@ import java.util.List;
 /**
  * 查询图解五通图片
  */
-public class TJWTService {
+public class TJWTService extends BaseService<TJWT> {
     private static TJWTService instance;
+
+    private TJWTService() {
+        super(TJWT.class);
+    }
 
     public static TJWTService getInstance() {
         if (null == instance)
@@ -21,7 +24,7 @@ public class TJWTService {
 
     public List<TJWT> findAllTJWT(){
         try {
-            return CustomApplication.getDbManager().selector(TJWT.class).expr(" dlt <> 1").orderBy(TJWT.SORT).findAll();
+            return selector().orderBy(TJWT.SORT).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }

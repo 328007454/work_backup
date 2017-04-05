@@ -27,6 +27,7 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DiscoverHoleAdapter;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
 
@@ -172,7 +173,7 @@ public class DiscoverHoleActivity extends BaseActivity {
                 HoleRecord holeRecord = new HoleRecord(currentReportId, currentBdzId, currentBdzName, tvHolePosition.getText().toString(),
                         etPosition.getText().toString(), picAll,etInputProblem.getText().toString());
                 try {
-                    db.save(holeRecord);
+                    HoleReportService.getInstance().saveOrUpdate(holeRecord);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }

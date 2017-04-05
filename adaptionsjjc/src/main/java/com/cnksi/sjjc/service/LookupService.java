@@ -1,7 +1,6 @@
 package com.cnksi.sjjc.service;
 
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.Lookup;
 import com.cnksi.sjjc.enmu.LookUpType;
 
@@ -18,11 +17,12 @@ import java.util.List;
  * @author terry
  *
  */
-public class LookupService {
+public class LookupService extends  BaseService<Lookup> {
 
 	public static LookupService mInstance;
 
 	private LookupService() {
+		super(Lookup.class);
 	}
 
 	public static LookupService getInstance() {
@@ -41,7 +41,7 @@ public class LookupService {
 	public List<String> getAllValueByLookupType(String type) {
 		List<String> valueList = new ArrayList<String>();
 		try {
-			List<Lookup> lookups = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+			List<Lookup> lookups = selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
 					.orderBy(Lookup.SORT, false).findAll();
 			for (Lookup look : lookups) {
 				valueList.add(look.v);
@@ -66,7 +66,7 @@ public class LookupService {
 	public Lookup findLookupByValue(String value) {
 		Lookup lup = null;
 		try {
-			lup = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.V, "=", value).findFirst();
+			lup = selector().and(Lookup.V, "=", value).findFirst();
 		} catch (DbException ex) {
 			ex.printStackTrace();
 		}
@@ -82,7 +82,7 @@ public class LookupService {
 	public List<Lookup> findLookupByType(String type, boolean hasSearch) {
 		List<Lookup> lookups = null;
 		try {
-			lookups = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+			lookups =selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
 					.orderBy(Lookup.SORT, false).findAll();
 		} catch (DbException e) {
 			e.printStackTrace();
@@ -105,7 +105,7 @@ public class LookupService {
 	public List<Lookup> findLookupByTypeWithOutLooId(String type) {
 		List<Lookup> lookups = null;
 		try {
-			lookups = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+			lookups = selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
 					.expr("AND (" + Lookup.LOO_ID + " IS NULL OR " + Lookup.LOO_ID + "='')")
 					.expr("AND (" + Lookup.K + " NOT LIKE 'exclusive' " + ") AND (" + Lookup.LOO_ID + " IS NULL OR "
 							+ Lookup.LOO_ID + "='')")
@@ -125,7 +125,7 @@ public class LookupService {
 	public List<Lookup> findLookupTemp(String type) {
 		List<Lookup> lookups = null;
 		try {
-			lookups = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.TYPE, "=", type)
+			lookups = selector().and(Lookup.TYPE, "=", type)
 					.and(WhereBuilder.b(Lookup.K, "in", new String[] { "full", "day" })).orderBy(Lookup.SORT, false).findAll();
 		} catch (DbException e) {
 			e.printStackTrace();
@@ -142,7 +142,7 @@ public class LookupService {
 	public List<Lookup> findLookupByTypeWithOutLooId(String type, String k) {
 		List<Lookup> lookups = null;
 		try {
-			lookups = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+			lookups = selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
 					.expr("AND (" + Lookup.K + " = '" + k + "' AND " + Lookup.K + " NOT LIKE 'exclusive' " + ") AND ("
 							+ Lookup.LOO_ID + " IS NULL OR " + Lookup.LOO_ID + "='')")
 					.orderBy(Lookup.SORT, false).findAll();
@@ -162,7 +162,7 @@ public class LookupService {
 	public List<Lookup> findLookupByLooId(String type, String looId) {
 		List<Lookup> lookups = null;
 		try {
-			lookups = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+			lookups = selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
 					.and(Lookup.LOO_ID, "=", looId).and(Lookup.K,"<>","special_guzhang").and(Lookup.K,"<>","special_xideng")
 					.and(Lookup.K,"<>","special_nighttime").orderBy(Lookup.SORT, false).findAll();
 		} catch (DbException e) {
@@ -180,7 +180,7 @@ public class LookupService {
 	public String getLookUpRemarkByK(String k) {
 		String remark = "";
 		try {
-			Lookup mLookUp = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.K, "=", k).findFirst();
+			Lookup mLookUp = selector().and(Lookup.K, "=", k).findFirst();
 			if (mLookUp != null) {
 				remark = mLookUp.remark;
 			}
@@ -216,7 +216,7 @@ public class LookupService {
 	public List<Lookup> getDefectReasonListByParentId(String parentId) {
 		List<Lookup> lookupList = null;
 		try {
-			lookupList = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.TYPE, "=", LookUpType.defect_reason.name())
+			lookupList =selector().and(Lookup.TYPE, "=", LookUpType.defect_reason.name())
 					.and(Lookup.LOO_ID, "=", parentId).findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -232,7 +232,7 @@ public class LookupService {
 	public List<Lookup> getDefectReasonType() {
 		List<Lookup> lookupList = null;
 		try {
-			lookupList = CustomApplication.getDbManager().selector(Lookup.class).where(Lookup.TYPE, "=", LookUpType.defect_reason.name())
+			lookupList =selector().and(Lookup.TYPE, "=", LookUpType.defect_reason.name())
 					.and(WhereBuilder.b(Lookup.LOO_ID, "=", "").expr("OR " + Lookup.LOO_ID + " IS NULL")).findAll();
 		} catch (Exception e) {
 			e.printStackTrace();

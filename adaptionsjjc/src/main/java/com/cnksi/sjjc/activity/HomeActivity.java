@@ -229,7 +229,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 ActivityUtil.startWTYCActiviy(_this);
                 break;
             case R.id.device_sycn:
-                ActivityUtil.startSyncActivity(_this);
+                ActivityUtil.startSync(mCurrentActivity);
                 break;
             case R.id.bdz_all_name:
                 mPowerStationDialog.show();
@@ -344,18 +344,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                 for (Task task : taskList) {
                                     try {
                                         Report report = ReportService.getInstance().getReportByTask(task.taskid);
+                                        String str = "";
                                         if (report != null) {
-                                            String str = "";
+
                                             if (InspectionType.full.name().equals(task.inspection)) {
                                                 long copyTotal = CopyItemService.getInstance().getCopyItemCount(task.bdzid);
                                                 long copyCount = CopyResultService.getInstance().getReportCopyCount(report.reportid);
                                                 str = String.format("抄录：%d/%d", copyCount, copyTotal);
                                             }
-                                            String arrivedStr = PlacedService.getInstance().findPlacedSpace(report);
-                                            if (!TextUtils.isEmpty(arrivedStr))
-                                                str = str + "   " + "到位：" + arrivedStr;
-                                            task.remark = str;
                                         }
+                                        String arrivedStr = PlacedService.getInstance().findPlacedSpace("", task.bdzid);
+                                        if (!TextUtils.isEmpty(arrivedStr))
+                                            str = str + "   " + "到位：" + arrivedStr;
+                                        task.remark = str;
                                     } catch (DbException e) {
                                         e.printStackTrace();
                                     }

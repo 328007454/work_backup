@@ -19,6 +19,8 @@ import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.service.ReportJzlbyqfjkgService;
+import com.cnksi.sjjc.service.ReportService;
+import com.cnksi.sjjc.service.TaskService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -32,7 +34,6 @@ import java.util.List;
 
 /**
  * 交直流变压器分接开关记录调整界面
- *
  */
 public class TransformAdjustmentRecordActivity extends BaseActivity {
     @ViewInject(R.id.ll_container)
@@ -79,15 +80,15 @@ public class TransformAdjustmentRecordActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    mReport = db.selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
+                    mReport = ReportService.getInstance().findById(currentReportId);
                     mReport.starttime = DateUtils.getCurrentLongTime();
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
-                listDbModel = ReportJzlbyqfjkgService.getIntance().getPartDevice(bdzid, "分接开关动作次数");
+                listDbModel = ReportJzlbyqfjkgService.getInstance().getPartDevice(bdzid, "分接开关动作次数");
                 if (listDbModel != null && !listDbModel.isEmpty()) {
                     for (DbModel model : listDbModel) {
-                        ReportJzlbyqfjkg mReport = ReportJzlbyqfjkgService.getIntance().getFirstReport(model.getString("bdzid"), model.getString("deviceid"),currentReportId);
+                        ReportJzlbyqfjkg mReport = ReportJzlbyqfjkgService.getInstance().getFirstReport(model.getString("bdzid"), model.getString("deviceid"), currentReportId);
                         listReport.add(mReport);
                     }
                 }
@@ -105,12 +106,12 @@ public class TransformAdjustmentRecordActivity extends BaseActivity {
                     DbModel model = listDbModel.get(i);
                     String bcds = listReport.get(i).bcds;
                     String dzcs = listReport.get(i).dzcs;
-                    ViewHolder holder = new ViewHolder(this,null,R.layout.activity_jzl_add_titleview,false);
-                    holder.setText(R.id.jzl_title,model.getString("name"));
-                    holder.setText(R.id.et_put_bcds,bcds==null?"":bcds);
+                    ViewHolder holder = new ViewHolder(this, null, R.layout.activity_jzl_add_titleview, false);
+                    holder.setText(R.id.jzl_title, model.getString("name"));
+                    holder.setText(R.id.et_put_bcds, bcds == null ? "" : bcds);
                     EditText txtBcds = holder.getView(R.id.et_put_bcds);
                     listBcds.add(txtBcds);
-                    holder.setText(R.id.et_put_dzcs,dzcs==null?"":dzcs);
+                    holder.setText(R.id.et_put_dzcs, dzcs == null ? "" : dzcs);
                     EditText txtDzcs = holder.getView(R.id.et_put_dzcs);
                     listDzcs.add(txtDzcs);
                     llContainer.addView(holder.getRootView());
@@ -129,11 +130,12 @@ public class TransformAdjustmentRecordActivity extends BaseActivity {
                 break;
             case R.id.btn_confirm_save:
                 boolean isSaveTask = true;
+                List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
                 for (int i = 0; i < listDbModel.size(); i++) {
                     DbModel dbModel = listDbModel.get(i);
                     String bcds = listBcds.get(i).getText().toString();
                     String dzcs = listDzcs.get(i).getText().toString();
-                    if(TextUtils.isEmpty(bcds)&&TextUtils.isEmpty(dzcs)){
+                    if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
                         continue;
                     }
                     mReportJzlby = listReport.get(i);
@@ -141,31 +143,31 @@ public class TransformAdjustmentRecordActivity extends BaseActivity {
                     mReportJzlby.bdz_name = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
                     mReportJzlby.device_id = dbModel.getString("deviceid");
                     mReportJzlby.device_name = dbModel.getString("name");
-                    mReportJzlby.report_id=currentReportId;
+                    mReportJzlby.report_id = currentReportId;
                     mReportJzlby.bcds = bcds;
                     mReportJzlby.dzcs = dzcs;
                     mReportJzlby.last_modify_time = DateUtils.getCurrentLongTime();
-                    try {
-                        listReport.get(i).id = mReportJzlby.id;
-                        db.saveOrUpdate(mReportJzlby);
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
+                    saveList.add(mReportJzlby);
 
                 }
-                    try {
-                        db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
-                        setResult(RESULT_OK);
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
                 try {
-                    mReport.endtime = DateUtils.getCurrentLongTime();
-                    db.saveOrUpdate(mReport);
+                    ReportJzlbyqfjkgService.getInstance().saveOrUpdate(saveList);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
-                Intent intent  = new Intent (_this,JZLFenJieKaiGuanReportActivity.class);
+                try {
+                    TaskService.getInstance().update( WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                    setResult(RESULT_OK);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    mReport.endtime = DateUtils.getCurrentLongTime();
+                    ReportService.getInstance().saveOrUpdate(mReport);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
                 startActivity(intent);
                 this.finish();
                 break;

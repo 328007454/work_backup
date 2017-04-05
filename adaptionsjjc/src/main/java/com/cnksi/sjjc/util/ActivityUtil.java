@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 
-import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.HomeActivity;
 import com.cnksi.sjjc.activity.NewLauncherActivity;
 import com.cnksi.sjjc.activity.TypeListActivity;
 import com.cnksi.sjjc.enmu.InspectionType;
-import com.cnksi.sjjc.sync.DataSync;
+import com.cnksi.sjjc.sync.KSyncConfig;
 
 /**
  * Created by lyndon on 2016/9/12.
@@ -62,7 +61,7 @@ public class ActivityUtil {
         intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
         intent1.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
         intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
-        intent1.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(activity, Config.CURRENT_DEPARTMENT_ID,""));
+        intent1.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(activity, Config.CURRENT_DEPARTMENT_ID, ""));
         intent1.setComponent(componentName1);
         activity.startActivity(intent1);
     }
@@ -79,11 +78,14 @@ public class ActivityUtil {
         activity.startActivity(intent);
     }
 
-    public static void startSyncActivity(Activity activity) {
-        ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
-        Intent intentData = new Intent(activity, DataSync.class);
-        intentData.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
-        intentData.putExtra(Config.SYNC_COME_FROM, Config.LAUNCHERACTIVITY_TO_SYNC);
-        activity.startActivity(intentData);
+
+    public static void startSync(Activity activity) {
+        if (BuildConfig.USE_NETWORK_SYNC) {
+            KSyncConfig.getInstance()
+                    .startNetWorkSync(activity);
+        } else {
+            KSyncConfig.getInstance().startUsbWorkSync(activity);
+        }
+
     }
 }

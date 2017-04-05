@@ -10,10 +10,12 @@ import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.databinding.ReportIndoorBinding;
 import com.cnksi.sjjc.databinding.ReportIndoorIncludeBinding;
+import com.cnksi.sjjc.service.BaseService;
+import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.ex.DbException;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 室内温湿度报告界面
@@ -23,7 +25,7 @@ public class IndoorHumitureReportActivity extends BaseReportActivity {
     public static final int ANIMATION = 0X100;
     public static final int VIBRATOR = ANIMATION + 1;
     private ReportIndoorBinding reportBinding;
-    private ArrayList<ReportSnwsd> mReportList;
+    private List<ReportSnwsd> mReportList;
     private Report report;
 
     @Override
@@ -49,8 +51,8 @@ public class IndoorHumitureReportActivity extends BaseReportActivity {
                                     @Override
                                     public void run() {
                                         try {
-                                            report = db.findById(Report.class, currentReportId);
-                                            mReportList = (ArrayList<ReportSnwsd>) db.selector(ReportSnwsd.class).where(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
+                                            report = ReportService.getInstance().findById(currentReportId);
+                                            mReportList = BaseService.getInstance(ReportSnwsd.class).selector().and(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
                                         } catch (DbException e) {
                                             e.printStackTrace();
                                         }

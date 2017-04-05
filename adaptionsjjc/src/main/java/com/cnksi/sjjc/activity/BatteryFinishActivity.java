@@ -29,6 +29,7 @@ import com.cnksi.sjjc.databinding.DialogPeople;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.BatteryGroupService;
 import com.cnksi.sjjc.service.BatteryService;
+import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.OnViewClickListener;
@@ -184,7 +185,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
                 }
                 cacheBatteryInfor();
                 try {
-                    db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                    TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
                 } catch (DbException e) {
                     e.printStackTrace();
                 }

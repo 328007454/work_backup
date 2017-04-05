@@ -331,7 +331,7 @@ public class PreventAnimalActivity extends BaseActivity {
     private void saveData(){
         preventionRecord.last_modify_time = DateUtils.getCurrentLongTime();
         try {
-            db.saveOrUpdate(preventionRecord);
+            PreventionService.getInstance().saveOrUpdate(preventionRecord);
         } catch (DbException e) {
             e.printStackTrace();
         }

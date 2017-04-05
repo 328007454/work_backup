@@ -1,6 +1,6 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.sjjc.bean.Standards;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -15,11 +15,12 @@ import java.util.List;
  * @author terry
  *
  */
-public class StandardService {
+public class StandardService extends BaseService<Standards> {
 
 	public static StandardService mInstance;
 
 	private StandardService() {
+		super(Standards.class);
 	}
 
 	public static StandardService getInstance() {
@@ -58,8 +59,7 @@ public class StandardService {
 			sqlInfo.addBindArg(new KeyValue("devicePartId",devicePartId));
 			sqlInfo.addBindArg(new KeyValue("deviceId",deviceId));
 			sqlInfo.addBindArg(new KeyValue("devicePartId",devicePartId));
-			mStandardList = CustomApplication.getDbManager()
-					.findDbModelAll(sqlInfo);
+			mStandardList = findDbModelAll(sqlInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

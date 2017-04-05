@@ -24,6 +24,7 @@ import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportCdbhclService;
 import com.cnksi.sjjc.service.ReportJzlbyqfjkgService;
+import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -193,16 +194,16 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                                     @Override
                                     public void run() {
                                         try {
-                                            report = db.findById(Report.class, currentReportId);
+                                            report = ReportService.getInstance().findById(currentReportId);
                                         } catch (DbException e) {
                                             e.printStackTrace(System.out);
                                         }
                                         if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
                                             if (Config.NEW_COPY) {
-                                                listDbModel = ReportJzlbyqfjkgService.getIntance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
+                                                listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
                                                 copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
                                             } else {
-                                                listDbModel = ReportJzlbyqfjkgService.getIntance().getPartDeviceAndReport(currentBdzId, "分接开关动作次数", currentReportId);
+                                                listDbModel = ReportJzlbyqfjkgService.getInstance().getPartDeviceAndReport(currentBdzId, "分接开关动作次数", currentReportId);
                                             }
                                         }
 
@@ -212,7 +213,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                                                     listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
                                                 else
                                                     listDevice = DeviceService.getInstance().getDevicesByName(currentBdzId, "保护差流");
-                                                exitCdbhclList = ReportCdbhclService.getIntance().getReportCdbhclList(currentBdzId, currentReportId);
+                                                exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(currentBdzId, currentReportId);
                                                 for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
                                                     CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
                                                 }

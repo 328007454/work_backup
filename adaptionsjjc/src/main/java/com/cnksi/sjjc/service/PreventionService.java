@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.PreventionRecord;
 
 import org.xutils.ex.DbException;
@@ -15,7 +14,8 @@ public class PreventionService extends BaseService<PreventionRecord> {
 
     private static PreventionService mPreventionInstance;
 
-    public PreventionService() {
+    private PreventionService() {
+        super(PreventionRecord.class);
 
     }
 
@@ -29,18 +29,18 @@ public class PreventionService extends BaseService<PreventionRecord> {
     public List<PreventionRecord> getAllRecord(String reportid, String bdzid) {
         List<PreventionRecord> listRecord = null;
         try {
-            listRecord = CustomApplication.getDbManager().selector(PreventionRecord.class).where(PreventionRecord.REPORT_ID, "=", reportid).and(PreventionRecord.BDZ_ID, "=", bdzid).orderBy(PreventionRecord.LAST_MODIFY_TIME, true).findAll();
+            listRecord = selector().and(PreventionRecord.REPORT_ID, "=", reportid).and(PreventionRecord.BDZ_ID, "=", bdzid).orderBy(PreventionRecord.LAST_MODIFY_TIME, true).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
         if (listRecord == null) {
-            return new ArrayList<PreventionRecord>();
+            return new ArrayList<>();
         }
         return listRecord;
     }
 
 
     public PreventionRecord findPreventionRecordByReoprtId(String reportId) throws DbException {
-        return CustomApplication.getDbManager().selector(PreventionRecord.class).where(PreventionRecord.REPORT_ID, "=", reportId).findFirst();
+        return selector().and(PreventionRecord.REPORT_ID, "=", reportId).findFirst();
     }
 }

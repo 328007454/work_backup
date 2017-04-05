@@ -46,7 +46,7 @@ public class CoreApplication extends Application {
      *
      * @return
      */
-    public static DbManager getDbManager() {
+    private static DbManager getDbManager() {
         if (mDbManager == null) {
             mDbManager = x.getDb(getDaoConfig());
         }

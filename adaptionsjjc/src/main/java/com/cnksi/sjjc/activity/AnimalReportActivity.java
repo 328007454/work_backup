@@ -21,6 +21,7 @@ import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;
+import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.Event;
@@ -104,10 +105,11 @@ public class AnimalReportActivity extends BaseReportActivity {
      */
     private Report report;
     //
-    private PreventionRecord preventionRecord  ;
+    private PreventionRecord preventionRecord;
     //
     private List<HoleRecord> mHoleList;
     private int discoverHoleCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,11 +120,11 @@ public class AnimalReportActivity extends BaseReportActivity {
 
     @Override
     public View setReportView() {
-        return getLayoutInflater().inflate(R.layout.animal_layout,null);
+        return getLayoutInflater().inflate(R.layout.animal_layout, null);
     }
 
     private void initUI() {
-        mTvInspectionPerson.setText(PreferencesUtils.get(_this,Config.CURRENT_LOGIN_USER,""));
+        mTvInspectionPerson.setText(PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
 
     }
 
@@ -131,7 +133,7 @@ public class AnimalReportActivity extends BaseReportActivity {
             @Override
             public void run() {
                 try {
-                    report = db.findById(Report.class, currentReportId);
+                    report = ReportService.getInstance().findById(currentReportId);
                     preventionRecord = PreventionService.getInstance().findPreventionRecordByReoprtId(currentReportId);
                     mHoleList = HoleReportService.getInstance().getCurrentClearRecord(currentReportId, currentBdzId);
                 } catch (DbException e) {
@@ -144,10 +146,11 @@ public class AnimalReportActivity extends BaseReportActivity {
     }
 
     private ArrayList<String> clearHole = new ArrayList<>();
+
     @SuppressWarnings("unchecked")
     @Override
     protected void onRefresh(Message msg) {
-       super.onRefresh(msg);
+        super.onRefresh(msg);
         switch (msg.what) {
             case LOAD_DATA:
                 mTvInspectionStartTime.setText(report.starttime);
@@ -159,30 +162,30 @@ public class AnimalReportActivity extends BaseReportActivity {
                 String dianLanPic = preventionRecord.cable_images;
                 String secondDevicPic = preventionRecord.second_device_images;
                 String otherPic = preventionRecord.other_images;
-                if (0==preventionRecord.switchStatus) {
+                if (0 == preventionRecord.switchStatus) {
                     tvKaiGuan.setText("正常");
                     //getResources().getColor(R.color.green_color)
-                    tvKaiGuan.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+                    tvKaiGuan.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
                 } else {
                     tvKaiGuan.setText("不正常");
                     tvKaiGuan.setTextColor(Color.RED);
                 }
-                if (0==preventionRecord.inroomStatus) {
-                    tvInroom.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+                if (0 == preventionRecord.inroomStatus) {
+                    tvInroom.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
                     tvInroom.setText("正常");
                 } else {
                     tvInroom.setText("不正常");
                     tvInroom.setTextColor(Color.RED);
                 }
-                if (0==preventionRecord.outroomStatus) {
-                    tvOutRoom.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+                if (0 == preventionRecord.outroomStatus) {
+                    tvOutRoom.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
                     tvOutRoom.setText("正常");
                 } else {
                     tvOutRoom.setText("不正常");
                     tvOutRoom.setTextColor(Color.RED);
                 }
-                if (0==preventionRecord.doorWindowStatus) {
-                    tvMen.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+                if (0 == preventionRecord.doorWindowStatus) {
+                    tvMen.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
                     tvMen.setText("正常");
                 } else {
                     tvMen.setText("不正常");
@@ -208,13 +211,13 @@ public class AnimalReportActivity extends BaseReportActivity {
                         (oneDevicePic == null ? "" : "," + oneDevicePic) + (protectPic == null ? "" : "," + protectPic) +
                         (dianLanPic == null ? "" : "," + dianLanPic) + (secondDevicPic == null ? "" : "," + secondDevicPic) +
                         (otherPic == null ? "" : "," + otherPic);
-                if(jianChaPics.startsWith(",")){
-                    jianChaPics = jianChaPics.substring(1,jianChaPics.length());
+                if (jianChaPics.startsWith(",")) {
+                    jianChaPics = jianChaPics.substring(1, jianChaPics.length());
                 }
                 for (HoleRecord record : mHoleList) {
                     if (currentReportId.equalsIgnoreCase(record.reportId))
                         discoverHoleCount++;
-                    if (!TextUtils.isEmpty(record.hole_images)&&currentReportId.equals(record.reportId)) {
+                    if (!TextUtils.isEmpty(record.hole_images) && currentReportId.equals(record.reportId)) {
                         if (TextUtils.isEmpty(disHolePics)) {
                             disHolePics += record.hole_images;
                         } else {
@@ -222,7 +225,7 @@ public class AnimalReportActivity extends BaseReportActivity {
                         }
 
                     }
-                    if (!TextUtils.isEmpty(record.clear_images)&&currentReportId.equals(record.clear_reportid)&&"1".equals(record.status)) {
+                    if (!TextUtils.isEmpty(record.clear_images) && currentReportId.equals(record.clear_reportid) && "1".equals(record.status)) {
                         if (TextUtils.isEmpty(clearHolePics)) {
                             clearHolePics += record.clear_images;
                         } else {
@@ -239,17 +242,19 @@ public class AnimalReportActivity extends BaseReportActivity {
                 break;
         }
     }
+
     private ArrayList<String> jiaChaList;
-    private  ArrayList<String> disList;
-    private ArrayList<String>  clearList;
+    private ArrayList<String> disList;
+    private ArrayList<String> clearList;
+
     private void setReportPics() {
         if (!TextUtils.isEmpty(jianChaPics)) {
-             jiaChaList = StringUtils.string2List(jianChaPics);
-            if(jiaChaList.size()!=0){
+            jiaChaList = StringUtils.string2List(jianChaPics);
+            if (jiaChaList.size() != 0) {
                 tvJianChaNum.setVisibility(View.VISIBLE);
                 imgJianCha.setVisibility(View.VISIBLE);
-                tvJianChaNum.setText(jiaChaList.size()+"");
-                if(jiaChaList.size()==1){
+                tvJianChaNum.setText(jiaChaList.size() + "");
+                if (jiaChaList.size() == 1) {
                     tvJianChaNum.setVisibility(View.GONE);
                 }
                 String picName = jiaChaList.get(0);
@@ -258,7 +263,7 @@ public class AnimalReportActivity extends BaseReportActivity {
                     imgJianCha.setImageBitmap(bmPicture);
                 }
             }
-        }else {
+        } else {
             tvJianChaNum.setVisibility(View.GONE);
             imgJianCha.setVisibility(View.INVISIBLE);
         }
@@ -266,7 +271,7 @@ public class AnimalReportActivity extends BaseReportActivity {
         tvDiscover.setText(discoverHoleCount == 0 ? "无" : discoverHoleCount + "");
         if (!TextUtils.isEmpty(disHolePics)) {
 
-           disList = StringUtils.string2List(disHolePics);
+            disList = StringUtils.string2List(disHolePics);
 //            tvDiscover.setText(disList.size()+"");
             String picName = disList.get(0);
             imgDisHole.setVisibility(View.VISIBLE);
@@ -274,42 +279,42 @@ public class AnimalReportActivity extends BaseReportActivity {
             if (bmPicture != null) {
                 imgDisHole.setImageBitmap(bmPicture);
             }
-            if(disList.size()>1){
+            if (disList.size() > 1) {
                 tvDisNum.setVisibility(View.VISIBLE);
-                tvDisNum.setText(disList.size()+"");
-            }else {
+                tvDisNum.setText(disList.size() + "");
+            } else {
                 tvDisNum.setVisibility(View.INVISIBLE);
             }
-        }else {
+        } else {
 //            tvDiscover.setText("无");
             tvDisNum.setVisibility(View.GONE);
             imgDisHole.setVisibility(View.INVISIBLE);
         }
         if (!TextUtils.isEmpty(clearHolePics)) {
-             clearList = StringUtils.string2List(clearHolePics);
-            tvClear.setText(clearList.size()+"");
+            clearList = StringUtils.string2List(clearHolePics);
+            tvClear.setText(clearList.size() + "");
             String picName = clearList.get(0);
             imgClearHole.setVisibility(View.VISIBLE);
             Bitmap bmPicture = BitmapUtil.getOptimizedBitmap(Config.RESULT_PICTURES_FOLDER + picName);
             if (bmPicture != null) {
                 imgClearHole.setImageBitmap(bmPicture);
             }
-            if(clearList.size()>1){
+            if (clearList.size() > 1) {
 
-                tvClearNum.setText(clearList.size()+"");
-            }else{
+                tvClearNum.setText(clearList.size() + "");
+            } else {
                 tvClearNum.setVisibility(View.INVISIBLE);
             }
-        }else{
+        } else {
             tvClear.setText("无");
             tvClearNum.setVisibility(View.GONE);
             imgClearHole.setVisibility(View.INVISIBLE);
         }
     }
 
-    @Event({ R.id.tv_continue_inspection,R.id.img_jianchaprocess,R.id.img_discoverhole,R.id.img_clearhole,R.id.tv_continue_inspection})
+    @Event({R.id.tv_continue_inspection, R.id.img_jianchaprocess, R.id.img_discoverhole, R.id.img_clearhole, R.id.tv_continue_inspection})
     private void onViewClick(View view) {
-        ArrayList<String> watchPics =null;
+        ArrayList<String> watchPics = null;
         switch (view.getId()) {
             case R.id.tv_continue_inspection:
                 Intent intent1 = new Intent(_this, PreventAnimalActivity.class);
@@ -317,10 +322,10 @@ public class AnimalReportActivity extends BaseReportActivity {
                 this.finish();
                 break;
             case R.id.img_jianchaprocess:
-                watchPics=jiaChaList;
+                watchPics = jiaChaList;
                 break;
             case R.id.img_discoverhole:
-                watchPics =disList;
+                watchPics = disList;
                 break;
             case R.id.img_clearhole:
                 watchPics = clearList;
@@ -329,10 +334,10 @@ public class AnimalReportActivity extends BaseReportActivity {
             default:
                 break;
         }
-        if(watchPics!=null&&watchPics.size()>0){
+        if (watchPics != null && watchPics.size() > 0) {
 
-        showImageDetails(mCurrentActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(watchPics, Config.RESULT_PICTURES_FOLDER), false,false);
-    }
+            showImageDetails(mCurrentActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(watchPics, Config.RESULT_PICTURES_FOLDER), false, false);
+        }
 
     }
 }

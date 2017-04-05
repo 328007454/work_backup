@@ -35,6 +35,7 @@ import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.HwcwService;
 import com.cnksi.sjjc.service.ModifyRecordService;
 import com.cnksi.sjjc.service.ReportService;
+import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
 
@@ -319,7 +320,7 @@ public class HWCWMainActivity extends BaseActivity {
         currentReport.endtime = DateUtils.getCurrentTime(CoreConfig.dateFormat2);
         try {
             ReportService.getInstance().saveOrUpdate(currentReport);
-            db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            TaskService.getInstance().update( WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
         } catch (DbException e) {
             e.printStackTrace();
         } finally {

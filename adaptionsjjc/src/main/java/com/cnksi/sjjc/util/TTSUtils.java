@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.cnksi.core.utils.CToast;
 import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.tts.ISpeakCallback;
 import com.cnksi.tts.ISpeakInterface;
 
 /**
@@ -57,18 +58,24 @@ public class TTSUtils {
         context.bindService(intent, instance.connection, Context.BIND_AUTO_CREATE);
     }
 
-    public void startSpeak(String content) {
-        if (!isConnect) {
-            CToast.showShort(CustomApplication.getAppContext(), "没有连接到TTS服务。");
-        } else try {
-            speakInterface.speak(content);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+    public void startSpeaking(String content) {
+        startSpeaking(content, null);
+    }
+
+
+    public void startSpeaking(String content, ISpeakCallback callback) {
+        if (isConnect()) {
+            try {
+                speakInterface.speak(content, callback);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else {
+            init(CustomApplication.getAppContext());
         }
     }
 
-    public void stopSpeak()
-    {
+    public void stopSpeak() {
         if (!isConnect()) return;
         try {
             speakInterface.stopSpeak();
@@ -80,7 +87,7 @@ public class TTSUtils {
 
 
     public boolean isConnect() {
-        if (!isConnect)  CToast.showShort(CustomApplication.getAppContext(), "没有连接到TTS服务。");
+        if (!isConnect) CToast.showShort(CustomApplication.getAppContext(), "没有连接到TTS服务。");
         return isConnect;
     }
 }

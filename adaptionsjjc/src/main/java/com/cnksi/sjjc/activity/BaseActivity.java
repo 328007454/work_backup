@@ -131,10 +131,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * Db验收实例
      */
     DbManager dbYShou;
-    /**
-     * Db实例
-     */
-    DbManager db;
+
     /**
      * 是否显示文件名
      */
@@ -185,7 +182,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
             setContentView(R.layout.include_title);
         if (PreferencesUtils.getBoolean(_this, Config.PERMISSION_STASTUS, false)) {
             dbYShou = CustomApplication.getYanShouDbManager();
-            db = CustomApplication.getDbManager();
         }
         x.view().inject(this);
     }
@@ -568,17 +564,5 @@ public abstract class BaseActivity extends BaseCoreActivity {
         }
     }
 
-    protected void startSync() {
-        if (BuildConfig.USE_NETWORK_SYNC) {
-            KSyncConfig.getInstance()
-                    .startNetWorkSync(mCurrentActivity);
-        } else {
-            ScreenManager.getScreenManager().popAllActivityExceptOne(LoginActivity.class);
-            Intent newIntent = new Intent(mCurrentActivity, DataSync.class);
-            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
-            newIntent.putExtra(Config.SYNC_COME_FROM, Config.LOGACTIVITY_TO_SYNC);
-            startActivity(newIntent);
-        }
 
-    }
 }
