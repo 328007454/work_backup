@@ -284,9 +284,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void itemClick(View v, Bdz bdz, int position) {
                 if (!bdz.name.contains("未激活")) {
-                    homePageBinding.bdzName.setText(bdz.name);
+                    homePageBinding.bdzName.setText(bdz.name+"");
                     mPowerStationDialog.dismiss();
-                    homePageBinding.bdzName.setText(bdzList.get(position).name);
                     currentSelectBdzId = bdzList.get(position).bdzid;
                     homePageBinding.common.setSelected(true);
                     homePageBinding.serious.setSelected(false);
