@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
@@ -16,14 +15,16 @@ import com.cnksi.sjjc.bean.Users;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.UserService;
-import com.cnksi.sjjc.sync.DataSync;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.OnViewClickListener;
-import com.iflytek.cloud.SpeechSynthesizer;
+import com.cnksi.sjjc.util.TTSUtils;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * launcher界面
@@ -36,6 +37,8 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setChildView(R.layout.activity_launcher);
+        x.view().inject(_this);
         /**
          * 第三方程序拉起接口
          */
@@ -68,16 +71,12 @@ public class LauncherActivity extends BaseActivity {
 
         setChildView(R.layout.activity_launcher);
         x.view().inject(_this);
-        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
-            initSpeech(this);
-        }
-
-
-        mTts.startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)), null);
+        TTSUtils.getInstance().startSpeak(String.format("欢迎使用%1$s", getString(R.string.app_name)));
 
         tvTitle.setText(R.string.app_name);
         exitProject.setImageResource(R.drawable.exit_button_background);
         exitProject.setVisibility(View.VISIBLE);
+
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -173,11 +172,9 @@ public class LauncherActivity extends BaseActivity {
 
                 return;
             case R.id.layout_data_sync:
-                ScreenManager.getScreenManager().popAllActivityExceptOne(LauncherActivity.class);
-                Intent intentData = new Intent(mCurrentActivity, DataSync.class);
-                intentData.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
-                intentData.putExtra(Config.SYNC_COME_FROM, Config.LAUNCHERACTIVITY_TO_SYNC);
-                startActivity(intentData);
+                List<String> upload = new ArrayList<>();
+                upload.add("admin/ningxiashizuishan/buqiao");
+                startSync();
                 return;
             //图解五通
             case R.id.tjwt:

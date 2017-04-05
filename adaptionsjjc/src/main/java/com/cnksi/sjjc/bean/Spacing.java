@@ -5,7 +5,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "spacing")
-public class Spacing {
+public class Spacing extends BaseModel{
 
 	// 间隔ID
 	public static final String SPID = "spid";
@@ -54,10 +54,7 @@ public class Spacing {
 	@Column(name = X)
 	public String x;
 
-	// 逻辑删除
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	public String dlt;
+
 
 	// 电压等级从lookup表中查询type=voltage
 	public static final String VOLTAGE = "voltage";

@@ -14,7 +14,7 @@ import java.util.UUID;
  * @copyRight
  */
 @Table(name = "sbjc_transceiver")
-public class Transceiver {
+public class Transceiver extends BaseModel {
 
     public static final String ID = "id";
     @Column(name = ID, isId = true)
@@ -89,12 +89,7 @@ public class Transceiver {
     @Column(name = REMARK)
     public String remark;
 
-    /**
-     * 是否删除
-     */
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public int dlt;
+
 
     /**
      * 更新时间

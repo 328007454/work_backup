@@ -10,7 +10,7 @@ import java.util.UUID;
  * Created by han on 2016/6/17.
  */
 @Table(name = "sbjc_battery")
-public class BatteryRecord implements Serializable {
+public class BatteryRecord extends BaseModel implements Serializable {
 
     //
     public static final String ID = "id";
@@ -78,10 +78,7 @@ public class BatteryRecord implements Serializable {
     @Column(name = REMARK)
     public String remark;
 
-    //是否删除
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt;
+
 
     //更新时间
     public static final String LAST_MODIFY_TIME = "last_modify_time";

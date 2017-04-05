@@ -60,7 +60,9 @@ public class Config extends CoreConfig {
     public static final String DATABASE_NAME = "bdzinspection.db";
     public static final String YANSHOUEDATABASE_NAME = "accept.db";
 
-    /** 名称 */
+    /**
+     * 名称
+     */
     public static final String CURRENT_FILENAME = "current_filename";
     /**
      * 上传数据库名称
@@ -129,13 +131,13 @@ public class Config extends CoreConfig {
 
     public static String CURRENT_AREA = "lz";
 
-    public static final String MASK_WIFI="MASK_WIFI";
+    public static final String MASK_WIFI = "MASK_WIFI";
 
     /**
      * 标题名称
      */
 
-    public final static String LASTTIEM_CHOOSE_BDZNAME="lasttime_choose_bdzname";
+    public final static String LASTTIEM_CHOOSE_BDZNAME = "lasttime_choose_bdzname";
     /**
      * 所有的设备id
      */
@@ -259,23 +261,29 @@ public class Config extends CoreConfig {
      */
     public static final int CANCEL_RESULT_LOAD_IMAGE = PAIZHAO_LUXIANG_REQUSET + 1;
 
-    public static final String SYNC_COME_FROM="sync_come_from";
+    public static final String SYNC_COME_FROM = "sync_come_from";
 
     /**
      * 数据同步
-     *
-     * */
+     */
     public static final String LOGACTIVITY_TO_SYNC = "logactivity_to_sync";
     /**
      * launcher到数据同步
-     * */
-    public static  final  String LAUNCHERACTIVITY_TO_SYNC="launcheractivity_to_sync";
+     */
+    public static final String LAUNCHERACTIVITY_TO_SYNC = "launcheractivity_to_sync";
     //差动保护差流记录查询的关键值key
-    public static final String DIFFERENTIAL_RECORD_KEY="dclz";
+    public static final String DIFFERENTIAL_RECORD_KEY = "dclz";
     //交直流分接开关key
-    public static final String TANSFORMADJUSTMENT_KAIGUAN="fjkgdzcs";
+    public static final String TANSFORMADJUSTMENT_KAIGUAN = "fjkgdzcs";
     //调整后档位key
-    public static final String TANSFORMADJUSTMENT_DANGWEI="fjkgdzhdw";
+    public static final String TANSFORMADJUSTMENT_DANGWEI = "fjkgdzhdw";
+
+
+    public static String SYNC_APP_ID = BuildConfig.SYNC_APP_ID;
+    public static String SYNC_BASE_FOLDER = BDZ_INSPECTION_FOLDER;
+    public static String SYNC_URL = BuildConfig.SYNC_URL;
+    public final static String KEY_SYNC_URL = "key_sync_url";
+
     /**
      * 操作类型
      */
@@ -293,5 +301,5 @@ public class Config extends CoreConfig {
         }
     }
 
-    public final static boolean NEW_COPY=true;
+    public final static boolean NEW_COPY = true;
 }

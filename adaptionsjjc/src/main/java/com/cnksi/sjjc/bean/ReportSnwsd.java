@@ -8,7 +8,7 @@ import org.xutils.db.annotation.Table;
 import java.util.UUID;
 
 @Table(name = "report_snwsd")
-public class ReportSnwsd {
+public class ReportSnwsd extends BaseModel{
 	
 	/***/
 	public static final String ID = "id";
@@ -67,10 +67,7 @@ public class ReportSnwsd {
 	@Column(name = LAST_MODIFY_TIME)
 	public String last_modify_time;
 	
-	/**是否删除（0-可用，1-不可用）*/
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	public String dlt;
+
 
 
 	public ReportSnwsd(){

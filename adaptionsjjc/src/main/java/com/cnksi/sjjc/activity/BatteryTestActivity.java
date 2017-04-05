@@ -480,17 +480,17 @@ public class BatteryTestActivity extends BaseActivity {
                 group = new BatteryGroup(currentReportId, currentBdzId, currentBdzName, currentBatterId);
             batteryGroupList.put(currentBatterId, group);
         }
-        String zuDuanVoltage = TextUtils.isEmpty(group.zuDuanVoltage) ? currentBattery.voltage : group.zuDuanVoltage;
-        String zuDuanElectricity = TextUtils.isEmpty(group.chargeElectricity) ? currentBattery.dl : group.chargeElectricity;
-        String singleVoltage = TextUtils.isEmpty(group.singleVoltage) ? currentBattery.singleVoltage : group.singleVoltage;
+        String zuDuanVoltage = group.zuDuanVoltage==null ? currentBattery.voltage : group.zuDuanVoltage+"";
+        String zuDuanElectricity = group.chargeElectricity==null ? currentBattery.dl : group.chargeElectricity+"";
+        String singleVoltage = group.singleVoltage==null? currentBattery.singleVoltage : group.singleVoltage+"";
         txtVoltage.setText(zuDuanVoltage);
         txtCurrent.setText(zuDuanElectricity);
         txtSingleVoltage.setText(singleVoltage);
-        txtFactVoltage.setText(group.fcdySc == null ? "" : group.fcdySc);
-        txtSystemVoltage.setText(group.fcdyZlxt == null ? "" : group.fcdyZlxt);
-        txtLoadElect.setText(group.loadElectricty == null ? "" : group.loadElectricty);
-        txtFuChongEle.setText(group.fcElectricty == null ? "" : group.fcElectricty);
-        txtZVoltage.setText(group.zVoltage == null ? "" : group.zVoltage);
+        txtFactVoltage.setText(group.fcdySc == null ? "" : group.fcdySc+"");
+        txtSystemVoltage.setText(group.fcdyZlxt == null ? "" : group.fcdyZlxt+"");
+        txtLoadElect.setText(group.loadElectricty == null ? "" : group.loadElectricty+"");
+        txtFuChongEle.setText(group.fcElectricty == null ? "" : group.fcElectricty+"");
+        txtZVoltage.setText(group.zVoltage == null ? "" : group.zVoltage+"");
         txtFVoltage.setText(group.fVoltage == null ? "" : group.fVoltage);
 
     }
@@ -544,14 +544,14 @@ public class BatteryTestActivity extends BaseActivity {
      * 保存当前基础信息
      */
     private void saveGroupBaseInfor(BatteryGroup batteryGroup) {
-        batteryGroup.zuDuanVoltage = txtVoltage.getText().toString().replace("V", "");
-        batteryGroup.chargeElectricity = txtCurrent.getText().toString().replace("A", "");
-        batteryGroup.singleVoltage = txtSingleVoltage.getText().toString().replace("V", "");
-        batteryGroup.fcdySc = txtFactVoltage.getText().toString();
-        batteryGroup.fcdyZlxt = txtSystemVoltage.getText().toString();
-        batteryGroup.loadElectricty = txtLoadElect.getText().toString();
-        batteryGroup.fcElectricty = txtFuChongEle.getText().toString();
-        batteryGroup.zVoltage = txtZVoltage.getText().toString();
+        batteryGroup.zuDuanVoltage =toDouble(txtVoltage.getText().toString().replace("V", ""));
+        batteryGroup.chargeElectricity =toDouble(txtCurrent.getText().toString().replace("A", ""));
+        batteryGroup.singleVoltage =toDouble( txtSingleVoltage.getText().toString().replace("V", ""));
+        batteryGroup.fcdySc =toDouble( txtFactVoltage.getText().toString());
+        batteryGroup.fcdyZlxt =toDouble(  txtSystemVoltage.getText().toString());
+        batteryGroup.loadElectricty =toDouble( txtLoadElect.getText().toString());
+        batteryGroup.fcElectricty =toDouble( txtFuChongEle.getText().toString());
+        batteryGroup.zVoltage =toDouble( txtZVoltage.getText().toString());
         batteryGroup.fVoltage = txtFVoltage.getText().toString();
         try {
             BatteryGroupService.getInstance().saveOrUpdate(batteryGroup);
@@ -561,6 +561,18 @@ public class BatteryTestActivity extends BaseActivity {
 //            Log.i(TAG, "保存数据错误--蓄电池组基础信息" + currentBatterId);
         }
     }
+    private Double toDouble(String s)
+    {
+        if (TextUtils.isEmpty(s.trim())) return null;
+        try {
+          return   Double.parseDouble(s);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 //    private void changeCheckTab(View view) {
 //        int tabSize = layoutCheckTab.getChildCount();

@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.Bdz;
 
 import org.xutils.db.sqlite.SqlInfo;
@@ -27,8 +26,8 @@ public class BdzService extends BaseService<Bdz> {
     public List<String> findUpdloadPictureFolder() {
         List<String> folder = new ArrayList<>();
         try {
-            SqlInfo sqlInfo = new SqlInfo("select distinct(folder_name) from bdz");
-            List<DbModel> folderList = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+            SqlInfo sqlInfo = new SqlInfo("select distinct(folder_name) from bdz where dlt='0'");
+            List<DbModel> folderList = findDbModelAll(sqlInfo);
             if (null != folderList && !folderList.isEmpty()) {
                 for (DbModel model : folderList)
                     folder.add(model.getString("folder_name"));

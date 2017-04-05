@@ -13,12 +13,9 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cnksi.core.adapter.ViewHolder;
@@ -30,12 +27,12 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.WeatherView1;
 import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Spacing;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.bean.Transceiver;
+import com.cnksi.sjjc.databinding.ActivityGetSendLetterBinding;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.SpacingService;
@@ -46,8 +43,6 @@ import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -65,41 +60,8 @@ public class GetSendLetterActivity extends BaseActivity {
     public static final int LOAD_DEVICE_FAILURE = 0x101;
     private final static int ACTION_IMAGE = 0x300;
 
-    @ViewInject(R.id.weatherView1)
-    private WeatherView1 weather;
 
-    @ViewInject(R.id.tab_strip)
-    private HorizontalScrollView horizontalScrollView;
-
-    @ViewInject(R.id.tab_container)
-    private LinearLayout tabContainer;
-
-    @ViewInject(R.id.image_location)
-    private ImageView imageLocation;
-
-    @ViewInject(R.id.tv_spacing)
-    private TextView tvSpacing;
-
-    @ViewInject(R.id.edit_send_level)
-    private EditText editSendLevel;
-
-    @ViewInject(R.id.edit_receive_level)
-    private EditText editReceiveLevel;
-
-    @ViewInject(R.id.radio_channel)
-    private RadioGroup radioGroupChannel;
-
-    @ViewInject(R.id.show_pic)
-    private ImageView imageShowPic;
-
-    @ViewInject(R.id.pic_num)
-    private TextView txtPicNumber;
-
-    @ViewInject(R.id.edit_remark)
-    private EditText editRemark;
-
-    @ViewInject(R.id.llpic)
-    RelativeLayout llpic;
+    ActivityGetSendLetterBinding binding;
     //收发信机设备
     private List<Device> transceiverDeviceList;
 
@@ -119,11 +81,12 @@ public class GetSendLetterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_get_send_letter);
-        x.view().inject(_this);
+        binding = ActivityGetSendLetterBinding.inflate(getLayoutInflater());
+        setChildView(binding.getRoot());
         tvTitle.setText("收发信机测试");
         getIntentValue();
         initData();
+
     }
 
     private void initData() {
@@ -147,13 +110,13 @@ public class GetSendLetterActivity extends BaseActivity {
     }
 
     private void initUI() {
-        radioGroupChannel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        binding.radioChannel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (i == R.id.radio_normal) {
-                    llpic.setVisibility(View.GONE);
+                    binding.llpic.setVisibility(View.GONE);
                 } else {
-                    llpic.setVisibility(View.VISIBLE);
+                    binding.llpic.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -172,7 +135,7 @@ public class GetSendLetterActivity extends BaseActivity {
                 e.printStackTrace();
             }
             //设置item的格式和点击动画
-            View view =  LayoutInflater.from(this).inflate(R.layout.item_tab, null, false);
+            View view = LayoutInflater.from(this).inflate(R.layout.item_tab, null, false);
             TextView textView = (TextView) view.findViewById(R.id.tv_tab);
 //            textView.setTextSize(AutoUtils.getPercentHeightSizeBigger(44));
             AutoUtils.autoSize(view);
@@ -181,26 +144,26 @@ public class GetSendLetterActivity extends BaseActivity {
             textView.setText(transceiverDevice.name);
             LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(AutoUtils.getPercentWidthSizeBigger(400), LinearLayout.LayoutParams.MATCH_PARENT);
 //            textView.setLayoutParams(p);
-            p.leftMargin=AutoUtils.getPercentHeightSizeBigger(30);
+            p.leftMargin = AutoUtils.getPercentHeightSizeBigger(30);
             view.setLayoutParams(p);
-            tabContainer.addView(view);
+            binding.tabContainer.addView(view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TranslateAnimation animation = new TranslateAnimation(imageLocation.getLeft(), v.getLeft(), 0, 0);
+                    TranslateAnimation animation = new TranslateAnimation(binding.imageLocation.getLeft(), v.getLeft(), 0, 0);
                     animation.setFillAfter(true);
                     animation.setInterpolator(new AccelerateDecelerateInterpolator());
-                    imageLocation.startAnimation(animation);
+                    binding.imageLocation.startAnimation(animation);
                     saveCurrentPage();
                     changeTab(v);
-                    if (v.getLeft() + v.getWidth() - horizontalScrollView.getScrollX() >= DisplayUtil.getInstance().getWidth())
-                        horizontalScrollView.smoothScrollBy(v.getLeft() + v.getWidth() - DisplayUtil.getInstance().getWidth() + 150, 0);
-                    else if (v.getLeft() <= horizontalScrollView.getScrollX())
-                        horizontalScrollView.smoothScrollBy(v.getLeft() - 150 - horizontalScrollView.getScrollX(), 0);
+                    if (v.getLeft() + v.getWidth() - binding.tabStrip.getScrollX() >= DisplayUtil.getInstance().getWidth())
+                        binding.tabStrip.smoothScrollBy(v.getLeft() + v.getWidth() - DisplayUtil.getInstance().getWidth() + 150, 0);
+                    else if (v.getLeft() <= binding.tabStrip.getScrollX())
+                        binding.tabStrip.smoothScrollBy(v.getLeft() - 150 - binding.tabStrip.getScrollX(), 0);
                 }
             });
         }
-        changeTab(tabContainer.getChildAt(0));
+        changeTab(binding.tabContainer.getChildAt(0));
     }
 
     @Override
@@ -253,7 +216,7 @@ public class GetSendLetterActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case ACTION_IMAGE:
-                    String picRemark = DateUtils.getCurrentLongTime() + "\n" + report.persons + "\n" + tvSpacing.getText().toString() + "----" + currentTransceiver.deviceName;
+                    String picRemark = DateUtils.getCurrentLongTime() + "\n" + report.persons + "\n" + binding.tvSpacing.getText().toString() + "----" + currentTransceiver.deviceName;
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imageName, picRemark);
                     break;
                 case LOAD_DATA:
@@ -284,12 +247,14 @@ public class GetSendLetterActivity extends BaseActivity {
      * 存取当前界面数据
      */
     private void saveCurrentPage() {
-        if (null == currentDevice)
+        if (null == currentDevice) {
+            CToast.showLong(mCurrentActivity, "当前页面没有设备，记录将不会保存。");
             return;
-        currentTransceiver.sendLevel = editSendLevel.getText().toString();
-        currentTransceiver.receiveLevel = editReceiveLevel.getText().toString();
-        currentTransceiver.channelStatus = radioGroupChannel.getCheckedRadioButtonId() == R.id.radio_normal ? 0 : 1;
-        currentTransceiver.remark = editRemark.getText().toString();
+        }
+        currentTransceiver.sendLevel = binding.editSendLevel.getText().toString();
+        currentTransceiver.receiveLevel = binding.editReceiveLevel.getText().toString();
+        currentTransceiver.channelStatus = binding.radioChannel.getCheckedRadioButtonId() == R.id.radio_normal ? 0 : 1;
+        currentTransceiver.remark = binding.editRemark.getText().toString();
         try {
             TransceiverService.getInstance().saveOrUpdate(currentTransceiver);
         } catch (DbException e) {
@@ -314,8 +279,8 @@ public class GetSendLetterActivity extends BaseActivity {
      * @param v
      */
     private void changeTab(View v) {
-        for (int i = 0; i < tabContainer.getChildCount(); i++) {
-            View childView = tabContainer.getChildAt(i);
+        for (int i = 0; i < binding.tabContainer.getChildCount(); i++) {
+            View childView = binding.tabContainer.getChildAt(i);
             TextView tvView = (TextView) childView.findViewById(R.id.tv_tab);
             if (v.equals(childView)) {
 //                childView.setSelected(true);
@@ -342,21 +307,21 @@ public class GetSendLetterActivity extends BaseActivity {
         }
 
         imageName = null;
-        tvSpacing.setText(transceiveSpacing.get(currentDevice.deviceid).name);
+        binding.tvSpacing.setText(transceiveSpacing.get(currentDevice.deviceid).name);
         if (null != currentTransceiver) {
-            editSendLevel.setText(currentTransceiver.sendLevel);
-            editReceiveLevel.setText(currentTransceiver.receiveLevel);
+            binding.editSendLevel.setText(currentTransceiver.sendLevel);
+            binding.editReceiveLevel.setText(currentTransceiver.receiveLevel);
             if (currentTransceiver.channelStatus == 0) {
-                radioGroupChannel.check(R.id.radio_normal);
+                binding.radioChannel.check(R.id.radio_normal);
             } else {
-                radioGroupChannel.check(R.id.radio_unNormal);
+                binding.radioChannel.check(R.id.radio_unNormal);
             }
-            editRemark.setText(currentTransceiver.remark);
+            binding.editRemark.setText(currentTransceiver.remark);
         } else {
-            editSendLevel.setText("");
-            editReceiveLevel.setText("");
-            radioGroupChannel.check(R.id.radio_normal);
-            editRemark.setText("");
+            binding.editSendLevel.setText("");
+            binding.editReceiveLevel.setText("");
+            binding.radioChannel.check(R.id.radio_normal);
+            binding.editRemark.setText("");
         }
         showThumbPic();
     }
@@ -368,21 +333,21 @@ public class GetSendLetterActivity extends BaseActivity {
         if (null != currentTransceiver && !TextUtils.isEmpty(currentTransceiver.images)) {
             List<String> images = StringUtils.string2List(currentTransceiver.images);
             if (!images.isEmpty()) {
-                imageShowPic.setVisibility(View.VISIBLE);
+                binding.showPic.setVisibility(View.VISIBLE);
                 if (images.size() > 1) {
-                    txtPicNumber.setVisibility(View.VISIBLE);
-                    txtPicNumber.setText("" + images.size());
+                    binding.tvPics.setVisibility(View.VISIBLE);
+                    binding.tvPics.setText("" + images.size());
                 } else {
-                    txtPicNumber.setVisibility(View.GONE);
+                    binding.tvPics.setVisibility(View.GONE);
                 }
-                mBitmapUtils.bind(imageShowPic, Uri.fromFile(new File(Config.RESULT_PICTURES_FOLDER + images.get(0))).toString());
+                mBitmapUtils.bind(binding.showPic, Uri.fromFile(new File(Config.RESULT_PICTURES_FOLDER + images.get(0))).toString());
 
             }
         } else {
-            imageShowPic.setVisibility(View.GONE);
-            txtPicNumber.setVisibility(View.GONE);
-            txtPicNumber.setText("");
-            imageShowPic.setImageBitmap(null);
+            binding.showPic.setVisibility(View.GONE);
+            binding.tvPics.setVisibility(View.GONE);
+            binding.tvPics.setText("");
+            binding.showPic.setImageBitmap(null);
         }
     }
 
@@ -442,7 +407,7 @@ public class GetSendLetterActivity extends BaseActivity {
                 try {
                     //1、修改报告
                     report.jcqk = rbYes.isChecked() ? "正常" : "不正常";
-                    report.tq = weather.getSelectWeather();
+                    report.tq = binding.weatherView1.getSelectWeather();
                     report.endtime = DateUtils.getCurrentLongTime();
                     ReportService.getInstance().saveOrUpdate(report);
                     //2、修改任务

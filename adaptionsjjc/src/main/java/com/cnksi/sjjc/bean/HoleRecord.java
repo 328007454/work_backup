@@ -11,7 +11,7 @@ import java.util.UUID;
  * Created by han on 2016/6/14.
  */
 @Table(name = "sbjc_hole")
-public class HoleRecord {
+public class HoleRecord extends BaseModel{
     /**
      * Id
      */
@@ -90,12 +90,7 @@ public class HoleRecord {
     public static final String PROBLEM = "problem";
     @Column(name = PROBLEM)
     public String problem;
-    /**
-     *是否删除 0 不删除 1 删除
-     */
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt;
+
     /**
      *更新时间
      */

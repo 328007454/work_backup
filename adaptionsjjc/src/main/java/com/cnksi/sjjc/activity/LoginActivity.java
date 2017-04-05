@@ -1,10 +1,11 @@
 package com.cnksi.sjjc.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -21,26 +22,25 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.UpdateUtils;
-import com.cnksi.ksynclib.KSyncConfig;
-import com.cnksi.ksynclib.activity.KSyncDebugActivity;
-import com.cnksi.ksynclib.activity.KSyncXJActivity;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Users;
+import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
+import com.cnksi.sjjc.service.DepartmentService;
 import com.cnksi.sjjc.service.UserService;
-import com.cnksi.sjjc.sync.DataSync;
+import com.cnksi.sjjc.sync.KSyncConfig;
+import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
-import com.iflytek.cloud.SpeechSynthesizer;
+import com.cnksi.sjjc.util.TTSUtils;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -128,9 +128,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private void initUI() {
         //设置版本信息
         mTvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(_this)));
-        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
-            initSpeech(_this);
-        }
+//        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
+//            initSpeech(_this);
+//        }
         //上次登录人员信息
 //        String userName = PreferencesUtils.getString(_this, Users.ACCOUNT, "");
         String userName = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
@@ -163,6 +163,14 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             autoCompleteTextView.setText("00031284");
             mEtPassword.setText("1");
         }
+
+        findViewById(R.id.ivLogo).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                modifySyncURL();
+                return true;
+            }
+        });
     }
 
     @Event(value = {R.id.b_add_people_button, R.id.mask_wifi, R.id.ib_delete1, R.id.ib_delete2, R.id.b_login_button, R.id.ivLogo})
@@ -224,32 +232,46 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             //跳转数据同步
             case R.id.ivLogo:
-                if (false) {
-                    String appId = "com.cnksi.sjjc";
-                    String url = "http://192.168.199.219:8080";
-                    String serialNumber = Build.SERIAL;
-                    KSyncConfig.initConfig(getApplicationContext(), CustomApplication.getDbManager().getDatabase(), appId, url, serialNumber, Config.BDZ_INSPECTION_FOLDER);
-                    KSyncConfig.addDyincParam("account", "00030493");
-                    KSyncDebugActivity.uploadFolder = "log,signimg,upload_database";
-                    KSyncConfig.isDebug = true;
-                    if (KSyncConfig.isDebug) {
-                        startActivity(new Intent(mCurrentActivity, KSyncDebugActivity.class));
-                    } else {
-                        startActivity(new Intent(mCurrentActivity, KSyncXJActivity.class));
-                    }
-
-                } else {
-                    ScreenManager.getScreenManager().popAllActivityExceptOne(LoginActivity.class);
-                    Intent newIntent = new Intent(LoginActivity.this, DataSync.class);
-                    newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
-                    newIntent.putExtra(Config.SYNC_COME_FROM, Config.LOGACTIVITY_TO_SYNC);
-                    startActivity(newIntent);
-                }
+                startSync();
 
                 break;
         }
     }
 
+    /**
+     * 显示修改服务器同步地址的对话框，该对话框由长安同步按钮触发
+     */
+    private void modifySyncURL() {
+        final ModifySyncUrlBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_modify_iphost, null, false);
+        final Dialog dialog = DialogUtils.createDialog(mCurrentActivity, binding, true);
+        binding.tvOldUrl.setText(Config.SYNC_URL);
+
+        binding.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        binding.btnSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getText(binding.etNewUrl).trim();
+                if (url.startsWith("http://") || url.startsWith("https://")) {
+
+                } else {
+                    url = "http://" + url;
+                }
+                //  if (StringUtils.isUrl(url)) {
+                Config.SYNC_URL = url;
+                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
+                dialog.dismiss();
+                //} else {
+                //  CToast.showShort(mCurrentActivity, "请输入一个有效的URL");
+                //}
+            }
+        });
+        dialog.show();
+    }
 
     /**
      * 登录
@@ -320,6 +342,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     @Override
     protected void onResume() {
         super.onResume();
+        KSyncConfig.getInstance().setDept_id("-1");
 //        boolean diff = true;
 //        try {
 //            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -372,7 +395,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case INIT_SPEECH:
                 // 读取内容
                 if (!TextUtils.isEmpty(speakContent))
-                    mTts.startSpeaking(speakContent, null);
+                    TTSUtils.getInstance().startSpeak(speakContent);
                 break;
             //添加已登录账号
             case SAME_ACCOUNT:
@@ -441,6 +464,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         }
         autoCompleteTextView.setText("");
         mEtPassword.setText("");
+
     }
 
 
@@ -473,6 +497,17 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         Intent intent = new Intent(_this, HomeActivity.class);
         startActivity(intent);
         LoginActivity.this.finish();
+        final String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
+        KSyncConfig.getInstance().setDept_id(dept_id);
+        if ("-1".equals(dept_id)) {
+            CToast.showLong(mCurrentActivity, "当前登录帐号无任何班组信息！");
+        } else
+            mExcutorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    DepartmentService.getInstance().deleteOtherDataByDept(dept_id);
+                }
+            });
     }
 
     /**

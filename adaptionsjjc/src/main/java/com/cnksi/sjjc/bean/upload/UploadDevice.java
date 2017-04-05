@@ -1,11 +1,13 @@
 package com.cnksi.sjjc.bean.upload;
 
 
+import com.cnksi.sjjc.bean.BaseModel;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "device")
-public class UploadDevice {
+public class UploadDevice extends BaseModel {
 
 	// 设备编号
 	public static final String DEVICEID = "deviceid";
@@ -78,10 +80,7 @@ public class UploadDevice {
 	@Column(name = CHANGE_PIC)
 	public String change_pic;
 
-	// 逻辑删除
-	public static final String DLT = "dlt";
-	@Column(name = DLT)
-	public String dlt;
+
 
 	// 电压等级从lookup表中查询type=voltage
 	public static final String VOLTAGE = "voltage";

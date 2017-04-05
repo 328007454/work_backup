@@ -12,7 +12,7 @@ import java.util.Date;
 
 
 @Table(name = "task")
-public class Task {
+public class Task extends BaseModel{
 
     // 任务编号
     public static final String TASKID = "taskid";

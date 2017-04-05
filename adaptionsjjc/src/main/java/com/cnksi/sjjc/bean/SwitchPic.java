@@ -5,7 +5,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "switch_pic")
-public class SwitchPic {
+public class SwitchPic extends BaseModel{
 
 	// ID
 	public static final String ID = "id";

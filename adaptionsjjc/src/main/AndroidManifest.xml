@@ -234,11 +234,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name=".sync.DataSync"
+            android:name=".sync.NetWorkSyncActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".sync.UsbSyncActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
         <!-- 室内温湿度报告 -->
         <activity
             android:name=".activity.JZLFenJieKaiGuanReportActivity"
@@ -354,8 +359,7 @@
 
         <activity android:name=".activity.VideoPlayer" />
         <activity android:name="com.cnksi.core.activity.PermissionActivity" />
-        <activity android:name="com.cnksi.ksynclib.activity.KSyncDebugActivity" />
-        <activity android:name="com.cnksi.ksynclib.activity.KSyncXJActivity" />
+
 
         <receiver android:name=".receiver.NetWorkDisableReceiver">
             <intent-filter android:priority="2147483647">

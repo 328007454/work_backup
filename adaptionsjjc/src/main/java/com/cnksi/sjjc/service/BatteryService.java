@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.Battery;
 
 import org.xutils.ex.DbException;
@@ -26,6 +25,6 @@ public class BatteryService extends BaseService<Battery> {
      */
 
     public List<Battery> getAllBattery(String bdzId) throws DbException {
-        return CustomApplication.getDbManager().selector(Battery.class).where(Battery.BDZID, "=", bdzId).orderBy(Battery.BID, false).findAll();
+        return selector(Battery.class).and(Battery.BDZID, "=", bdzId).orderBy(Battery.BID, false).findAll();
     }
 }

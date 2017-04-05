@@ -9,7 +9,7 @@ import org.xutils.db.annotation.Table;
  * @date 创建时间：2016年4月25日 下午1:07:28 TODO
  */
 @Table(name = "error_log")
-public class ErrorLogBean {
+public class ErrorLogBean extends BaseModel{
 	@Column(isId = true,name = "id")
 	public String id;
 

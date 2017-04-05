@@ -1,12 +1,12 @@
 package com.cnksi.sjjc.bean;
 
 
+import android.text.TextUtils;
+
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.enmu.InspectionType;
-
-import android.text.TextUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -17,7 +17,7 @@ import org.xutils.db.annotation.Table;
  * @author Oliver
  */
 @Table(name = "standards")
-public class Standards {
+public class Standards extends BaseModel{
 
     public Standards() {
         this.dlt = "0";
@@ -82,10 +82,7 @@ public class Standards {
     @Column(name = KIND)
     public String kind;
 
-    // 逻辑删除
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt;
+
 
     // 缺陷来源
     public static final String ORIGIN = "origin";

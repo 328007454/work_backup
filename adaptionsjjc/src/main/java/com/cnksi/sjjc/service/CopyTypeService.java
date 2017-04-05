@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.CopyType;
 
 import org.xutils.ex.DbException;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class CopyTypeService {
+public class CopyTypeService extends BaseService<CopyType> {
     public static CopyTypeService mInstance;
 
     private CopyTypeService() {
@@ -26,7 +25,7 @@ public class CopyTypeService {
     public Map<String, String> getAllCopyType() {
         Map<String, String> typeMap = new HashMap<>();
         try {
-            List<CopyType> list = CustomApplication.getDbManager().selector(CopyType.class).where(CopyType.SELECTED_ABLE, "=", "Y").findAll();
+            List<CopyType> list = selector(CopyType.class).and(CopyType.SELECTED_ABLE, "=", "Y").findAll();
             if (null != list && !list.isEmpty()) {
                 for (CopyType type : list)
                     typeMap.put(type.key, type.name);

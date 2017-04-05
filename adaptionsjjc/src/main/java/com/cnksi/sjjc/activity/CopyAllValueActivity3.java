@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -395,7 +394,6 @@ public class CopyAllValueActivity3 extends BaseActivity {
                     mAfterTime = mCurrentTime;
                 long diffTime = mCurrentTime - mAfterTime;
                 clickIndex++;
-                Log.i("mmmm", diffTime + "----" + clickIndex);
                 if (1000 >= diffTime && 3 <= clickIndex) {
                     layoutShadom.setVisibility(View.VISIBLE);
                     layoutRelat.setVisibility(View.VISIBLE);
@@ -432,7 +430,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
                             deviceAdapter.next();
                         }
                     } else {
-                        onClick(findViewById(R.id.ibtn_exit));
+                        onClick(findViewById(R.id.tv_right));
                     }
                 }
                 break;

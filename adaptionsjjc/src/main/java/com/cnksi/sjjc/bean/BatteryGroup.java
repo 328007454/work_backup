@@ -11,7 +11,7 @@ import java.util.UUID;
  * Created by han on 2016/8/10.
  */
 @Table(name = "sbjc_battery_group")
-public class BatteryGroup {
+public class BatteryGroup extends BaseModel {
     //
     public static final String ID = "id";
     @Column(name = ID, isId = true)
@@ -40,28 +40,28 @@ public class BatteryGroup {
     //实测全电池浮充电压
     public static final String FCDY_SC = "fcdy_sc";
     @Column(name = FCDY_SC)
-    public String fcdySc;
+    public Double fcdySc;
 
     //直流系统监测全电池浮充电压
     public static final String FCDY_ZLXT = "fcdy_zlxt";
     @Column(name = FCDY_ZLXT)
-    public String fcdyZlxt;
+    public Double fcdyZlxt;
 
     //负荷电流
     public static final String FHDL = "fhdl";
     @Column(name = FHDL)
-    public String loadElectricty;
+    public Double loadElectricty;
 
 
     //浮充电流
     public static final String FCDL = "fcdl";
     @Column(name = FCDL)
-    public String fcElectricty;
+    public Double fcElectricty;
 
     //正母线对地电压值
     public static final String DYZ_ZMX = "dyz_zmx";
     @Column(name = DYZ_ZMX)
-    public String zVoltage;
+    public Double zVoltage;
 
 
     //负母线对地电压值
@@ -88,17 +88,17 @@ public class BatteryGroup {
     //组端电压
     public static final String ZU_DUAN_VOLTAGE = "zddy";
     @Column(name = ZU_DUAN_VOLTAGE)
-    public String zuDuanVoltage;
+    public Double zuDuanVoltage;
 
     //充电电流
     public static final String CHARGE_ELECTRICITY = "cddl";
     @Column(name = CHARGE_ELECTRICITY)
-    public String chargeElectricity;
+    public Double chargeElectricity;
 
     //单只标压
     public static final String SINGLE_VOLTAGE = "dzbcdy";
     @Column(name = SINGLE_VOLTAGE)
-    public String singleVoltage;
+    public Double singleVoltage;
 
 
     // 备注
@@ -106,10 +106,7 @@ public class BatteryGroup {
     @Column(name = REMARK)
     public String remark;
 
-    //是否删除
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public String dlt;
+
 
     //更新时间
     public static final String LAST_MODIFY_TIME = "last_modify_time";

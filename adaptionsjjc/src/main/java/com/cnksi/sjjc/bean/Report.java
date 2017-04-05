@@ -7,7 +7,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "report")
-public class Report {
+public class Report extends BaseModel{
 
     // 报告ID
     public static final String REPORTID = "reportid";

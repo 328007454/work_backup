@@ -2,7 +2,6 @@ package com.cnksi.sjjc.service;
 
 import android.text.TextUtils;
 
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.Device;
@@ -18,10 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.cnksi.ksynclib.sqlite.KSyncDao.KSYNC_MODIFY_TABLENAME;
+
 /**
  * Created by han on 2016/4/27.
  */
-public class DeviceService {
+public class DeviceService extends BaseService<Device> {
 
     private static DeviceService mDevices;
 
@@ -31,10 +32,8 @@ public class DeviceService {
     public static DeviceService getInstance() {
         if (mDevices == null) {
             mDevices = new DeviceService();
-            return mDevices;
-        } else {
-            return mDevices;
         }
+        return mDevices;
     }
 
     /**
@@ -44,7 +43,7 @@ public class DeviceService {
     public List<Device> getDevicesProtect(String bdzId) {
         List<Device> deviceList = new ArrayList<Device>();
         try {
-            deviceList = CustomApplication.getDbManager().selector(Device.class).where(Device.NAME, "like", "%保护%").and(Device.BDZID, "=", bdzId).and(Device.DLT, "<>", "1").findAll();
+            deviceList = selector(Device.class).and(Device.NAME, "like", "%保护%").and(Device.BDZID, "=", bdzId).and(Device.DLT, "<>", "1").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -58,9 +57,9 @@ public class DeviceService {
     public List<DbModel> getDevicesByName(String bdzId, String name) {
         List<DbModel> dbModelList = null;
         try {
-            SqlInfo sqlInfo = new SqlInfo("SELECT d.deviceid,d.name FROM device d WHERE d.bdzid = '" + bdzId + "' AND dtid IN ( SELECT dtid FROM device_unit WHERE duid IN ( SELECT s.duid FROM standards s WHERE s.description LIKE " +
+            SqlInfo sqlInfo = new SqlInfo("SELECT d.deviceid,d.name FROM device d WHERE d.bdzid = '" + bdzId + "' and d.dlt='0' AND dtid IN ( SELECT dtid FROM device_unit WHERE dlt='0' and  duid IN ( SELECT s.duid FROM standards s WHERE dlt='0' and s.description LIKE " +
                     "'%" + name + "%')) order by d.deviceid ");
-            dbModelList = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+            dbModelList = findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -83,13 +82,13 @@ public class DeviceService {
         String filter = TextUtils.isEmpty(nameFilter) ? "" : " and d.name LIKE '%" + nameFilter + "%'";
         SqlInfo sqlInfo = new SqlInfo(
                 "SELECT d.* FROM device d LEFT JOIN spacing s on s.spid=d.spid WHERE dtid IN " +
-                        "( SELECT DISTINCT dt.dtid FROM ( SELECT duid FROM standards WHERE resulttype = 1 AND dlt = 0 ) AS ds" +
+                        "( SELECT DISTINCT dt.dtid FROM ( SELECT duid FROM standards WHERE resulttype = 1 AND dlt = '0' ) AS ds" +
                         " LEFT JOIN device_unit dp ON ds.duid = dp.duid LEFT JOIN device_type dt ON dt.dtid = dp.dtid " +
-                        " where dp.dlt<>'1' and dt.dlt<>'1') AND d.bdzid = ? AND d.device_type = ?" + filter +
+                        " where dp.dlt<>'1' and dt.dlt<>'1') AND d.bdzid = ? AND d.dlt='0' AND d.device_type = ?" + filter +
                         " ORDER BY s." + sort + ", d.sort");
         sqlInfo.addBindArg(new KeyValue("bdzid", bdzId));
         sqlInfo.addBindArg(new KeyValue("deviceType", deviceType));
-        List<DbModel> mDeviceList = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+        List<DbModel> mDeviceList = findDbModelAll(sqlInfo);
         return mDeviceList;
     }
 
@@ -117,11 +116,12 @@ public class DeviceService {
      * @return
      * @throws DbException
      */
-    public List<DbModel> findDeviceHasCopyValueBySelector( String selector, String bdzId) throws DbException {
+    public List<DbModel> findDeviceHasCopyValueBySelector(String selector, String bdzId) throws DbException {
         SqlInfo sqlInfo = new SqlInfo(" SELECT * from device WHERE  bdzid=? " + selector);
         sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
         return CustomApplication.getDbManager().findDbModelAll(sqlInfo);
     }
+
     /**
      * 根据条件查询当前设备需要抄录的总项数目是否与当前record表中该设备已经抄录的总数据数目是否相等。
      *
@@ -245,7 +245,7 @@ public class DeviceService {
      */
     public List<DbModel> getDevicesByNameWays(String bdzId, String key) {
         List<DbModel> dbModelList = null;
-        String sql = "select d.deviceid,d.device_name name,d.val,d.val_a,d.val_b,d.val_c,d.val_O  from copy_item d where d.bdzid = '"+bdzId +"' and d.type_key = '"+key +"' order by d.deviceid ASC";
+        String sql = "select d.deviceid,d.device_name name,d.val,d.val_a,d.val_b,d.val_c,d.val_O  from copy_item d where d.bdzid = '" + bdzId + "' and d.type_key = '" + key + "' order by d.deviceid ASC";
         try {
             dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
@@ -262,8 +262,8 @@ public class DeviceService {
     public List<CopyItem> getDevicesByNameWays1(String bdzId, String key) {
         List<CopyItem> items = null;
         try {
-           items = CustomApplication.getDbManager().selector(CopyItem.class).where(CopyItem.BDZID,"=",bdzId).and(CopyItem.TYPE_KEY,"=",key).orderBy(CopyItem.DEVICEID,false).findAll();
-            for (CopyItem item :items){
+            items = CustomApplication.getDbManager().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.TYPE_KEY, "=", key).orderBy(CopyItem.DEVICEID, false).findAll();
+            for (CopyItem item : items) {
                 item.focus = false;
             }
         } catch (DbException e) {
@@ -276,11 +276,11 @@ public class DeviceService {
      * 交直流分接开关查询方式
      *
      * @param bdzid,
-     * */
+     */
     public List<DbModel> getDevicesByNameWays(String bdzid, String kaiGuanKey, String dangWeiKey) {
 
         List<DbModel> dbModelList = null;
-        String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid from copy_item d where d.bdzid = '"+bdzid +"' and (d.type_key = '"+kaiGuanKey +"' or d.type_key = '"+dangWeiKey +"')";
+        String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid from copy_item d where d.bdzid = '" + bdzid + "' and (d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "')";
         try {
             dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
@@ -293,12 +293,12 @@ public class DeviceService {
      * 交直流分接开关查询方式2
      *
      * @param bdzid,
-     * */
+     */
     public List<DbModel> searchDevicesByNameWays(String bdzid, String kaiGuanKey, String dangWeiKey) {
 
         List<DbModel> dbModelList = null;
         String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid,group_concat(d.description) description,group_concat(d.type_key) key from copy_item d where  (d.type_key = '"
-                +kaiGuanKey +"' or d.type_key = '"+dangWeiKey +"') and d.bdzid = '"+bdzid +"' group by d.deviceid ";
+                + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "') and d.bdzid = '" + bdzid + "' group by d.deviceid ";
         try {
             dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
@@ -309,12 +309,12 @@ public class DeviceService {
 
     /**
      * 得到当前变电站以及当前deviceId下的设备
-     * */
+     */
     public List<CopyItem> getAllCopyItem(String bdzId, String deviceId, String kaiGaunKey, String dangWeiKey) {
         List<CopyItem> copyItemList = null;
         try {
-            copyItemList = CustomApplication.getDbManager().selector(CopyItem.class).where(CopyItem.BDZID,"=",bdzId).and(CopyItem.DEVICEID,"=",deviceId).and(CopyItem.TYPE_KEY,"=",kaiGaunKey).or(CopyItem.TYPE_KEY,"=",dangWeiKey).findAll();
-            if(null==copyItemList) copyItemList = new ArrayList<>();
+            copyItemList = CustomApplication.getDbManager().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).and(CopyItem.TYPE_KEY, "=", kaiGaunKey).or(CopyItem.TYPE_KEY, "=", dangWeiKey).findAll();
+            if (null == copyItemList) copyItemList = new ArrayList<>();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -326,10 +326,10 @@ public class DeviceService {
      * 交直流分接开关查询方式
      *
      * @param bdzid,
-     * */
-    public List<DbModel> getDevicesById(String bdzid, String deviceId,String kaiGuanKey, String dangWeiKey) {
+     */
+    public List<DbModel> getDevicesById(String bdzid, String deviceId, String kaiGuanKey, String dangWeiKey) {
         List<DbModel> dbModelList = null;
-        String sql = "select d.description description,d.type_key key from copy_item d where d.bdzid = '"+bdzid +"' and d.deviceid = '"+deviceId+"' and ( d.type_key = '"+kaiGuanKey +"' or d.type_key = '"+dangWeiKey +"' )";
+        String sql = "select d.description description,d.type_key key from copy_item d where d.bdzid = '" + bdzid + "' and d.deviceid = '" + deviceId + "' and ( d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "' )";
         try {
             dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
@@ -338,27 +338,60 @@ public class DeviceService {
         return dbModelList;
     }
 
-
+    //建议服务器处理 否则会引起同步问题
     public boolean refreshDeviceHasCopy() {
         boolean isSuccess = false;
+//        try {
+//            dropTrigger("device");
+//            String sql = "update device set has_copy ='N'";
+//            CustomApplication.getDbManager().execNonQuery(sql);
+//            if (Config.NEW_COPY) {
+//                sql = "update device set has_copy = 'Y' where deviceid in (select distinct deviceid from copy_item);";
+//            } else {
+//                sql = "UPDATE device set has_copy='Y' WHERE deviceid IN"
+//                        + "(select DISTINCT(d.deviceid) deviceid from standards s "
+//                        + "left JOIN device_unit du on s.duid = du.duid LEFT JOIN device_type dt on dt.dtid = du.dtid"
+//                        + "	LEFT JOIN device d on d.dtid = dt.dtid "
+//                        + "where s.resulttype = '1' AND d.dlt <> '1' AND du.dlt <> '1' AND s.dlt <> '1' AND dt.dlt <> '1')";
+//            }
+//            CustomApplication.getDbManager().execNonQuery(sql);
+//            createTrigger("device","deviceid");
+//            isSuccess = true;
+//        } catch (DbException e) {
+//            e.printStackTrace();
+//        }
+        return isSuccess;
+    }
+
+
+    /**
+     * 删除某个表的Trigger
+     */
+    public void dropTrigger(String tableName) {
         try {
-            String sql = "update device set has_copy ='N'";
-            CustomApplication.getDbManager().execNonQuery(sql);
-            if (Config.NEW_COPY) {
-                sql = "update device set has_copy = 'Y' where deviceid in (select distinct deviceid from copy_item);";
-            } else {
-                sql = "UPDATE device set has_copy='Y' WHERE deviceid IN"
-                        + "(select DISTINCT(d.deviceid) deviceid from standards s "
-                        + "left JOIN device_unit du on s.duid = du.duid LEFT JOIN device_type dt on dt.dtid = du.dtid"
-                        + "	LEFT JOIN device d on d.dtid = dt.dtid "
-                        + "where s.resulttype = '1' AND d.dlt <> '1' AND du.dlt <> '1' AND s.dlt <> '1' AND dt.dlt <> '1')";
-            }
-            CustomApplication.getDbManager().execNonQuery(sql);
-            isSuccess = true;
+
+            String triggerSql = String.format("DROP TRIGGER  If Exists %s_insert_trigger", tableName);
+            CustomApplication.getDbManager().execNonQuery(triggerSql);
+            triggerSql = String.format("DROP TRIGGER If Exists %s_update_trigger", tableName);
+            CustomApplication.getDbManager().execNonQuery(triggerSql);
+
         } catch (DbException e) {
             e.printStackTrace();
         }
-        return isSuccess;
+    }
+
+    /**
+     * 为表创建Trigger(2个trigger)
+     */
+    public void createTrigger(String tableName, String pk) {
+        try {
+            String triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS %s_insert_trigger After insert ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'insert','0',(datetime('now', 'localtime'))); END;", tableName, tableName, KSYNC_MODIFY_TABLENAME, tableName, pk, pk);
+            CustomApplication.getDbManager().execNonQuery(triggerSql);
+            triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS  %s_update_trigger After update ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'update','0',(datetime('now', 'localtime'))); END;", tableName, tableName, KSYNC_MODIFY_TABLENAME, tableName, pk, pk);
+            CustomApplication.getDbManager().execNonQuery(triggerSql);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
 }

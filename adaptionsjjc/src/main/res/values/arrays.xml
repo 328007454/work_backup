@@ -291,5 +291,17 @@
     <string-array name="XuDianChiNeiZu">
         <item>内阻检测</item>
     </string-array>
-
+    <string-array name="NetSyncMenuArray">
+        <item>USB同步</item>
+        <item>数据库删除</item>
+        <item>逾期文件删除</item>
+        <item>上传数据库</item>
+        <item>删除其他班组数据</item>
+    </string-array>
+    <string-array name="UsbSyncMenuArray">
+        <item>网络同步</item>
+        <item>数据库删除</item>
+        <item>逾期文件删除</item>
+        <item>删除其他班组数据</item>
+    </string-array>
 </resources>

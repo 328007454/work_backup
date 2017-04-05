@@ -19,9 +19,8 @@ import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.util.PlaySound;
+import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechUtility;
 import com.tendcloud.tenddata.TCAgent;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
@@ -59,12 +58,12 @@ public class CustomApplication extends CoreApplication {
             Config.BAK_FOLDER,
             Config.NFC_FOLDER,
             Config.WWWROOT_FOLDER};
-    //数据库配置
-    protected static DbManager.DaoConfig mDaoConfig = null;
+
     //数据库管理者
     private static DbManager mDbManager = null;
     private static DbManager PJDbManager = null;
     private static DbManager yanShouDbManager = null;
+
 
     public HashMap<String, String> getCopyedMap() {
         if (copyedMap == null)
@@ -108,19 +107,21 @@ public class CustomApplication extends CoreApplication {
         // 注意：此接口在非主进程调用会返回null对象，如需在非主进程使用语音功能，请增加参数：SpeechConstant.FORCE_LOGIN+"=true"
         // 参数间使用“,”分隔。
         // 设置你申请的应用appid
-        StringBuffer param = new StringBuffer();
-        param.append("appid=" + getString(R.string.app_id));
-        param.append(",");
-        // 设置使用v5+
-        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
-        SpeechUtility.createUtility(CustomApplication.this, param.toString());
+//        StringBuffer param = new StringBuffer();
+//        param.append("appid=" + getString(R.string.app_id));
+//        param.append(",");
+//        // 设置使用v5+
+//        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
+//        SpeechUtility.createUtility(CustomApplication.this, param.toString());
         DisplayUtil.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
         CLog.init(true);
         PlaySound.initPlay(this);
         CrashReportUploadHandler.init(mInstance, Config.LOGFOLDER).start();
-        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true)) {
+        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true) && !BuildConfig.USE_NETWORK_SYNC) {
             com.cnksi.core.utils.NetWorkUtil.disableNetWork(this);
         }
+        initRuntimeVar();
+        TTSUtils.init(getAppContext());
     }
 
     public void initApp() {
@@ -210,27 +211,19 @@ public class CustomApplication extends CoreApplication {
      */
 
     protected static DbManager.DaoConfig getDaoConfig() {
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(12)
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(0)
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override
                     public void onDbOpened(DbManager db) {
                         // 开启WAL, 对写入加速提升巨大
                         //db.getDatabase().enableWriteAheadLogging();
+                        //此处不处理数据库版本更新  全权交给同步框架处理。
+                        db.getDaoConfig().setDbVersion(db.getDatabase().getVersion());
                     }
                 })
                 .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
                     @Override
                     public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
-                        // TODO: ...
-//                        try {
-////                            db.addColumn(HoleRecord.class, "clear_images");
-//                        } catch (DbException e) {
-//                            e.printStackTrace();
-//                        }
-                        // db.dropTable(...);
-                        // ...
-                        // or
-                        // db.dropDb();
                         try {
                             db.addColumn(HoleRecord.class, "problem");
                             db.addColumn(PreventionRecord.class, "clear_info");
@@ -285,16 +278,16 @@ public class CustomApplication extends CoreApplication {
                 .build();
     }
 
-    private static int DataVerSion = 13;
+    private static int DataVersion = 13;
 
     private void copyAssetsToSDCard() {
-        if (PreferencesUtils.getInt(mInstance, "DataVersion", 0) < DataVerSion)
+        if (PreferencesUtils.getInt(mInstance, "DataVersion", 0) < DataVersion)
             mExcutorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     delAllFile(Config.WWWROOT_FOLDER);
                     if (copyAssetsToSDCard(mInstance, "www", Config.WWWROOT_FOLDER)) {
-                        PreferencesUtils.put(mInstance, "DataVersion", DataVerSion);
+                        PreferencesUtils.put(mInstance, "DataVersion", DataVersion);
                         try {
                             XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
                         } catch (Exception e) {
@@ -409,4 +402,10 @@ public class CustomApplication extends CoreApplication {
             Runtime.getRuntime().exit(-1);
         }
     }
+
+    private void initRuntimeVar() {
+        Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
+    }
+
+
 }

@@ -37,13 +37,12 @@ import com.cnksi.core.utils.KeyBoardUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.core.view.PagerSlidingTabStrip;
+import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.iflytek.cloud.ErrorCode;
-import com.iflytek.cloud.InitListener;
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechSynthesizer;
+import com.cnksi.sjjc.sync.DataSync;
+import com.cnksi.sjjc.sync.KSyncConfig;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -167,7 +166,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @ViewInject(R.id.shadom_rela)
     protected RelativeLayout layoutRelat;
 
-    protected SpeechSynthesizer mTts;
+ //   protected SpeechSynthesizer mTts;
     public Vibrator mVibrator;
 
     /**
@@ -403,36 +402,36 @@ public abstract class BaseActivity extends BaseCoreActivity {
         return res;
     }
 
-    /**
-     * 初始化语音引擎
-     */
-    protected void initSpeech(Context context) {
-        // 初始化合成对象
-        mTts = SpeechSynthesizer.createSynthesizer(context, new InitListener() {
-            @Override
-            public void onInit(int code) {
-                if (code == ErrorCode.SUCCESS) {
-                    // 清空参数
-                    mTts.setParameter(SpeechConstant.PARAMS, null);
-                    // 设置本地合成
-                    mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL);
-                    // 设置发音人资源路径
-                    mTts.setParameter(ResourceUtil.TTS_RES_PATH, getResourcePath());
-                    // 设置发音人 voicer为空默认通过语音+界面指定发音人。
-                    mTts.setParameter(SpeechConstant.VOICE_NAME, voicer);
-                    // 设置语速
-                    mTts.setParameter(SpeechConstant.SPEED, "50");
-                    // 设置音调
-                    mTts.setParameter(SpeechConstant.PITCH, "50");
-                    // 设置音量
-                    mTts.setParameter(SpeechConstant.VOLUME, "100");
-                    // 设置播放器音频流类型
-                    mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");
-                    mHandler.sendEmptyMessage(INIT_SPEECH);
-                }
-            }
-        });
-    }
+//    /**
+//     * 初始化语音引擎
+//     */
+//    protected void initSpeech(Context context) {
+//        // 初始化合成对象
+//        mTts = SpeechSynthesizer.createSynthesizer(context, new InitListener() {
+//            @Override
+//            public void onInit(int code) {
+//                if (code == ErrorCode.SUCCESS) {
+//                    // 清空参数
+//                    mTts.setParameter(SpeechConstant.PARAMS, null);
+//                    // 设置本地合成
+//                    mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL);
+//                    // 设置发音人资源路径
+//                    mTts.setParameter(ResourceUtil.TTS_RES_PATH, getResourcePath());
+//                    // 设置发音人 voicer为空默认通过语音+界面指定发音人。
+//                    mTts.setParameter(SpeechConstant.VOICE_NAME, voicer);
+//                    // 设置语速
+//                    mTts.setParameter(SpeechConstant.SPEED, "50");
+//                    // 设置音调
+//                    mTts.setParameter(SpeechConstant.PITCH, "50");
+//                    // 设置音量
+//                    mTts.setParameter(SpeechConstant.VOLUME, "100");
+//                    // 设置播放器音频流类型
+//                    mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");
+//                    mHandler.sendEmptyMessage(INIT_SPEECH);
+//                }
+//            }
+//        });
+//    }
 
     // 获取发音人资源路径
     private String getResourcePath() {
@@ -454,14 +453,14 @@ public abstract class BaseActivity extends BaseCoreActivity {
         System.exit(0);
     }
 
-    /**
-     * 停止说话
-     */
-    protected void stopSpeaking() {
-        if (mTts != null) {
-            mTts.stopSpeaking();
-        }
-    }
+//    /**
+//     * 停止说话
+//     */
+//    protected void stopSpeaking() {
+//        if (mTts != null) {
+//            mTts.stopSpeaking();
+//        }
+//    }
 
     /**
      * 可以标记图片
@@ -549,6 +548,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
+
     protected void changedStatusColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //5.0 全透明实现
@@ -565,6 +565,19 @@ public abstract class BaseActivity extends BaseCoreActivity {
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+    }
+
+    protected void startSync() {
+        if (BuildConfig.USE_NETWORK_SYNC) {
+            KSyncConfig.getInstance()
+                    .startNetWorkSync(mCurrentActivity);
+        } else {
+            ScreenManager.getScreenManager().popAllActivityExceptOne(LoginActivity.class);
+            Intent newIntent = new Intent(mCurrentActivity, DataSync.class);
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
+            newIntent.putExtra(Config.SYNC_COME_FROM, Config.LOGACTIVITY_TO_SYNC);
+            startActivity(newIntent);
         }
 
     }

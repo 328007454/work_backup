@@ -4,7 +4,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "copy_item")
-public class CopyItem implements Cloneable {
+public class CopyItem extends BaseModel implements Cloneable {
 
     // ID
     public static final String ID = "id";
