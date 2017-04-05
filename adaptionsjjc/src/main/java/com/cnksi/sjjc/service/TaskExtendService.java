@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.TaskExtend;
 
 import org.xutils.ex.DbException;
@@ -12,6 +11,10 @@ import org.xutils.ex.DbException;
  */
 public class TaskExtendService extends BaseService<TaskExtend> {
     private static TaskExtendService instance;
+
+    private TaskExtendService() {
+        super(TaskExtend.class);
+    }
 
     public static TaskExtendService getInstance() {
         if (null == instance)
@@ -27,6 +30,6 @@ public class TaskExtendService extends BaseService<TaskExtend> {
      * @throws DbException
      */
     public TaskExtend findTaskExtendByTaskId(String taskId) throws DbException {
-        return CustomApplication.getDbManager().selector(TaskExtend.class).where(TaskExtend.TASK_ID, "=", taskId).findFirst();
+        return selector().and(TaskExtend.TASK_ID, "=", taskId).findFirst();
     }
 }

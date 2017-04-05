@@ -31,7 +31,6 @@ import android.widget.TextView;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.CopyValueElvAdapter;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
@@ -44,8 +43,8 @@ import com.cnksi.sjjc.bean.Spacing;
 import com.cnksi.sjjc.fragment.CopyValueFragment;
 import com.cnksi.sjjc.processor.CopyDataInterface;
 import com.cnksi.sjjc.processor.ProcessorFactory;
+import com.cnksi.sjjc.service.BaseService;
 import com.cnksi.sjjc.service.DeviceService;
-import com.cnksi.sjjc.service.ModifyRecordService;
 import com.cnksi.sjjc.util.DefectLevelUtils;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.TTSUtils;
@@ -581,6 +580,7 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
             for (DevicePart mDevicePart : groupList) {
                 List<DbModel> dataList = groupHashMap.get(mDevicePart);
                 if (dataList != null && !dataList.isEmpty()) {
+                    List<DefectRecord> saveList = new ArrayList<>();
                     for (DbModel m : dataList) {
 
                         String value = m.getString(DefectRecord.VAL) == null ? ""
@@ -593,33 +593,20 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
                                     TextUtils.isEmpty(value) ? "" : currentReportId,
                                     TextUtils.isEmpty(value) ? "" : currentBdzId, currentBdzName, m);
                             m.add(DefectRecord.DEFECTID, record.defectid);
-                            try {
-                                CustomApplication.getDbManager().saveOrUpdate(record);
-
-                            } catch (DbException e) {
-                                e.printStackTrace();
-                            } finally {
-                                ModifyRecordService.getInstance().saveOrUpdateModifyRecord(record.defectid,
-                                        DefectRecord.DEFECTID, DefectRecord.TABLENAME,
-                                        Config.ModifyOperation.update.name());
-                            }
+                            saveList.add(record);
                         } else {
                             if (!TextUtils.isEmpty(value)) {
                                 DefectRecord record = new DefectRecord(currentReportId, currentBdzId,
                                         currentBdzName, m);
                                 m.add(DefectRecord.DEFECTID, record.defectid);
-                                try {
-                                    CustomApplication.getDbManager().saveOrUpdate(record);
-
-                                } catch (DbException e) {
-                                    e.printStackTrace();
-                                } finally {
-                                    ModifyRecordService.getInstance().saveOrUpdateModifyRecord(record.defectid,
-                                            DefectRecord.DEFECTID, DefectRecord.TABLENAME,
-                                            Config.ModifyOperation.update.name());
-                                }
+                                saveList.add(record);
                             }
                         }
+                    }
+                    try {
+                        BaseService.getInstance(DefectRecord.class).saveOrUpdate(saveList);
+                    } catch (DbException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -793,7 +780,7 @@ public class CopyAllValueActivity extends BaseActivity implements OnPageChangeLi
                 ""// pics图片
         );
         try {
-            CustomApplication.getDbManager().saveOrUpdate(record);
+            BaseService.getInstance(DefectRecord.class).saveOrUpdate(record);
             isRecordDefect = true;
         } catch (DbException e) {
             e.printStackTrace();

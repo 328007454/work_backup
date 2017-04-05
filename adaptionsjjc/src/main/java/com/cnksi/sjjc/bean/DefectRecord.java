@@ -7,6 +7,7 @@ import com.cnksi.core.utils.FunctionUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.sjjc.service.BaseService;
 import com.cnksi.sjjc.util.CalcUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -348,7 +349,7 @@ public class DefectRecord extends BaseModel {
                 sql.addBindArg(new KeyValue(STADID, this.standid));
                 sql.addBindArg(new KeyValue(BDZID, this.bdzid));
                 try {
-                    DbModel data = CustomApplication.getDbManager().findDbModelFirst(sql);
+                    DbModel data = BaseService.getInstance(DefectRecord.class).findDbModelFirst(sql);
                     this.olddzcs = data != null ? data.getString(DZCS) : null;
                 } catch (DbException e) {
                     e.printStackTrace();

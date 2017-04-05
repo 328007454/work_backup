@@ -14,6 +14,10 @@ public class BatteryGroupService extends BaseService<BatteryGroup> {
 
     private static BatteryGroupService batteryGroupService;
 
+    protected BatteryGroupService() {
+        super(BatteryGroup.class);
+    }
+
     public static BatteryGroupService getInstance() {
         if (batteryGroupService == null) {
             batteryGroupService = new BatteryGroupService();
@@ -25,7 +29,7 @@ public class BatteryGroupService extends BaseService<BatteryGroup> {
     public List<BatteryGroup> getAllGroup(String currentReportId) {
         List<BatteryGroup> batteryGroupList = null;
         try {
-            batteryGroupList = selector(BatteryGroup.class).and(BatteryGroup.REPORTID, "=", currentReportId).findAll();
+            batteryGroupList = selector().and(BatteryGroup.REPORTID, "=", currentReportId).findAll();
             if (batteryGroupList == null) {
                 batteryGroupList = new ArrayList<>();
             }
@@ -40,7 +44,7 @@ public class BatteryGroupService extends BaseService<BatteryGroup> {
     public BatteryGroup getBatteryGroup(String currentReportId, String batteryGroupId) {
         BatteryGroup group = null;
         try {
-            group = selector(BatteryGroup.class).and(BatteryGroup.REPORTID, "=", currentReportId).and(BatteryGroup.BATTARY_GROUP, "=", batteryGroupId).findFirst();
+            group = selector().and(BatteryGroup.REPORTID, "=", currentReportId).and(BatteryGroup.BATTARY_GROUP, "=", batteryGroupId).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
         }

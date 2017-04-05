@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 
 import org.xutils.ex.DbException;
@@ -10,14 +9,15 @@ import java.util.List;
 /**
  * Created by han on 2016/4/28.
  */
-public class ReportCdbhclService extends BaseService {
+public class ReportCdbhclService extends BaseService<ReportCdbhcl> {
 
     private static ReportCdbhclService mReportCdbhclService;
 
-    public ReportCdbhclService() {
+    private ReportCdbhclService() {
+        super(ReportCdbhcl.class);
     }
 
-    public static ReportCdbhclService getIntance() {
+    public static ReportCdbhclService getInstance() {
         if (mReportCdbhclService == null) {
             mReportCdbhclService = new ReportCdbhclService();
             return mReportCdbhclService;
@@ -33,7 +33,7 @@ public class ReportCdbhclService extends BaseService {
 
     public ReportCdbhcl getReportCdbhcl(String bdzid, String deviceid) {
         try {
-            mReportCdbhcl = CustomApplication.getDbManager().selector(ReportCdbhcl.class).where(ReportCdbhcl.DEVICE_ID, "=", deviceid).and(ReportCdbhcl.BDZ_ID, "=", bdzid).findFirst();
+            mReportCdbhcl = selector().and(ReportCdbhcl.DEVICE_ID, "=", deviceid).and(ReportCdbhcl.BDZ_ID, "=", bdzid).findFirst();
             if (mReportCdbhcl == null) {
                 mReportCdbhcl = new ReportCdbhcl();
                 return mReportCdbhcl;
@@ -46,7 +46,7 @@ public class ReportCdbhclService extends BaseService {
 
 
     public List<ReportCdbhcl> getReportCdbhclList(String bdzid, String reportId) throws DbException {
-        return CustomApplication.getDbManager().selector(ReportCdbhcl.class).where(ReportCdbhcl.REPORT_ID,"=",reportId)
-        .and(ReportCdbhcl.BDZ_ID,"=",bdzid).orderBy(ReportCdbhcl.DEVICE_ID,false).findAll();
+        return selector().and(ReportCdbhcl.REPORT_ID, "=", reportId)
+                .and(ReportCdbhcl.BDZ_ID, "=", bdzid).orderBy(ReportCdbhcl.DEVICE_ID, false).findAll();
     }
 }

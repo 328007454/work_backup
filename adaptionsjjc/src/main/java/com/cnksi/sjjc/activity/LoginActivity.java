@@ -234,7 +234,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             //跳转数据同步
             case R.id.ivLogo:
                 ActivityUtil.startSync(mCurrentActivity);
-
                 break;
         }
     }
@@ -246,7 +245,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         final ModifySyncUrlBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_modify_iphost, null, false);
         final Dialog dialog = DialogUtils.createDialog(mCurrentActivity, binding, true);
         binding.tvOldUrl.setText(Config.SYNC_URL);
-
         binding.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,7 +275,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     /**
      * 登录
      *
-     * @param login trun 登录系统 false 添加登录人员
+     * @param login true 登录系统 false 添加登录人员
      */
     private void loginUser(boolean login) {
 

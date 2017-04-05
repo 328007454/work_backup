@@ -20,6 +20,8 @@ import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportJzlbyqfjkgService;
+import com.cnksi.sjjc.service.ReportService;
+import com.cnksi.sjjc.service.TaskService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -30,6 +32,7 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by han on 2016/9/6.
  * 修改过后的交直流分接开关
@@ -76,7 +79,7 @@ public class NewTransformRecordActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    mReport = db.selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
+                    mReport = ReportService.getInstance().findById(currentReportId);
                     mReport.starttime = DateUtils.getCurrentLongTime();
                 } catch (DbException e) {
                     e.printStackTrace();
@@ -84,7 +87,7 @@ public class NewTransformRecordActivity extends BaseActivity {
                 listDbModel = DeviceService.getInstance().searchDevicesByNameWays(bdzid, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
                 if (listDbModel != null && !listDbModel.isEmpty()) {
                     for (DbModel model : listDbModel) {
-                        ReportJzlbyqfjkg mReport = ReportJzlbyqfjkgService.getIntance().getFirstReport(model.getString("bdzid"), model.getString("deviceid"),currentReportId);
+                        ReportJzlbyqfjkg mReport = ReportJzlbyqfjkgService.getInstance().getFirstReport(model.getString("bdzid"), model.getString("deviceid"), currentReportId);
                         listReport.add(mReport);
                     }
                 }
@@ -143,11 +146,12 @@ public class NewTransformRecordActivity extends BaseActivity {
                 this.finish();
                 break;
             case R.id.btn_confirm_save:
+                List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
                 for (int i = 0; i < listDbModel.size(); i++) {
                     DbModel dbModel = listDbModel.get(i);
                     String bcds = listBcds.get(i).getText().toString();
                     String dzcs = listDzcs.get(i).getText().toString();
-                    if(TextUtils.isEmpty(bcds)&&TextUtils.isEmpty(dzcs)){
+                    if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
                         continue;
                     }
                     mReportJzlby = listReport.get(i);
@@ -159,23 +163,23 @@ public class NewTransformRecordActivity extends BaseActivity {
                     mReportJzlby.bcds = bcds;
                     mReportJzlby.dzcs = dzcs;
                     mReportJzlby.last_modify_time = DateUtils.getCurrentLongTime();
-                    try {
-                        listReport.get(i).id = mReportJzlby.id;
-                        db.saveOrUpdate(mReportJzlby);
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-
+                    saveList.add(mReportJzlby);
                 }
                 try {
-                    db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+
+                    ReportJzlbyqfjkgService.getInstance().saveOrUpdate(mReportJzlby);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
                     setResult(RESULT_OK);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
                 try {
                     mReport.endtime = DateUtils.getCurrentLongTime();
-                    db.saveOrUpdate(mReport);
+                    ReportService.getInstance().saveOrUpdate(mReport);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }

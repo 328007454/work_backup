@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DifferentialMotionRecordAdapter4;
 import com.cnksi.sjjc.bean.CdbhclValue;
@@ -19,6 +18,8 @@ import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportCdbhclService;
+import com.cnksi.sjjc.service.ReportService;
+import com.cnksi.sjjc.service.TaskService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -73,7 +74,7 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    mReport = db.selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
+                    mReport = ReportService.getInstance().findById(currentReportId);
                     bdzId = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_ID, "");
                     reportId = PreferencesUtils.getString(_this, Config.CURRENT_REPORT_ID, "");
                     if (Config.NEW_COPY) {
@@ -86,7 +87,7 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
                             listDevice = DeviceService.getInstance().getDevicesByNameWays(bdzId, Config.DIFFERENTIAL_RECORD_KEY);
                     } else
                         listDevice = DeviceService.getInstance().getDevicesByName(bdzId, "差流");
-                    List<ReportCdbhcl> exitCdbhclList = ReportCdbhclService.getIntance().getReportCdbhclList(bdzId, reportId);
+                    List<ReportCdbhcl> exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(bdzId, reportId);
                     if (null != exitCdbhclList && !exitCdbhclList.isEmpty()) {
                         for (ReportCdbhcl report : exitCdbhclList) {
                             for (CdbhclValue value : cdbhclValueList) {
@@ -138,6 +139,7 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
     private void saveData() {
         ReportCdbhcl mCdReport;
         String bdzName = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
+        List<ReportCdbhcl> saveList = new ArrayList<>();
         for (CdbhclValue value : cdbhclValueList) {
             if (reportCdbhclsMap.containsKey(value.getId())) {
                 mCdReport = reportCdbhclsMap.get(value.getId());
@@ -147,16 +149,14 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
                 reportCdbhclsMap.put(value.getId(), mCdReport);
             }
             mCdReport.last_modify_time = DateUtils.getCurrentLongTime();
-            try {
-                CustomApplication.getDbManager().saveOrUpdate(mCdReport);
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
+            saveList.add(mCdReport);
         }
+
         mReport.endtime = DateUtils.getCurrentLongTime();
         try {
-            db.saveOrUpdate(mReport);
-            db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            ReportCdbhclService.getInstance().saveOrUpdate(saveList);
+            ReportService.getInstance().saveOrUpdate(mReport);
+            TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
         } catch (DbException e) {
             e.printStackTrace();
         }

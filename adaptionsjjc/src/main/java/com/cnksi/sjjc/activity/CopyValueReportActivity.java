@@ -10,12 +10,12 @@ import android.widget.TextView;
 import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.processor.CopyDataInterface;
 import com.cnksi.sjjc.processor.ProcessorFactory;
+import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.Event;
@@ -118,7 +118,7 @@ public class CopyValueReportActivity extends BaseReportActivity {
 					// 查询状态
 				//	mCurrentDepartment = DepartmentService.getInstance().findDepartmentById(currentDepartmentId);
 					status = processor.getCopyResult(currentBdzId);
-					report = CustomApplication.getDbManager().findById(Report.class, currentReportId);
+					report = ReportService.getInstance().findById(currentReportId);
 
 				} catch (DbException e) {
 					e.printStackTrace();

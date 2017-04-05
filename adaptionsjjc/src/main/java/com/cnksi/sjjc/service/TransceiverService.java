@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.Transceiver;
 
 import org.xutils.ex.DbException;
@@ -18,6 +17,10 @@ public class TransceiverService extends BaseService<Transceiver> {
 
     private static TransceiverService instance;
 
+    private TransceiverService() {
+        super(Transceiver.class);
+    }
+
     public static TransceiverService getInstance() {
         if (null == instance)
             instance = new TransceiverService();
@@ -33,7 +36,7 @@ public class TransceiverService extends BaseService<Transceiver> {
      * @throws DbException
      */
     public Transceiver findExitTransceiver(String reportId, String deviceId) throws DbException {
-        return CustomApplication.getDbManager().selector(Transceiver.class).where(Transceiver.REPORDID, "=", reportId).and(Transceiver.DEVICEID, "=", deviceId).findFirst();
+        return selector().and(Transceiver.REPORDID, "=", reportId).and(Transceiver.DEVICEID, "=", deviceId).findFirst();
     }
 
     /**
@@ -44,7 +47,7 @@ public class TransceiverService extends BaseService<Transceiver> {
      * @throws DbException
      */
     public List<Transceiver> findExitTransceiver(String reportId) throws DbException {
-        return CustomApplication.getDbManager().selector(Transceiver.class).where(Transceiver.REPORDID, "=", reportId).findAll();
+        return selector().and(Transceiver.REPORDID, "=", reportId).findAll();
     }
 
     /**
@@ -54,7 +57,7 @@ public class TransceiverService extends BaseService<Transceiver> {
      * @throws DbException
      */
     public List<Transceiver> findExceptionTransceiver(String reportId) throws DbException {
-        return CustomApplication.getDbManager().selector(Transceiver.class).where(Transceiver.REPORDID, "=", reportId)
+        return selector().and(Transceiver.REPORDID, "=", reportId)
                 .and(Transceiver.CHANNELSTATUS, "=", "1").findAll();
     }
 }

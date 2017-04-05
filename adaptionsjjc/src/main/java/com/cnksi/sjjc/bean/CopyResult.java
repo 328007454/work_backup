@@ -1,7 +1,7 @@
 package com.cnksi.sjjc.bean;
 
 
-import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.sjjc.service.CopyResultService;
 import com.cnksi.sjjc.util.CalcUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -174,7 +174,7 @@ public class CopyResult extends BaseModel {
             sql.addBindArg(new KeyValue("",type_key));
             sql.addBindArg(new KeyValue("",deviceid));
             try {
-                DbModel data = CustomApplication.getDbManager().findDbModelFirst(sql);
+                DbModel data = CopyResultService.getInstance().findDbModelFirst(sql);
                 this.dzcs_old = data != null ? data.getString(DZCS) : null;
             } catch (DbException e) {
                 e.printStackTrace();

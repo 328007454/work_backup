@@ -17,6 +17,10 @@ import java.util.List;
 public class BdzService extends BaseService<Bdz> {
     private static BdzService instance;
 
+    private BdzService() {
+        super(Bdz.class);
+    }
+
     public static BdzService getInstance() {
         if (null == instance)
             instance = new BdzService();

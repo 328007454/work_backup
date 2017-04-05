@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import com.baidu.location.BDLocation;
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.cnksi.core.adapter.ViewHolder;
@@ -252,7 +251,7 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
                 if (DistanceUtil.getDistance(currentLocation, spaceLocation) < 200) {
                     String bdzid = dbModel.getString(Spacing.BDZID);
                     try {
-                        Bdz bdz =  BdzService.getInstance().findById(Bdz.class,bdzid);
+                        Bdz bdz =  BdzService.getInstance().findById(bdzid);
                         if(bdz != null){
                             launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
                             break;

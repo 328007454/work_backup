@@ -19,6 +19,7 @@ public class CopyResultService extends BaseService<CopyResult> {
     public static CopyResultService mInstance;
 
     private CopyResultService() {
+        super(CopyResult.class);
     }
 
     public static CopyResultService getInstance() {
@@ -43,7 +44,7 @@ public class CopyResultService extends BaseService<CopyResult> {
 
     public CopyResult getResult(String reportId, String itemId) {
         try {
-            Selector<CopyResult> selector = selector(CopyResult.class).and(CopyResult.REPORTID, "=", reportId)
+            Selector<CopyResult> selector = selector().and(CopyResult.REPORTID, "=", reportId)
                     .and(CopyResult.ITEM_ID, "=", itemId).orderBy(CopyResult.UPDATE_TIME);
             return selector.findFirst();
         } catch (DbException e) {
@@ -61,7 +62,7 @@ public class CopyResultService extends BaseService<CopyResult> {
     public List<CopyResult> getResultList(String reportId, String deviceId, boolean inReport, String type) {
         try {
             String operate = (inReport) ? "=" : "!=";
-            Selector<CopyResult> selector = selector(CopyResult.class).and(CopyResult.DEVICEID, "=", deviceId)
+            Selector<CopyResult> selector = selector().and(CopyResult.DEVICEID, "=", deviceId)
                     .and(CopyResult.REPORTID, operate, reportId).
                             expr(" and " + CopyItem.TYPE_KEY + " in('" + type + "')  and create_time in ( select max(create_time) from copy_result where dlt='0' group by item_id)  group by " + CopyResult.ITEM_ID + " order by " + CopyResult.UPDATE_TIME + "," + CopyResult.CREATE_TIME);
             return selector.findAll();
@@ -114,7 +115,7 @@ public class CopyResultService extends BaseService<CopyResult> {
      */
     public List<CopyResult> getDifferentialRecord(String bdzId, String reportId) throws DbException {
 
-        return selector(CopyResult.class).and(CopyResult.REPORTID, "=", reportId)
+        return selector().and(CopyResult.REPORTID, "=", reportId)
                 .and(CopyResult.BDZID, "=", bdzId).orderBy(CopyResult.DEVICEID, false).findAll();
     }
 }

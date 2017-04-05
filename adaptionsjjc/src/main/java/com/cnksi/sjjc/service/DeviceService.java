@@ -26,7 +26,8 @@ public class DeviceService extends BaseService<Device> {
 
     private static DeviceService mDevices;
 
-    public DeviceService() {
+    private DeviceService() {
+        super(Device.class);
     }
 
     public static DeviceService getInstance() {
@@ -43,7 +44,7 @@ public class DeviceService extends BaseService<Device> {
     public List<Device> getDevicesProtect(String bdzId) {
         List<Device> deviceList = new ArrayList<Device>();
         try {
-            deviceList = selector(Device.class).and(Device.NAME, "like", "%保护%").and(Device.BDZID, "=", bdzId).and(Device.DLT, "<>", "1").findAll();
+            deviceList = selector().and(Device.NAME, "like", "%保护%").and(Device.BDZID, "=", bdzId).and(Device.DLT, "<>", "1").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -102,10 +103,10 @@ public class DeviceService extends BaseService<Device> {
      * @throws DbException
      */
     public List<DbModel> findDeviceHasCopyValueBySelector(String deviceType, String selector, String bdzId) throws DbException {
-        SqlInfo sqlInfo = new SqlInfo(" SELECT * from device WHERE  bdzid=? and device_type=? and has_copy='Y' " + selector);
+        SqlInfo sqlInfo = new SqlInfo(" SELECT * from device WHERE dlt='0' and  bdzid=? and device_type=? and has_copy='Y' " + selector);
         sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
         sqlInfo.addBindArg(new KeyValue("deviceType", deviceType));
-        return CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+        return findDbModelAll(sqlInfo);
     }
 
     /**
@@ -117,9 +118,9 @@ public class DeviceService extends BaseService<Device> {
      * @throws DbException
      */
     public List<DbModel> findDeviceHasCopyValueBySelector(String selector, String bdzId) throws DbException {
-        SqlInfo sqlInfo = new SqlInfo(" SELECT * from device WHERE  bdzid=? " + selector);
+        SqlInfo sqlInfo = new SqlInfo(" SELECT * from device WHERE dlt='0' and  bdzid=? " + selector);
         sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
-        return CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+        return findDbModelAll(sqlInfo);
     }
 
     /**
@@ -195,7 +196,7 @@ public class DeviceService extends BaseService<Device> {
         if (!"search_device_key".equals(deviceType)) {
             sqlInfo.addBindArg(new KeyValue("deviceType", deviceType));
         }
-        return CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+        return findDbModelAll(sqlInfo);
     }
 
     /**
@@ -206,7 +207,7 @@ public class DeviceService extends BaseService<Device> {
      * @throws DbException
      */
     public List<Device> findTransceiverDevice(String bdzId) throws DbException {
-        return CustomApplication.getDbManager().selector(Device.class).where(Device.BDZID, "=", bdzId).and(Device.NAME, "like", "%收发信机%").findAll();
+        return selector().and(Device.BDZID, "=", bdzId).and(Device.NAME, "like", "%收发信机%").findAll();
 
     }
 
@@ -216,13 +217,13 @@ public class DeviceService extends BaseService<Device> {
      * @param bdzid
      */
     public void recoverCopyData(String bdzid) {
-        String sql = "select deviceid,standid,val from defect_record where val <> '' and val is not null and bdzid = '"
+        String sql = "select deviceid,standid,val from defect_record where dlt='0' and val <> '' and val is not null and bdzid = '"
                 + bdzid + "' GROUP BY deviceid,standid order by discovered_date desc";
         SqlInfo sqlInfo = new SqlInfo(sql);
         try {
             // if (!PreferencesUtils.getBoolean(CustomApplication.getInstance(), Config.IS_RECOVER_COPY_DATA + bdzid,
             // false)) {
-            List<DbModel> dataList = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+            List<DbModel> dataList = findDbModelAll(sqlInfo);
             if (dataList != null) {
                 HashMap<String, String> copyMap = CustomApplication.getInstance().getCopyedMap();
                 for (DbModel model : dataList) {
@@ -245,9 +246,9 @@ public class DeviceService extends BaseService<Device> {
      */
     public List<DbModel> getDevicesByNameWays(String bdzId, String key) {
         List<DbModel> dbModelList = null;
-        String sql = "select d.deviceid,d.device_name name,d.val,d.val_a,d.val_b,d.val_c,d.val_O  from copy_item d where d.bdzid = '" + bdzId + "' and d.type_key = '" + key + "' order by d.deviceid ASC";
+        String sql = "select d.deviceid,d.device_name name,d.val,d.val_a,d.val_b,d.val_c,d.val_O  from copy_item d where d.dlt='0' and d.bdzid = '" + bdzId + "' and d.type_key = '" + key + "' order by d.deviceid ASC";
         try {
-            dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
+            dbModelList = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -262,7 +263,7 @@ public class DeviceService extends BaseService<Device> {
     public List<CopyItem> getDevicesByNameWays1(String bdzId, String key) {
         List<CopyItem> items = null;
         try {
-            items = CustomApplication.getDbManager().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.TYPE_KEY, "=", key).orderBy(CopyItem.DEVICEID, false).findAll();
+            items = getInstance(CopyItem.class).selector().and(CopyItem.BDZID, "=", bdzId).and(CopyItem.TYPE_KEY, "=", key).orderBy(CopyItem.DEVICEID, false).findAll();
             for (CopyItem item : items) {
                 item.focus = false;
             }
@@ -282,7 +283,7 @@ public class DeviceService extends BaseService<Device> {
         List<DbModel> dbModelList = null;
         String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid from copy_item d where d.bdzid = '" + bdzid + "' and (d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "')";
         try {
-            dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
+            dbModelList = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -300,7 +301,7 @@ public class DeviceService extends BaseService<Device> {
         String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid,group_concat(d.description) description,group_concat(d.type_key) key from copy_item d where  (d.type_key = '"
                 + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "') and d.bdzid = '" + bdzid + "' group by d.deviceid ";
         try {
-            dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
+            dbModelList = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -313,7 +314,7 @@ public class DeviceService extends BaseService<Device> {
     public List<CopyItem> getAllCopyItem(String bdzId, String deviceId, String kaiGaunKey, String dangWeiKey) {
         List<CopyItem> copyItemList = null;
         try {
-            copyItemList = CustomApplication.getDbManager().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).and(CopyItem.TYPE_KEY, "=", kaiGaunKey).or(CopyItem.TYPE_KEY, "=", dangWeiKey).findAll();
+            copyItemList = getInstance(CopyItem.class).selector().and(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).and(CopyItem.TYPE_KEY, "=", kaiGaunKey).or(CopyItem.TYPE_KEY, "=", dangWeiKey).findAll();
             if (null == copyItemList) copyItemList = new ArrayList<>();
         } catch (DbException e) {
             e.printStackTrace();
@@ -329,9 +330,9 @@ public class DeviceService extends BaseService<Device> {
      */
     public List<DbModel> getDevicesById(String bdzid, String deviceId, String kaiGuanKey, String dangWeiKey) {
         List<DbModel> dbModelList = null;
-        String sql = "select d.description description,d.type_key key from copy_item d where d.bdzid = '" + bdzid + "' and d.deviceid = '" + deviceId + "' and ( d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "' )";
+        String sql = "select d.description description,d.type_key key from copy_item d where d.dlt='0' and d.bdzid = '" + bdzid + "' and d.deviceid = '" + deviceId + "' and ( d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "' )";
         try {
-            dbModelList = CustomApplication.getDbManager().findDbModelAll(new SqlInfo(sql));
+            dbModelList = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -371,9 +372,9 @@ public class DeviceService extends BaseService<Device> {
         try {
 
             String triggerSql = String.format("DROP TRIGGER  If Exists %s_insert_trigger", tableName);
-            CustomApplication.getDbManager().execNonQuery(triggerSql);
+           execSql(triggerSql);
             triggerSql = String.format("DROP TRIGGER If Exists %s_update_trigger", tableName);
-            CustomApplication.getDbManager().execNonQuery(triggerSql);
+            execSql(triggerSql);
 
         } catch (DbException e) {
             e.printStackTrace();
@@ -386,9 +387,9 @@ public class DeviceService extends BaseService<Device> {
     public void createTrigger(String tableName, String pk) {
         try {
             String triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS %s_insert_trigger After insert ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'insert','0',(datetime('now', 'localtime'))); END;", tableName, tableName, KSYNC_MODIFY_TABLENAME, tableName, pk, pk);
-            CustomApplication.getDbManager().execNonQuery(triggerSql);
+            execSql(triggerSql);
             triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS  %s_update_trigger After update ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'update','0',(datetime('now', 'localtime'))); END;", tableName, tableName, KSYNC_MODIFY_TABLENAME, tableName, pk, pk);
-            CustomApplication.getDbManager().execNonQuery(triggerSql);
+            execSql(triggerSql);
         } catch (DbException e) {
             e.printStackTrace();
         }

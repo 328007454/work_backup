@@ -15,6 +15,7 @@ public class CopyItemService extends BaseService<CopyItem> {
     public static CopyItemService mInstance;
 
     private CopyItemService() {
+        super(CopyItem.class);
     }
 
     public static CopyItemService getInstance() {
@@ -33,7 +34,7 @@ public class CopyItemService extends BaseService<CopyItem> {
      */
     public List<CopyItem> getDeviceCopyItem(String bdzId, String deviceId) {
         try {
-            Selector<CopyItem> selector = selector(CopyItem.class).and(CopyItem.BDZID, "=", bdzId)
+            Selector<CopyItem> selector = selector().and(CopyItem.BDZID, "=", bdzId)
                     .and(CopyItem.DEVICEID, "=", deviceId).orderBy(CopyItem.ID);
             return selector.findAll();
         } catch (DbException e) {
@@ -45,7 +46,7 @@ public class CopyItemService extends BaseService<CopyItem> {
 
     public List<CopyItem> getDeviceCopyItem(String bdzId, String deviceId, String copyType) {
         try {
-            Selector<CopyItem> selector = selector(CopyItem.class).and(CopyItem.BDZID, "=", bdzId)
+            Selector<CopyItem> selector = selector().and(CopyItem.BDZID, "=", bdzId)
                     .and(CopyItem.DEVICEID, "=", deviceId).expr(" and " + CopyItem.TYPE_KEY + " in('" + copyType + "') ").orderBy(CopyItem.ID);
             return selector.findAll();
         } catch (DbException e) {

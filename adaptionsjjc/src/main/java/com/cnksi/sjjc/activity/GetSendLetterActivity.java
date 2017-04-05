@@ -25,7 +25,6 @@ import com.cnksi.core.utils.DisplayUtil;
 import com.cnksi.core.utils.KeyBoardUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.Report;
@@ -127,7 +126,7 @@ public class GetSendLetterActivity extends BaseActivity {
             Device transceiverDevice = transceiverDeviceList.get(i);
             try {
                 //查询设备所在间隔
-                Spacing deviceSpacing = SpacingService.getInstance().findById(Spacing.class, transceiverDevice.spid);
+                Spacing deviceSpacing = SpacingService.getInstance().findById(transceiverDevice.spid);
                 if (null != deviceSpacing) {
                     transceiveSpacing.put(transceiverDevice.deviceid, deviceSpacing);
                 }
@@ -411,9 +410,9 @@ public class GetSendLetterActivity extends BaseActivity {
                     report.endtime = DateUtils.getCurrentLongTime();
                     ReportService.getInstance().saveOrUpdate(report);
                     //2、修改任务
-                    Task task = TaskService.getInstance().getTask(currentTaskId);
+                    Task task = TaskService.getInstance().findById(currentTaskId);
                     task.status = Task.TaskStatus.done.name();
-                    CustomApplication.getDbManager().saveOrUpdate(task);
+                   TaskService.getInstance().saveOrUpdate(task);
                     isNeedUpdateTaskState = true;
                     Intent intent = new Intent(_this, GetSendLetterReportActivity.class);
                     startActivity(intent);

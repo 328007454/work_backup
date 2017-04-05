@@ -131,10 +131,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * Db验收实例
      */
     DbManager dbYShou;
-    /**
-     * Db实例
-     */
-    DbManager db;
+
     /**
      * 是否显示文件名
      */
@@ -185,7 +182,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
             setContentView(R.layout.include_title);
         if (PreferencesUtils.getBoolean(_this, Config.PERMISSION_STASTUS, false)) {
             dbYShou = CustomApplication.getYanShouDbManager();
-            db = CustomApplication.getDbManager();
         }
         x.view().inject(this);
     }

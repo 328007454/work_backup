@@ -69,7 +69,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     //点击当前清除拍照时对应的HoleRecord
     private HoleRecord item;
     //判断是否是返回键
-    private boolean isBack=false;
+    private boolean isBack = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isBack=true;
+                isBack = true;
                 saveData();
             }
         });
@@ -99,10 +99,10 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                holeRecords = HoleReportService.getInstance().getAllHoleRecord(currentReportId,currentBdzId);
-                if(holeRecords!=null&&!holeRecords.isEmpty()){
-                    for(HoleRecord record:holeRecords){
-                        clearPicMap.put(record.id,record);
+                holeRecords = HoleReportService.getInstance().getAllHoleRecord(currentReportId, currentBdzId);
+                if (holeRecords != null && !holeRecords.isEmpty()) {
+                    for (HoleRecord record : holeRecords) {
+                        clearPicMap.put(record.id, record);
                     }
 
                 }
@@ -147,16 +147,16 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
                 ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
                 ArrayList<String> allPicList = StringUtils.string2List(item.clear_images);
                 for (String imageUrl : cancleImagList) {
-                    allPicList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER,""));
+                    allPicList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
                 }
-                item.clear_images =StringUtils.ArrayListToString(allPicList);
+                item.clear_images = StringUtils.ArrayListToString(allPicList);
                 clearPicMap.put(item.id, item);
                 mHandler.sendEmptyMessage(LOAD_DATA);
             } else if (requestCode == LOAD_DATA) {
-                if(TextUtils.isEmpty(item.clear_images)){
-                    item.clear_images=""+imgName;
-                }else{
-                   item.clear_images=item.clear_images+","+imgName;
+                if (TextUtils.isEmpty(item.clear_images)) {
+                    item.clear_images = "" + imgName;
+                } else {
+                    item.clear_images = item.clear_images + "," + imgName;
                 }
                 item.clear_reportid = currentReportId;
                 clearPicMap.put(item.id, item);
@@ -167,13 +167,13 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
 
     /**
      * 现存孔洞清除孔洞时候的拍照
-     * */
+     */
     @Override
     public void itemClick(View v, Object o, int position, View iView, View view) {
         switch (v.getId()) {
             case R.id.iv_take_pic:
                 item = (HoleRecord) o;
-                currentHole= item.location+"_"+item.hole_detail;
+                currentHole = item.location + "_" + item.hole_detail;
                 FunctionUtils.takePicture(this, imgName = FunctionUtil.getCurrentImageName(_this), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
                 break;
             default:
@@ -186,7 +186,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
         switch (v.getId()) {
             case R.id.iv_delet_pic://删除清除孔洞所有
                 item = (HoleRecord) o;
-                if(!TextUtils.isEmpty(item.clear_images)){
+                if (!TextUtils.isEmpty(item.clear_images)) {
                     showClearAllPicDialog();
                 }
                 break;
@@ -195,7 +195,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
                 item = (HoleRecord) o;
                 if (!TextUtils.isEmpty(item.clear_images)) {
                     listPicClear = StringUtils.string2List(item.clear_images);
-                    showImageDetails(mCurrentActivity,0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicClear, Config.RESULT_PICTURES_FOLDER),true);
+                    showImageDetails(mCurrentActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicClear, Config.RESULT_PICTURES_FOLDER), true);
                 }
 
                 break;
@@ -204,7 +204,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
                 item = (HoleRecord) o;
                 if (!TextUtils.isEmpty(item.hole_images)) {
                     listPicDis = StringUtils.string2List(item.hole_images);
-                    showImageDetails(mCurrentActivity,0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER),false);
+                    showImageDetails(mCurrentActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
                 }
                 break;
             default:
@@ -214,9 +214,9 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
 
     /**
      * 清除所有的展示的清除孔洞照片
-     * */
-    private void showClearAllPicDialog(){
-        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 9/ 10;
+     */
+    private void showClearAllPicDialog() {
+        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 9 / 10;
         if (mClearHolder == null) {
             mClearHolder = new ClearHolder();
         }
@@ -226,7 +226,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
         }
         mClearHolder.tvContent.setText("是否删除该孔洞所有清除后照片");
         mClearHolder.tvTitle.setText("提示");
-            mClearDialog.show();
+        mClearDialog.show();
         mClearHolder.btCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,6 +247,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
             }
         });
     }
+
     private String clearPosition = "";
     private Dialog mClearDialog;
     private ClearHolder mClearHolder;
@@ -254,21 +255,20 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     @Event(R.id.btn_next)
     private void clickEvent(View view) {
         for (HoleRecord record : holeRecords) {
-            if (!TextUtils.isEmpty(record.clear_images)&&currentReportId.equals(record.clear_reportid)) {
+            if (!TextUtils.isEmpty(record.clear_images) && currentReportId.equals(record.clear_reportid)) {
                 clearPosition += record.location + "_" + record.hole_detail + "\n";
             }
         }
         showClearHoleDialog(clearPosition);
-        clearPosition="";
+        clearPosition = "";
 
     }
 
     /**
      * 清除部分清除孔洞的照片
-     *
-     * */
+     */
     private void showClearHoleDialog(final String clearPosition) {
-        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 9/10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 9 / 10;
         if (mClearHolder == null) {
             mClearHolder = new ClearHolder();
         }
@@ -276,11 +276,11 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
             mClearDialog = DialogUtils.createDialog(mCurrentActivity, null, R.layout.dialog_tips, mClearHolder, dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         }
-        if(!TextUtils.isEmpty(clearPosition)){
-            mClearHolder.tvContent.setText("是否清除以下孔洞：\n"+clearPosition);
+        if (!TextUtils.isEmpty(clearPosition)) {
+            mClearHolder.tvContent.setText("是否清除以下孔洞：\n" + clearPosition);
 
-        }else{
-            mClearHolder.tvContent.setText("目前没有清除的孔洞：\n"+clearPosition);
+        } else {
+            mClearHolder.tvContent.setText("目前没有清除的孔洞：\n" + clearPosition);
         }
         mClearDialog.show();
         mClearHolder.tvTitle.setText("确认清除孔洞");
@@ -294,7 +294,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
         mClearHolder.btFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               saveData();
+                saveData();
                 mClearDialog.dismiss();
 
             }
@@ -317,23 +317,27 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
 
     /**
      * 保存数据
-     * */
-    private void saveData(){
+     */
+    private void saveData() {
+        List<HoleRecord> saveList = new ArrayList<>();
         for (Map.Entry<String, HoleRecord> entry : clearPicMap.entrySet()) {
-            try {
-                if(!isBack){
-                    if(!TextUtils.isEmpty(entry.getValue().clear_images)){
-                        entry.getValue().status="1";
-                    }else{
-                        entry.getValue().status="0";
-                    }
+
+            if (!isBack) {
+                if (!TextUtils.isEmpty(entry.getValue().clear_images)) {
+                    entry.getValue().status = "1";
+                } else {
+                    entry.getValue().status = "0";
                 }
-                db.saveOrUpdate(entry.getValue());
-            } catch (DbException e) {
-                e.printStackTrace();
             }
+            saveList.add(entry.getValue());
+
         }
-        XianCunHoleActivity.this.setResult(RESULT_OK);
-        XianCunHoleActivity.this.finish();
+        try {
+            HoleReportService.getInstance().saveOrUpdate(saveList);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        setResult(RESULT_OK);
+        finish();
     }
 }

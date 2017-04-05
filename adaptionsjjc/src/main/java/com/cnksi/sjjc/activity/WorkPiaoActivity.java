@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.WorkPlanAdapter;
 import com.cnksi.sjjc.bean.WorkPiao;
+import com.cnksi.sjjc.service.BaseService;
 
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.ViewInject;
@@ -44,7 +45,7 @@ public class WorkPiaoActivity extends BaseActivity {
 
     public void initData() {
         try {
-            wpList = db.selector(WorkPiao.class).findAll();
+            wpList = BaseService.getInstance(WorkPiao.class).findAll();
             mHandler.sendEmptyMessage(LOAD_DATA);
         } catch (DbException e) {
             e.printStackTrace();
@@ -63,8 +64,8 @@ public class WorkPiaoActivity extends BaseActivity {
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case LOAD_DATA:
-                if(wpAdapter==null){
-                    wpAdapter = new WorkPlanAdapter(_this,wpList,R.layout.work_piao_list_item);
+                if (wpAdapter == null) {
+                    wpAdapter = new WorkPlanAdapter(_this, wpList, R.layout.work_piao_list_item);
                 }
                 lvContainer.setAdapter(wpAdapter);
                 break;

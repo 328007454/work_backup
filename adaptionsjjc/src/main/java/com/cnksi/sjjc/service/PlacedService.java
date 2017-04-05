@@ -2,8 +2,6 @@ package com.cnksi.sjjc.service;
 
 
 import com.cnksi.sjjc.bean.Placed;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.sjjc.bean.Spacing;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -17,6 +15,10 @@ public class PlacedService extends BaseService<Placed> {
 
     private static PlacedService instance;
 
+    protected PlacedService() {
+        super(Placed.class);
+    }
+
     public static PlacedService getInstance() {
         if (null == instance)
             instance = new PlacedService();
@@ -26,16 +28,17 @@ public class PlacedService extends BaseService<Placed> {
     /**
      * 查詢已到間隔
      *
-     * @param report
+     * @param reportId
+     * @param bdzId
      * @return
      */
-    public String findPlacedSpace(Report report) {
+    public String findPlacedSpace(String reportId, String bdzId) {
         try {
-            DbModel result = from(Placed.class).select(" count(DISTINCT spid) as c").and(Placed.REPORTID, "=", report.reportid).and(Placed.PLACED, "=",
+            DbModel result = selector().select(" count(DISTINCT spid) as c").and(Placed.REPORTID, "=", reportId).and(Placed.PLACED, "=",
                     "1").findFirst();
             long arrived = result.getLong("c");
-            long total = SpacingService.getInstance().from(Spacing.class).
-                    expr("and spid in (select distinct(spid) spid from device where device_type = 'one' and bdzid = '" + report.bdzid + "')").count();
+            long total = SpacingService.getInstance().selector().
+                    expr("and spid in (select distinct(spid) spid from device where device_type = 'one' and bdzid = '" + bdzId + "')").count();
             return arrived + "/" + total;
         } catch (DbException e) {
             e.printStackTrace();

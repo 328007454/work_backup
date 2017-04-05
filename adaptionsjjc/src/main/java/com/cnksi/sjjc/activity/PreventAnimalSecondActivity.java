@@ -22,6 +22,8 @@ import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;
+import com.cnksi.sjjc.service.ReportService;
+import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -136,7 +138,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
             public void run() {
                 try {
                     preventionRecord = PreventionService.getInstance().findPreventionRecordByReoprtId(currentReportId);
-                    report = db.findById(Report.class, currentReportId);
+                    report = ReportService.getInstance().findById(currentReportId);
 //                    preventionRecord = (PreventionRecord) getIntent().getSerializableExtra("PreventionRecord");
                     mHoleList = HoleReportService.getInstance().getCurrentClearRecord(currentReportId, currentBdzId);
                     if (null == preventionRecord) {
@@ -193,10 +195,10 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                     preventionRecord.mousetrapInfo = etMouseInfo.getText().toString();
                     preventionRecord.clearInfo=tvClear.getText().toString().trim();
                     preventionRecord.last_modify_time = DateUtils.getCurrentLongTime();
-                    db.saveOrUpdate(preventionRecord);
+                    PreventionService.getInstance().saveOrUpdate(preventionRecord);
                     report.endtime = DateUtils.getCurrentLongTime();
-                    db.saveOrUpdate(report);
-                    db.update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                    ReportService.getInstance().saveOrUpdate(report);
+                    TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
                 } catch (DbException e) {
                     e.printStackTrace();
                 }

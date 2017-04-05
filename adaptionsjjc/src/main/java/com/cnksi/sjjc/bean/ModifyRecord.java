@@ -5,7 +5,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "modify_record")
-public class ModifyRecord extends BaseModel{
+public class ModifyRecord {
 
 	@Column( name= "id",isId = true)
 	public int id;

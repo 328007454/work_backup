@@ -45,6 +45,7 @@ import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.BatteryGroupService;
 import com.cnksi.sjjc.service.BatteryRecordService;
 import com.cnksi.sjjc.service.BatteryService;
+import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskExtendService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
@@ -236,7 +237,7 @@ public class BatteryTestActivity extends BaseActivity {
                 currentReport.temperature = txtTempreture.getText().toString();
                 cacheBatteryInfor();
                 try {
-                    db.saveOrUpdate(currentReport);
+                    ReportService.getInstance().saveOrUpdate(currentReport);
                 } catch (DbException e) {
                     e.printStackTrace();
                     Log.i("BatteryTestActivity", "返回键数据保存出错");
@@ -314,10 +315,10 @@ public class BatteryTestActivity extends BaseActivity {
             public void run() {
                 try {
 //                    batteryGroupList = BatteryGroupService.getInstance().getAllGroup(currentReportId);
-                    currentReport = db.findById(Report.class, currentReportId);
-                    task = TaskService.getInstance().getTask(currentReport.taskid);
+                    currentReport = ReportService.getInstance().findById(currentReportId);
+                    task = TaskService.getInstance().findById(currentReport.taskid);
                     currentReport.inspection = currentInspectionType;
-                    db.saveOrUpdate(currentReport);
+                    ReportService.getInstance().saveOrUpdate(currentReport);
                     taskExpand = TaskExtendService.getInstance().findTaskExtendByTaskId(currentTaskId);
                     batteryList = BatteryService.getInstance().getAllBattery(currentBdzId);
                     if (null != batteryList && !batteryList.isEmpty()) {
@@ -710,7 +711,7 @@ public class BatteryTestActivity extends BaseActivity {
             currentReport.resistanceIsCheck = taskExpand.sbjcResistanceCheck;
         }
         try {
-            db.saveOrUpdate(currentReport);
+            ReportService.getInstance().saveOrUpdate(currentReport);
 
             Intent intent = new Intent(this, BatteryFinishActivity.class);
             startActivity(intent);
