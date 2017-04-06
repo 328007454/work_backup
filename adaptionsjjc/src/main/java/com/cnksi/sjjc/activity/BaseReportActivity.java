@@ -68,7 +68,8 @@ public abstract class BaseReportActivity extends BaseActivity {
         mBtnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ScreenManager.getScreenManager().popAllActivityExceptOne(LauncherActivity.class);
+//                ScreenManager.getScreenManager().popAllActivityExceptOne(LauncherActivity.class);
+                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
                 onBackPressed();
             }
         });

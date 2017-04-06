@@ -204,7 +204,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoSpecialTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks = selector().expr(" inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
+            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {
