@@ -340,7 +340,7 @@ public class DeviceService extends BaseService<Device> {
         return dbModelList;
     }
 
-    //建议服务器处理 否则会引起同步问题
+    //建议服务器处理 否则会引起同步问题 这里关掉触发器避免大范围的跟踪
     public boolean refreshDeviceHasCopy() {
         boolean isSuccess = false;
         try {
