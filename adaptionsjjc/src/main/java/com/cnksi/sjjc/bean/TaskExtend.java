@@ -7,7 +7,7 @@ import java.util.UUID;
 
 
 @Table(name = "task_extend")
-public class TaskExtend  {
+public class TaskExtend {
 
     // ID
     public static final String ID = "id";
@@ -33,6 +33,11 @@ public class TaskExtend  {
     public static final String SBJC_STRESS_TYPE = "sbjc_stress_type";
     @Column(name = SBJC_STRESS_TYPE)
     public String sbjcStressType;
+
+    // 压力测试类
+    public static final String DLT = "dlt";
+    @Column(name = DLT)
+    public int dlt;
 
     public TaskExtend() {
 
