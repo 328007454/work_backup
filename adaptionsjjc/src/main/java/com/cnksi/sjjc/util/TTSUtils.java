@@ -20,6 +20,10 @@ import com.cnksi.tts.ISpeakInterface;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
+/**
+ *使用AIDL的方式进行远程调用TTS服务完成操作说话
+ *
+ */
 public class TTSUtils {
     private final static String TAG = "TTSUtils";
     private final static TTSUtils instance = new TTSUtils();

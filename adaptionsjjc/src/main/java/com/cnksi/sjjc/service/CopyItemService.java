@@ -108,6 +108,25 @@ public class CopyItemService extends BaseService<CopyItem> {
      * @param bdzId
      * @return
      */
+    public long getCopyTotalCount(String bdzId, String inspection) {
+        String sql = "select count(1) AS copyCount from copy_item item where item.bdzid=? and item.kind like '%" + inspection + "%' and item.dlt = '0'";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
+        try {
+            DbModel dbModel = findDbModelFirst(sqlInfo);
+            return dbModel.getLong("copyCount");
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * 查询变电站下所有抄录项目
+     *
+     * @param bdzId
+     * @return
+     */
     public long getCopyItemCount(String bdzId, String itemKeyType) {
 //        String sql = "select count(case when val = 'Y' then 1 else null end)+"
 //                + "count(case when val_a = 'Y' then 1 else null end)+"

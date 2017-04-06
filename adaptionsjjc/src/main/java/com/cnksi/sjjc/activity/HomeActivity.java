@@ -42,6 +42,7 @@ import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
+import com.cnksi.sjjc.util.TTSUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
@@ -87,6 +88,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         });
         initUI();
         initTabs();
+        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
     }
 
     ArrayList<DefectRecord> recordCrisis;
@@ -139,14 +141,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                 bdzAdapter.setList(bdzList);
                             if (defectAdapter == null) {
                                 homePageBinding.common.setSelected(true);
-                                currentSelectBdzId = bdzList.get(0).bdzid;
+                                if (!bdzList.isEmpty())
+                                    currentSelectBdzId = bdzList.get(0).bdzid;
                                 showRecyclerDefect(mCommonMap);
                                 defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
                                 defectAdapter.setItemClickListener(HomeActivity.this);
                                 homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
                                 homePageBinding.recyDefect.setAdapter(defectAdapter);
                             }
-                            homePageBinding.bdzName.setText(bdzList.get(0).name);
+                            if (!bdzList.isEmpty())
+                                homePageBinding.bdzName.setText(bdzList.get(0).name);
                         }
                     });
                 } catch (DbException e) {
@@ -282,7 +286,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void itemClick(View v, Bdz bdz, int position) {
                 if (!bdz.name.contains("未激活")) {
-                    homePageBinding.bdzName.setText(bdz.name+"");
+                    homePageBinding.bdzName.setText(bdz.name + "");
                     mPowerStationDialog.dismiss();
                     currentSelectBdzId = bdzList.get(position).bdzid;
                     homePageBinding.common.setSelected(true);
@@ -348,13 +352,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                         if (report != null) {
 
                                             if (InspectionType.full.name().equals(task.inspection)) {
-                                                long copyTotal = CopyItemService.getInstance().getCopyItemCount(task.bdzid);
+                                                long copyTotal = CopyItemService.getInstance().getCopyTotalCount(task.bdzid,task.inspection);
                                                 long copyCount = CopyResultService.getInstance().getReportCopyCount(report.reportid);
                                                 str = String.format("抄录：%d/%d", copyCount, copyTotal);
                                             }
                                         }
                                         String arrivedStr = PlacedService.getInstance().findPlacedSpace("", task.bdzid);
-                                        if (!TextUtils.isEmpty(arrivedStr))
+                                        if (!TextUtils.isEmpty(arrivedStr) && !task.inspection.contains("special"))
                                             str = str + "   " + "到位：" + arrivedStr;
                                         task.remark = str;
                                     } catch (DbException e) {

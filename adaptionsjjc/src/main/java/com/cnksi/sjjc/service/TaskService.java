@@ -6,7 +6,6 @@ import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.SwitchPic;
 import com.cnksi.sjjc.bean.Task;
-import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.bean.TaskStatistic;
 import com.cnksi.sjjc.enmu.InspectionType;
 
@@ -44,8 +43,8 @@ public class TaskService extends BaseService<Task> {
         String[] tableClassId = {Report.REPORTID, DefectRecord.REPORTID, SwitchPic.REPORTID};
         boolean isSuccess = false;
         try {
-           logicDeleteById( idValue);
-            Report mReport =getInstance(Report.class).selector().and(Report.TASK_ID, "=", idValue).findFirst();
+            logicDeleteById(idValue);
+            Report mReport = getInstance(Report.class).selector().and(Report.TASK_ID, "=", idValue).findFirst();
             if (mReport != null) {
                 for (int i = 0, count = tableClassArray.length; i < count; i++) {
                     logicDelete(tableClassArray[i], WhereBuilder.b(tableClassId[i], "=", mReport.reportid));
@@ -59,9 +58,6 @@ public class TaskService extends BaseService<Task> {
     }
 
 
-
-
-
     /**
      * 查询数据抄录情况
      */
@@ -69,7 +65,7 @@ public class TaskService extends BaseService<Task> {
         long count = 0;
         try {
 
-            count = selector().expr(" and "+DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId).count();
+            count = selector().expr(" and " + DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId).count();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -99,7 +95,7 @@ public class TaskService extends BaseService<Task> {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
         try {
-            DbModel mDbModel =findDbModelFirst(sqlInfo);
+            DbModel mDbModel = findDbModelFirst(sqlInfo);
             if (mDbModel != null) {
                 count = mDbModel.getLong("rs");
             }
@@ -147,14 +143,11 @@ public class TaskService extends BaseService<Task> {
      */
     public void isUploadCurrentTask(Task mTask, boolean IsUpload) {
         try {
-           update(WhereBuilder.b(Report.TASK_ID, "=", mTask.taskid), new KeyValue(Report.IS_UPLOAD, mTask.isUpload = (IsUpload ? "Y" : "N")));
+            update(WhereBuilder.b(Report.TASK_ID, "=", mTask.taskid), new KeyValue(Report.IS_UPLOAD, mTask.isUpload = (IsUpload ? "Y" : "N")));
         } catch (DbException e) {
             e.printStackTrace();
         }
     }
-
-
-
 
 
     public TaskStatistic getTaskStatistic(String inspectionType) {
@@ -197,7 +190,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks =selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").findAll();
+            tasks = selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {
@@ -209,9 +202,9 @@ public class TaskService extends BaseService<Task> {
     }
 
     public List<Task> getUnDoSpecialTask(String inspectionType) {
-        List<Task> tasks =null;
+        List<Task> tasks = null;
         try {
-            tasks = selector().expr(" inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
+            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {
@@ -235,7 +228,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getFinishedTask() {
         List<Task> tasks = new ArrayList<>();
         try {
-            tasks =selector().where(Task.STATUS, "=", "undo").findAll();
+            tasks = selector().where(Task.STATUS, "=", "undo").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -293,6 +286,7 @@ public class TaskService extends BaseService<Task> {
 
     public List<Task> findWorkTicketTask() {
         try {
+            //电子化操作票属于PAD端功能，与服务器无任何关联。此处直接查询并组装成界面想要的数据。
             List<DbModel> models = getDbManager().findDbModelAll(new SqlInfo("SELECT * FROM operate_tick limit 3"));
             if (models != null & models.size() > 0) {
                 List<Task> tasks = new ArrayList<>();
