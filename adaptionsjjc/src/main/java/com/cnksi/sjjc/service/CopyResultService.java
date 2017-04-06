@@ -95,8 +95,6 @@ public class CopyResultService extends BaseService<CopyResult> {
     }
 
     public long getReportCopyCount(String reportId) {
-//        String sql = "select count(CASE WHEN val = '' THEN NULL ELSE val END)+count(CASE WHEN val_a = '' THEN NULL ELSE val_a END)+count(CASE WHEN val_b = '' THEN NULL ELSE val_b END)" +
-//                "+count(CASE WHEN val_c = '' THEN NULL ELSE val_c END)+count(CASE WHEN val_o = '' THEN NULL ELSE val_o END) as count from copy_result result WHERE result.reportid=?";
         String sql = "select count(1) as count" + " from copy_result result WHERE result.dlt='0' and result.reportid=? and ( result.val is not null or result.val_a is not null or result.val_b is not null or result.val_c is not null or result.val_o is not null)";
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", reportId));

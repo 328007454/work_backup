@@ -147,7 +147,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                 homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
                                 homePageBinding.recyDefect.setAdapter(defectAdapter);
                             }
-                            homePageBinding.bdzName.setText(bdzList.get(0).name);
+                            if (!bdzList.isEmpty())
+                                homePageBinding.bdzName.setText(bdzList.get(0).name);
                         }
                     });
                 } catch (DbException e) {
@@ -349,7 +350,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                         if (report != null) {
 
                                             if (InspectionType.full.name().equals(task.inspection)) {
-                                                long copyTotal = CopyItemService.getInstance().getCopyItemCount(task.bdzid);
+                                                long copyTotal = CopyItemService.getInstance().getCopyTotalCount(task.bdzid,task.inspection);
                                                 long copyCount = CopyResultService.getInstance().getReportCopyCount(report.reportid);
                                                 str = String.format("抄录：%d/%d", copyCount, copyTotal);
                                             }
