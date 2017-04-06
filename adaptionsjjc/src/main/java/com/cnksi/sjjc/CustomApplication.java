@@ -18,6 +18,7 @@ import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportSnwsd;
+import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
@@ -211,7 +212,7 @@ public class CustomApplication extends CoreApplication {
      */
 
     protected static DbManager.DaoConfig getDaoConfig() {
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(0)
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(5)
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override
                     public void onDbOpened(DbManager db) {
@@ -233,6 +234,7 @@ public class CustomApplication extends CoreApplication {
                             db.addColumn(ReportCdbhcl.class, "dclz_c");
                             db.addColumn(ReportCdbhcl.class, "dclz_o");
                             db.addColumn(ReportSnwsd.class, "location");
+                            db.addColumn(TaskExtend.class, "dlt");
                         } catch (DbException e) {
                             e.printStackTrace();
                         }

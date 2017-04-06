@@ -7,6 +7,7 @@ import java.util.UUID;
 
 
 @Table(name = "task_extend")
+
 public class TaskExtend extends BaseModel {
 
     // ID
