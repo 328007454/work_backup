@@ -7,80 +7,10 @@
         <item>全部</item>
         <item>逾期</item>
     </string-array>
-    <string-array name="InspectionReadyTitleArray">
-        <item>抄录温湿度</item>
-        <item>危险点</item>
-        <item>工器具</item>
-        <item>巡检线路图</item>
-        <item>现存缺陷</item>
-    </string-array>
-    <string-array name="DefectControlArray">
-        <item>记录缺陷</item>
-        <item>跟踪缺陷</item>
-        <item>消除缺陷</item>
-    </string-array>
-    <string-array name="ChangPartPictureArray">
-        <item>查看大图</item>
-        <item>更换照片</item>
-        <item>恢复默认照片</item>
-        <item>添加巡检标准</item>
-        <item>删除该部件</item>
-    </string-array>
-    <string-array name="ChangStandardArray">
-        <item>查看大图</item>
-        <item>更换照片</item>
-        <item>恢复默认照片</item>
-    </string-array>
-    <string-array name="AddStandardArray">
-        <item>查看大图</item>
-        <item>更换照片</item>
-    </string-array>
-    <string-array name="ReferenceStandardTitle">
-        <item>巡检标准</item>
-        <item>工作标准</item>
-        <item>技术标准</item>
-        <item>管理标准</item>
-    </string-array>
-    <string-array name="ClampTitleArray">
-        <item>保护压板核对</item>
-        <item>定值核对</item>
-    </string-array>
     <string-array name="IsUploadOrDeleteArray">
         <item>上传</item>
         <item>不上传</item>
         <item>删除</item>
-    </string-array>
-    <string-array name="WordsOneArray">
-        <item>Q</item>
-        <item>W</item>
-        <item>E</item>
-        <item>R</item>
-        <item>T</item>
-        <item>Y</item>
-        <item>U</item>
-        <item>I</item>
-        <item>O</item>
-        <item>P</item>
-    </string-array>
-    <string-array name="WordsTwoArray">
-        <item>A</item>
-        <item>S</item>
-        <item>D</item>
-        <item>F</item>
-        <item>G</item>
-        <item>H</item>
-        <item>J</item>
-        <item>K</item>
-        <item>L</item>
-    </string-array>
-    <string-array name="WordsThreeArray">
-        <item>Z</item>
-        <item>X</item>
-        <item>C</item>
-        <item>V</item>
-        <item>B</item>
-        <item>N</item>
-        <item>M</item>
     </string-array>
     <string-array name="weather">
         <item>晴</item>
@@ -260,17 +190,6 @@
         <item>避雷针精益化评价</item>
     </string-array>
 
-    <string-array name="PressureDetectionName">
-        <item>SF6气体压力检测</item>
-        <item>液体压力检测</item>
-        <item>气体压力检测</item>
-    </string-array>
-    <string-array name="PressureDetectionType">
-        <item>sf6</item>
-        <item>water</item>
-        <item>gas</item>
-    </string-array>
-
 
     <string-array name="AnimalPositionArray">
         <item>主控室</item>
@@ -280,16 +199,6 @@
         <item>电缆层</item>
         <item>二次设备</item>
         <item>其它地点</item>
-    </string-array>
-    <string-array name="XuDianChiJianCe">
-        <item>电压检测</item>
-        <item>内阻检测</item>
-    </string-array>
-    <string-array name="XuDianChiDianya">
-        <item>电压检测</item>
-    </string-array>
-    <string-array name="XuDianChiNeiZu">
-        <item>内阻检测</item>
     </string-array>
     <string-array name="NetSyncMenuArray">
         <item>USB同步</item>

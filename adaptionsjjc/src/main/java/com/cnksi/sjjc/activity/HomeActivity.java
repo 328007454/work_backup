@@ -3,6 +3,7 @@ package com.cnksi.sjjc.activity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -189,11 +190,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         homePageBinding.serious.setOnClickListener(this);
         homePageBinding.crisis.setOnClickListener(this);
         homePageBinding.bdzAllName.setOnClickListener(this);
-//        bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
-//        mPop = new PopupWindow(bdzPopwindowBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//        mPop.setBackgroundDrawable(new BitmapDrawable());
-//        bdzPopwindowBinding.llContainer.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-//        mPop.setOutsideTouchable(true);
+        bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
+        mPop = new PopupWindow(bdzPopwindowBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        mPop.setBackgroundDrawable(new BitmapDrawable());
+        bdzPopwindowBinding.llContainer.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        mPop.setOutsideTouchable(true);
         homePageBinding.setTypeClick(this);
         taskItemAdapter = new HomeTaskItemAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
         taskItemAdapter.setItemClickListener(new ItemClickListener<Task>() {
