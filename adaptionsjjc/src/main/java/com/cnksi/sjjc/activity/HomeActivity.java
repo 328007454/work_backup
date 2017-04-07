@@ -3,7 +3,6 @@ package com.cnksi.sjjc.activity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -54,24 +53,36 @@ import java.util.Map;
 
 
 /**
+ * 首页界面
  * Created by han on 2017/3/24.
  */
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener, ItemClickListener {
     private ActivityHomePageBinding homePageBinding;
+    //变电站弹出popwindow
     private BdzPopwindowBinding bdzPopwindowBinding;
+    //广告banner图片集合
     private ArrayList<Integer> bannerMapUrl = new ArrayList<>();
+    //变电站适配器
     private BdzAdapter bdzAdapter;
     private PopupWindow mPop;
     private List<Bdz> bdzList = new ArrayList<>();
-    private int[] location = new int[2];
+    //缺陷适配器
     private DefectAdapter defectAdapter;
+    //危急、严重、一般缺陷集合
     private Map<String, ArrayList<DefectRecord>> mCrisisMap = new HashMap<>();
     private Map<String, ArrayList<DefectRecord>> mSerioutMap = new HashMap<>();
     private Map<String, ArrayList<DefectRecord>> mCommonMap = new HashMap<>();
+    private ArrayList<DefectRecord> recordCrisis;
+    private ArrayList<DefectRecord> recordSerious;
+    private ArrayList<DefectRecord> recordCommon;
+    //当前选中的变电站id
     private String currentSelectBdzId;
+    //主页任务适配器
     private HomeTaskItemAdapter taskItemAdapter;
+    //变电站listview
     private ListView mPowerStationListView;
+    //变电站弹出对话框
     private Dialog mPowerStationDialog = null;
 
     @Override
@@ -91,9 +102,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
     }
 
-    ArrayList<DefectRecord> recordCrisis;
-    ArrayList<DefectRecord> recordSerious;
-    ArrayList<DefectRecord> recordCommon;
+
 
     private void loadData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
@@ -180,11 +189,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         homePageBinding.serious.setOnClickListener(this);
         homePageBinding.crisis.setOnClickListener(this);
         homePageBinding.bdzAllName.setOnClickListener(this);
-        bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
-        mPop = new PopupWindow(bdzPopwindowBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        mPop.setBackgroundDrawable(new BitmapDrawable());
-        bdzPopwindowBinding.llContainer.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        mPop.setOutsideTouchable(true);
+//        bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
+//        mPop = new PopupWindow(bdzPopwindowBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        mPop.setBackgroundDrawable(new BitmapDrawable());
+//        bdzPopwindowBinding.llContainer.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//        mPop.setOutsideTouchable(true);
         homePageBinding.setTypeClick(this);
         taskItemAdapter = new HomeTaskItemAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
         taskItemAdapter.setItemClickListener(new ItemClickListener<Task>() {
@@ -213,31 +222,40 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View view) {
         Intent intent = null;
         switch (view.getId()) {
+            //跳转到设备巡视或者设备维护界面
             case R.id.device_xunshi:
             case R.id.device_weihu:
                 ActivityUtil.startDeviceTourActivity(_this, view.getId());
                 break;
+            //跳转到操作篇
             case R.id.device_operate:
                 ActivityUtil.startOperateActivity(_this);
                 break;
+            //跳转到运维一体化
             case R.id.device_unify:
                 ActivityUtil.startUnifyActivity(_this);
                 break;
+            //跳转到设备缺陷
             case R.id.device_defect:
                 //undo
                 break;
+            //跳转到数据抄录
             case R.id.device_copy:
                 ActivityUtil.startShuJuJianCe(_this);
                 break;
+            //教育培训五通一措
             case R.id.device_tjwt:
                 ActivityUtil.startWTYCActiviy(_this);
                 break;
+            //跳转到数据同步
             case R.id.device_sycn:
                 ActivityUtil.startSync(mCurrentActivity);
                 break;
+            //显示变电站列表对话框
             case R.id.bdz_all_name:
                 mPowerStationDialog.show();
                 break;
+            //一般缺陷
             case R.id.common:
                 showRecyclerDefect(mCommonMap);
                 homePageBinding.common.setSelected(true);
@@ -245,6 +263,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 homePageBinding.serious.setSelected(false);
                 defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
                 break;
+            //严重缺陷
             case R.id.serious:
                 showRecyclerDefect(mSerioutMap);
                 homePageBinding.common.setSelected(false);
@@ -252,6 +271,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 homePageBinding.serious.setSelected(true);
                 defectAdapter.setList(mSerioutMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mSerioutMap.get(currentSelectBdzId));
                 break;
+            //危急缺陷
             case R.id.crisis:
                 showRecyclerDefect(mCrisisMap);
                 homePageBinding.common.setSelected(false);

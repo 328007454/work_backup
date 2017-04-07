@@ -22,6 +22,7 @@ import com.cnksi.sjjc.service.TaskService;
 import java.util.List;
 
 /**
+ * 设备巡视
  * Created by han on 2017/3/22.
  */
 
@@ -62,7 +63,7 @@ public class TourFragment extends BaseCoreFragment {
                 final List<Task> fullTask = TaskService.getInstance().getUnDoTask(InspectionType.full.name());
                 final List<Task> specialCount = TaskService.getInstance().getUnDoSpecialTask(InspectionType.special.name());
                 final List<Task> lightCout = TaskService.getInstance().getUnDoTask(InspectionType.special_xideng.name());
-                int totalPercent = (int) (((float)result.getMonthTaskFinish()/ result.getMonthTaskCount())*100);
+                int totalPercent = (int) (((float) result.getMonthTaskFinish() / result.getMonthTaskCount()) * 100);
                 final int percent = totalPercent;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -78,7 +79,7 @@ public class TourFragment extends BaseCoreFragment {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        tourBinding.progress.setProgress(i <= (int)percent ? i++ : percent);
+                        tourBinding.progress.setProgress(i <= (int) percent ? i++ : percent);
                         if (i <= percent)
                             mHandler.postDelayed(this, 100);
                     }
@@ -87,6 +88,9 @@ public class TourFragment extends BaseCoreFragment {
         });
     }
 
+    /**
+     * 跳转到对应的任务列表界面
+     */
     public void toTaskPlan(String inspectionType) {
         CustomApplication.closeDbConnection();
         Intent intent = new Intent();
