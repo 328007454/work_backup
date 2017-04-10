@@ -4,10 +4,10 @@
     <data class=".dialog.ModifySyncUrlBinding"></data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@drawable/conner_dialog_green_title_background"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/conner_dialog_green_title_background"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_dialog_title"
@@ -16,7 +16,7 @@
             android:gravity="center"
             android:text="修改服务器地址"
             android:textColor="@android:color/white"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -24,40 +24,10 @@
             android:padding="30px"
             android:text="请输入同步服务器地址\n（例如: 192.168.199.10:9090\n http://192.168.199.10:9090\n https://192.168.199.10:9090）"
             android:textColor="#333333"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
-        <View
-            style="@style/HLine"/>
+        <View style="@style/HLine" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="30px">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-
-                android:text="当前地址："
-                android:textColor="#333333"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/tv_old_url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="left|center_vertical"
-                android:textColor="#333333"
-                android:textSize="16sp"/>
-        </LinearLayout>
-
-        <View
-            style="@style/HLine"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,9 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="新的地址："
+                android:text="同步地址："
                 android:textColor="#333333"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/et_new_url"
@@ -82,13 +52,44 @@
                 android:gravity="left|center_vertical"
                 android:hint="请输入服务器地址"
                 android:textColor="#333333"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/line_height"
-            android:background="@color/line_color"/>
+            android:background="@color/line_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="APPID："
+                android:textColor="#333333"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_app_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:hint="请输入APPID"
+                android:textColor="#333333"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:background="@color/line_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,7 +112,7 @@
                 android:minHeight="@dimen/global_button_minheight"
                 android:text="@string/cancel_str"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_sure"
@@ -127,7 +128,7 @@
                 android:minHeight="@dimen/global_button_minheight"
                 android:text="@string/dialog_sure_str"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
     </LinearLayout>

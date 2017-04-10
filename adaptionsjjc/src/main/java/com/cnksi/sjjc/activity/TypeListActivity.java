@@ -125,8 +125,8 @@ public class TypeListActivity extends BaseActivity {
                     return;
                 }
                 Intent intent = new Intent();
-                intent.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
-                intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
+                intent.putExtra(Config.CURRENT_LOGIN_USER,  PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
+                intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
                 ComponentName componentName;
                 switch (mInspectionType) {
                     case SBXS:

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.cnksi.core.adapter.ViewHolder;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DisplayUtil;
+import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -104,7 +105,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
         checkIsNeedSync();
     }
-
 
 
     private void loadData() {
@@ -471,11 +471,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     /**
      * 跳转到巡视的开始任务界面
+     *
      * @param task
      */
     private void startTask(Task task) {
         CustomApplication.closeDbConnection();
         Intent intent = new Intent();
+        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
         ComponentName componentName;
         if ("workticket".equals(task.inspection))
             componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");

@@ -91,10 +91,7 @@ public class CustomApplication extends CoreApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-//        if(LeakCanary.isInAnalyzerProcess(this)){
-//            return;
-//        }
-//        LeakCanary.install(this);
+
 
         //初始化百度地图
         SDKInitializer.initialize(getApplicationContext());
@@ -104,16 +101,6 @@ public class CustomApplication extends CoreApplication {
         TCAgent.LOG_ON = true;
         TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
         TCAgent.setReportUncaughtExceptions(true);
-        // 应用程序入口处调用,避免手机内存过小，杀死后台进程,造成SpeechUtility对象为null
-        // 注意：此接口在非主进程调用会返回null对象，如需在非主进程使用语音功能，请增加参数：SpeechConstant.FORCE_LOGIN+"=true"
-        // 参数间使用“,”分隔。
-        // 设置你申请的应用appid
-//        StringBuffer param = new StringBuffer();
-//        param.append("appid=" + getString(R.string.app_id));
-//        param.append(",");
-//        // 设置使用v5+
-//        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
-//        SpeechUtility.createUtility(CustomApplication.this, param.toString());
         DisplayUtil.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
         CLog.init(true);
         PlaySound.initPlay(this);
@@ -407,6 +394,8 @@ public class CustomApplication extends CoreApplication {
 
     private void initRuntimeVar() {
         Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
+        Config.SYNC_APP_ID = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
+
     }
 
 

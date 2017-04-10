@@ -132,11 +132,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private void initUI() {
         //设置版本信息
         mTvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(_this)));
-//        if (null == (mTts = SpeechSynthesizer.getSynthesizer())) {
-//            initSpeech(_this);
-//        }
-        //上次登录人员信息
-//        String userName = PreferencesUtils.getString(_this, Users.ACCOUNT, "");
         String userName = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
         if (!TextUtils.isEmpty(userName)) autoCompleteTextView.setText(userName);
         arrayAdapter = new ArrayAdapter<String>(_this, R.layout.user_name_drop_down_item, R.id.tv_user_name);
@@ -192,7 +187,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 } else {
                     if (System.currentTimeMillis() - startTime < 500) {
                         count++;
-
                     } else {
                         count = 0;
                     }
@@ -247,7 +241,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private void modifySyncURL() {
         final ModifySyncUrlBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_modify_iphost, null, false);
         final Dialog dialog = DialogUtils.createDialog(mCurrentActivity, binding, true);
-        binding.tvOldUrl.setText(Config.SYNC_URL);
+        binding.etNewUrl.setText(Config.SYNC_URL);
+        binding.etAppId.setText(Config.SYNC_APP_ID);
         binding.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,17 +254,15 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             public void onClick(View v) {
                 String url = getText(binding.etNewUrl).trim();
                 if (url.startsWith("http://") || url.startsWith("https://")) {
-
                 } else {
                     url = "http://" + url;
                 }
-                //  if (StringUtils.isUrl(url)) {
                 Config.SYNC_URL = url;
+                String appId = getText(binding.etAppId);
+                if (!TextUtils.isEmpty(appId)) Config.SYNC_APP_ID = appId;
                 PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
+                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
                 dialog.dismiss();
-                //} else {
-                //  CToast.showShort(mCurrentActivity, "请输入一个有效的URL");
-                //}
             }
         });
         dialog.show();
@@ -339,55 +332,15 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         });
     }
 
-    //    ViewHolder holder;
-//    Dialog dialog;
+
     @Override
     protected void onResume() {
         super.onResume();
+        //清空当前登录信息
         KSyncConfig.getInstance().setDept_id("-1");
-//        boolean diff = true;
-//        try {
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-//            String str = formatter.format(curDate);
-//            diff = DateUtils.compareDate(str, "2017-03-01 00:00:00", "yyyy-MM-dd HH:mm:ss");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        if (diff) {
-//            holder = new ViewHolder();
-//            dialog = DialogUtils.createDialog(this, com.cnksi.sjjc.R.layout.dialog_tips, holder);
-//            holder.btCancel.setVisibility(View.GONE);
-//            holder.tvTitle.setText("提示");
-//            holder.tvContent.setText("已过期");
-//            dialog.setCanceledOnTouchOutside(false);
-//            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                @Override
-//                public void onDismiss(DialogInterface dialog) {
-//                    compeletlyExitSystem();
-//                }
-//            });
-//            dialog.show();
-//            holder.btSure.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    System.exit(0);
-//                }
-//            });
-//        }
+        onClick(findViewById(R.id.ib_delete1));
+        onClick(findViewById(R.id.ib_delete2));
     }
-//    class ViewHolder {
-//        @ViewInject(com.cnksi.sjjc.R.id.btn_sure)
-//        private Button btSure;
-//        @ViewInject(com.cnksi.sjjc.R.id.tv_dialog_title)
-//        private TextView tvTitle;
-//        @ViewInject(R.id.tv_dialog_content)
-//        private TextView tvContent;
-//
-//        @ViewInject(com.cnksi.sjjc.R.id.btn_cancel)
-//        private Button btCancel;
-//
-//    }
 
 
     @Override

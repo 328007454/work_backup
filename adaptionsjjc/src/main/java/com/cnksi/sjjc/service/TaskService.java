@@ -286,7 +286,7 @@ public class TaskService extends BaseService<Task> {
 
     public List<Task> findWorkTicketTask() {
         try {
-            //电子化操作票属于PAD端功能，与服务器无任何关联。此处直接查询并组装成界面想要的数据。
+            //电子化操作票属于PAD端功能，与服务器无任何关联。此处直接查询并组装成界面想要的Task数据。
             List<DbModel> models = getDbManager().findDbModelAll(new SqlInfo("SELECT * FROM operate_tick limit 3"));
             if (models != null & models.size() > 0) {
                 List<Task> tasks = new ArrayList<>();
@@ -303,7 +303,7 @@ public class TaskService extends BaseService<Task> {
                 return tasks;
             }
         } catch (DbException e) {
-            e.printStackTrace();
+
         }
         return null;
     }

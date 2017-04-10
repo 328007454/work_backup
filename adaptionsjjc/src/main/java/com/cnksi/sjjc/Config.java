@@ -283,6 +283,7 @@ public class Config extends CoreConfig {
     public static String SYNC_BASE_FOLDER = BDZ_INSPECTION_FOLDER;
     public static String SYNC_URL = BuildConfig.SYNC_URL;
     public final static String KEY_SYNC_URL = "key_sync_url";
+    public final static String KEY_SYNC_APP_ID = "key_sync_app_id";
 
     /**
      * 操作类型
