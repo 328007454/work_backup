@@ -40,6 +40,7 @@ import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.PlacedService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
+import com.cnksi.sjjc.sync.KSyncConfig;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.TTSUtils;
@@ -89,6 +90,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         initUI();
         initTabs();
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
+        checkIsNeedSync();
     }
 
     ArrayList<DefectRecord> recordCrisis;
@@ -322,6 +324,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
 
+    /**
+     * 显示不同任务的工具类。
+     */
     class TaskType {
         TabType type;
         TextView tv;
@@ -352,7 +357,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                         if (report != null) {
 
                                             if (InspectionType.full.name().equals(task.inspection)) {
-                                                long copyTotal = CopyItemService.getInstance().getCopyTotalCount(task.bdzid,task.inspection);
+                                                long copyTotal = CopyItemService.getInstance().getCopyTotalCount(task.bdzid, task.inspection);
                                                 long copyCount = CopyResultService.getInstance().getReportCopyCount(report.reportid);
                                                 str = String.format("抄录：%d/%d", copyCount, copyTotal);
                                             }
@@ -422,7 +427,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         tabs[1] = new TaskType(homePageBinding.tvDeviceMaintenance, TabType.maintenance);
         tabs[2] = new TaskType(homePageBinding.tvTransferSwitching, TabType.switching);
         tabs[3] = new TaskType(homePageBinding.tvOperations, TabType.operations);
-        //  tabs[3] = new DataType(binding.tvAcceptanceReport, PicType.acceptance_report);
         select(tabs[0]);
         for (final TaskType tab : tabs) {
             tab.setOnClickListener(new View.OnClickListener() {
@@ -444,6 +448,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         taskItemAdapter.setList(currentDataType.tasks);
     }
 
+    /**
+     * 跳转到巡视的开始任务界面
+     * @param task
+     */
     private void startTask(Task task) {
         CustomApplication.closeDbConnection();
         Intent intent = new Intent();
@@ -458,4 +466,23 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         intent.setComponent(componentName);
         startActivity(intent);
     }
+
+    /**
+     * 根据判断本地数据库是否有设备来判断是否需要二次同步。
+     */
+    private void checkIsNeedSync() {
+        try {
+            if (DeviceService.getInstance().selector().count() == 0) {
+                DialogUtils.createTipsDialog(mCurrentActivity, "检测到本地设备数据为空，是否需要同步数据？", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        KSyncConfig.getInstance().startNetWorkSync(mCurrentActivity);
+                    }
+                }, false).show();
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
