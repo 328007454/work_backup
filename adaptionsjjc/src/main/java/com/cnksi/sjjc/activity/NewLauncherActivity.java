@@ -92,7 +92,7 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
     private Runnable locationTask = new Runnable() {
         public void run() {
             LocationUtil.getInstance().init(NewLauncherActivity.this).setLocationListener(NewLauncherActivity.this).requestLocation(NewLauncherActivity.this);
-            mHandler.postDelayed(this, 30000);
+//            mHandler.postDelayed(this, 30000);
         }
     };
 
@@ -154,6 +154,7 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
                                 launcherBinding.lancherTitle.txtTeam.setText(department.name);
                                 initBDZDialog();
                                 launcherBinding.lancherTitle.txtBdz.setText(bdzList.get(0).name);
+                                PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
                             }
                         });
                 } catch (DbException e) {
@@ -224,7 +225,9 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
             public void itemClick(View v, Bdz bdz, int position) {
                 if (!bdz.name.contains("未激活")) {
                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
+                    PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
                     mPowerStationDialog.dismiss();
+                    LocationUtil.getInstance().stopLocationRequest();
                 } else
                     CToast.showShort(_this, "该变电站未激活");
             }
