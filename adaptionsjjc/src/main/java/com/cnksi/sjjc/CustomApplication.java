@@ -14,10 +14,6 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.crash.CrashHandler;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
-import com.cnksi.sjjc.bean.HoleRecord;
-import com.cnksi.sjjc.bean.PreventionRecord;
-import com.cnksi.sjjc.bean.ReportCdbhcl;
-import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.TTSUtils;
@@ -207,24 +203,16 @@ public class CustomApplication extends CoreApplication {
                         //db.getDatabase().enableWriteAheadLogging();
                         //此处不处理数据库版本更新  全权交给同步框架处理。
                         db.getDaoConfig().setDbVersion(db.getDatabase().getVersion());
+                        try {
+                            db.addColumn(TaskExtend.class, "dlt");
+                        } catch (DbException e) {
+
+                        }
                     }
                 })
                 .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
                     @Override
                     public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
-                        try {
-                            db.addColumn(HoleRecord.class, "problem");
-                            db.addColumn(PreventionRecord.class, "clear_info");
-                            db.addColumn(PreventionRecord.class, "mousetrap_info");
-                            db.addColumn(ReportCdbhcl.class, "dclz_a");
-                            db.addColumn(ReportCdbhcl.class, "dclz_b");
-                            db.addColumn(ReportCdbhcl.class, "dclz_c");
-                            db.addColumn(ReportCdbhcl.class, "dclz_o");
-                            db.addColumn(ReportSnwsd.class, "location");
-                            db.addColumn(TaskExtend.class, "dlt");
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }).setAllowTransaction(true);
         return config;
