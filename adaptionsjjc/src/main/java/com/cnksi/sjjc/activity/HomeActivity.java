@@ -385,7 +385,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                         }
                                         String arrivedStr = PlacedService.getInstance().findPlacedSpace("", task.bdzid);
                                         if (!TextUtils.isEmpty(arrivedStr) && !task.inspection.contains("special"))
-                                            str = str + "   " + "到位：" + arrivedStr;
+                                            str = str + "   " + "到位  ：" + arrivedStr;
                                         task.remark = str;
                                     } catch (DbException e) {
                                         e.printStackTrace();
