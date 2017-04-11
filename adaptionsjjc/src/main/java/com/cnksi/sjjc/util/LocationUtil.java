@@ -81,8 +81,6 @@ public class LocationUtil {
                     else
                         locationListener.locationFailure(-1, "获取定位信息为空");
                 }
-//                locationClient.unRegisterLocationListener(this);
-//                locationClient.stop();
             }
         });
         locationClient.start();

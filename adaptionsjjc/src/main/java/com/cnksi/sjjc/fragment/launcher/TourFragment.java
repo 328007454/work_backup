@@ -98,6 +98,7 @@ public class TourFragment extends BaseCoreFragment {
         intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionType);
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(mCurrentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, ""));
         intent.setComponent(componentName4);
         startActivity(intent);
     }
