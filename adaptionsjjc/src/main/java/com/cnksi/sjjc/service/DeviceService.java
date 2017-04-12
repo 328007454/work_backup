@@ -300,7 +300,7 @@ public class DeviceService extends BaseService<Device> {
 
         List<DbModel> dbModelList = null;
         String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid,group_concat(d.description) description,group_concat(d.type_key) key from copy_item d where  (d.type_key = '"
-                + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "') and d.bdzid = '" + bdzid + "' group by d.deviceid ";
+                + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "') and d.bdzid = '" + bdzid + "' and d.dlt = '0' group by d.deviceid ";
         try {
             dbModelList = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {

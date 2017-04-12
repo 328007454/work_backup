@@ -48,7 +48,7 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewLauncherActivity extends BaseActivity implements LocationListener{
+public class NewLauncherActivity extends BaseActivity implements LocationListener {
     private ActivityLauncherNewBinding launcherBinding;
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
     private int currentSelectPosition;
@@ -88,7 +88,9 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
         }
     };
 
-    /**变电站定位runnable*/
+    /**
+     * 变电站定位runnable
+     */
     private Runnable locationTask = new Runnable() {
         public void run() {
             LocationUtil.getInstance().init(NewLauncherActivity.this).setLocationListener(NewLauncherActivity.this).requestLocation(NewLauncherActivity.this);
@@ -243,9 +245,10 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
 
     @Override
     public void locationSuccess(BDLocation location) {
+        LocationUtil.getInstance().stopLocationRequest();
         List<DbModel> spacingModels = SpacingService.getInstance().findBdzBySpacing();
-        if(spacingModels != null && spacingModels.size() != 0){
-            for(DbModel dbModel : spacingModels){
+        if (spacingModels != null && spacingModels.size() != 0) {
+            for (DbModel dbModel : spacingModels) {
                 String latitude = dbModel.getString(Spacing.LATITUDE);
                 String longtitude = dbModel.getString(Spacing.LONGITUDE);
                 LatLng spaceLocation = new LatLng(Double.valueOf(latitude), Double.valueOf(longtitude));
@@ -254,8 +257,8 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
                 if (DistanceUtil.getDistance(currentLocation, spaceLocation) < 200) {
                     String bdzid = dbModel.getString(Spacing.BDZID);
                     try {
-                        Bdz bdz =  BdzService.getInstance().findById(bdzid);
-                        if(bdz != null){
+                        Bdz bdz = BdzService.getInstance().findById(bdzid);
+                        if (bdz != null) {
                             launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
                             break;
                         }
