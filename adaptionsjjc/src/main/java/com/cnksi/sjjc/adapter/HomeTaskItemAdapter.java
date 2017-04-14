@@ -111,7 +111,14 @@ public class HomeTaskItemAdapter extends BaseLinearBindingAdapter<HomeTaskItemBi
     private String getShortName(String bdzName) {
         if (TextUtils.isEmpty(bdzName)) {
             return "变";
-        } else return String.valueOf(bdzName.charAt(0));
+        } else {
+            for (char c : bdzName.toCharArray()) {
+                if (c >= '\u4e00' && c <= '\u9fa5') {
+                    return String.valueOf(c);
+                }
+            }
+            return String.valueOf(bdzName.charAt(0));
+        }
     }
 
     @Override

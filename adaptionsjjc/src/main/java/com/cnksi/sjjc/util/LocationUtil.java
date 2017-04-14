@@ -11,6 +11,7 @@ import com.cnksi.sjjc.inter.LocationListener;
 
 /**
  * 定位工具
+ *
  * @author lyndon
  */
 public class LocationUtil {
@@ -88,7 +89,7 @@ public class LocationUtil {
     }
 
     public void stopLocationRequest() {
-        if (locationClient != null) {
+        if (locationClient != null && locationListener != null) {
             locationClient.unRegisterLocationListener(bdLocationListener);
             locationClient.stop();
         }

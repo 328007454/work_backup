@@ -94,7 +94,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="30px"
-                        android:src="@mipmap/icon_more_task" />
+                        android:src="@mipmap/icon_more_task"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -104,7 +105,8 @@
                         android:gravity="center"
                         android:text="查看更多"
                         android:textColor="#c0bab9"
-                        android:textSize="32px" />
+                        android:textSize="32px"
+                        android:visibility="invisible" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -211,10 +213,10 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="30px"
                         android:layout_weight="1"
-                        android:textSize="@dimen/txt_size36px"
-                        android:textColor="#958c8c"
                         android:gravity="center_vertical"
-                        android:text="220kV桥沟变电站" />
+                        android:text="220kV桥沟变电站"
+                        android:textColor="#958c8c"
+                        android:textSize="@dimen/txt_size36px" />
 
                     <ImageView
 
