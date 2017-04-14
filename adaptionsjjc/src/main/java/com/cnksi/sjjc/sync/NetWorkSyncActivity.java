@@ -28,6 +28,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -203,6 +205,34 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         binding.tvDownload.setEnabled(enabled);
     }
 
+    private SyncInfo getSyncInfo(String s) {
+        String key;
+        if (s.startsWith("[")) {
+            key = s.replaceAll("^\\[[\\d]*%\\]", "");
+            if (s.startsWith("[成功]"))
+                key = s.substring(4);
+        } else if (s.startsWith("下载文件")) {
+            key = s.substring(4);
+        } else {
+            return new SyncInfo(s, KSync.SYNC_INFO);
+        }
+        key.trim();
+        if (TextUtils.isEmpty(key)) {
+            return new SyncInfo(s, KSync.SYNC_INFO);
+        } else {
+            SyncInfo info = cacheMap.get(key);
+            if (info == null) {
+                info = new SyncInfo(s, KSync.SYNC_INFO);
+                cacheMap.put(key, info);
+                return info;
+            }
+            info.content = s;
+            return null;
+        }
+    }
+
+    Map<String, SyncInfo> cacheMap = new HashMap<>();
+
     public class KHandler extends Handler {
         @Override
         public void handleMessage(final Message msg) {
@@ -216,6 +246,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     hasError = true;
                     break;
                 case KSync.SYNC_INFO:
+                    info = getSyncInfo(String.valueOf(msg.obj));
+                    break;
                 case KSync.SYNC_CONNECTING:
                 case KSync.SYNC_START:
                     info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_INFO);
@@ -225,7 +257,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case KSync.SYNC_PING:
                     setNetwork(msg);
-                    break;
+                    return;
                 case KSync.SYNC_SERVER_TIME:
                     //去设置时间
                     setTime(String.valueOf(msg.obj));
@@ -241,9 +273,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             }
             if (info != null) {
                 mSyncInfos.add(info);
-                mSyncInfoAdapter.notifyDataSetChanged();
-                binding.lvContainer.setSelection(mSyncInfoAdapter.getCount() - 1);
             }
+            mSyncInfoAdapter.notifyDataSetChanged();
+            binding.lvContainer.setSelection(mSyncInfoAdapter.getCount() - 1);
         }
     }
 
