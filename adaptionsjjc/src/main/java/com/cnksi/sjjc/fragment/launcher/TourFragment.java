@@ -18,6 +18,7 @@ import com.cnksi.sjjc.bean.TaskStatistic;
 import com.cnksi.sjjc.databinding.FragmentTourBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.service.TaskService;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class TourFragment extends BaseCoreFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         tourBinding = DataBindingUtil.inflate(LayoutInflater.from(container.getContext()), R.layout.fragment_tour, container, false);
+        AutoUtils.auto(tourBinding.getRoot());
         return tourBinding.getRoot();
     }
 

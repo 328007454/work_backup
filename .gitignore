@@ -1,8 +1,5 @@
 *.iml
 .gradle
-yanshou/
-sjjcmianyang/
-resjjc/
 local.properties
 gradle/
 gradle.properties
@@ -11,14 +8,7 @@ gradlew.bat
 gradlew
 captures/
 build/
-app/
 .idea
-adaptionsjjc.zip
 autolayout/build
-myapplication/
-
-
-
-
-
+automodel/
 /adaptionsjjc/local.properties

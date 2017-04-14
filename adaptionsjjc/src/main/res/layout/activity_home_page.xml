@@ -9,7 +9,7 @@
             type="com.cnksi.sjjc.activity.HomeActivity" />
     </data>
 
-    <ScrollView
+    <com.cnksi.sjjc.View.OverrideScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/battery_color_type"
@@ -199,7 +199,7 @@
 
                 <LinearLayout
                     android:id="@+id/bdz_all_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="500px"
                     android:layout_height="match_parent"
                     android:background="@drawable/home_include_background"
                     android:minWidth="500px"
@@ -297,5 +297,5 @@
                 android:layout_height="20px"
                 android:background="#f0f2f2" />
         </LinearLayout>
-    </ScrollView>
+    </com.cnksi.sjjc.View.OverrideScrollView>
 </layout>

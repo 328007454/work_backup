@@ -36,6 +36,7 @@
                     android:src="@mipmap/icon_tour" />
 
                 <TextView
+                    android:textSize="34px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -61,6 +62,7 @@
                     android:src="@mipmap/icon_maintence" />
 
                 <TextView
+                    android:textSize="34px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -87,6 +89,7 @@
                     android:src="@mipmap/icon_operate" />
 
                 <TextView
+                    android:textSize="34px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -112,6 +115,7 @@
                     android:src="@mipmap/icon_unify" />
 
                 <TextView
+                    android:textSize="34px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -145,6 +149,7 @@
                     android:src="@mipmap/icon_defct" />
 
                 <TextView
+                    android:textSize="34px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -170,6 +175,7 @@
                     android:src="@mipmap/icon_copy" />
 
                 <TextView
+                    android:textSize="34px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -196,6 +202,7 @@
                     android:src="@mipmap/icon_education" />
 
                 <TextView
+                    android:textSize="34px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -223,6 +230,7 @@
                     android:src="@mipmap/icon_sync" />
 
                 <TextView
+                    android:textSize="34px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"

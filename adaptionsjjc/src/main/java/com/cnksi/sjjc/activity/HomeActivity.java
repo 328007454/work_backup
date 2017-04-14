@@ -119,27 +119,25 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     bdzList = CustomApplication.getDbManager().findAll(Bdz.class);
                     final List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList();
                     for (DefectRecord mDefectRecord : defectList) {
+                        ArrayList<DefectRecord> temp;
                         if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            if (mCrisisMap.get(mDefectRecord.bdzid) == null) {
-                                recordCrisis = new ArrayList<DefectRecord>();
-                                recordCrisis.add(mDefectRecord);
-                            } else
-                                recordCrisis.add(mDefectRecord);
-                            mCrisisMap.put(mDefectRecord.bdzid, recordCrisis);
+                            if (null == (temp = mCrisisMap.get(mDefectRecord.bdzid))) {
+                                temp = new ArrayList<>();
+                                mCrisisMap.put(mDefectRecord.bdzid, temp);
+                            }
+                            temp.add(mDefectRecord);
                         } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            if (mSerioutMap.get(mDefectRecord.bdzid) == null) {
-                                recordSerious = new ArrayList<DefectRecord>();
-                                recordSerious.add(mDefectRecord);
-                            } else
-                                recordSerious.add(mDefectRecord);
-                            mSerioutMap.put(mDefectRecord.bdzid, recordSerious);
+                            if (null == (temp = mSerioutMap.get(mDefectRecord.bdzid))) {
+                                temp = new ArrayList<>();
+                                mSerioutMap.put(mDefectRecord.bdzid, temp);
+                            }
+                            temp.add(mDefectRecord);
                         } else if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            if (mCommonMap.get(mDefectRecord.bdzid) == null) {
-                                recordCommon = new ArrayList<DefectRecord>();
-                                recordCommon.add(mDefectRecord);
-                            } else
-                                recordCommon.add(mDefectRecord);
-                            mCommonMap.put(mDefectRecord.bdzid, recordCommon);
+                            if (null == (temp = mCommonMap.get(mDefectRecord.bdzid))) {
+                                temp = new ArrayList<>();
+                                mCommonMap.put(mDefectRecord.bdzid, temp);
+                            }
+                            temp.add(mDefectRecord);
                         }
                     }
                     runOnUiThread(new Runnable() {
@@ -240,7 +238,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             //跳转到设备缺陷
             case R.id.device_defect:
-                //undo
+                CToast.showShort(mCurrentActivity, "工程师正在玩命开发中！敬请期待！");
                 break;
             //跳转到数据抄录
             case R.id.device_copy:

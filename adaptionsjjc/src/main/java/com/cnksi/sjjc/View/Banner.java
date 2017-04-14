@@ -250,6 +250,9 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         imageViews.clear();
         for (int i = 0; i <= count + 1; i++) {
             ImageView iv = new ImageView(context);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            iv.setScaleType(ScaleType.FIT_XY);
+            iv.setLayoutParams(params);
             Object url = null;
             if (i == 0) {
                 url = imagesUrl.get(count - 1);

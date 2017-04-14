@@ -1,9 +1,8 @@
-
 //
 //include ':cnksicore', ':adaptionsjjc'
 //include ':autolayout'
 ////include ":myapplication"
 //=======
-include ':cnksicore', ':adaptionsjjc', ':tts'
+include ':cnksicore', ':adaptionsjjc', ':tts', ':automodel'
 include ':autolayout'
 

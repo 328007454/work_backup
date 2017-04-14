@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 import com.cnksi.sjjc.R;
+import com.zhy.autolayout.utils.AutoUtils;
 
 
 /**
@@ -90,6 +91,6 @@ public class UnderLineTextView extends AppCompatTextView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (isSelected())
-            canvas.drawLine(0, getHeight() - dividerWidth, getWidth(), getHeight() - dividerWidth, dividerPaint);
+            canvas.drawLine(AutoUtils.getPercentWidthSize(20), getHeight() - dividerWidth, getWidth()-AutoUtils.getPercentWidthSize(20), getHeight() - dividerWidth, dividerPaint);
     }
 }
