@@ -7,6 +7,8 @@
         android:supportsRtl="true">
         <service
             android:name=".TTService"
+            android:exported="true"
+            android:enabled="true"
             android:process=":tts">
             <intent-filter>
                 <action android:name="android.intent.action.TTService" />

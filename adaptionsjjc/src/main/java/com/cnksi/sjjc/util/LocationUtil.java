@@ -11,7 +11,6 @@ import com.cnksi.sjjc.inter.LocationListener;
 
 /**
  * 定位工具
- *
  * @author lyndon
  */
 public class LocationUtil {
@@ -24,8 +23,7 @@ public class LocationUtil {
 
     private LocationListener locationListener;
 
-    private BDLocationListener bdLocationListener;
-    private Context context;
+    private LocationHelper locationHelper;
 
     public static LocationUtil getInstance() {
         if (null == instance)
@@ -45,8 +43,12 @@ public class LocationUtil {
      * 初始化参数
      */
     public LocationUtil init(Context context) {
-        this.context = context;
-        locationClientOption = new LocationClientOption();
+        if(null == locationHelper){
+            locationHelper = new LocationHelper();
+        }
+        if(null == locationClientOption){
+            locationClientOption = new LocationClientOption();
+        }
         locationClientOption.setOpenGps(true);// 打开gps
         locationClientOption.setCoorType("bd09ll"); // 设置坐标类型
         locationClientOption.setScanSpan(2000); // 定位间隔时间
@@ -67,30 +69,31 @@ public class LocationUtil {
         }
         locationClient = new LocationClient(context.getApplicationContext());
         locationClient.setLocOption(locationClientOption);
-        locationClient.registerLocationListener(new BDLocationListener() {
-            @Override
-            public void onReceiveLocation(BDLocation bdLocation) {
-                bdLocationListener = this;
-                // 网络定位，离线定位，GPS定位皆可
-                if (null != bdLocation && (BDLocation.TypeOffLineLocation == bdLocation.getLocType() || BDLocation.TypeNetWorkLocation == bdLocation.getLocType()
-                        || BDLocation.TypeGpsLocation == bdLocation.getLocType())) {
-                    locationListener.locationSuccess(bdLocation);
-                    stopLocationRequest();
-                } else {
-                    if (null != bdLocation)
-                        locationListener.locationFailure(bdLocation.getLocType(), "定位失败具体原因参考http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.0/index.html");
-                    else
-                        locationListener.locationFailure(-1, "获取定位信息为空");
-                }
-            }
-        });
+        locationClient.registerLocationListener(locationHelper);
         locationClient.start();
         locationClient.requestLocation();
     }
 
+    private class LocationHelper implements BDLocationListener{
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            // 网络定位，离线定位，GPS定位皆可
+            if (null != bdLocation && (BDLocation.TypeOffLineLocation == bdLocation.getLocType() || BDLocation.TypeNetWorkLocation == bdLocation.getLocType()
+                    || BDLocation.TypeGpsLocation == bdLocation.getLocType())) {
+                locationListener.locationSuccess(bdLocation);
+                stopLocationRequest();
+            } else {
+                if (null != bdLocation)
+                    locationListener.locationFailure(bdLocation.getLocType(), "定位失败具体原因参考http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.0/index.html");
+                else
+                    locationListener.locationFailure(-1, "获取定位信息为空");
+            }
+        }
+    }
+
     public void stopLocationRequest() {
         if (locationClient != null && locationListener != null) {
-            locationClient.unRegisterLocationListener(bdLocationListener);
+            locationClient.unRegisterLocationListener(locationHelper);
             locationClient.stop();
         }
     }

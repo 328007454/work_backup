@@ -54,12 +54,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 首页界面
  * Created by han on 2017/3/24.
  */
-
 public class HomeActivity extends BaseActivity implements View.OnClickListener, ItemClickListener {
     private ActivityHomePageBinding homePageBinding;
     //变电站弹出popwindow
@@ -105,7 +103,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
         checkIsNeedSync();
     }
-
 
     private void loadData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
@@ -208,6 +205,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
             }
         });
+
+        loadData();
     }
 
     @Override
@@ -216,12 +215,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         for (TaskType tab : tabs) {
             tab.init();
         }
-        loadData();
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = null;
         switch (view.getId()) {
             //跳转到设备巡视或者设备维护界面
             case R.id.device_xunshi:
@@ -307,7 +304,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void itemClick(View v, Bdz bdz, int position) {
                 if (!bdz.name.contains("未激活")) {
-                    homePageBinding.bdzName.setText(bdz.name + "");
+                    homePageBinding.bdzName.setText(bdz.name);
                     mPowerStationDialog.dismiss();
                     currentSelectBdzId = bdzList.get(position).bdzid;
                     homePageBinding.common.setSelected(true);
@@ -346,7 +343,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     /**
      * 显示不同任务的工具类。
      */
-    class TaskType {
+    private class TaskType {
         TabType type;
         TextView tv;
         List<Task> tasks = new ArrayList<>();
@@ -416,7 +413,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             });
         }
 
-
         void setSelected(boolean isSelect) {
             if (tv.isSelected() != isSelect)
                 tv.setSelected(isSelect);
@@ -427,7 +423,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    enum TabType {
+    private enum TabType {
         inspection("设备巡视"), maintenance("设备维护"), switching("倒闸操作"), operations("运维一体化");
         String zhName;
 
@@ -469,8 +465,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     /**
      * 跳转到巡视的开始任务界面
-     *
-     * @param task
      */
     private void startTask(Task task) {
         CustomApplication.closeDbConnection();
@@ -506,5 +500,4 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             e.printStackTrace();
         }
     }
-
 }
