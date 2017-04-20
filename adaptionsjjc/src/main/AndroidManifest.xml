@@ -378,11 +378,7 @@
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
-        <service android:name=".service.androidservice.LocatoinService">
-            <intent-filter>
-                <action android:name="com.cnksi.sjjc.service.androidservice.LocatoinService" />
-            </intent-filter>
-        </service>
+
 
         <meta-data
             android:name="design_width"

@@ -14,9 +14,8 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import com.baidu.location.BDLocation;
-import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.utils.DistanceUtil;
 import com.cnksi.core.adapter.ViewHolder;
+import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtil;
@@ -38,6 +37,8 @@ import com.cnksi.sjjc.service.BdzService;
 import com.cnksi.sjjc.service.SpacingService;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
+import com.cnksi.sjjc.util.DistanceUtil;
+import com.cnksi.sjjc.util.LatLng;
 import com.cnksi.sjjc.util.LocationUtil;
 import com.cnksi.sjjc.util.OnViewClickListener;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -48,7 +49,7 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewLauncherActivity extends BaseActivity implements LocationListener {
+public class NewLauncherActivity extends BaseActivity {
     private ActivityLauncherNewBinding launcherBinding;
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
     private int currentSelectPosition;
@@ -56,6 +57,7 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
     private ListView mPowerStationListView;
     private Dialog mPowerStationDialog = null;
     private ArrayList<Bdz> bdzList;
+    LocationUtil.LocationHelper locationHelper;
     RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
@@ -88,15 +90,6 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
         }
     };
 
-    /**
-     * 变电站定位runnable
-     */
-    private Runnable locationTask = new Runnable() {
-        public void run() {
-            LocationUtil.getInstance().init(NewLauncherActivity.this).setLocationListener(NewLauncherActivity.this).requestLocation(NewLauncherActivity.this);
-//            mHandler.postDelayed(this, 30000);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,8 +126,40 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
                 mPowerStationDialog.show();
             }
         });
+        locationHelper = LocationUtil.getInstance().requestLocation(new LocationListener() {
+            @Override
+            public void locationSuccess(BDLocation location) {
+                CLog.e("Location:" + location.getLongitude() + "," + location.getLatitude());
+                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                if (currentLocation == null) return;
+                List<DbModel> spacingModels = SpacingService.getInstance().findBdzBySpacing();
+                if (spacingModels != null && spacingModels.size() != 0) {
+                    for (DbModel dbModel : spacingModels) {
 
-        mHandler.post(locationTask);
+                        LatLng bdzLocation = LatLng.valueOf(dbModel.getString(Spacing.LATITUDE), dbModel.getString(Spacing.LONGITUDE));
+                        if (bdzLocation == null) continue;
+                        // 200米范围内
+                        if (DistanceUtil.getDistance(currentLocation, bdzLocation) < 200) {
+                            String bdzid = dbModel.getString(Spacing.BDZID);
+                            try {
+                                Bdz bdz = BdzService.getInstance().findById(bdzid);
+                                if (bdz != null) {
+                                    launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
+                                    break;
+                                }
+                            } catch (DbException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void locationFailure(int code, String message) {
+
+            }
+        }, 0, 30000);
     }
 
     private void initBaseData() {
@@ -216,7 +241,7 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
 
     private void initBDZDialog() {
         int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
-        int dialogHeight = bdzList.size() > 8 ? DisplayUtil.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
+        final int dialogHeight = bdzList.size() > 8 ? DisplayUtil.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
         final ViewHolder holder = new ViewHolder(this, null, R.layout.content_list_dialog, false);
         AutoUtils.autoSize(holder.getRootView());
         mPowerStationListView = holder.getView(R.id.lv_container);
@@ -229,7 +254,7 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
                     PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
                     mPowerStationDialog.dismiss();
-                    LocationUtil.getInstance().stopLocationRequest();
+                    locationHelper.remove();
                 } else
                     CToast.showShort(_this, "该变电站未激活");
             }
@@ -243,42 +268,10 @@ public class NewLauncherActivity extends BaseActivity implements LocationListene
         mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
     }
 
-    @Override
-    public void locationSuccess(BDLocation location) {
-        LocationUtil.getInstance().stopLocationRequest();
-        List<DbModel> spacingModels = SpacingService.getInstance().findBdzBySpacing();
-        if (spacingModels != null && spacingModels.size() != 0) {
-            for (DbModel dbModel : spacingModels) {
-                String latitude = dbModel.getString(Spacing.LATITUDE);
-                String longtitude = dbModel.getString(Spacing.LONGITUDE);
-                LatLng spaceLocation = new LatLng(Double.valueOf(latitude), Double.valueOf(longtitude));
-                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                // 200米范围内
-                if (DistanceUtil.getDistance(currentLocation, spaceLocation) < 200) {
-                    String bdzid = dbModel.getString(Spacing.BDZID);
-                    try {
-                        Bdz bdz = BdzService.getInstance().findById(bdzid);
-                        if (bdz != null) {
-                            launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
-                            break;
-                        }
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void locationFailure(int code, String message) {
-
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LocationUtil.getInstance().stopLocationRequest();
-        mHandler.removeCallbacks(locationTask);
+        locationHelper.remove();
     }
 }

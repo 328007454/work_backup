@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.cnksi.core.application.CoreApplication;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CLog;
@@ -15,6 +14,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.crash.CrashHandler;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
 import com.cnksi.sjjc.bean.TaskExtend;
+import com.cnksi.sjjc.util.LocationUtil;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
@@ -89,9 +89,6 @@ public class CustomApplication extends CoreApplication {
         super.onCreate();
 
 
-        //初始化百度地图
-        SDKInitializer.initialize(getApplicationContext());
-
         mInstance = this;
         AutoLayoutConifg.getInstance().useDeviceSize().init(this);
         TCAgent.LOG_ON = true;
@@ -106,6 +103,7 @@ public class CustomApplication extends CoreApplication {
         }
         initRuntimeVar();
         TTSUtils.init(getAppContext());
+        LocationUtil.getInstance().init(getAppContext());
     }
 
     public void initApp() {

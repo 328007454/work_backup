@@ -1,16 +1,23 @@
 package com.cnksi.sjjc.util;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.cnksi.core.utils.CLog;
 import com.cnksi.sjjc.inter.LocationListener;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 定位工具
+ *
  * @author lyndon
  */
 public class LocationUtil {
@@ -21,9 +28,7 @@ public class LocationUtil {
 
     private LocationClientOption locationClientOption;
 
-    private LocationListener locationListener;
-
-    private LocationHelper locationHelper;
+    Handler handler = new Handler(Looper.getMainLooper());
 
     public static LocationUtil getInstance() {
         if (null == instance)
@@ -31,69 +36,118 @@ public class LocationUtil {
         return instance;
     }
 
-    /**
-     * 设置监听
-     */
-    public LocationUtil setLocationListener(LocationListener locationListener) {
-        this.locationListener = locationListener;
-        return this;
-    }
+    Set<LocationHelper> helpers = new HashSet<>();
+
 
     /**
      * 初始化参数
      */
-    public LocationUtil init(Context context) {
-        if(null == locationHelper){
-            locationHelper = new LocationHelper();
+    public static void init(Context context) {
+        if (null == instance.locationClientOption) {
+            instance.locationClientOption = new LocationClientOption();
         }
-        if(null == locationClientOption){
-            locationClientOption = new LocationClientOption();
-        }
-        locationClientOption.setOpenGps(true);// 打开gps
-        locationClientOption.setCoorType("bd09ll"); // 设置坐标类型
-        locationClientOption.setScanSpan(2000); // 定位间隔时间
-        locationClientOption.setTimeOut(30000);// 定位超时时间30s
-        locationClientOption.setLocationMode(LocationMode.Hight_Accuracy);
-        return this;
+        instance.locationClientOption.setOpenGps(true);// 打开gps
+        instance.locationClientOption.setCoorType("bd09ll"); // 设置坐标类型
+        instance.locationClientOption.setScanSpan(2000); // 定位间隔时间
+        instance.locationClientOption.setTimeOut(30000);// 定位超时时间30s
+        instance.locationClientOption.setLocationMode(LocationMode.Hight_Accuracy);
+        instance.locationClient = new LocationClient(context.getApplicationContext(), instance.locationClientOption);
     }
 
     /**
      * 开启定位
      */
-    public void requestLocation(final Context context) {
-        if (null == locationClientOption) {
-            throw new RuntimeException("需要先调用init()方法再进行调用setLocationListener(xxx)");
+    public LocationHelper requestLocation(LocationListener listener, int timeout, int interval) {
+        if (null == locationClient) {
+            throw new RuntimeException("需要先调用init()方法");
         }
-        if (null == locationListener) {
-            throw new RuntimeException("调用init()方法后调用setLocationListener(xxx)");
-        }
-        locationClient = new LocationClient(context.getApplicationContext());
-        locationClient.setLocOption(locationClientOption);
-        locationClient.registerLocationListener(locationHelper);
-        locationClient.start();
+        LocationHelper helper = interval > 2000 ? new LocationHelper(listener, true, interval) : new LocationHelper(listener, timeout);
+        addListener(helper);
+        if (!locationClient.isStarted()) locationClient.start();
         locationClient.requestLocation();
+        return helper;
     }
 
-    private class LocationHelper implements BDLocationListener{
+    public class LocationHelper implements BDLocationListener {
+        LocationListener listener;
+        boolean isRemove;
+        boolean isKeep = false;
+
+        public LocationHelper(LocationListener listener, final int timeout) {
+            this.listener = listener;
+            if (timeout > 2000)
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        remove();
+                    }
+                }, timeout);
+        }
+
+        public LocationHelper(LocationListener listener, final boolean isKeep, final int interval) {
+            this.listener = listener;
+            this.isKeep = true;
+            if (interval > 2000)
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isRemove) {
+                            handler.postDelayed(this, interval);
+                        }
+                        addListener(LocationHelper.this);
+                        locationClient.requestLocation();
+
+                    }
+                }, interval);
+        }
+
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
+            CLog.e("locType:" + bdLocation.getLocType() + ";" + bdLocation.getLatitude() + ";" + bdLocation.getLongitude());
             // 网络定位，离线定位，GPS定位皆可
             if (null != bdLocation && (BDLocation.TypeOffLineLocation == bdLocation.getLocType() || BDLocation.TypeNetWorkLocation == bdLocation.getLocType()
                     || BDLocation.TypeGpsLocation == bdLocation.getLocType())) {
-                locationListener.locationSuccess(bdLocation);
-                stopLocationRequest();
+                listener.locationSuccess(bdLocation);
+                if (!isKeep)
+                    remove();
             } else {
                 if (null != bdLocation)
-                    locationListener.locationFailure(bdLocation.getLocType(), "定位失败具体原因参考http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.0/index.html");
+                    listener.locationFailure(bdLocation.getLocType(), "定位失败具体原因参考http://wiki.lbsyun.baidu.com/cms/androidloc/doc/v7.0/index.html");
                 else
-                    locationListener.locationFailure(-1, "获取定位信息为空");
+                    listener.locationFailure(-1, "获取定位信息为空");
             }
+        }
+
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
+
+        }
+
+        public void remove() {
+            if (isRemove) return;
+            isRemove = true;
+            LocationUtil.this.remove(this);
         }
     }
 
-    public void stopLocationRequest() {
-        if (locationClient != null && locationListener != null) {
-            locationClient.unRegisterLocationListener(locationHelper);
+    private void addListener(LocationHelper helper) {
+        locationClient.registerLocationListener(helper);
+        helpers.add(helper);
+    }
+
+    private synchronized void remove(LocationHelper helper) {
+        locationClient.unRegisterLocationListener(helper);
+        helpers.remove(helper);
+    }
+
+
+    public void cancelAllRequest() {
+        if (locationClient != null) {
+            if (helpers.size() > 0) {
+                for (LocationHelper helper : helpers) {
+                    locationClient.unRegisterLocationListener(helper);
+                }
+            }
             locationClient.stop();
         }
     }
