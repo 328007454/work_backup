@@ -14,8 +14,11 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import com.baidu.location.BDLocation;
+import com.cnksi.bdloc.DistanceUtil;
+import com.cnksi.bdloc.LatLng;
+import com.cnksi.bdloc.LocationListener;
+import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.core.adapter.ViewHolder;
-import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtil;
@@ -32,14 +35,10 @@ import com.cnksi.sjjc.databinding.ActivityLauncherNewBinding;
 import com.cnksi.sjjc.fragment.launcher.MaintenanceFragment;
 import com.cnksi.sjjc.fragment.launcher.TourFragment;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.inter.LocationListener;
 import com.cnksi.sjjc.service.BdzService;
 import com.cnksi.sjjc.service.SpacingService;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
-import com.cnksi.sjjc.util.DistanceUtil;
-import com.cnksi.sjjc.util.LatLng;
-import com.cnksi.sjjc.util.LocationUtil;
 import com.cnksi.sjjc.util.OnViewClickListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -126,10 +125,9 @@ public class NewLauncherActivity extends BaseActivity {
                 mPowerStationDialog.show();
             }
         });
-        locationHelper = LocationUtil.getInstance().requestLocation(new LocationListener() {
+        locationHelper = LocationUtil.getInstance().getLocalHelper(new LocationListener() {
             @Override
             public void locationSuccess(BDLocation location) {
-                CLog.e("Location:" + location.getLongitude() + "," + location.getLatitude());
                 LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 if (currentLocation == null) return;
                 List<DbModel> spacingModels = SpacingService.getInstance().findBdzBySpacing();
@@ -154,12 +152,8 @@ public class NewLauncherActivity extends BaseActivity {
                     }
                 }
             }
-
-            @Override
-            public void locationFailure(int code, String message) {
-
-            }
-        }, 0, 30000);
+        }).setPeriod(30);
+        locationHelper.start();
     }
 
     private void initBaseData() {
@@ -237,6 +231,7 @@ public class NewLauncherActivity extends BaseActivity {
             default:
                 break;
         }
+        locationHelper.resume();
     }
 
     private void initBDZDialog() {
@@ -254,7 +249,7 @@ public class NewLauncherActivity extends BaseActivity {
                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
                     PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
                     mPowerStationDialog.dismiss();
-                    locationHelper.remove();
+                    locationHelper.stop();
                 } else
                     CToast.showShort(_this, "该变电站未激活");
             }
@@ -268,10 +263,15 @@ public class NewLauncherActivity extends BaseActivity {
         mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationHelper.pause();
+    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        locationHelper.remove();
     }
 }
