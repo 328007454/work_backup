@@ -200,6 +200,13 @@
         <item>二次设备</item>
         <item>其它地点</item>
     </string-array>
+
+    <string-array name="DefectTypeArray">
+        <item>全部缺陷</item>
+        <item>一般缺陷</item>
+        <item>严重缺陷</item>
+        <item>危机缺陷</item>
+    </string-array>
     <string-array name="NetSyncMenuArray">
         <item>USB同步</item>
         <item>数据库删除</item>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="">
+
+    </data>
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+
+            android:id="@+id/iv_defect_image"
+            android:layout_width="280px"
+            android:layout_height="210px"
+            android:background="#1bbc9b"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_nodefect"
+            android:textColor="@android:color/white"
+            app:layout_auto_baseheight="width" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30px"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:text="缺陷内容："
+                android:textColor="#626262"
+                android:textSize="38px" />
+
+            <TextView
+                android:id="@+id/tv_defect_device"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="设备名称："
+                android:textColor="#626262"
+                android:textSize="38px" />
+
+            <TextView
+                android:id="@+id/tv_defect_type"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="缺陷性质："
+                android:textColor="#626262"
+                android:textSize="38px" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

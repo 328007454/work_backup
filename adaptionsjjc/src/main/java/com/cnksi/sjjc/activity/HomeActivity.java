@@ -235,7 +235,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             //跳转到设备缺陷
             case R.id.device_defect:
-                CToast.showShort(mCurrentActivity, "工程师正在玩命开发中！敬请期待！");
+//                CToast.showShort(mCurrentActivity, "工程师正在玩命开发中！敬请期待！");
+                ActivityUtil.startDefecControlActivity(_this);
                 break;
             //跳转到数据抄录
             case R.id.device_copy:

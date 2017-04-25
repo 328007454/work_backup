@@ -321,6 +321,12 @@
             android:theme="@style/MyDialogStyle"
             android:windowSoftInputMode="adjustUnspecified|stateAlwaysVisible" />
 
+        <activity
+            android:name=".activity.DefectControlActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateAlwaysVisible" />
+
         <!-- batteryfinishActivity -->
 
         <activity

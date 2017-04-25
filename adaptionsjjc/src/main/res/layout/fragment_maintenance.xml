@@ -173,7 +173,7 @@
                         android:background="@drawable/new_launch_switchover_bg"
                         android:gravity="center_vertical"
                         android:paddingLeft="40px"
-                        android:text="轮换实验"
+                        android:text="轮换试验"
                         android:textColor="@color/white"
                         android:textSize="36px" />
                 </RelativeLayout>
