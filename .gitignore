@@ -2,7 +2,6 @@
 .gradle
 local.properties
 gradle/
-gradle.properties
 adaptionsjjc/build
 gradlew.bat
 gradlew
