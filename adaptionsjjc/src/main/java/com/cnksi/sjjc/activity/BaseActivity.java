@@ -148,6 +148,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @ViewInject(R.id.btn_back)
     protected ImageView btnBack;
 
+    @ViewInject(R.id.btn_back_defect)
+    protected ImageView btnBackDefect;
+
     @ViewInject(R.id.btn_right)
     protected ImageView btnRight;
 
@@ -163,7 +166,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @ViewInject(R.id.shadom_rela)
     protected RelativeLayout layoutRelat;
 
- //   protected SpeechSynthesizer mTts;
+    //   protected SpeechSynthesizer mTts;
     public Vibrator mVibrator;
 
     /**
@@ -230,6 +233,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
                 onBackPressed();
             }
         });
+
     }
 
     /**

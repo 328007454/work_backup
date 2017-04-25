@@ -9,7 +9,7 @@
     <!-- 缺陷原因 -->
 
     <TextView
-        android:background="@drawable/bdz_background_select"
+        android:background="@drawable/bdz_title_background"
         android:id="@+id/tv_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="120px"

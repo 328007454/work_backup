@@ -325,7 +325,7 @@
             android:name=".activity.DefectControlActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateAlwaysVisible" />
+            android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden" />
 
         <!-- batteryfinishActivity -->
 

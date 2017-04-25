@@ -59,11 +59,17 @@ public class DefectControlActivity extends BaseActivity {
     }
 
     private void initUI() {
+        bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
         defectControlBinding.setEvent(this);
         tvTitle.setText("缺陷管理");
-        btnBack.setImageResource(R.drawable.ic_hompage_selector);
-        bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
-
+        btnBack.setVisibility(View.GONE);
+        btnBackDefect.setVisibility(View.VISIBLE);
+        btnBackDefect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         //TODO:需要对该adapter填充数据
         defectContentAdapter = new DefectContentAdapter(_this, new ArrayList(), R.layout.adapter_defect_item);
 
