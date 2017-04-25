@@ -60,7 +60,6 @@ public class DefectControlActivity extends BaseActivity {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
-
                 final List<DefectRecord> defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(currentBdz == null ? "" : currentBdz.bdzid, defectLevel);
                 runOnUiThread(new Runnable() {
                     @Override
@@ -74,10 +73,20 @@ public class DefectControlActivity extends BaseActivity {
 
 
     private void initUI() {
+
         defectControlBinding.setEvent(this);
         tvTitle.setText("缺陷管理");
+
         btnBack.setImageResource(R.drawable.ic_hompage_selector);
 
+        btnBack.setVisibility(View.GONE);
+        btnBackDefect.setVisibility(View.VISIBLE);
+        btnBackDefect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         defectControlBinding.defectType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

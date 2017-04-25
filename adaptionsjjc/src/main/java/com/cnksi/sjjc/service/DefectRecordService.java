@@ -41,7 +41,7 @@ public class DefectRecordService {
             Selector<DefectRecord> selector = CustomApplication.getDbManager().selector(DefectRecord.class).where(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.HAS_REMOVE, "=", "N")
                     .and(DefectRecord.IS_COPY, "<>", "Y");
-            if (TextUtils.isEmpty(bdzId)) {
+            if (!TextUtils.isEmpty(bdzId)) {
                 selector.and(DefectRecord.BDZID, "=", bdzId);
             }
             if (level > 0)

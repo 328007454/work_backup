@@ -83,6 +83,17 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true" />
 
+            <ImageButton
+                android:id="@+id/btn_back_defect"
+                android:layout_width="@dimen/title_bar_minheight_px"
+                android:layout_height="@dimen/title_bar_minheight_px"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_defectpage_selector"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_centerInParent="true"
