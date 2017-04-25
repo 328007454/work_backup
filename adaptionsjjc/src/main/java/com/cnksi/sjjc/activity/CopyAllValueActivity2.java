@@ -4,9 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +25,6 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.CopyAdapter;
 import com.cnksi.sjjc.adapter.CopyDeviceAdapter;
 import com.cnksi.sjjc.adapter.TreeNode;
-import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.CopyResult;
 import com.cnksi.sjjc.inter.ItemClickListener;
@@ -52,7 +49,6 @@ import java.util.Map;
 
 /**
  * 集中抄录数据 (集中抄录设备) 从设备列表界面跳转过来
- *
  * @author terry
  */
 public class CopyAllValueActivity2 extends BaseActivity {
@@ -212,7 +208,7 @@ public class CopyAllValueActivity2 extends BaseActivity {
                 // 所有抄录类型
                 Map<String, String> copyType = CopyTypeService.getInstance().getAllCopyType();
                 // 查询当前报告已抄录项目
-                List<CopyResult> reportResultList = CopyResultService.getInstance().getResultList(currentReportId,
+                List<CopyResult> reportResultList = CopyResultService.getInstance().getResultList(currentBdzId,currentReportId,
                         currentDeviceId, true, processor.getCopyType());
                 Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
                 if (null != reportResultList && !reportResultList.isEmpty()) {
@@ -220,7 +216,7 @@ public class CopyAllValueActivity2 extends BaseActivity {
                         reportCopyResultMap.put(result.item_id, result);
                 }
                 // 历史抄录值
-                List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentReportId,
+                List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId,currentReportId,
                         currentDeviceId, false, processor.getCopyType());
                 Map<String, CopyResult> historyMap = new HashMap<>();
                 if (null != historyResultList && !historyResultList.isEmpty()) {
@@ -389,8 +385,6 @@ public class CopyAllValueActivity2 extends BaseActivity {
 
     /**
      * 完成巡检提示框
-     *
-     * @param mRootContainer
      */
     protected void showTipsDialog(ViewGroup mRootContainer, CharSequence copytips) {
         int dialogWidth = ScreenUtils.getScreenWidth(_this) * 9 / 10;

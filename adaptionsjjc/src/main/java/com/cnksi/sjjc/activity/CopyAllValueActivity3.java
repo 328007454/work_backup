@@ -134,7 +134,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
     private void initUI() {
         getIntentValue();
         processor = ProcessorFactory.getProcessor(currentInspectionType, currentReportId);
-        mTvTitle.setText(currentInspectionName + "记录");
+        mTvTitle.setText(currentInspectionName + "记录" + "");
         tvRight.setText("完成记录");
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
@@ -229,14 +229,14 @@ public class CopyAllValueActivity3 extends BaseActivity {
                 // 所有抄录类型
                 Map<String, String> copyType = CopyTypeService.getInstance().getAllCopyType();
                 // 查询当前报告已抄录项目
-                reportResultList = CopyResultService.getInstance().getResultList(currentReportId, currentDeviceId, true, processor.getCopyType());
+                reportResultList = CopyResultService.getInstance().getResultList(currentBdzId,currentReportId, currentDeviceId, true, processor.getCopyType());
                 Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
                 if (null != reportResultList && !reportResultList.isEmpty()) {
                     for (CopyResult result : reportResultList)
                         reportCopyResultMap.put(result.item_id, result);
                 }
                 // 历史抄录值
-                List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentReportId, currentDeviceId, false, processor.getCopyType());
+                List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId,currentReportId, currentDeviceId, false, processor.getCopyType());
                 Map<String, CopyResult> historyMap = new HashMap<>();
                 if (null != historyResultList && !historyResultList.isEmpty()) {
                     for (CopyResult historyResult : historyResultList) {
@@ -403,7 +403,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
                     new CountDownTimer(6000, 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
-                            tvTip.setText("" + millisUntilFinished / 1000);
+                            tvTip.setText("" + millisUntilFinished / 1000 + "");
                         }
 
                         @Override
@@ -439,8 +439,6 @@ public class CopyAllValueActivity3 extends BaseActivity {
 
     /**
      * 完成巡检提示框
-     *
-     * @param mRootContainer
      */
     protected void showTipsDialog(ViewGroup mRootContainer, CharSequence copytips) {
         int dialogWidth = ScreenUtils.getScreenWidth(_this) * 9 / 10;
@@ -589,5 +587,4 @@ public class CopyAllValueActivity3 extends BaseActivity {
             }
         }
     }
-
 }

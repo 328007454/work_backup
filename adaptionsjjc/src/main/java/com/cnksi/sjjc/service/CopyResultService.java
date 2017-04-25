@@ -55,16 +55,13 @@ public class CopyResultService extends BaseService<CopyResult> {
 
     /**
      * 查询设备先最新的抄录项
-     *
-     * @param deviceId
-     * @return
      */
-    public List<CopyResult> getResultList(String reportId, String deviceId, boolean inReport, String type) {
+    public List<CopyResult> getResultList(String bdzid,String reportId, String deviceId, boolean inReport, String type) {
         try {
             String operate = (inReport) ? "=" : "!=";
-            Selector<CopyResult> selector = selector().and(CopyResult.DEVICEID, "=", deviceId)
+            Selector<CopyResult> selector = selector().and(CopyResult.DEVICEID, "=", deviceId).and(CopyResult.BDZID,"=",bdzid)
                     .and(CopyResult.REPORTID, operate, reportId).
-                            expr(" and " + CopyItem.TYPE_KEY + " in('" + type + "')  and create_time in ( select max(create_time) from copy_result where dlt='0' group by item_id)  group by " + CopyResult.ITEM_ID + " order by " + CopyResult.UPDATE_TIME + "," + CopyResult.CREATE_TIME);
+                            expr(" and " + CopyItem.TYPE_KEY + " in('" + type + "')  and create_time in ( select max(create_time) from copy_result cr where cr.deviceid = '"+deviceId+"' and cr.bdzid = '"+bdzid+"' and cr.dlt='0' group by item_id)  group by " + CopyResult.ITEM_ID + " order by " + CopyResult.UPDATE_TIME + "," + CopyResult.CREATE_TIME);
             return selector.findAll();
         } catch (DbException e) {
             e.printStackTrace();
