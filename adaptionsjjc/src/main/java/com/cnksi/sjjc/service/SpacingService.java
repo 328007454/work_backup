@@ -45,7 +45,7 @@ public class SpacingService extends BaseService<Spacing> {
      */
     public List<DbModel> findBdzBySpacing() {
         List<DbModel> spacingList;
-        SqlInfo sqlInfo = new SqlInfo("select * from spacing where dlt <> 1 and device_type like '%one%' and (latitude <> '' or latitude <> null) and (longitude <> '' or longitude <> null)");
+        SqlInfo sqlInfo = new SqlInfo("select bdzid,latitude,longitude from spacing where dlt <> 1 and device_type like '%one%' and (latitude  is not null and latitude<>'0' and latitude<>'') and (latitude!='0' and  longitude <> '' and longitude is not null) group by bdzid ");
         try {
             spacingList = findDbModelAll(sqlInfo);
             return spacingList;

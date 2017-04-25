@@ -3,6 +3,6 @@
 //include ':autolayout'
 ////include ":myapplication"
 //=======
-include ':cnksicore', ':adaptionsjjc', ':tts', ':automodel'
+include ':cnksicore', ':adaptionsjjc', ':tts', ':automodel', ':bdloc'
 include ':autolayout'
 

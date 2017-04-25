@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.CToast;
@@ -106,8 +107,12 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private ArrayAdapter<String> arrayAdapter;
 
     private String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CAMERA};
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.CAMERA};
     /**
      * 屏蔽Wifi计数器
      */
@@ -511,5 +516,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
         CustomApplication.getInstance().initApp();
         checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, null, "0");
+        LocationUtil.getInstance().preSearchGps(mCurrentActivity);
     }
 }

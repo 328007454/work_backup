@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
-import com.baidu.mapapi.SDKInitializer;
+import com.cnksi.bdloc.LLog;
+import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.core.application.CoreApplication;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CLog;
@@ -87,11 +88,6 @@ public class CustomApplication extends CoreApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
-
-        //初始化百度地图
-        SDKInitializer.initialize(getApplicationContext());
-
         mInstance = this;
         AutoLayoutConifg.getInstance().useDeviceSize().init(this);
         TCAgent.LOG_ON = true;
@@ -106,6 +102,8 @@ public class CustomApplication extends CoreApplication {
         }
         initRuntimeVar();
         TTSUtils.init(getAppContext());
+        LocationUtil.init(getAppContext());
+        LLog.isLog = BuildConfig.LOG_DEBUG;
     }
 
     public void initApp() {
