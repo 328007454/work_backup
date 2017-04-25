@@ -129,7 +129,7 @@ public class DefectControlActivity extends BaseActivity {
                 });
             }
         });
-        defectContentAdapter = new DefectContentAdapter(mCurrentActivity, null);
+        defectContentAdapter = new DefectContentAdapter(this, null);
         defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
 
     }

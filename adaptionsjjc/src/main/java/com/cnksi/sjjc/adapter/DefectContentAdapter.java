@@ -1,20 +1,21 @@
 package com.cnksi.sjjc.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.DefectControlActivity;
 import com.cnksi.sjjc.bean.DefectRecord;
 
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -22,8 +23,11 @@ import java.util.Collection;
  */
 
 public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
-    public DefectContentAdapter(Context context, Collection data) {
+    DefectControlActivity activity;
+
+    public DefectContentAdapter(DefectControlActivity context, Collection data) {
         super(context, data, R.layout.adapter_defect_item);
+        activity = context;
     }
 
 
@@ -33,13 +37,19 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         TextView defectContentTv = holder.getView(R.id.tv_defect_content);
         defectContentTv.setText(convert2DefectLevel(item));
         holder.setText(R.id.tv_defect_device, "设备：" + item.devcie);
-        String[] defectPicArray = StringUtils.cleanString(item.pics).split(CoreConfig.COMMA_SEPARATOR);
-        if (defectPicArray != null && defectPicArray.length > 0
-                && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
-            x.image().bind(defectImage, Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), CustomApplication.getLargeImageOptions());
+        final ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.string2List(item.pics);
+        if (listPicDis.size() > 0 && !TextUtils.isEmpty(listPicDis.get(0))) {
+            x.image().bind(defectImage, Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)), CustomApplication.getLargeImageOptions());
+            defectImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.showImageDetails(activity, StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER));
+                }
+            });
         } else {
             defectImage.setScaleType(ImageView.ScaleType.CENTER);
             defectImage.setImageResource(R.mipmap.icon_nodefect);
+            defectImage.setOnClickListener(null);
         }
 
     }
