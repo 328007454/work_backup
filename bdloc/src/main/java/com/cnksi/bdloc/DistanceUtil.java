@@ -64,4 +64,17 @@ public class DistanceUtil {
         return highest;
     }
 
+    public static boolean isEquals(BDLocation src,BDLocation dst)
+    {
+        if (src!=null&&dst!=null&&src.getRadius()>0&&src.getRadius()>0)
+        {
+           return src.getLongitude()==dst.getLongitude()&&
+                    src.getLatitude()==dst.getLatitude()
+                   &&src.getRadius()==dst.getRadius();
+
+        }
+        return false;
+    }
+
+
 }

@@ -19,4 +19,10 @@ public class LLog {
             Log.e(TAG, msg);
         }
     }
+
+    public static void i(String msg) {
+        if (isLog) {
+            Log.i(TAG, msg);
+        }
+    }
 }

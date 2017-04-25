@@ -21,35 +21,40 @@ import java.util.concurrent.TimeUnit;
  */
 public class LocationUtil {
 
-    private static LocationUtil instance = new LocationUtil();
+    private static LocationUtil instance;
 
     private LocationClient locationClient;
 
-    private LocationClientOption locationClientOption;
+    private static int MIN_INTERVAL_TIME = 2000;
 
     Handler handler = new Handler(Looper.getMainLooper());
 
     public static LocationUtil getInstance() {
+        if (instance == null) throw new RuntimeException("你必须调用init方法初始化工具类");
         return instance;
     }
 
     private boolean isPrepare = false;
     private final Set<LocationHelper> helpers = new HashSet<>();
-    private long lastLocationTime;
+    private final Set<LocationHelper> sleepHelpers = new HashSet<>();
+
+
+    private LocationUtil(Context context) {
+        LocationClientOption locationClientOption = new LocationClientOption();
+        locationClientOption.setCoorType("bd09ll"); // 设置坐标类型
+        locationClientOption.setScanSpan(MIN_INTERVAL_TIME); // 定位间隔时间
+        locationClientOption.setTimeOut(300000);// 定位超时时间30s
+        locationClientOption.setLocationMode(LocationMode.Hight_Accuracy);
+        locationClientOption.setLocationNotify(true);
+        locationClient = new LocationClient(context.getApplicationContext(), locationClientOption);
+    }
 
     /**
      * 初始化参数
      */
     public static void init(Context context) {
-        if (null == instance.locationClientOption) {
-            instance.locationClientOption = new LocationClientOption();
-        }
-        instance.locationClientOption.setOpenGps(true);// 打开gps
-        instance.locationClientOption.setCoorType("bd09ll"); // 设置坐标类型
-        instance.locationClientOption.setScanSpan(2000); // 定位间隔时间
-        instance.locationClientOption.setTimeOut(300000);// 定位超时时间30s
-        instance.locationClientOption.setLocationMode(LocationMode.Hight_Accuracy);
-        instance.locationClient = new LocationClient(context.getApplicationContext(), instance.locationClientOption);
+        if (instance == null)
+            instance = new LocationUtil(context);
     }
 
 
@@ -57,14 +62,18 @@ public class LocationUtil {
         return new LocationHelper(listener);
     }
 
+    //记录最后一次受信任的位置
+    BDLocation lastLocation;
+    long lastLocationTime;
 
     public class LocationHelper implements BDLocationListener {
         LocationListener listener;
-        boolean isRunning = false;
+        Status status = Status.stop;
         boolean isKeep = false;
         long timeout = 30000;
         long period = 0;
-        private boolean isNeedDispatch = true;
+        boolean periodSuccess = false;
+
 
         public LocationHelper(LocationListener listener) {
             this.listener = listener;
@@ -85,15 +94,25 @@ public class LocationUtil {
             return setTimeout(timeout, TimeUnit.SECONDS);
         }
 
+        public LocationHelper setKeep(boolean isKeep) {
+            this.isKeep = isKeep;
+            return this;
+        }
+
+
         /**
-         * 设置定位周期 必须大于2000才有效。
+         * 设置定位周期 必须大于MIN_INTERVAL_TIME才有效。
          *
          * @param period
          * @return
          */
         public LocationHelper setPeriod(int period, TimeUnit timeUnit) {
             this.period = timeUnit.toMillis(period);
-            this.isKeep = true;
+            //定位周期小于MIN_INTERVAL_TIME 则认为是keep状态
+            if (this.period <= MIN_INTERVAL_TIME) {
+                isKeep = true;
+                this.period = 0;
+            }
             return this;
         }
 
@@ -102,16 +121,32 @@ public class LocationUtil {
         }
 
         @Override
-        public void onReceiveLocation(BDLocation bdLocation) {
-            LLog.e("locType:" + bdLocation.getLocType() + ";" + bdLocation.getLatitude() + ";" + bdLocation.getLongitude());
-            if (listener.isTrustLocation(bdLocation) && isNeedDispatch) {
-                lastLocationTime = System.currentTimeMillis();
-                listener.locationSuccess(bdLocation);
-                isNeedDispatch = false;
-                if (!isKeep)
+        public void onReceiveLocation(final BDLocation bdLocation) {
+            LLog.i("locType:" + bdLocation.getLocTypeDescription() + ";lat=" + bdLocation.getLatitude() + ";lng=" + bdLocation.getLongitude());
+            if (listener.isTrustLocation(bdLocation)) {
+                //如果是周期模式  暂停定位  等待下一周期恢复
+                if (period > MIN_INTERVAL_TIME) {
+                    //标记这一个周期已经完成定位。
+                    periodSuccess = true;
+                    removeListener(this);
+                } else if (isKeep) {
+                    if (DistanceUtil.isEquals(lastLocation, bdLocation)) {
+                        return;//如果是持续模式则当两次返回位置不一样时再调用回调请求。
+                    }
+                } else {
                     stop();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.locationSuccess(bdLocation);
+                    }
+                });
+                lastLocation = bdLocation;
+                lastLocationTime = System.currentTimeMillis();
             }
         }
+
 
         @Override
         public void onConnectHotSpotMessage(String s, int i) {
@@ -119,10 +154,10 @@ public class LocationUtil {
         }
 
         public void stop() {
-            isStopByPause = false;
-            if (isRunning) {
-                isRunning = false;
-                LocationUtil.this.removeListener(this);
+            LLog.e("停止定位请求");
+            if (Status.stop != status) {
+                status = Status.stop;
+                removeListener(this);
                 handler.removeCallbacks(TIMEOUT_TASK);
                 handler.removeCallbacks(PERIOD_TASK);
             }
@@ -131,51 +166,75 @@ public class LocationUtil {
         Runnable TIMEOUT_TASK = new Runnable() {
             @Override
             public void run() {
-                if (isRunning) listener.locationFailure(LocationListener.ERROR_TIMEOUT, "请求超时！");
+                if (Status.start == status) {
+                    //如果定位超时 并且上次定位间隔不超过1分钟 则认为上次定位为有效定位。
+                    if (System.currentTimeMillis() - lastLocationTime > TimeUnit.SECONDS.toMillis(30))
+                        listener.locationFailure(LocationListener.ERROR_TIMEOUT, "请求定位超时！");
+                    else listener.locationSuccess(lastLocation);
+                }
                 stop();
             }
         };
         Runnable PERIOD_TASK = new Runnable() {
             @Override
             public void run() {
-                if (isRunning) {
+                if (Status.start == status) {
+                    if (!periodSuccess)
+                        listener.locationFailure(LocationListener.ERROR_TIMEOUT, "本次定位失败！");
+                    else addListener(LocationHelper.this);
                     handler.postDelayed(this, period);
-                    isNeedDispatch = true;
-                    //如果60s内没有获得有效的位置。则重新请求定位
-                    if (System.currentTimeMillis() - lastLocationTime > TimeUnit.SECONDS.toMillis(60))
-                        locationClient.requestLocation();
                 }
             }
         };
 
         public void start() {
-            if (isRunning) return;
-            isRunning = true;
+            LLog.e("开始定位请求");
+            if (Status.start == status) {
+                locationClient.requestLocation();
+                return;
+            }
+            status = Status.start;
             addListener(this);
-
-            if (period >= 2000)
+            //如果该helper为持续模式 则超时和周期任务均无效
+            if (isKeep) return;
+            //周期大于2s才认为有效，并创立周期任务。
+            if (period >= MIN_INTERVAL_TIME) {
                 handler.postDelayed(PERIOD_TASK, period);
-            else if (timeout >= 2000)
+            } else if (timeout >= MIN_INTERVAL_TIME)
                 handler.postDelayed(TIMEOUT_TASK, timeout);
         }
 
-        boolean isStopByPause = false;
 
         public void pause() {
-            LLog.e("暂停定位请求！");
-            stop();
-            isStopByPause = true;
+            if (status == Status.start) {
+                status = Status.pause;
+                LLog.e("暂停定位请求！");
+                removeListener(this);
+                if (period > MIN_INTERVAL_TIME) handler.removeCallbacks(PERIOD_TASK);
+                sleepHelpers.add(this);
+            }
         }
 
         /**
          * 恢复暂停的定位请求。
          */
         public void resume() {
-            if (isStopByPause) {
+
+            if (status == Status.pause) {
+                status = Status.start;
+                addListener(this);
                 LLog.e("恢复定位请求！");
-                start();
+                sleepHelpers.remove(this);
+                if (period > MIN_INTERVAL_TIME) handler.postDelayed(PERIOD_TASK, period);
             }
+
         }
+    }
+
+    enum Status {
+        start,
+        pause,
+        stop
     }
 
     private void addListener(LocationHelper helper) {
@@ -194,31 +253,51 @@ public class LocationUtil {
 
 
     public void cancelAllRequest() {
-        if (locationClient != null) {
-            if (helpers.size() > 0) {
-                for (LocationHelper helper : helpers) {
-                    locationClient.unRegisterLocationListener(helper);
-                }
+        if (helpers.size() > 0) {
+            for (LocationHelper helper : helpers) {
+                helper.stop();
             }
-            locationClient.stop();
         }
+        if (sleepHelpers.size() > 0)
+            for (LocationHelper helper : sleepHelpers) {
+                helper.stop();
+            }
+        locationClient.stop();
     }
 
     /**
-     * 请求一次GPS定位。
+     * 请求一次高精度GPS定位。用于提前启动GPS，避免冷启动时间过长的问题。5分钟内没有搜索到GPS则放弃。
      */
-    public void prepare() {
+    public void preSearchGps(Context context) {
         if (isPrepare) return;
-        getLocalHelper(new LocationListener() {
+        LocationClientOption locationClientOption = new LocationClientOption();
+        locationClientOption.setCoorType("bd09ll"); // 设置坐标类型
+        locationClientOption.setTimeOut(300000);// 定位超时时间30s
+        locationClientOption.setLocationMode(LocationMode.Device_Sensors);
+        final LocationClient locationClient = new LocationClient(context.getApplicationContext(), locationClientOption);
+        locationClient.registerLocationListener(new BDLocationListener() {
             @Override
-            public void locationSuccess(BDLocation location) {
-                isPrepare = true;
+            public void onReceiveLocation(BDLocation bdLocation) {
+                if (bdLocation != null && bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
+                    isPrepare = true;
+                    locationClient.unRegisterLocationListener(this);
+                    locationClient.stop();
+                }
             }
 
             @Override
-            public boolean isTrustLocation(BDLocation bdLocation) {
-                return bdLocation != null && bdLocation.getLocType() == BDLocation.TypeGpsLocation;
+            public void onConnectHotSpotMessage(String s, int i) {
+
             }
-        }).setTimeout(300 * 1000).start();
+        });
+        locationClient.start();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                locationClient.stop();
+            }
+        }, 300 * 1000);
+
+
     }
 }

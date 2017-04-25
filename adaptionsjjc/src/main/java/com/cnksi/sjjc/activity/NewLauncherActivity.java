@@ -273,5 +273,6 @@ public class NewLauncherActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        locationHelper.stop();
     }
 }
