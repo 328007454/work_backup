@@ -96,6 +96,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void run() {
                 DeviceService.getInstance().refreshDeviceHasCopy();
+                try {
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
             }
         });
         initUI();

@@ -223,7 +223,7 @@
                 android:id="@+id/layout_battery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -240,23 +240,21 @@
                     android:gravity="center"
                     android:text="分析结论"
                     android:textColor="@color/battery_text_color"
-                    android:textSize="48px"
-                     />
-
+                    android:textSize="48px" />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120px"
+                    android:layout_height="wrap_content"
+                    android:minHeight="120px"
                     android:background="@color/battery_linearlayout_color"
                     android:orientation="horizontal">
-
                     <TextView
                         android:id="@+id/txt_colusion"
-                        style="@style/AnimalReportTextViewStyle"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
                         android:paddingLeft="20px"
+                        android:textSize="@dimen/global_text_size_px"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
             </LinearLayout>
