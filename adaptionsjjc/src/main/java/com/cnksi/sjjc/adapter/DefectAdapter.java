@@ -17,6 +17,7 @@ import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.x;
 
@@ -48,6 +49,7 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = new ViewHolder(context, parent, layoutId, false);
+        AutoUtils.autoSize(viewHolder.getRootView());
         return new RecyclerViewHolder(viewHolder.getRootView());
     }
 
