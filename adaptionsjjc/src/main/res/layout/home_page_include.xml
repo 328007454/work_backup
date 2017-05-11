@@ -32,6 +32,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
+                    android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@mipmap/icon_tour" />
 
@@ -58,6 +59,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
+                    android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@mipmap/icon_maintence" />
 
@@ -85,6 +87,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
+                    android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@mipmap/icon_operate" />
 
@@ -111,6 +114,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
+                    android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@mipmap/icon_unify" />
 
@@ -145,6 +149,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
+                    android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@mipmap/icon_defct" />
 
@@ -171,6 +176,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
+                    android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@mipmap/icon_copy" />
 
@@ -198,6 +204,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
+                    android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@mipmap/icon_education" />
 
@@ -226,6 +233,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="30px"
+                    android:scaleType="centerInside"
                     android:background="@android:color/transparent"
                     android:src="@mipmap/icon_sync" />
 

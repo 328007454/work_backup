@@ -8,10 +8,10 @@
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30px"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="30px">
 
         <ImageView
             android:id="@+id/iv_defect_image"
@@ -30,12 +30,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_device_name"
+                android:id="@+id/tv_defect_content"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center_vertical|left"
-                android:text="缺陷内容："
+                android:maxLines="2"
                 android:textColor="#626262"
                 android:textSize="38px" />
 
@@ -46,16 +46,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="设备名称："
-                android:textColor="#626262"
-                android:textSize="38px" />
-
-            <TextView
-                android:id="@+id/tv_defect_type"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="缺陷性质："
                 android:textColor="#626262"
                 android:textSize="38px" />
         </LinearLayout>

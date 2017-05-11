@@ -138,7 +138,6 @@ public class BatteryTestActivity extends BaseActivity {
     @ViewInject(R.id.et_fu_muxian_voltage)
     private EditText txtFVoltage;
 
-
     //内阻数量统计
     @ViewInject(R.id.resistance_total)
     private TextView txtResistanceTotal;
@@ -193,7 +192,7 @@ public class BatteryTestActivity extends BaseActivity {
         setChildView(R.layout.activity_battery);
         x.view().inject(this);
         Bundle bundle = getIntent().getExtras();
-        /**
+        /*
          * <b>NOTE :</b>设备检测CURRENT_TASK_ID不能存放在intent中传递，通过缓存传递
          */
         if (null != bundle && !TextUtils.isEmpty(bundle.getString(Config.CURRENT_TASK_ID))) {
@@ -284,7 +283,6 @@ public class BatteryTestActivity extends BaseActivity {
                 baseInforLayout.setVisibility(View.GONE);
                 ivShow.setBackgroundResource(R.mipmap.icon_down);
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
@@ -297,14 +295,12 @@ public class BatteryTestActivity extends BaseActivity {
             public void itemClick(View v, BatteryRecord batteryRecord, int position) {
                 showImage(batteryRecord);
             }
-
             @Override
             public void itemLongClick(View v, BatteryRecord batteryRecord, int position) {
 
             }
         });
         batteryImageGrid.setAdapter(batteryImageAdapter);
-
     }
 
 
@@ -433,13 +429,10 @@ public class BatteryTestActivity extends BaseActivity {
             containerHorizantal.setVisibility(View.GONE);
             layoutBattery.setVisibility(View.GONE);
         }
-
     }
 
     /**
      * tab切换更换电池组
-     *
-     * @param view
      */
     private void changeBatteryTab(View view) {
         int tabSize = layoutBattery.getChildCount();
@@ -496,13 +489,11 @@ public class BatteryTestActivity extends BaseActivity {
 
     }
 
-
     /**
      * 存储当前的蓄电池的值
      */
-
     private void cacheBatteryInfor() {
-        /**
+        /*
          * 1、
          * 2、電池組是否存在記錄
          * 3、更改記錄電池

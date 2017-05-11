@@ -27,12 +27,11 @@
             android:background="#e0e0e0" />
 
         <com.cnksi.sjjc.View.NoScrollViewPager
-            android:background="@color/white"
             android:id="@+id/fragmen_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            />
+            android:background="@color/white" />
 
 
         <View
@@ -41,10 +40,10 @@
             android:background="#e0e0e0" />
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="75px"
-            android:background="#f0f0f0" />
+            android:background="#f0f0f0"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/main_radioGroupLL"
@@ -61,7 +60,7 @@
                 android:layout_alignParentTop="true"
                 android:background="#dfdfdf" />
 
-            <RadioGroup
+            <com.zhy.autolayout.AutoRadioGroup
                 android:id="@+id/main_radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="165px"
@@ -76,23 +75,34 @@
                     android:id="@+id/menu_record"
                     style="@style/NewRadioButtonBaseStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:clickable="true"
                     android:drawablePadding="20px"
                     android:drawableTop="@drawable/ic_hompage_selector"
                     android:text="@string/menu_record"
                     android:textSize="@dimen/txt_bottom32px" />
 
+                <!--<android.support.v7.widget.AppCompatRadioButton-->
+                    <!--android:id="@+id/menu_tour"-->
+                    <!--style="@style/NewRadioButtonBaseStyle"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:clickable="true"-->
+                    <!--android:drawableTop="@drawable/ic_tour_selector"-->
+                    <!--android:paddingTop="10px"-->
+                    <!--android:text="@string/menu_tour"-->
+                    <!--android:textSize="@dimen/txt_bottom32px" />-->
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/menu_tour"
-                    android:paddingTop="10px"
                     style="@style/NewRadioButtonBaseStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:clickable="true"
-                    android:drawableTop="@drawable/ic_tour_selector"
+                    android:drawablePadding="20px"
+                    android:drawableTop="@drawable/ic_sbxs_selector"
                     android:text="@string/menu_tour"
                     android:textSize="@dimen/txt_bottom32px" />
 
@@ -100,8 +110,8 @@
                     android:id="@+id/menu_maintenance"
                     style="@style/NewRadioButtonBaseStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:clickable="true"
                     android:drawablePadding="20px"
                     android:drawableTop="@drawable/ic_maintance_selector"
@@ -113,8 +123,8 @@
                     android:id="@+id/menu_operate"
                     style="@style/NewRadioButtonBaseStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:clickable="true"
                     android:drawablePadding="20px"
                     android:drawableTop="@drawable/ic_operater_selector"
@@ -125,14 +135,14 @@
                     android:id="@+id/menu_unify"
                     style="@style/NewRadioButtonBaseStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:clickable="true"
                     android:drawablePadding="20px"
                     android:drawableTop="@drawable/ic_unify_selector"
                     android:text="@string/menu_unify"
                     android:textSize="@dimen/txt_bottom32px" />
-            </RadioGroup>
+            </com.zhy.autolayout.AutoRadioGroup>
 
         </RelativeLayout>
     </LinearLayout>

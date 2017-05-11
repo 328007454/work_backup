@@ -3,11 +3,11 @@ package com.cnksi.sjjc.activity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -90,12 +90,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changedStatusColor();
-        homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
-        setContentView(homePageBinding.getRoot());
+//        homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
+//        setContentView(homePageBinding.getRoot());
+        homePageBinding = DataBindingUtil.setContentView(this,R.layout.activity_home_page);
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 DeviceService.getInstance().refreshDeviceHasCopy();
+                try {
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
             }
         });
         initUI();

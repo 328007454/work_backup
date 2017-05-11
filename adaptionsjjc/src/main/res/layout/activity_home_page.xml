@@ -168,15 +168,15 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:id="@+id/data_container"
                     android:layout_width="match_parent"
                     android:layout_height="535px"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical">
+                </LinearLayout>
 
             </LinearLayout>
-            <!-- -->
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="40px"
@@ -219,7 +219,6 @@
                         android:textSize="@dimen/txt_size36px" />
 
                     <ImageView
-
                         android:layout_width="20px"
                         android:layout_height="20px"
                         android:layout_gravity="center_vertical"

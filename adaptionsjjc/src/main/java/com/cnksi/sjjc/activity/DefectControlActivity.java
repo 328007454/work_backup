@@ -13,14 +13,14 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DisplayUtil;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.BdzAdapter;
 import com.cnksi.sjjc.adapter.DefectContentAdapter;
 import com.cnksi.sjjc.adapter.DefectTypeAdapter;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.bean.Bdz;
+import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.databinding.ActivityDefectControlBinding;
-import com.cnksi.sjjc.databinding.BdzPopwindowBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.service.DefectRecordService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -36,17 +36,15 @@ import java.util.List;
 
 public class DefectControlActivity extends BaseActivity {
     private ActivityDefectControlBinding defectControlBinding;
-    private List<String> defectTypeList;
     private List<Bdz> bdzList = new ArrayList<>();
     private DefectContentAdapter defectContentAdapter;
-    //变电站listview
-    private ListView mPowerStationListView;
+
     //变电站弹出对话框
     private Dialog mPowerStationDialog = null;
-    //变电站适配器
-    private BdzAdapter bdzAdapter;
-    //变电站弹出popwindow
-    private BdzPopwindowBinding bdzPopwindowBinding;
+
+
+    private Bdz currentBdz;
+    private int defectLevel = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +56,29 @@ public class DefectControlActivity extends BaseActivity {
 
     }
 
+    private void search() {
+        mFixedThreadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                final List<DefectRecord> defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(currentBdz == null ? "" : currentBdz.bdzid, defectLevel);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        defectContentAdapter.setList(defectRecords);
+                    }
+                });
+            }
+        });
+    }
+
+
     private void initUI() {
-        bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
+
         defectControlBinding.setEvent(this);
         tvTitle.setText("缺陷管理");
+
+        btnBack.setImageResource(R.drawable.ic_hompage_selector);
+
         btnBack.setVisibility(View.GONE);
         btnBackDefect.setVisibility(View.VISIBLE);
         btnBackDefect.setOnClickListener(new View.OnClickListener() {
@@ -70,24 +87,26 @@ public class DefectControlActivity extends BaseActivity {
                 onBackPressed();
             }
         });
-        //TODO:需要对该adapter填充数据
-        defectContentAdapter = new DefectContentAdapter(_this, new ArrayList(), R.layout.adapter_defect_item);
-
         defectControlBinding.defectType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // TODO:
+                defectLevel = i * 2;
+                search();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                defectLevel = 0;
+                search();
             }
         });
     }
 
     private void initData() {
-        defectTypeList = Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray));
-        defectControlBinding.defectType.setAdapter(new DefectTypeAdapter(this, defectTypeList, R.layout.adapter_defect_type));
+        defectControlBinding.defectType.setAdapter(
+                new DefectTypeAdapter(this,
+                        Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray)),
+                        R.layout.adapter_defect_type));
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -101,17 +120,17 @@ public class DefectControlActivity extends BaseActivity {
                     @Override
                     public void run() {
                         initBDZDialog();
-                        if (bdzAdapter == null) {
-                            bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
-                            bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
-                        } else
-                            bdzAdapter.setList(bdzList);
-                        defectControlBinding.bdzName.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
+                        if (bdzList.size() > 0) {
+                            currentBdz = bdzList.get(0);
+                            defectControlBinding.bdzName.setText(currentBdz.name);
+                        }
+                        search();
                     }
                 });
             }
         });
-
+        defectContentAdapter = new DefectContentAdapter(this, null);
+        defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
 
     }
 
@@ -131,13 +150,15 @@ public class DefectControlActivity extends BaseActivity {
         int dialogHeight = bdzList.size() > 8 ? DisplayUtil.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
         final ViewHolder holder = new ViewHolder(this, null, R.layout.content_list_dialog, false);
         AutoUtils.autoSize(holder.getRootView());
-        mPowerStationListView = holder.getView(R.id.lv_container);
+        ListView listView = holder.getView(R.id.lv_container);
         holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
         DialogBDZAdapter adapter = new DialogBDZAdapter(this, bdzList, R.layout.dialog_content_child_item);
         adapter.setItemClickListener(new ItemClickListener<Bdz>() {
             @Override
             public void itemClick(View v, Bdz bdz, int position) {
                 if (!bdz.name.contains("未激活")) {
+                    currentBdz = bdz;
+                    search();
                     defectControlBinding.bdzName.setText(bdz.name);
                     mPowerStationDialog.dismiss();
                 } else
@@ -149,7 +170,7 @@ public class DefectControlActivity extends BaseActivity {
 
             }
         });
-        mPowerStationListView.setAdapter(adapter);
+        listView.setAdapter(adapter);
         mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
     }
 

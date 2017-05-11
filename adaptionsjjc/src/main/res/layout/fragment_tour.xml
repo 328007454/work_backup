@@ -43,9 +43,9 @@
             android:background="#e0e0e0" />
 
         <RelativeLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="412px">
+            android:layout_height="412px"
+            android:background="@color/white">
 
             <LinearLayout
                 android:id="@+id/ll_container"
@@ -199,21 +199,21 @@
             android:background="#e0e0e0" />
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="50px"
-            android:background="#f0f0f0" />
+            android:background="#f0f0f0"
+            android:visibility="gone" />
 
         <View
-            android:layout_marginTop="50px"
             android:layout_width="match_parent"
             android:layout_height="2px"
+            android:layout_marginTop="50px"
             android:background="#e0e0e0" />
 
         <LinearLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="550px"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -248,6 +248,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="68px"
                     android:layout_marginTop="66px"
+                    app:layout_auto_baseheight="width"
                     android:background="@mipmap/icon_rotinue" />
             </LinearLayout>
 
@@ -305,6 +306,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="38px"
+                        app:layout_auto_basewidth="height"
                         android:background="@mipmap/icon_overall" />
                 </LinearLayout>
 
@@ -354,7 +356,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="38px"
-
+                        app:layout_auto_basewidth="height"
                         android:src="@mipmap/icon_special" />
                 </LinearLayout>
             </LinearLayout>
@@ -366,9 +368,9 @@
             android:background="#e0e0e0" />
 
         <LinearLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="275px"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -410,7 +412,7 @@
                     android:layout_height="140px"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="38px"
-
+                    app:layout_auto_basewidth="height"
                     android:src="@mipmap/icon_night" />
             </LinearLayout>
 
@@ -457,18 +459,20 @@
                     android:layout_height="140px"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="38px"
+                    app:layout_auto_basewidth="height"
                     android:src="@mipmap/icon_professionnal" />
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="#e0e0e0" />
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="78px"
-            android:background="#f0f0f0" />
+            android:background="#f0f0f0"
+            android:visibility="gone" />
     </LinearLayout>
 </layout>

@@ -526,6 +526,7 @@ public class StringUtils {
     public static ArrayList<String> string2List(String str) {
         ArrayList<String> list = null;
         if (!TextUtils.isEmpty(str)) {
+            str = str.trim();
             String[] strArray = str.split(CoreConfig.MUTI_SYMBOL_SEPARATOR);
             if (strArray != null) {
                 list = new ArrayList<>(Arrays.asList(strArray));

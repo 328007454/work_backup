@@ -4,6 +4,7 @@
     <data class=""></data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="180px"
         android:gravity="center_vertical"
@@ -15,6 +16,7 @@
             android:layout_height="96px"
             android:layout_margin="30px"
             android:gravity="center"
+            app:layout_auto_basewidth="height"
             android:textColor="@color/white"
             android:textSize="40px" />
 

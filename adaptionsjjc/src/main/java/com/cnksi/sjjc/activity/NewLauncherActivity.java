@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -94,8 +93,9 @@ public class NewLauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changedStatusColor();
-        launcherBinding = DataBindingUtil.inflate(LayoutInflater.from(getApplicationContext()), R.layout.activity_launcher_new, null, false);
-        setContentView(launcherBinding.getRoot());
+//        launcherBinding = DataBindingUtil.inflate(LayoutInflater.from(getApplicationContext()), R.layout.activity_launcher_new, null, false);
+//        setContentView(launcherBinding.getRoot());
+        launcherBinding = DataBindingUtil.setContentView(this,R.layout.activity_launcher_new);
         initUI();
         initFragments();
         setFragmentToHomePager();
