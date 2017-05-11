@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -139,9 +138,9 @@ public class BatteryDialogActivity extends AppCompatActivity {
         getIntentValue();
         initUI();
         initData();
-        //指定电池输入类型
-        String inputType = "1234567890.";
-        editVoltage.setKeyListener(DigitsKeyListener.getInstance(inputType));
+//        //指定电池输入类型
+//        String inputType = "1234567890.";
+//        editVoltage.setKeyListener(DigitsKeyListener.getInstance(inputType));
     }
 
     /**
