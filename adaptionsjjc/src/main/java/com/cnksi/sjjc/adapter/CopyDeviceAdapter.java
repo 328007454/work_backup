@@ -75,7 +75,9 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
         holder.getRootView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.itemClick(v, item, position);
+                if(itemClickAble){
+                    itemClickListener.itemClick(v, item, position);
+                }
             }
         });
     }
@@ -105,5 +107,10 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
     public void setCurrentSelectedPosition(int position) {
         currentSelectedPosition = position;
         notifyDataSetChanged();
+    }
+
+    private boolean itemClickAble;
+    public void setItemClickAble(boolean itemClickAble){
+        this.itemClickAble = itemClickAble;
     }
 }
