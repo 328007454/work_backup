@@ -24,6 +24,7 @@
 
 
         <EditText
+            android:maxLength="8"
             android:id="@+id/et_test_instrument"
             style="@style/NewHeatPointEditTextStyle"
             android:layout_width="0dp"

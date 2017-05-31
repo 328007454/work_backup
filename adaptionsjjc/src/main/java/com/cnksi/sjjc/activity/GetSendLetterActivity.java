@@ -188,13 +188,14 @@ public class GetSendLetterActivity extends BaseActivity {
                 break;
             //完成任务
             case R.id.btn_finish:
-                saveCurrentPage();
-                Dialog dialog = new Dialog(this, R.style.dialog);
-                ViewHolder holder = new ViewHolder(this, null, R.layout.dialog_test_conclusion, false);
-                AutoUtils.autoSize(holder.getRootView());
-                dialog.setContentView(holder.getRootView());
-                dialogEvent(dialog, holder);
-                dialog.show();
+                if (saveCurrentPage()) {
+                    Dialog dialog = new Dialog(this, R.style.dialog);
+                    ViewHolder holder = new ViewHolder(this, null, R.layout.dialog_test_conclusion, false);
+                    AutoUtils.autoSize(holder.getRootView());
+                    dialog.setContentView(holder.getRootView());
+                    dialogEvent(dialog, holder);
+                    dialog.show();
+                }
                 break;
             //拍照
             case R.id.take_pic:
@@ -245,13 +246,19 @@ public class GetSendLetterActivity extends BaseActivity {
     /**
      * 存取当前界面数据
      */
-    private void saveCurrentPage() {
+    private boolean saveCurrentPage() {
+        String sendLevelStr = binding.editSendLevel.getText().toString();
+        String receiveLevelStr = binding.editReceiveLevel.getText().toString();
+        if ((!TextUtils.isEmpty(sendLevelStr) || !TextUtils.isEmpty(receiveLevelStr)) && (TextUtils.isEmpty(StringUtils.getTransformTep(sendLevelStr)) || TextUtils.isEmpty(StringUtils.getTransformTep(receiveLevelStr)))) {
+            CToast.showShort(_this, "请输入正确的发信电平或者收信电平");
+            return false;
+        }
         if (null == currentDevice) {
             CToast.showLong(mCurrentActivity, "当前页面没有设备，记录将不会保存。");
-            return;
+            return true;
         }
-        currentTransceiver.sendLevel = binding.editSendLevel.getText().toString();
-        currentTransceiver.receiveLevel = binding.editReceiveLevel.getText().toString();
+        currentTransceiver.sendLevel = StringUtils.getTransformTep(sendLevelStr);
+        currentTransceiver.receiveLevel = StringUtils.getTransformTep(receiveLevelStr);
         currentTransceiver.channelStatus = binding.radioChannel.getCheckedRadioButtonId() == R.id.radio_normal ? 0 : 1;
         currentTransceiver.remark = binding.editRemark.getText().toString();
         try {
@@ -259,6 +266,7 @@ public class GetSendLetterActivity extends BaseActivity {
         } catch (DbException e) {
             e.printStackTrace();
         }
+        return true;
     }
 
     /**
@@ -412,7 +420,7 @@ public class GetSendLetterActivity extends BaseActivity {
                     //2、修改任务
                     Task task = TaskService.getInstance().findById(currentTaskId);
                     task.status = Task.TaskStatus.done.name();
-                   TaskService.getInstance().saveOrUpdate(task);
+                    TaskService.getInstance().saveOrUpdate(task);
                     isNeedUpdateTaskState = true;
                     Intent intent = new Intent(_this, GetSendLetterReportActivity.class);
                     startActivity(intent);

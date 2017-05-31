@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FunctionUtils;
@@ -116,7 +116,7 @@ public class BatteryDialogActivity extends AppCompatActivity {
     private String bdzName;
     /**
      * 当前检测类型
-     * */
+     */
     private String currentInspectionType;
 
     /**
@@ -125,22 +125,16 @@ public class BatteryDialogActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,  WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        View titleView = this.findViewById(android.R.id.title);
-//        titleView.setVisibility(View.GONE);
         setContentView(R.layout.activity_battery_item_dialog);
         x.view().inject(this);
         mServerice = Executors.newCachedThreadPool();
-        editVoltage.setInputType(InputType.TYPE_CLASS_NUMBER);
         getIntentValue();
         initUI();
         initData();
-//        //指定电池输入类型
-//        String inputType = "1234567890.";
-//        editVoltage.setKeyListener(DigitsKeyListener.getInstance(inputType));
     }
 
     /**
@@ -165,6 +159,7 @@ public class BatteryDialogActivity extends AppCompatActivity {
 
         return super.onCreateView(name, context, attrs);
     }
+
     private void initUI() {
         if ("0".equalsIgnoreCase(typeStr) && !batteryCode.equalsIgnoreCase(String.valueOf(battery.amount))) {
             btCancle.setText(getResources().getString(R.string.dialog_sure_str));
@@ -188,7 +183,6 @@ public class BatteryDialogActivity extends AppCompatActivity {
             txtVoltage.setText("内阻(mΩ)");
         }
     }
-
 
 
     private void initData() {
@@ -253,8 +247,12 @@ public class BatteryDialogActivity extends AppCompatActivity {
                 break;
             case R.id.btn_cancel:
                 if ("0".equalsIgnoreCase(typeStr) && !batteryCode.equalsIgnoreCase(String.valueOf(battery.amount))) {
-                    saveData();
-                    finishDialog();
+                    if (saveData()) {
+                        finishDialog();
+                    } else {
+                        CToast.showShort(this, "请输入正确的值!");
+                        return;
+                    }
                 } else {
                     finish();
                 }
@@ -263,15 +261,19 @@ public class BatteryDialogActivity extends AppCompatActivity {
             case R.id.btn_sure://取消或者确定按钮
                 if ("0".equalsIgnoreCase(typeStr)) {
                     if (batteryCode.equalsIgnoreCase(String.valueOf(battery.amount))
-                            ||(2==String.valueOf(battery.amount).length()&&batteryCode.substring(1).equalsIgnoreCase(String.valueOf(battery.amount)))
-                            ||(1==String.valueOf(battery.amount).length()&&batteryCode.substring(2).equalsIgnoreCase(String.valueOf(battery.amount)))) {
+                            || (2 == String.valueOf(battery.amount).length() && batteryCode.substring(1).equalsIgnoreCase(String.valueOf(battery.amount)))
+                            || (1 == String.valueOf(battery.amount).length() && batteryCode.substring(2).equalsIgnoreCase(String.valueOf(battery.amount)))) {
                         Toast.makeText(this, "当前电池数为最后一节了", Toast.LENGTH_LONG).show();
                         saveData();
                         finishDialog();
                         return;
                     }
-                    saveData();
-                    setChangedBatteryCode();
+                    if (saveData()) {
+                        setChangedBatteryCode();
+                    } else {
+                        CToast.showShort(this, "请输入正确的值!");
+                        return;
+                    }
                 } else {
                     finishDialog();
                 }
@@ -318,8 +320,8 @@ public class BatteryDialogActivity extends AppCompatActivity {
             batteryCode = String.valueOf(Integer.valueOf(batteryCode) + 1);
         }
         if (batteryCode.equalsIgnoreCase(String.valueOf(battery.amount))
-                ||(2==String.valueOf(battery.amount).length()&&batteryCode.substring(1).equalsIgnoreCase(String.valueOf(battery.amount)))
-                ||(1==String.valueOf(battery.amount).length()&&batteryCode.substring(2).equalsIgnoreCase(String.valueOf(battery.amount)))) {
+                || (2 == String.valueOf(battery.amount).length() && batteryCode.substring(1).equalsIgnoreCase(String.valueOf(battery.amount)))
+                || (1 == String.valueOf(battery.amount).length() && batteryCode.substring(2).equalsIgnoreCase(String.valueOf(battery.amount)))) {
             btCancle.setText("取消");
             btSure.setText("确定");
         }
@@ -389,18 +391,27 @@ public class BatteryDialogActivity extends AppCompatActivity {
         }
     }
 
-    private void saveData() {
+    private boolean saveData() {
         if ("0".equalsIgnoreCase(typeStr)) {
-            if (null == batteryRecord && (!TextUtils.isEmpty(editVoltage.getText().toString().trim()) || !exitImageList.isEmpty()))
+            String value = editVoltage.getText().toString().trim();
+            try {
+                if (new Float(value) > 9999)
+                    return false;
+                if (!TextUtils.isEmpty(value))
+                    value = String.valueOf(Double.parseDouble(editVoltage.getText().toString().trim()));
+            } catch (NumberFormatException ex) {
+                return false;
+            }
+            if (null == batteryRecord && (!TextUtils.isEmpty(value) || !exitImageList.isEmpty()))
                 batteryRecord = new BatteryRecord(currentReportId, battery.bdzid, bdzName, battery.bid, batteryCode, currentInspectionType, Integer.valueOf(typeStr));
             try {
                 if (null != batteryRecord) {
                     String imageStr = StringUtils.ArrayListToString(exitImageList);
                     if (batteryCheckType == 0) {
-                        batteryRecord.voltage = editVoltage.getText().toString().trim();
+                        batteryRecord.voltage = com.cnksi.sjjc.util.StringUtils.getTransformTep(value);
                         batteryRecord.voltageImages = imageStr;
                     } else {
-                        batteryRecord.resistance = editVoltage.getText().toString().trim();
+                        batteryRecord.resistance = com.cnksi.sjjc.util.StringUtils.getTransformTep(value);
                         batteryRecord.resistanceImages = imageStr;
                     }
                     batteryRecord.last_modify_time = DateUtils.getCurrentLongTime();
@@ -410,6 +421,7 @@ public class BatteryDialogActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        return true;
     }
 
     @Override

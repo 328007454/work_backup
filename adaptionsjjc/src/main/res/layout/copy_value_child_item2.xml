@@ -26,6 +26,7 @@
             android:background="@android:color/transparent"
             android:gravity="center"
             android:hint="@string/please_input_value_str"
+            android:inputType="numberDecimal"
             android:maxLength="8"
             android:minHeight="@dimen/edit_text_minheight_px"
             android:minWidth="@dimen/edit_text_minwidth_px"

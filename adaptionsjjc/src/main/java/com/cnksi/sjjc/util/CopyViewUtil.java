@@ -3,7 +3,6 @@ package com.cnksi.sjjc.util;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -93,7 +92,7 @@ public class CopyViewUtil {
 					childHolder.setText(R.id.tv_copy_content, descript);
 
 					EditText copyValue = childHolder.getView(R.id.et_copy_values);
-					copyValue.setInputType(InputType.TYPE_CLASS_PHONE);
+//					copyValue.setRInputType(InputType.TYPE_CLASS_PHONE);
 					copyValue.addTextChangedListener(new CopyTextWatcher(childItem));
 //					copyValue.setOnTouchListener(new OnTouchListener() {
 //						@Override
@@ -174,16 +173,17 @@ public class CopyViewUtil {
 		public void afterTextChanged(Editable s) {
 			CopyResult copyResult = copyResultMap.get(copyItem.id);
 			if (null != copyResult) {
+				String value = StringUtils.getTransformTep(s.toString());
 				if ("Y".equals(copyItem.val))
-					copyResult.val = s.toString();
+					copyResult.val = value;
 				if ("Y".equals(copyItem.val_a))
-					copyResult.val_a = s.toString();
+					copyResult.val_a = value;
 				if ("Y".equals(copyItem.val_b))
-					copyResult.val_b = s.toString();
+					copyResult.val_b = value;
 				if ("Y".equals(copyItem.val_c))
-					copyResult.val_c = s.toString();
+					copyResult.val_c = value;
 				if ("Y".equals(copyItem.val_o))
-					copyResult.val_o = s.toString();
+					copyResult.val_o = value;
 			}
 		}
 	}

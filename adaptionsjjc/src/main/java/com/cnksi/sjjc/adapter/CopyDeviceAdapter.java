@@ -109,7 +109,7 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
         notifyDataSetChanged();
     }
 
-    private boolean itemClickAble;
+    private boolean itemClickAble=true;
     public void setItemClickAble(boolean itemClickAble){
         this.itemClickAble = itemClickAble;
     }

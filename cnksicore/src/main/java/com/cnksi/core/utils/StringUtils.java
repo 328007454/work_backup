@@ -622,4 +622,53 @@ public class StringUtils {
         return BlankToDefault(str, "");
     }
 
+    /**
+     * 获取两位小数点
+     */
+    public static String getTransformTep(String temperature) {
+        Float tempFloat = 0.0f;
+        try {
+            tempFloat = new Float(temperature);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "";
+        }
+        if (tempFloat == 0.0f)
+            return "0.0";
+        if (!temperature.contains("."))
+            return String.valueOf(tempFloat.intValue());
+        tempFloat = (float) (Math.round(tempFloat * 100)) / 100;
+        return String.valueOf(tempFloat);
+    }
+    /**
+     * 检查输入的是否不符合数学意义上的数字
+     */
+    public static boolean checkTemprature(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return true;
+        } else {
+            return testTemperature(value);
+        }
+    }
+
+    /**
+     * 判断是否是浮点数
+     */
+    public static boolean testTemperature(String temp) {
+        Float tempFloat = 0f;
+        String pattern = "[-]?[0-9]*\\.?[0-9]+";
+        Pattern pt = Pattern.compile(pattern);
+        try {
+            tempFloat = new Float(temp);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        Matcher matcher = pt.matcher(String.valueOf(tempFloat));
+        if (matcher.matches() || "0".equals(temp)) {
+            return true;
+        }
+        return false;
+    }
+
 }

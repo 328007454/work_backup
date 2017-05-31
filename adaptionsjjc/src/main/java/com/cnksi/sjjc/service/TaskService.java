@@ -307,4 +307,25 @@ public class TaskService extends BaseService<Task> {
         }
         return null;
     }
+
+    /**
+     * 查询同一天相同变电站，相同类型下的任务计划个数
+     *
+     * @param bdzId      变电站id
+     * @param chooseTime 任务选择时间
+     * @param name       巡视类型
+     */
+
+    public int getCountSameTaks(String name, String bdzId, String chooseTime) {
+        try {
+            List<Task> tasks = selector().and(Task.INSPECTION, "=", name).and(Task.STATUS, "=", "undo").and(Task.BDZID, "=", bdzId)
+                    .expr("and (select datetime('" + chooseTime + "','+24 hour'))> schedule_time and schedule_time >= (select datetime('" + chooseTime + "'))").findAll();
+            if (null != tasks)
+                return tasks.size();
+        } catch (DbException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
 }

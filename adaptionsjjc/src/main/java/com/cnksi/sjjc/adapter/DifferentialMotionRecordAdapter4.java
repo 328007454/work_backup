@@ -4,13 +4,13 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.CdbhclValue;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
+import com.cnksi.sjjc.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +47,7 @@ public class DifferentialMotionRecordAdapter4 extends BaseLinearLayoutAdapter<Cd
         final EditText editText = holder.getView(R.id.et_test_instrument);
 
         editText.setHint("请输入大差流值");
-        editText.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+//        editText.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         editText.setText(TextUtils.isEmpty(item.getValue()) ? "" : item.getValue());
 //        if (null != recordMap && !recordMap.isEmpty()) {
 //            ReportCdbhcl report = recordMap.get(item.deviceid);
@@ -78,21 +78,8 @@ public class DifferentialMotionRecordAdapter4 extends BaseLinearLayoutAdapter<Cd
 
         @Override
         public void afterTextChanged(Editable s) {
-            valueList.get(position).setValue(s.toString());
-//            if (null != recordMap && !recordMap.isEmpty()) {
-//                report = recordMap.get(deviceId);
-//                if (report == null) {
-//                    report = new ReportCdbhcl();
-//                    report.dclz = s.toString();
-//                } else {
-//                    report.dclz = s.toString();
-//                }
-//                recordMap.put(deviceId, report);
-//            } else {
-//                ReportCdbhcl report = new ReportCdbhcl();
-//                report.dclz = s.toString();
-//                recordMap.put(deviceId, report);
-//            }
+            String value = StringUtils.getTransformTep(s.toString());
+            valueList.get(position).setValue(value);
         }
     }
 

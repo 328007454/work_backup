@@ -149,8 +149,8 @@ public class NewTransformRecordActivity extends BaseActivity {
                 List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
                 for (int i = 0; i < listDbModel.size(); i++) {
                     DbModel dbModel = listDbModel.get(i);
-                    String bcds = listBcds.get(i).getText().toString();
-                    String dzcs = listDzcs.get(i).getText().toString();
+                    String bcds = StringUtils.getTransformTep(listBcds.get(i).getText().toString());
+                    String dzcs = StringUtils.getTransformTep(listDzcs.get(i).getText().toString());
                     if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
                         continue;
                     }

@@ -97,6 +97,7 @@
                     android:textSize="@dimen/new_global_text_size" />
 
                 <EditText
+                    android:maxLength="5"
                     android:id="@+id/et_tempreture"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0dp"
@@ -138,9 +139,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1"
+                    android:maxLength="5"
                     android:gravity="right|center_vertical"
                     android:hint="请输入当前湿度"
-                    android:inputType="numberSigned|numberDecimal" />
+                    android:inputType="numberDecimal" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
