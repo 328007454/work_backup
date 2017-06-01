@@ -111,7 +111,7 @@ public class KSyncConfig {
         downFolder.add("signimg");
         downFolder.add("video");
         downFolder.add("audio");
-        downFolder.add(Config.DOWNLOAD_APP_FOLDER);
+        downFolder.add("download");
 
 
         uploadFolder.add("signimg");
