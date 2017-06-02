@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.activity;
+package com.cnksi.sjjc.activity.indoortempretureactivity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -12,6 +12,7 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.IndoorWeathearAdapter;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;

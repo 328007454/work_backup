@@ -101,17 +101,17 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name=".activity.IndoorHumitureRecordActivity"
+            android:name=".activity.indoortempretureactivity.IndoorHumitureRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".activity.NewIndoorHumitureRecordActivity"
+            android:name=".activity.indoortempretureactivity.NewIndoorHumitureRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name=".activity.IndoorHumitureReportActivity"
+            android:name=".activity.indoortempretureactivity.IndoorHumitureReportActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -306,7 +306,7 @@
             android:windowSoftInputMode="adjustPan" />
         <!-- 蓄电池检测界面 -->
         <activity
-            android:name=".activity.BatteryTestActivity"
+            android:name=".activity.batteryactivity.BatteryTestActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -315,7 +315,7 @@
         <!-- batterydialogActivity -->
 
         <activity
-            android:name=".activity.BatteryDialogActivity"
+            android:name=".activity.batteryactivity.BatteryDialogActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle"
@@ -330,7 +330,7 @@
         <!-- batteryfinishActivity -->
 
         <activity
-            android:name=".activity.BatteryFinishActivity"
+            android:name=".activity.batteryactivity.BatteryFinishActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -338,7 +338,7 @@
 
         <!-- 蓄电池报告界面 -->
         <activity
-            android:name=".activity.BatteryTestReportActivity"
+            android:name=".activity.batteryactivity.BatteryTestReportActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
             android:screenOrientation="portrait"

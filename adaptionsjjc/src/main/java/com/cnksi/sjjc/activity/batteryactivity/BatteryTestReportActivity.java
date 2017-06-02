@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.activity;
+package com.cnksi.sjjc.activity.batteryactivity;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.BaseReportActivity;
+import com.cnksi.sjjc.activity.ImageDetailsActivity;
+import com.cnksi.sjjc.activity.LauncherActivity;
 import com.cnksi.sjjc.adapter.BatteryReportImageAdapter;
 import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryGroup;

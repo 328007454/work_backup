@@ -101,7 +101,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     /**
      * Activity本身
      */
-    BaseActivity _this;
+    public BaseActivity _this;
     /**
      * 当前变电站编号
      */

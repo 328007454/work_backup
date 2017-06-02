@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@color/special_tips_background_color"
         android:orientation="vertical"
-        tools:context=".activity.BatteryTestActivity">
+        tools:context=".activity.batteryactivity.BatteryTestActivity">
 
         <HorizontalScrollView
             android:id="@+id/container_horizantal"

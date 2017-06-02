@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.activity;
+package com.cnksi.sjjc.activity.batteryactivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +26,8 @@ import com.cnksi.core.utils.FunctionUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.DrawCircleImageActivity;
+import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.service.BatteryRecordService;

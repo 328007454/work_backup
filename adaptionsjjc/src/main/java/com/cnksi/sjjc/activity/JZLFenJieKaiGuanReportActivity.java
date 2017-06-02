@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.cnksi.core.view.InnerListView;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.JZLFenJieKaiGuanContentAdapter;
 import com.cnksi.sjjc.bean.CdbhclValue;
 import com.cnksi.sjjc.bean.CopyItem;

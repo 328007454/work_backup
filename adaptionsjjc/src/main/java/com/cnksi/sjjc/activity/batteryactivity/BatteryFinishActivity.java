@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.activity;
+package com.cnksi.sjjc.activity.batteryactivity;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowManagerAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;

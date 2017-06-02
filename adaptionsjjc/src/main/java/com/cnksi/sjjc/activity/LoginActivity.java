@@ -30,7 +30,6 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.utils.UpdateUtils;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -124,6 +123,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_login);
         x.view().inject(_this);
+        checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, null, "0");
         initUI();
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, permissions);
     }
@@ -417,7 +417,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             //更新APP
             case CoreConfig.INSTALL_APP_CODE:
-                UpdateUtils.showInstallNewApkDialog(_this, mUpdateFile);
+//                UpdateUtils.showInstallNewApkDialog(_this, mUpdateFile);
                 FileUtils.deleteAllFiles(new File(Config.LOGFOLDER));
                 break;
             case LOAD_DATA:
@@ -515,7 +515,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     public void allPermissionsGranted() {
         PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
         CustomApplication.getInstance().initApp();
-        checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, null, "0");
         LocationUtil.getInstance().preSearchGps(mCurrentActivity);
     }
 }
