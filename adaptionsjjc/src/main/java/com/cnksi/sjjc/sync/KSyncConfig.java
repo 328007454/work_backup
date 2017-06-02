@@ -135,6 +135,16 @@ public class KSyncConfig {
         } catch (DbException e) {
             e.printStackTrace();
         }
+        //增加下载APK文件夹
+        info = new SqlInfo("select short_name_pinyin from city");
+        try {
+            DbModel model = CustomApplication.getDbManager().findDbModelFirst(info);
+            if (model != null) {
+                downFolder.add("admin/" + model.getString("short_name_pinyin")+"/apk");
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getDownFolderString() {
