@@ -532,6 +532,12 @@ public class BatteryTestActivity extends BaseActivity {
 //        }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        cacheBatteryInfor();
+    }
+
     /**
      * 保存当前基础信息
      */

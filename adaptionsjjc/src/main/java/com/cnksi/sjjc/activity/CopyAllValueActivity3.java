@@ -121,6 +121,21 @@ public class CopyAllValueActivity3 extends BaseActivity {
     private int clickIndex;
     private CopyDataInterface processor;
 
+    /**遮罩计时器*/
+    private CountDownTimer timer = new CountDownTimer(6000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            tvTip.setText("" + millisUntilFinished / 1000 +"");
+        }
+
+        @Override
+        public void onFinish() {
+            layoutShadom.setVisibility(View.GONE);
+            clickIndex = 0;
+            mAfterTime = 0;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,24 +156,25 @@ public class CopyAllValueActivity3 extends BaseActivity {
         copyDeviceList = new ArrayList<>();
         deviceAdapter = new CopyDeviceAdapter(this, copyDeviceList, R.layout.device_item);
         deviceAdapter.setItemClickListener(new ItemClickListener<DbModel>() {
-
             @Override
             public void itemClick(View v, DbModel dbModel, int position) {
                 if (isSpread) {
                     setDeviceListDisplay();
                 }
-                if (null != dbModel) {
-                    deviceAdapter.setCurrentSelectedPosition(position);
-                    currentDevice = dbModel;
-                    if (!deviceAdapter.isLast()) {
-                        isFinish = false;
-                        btnNext.setText(R.string.next);
-                    }
-                    setCurrentDevice(position);
+                if(!showShadom()){
+                    if (null != dbModel) {
+                        deviceAdapter.setCurrentSelectedPosition(position);
+                        currentDevice = dbModel;
+                        if (!deviceAdapter.isLast()) {
+                            isFinish = false;
+                            btnNext.setText(R.string.next);
+                        }
+                        setCurrentDevice(position);
 
-                } else {
-                    data.clear();
-                    copyContainer.removeAllViews();
+                    } else {
+                        data.clear();
+                        copyContainer.removeAllViews();
+                    }
                 }
             }
 
@@ -196,6 +212,29 @@ public class CopyAllValueActivity3 extends BaseActivity {
 
             }
         });
+    }
+
+    /**
+     * 展示遮罩
+     */
+    public boolean showShadom() {
+        long mCurrentTime = System.currentTimeMillis();
+        if (0 == clickIndex)
+            mAfterTime = mCurrentTime;
+        long diffTime = mCurrentTime - mAfterTime;
+        clickIndex++;
+        if (1000 >= diffTime && 3 <= clickIndex) {
+            layoutShadom.setVisibility(View.VISIBLE);
+            CToast.showLong(_this, "不要作弊哟，5秒后继续操作。");
+            timer.start();
+            return true;
+        } else {
+            if (500 <= diffTime) {
+                mAfterTime = 0;
+                clickIndex = 0;
+            }
+            return false;
+        }
     }
 
     private void initData() {
@@ -404,6 +443,9 @@ public class CopyAllValueActivity3 extends BaseActivity {
                         @Override
                         public void onTick(long millisUntilFinished) {
                             tvTip.setText("" + millisUntilFinished / 1000 + "");
+                            btnNext.setClickable(false);
+                            btnPre.setClickable(false);
+                            deviceAdapter.setItemClickAble(false);
                         }
 
                         @Override
@@ -412,6 +454,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
                             layoutRelat.setVisibility(View.GONE);
                             btnNext.setClickable(true);
                             btnPre.setClickable(true);
+                            deviceAdapter.setItemClickAble(true);
                             clickIndex = 0;
                             mAfterTime = 0;
                         }
