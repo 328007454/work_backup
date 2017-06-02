@@ -43,7 +43,7 @@ android {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
-            buildConfigField "String", "SYNC_URL", "\"http://192.168.199.10:9101\""
+            buildConfigField "String", "SYNC_URL", "\"http://211.149.155.181:9090\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -56,7 +56,7 @@ android {
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         if (variant.buildType.name == "release") {
                             // 输出apk名称
-                            def fileName = "sjjc_${defaultConfig.versionName}_release.apk"
+                            def fileName = "sjjc_${defaultConfig.versionName}_release_${releaseTime()}.apk"
                             output.outputFile = new File("E:\\CompanyProjectNew\\SJJCAPK", fileName)
                         } else {
                             // 输出apk名称
@@ -72,7 +72,7 @@ android {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
-            buildConfigField "String", "SYNC_URL", "\"http://192.168.199.10:9101\""
+            buildConfigField "String", "SYNC_URL", "\"http://211.149.155.181:9090\""
         }
     }
 
