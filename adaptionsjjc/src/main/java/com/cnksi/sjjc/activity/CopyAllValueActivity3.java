@@ -121,16 +121,25 @@ public class CopyAllValueActivity3 extends BaseActivity {
     private int clickIndex;
     private CopyDataInterface processor;
 
-    /**遮罩计时器*/
+    /**
+     * 遮罩计时器
+     */
     private CountDownTimer timer = new CountDownTimer(6000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
-            tvTip.setText("" + millisUntilFinished / 1000 +"");
+            btnNext.setClickable(false);
+            btnPre.setClickable(false);
+            deviceAdapter.setClickAble(false);
+            tvTip.setText("" + millisUntilFinished / 1000 + "");
         }
 
         @Override
         public void onFinish() {
             layoutShadom.setVisibility(View.GONE);
+            layoutRelat.setVisibility(View.GONE);
+            deviceAdapter.setClickAble(true);
+            btnNext.setClickable(true);
+            btnPre.setClickable(true);
             clickIndex = 0;
             mAfterTime = 0;
         }
@@ -161,7 +170,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
                 if (isSpread) {
                     setDeviceListDisplay();
                 }
-                if(!showShadom()){
+                if (!showShadom()) {
                     if (null != dbModel) {
                         deviceAdapter.setCurrentSelectedPosition(position);
                         currentDevice = dbModel;
@@ -268,14 +277,14 @@ public class CopyAllValueActivity3 extends BaseActivity {
                 // 所有抄录类型
                 Map<String, String> copyType = CopyTypeService.getInstance().getAllCopyType();
                 // 查询当前报告已抄录项目
-                reportResultList = CopyResultService.getInstance().getResultList(currentBdzId,currentReportId, currentDeviceId, true, processor.getCopyType());
+                reportResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, true, processor.getCopyType());
                 Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
                 if (null != reportResultList && !reportResultList.isEmpty()) {
                     for (CopyResult result : reportResultList)
                         reportCopyResultMap.put(result.item_id, result);
                 }
                 // 历史抄录值
-                List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId,currentReportId, currentDeviceId, false, processor.getCopyType());
+                List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false, processor.getCopyType());
                 Map<String, CopyResult> historyMap = new HashMap<>();
                 if (null != historyResultList && !historyResultList.isEmpty()) {
                     for (CopyResult historyResult : historyResultList) {
@@ -428,57 +437,22 @@ public class CopyAllValueActivity3 extends BaseActivity {
                 }
                 break;
             case R.id.btn_next:
-                long mCurrentTime = System.currentTimeMillis();
-                if (0 == clickIndex)
-                    mAfterTime = mCurrentTime;
-                long diffTime = mCurrentTime - mAfterTime;
-                clickIndex++;
-                if (1000 >= diffTime && 3 <= clickIndex) {
-                    layoutShadom.setVisibility(View.VISIBLE);
-                    layoutRelat.setVisibility(View.VISIBLE);
-                    btnNext.setClickable(false);
-                    btnPre.setClickable(false);
-                    CToast.showLong(_this, "不要作弊哟，5秒后继续操作。");
-                    new CountDownTimer(6000, 1000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                            tvTip.setText("" + millisUntilFinished / 1000 + "");
-                            btnNext.setClickable(false);
-                            btnPre.setClickable(false);
-                            deviceAdapter.setItemClickAble(false);
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            layoutShadom.setVisibility(View.GONE);
-                            layoutRelat.setVisibility(View.GONE);
-                            btnNext.setClickable(true);
-                            btnPre.setClickable(true);
-                            deviceAdapter.setItemClickAble(true);
-                            clickIndex = 0;
-                            mAfterTime = 0;
-                        }
-                    }.start();
-                } else {
-                    if (500 <= diffTime) {
-                        mAfterTime = 0;
-                        clickIndex = 0;
-                    }
-                    if (!isFinish) {
-                        saveAll();
-                        if (deviceAdapter.isLast()) {
-                            btnNext.setText(R.string.finish_str);
-                            isFinish = true;
-                        } else {
-                            deviceAdapter.next();
-                        }
+                if (!isFinish) {
+                    saveAll();
+                    if (deviceAdapter.isLast()) {
+                        btnNext.setText(R.string.finish_str);
+                        isFinish = true;
                     } else {
-                        onClick(findViewById(R.id.tv_right));
+                        deviceAdapter.next();
                     }
+                } else {
+                    onClick(findViewById(R.id.tv_right));
                 }
+
                 break;
         }
     }
+
 
     /**
      * 完成巡检提示框
