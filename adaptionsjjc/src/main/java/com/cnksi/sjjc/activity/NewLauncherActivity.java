@@ -95,7 +95,7 @@ public class NewLauncherActivity extends BaseActivity {
         changedStatusColor();
 //        launcherBinding = DataBindingUtil.inflate(LayoutInflater.from(getApplicationContext()), R.layout.activity_launcher_new, null, false);
 //        setContentView(launcherBinding.getRoot());
-        launcherBinding = DataBindingUtil.setContentView(this,R.layout.activity_launcher_new);
+        launcherBinding = DataBindingUtil.setContentView(this, R.layout.activity_launcher_new);
         initUI();
         initFragments();
         setFragmentToHomePager();

@@ -47,6 +47,8 @@ import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -92,7 +94,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         changedStatusColor();
 //        homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
 //        setContentView(homePageBinding.getRoot());
-        homePageBinding = DataBindingUtil.setContentView(this,R.layout.activity_home_page);
+        homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -106,9 +108,26 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
         initUI();
+        initUpdateSystem();
         initTabs();
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
         checkIsNeedSync();
+    }
+
+    private void initUpdateSystem() {
+        String apkPath = "";
+        //增加下载APK文件夹
+        SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
+        try {
+            DbModel model = CustomApplication.getDbManager().findDbModelFirst(info1);
+            if (model != null) {
+                apkPath = Config.BDZ_INSPECTION_FOLDER + "admin/" + model.getString("short_name_pinyin") + "/apk";
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+            apkPath = Config.DOWNLOAD_APP_FOLDER;
+        }
+        checkUpdateVersion(apkPath, Config.PCODE, true, "");
     }
 
     private void loadData() {

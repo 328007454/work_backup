@@ -83,6 +83,7 @@
             android:background="@color/line_color" />
 
         <LinearLayout
+            android:id="@+id/click_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/global_padding_top_bottom_px"

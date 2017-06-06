@@ -34,7 +34,7 @@
     <string name="download_loading_str">正在下载,请稍后\u2026</string>
     <string name="download_complete_click_install_str">下载完成,请点击安装</string>
     <string name="download_failure_check_network_str">下载失败，请检查网络！</string>
-
+    <string name="install_now_str_pms">设备巡视模块已下载是否立即更新？</string>
     <!-- 注册界面 -->
     <string name="register_str">注册</string>
     <string name="register_way_str">注册方式</string>
