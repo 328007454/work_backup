@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.sync;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,9 +8,11 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cnksi.core.utils.StringUtils;
@@ -63,6 +66,21 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         mSyncInfoAdapter = new SyncInfoAdapter(currentActivity, mSyncInfos);
         binding.lvContainer.setAdapter(mSyncInfoAdapter);
         initKsync();
+        binding.lvContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SyncInfo syncInfo = mSyncInfoAdapter.getItem(position);
+                if (syncInfo.type == KSync.SYNC_ERROR) {
+                    Dialog dialog = new Dialog(currentActivity);
+                    dialog.setContentView(View.inflate(currentActivity, R.layout.sync_info_dialog, null));
+                    dialog.setCanceledOnTouchOutside(true);
+                    TextView tv = (TextView) dialog.findViewById(com.cnksi.ksynclib.R.id.tv_toast);
+                    tv.setText(syncInfo.content);
+                    tv.setMovementMethod(ScrollingMovementMethod.getInstance());
+                    dialog.show();
+                }
+            }
+        });
     }
 
     public void initKsync() {
@@ -260,8 +278,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     return;
                 case KSync.SYNC_SERVER_TIME:
                     //去设置时间
-                    setTime(String.valueOf(msg.obj));
-                    break;
+                    // setTime(String.valueOf(msg.obj));
+                    return;
                 case DELETE_FINISHED:
                     Toast.makeText(currentActivity, String.valueOf(msg.obj), Toast.LENGTH_SHORT).show();
                     CustomerDialog.dismissProgress();
