@@ -123,7 +123,7 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
             case CoreConfig.INSTALL_APP_CODE:
                 // TODO:显示安装对话框
 //                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile);
-                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile, false, updateContent);
+                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile, isPms, updateContent);
                 break;
         }
     }
@@ -305,15 +305,18 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
 //        checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mCurrentActivity, CoreConfig.PROGRAM_APP_CODE));
     }
 
+    private boolean isPms = false;
+
     protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, boolean isPms, String updateContent) {
         this.updateContent = updateContent;
-        checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mCurrentActivity, CoreConfig.PROGRAM_APP_CODE), isPms);
+        this.isPms = isPms;
+        checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mCurrentActivity, CoreConfig.PROGRAM_APP_CODE));
     }
 
     /**
      * 检测更新
      */
-    protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, final String appCode, final boolean isPms) {
+    protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, final String appCode) {
         mDownloadFolder = downloadFolder;
         mDownloadFile = downloadFileName;
         mExcutorService.execute(new Runnable() {

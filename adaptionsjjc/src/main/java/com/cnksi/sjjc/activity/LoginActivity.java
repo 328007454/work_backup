@@ -35,9 +35,9 @@ import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.TipLayout;
 import com.cnksi.sjjc.bean.AppVersion;
 import com.cnksi.sjjc.bean.Users;
+import com.cnksi.sjjc.databinding.DialogCopyTipsBinding;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
 import com.cnksi.sjjc.service.DepartmentService;
@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private Dialog updateLogDialog;
     private AppVersion remoteAppVersion;
     private AppVersion currentVersion;
-    private TipLayout layout;
+    private DialogCopyTipsBinding layout;
     private String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.RECORD_AUDIO,
@@ -138,7 +138,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     }
 
     private void initData() {
-        layout = TipLayout.inflate(getLayoutInflater());
+        layout = DialogCopyTipsBinding.inflate(getLayoutInflater());
         int dialogWidth = ScreenUtils.getScreenWidth(_this) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         updateLogDialog = DialogUtils.creatDialog(_this, layout.getRoot(), dialogWidth, dialogHeight);
@@ -223,7 +223,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         });
     }
 
-    @Event(value = {R.id.b_add_people_button, R.id.mask_wifi, R.id.ib_delete1, R.id.ib_delete2, R.id.b_login_button, R.id.ivLogo})
+    @Event(value = {R.id.b_add_people_button, R.id.mask_wifi, R.id.ib_delete1, R.id.ib_delete2, R.id.b_login_button, R.id.ivLogo, R.id.tv_version})
     private void onClick(View v) {
         switch (v.getId()) {
             //添加登录人员
@@ -282,6 +282,11 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             //跳转数据同步
             case R.id.ivLogo:
                 ActivityUtil.startSync(mCurrentActivity);
+                break;
+            case R.id.tv_version:
+                mHandler.sendEmptyMessage(SHOW_UPDATE_LOG_DIALOG);
+                break;
+            default:
                 break;
         }
     }
@@ -476,6 +481,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case LOAD_DATA:
                 arrayAdapter.clear();
                 arrayAdapter.addAll(usersName);
+                break;
+            default:
                 break;
 
         }

@@ -172,6 +172,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
                 }
                 if (!showShadom()) {
                     if (null != dbModel) {
+                        saveAll();
                         deviceAdapter.setCurrentSelectedPosition(position);
                         currentDevice = dbModel;
                         if (!deviceAdapter.isLast()) {

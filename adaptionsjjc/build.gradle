@@ -16,8 +16,8 @@ android {
         applicationId "com.cnksi.sjjc"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 23
-        versionName "2.2.1-Beta"
+        versionCode 25
+        versionName "2.2.5-Beta"
         vectorDrawables.useSupportLibrary = true
     }
     dataBinding {
