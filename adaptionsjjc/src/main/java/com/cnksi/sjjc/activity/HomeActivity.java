@@ -135,34 +135,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void run() {
                 try {
-                    mCrisisMap.clear();
-                    mCommonMap.clear();
-                    mSerioutMap.clear();
-                    bdzList.clear();
-                    bdzList = CustomApplication.getDbManager().findAll(Bdz.class);
-                    final List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList();
-                    for (DefectRecord mDefectRecord : defectList) {
-                        ArrayList<DefectRecord> temp;
-                        if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            if (null == (temp = mCrisisMap.get(mDefectRecord.bdzid))) {
-                                temp = new ArrayList<>();
-                                mCrisisMap.put(mDefectRecord.bdzid, temp);
-                            }
-                            temp.add(mDefectRecord);
-                        } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            if (null == (temp = mSerioutMap.get(mDefectRecord.bdzid))) {
-                                temp = new ArrayList<>();
-                                mSerioutMap.put(mDefectRecord.bdzid, temp);
-                            }
-                            temp.add(mDefectRecord);
-                        } else if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            if (null == (temp = mCommonMap.get(mDefectRecord.bdzid))) {
-                                temp = new ArrayList<>();
-                                mCommonMap.put(mDefectRecord.bdzid, temp);
-                            }
-                            temp.add(mDefectRecord);
-                        }
-                    }
+                    transformDefectType();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -181,16 +154,53 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                 defectAdapter.setItemClickListener(HomeActivity.this);
                                 homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
                                 homePageBinding.recyDefect.setAdapter(defectAdapter);
+                            }else{
+                                defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
                             }
                             if (!bdzList.isEmpty())
                                 homePageBinding.bdzName.setText(bdzList.get(0).name);
                         }
                     });
-                } catch (DbException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    public void transformDefectType() {
+        try {
+            mCrisisMap.clear();
+            mCommonMap.clear();
+            mSerioutMap.clear();
+            bdzList.clear();
+            bdzList = CustomApplication.getDbManager().findAll(Bdz.class);
+            final List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList();
+            for (DefectRecord mDefectRecord : defectList) {
+                ArrayList<DefectRecord> temp;
+                if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                    if (null == (temp = mCrisisMap.get(mDefectRecord.bdzid))) {
+                        temp = new ArrayList<>();
+                        mCrisisMap.put(mDefectRecord.bdzid, temp);
+                    }
+                    temp.add(mDefectRecord);
+                } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                    if (null == (temp = mSerioutMap.get(mDefectRecord.bdzid))) {
+                        temp = new ArrayList<>();
+                        mSerioutMap.put(mDefectRecord.bdzid, temp);
+                    }
+                    temp.add(mDefectRecord);
+                } else if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                    if (null == (temp = mCommonMap.get(mDefectRecord.bdzid))) {
+                        temp = new ArrayList<>();
+                        mCommonMap.put(mDefectRecord.bdzid, temp);
+                    }
+                    temp.add(mDefectRecord);
+                }
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initUI() {
@@ -232,15 +242,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
 
-        loadData();
+//        loadData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        loadData();
         for (TaskType tab : tabs) {
             tab.init();
         }
+
     }
 
     @Override

@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dialog_content_margin"
         android:layout_marginRight="@dimen/dialog_content_margin"
-        android:gravity="center"
+        android:gravity="left|center_vertical"
         android:minHeight="@dimen/dialog_content_minheight"
         android:textColor="@color/dialog_content_text_color"
         android:textSize="@dimen/dialog_content_text_size" />

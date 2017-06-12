@@ -13,6 +13,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -75,6 +76,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     public static final int NO_LOGIN_USER = USER_TWO_LOGIN_SUCCESS + 1;//没人登录人员
     public static final int USER_LOGIN_SUCCESS = NO_LOGIN_USER + 1;//登录成功
     public static final int SHOW_UPDATE_LOG_DIALOG = USER_LOGIN_SUCCESS + 1;
+    public static final int USER_COUNT_NOT_ACTIVITE = SHOW_UPDATE_LOG_DIALOG + 1;
     private String speakContent;
     @ViewInject(R.id.txt_user_layout)
     private RelativeLayout userLayout;
@@ -379,7 +381,10 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                     //根据用户名查询
                     tempUser = UserService.getInstance().findUserByAccount(userName);
                     if (null != tempUser) {
-                        mHandler.sendEmptyMessage(PWD_ERROR);
+                        if ("未激活".equalsIgnoreCase(tempUser.pwd))
+                            mHandler.sendEmptyMessage(USER_COUNT_NOT_ACTIVITE);
+                        else
+                            mHandler.sendEmptyMessage(PWD_ERROR);
                     } else {
                         mHandler.sendEmptyMessage(NO_SUCH_USER);
                     }
@@ -456,7 +461,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             // 密码错误
             case PWD_ERROR:
-                CToast.showShort(_this, R.string.login_user_not_activte);
+                CToast.showShort(_this, R.string.login_failed_password_str);
                 break;
             // 没有登录人员
             case NO_LOGIN_USER:
@@ -475,12 +480,15 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                     layout.tvDialogTitle.setText("本次更新内容");
                     layout.clickLinearlayout.setVisibility(View.GONE);
                     layout.tvCopy.setVisibility(View.GONE);
-                    layout.tvTips.setText(TextUtils.isEmpty(currentVersion.description) ? "欢迎使用！" : currentVersion.description);
+                    layout.tvTips.setText(Html.fromHtml(TextUtils.isEmpty(currentVersion.description) ? "欢迎使用！" : currentVersion.description));
                     updateLogDialog.show();
                 }
             case LOAD_DATA:
                 arrayAdapter.clear();
                 arrayAdapter.addAll(usersName);
+                break;
+            case USER_COUNT_NOT_ACTIVITE:
+                CToast.showShort(_this, R.string.login_user_not_activte);
                 break;
             default:
                 break;

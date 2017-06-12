@@ -1,13 +1,11 @@
 package com.cnksi.core.view;
 
-import java.util.Calendar;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.Configuration;
 import android.os.Handler;
+import android.text.Html;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,6 +23,9 @@ import android.widget.TextView;
 import com.cnksi.core.R;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.datepicker.WheelMain;
+
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * 就是自定义的Dialog,不可back或点击外部销毁
@@ -167,7 +168,7 @@ public class CustomerDialog {
 			TextView mTvCancel = (TextView) view.findViewById(R.id.tv_cancel);
 			TextView mTvSingleConfirm = (TextView) view.findViewById(R.id.tv_confirm);
 			TextView mTvMultipleConfirm = (TextView) view.findViewById(R.id.tv_multiple_confirm);
-			mTvToast.setText(toast);
+			mTvToast.setText(Html.fromHtml(toast));
 			mTvCancel.setText(cancelText);
 			mTvSingleConfirm.setText(confirmText);
 			mTvMultipleConfirm.setText(confirmText);
