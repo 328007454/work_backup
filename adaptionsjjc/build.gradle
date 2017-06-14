@@ -113,10 +113,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':cnksicore')
     compile(name: 'flironesdk', ext: 'aar')
-
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     compile('com.cnksi:ksynclib:3.1.8') {
         exclude module: 'fastjson'
     }
@@ -128,8 +124,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
     compile 'com.android.support:design:25.3.0'
 }

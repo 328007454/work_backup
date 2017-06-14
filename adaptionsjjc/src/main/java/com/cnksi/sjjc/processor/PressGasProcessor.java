@@ -37,7 +37,7 @@ public class PressGasProcessor extends CopyDataInterface {
     public List<DbModel> findAllDeviceHasCopyValue(String currentFunctionModel, String bdzId) throws DbException {
         String selector = "";
         if (Config.NEW_COPY) {
-            selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key='"+getCopyType()+"' )";
+            selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key='"+getCopyType()+"' and dlt = '0' )";
             return DeviceService.getInstance().findDeviceHasCopyValueBySelector( selector, bdzId);
         } else {
             selector = "and dtid in(select dtid from device_type WHERE name like 'SF6断路%气动%') ";

@@ -49,7 +49,7 @@ public class ArresterCheckOLProcessor extends CopyDataInterface {
     @Override
     public List<DbModel> findAllDeviceHasCopyValue(String currentFunctionModel, String bdzId) throws DbException {
         if (Config.NEW_COPY) {
-            String selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key in('" + getCopyType() + "') )";
+            String selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key in('" + getCopyType() + "') and dlt = '0' )";
             return DeviceService.getInstance().findDeviceHasCopyValueBySelector( selector, bdzId);
         } else {
             return DeviceService.getInstance().findAllDeviceHasCopyValue(currentFunctionModel,

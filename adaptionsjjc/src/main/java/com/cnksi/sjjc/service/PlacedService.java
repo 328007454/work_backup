@@ -38,7 +38,7 @@ public class PlacedService extends BaseService<Placed> {
                     "1").findFirst();
             long arrived = result.getLong("c");
             long total = SpacingService.getInstance().selector().
-                    expr("and spid in (select distinct(spid) spid from device where device_type = 'one' and bdzid = '" + bdzId + "')").count();
+                    expr("and spid in (select distinct(spid) spid from device where device_type like '%one%' and dlt='0' and bdzid = '" + bdzId + "')").count();
             return arrived + "/" + total;
         } catch (DbException e) {
             e.printStackTrace();

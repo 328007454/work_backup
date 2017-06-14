@@ -145,20 +145,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                 bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
                             } else
                                 bdzAdapter.setList(bdzList);
-                            if (defectAdapter == null) {
-                                homePageBinding.common.setSelected(true);
-                                if (!bdzList.isEmpty())
-                                    currentSelectBdzId = bdzList.get(0).bdzid;
-                                showRecyclerDefect(mCommonMap);
-                                defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
-                                defectAdapter.setItemClickListener(HomeActivity.this);
-                                homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
-                                homePageBinding.recyDefect.setAdapter(defectAdapter);
-                            }else{
-                                defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
-                            }
-                            if (!bdzList.isEmpty())
+                            if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(_this, Config.LOCATION_BDZID, "")))
                                 homePageBinding.bdzName.setText(bdzList.get(0).name);
+                            loadDefect();
                         }
                     });
                 } catch (Exception e) {
@@ -248,11 +237,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
+        if (!TextUtils.isEmpty(PreferencesUtils.get(_this, Config.LOCATION_BDZID, ""))) {
+            currentSelectBdzId = PreferencesUtils.get(_this, Config.LOCATION_BDZID, "");
+            String locationBdzName = PreferencesUtils.get(_this, Config.LOCATION_BDZNAME, "");
+            homePageBinding.bdzName.setText(TextUtils.isEmpty(locationBdzName) ? "" : locationBdzName);
+        }
         loadData();
         for (TaskType tab : tabs) {
             tab.init();
         }
-
     }
 
     @Override
@@ -349,8 +342,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     homePageBinding.common.setSelected(true);
                     homePageBinding.serious.setSelected(false);
                     homePageBinding.crisis.setSelected(false);
-                    showRecyclerDefect(mCommonMap);
-                    defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
+                    loadDefect();
                 } else
                     CToast.showShort(_this, "该变电站未激活");
             }
@@ -362,6 +354,23 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         });
         mPowerStationListView.setAdapter(adapter);
         mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
+    }
+
+    public void loadDefect() {
+        showRecyclerDefect(mCommonMap);
+        if (defectAdapter == null) {
+            homePageBinding.common.setSelected(true);
+            if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(_this, Config.LOCATION_BDZID, "")))
+                currentSelectBdzId = bdzList.get(0).bdzid;
+            defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
+            defectAdapter.setItemClickListener(HomeActivity.this);
+            homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
+            homePageBinding.recyDefect.setAdapter(defectAdapter);
+        } else {
+            if (TextUtils.isEmpty(currentSelectBdzId) && !bdzList.isEmpty())
+                currentSelectBdzId = bdzList.get(0).bdzid;
+            defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
+        }
     }
 
     @Override
