@@ -114,7 +114,7 @@ public class StringUtils {
         if (tempFloat == 0.0f)
             return "0.0";
         if (!temperature.contains("."))
-            return String.valueOf(tempFloat.intValue());
+            return temperature;
 
         return String.valueOf((float) (Math.round(tempFloat * 100)) / 100);
     }

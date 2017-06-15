@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.activity;
 
+
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -357,11 +358,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void loadDefect() {
-        showRecyclerDefect(mCommonMap);
         if (defectAdapter == null) {
             homePageBinding.common.setSelected(true);
-            if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(_this, Config.LOCATION_BDZID, "")))
-                currentSelectBdzId = bdzList.get(0).bdzid;
+            if (!bdzList.isEmpty()) {
+                if (TextUtils.isEmpty(PreferencesUtils.get(_this, Config.LOCATION_BDZID, "")))
+                    currentSelectBdzId = bdzList.get(0).bdzid;
+            }
             defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
             defectAdapter.setItemClickListener(HomeActivity.this);
             homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
@@ -371,6 +373,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 currentSelectBdzId = bdzList.get(0).bdzid;
             defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
         }
+        showRecyclerDefect(mCommonMap);
     }
 
     @Override

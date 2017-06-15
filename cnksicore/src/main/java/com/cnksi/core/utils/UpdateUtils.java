@@ -193,7 +193,7 @@ public class UpdateUtils {
      * @param file
      */
     public static Dialog showInstallNewApkDialog(final Activity mContext, final File file, boolean isPms, String updateContent) {
-        Dialog mDialog = CustomerDialog.showSelectDialog(mContext, "系统更新", isPms ? mContext.getResources().getString(R.string.install_now_str_pms) : updateContent, new DialogClickListener() {
+        Dialog mDialog = CustomerDialog.showSelectDialog(mContext, "版本更新", isPms ? mContext.getResources().getString(R.string.install_now_str_pms) : updateContent, new DialogClickListener() {
             @Override
             public void confirm() {
                 UpdateUtils.installNewApk(mContext, file);
@@ -203,7 +203,7 @@ public class UpdateUtils {
             public void cancel() {
 
             }
-        }, R.string.install_now_str, R.string.cancel_install_str);
+        }, R.string.install_now_str, R.string.cancel_install_str,isPms);
         return mDialog;
     }
 
