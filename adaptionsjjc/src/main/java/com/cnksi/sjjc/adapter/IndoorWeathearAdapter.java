@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.util.StringUtils;
 
 import java.util.List;
 
@@ -132,9 +133,9 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
             if (ReportSnwsd.LOCATION.equalsIgnoreCase(tag))
                 reportSnwsd.location = s.toString();
             if (ReportSnwsd.WD.equalsIgnoreCase(tag))
-                reportSnwsd.wd = s.toString();
+                reportSnwsd.wd = StringUtils.getTransformTep(s.toString());
             if (ReportSnwsd.SD.equalsIgnoreCase(tag))
-                reportSnwsd.sd = s.toString();
+                reportSnwsd.sd = StringUtils.getTransformTep(s.toString());
         }
     }
 

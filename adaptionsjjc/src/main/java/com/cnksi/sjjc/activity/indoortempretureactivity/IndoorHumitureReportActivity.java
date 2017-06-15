@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.activity;
+package com.cnksi.sjjc.activity.indoortempretureactivity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.os.Message;
 import android.view.View;
 
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.BaseReportActivity;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.databinding.ReportIndoorBinding;

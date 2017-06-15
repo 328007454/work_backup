@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.activity;
+package com.cnksi.sjjc.activity.indoortempretureactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.View.WeatherView1;
+import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.bean.Task;

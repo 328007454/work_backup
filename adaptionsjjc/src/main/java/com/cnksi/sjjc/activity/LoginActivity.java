@@ -3,6 +3,7 @@ package com.cnksi.sjjc.activity;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,15 +30,15 @@ import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.CoreConfig;
-import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.utils.UpdateUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.bean.AppVersion;
 import com.cnksi.sjjc.bean.Users;
+import com.cnksi.sjjc.databinding.DialogCopyTipsBinding;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
 import com.cnksi.sjjc.service.DepartmentService;
@@ -47,11 +50,13 @@ import com.cnksi.sjjc.util.PermissionUtil;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.tts.ISpeakCallback;
 
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +75,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     public static final int USER_TWO_LOGIN_SUCCESS = USER_ONE_LOGIN_SUCCESS + 1;//添加第二个登录人员成功
     public static final int NO_LOGIN_USER = USER_TWO_LOGIN_SUCCESS + 1;//没人登录人员
     public static final int USER_LOGIN_SUCCESS = NO_LOGIN_USER + 1;//登录成功
+    public static final int SHOW_UPDATE_LOG_DIALOG = USER_LOGIN_SUCCESS + 1;
+    public static final int USER_COUNT_NOT_ACTIVITE = SHOW_UPDATE_LOG_DIALOG + 1;
     private String speakContent;
     @ViewInject(R.id.txt_user_layout)
     private RelativeLayout userLayout;
@@ -105,7 +112,10 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private Users mCurrentUserOne, mCurrentUserTwo;
     private List<String> usersName = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapter;
-
+    private Dialog updateLogDialog;
+    private AppVersion remoteAppVersion;
+    private AppVersion currentVersion;
+    private DialogCopyTipsBinding layout;
     private String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.RECORD_AUDIO,
@@ -125,7 +135,45 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         super.setContentView(R.layout.activity_login);
         x.view().inject(_this);
         initUI();
+        initData();
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, permissions);
+    }
+
+    private void initData() {
+        layout = DialogCopyTipsBinding.inflate(getLayoutInflater());
+        int dialogWidth = ScreenUtils.getScreenWidth(_this) * 9 / 10;
+        int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
+        updateLogDialog = DialogUtils.creatDialog(_this, layout.getRoot(), dialogWidth, dialogHeight);
+        mFixedThreadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
+                int version = info.versionCode;
+                try {
+                    remoteAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    String apkPath = "";
+                    //增加下载APK文件夹
+                    SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
+                    try {
+                        DbModel model = CustomApplication.getDbManager().findDbModelFirst(info1);
+                        if (model != null) {
+                            apkPath = "admin/" + model.getString("short_name_pinyin") + "/apk";
+                        }
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
+                    if (null != remoteAppVersion) {
+                        checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
+                                Config.PCODE, false, TextUtils.isEmpty(remoteAppVersion.description) ? "修复bug,优化流畅度" : remoteAppVersion.description);
+                    }
+                    currentVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + version + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
 
@@ -177,7 +225,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         });
     }
 
-    @Event(value = {R.id.b_add_people_button, R.id.mask_wifi, R.id.ib_delete1, R.id.ib_delete2, R.id.b_login_button, R.id.ivLogo})
+    @Event(value = {R.id.b_add_people_button, R.id.mask_wifi, R.id.ib_delete1, R.id.ib_delete2, R.id.b_login_button, R.id.ivLogo, R.id.tv_version})
     private void onClick(View v) {
         switch (v.getId()) {
             //添加登录人员
@@ -236,6 +284,11 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             //跳转数据同步
             case R.id.ivLogo:
                 ActivityUtil.startSync(mCurrentActivity);
+                break;
+            case R.id.tv_version:
+                mHandler.sendEmptyMessage(SHOW_UPDATE_LOG_DIALOG);
+                break;
+            default:
                 break;
         }
     }
@@ -328,7 +381,10 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                     //根据用户名查询
                     tempUser = UserService.getInstance().findUserByAccount(userName);
                     if (null != tempUser) {
-                        mHandler.sendEmptyMessage(PWD_ERROR);
+                        if ("未激活".equalsIgnoreCase(tempUser.pwd))
+                            mHandler.sendEmptyMessage(USER_COUNT_NOT_ACTIVITE);
+                        else
+                            mHandler.sendEmptyMessage(PWD_ERROR);
                     } else {
                         mHandler.sendEmptyMessage(NO_SUCH_USER);
                     }
@@ -405,7 +461,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             // 密码错误
             case PWD_ERROR:
-                CToast.showShort(_this, R.string.login_user_not_activte);
+                CToast.showShort(_this, R.string.login_failed_password_str);
                 break;
             // 没有登录人员
             case NO_LOGIN_USER:
@@ -416,13 +472,25 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 loginSystem();
                 break;
             //更新APP
-            case CoreConfig.INSTALL_APP_CODE:
-                UpdateUtils.showInstallNewApkDialog(_this, mUpdateFile);
-                FileUtils.deleteAllFiles(new File(Config.LOGFOLDER));
-                break;
+//            case CoreConfig.INSTALL_APP_CODE:
+//                FileUtils.deleteAllFiles(new File(Config.LOGFOLDER));
+//                break;
+            case SHOW_UPDATE_LOG_DIALOG:
+                if (null != updateLogDialog && null != currentVersion) {
+                    layout.tvDialogTitle.setText("本次更新内容");
+                    layout.clickLinearlayout.setVisibility(View.GONE);
+                    layout.tvCopy.setVisibility(View.GONE);
+                    layout.tvTips.setText(Html.fromHtml(TextUtils.isEmpty(currentVersion.description) ? "欢迎使用！" : currentVersion.description));
+                    updateLogDialog.show();
+                }
             case LOAD_DATA:
                 arrayAdapter.clear();
                 arrayAdapter.addAll(usersName);
+                break;
+            case USER_COUNT_NOT_ACTIVITE:
+                CToast.showShort(_this, R.string.login_user_not_activte);
+                break;
+            default:
                 break;
 
         }
@@ -515,7 +583,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     public void allPermissionsGranted() {
         PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
         CustomApplication.getInstance().initApp();
-        checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, null, "0");
         LocationUtil.getInstance().preSearchGps(mCurrentActivity);
     }
 }

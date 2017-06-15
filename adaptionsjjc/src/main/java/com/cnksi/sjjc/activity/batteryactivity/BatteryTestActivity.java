@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.activity;
+package com.cnksi.sjjc.activity.batteryactivity;
 
 import android.app.Dialog;
 import android.content.ComponentName;
@@ -32,6 +32,8 @@ import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.adapter.BatteryAdapter;
 import com.cnksi.sjjc.adapter.BatteryImageAdapter;
 import com.cnksi.sjjc.bean.Battery;
@@ -233,8 +235,16 @@ public class BatteryTestActivity extends BaseActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentReport.temperature = txtTempreture.getText().toString();
-                cacheBatteryInfor();
+                try {
+                    new Float(txtTempreture.getText().toString());
+                    currentReport.temperature = txtTempreture.getText().toString();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                if (!cacheBatteryInfor()) {
+                    CToast.showShort(_this, "基本信息输入有误，请核对");
+                    return;
+                }
                 try {
                     ReportService.getInstance().saveOrUpdate(currentReport);
                 } catch (DbException e) {
@@ -283,6 +293,7 @@ public class BatteryTestActivity extends BaseActivity {
                 baseInforLayout.setVisibility(View.GONE);
                 ivShow.setBackgroundResource(R.mipmap.icon_down);
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
@@ -295,6 +306,7 @@ public class BatteryTestActivity extends BaseActivity {
             public void itemClick(View v, BatteryRecord batteryRecord, int position) {
                 showImage(batteryRecord);
             }
+
             @Override
             public void itemLongClick(View v, BatteryRecord batteryRecord, int position) {
 
@@ -332,6 +344,12 @@ public class BatteryTestActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        txtTempreture.setText(com.cnksi.sjjc.util.StringUtils.getTransformTep(txtTempreture.getText().toString()));
     }
 
     @Override
@@ -417,8 +435,12 @@ public class BatteryTestActivity extends BaseActivity {
             holder.getRootView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    cacheBatteryInfor();
-                    changeBatteryTab(v);
+                    if (cacheBatteryInfor()) {
+                        changeBatteryTab(v);
+                    } else {
+                        CToast.showShort(_this, "基本信息输入有误，请核对");
+                        return;
+                    }
                 }
             });
             if (index == 0)
@@ -474,34 +496,41 @@ public class BatteryTestActivity extends BaseActivity {
                 group = new BatteryGroup(currentReportId, currentBdzId, currentBdzName, currentBatterId);
             batteryGroupList.put(currentBatterId, group);
         }
-        String zuDuanVoltage = group.zuDuanVoltage==null ? currentBattery.voltage : group.zuDuanVoltage+"";
-        String zuDuanElectricity = group.chargeElectricity==null ? currentBattery.dl : group.chargeElectricity+"";
-        String singleVoltage = group.singleVoltage==null? currentBattery.singleVoltage : group.singleVoltage+"";
+        txtTempreture.setText(com.cnksi.sjjc.util.StringUtils.getTransformTep(txtTempreture.getText().toString()));
+        String zuDuanVoltage = group.zuDuanVoltage == null ? currentBattery.voltage : group.zuDuanVoltage + "";
+        String zuDuanElectricity = group.chargeElectricity == null ? currentBattery.dl : group.chargeElectricity + "";
+        String singleVoltage = group.singleVoltage == null ? currentBattery.singleVoltage : group.singleVoltage + "";
         txtVoltage.setText(zuDuanVoltage);
         txtCurrent.setText(zuDuanElectricity);
         txtSingleVoltage.setText(singleVoltage);
-        txtFactVoltage.setText(group.fcdySc == null ? "" : group.fcdySc+"");
-        txtSystemVoltage.setText(group.fcdyZlxt == null ? "" : group.fcdyZlxt+"");
-        txtLoadElect.setText(group.loadElectricty == null ? "" : group.loadElectricty+"");
-        txtFuChongEle.setText(group.fcElectricty == null ? "" : group.fcElectricty+"");
-        txtZVoltage.setText(group.zVoltage == null ? "" : group.zVoltage+"");
+        txtFactVoltage.setText(group.fcdySc == null ? "" : group.fcdySc + "");
+        txtSystemVoltage.setText(group.fcdyZlxt == null ? "" : group.fcdyZlxt + "");
+        txtLoadElect.setText(group.loadElectricty == null ? "" : group.loadElectricty + "");
+        txtFuChongEle.setText(group.fcElectricty == null ? "" : group.fcElectricty + "");
+        txtZVoltage.setText(group.zVoltage == null ? "" : group.zVoltage + "");
         txtFVoltage.setText(group.fVoltage == null ? "" : group.fVoltage);
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        cacheBatteryInfor();
     }
 
     /**
      * 存储当前的蓄电池的值
      */
-    private void cacheBatteryInfor() {
+    private boolean cacheBatteryInfor() {
         /*
          * 1、
          * 2、電池組是否存在記錄
          * 3、更改記錄電池
          */
         if (TextUtils.isEmpty(currentBatterId))
-            return;
+            return false;
         BatteryGroup batteryGroup = batteryGroupList.get(currentBatterId);
-        saveGroupBaseInfor(batteryGroup);
+        return saveGroupBaseInfor(batteryGroup);
 
 //        if (batteryGroupList.isEmpty()) {
 //            batteryGroup = new BatteryGroup(currentReportId, currentBdzId, currentBdzName, currentBatterId);
@@ -532,40 +561,41 @@ public class BatteryTestActivity extends BaseActivity {
 //        }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        cacheBatteryInfor();
-    }
 
     /**
      * 保存当前基础信息
      */
-    private void saveGroupBaseInfor(BatteryGroup batteryGroup) {
-        batteryGroup.zuDuanVoltage =toDouble(txtVoltage.getText().toString().replace("V", ""));
-        batteryGroup.chargeElectricity =toDouble(txtCurrent.getText().toString().replace("A", ""));
-        batteryGroup.singleVoltage =toDouble( txtSingleVoltage.getText().toString().replace("V", ""));
-        batteryGroup.fcdySc =toDouble( txtFactVoltage.getText().toString());
-        batteryGroup.fcdyZlxt =toDouble(  txtSystemVoltage.getText().toString());
-        batteryGroup.loadElectricty =toDouble( txtLoadElect.getText().toString());
-        batteryGroup.fcElectricty =toDouble( txtFuChongEle.getText().toString());
-        batteryGroup.zVoltage =toDouble( txtZVoltage.getText().toString());
-        batteryGroup.fVoltage = txtFVoltage.getText().toString();
+    private boolean saveGroupBaseInfor(BatteryGroup batteryGroup) {
+        if (StringUtils.checkTemprature(txtVoltage.getText().toString()) && StringUtils.checkTemprature(txtCurrent.getText().toString())
+                && StringUtils.checkTemprature(txtSingleVoltage.getText().toString()) && StringUtils.checkTemprature(txtFactVoltage.getText().toString())
+                && StringUtils.checkTemprature(txtSystemVoltage.getText().toString()) && StringUtils.checkTemprature(txtLoadElect.getText().toString())
+                && StringUtils.checkTemprature(txtFuChongEle.getText().toString()) && StringUtils.checkTemprature(txtZVoltage.getText().toString())
+                && StringUtils.checkTemprature(txtFVoltage.getText().toString())) {
+            batteryGroup.zuDuanVoltage = StringUtils.getTransformTep(txtVoltage.getText().toString().replace("V", ""));
+            batteryGroup.chargeElectricity = StringUtils.getTransformTep(txtCurrent.getText().toString().replace("A", ""));
+            batteryGroup.singleVoltage = StringUtils.getTransformTep(txtSingleVoltage.getText().toString().replace("V", ""));
+            batteryGroup.fcdySc = StringUtils.getTransformTep(txtFactVoltage.getText().toString());
+            batteryGroup.fcdyZlxt = StringUtils.getTransformTep(txtSystemVoltage.getText().toString());
+            batteryGroup.loadElectricty = StringUtils.getTransformTep(txtLoadElect.getText().toString());
+            batteryGroup.fcElectricty = StringUtils.getTransformTep(txtFuChongEle.getText().toString());
+            batteryGroup.zVoltage = StringUtils.getTransformTep(txtZVoltage.getText().toString());
+            batteryGroup.fVoltage = StringUtils.getTransformTep(txtFVoltage.getText().toString());
+        } else {
+            return false;
+        }
         try {
             BatteryGroupService.getInstance().saveOrUpdate(batteryGroup);
-//            Log.i(TAG, "保存数据成功--蓄电池组基础信息" + currentBatterId);
         } catch (DbException e) {
             e.printStackTrace();
-//            Log.i(TAG, "保存数据错误--蓄电池组基础信息" + currentBatterId);
         }
+        return true;
     }
-    private Double toDouble(String s)
-    {
+
+    private Double toDouble(String s) {
         if (TextUtils.isEmpty(s.trim())) return null;
         try {
-          return   Double.parseDouble(s);
-        }catch (Exception e)
-        {
+            return Double.parseDouble(s);
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -643,9 +673,12 @@ public class BatteryTestActivity extends BaseActivity {
 //                showSureDialog();
                 break;
             case R.id.tv_right:
-                cacheBatteryInfor();
-                saveOrUpdateReport();
-                return;
+                if (cacheBatteryInfor())
+                    saveOrUpdateReport();
+                else {
+                    CToast.showShort(_this, "基本信息输入有误，请核对");
+                    return;
+                }
 
 //                if (TextUtils.isEmpty(txtTempreture.getText().toString())) {
 //                    CToast.showShort(this, "请输入蓄电池温度");
@@ -653,6 +686,7 @@ public class BatteryTestActivity extends BaseActivity {
 //                }
 //                showSureDialog();
 //                break;
+                break;
             case R.id.layout_image:
                 if (baseInforLayout.getVisibility() == View.GONE) {
                     baseInforLayout.setVisibility(View.VISIBLE);
@@ -702,6 +736,22 @@ public class BatteryTestActivity extends BaseActivity {
 
     private void saveOrUpdateReport() {
         currentReport.endtime = DateUtils.getCurrentLongTime();
+        String valueTemp = txtTempreture.getText().toString();
+        if (TextUtils.isEmpty(valueTemp)) {
+            CToast.showShort(_this, "请输入环境温度");
+            return;
+        }
+        try {
+            new Float(valueTemp);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            CToast.showShort(_this, "温度输入非法");
+            return;
+        }
+        if ((-99.9f > (float) new Float(valueTemp) || new Float(valueTemp) > 99.99)) {
+            CToast.showShort(_this, "温度在-99.9℃到99.9℃");
+            return;
+        }
         currentReport.temperature = txtTempreture.getText().toString();
         currentReport.checkType = taskExpand.sbjcIsAllCheck;
         if (inspectionType == InspectionType.SBJC_10) {

@@ -188,6 +188,26 @@ public class UpdateUtils {
     }
 
     /**
+     * 新版本已下载 提示安装dialog
+     *
+     * @param file
+     */
+    public static Dialog showInstallNewApkDialog(final Activity mContext, final File file, boolean isPms, String updateContent) {
+        Dialog mDialog = CustomerDialog.showSelectDialog(mContext, "版本更新", isPms ? mContext.getResources().getString(R.string.install_now_str_pms) : updateContent, new DialogClickListener() {
+            @Override
+            public void confirm() {
+                UpdateUtils.installNewApk(mContext, file);
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        }, R.string.install_now_str, R.string.cancel_install_str,isPms);
+        return mDialog;
+    }
+
+    /**
      * 解析升级数据
      *
      * @param mContext

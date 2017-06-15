@@ -60,6 +60,7 @@
     <string name="login_str">登\t\t录</string>
     <string name="login_the_same_account">您已登录该帐号，请勿重复登录！</string>
     <string name="login_user_not_activte">您的帐号还未激活，请到管理后台登录激活</string>
+    <string name="login_failed_password_str">密码输入错误，请重新输入</string>
     <string name="login_failed_str">登录失败,请检查用户名和密码!</string>
     <!--
     <string name="sys_copyrights_str">Copyrights\t中国电信集团公司</string>

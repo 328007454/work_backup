@@ -44,6 +44,7 @@
             android:layout_width="0dp"
             android:layout_weight="1.1"
             android:focusable="true"
+            android:maxLength="8"
             android:inputType="numberSigned|numberDecimal"
             android:paddingRight="30px"
             android:textSize="@dimen/global_text_size_1"
@@ -84,7 +85,8 @@
             android:layout_width="0dp"
             android:layout_weight="1.1"
             android:focusable="true"
-            android:inputType="numberSigned|numberDecimal"
+            android:maxLength="8"
+            android:inputType="numberDecimal"
             android:paddingRight="30px"
             android:textSize="@dimen/global_text_size_1"
             android:visibility="visible" />

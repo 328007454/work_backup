@@ -313,10 +313,20 @@ public class AddTaskActivity extends BaseActivity {
                 CToast.showShort(this, "请选择压力检测类型");
                 return;
             }
+            int todaySameTaskCount = TaskService.getInstance().getCountSameTaks(mPressureDetectionType,mTaskBDZ.bdzid,inspectionDate);
+            if (todaySameTaskCount > 0) {
+                CToast.showShort(_this, "计划列表中已经有该任务了，请返回查看哟！");
+                return;
+            }
             task = new Task(UUID.randomUUID().toString(), mTaskBDZ.bdzid, mTaskBDZ.name, mPressureDetectionType, mPressureDetectionName,
                     DateUtils.getFormatterTime(inspectionDate + " 00:00:00", Config.dateFormat2),
                     Task.TaskStatus.undo.name());
         } else {
+            int todaySameTaskCount = TaskService.getInstance().getCountSameTaks(mInspectionType.name(),mTaskBDZ.bdzid,inspectionDate);
+            if (todaySameTaskCount > 0) {
+                CToast.showShort(_this, "计划列表中已经有该任务了，请返回查看哟！");
+                return;
+            }
             task = new Task(UUID.randomUUID().toString(), mTaskBDZ.bdzid, mTaskBDZ.name, mInspectionType.name(), mInspectionType.value,
                     DateUtils.getFormatterTime(inspectionDate + " 00:00:00", Config.dateFormat2),
                     Task.TaskStatus.undo.name());

@@ -137,6 +137,7 @@
                     android:textSize="@dimen/tv_text_size" />
 
                 <EditText
+                    android:maxLength="8"
                     android:id="@+id/edit_send_level"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="match_parent"
@@ -164,6 +165,7 @@
                     android:textSize="@dimen/tv_text_size" />
 
                 <EditText
+                    android:maxLength="8"
                     android:id="@+id/edit_receive_level"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="match_parent"

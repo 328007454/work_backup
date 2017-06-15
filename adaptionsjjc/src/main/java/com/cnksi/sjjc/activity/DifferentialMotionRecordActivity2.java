@@ -3,9 +3,11 @@ package com.cnksi.sjjc.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
@@ -125,22 +127,28 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
                 this.finish();
                 break;
             case R.id.btn_confirm_save:
-                saveData();
-                Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
-                startActivity(intent);
-                setResult(RESULT_OK);
-                this.finish();
+                if (saveData()) {
+                    Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
+                    startActivity(intent);
+                    setResult(RESULT_OK);
+                    this.finish();
+                } else {
+                    CToast.showShort(_this, "输入数据有误，请核对");
+                }
                 break;
             default:
                 break;
         }
     }
 
-    private void saveData() {
+    private boolean saveData() {
         ReportCdbhcl mCdReport;
         String bdzName = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
         List<ReportCdbhcl> saveList = new ArrayList<>();
         for (CdbhclValue value : cdbhclValueList) {
+            if (!TextUtils.isEmpty(value.getValue()) && (99999999 < (float) new Float(value.getValue()) || 0 > (float) new Float(value.getValue()))) {
+                return false;
+            }
             if (reportCdbhclsMap.containsKey(value.getId())) {
                 mCdReport = reportCdbhclsMap.get(value.getId());
                 mCdReport.addValue(value);
@@ -160,6 +168,7 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
         } catch (DbException e) {
             e.printStackTrace();
         }
+        return true;
     }
 
 }

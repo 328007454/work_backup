@@ -36,15 +36,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="140px"
-            android:background="@color/white"
-            android:layout_marginTop="114px">
+            android:layout_marginTop="114px"
+            android:background="@color/white">
+
             <TextView
-                android:layout_marginLeft="20px"
                 android:id="@+id/tv_weather_id"
                 android:layout_width="wrap_content"
                 android:layout_height="140px"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20px"
                 android:gravity="left|center_vertical"
                 android:text="当前天气"
                 android:textColor="@color/global_text_color"
@@ -98,7 +99,8 @@
                 android:layout_weight="1"
                 android:gravity="right|center_vertical"
                 android:hint="请输入当前温度"
-                android:inputType="numberSigned|numberDecimal" />
+                android:inputType="numberSigned|numberDecimal"
+                android:maxLength="5" />
         </LinearLayout>
 
         <LinearLayout
@@ -128,7 +130,8 @@
                 android:layout_weight="1"
                 android:gravity="right|center_vertical"
                 android:hint="请输入当前湿度"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:maxLength="5" />
         </LinearLayout>
     </LinearLayout>
 

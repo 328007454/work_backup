@@ -48,7 +48,10 @@ public class Config extends CoreConfig {
     public static final String NFC_FOLDER = BDZ_INSPECTION_FOLDER + "nfc/";
     public static final String TJWT_FOLDER = BDZ_INSPECTION_FOLDER + "lib/wt/";
     public static final String WORKTICKIT_PIC = WWWROOT_FOLDER + "pic/";
-
+    /**
+     * 项目code
+     */
+    public static final String PCODE = "E6F70F55-48A6-4F8A-A5C1-4B3AE6135B85";
     public static final String PAD_SYNC_FOLDER = "audio,customer_pictures,upload_database,result_pictures,pictures,log";
     // 签字目录
     public final static String SIGN_PICTURE_FOLDER = BDZ_INSPECTION_FOLDER + "signimg/";
@@ -128,6 +131,8 @@ public class Config extends CoreConfig {
      * 标题名称
      */
     public static final String TITLE_NAME = "title_name";
+    public static final String LOCATION_BDZID = "location_bdzId";
+    public static final String LOCATION_BDZNAME = "location_bdzName";
 
     public static String CURRENT_AREA = "lz";
 

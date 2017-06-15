@@ -91,6 +91,10 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
      */
     protected boolean isCheckPermission = false;
 
+    /**
+     * 更新日志
+     */
+    protected String updateContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +122,8 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
                 break;
             case CoreConfig.INSTALL_APP_CODE:
                 // TODO:显示安装对话框
-                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile);
+//                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile);
+                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile, isPms, updateContent);
                 break;
         }
     }
@@ -297,6 +302,14 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
     }
 
     protected void checkUpdateVersion(final String downloadFolder, String downloadFileName) {
+//        checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mCurrentActivity, CoreConfig.PROGRAM_APP_CODE));
+    }
+
+    private boolean isPms = false;
+
+    protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, boolean isPms, String updateContent) {
+        this.updateContent = updateContent;
+        this.isPms = isPms;
         checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mCurrentActivity, CoreConfig.PROGRAM_APP_CODE));
     }
 
@@ -313,9 +326,11 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
                 if (mUpdateFile == null) {
                     mUpdateFile = UpdateUtils.hasUpdateApk(mCurrentActivity, downloadFolder);
                     if (mUpdateFile != null) {
-                        if (AppUtils.verSignature(mCurrentActivity, mUpdateFile.getAbsolutePath())) {
-                            mHandler.sendEmptyMessage(CoreConfig.INSTALL_APP_CODE);
-                        }
+//                        if (AppUtils.verSignature(mCurrentActivity, mUpdateFile.getAbsolutePath())) {
+                        mHandler.sendEmptyMessage(CoreConfig.INSTALL_APP_CODE);
+//                        }
+                    } else if (null == mUpdateFile) {
+                        return;
                     } else {
                         if (NetWorkUtil.isNetworkConnected(mCurrentActivity)) {
                             // 上传用户信息 检查升级

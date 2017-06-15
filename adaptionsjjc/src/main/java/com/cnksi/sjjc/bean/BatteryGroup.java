@@ -40,28 +40,28 @@ public class BatteryGroup extends BaseModel {
     //实测全电池浮充电压
     public static final String FCDY_SC = "fcdy_sc";
     @Column(name = FCDY_SC)
-    public Double fcdySc;
+    public String fcdySc;
 
     //直流系统监测全电池浮充电压
     public static final String FCDY_ZLXT = "fcdy_zlxt";
     @Column(name = FCDY_ZLXT)
-    public Double fcdyZlxt;
+    public String fcdyZlxt;
 
     //负荷电流
     public static final String FHDL = "fhdl";
     @Column(name = FHDL)
-    public Double loadElectricty;
+    public String loadElectricty;
 
 
     //浮充电流
     public static final String FCDL = "fcdl";
     @Column(name = FCDL)
-    public Double fcElectricty;
+    public String fcElectricty;
 
     //正母线对地电压值
     public static final String DYZ_ZMX = "dyz_zmx";
     @Column(name = DYZ_ZMX)
-    public Double zVoltage;
+    public String zVoltage;
 
 
     //负母线对地电压值
@@ -88,17 +88,17 @@ public class BatteryGroup extends BaseModel {
     //组端电压
     public static final String ZU_DUAN_VOLTAGE = "zddy";
     @Column(name = ZU_DUAN_VOLTAGE)
-    public Double zuDuanVoltage;
+    public String zuDuanVoltage;
 
     //充电电流
     public static final String CHARGE_ELECTRICITY = "cddl";
     @Column(name = CHARGE_ELECTRICITY)
-    public Double chargeElectricity;
+    public String chargeElectricity;
 
     //单只标压
     public static final String SINGLE_VOLTAGE = "dzbcdy";
     @Column(name = SINGLE_VOLTAGE)
-    public Double singleVoltage;
+    public String singleVoltage;
 
 
     // 备注
