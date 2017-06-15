@@ -62,6 +62,7 @@ public enum InspectionType {
     maintenance_18("各抽风机卫生清扫"),
     maintenance_19("更换老鼠药、沾鼠板"),
     exclusive("专项巡视"),
+    professional("专业巡视"),
     exclusive_01("红外线测温"),
     exclusive_02("防火封堵专项检查"),
     exclusive_03("继电保护定置专项核对"),
@@ -163,7 +164,7 @@ public enum InspectionType {
             return InspectionType.TJWT;
         } else if (InspectionType.JYHPJ.value.equals(value)) {
             return InspectionType.TJWT;
-        }else if (InspectionType.NEWSBJC.value.equals(value)) {
+        } else if (InspectionType.NEWSBJC.value.equals(value)) {
             return InspectionType.NEWSBJC;
         }
         return null;

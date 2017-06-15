@@ -65,6 +65,7 @@ public class TourFragment extends BaseCoreFragment {
                 final List<Task> fullTask = TaskService.getInstance().getUnDoTask(InspectionType.full.name());
                 final List<Task> specialCount = TaskService.getInstance().getUnDoSpecialTask(InspectionType.special.name());
                 final List<Task> lightCout = TaskService.getInstance().getUnDoTask(InspectionType.special_xideng.name());
+                final List<Task> professionalCout = TaskService.getInstance().getUnDoTask(InspectionType.professional.name());
                 int totalPercent = (int) (((float) result.getMonthTaskFinish() / result.getMonthTaskCount()) * 100);
                 final int percent = totalPercent;
                 getActivity().runOnUiThread(new Runnable() {
@@ -75,6 +76,7 @@ public class TourFragment extends BaseCoreFragment {
                         tourBinding.setRounteCount(rountTasks.size() + "");
                         tourBinding.setSpecailCount(specialCount.size() + "");
                         tourBinding.setLightCount(lightCout.size() + "");
+                        tourBinding.setProfessionalCount(professionalCout.size() + "");
 
                     }
                 });

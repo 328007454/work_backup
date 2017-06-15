@@ -28,6 +28,10 @@
             name="lightCount"
             type="String" />
 
+        <variable
+            name="professionalCount"
+            type="String" />
+
         <import type="com.cnksi.sjjc.enmu.InspectionType" />
     </data>
 
@@ -248,8 +252,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="68px"
                     android:layout_marginTop="66px"
-                    app:layout_auto_baseheight="width"
-                    android:background="@mipmap/icon_rotinue" />
+                    android:background="@mipmap/icon_rotinue"
+                    app:layout_auto_baseheight="width" />
             </LinearLayout>
 
             <View
@@ -306,8 +310,8 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="38px"
-                        app:layout_auto_basewidth="height"
-                        android:background="@mipmap/icon_overall" />
+                        android:background="@mipmap/icon_overall"
+                        app:layout_auto_basewidth="height" />
                 </LinearLayout>
 
                 <View
@@ -356,8 +360,8 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="38px"
-                        app:layout_auto_basewidth="height"
-                        android:src="@mipmap/icon_special" />
+                        android:src="@mipmap/icon_special"
+                        app:layout_auto_basewidth="height" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -412,8 +416,8 @@
                     android:layout_height="140px"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="38px"
-                    app:layout_auto_basewidth="height"
-                    android:src="@mipmap/icon_night" />
+                    android:src="@mipmap/icon_night"
+                    app:layout_auto_basewidth="height" />
             </LinearLayout>
 
             <View
@@ -425,6 +429,7 @@
                 android:layout_width="0dp"
                 android:layout_height="275px"
                 android:layout_weight="1"
+                android:onClick="@{()->event.toTaskPlan(InspectionType.professional.name())}"
                 android:orientation="horizontal"
                 android:paddingLeft="42px">
 
@@ -449,7 +454,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0px"
                         android:layout_weight="1"
-                        android:text="共有0项巡视任务"
+                        android:text="@{`共有`+professionalCount+`巡视任务`}"
                         android:textColor="#c0bad9"
                         android:textSize="36px" />
                 </LinearLayout>
@@ -459,8 +464,8 @@
                     android:layout_height="140px"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="38px"
-                    app:layout_auto_basewidth="height"
-                    android:src="@mipmap/icon_professionnal" />
+                    android:src="@mipmap/icon_professionnal"
+                    app:layout_auto_basewidth="height" />
             </LinearLayout>
         </LinearLayout>
 
