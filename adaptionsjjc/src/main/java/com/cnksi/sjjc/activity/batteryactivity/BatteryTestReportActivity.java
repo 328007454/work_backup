@@ -19,8 +19,8 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseReportActivity;
+import com.cnksi.sjjc.activity.HomeActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
-import com.cnksi.sjjc.activity.LauncherActivity;
 import com.cnksi.sjjc.adapter.BatteryReportImageAdapter;
 import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryGroup;
@@ -145,11 +145,11 @@ public class BatteryTestReportActivity extends BaseReportActivity {
             @Override
             public void onClick(View v) {
                 if("maintenance_xdcdyjc".equalsIgnoreCase(type)){
-                    Intent intent = new Intent(BatteryTestReportActivity.this,LauncherActivity.class);
+                    Intent intent = new Intent(BatteryTestReportActivity.this,HomeActivity.class);
                     startActivity(intent);
                     onBackPressed();
                 }else{
-                    ScreenManager.getScreenManager().popAllActivityExceptOne(LauncherActivity.class);
+                    ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
                     onBackPressed();
                 }
             }
