@@ -77,6 +77,9 @@ public class HomeTaskItemAdapter extends BaseLinearBindingAdapter<HomeTaskItemBi
         } else if (inspectionType.contains(InspectionType.full.name())) {
             color = 0xff2db2ff;
             zhInspectionName = "(" + InspectionType.full.value + ")";
+        } else if (inspectionType.contains(InspectionType.professional.name())) {
+            color = 0xff2db2ff;
+            zhInspectionName = "(" + InspectionType.professional.value + ")";
         } else if (inspectionType.contains(InspectionType.routine.name())) {
             color = 0xffff7356;
             zhInspectionName = "(" + InspectionType.routine.value + ")";
