@@ -25,7 +25,7 @@ public class NetWorkUtil {
     public static void disableNetWork(Context context) {
         try {
             setWifiEnabled(context, false);
-            setMobileNetworkEnabled(context, false);
+            // setMobileNetworkEnabled(context, false);
             setBluetoothEnabled(false);
         } catch (Exception e) {
             e.printStackTrace();

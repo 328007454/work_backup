@@ -415,7 +415,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     switch (type) {
                         case inspection:
                             taskList = TaskService.getInstance().
-                                    findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name());
+                                    findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name(), InspectionType.professional.name());
                             if (taskList != null && taskList.size() > 0)
                                 for (Task task : taskList) {
                                     try {

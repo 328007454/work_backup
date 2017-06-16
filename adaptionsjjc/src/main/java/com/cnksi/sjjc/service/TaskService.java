@@ -152,7 +152,7 @@ public class TaskService extends BaseService<Task> {
 
     public TaskStatistic getTaskStatistic(String inspectionType) {
         TaskStatistic result = new TaskStatistic();
-        String inspectionExpr = TextUtils.isEmpty(inspectionType) ? " and (inspection like '%" + InspectionType.routine.name() + "%' or inspection like '%" + InspectionType.full.name() + "%' or inspection like '%" + InspectionType.special.name() + "%') " : " and inspection like '%" + inspectionType + "%' ";
+        String inspectionExpr = TextUtils.isEmpty(inspectionType) ? " and (inspection like '%" + InspectionType.professional.name() + "%' or inspection like '%" + InspectionType.routine.name() + "%' or inspection like '%" + InspectionType.full.name() + "%' or inspection like '%" + InspectionType.special.name() + "%') " : " and inspection like '%" + inspectionType + "%' ";
         String todayTimeExpr = " and schedule_time BETWEEN datetime('now','localtime','start of day') AND datetime('now','localtime','start of day','+1 day','-1 second') ";
         String mothTimeExpr = " and schedule_time BETWEEN datetime('now','localtime','start of month') AND datetime('now','localtime','start of month','+1 month','-1 second') ";
         String doneExpr = " and status='" + Task.TaskStatus.done.name() + "' ";
