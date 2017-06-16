@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -113,7 +114,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private List<String> usersName = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapter;
     private Dialog updateLogDialog;
-    private AppVersion remoteAppVersion;
+    private AppVersion remoteSjjcAppVersion;
+    private AppVersion remoteXunshiAppVersion;
     private AppVersion currentVersion;
     private DialogCopyTipsBinding layout;
     private String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -149,8 +151,15 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             public void run() {
                 PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
                 int version = info.versionCode;
+                PackageInfo infoXunshi = null;
+                PackageManager manager = null;
                 try {
-                    remoteAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    //获取巡视app安装版本号
+                    manager = _this.getPackageManager();
+                    infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
+                    remoteSjjcAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    remoteXunshiAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + infoXunshi.versionCode + "'").expr("and file_name like '%xunshi%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+
                     String apkPath = "";
                     //增加下载APK文件夹
                     SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
@@ -162,13 +171,17 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
-                    if (null != remoteAppVersion) {
+                    if (null != remoteSjjcAppVersion) {
                         checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
-                                Config.PCODE, false, TextUtils.isEmpty(remoteAppVersion.description) ? "修复bug,优化流畅度" : remoteAppVersion.description);
+                                Config.PCODE, false, TextUtils.isEmpty(remoteSjjcAppVersion.description) ? "修复bug,优化流畅度" : remoteSjjcAppVersion.description);
+                    }
+                    if (null != remoteSjjcAppVersion && PreferencesUtils.get(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+                        PreferencesUtils.put(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false);
                     }
                     currentVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + version + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-
-                } catch (DbException e) {
+                    if (currentVersion == null)
+                        currentVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + infoXunshi.versionCode + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

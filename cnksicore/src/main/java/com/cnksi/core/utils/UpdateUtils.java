@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -62,6 +63,10 @@ public class UpdateUtils {
         return hasUpdateApk(context, null, appFloder);
     }
 
+    public static File hasUpdateApk(Context context, String appFloder, boolean isPms) {
+        return hasUpdateApk(context, null, appFloder, isPms);
+    }
+
     /**
      * 检测是否有新的APK
      *
@@ -73,7 +78,7 @@ public class UpdateUtils {
     public static File hasUpdateApk(Context context, File file, String appFloder) {
         if (file == null) {
             PackageInfo localPackageInfo = AppUtils.getLocalPackageInfo(context);
-            file = getTheNewApkFile(context, appFloder, localPackageInfo == null ? "" : localPackageInfo.packageName);
+            file = getTheNewApkFile(context, appFloder, localPackageInfo == null ? "" : localPackageInfo.packageName, localPackageInfo.versionCode);
         }
         if (file != null && file.exists()) {
             PackageInfo remotePackageInfo = AppUtils.getAPKPackageInfo(context, file);
@@ -94,13 +99,56 @@ public class UpdateUtils {
     }
 
     /**
+     * 检测是否有新的APK
+     *
+     * @param context
+     * @param file
+     * @param appFloder apk包的路径
+     * @return
+     */
+    public static File hasUpdateApk(Context context, File file, String appFloder, boolean isPms) {
+        if (file == null) {
+
+            PackageInfo localPackageInfo = AppUtils.getLocalPackageInfo(context);
+            if (isPms) {
+                PackageManager manager = context.getPackageManager();
+                try {
+                    PackageInfo info = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
+                    file = getTheNewApkFile(context, appFloder, "com.cnksi.bdzinspection", info == null ? 1000 : info.versionCode);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                file = getTheNewApkFile(context, appFloder, localPackageInfo == null ? "" : localPackageInfo.packageName, localPackageInfo.versionCode);
+            }
+        }
+//        if (file != null && file.exists()) {
+//            PackageInfo remotePackageInfo = AppUtils.getAPKPackageInfo(context, file);
+//            PackageInfo localPackageInfo = AppUtils.getLocalPackageInfo(context);
+//            int remoteVersionCode = 0;
+//            int localVersionCode = 0;
+//            if (remotePackageInfo != null && localPackageInfo != null) {
+//                remoteVersionCode = remotePackageInfo.versionCode;
+//                localVersionCode = localPackageInfo.versionCode;
+//            }
+//            if (remoteVersionCode > localVersionCode) {
+//                return file;
+//            } else {
+//                return null;
+//            }
+//        }
+        return file;
+    }
+
+    /**
      * 得到最新的升级apk包
      *
      * @param context
      * @param path
      * @return
      */
-    public static File getTheNewApkFile(Context context, String path, String packageName) {
+    public static File getTheNewApkFile(Context context, String path, String packageName, int currentVersionCode) {
         File newApkFile = null;
         PackageInfo newAPkPackageInfo;
         List<File> apkFileList = new ArrayList<>();
@@ -126,11 +174,11 @@ public class UpdateUtils {
                 }
                 // 从找到的APK文件中找到最新的APK文件
                 if (!realApkFileList.isEmpty()) {
-                    newApkFile = realApkFileList.get(0);
-                    newAPkPackageInfo = AppUtils.getAPKPackageInfo(context, newApkFile);
+//                    newApkFile = realApkFileList.get(0);
+//                    newAPkPackageInfo = AppUtils.getAPKPackageInfo(context, newApkFile);
                     for (File fileTemp : realApkFileList) {
                         PackageInfo tempAPkPackageInfo = AppUtils.getAPKPackageInfo(context, fileTemp);
-                        if (tempAPkPackageInfo != null && tempAPkPackageInfo.versionCode > newAPkPackageInfo.versionCode) {
+                        if (tempAPkPackageInfo != null && tempAPkPackageInfo.versionCode > currentVersionCode) {
                             newAPkPackageInfo = tempAPkPackageInfo;
                             newApkFile = fileTemp;
                         }
@@ -192,18 +240,25 @@ public class UpdateUtils {
      *
      * @param file
      */
-    public static Dialog showInstallNewApkDialog(final Activity mContext, final File file, boolean isPms, String updateContent) {
-        Dialog mDialog = CustomerDialog.showSelectDialog(mContext, "版本更新", isPms ? mContext.getResources().getString(R.string.install_now_str_pms) : updateContent, new DialogClickListener() {
+
+    public static Dialog showInstallNewApkDialog(final Activity mContext, final File file, final boolean isPms, String updateContent) {
+        mDialog = CustomerDialog.showSelectDialog(mContext, "版本更新", isPms ? mContext.getResources().getString(R.string.install_now_str_pms) : updateContent, new DialogClickListener() {
             @Override
             public void confirm() {
                 UpdateUtils.installNewApk(mContext, file);
+                PreferencesUtils.put(mContext, AppUtils.IS_SJJC_AREADY_UPDATE, true);
             }
 
             @Override
             public void cancel() {
+                if (!isPms)
+                    PreferencesUtils.put(mContext, AppUtils.IS_SJJC_AREADY_UPDATE, false);
+                if (isPms && PreferencesUtils.get(mContext, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+                    System.exit(0);
+                }
 
             }
-        }, R.string.install_now_str, R.string.cancel_install_str,isPms);
+        }, R.string.install_now_str, R.string.cancel_install_str, isPms);
         return mDialog;
     }
 

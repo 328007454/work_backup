@@ -4,6 +4,8 @@ package com.cnksi.sjjc.activity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.cnksi.core.adapter.ViewHolder;
+import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DisplayUtil;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -27,6 +30,7 @@ import com.cnksi.sjjc.adapter.BdzAdapter;
 import com.cnksi.sjjc.adapter.DefectAdapter;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
+import com.cnksi.sjjc.bean.AppVersion;
 import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
@@ -88,6 +92,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private ListView mPowerStationListView;
     //变电站弹出对话框
     private Dialog mPowerStationDialog = null;
+    private AppVersion remoteSjjcAppVersion;
+    private AppVersion remoteXunshiAppVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +109,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 try {
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
-                } catch (DbException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -116,19 +122,40 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initUpdateSystem() {
-        String apkPath = "";
-        //增加下载APK文件夹
-        SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
-        try {
-            DbModel model = CustomApplication.getDbManager().findDbModelFirst(info1);
-            if (model != null) {
-                apkPath = Config.BDZ_INSPECTION_FOLDER + "admin/" + model.getString("short_name_pinyin") + "/apk";
+        mFixedThreadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                String apkPath = "";
+                //增加下载APK文件夹
+                SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
+                try {
+                    PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
+                    int version = info.versionCode;
+                    PackageManager manager = _this.getPackageManager();
+                    PackageInfo infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
+                    remoteSjjcAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    remoteXunshiAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + infoXunshi.versionCode + "'").expr("and file_name like '%xunshi%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    DbModel model = CustomApplication.getDbManager().findDbModelFirst(info1);
+                    if (model != null) {
+                        apkPath = Config.BDZ_INSPECTION_FOLDER + "admin/" + model.getString("short_name_pinyin") + "/apk";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    apkPath = Config.DOWNLOAD_APP_FOLDER;
+                }
+
+
+                if (remoteSjjcAppVersion != null && remoteXunshiAppVersion != null && !PreferencesUtils.get(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+//TODO:
+                } else if (remoteXunshiAppVersion != null && remoteSjjcAppVersion == null && PreferencesUtils.get(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+                    checkUpdateVersion(apkPath, Config.PCODE, true, "");
+                } else if (remoteXunshiAppVersion == null || remoteSjjcAppVersion == null) {
+                    PreferencesUtils.put(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false);
+                    checkUpdateVersion(apkPath, Config.PCODE, true, "");
+                }
             }
-        } catch (DbException e) {
-            e.printStackTrace();
-            apkPath = Config.DOWNLOAD_APP_FOLDER;
-        }
-        checkUpdateVersion(apkPath, Config.PCODE, true, "");
+        });
+
     }
 
     private void loadData() {

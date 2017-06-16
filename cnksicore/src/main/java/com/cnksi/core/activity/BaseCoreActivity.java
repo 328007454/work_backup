@@ -324,7 +324,7 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (mUpdateFile == null) {
-                    mUpdateFile = UpdateUtils.hasUpdateApk(mCurrentActivity, downloadFolder);
+                    mUpdateFile = UpdateUtils.hasUpdateApk(mCurrentActivity, downloadFolder,isPms);
                     if (mUpdateFile != null) {
 //                        if (AppUtils.verSignature(mCurrentActivity, mUpdateFile.getAbsolutePath())) {
                         mHandler.sendEmptyMessage(CoreConfig.INSTALL_APP_CODE);

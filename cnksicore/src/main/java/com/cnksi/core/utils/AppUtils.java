@@ -32,7 +32,8 @@ public class AppUtils {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
-
+    public static final String IS_SJJC_AREADY_UPDATE = "isSjjcAreadyUpdate";
+    public static final String IS_XUNSHI_AREADY_UPDATE = "isXunshiAreadyUpdate";
     /**
      * 获取系统安装的所有程序
      *

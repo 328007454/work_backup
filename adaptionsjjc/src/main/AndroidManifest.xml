@@ -365,7 +365,6 @@
             </intent-filter>
         </receiver>
 
-
         <meta-data
             android:name="design_width"
             android:value="1080" />

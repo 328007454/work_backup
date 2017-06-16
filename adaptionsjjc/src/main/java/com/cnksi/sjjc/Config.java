@@ -133,6 +133,7 @@ public class Config extends CoreConfig {
     public static final String TITLE_NAME = "title_name";
     public static final String LOCATION_BDZID = "location_bdzId";
     public static final String LOCATION_BDZNAME = "location_bdzName";
+    public static final String IS_AREADY_UPDATE = "isAreadyUpdate";
 
     public static String CURRENT_AREA = "lz";
 
@@ -308,4 +309,5 @@ public class Config extends CoreConfig {
     }
 
     public final static boolean NEW_COPY = true;
+
 }
