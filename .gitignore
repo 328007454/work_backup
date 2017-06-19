@@ -1,13 +1,7 @@
 *.iml
 .gradle
 local.properties
-gradle/
-adaptionsjjc/build
-gradlew.bat
-gradlew
 captures/
 build/
 .idea
-autolayout/build
 automodel/
-/adaptionsjjc/local.properties
