@@ -69,18 +69,19 @@
         <item>变电站一级动火工作票</item>
         <item>变电站二级动火工作票</item>
     </string-array>
+    <!-- #后面为该记录的枚举类型 -->
     <string-array name="SBJC">
-        <!--<item>红外测温记录</item>-->
-        <!--<item>保护屏红外热像检测月度记录</item>-->
-        <item>室内温湿度记录</item>
-        <item>差动保护差流记录</item>
-        <item>交直流变压器分接开关调整记录</item>
-        <item>收发信机测试记录</item>
-        <item>防小动物措施记录</item>
-        <item>压力检查记录</item>
-        <item>蓄电池检测记录</item>
-        <item>蓄电池内阻检测记录</item>
-        <item>避雷器在线监测记录</item>
+        <item>红外测温记录#SBJC_01</item>
+        <item>保护屏红外热像检测月度记录#SBJC_02</item>
+        <item>室内温湿度记录#SBJC_03</item>
+        <item>差动保护差流记录#SBJC_04</item>
+        <item>交直流变压器分接开关调整记录#SBJC_05</item>
+        <item>收发信机测试记录#SBJC_12</item>
+        <item>防小动物措施记录#SBJC_09</item>
+        <item>压力检查记录#SBJC_06</item>
+        <item>蓄电池检测记录#SBJC_10</item>
+        <item>蓄电池内阻检测记录#SBJC_11</item>
+        <item>避雷器在线监测记录#SBJC_08</item>
     </string-array>
     <string-array name="DQSY">
         <item>事故照明切换试验</item>

@@ -381,7 +381,6 @@ public class CustomApplication extends CoreApplication {
     private void initRuntimeVar() {
         Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
         Config.SYNC_APP_ID = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
-
     }
 
 

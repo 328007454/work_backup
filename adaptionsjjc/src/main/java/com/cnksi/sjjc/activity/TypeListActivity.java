@@ -22,6 +22,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -37,9 +38,13 @@ public class TypeListActivity extends BaseActivity {
     private List<String> data;
     private TypeAdapter adapter;
 
-    /**图解五通title*/
+    /**
+     * 图解五通title
+     */
     private List<String> titleList = new ArrayList<>();
-    /**图解五通数据集*/
+    /**
+     * 图解五通数据集
+     */
     private List<TJWT> tjwtList;
 
 
@@ -60,6 +65,11 @@ public class TypeListActivity extends BaseActivity {
         tvTitle.setText(mInspectionType.value);
     }
 
+    /**
+     * 避免调整列表顺序之后对应的类型不正确
+     */
+    LinkedHashMap<String, String> SBJCInspectionMap = new LinkedHashMap<>();
+
     private void initData() {
         data = new ArrayList<String>();
         adapter = new TypeAdapter(this, data, R.layout.item_type, mInspectionType);
@@ -73,7 +83,12 @@ public class TypeListActivity extends BaseActivity {
                 typeList = Arrays.asList(getResources().getStringArray(R.array.GZP));
                 break;
             case SBJC:
-                typeList = Arrays.asList(getResources().getStringArray(R.array.SBJC));
+                List<String> temp = Arrays.asList(getResources().getStringArray(R.array.SBJC));
+                for (String s : temp) {
+                    String rs[] = s.split("#");
+                    SBJCInspectionMap.put(rs[0], rs[1]);
+                }
+                typeList = new ArrayList<>(SBJCInspectionMap.keySet());
                 break;
             case switchover:
                 typeList = Arrays.asList(getResources().getStringArray(R.array.DQSY));
@@ -92,8 +107,8 @@ public class TypeListActivity extends BaseActivity {
                 break;
             case TJWT: //图解五通
                 tjwtList = TJWTService.getInstance().findAllTJWT();
-                if(tjwtList != null && tjwtList.size() != 0){
-                    for(TJWT tjwt : tjwtList){
+                if (tjwtList != null && tjwtList.size() != 0) {
+                    for (TJWT tjwt : tjwtList) {
                         titleList.add(tjwt.name);
                     }
                 }
@@ -111,10 +126,10 @@ public class TypeListActivity extends BaseActivity {
         adapter.setItemClickListener(new ItemClickListener<String>() {
             @Override
             public void itemClick(View v, String s, int position) {
-                int index=s.lastIndexOf(" ");
+                int index = s.lastIndexOf(" ");
 
-                int maxPosition = Integer.valueOf(s.substring(index+1,s.length()));
-                s=s.substring(0,index);
+                int maxPosition = Integer.valueOf(s.substring(index + 1, s.length()));
+                s = s.substring(0, index);
                 if (position >= maxPosition) {
                     mHandler.post(new Runnable() {
                         @Override
@@ -125,7 +140,7 @@ public class TypeListActivity extends BaseActivity {
                     return;
                 }
                 Intent intent = new Intent();
-                intent.putExtra(Config.CURRENT_LOGIN_USER,  PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
+                intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
                 intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
                 ComponentName componentName;
                 switch (mInspectionType) {
@@ -166,33 +181,7 @@ public class TypeListActivity extends BaseActivity {
                         break;
                     case SBJC:
                         intent.setClass(_this, TaskRemindActivity.class);
-                        if (position == 10) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_01.name());
-                        } else if (position == 11) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_02.name());
-                        } else if (position == 0) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_03.name());
-                        } else if (position == 1) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_04.name());
-                        } else if (position == 2) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_05.name());
-                        } else if (position == 3) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_12.name());
-                        } else if (position == 4) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_09.name());
-                        } else if (position == 6) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_10.name());
-                        } else if (position == 7) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_11.name());
-                        } else if (position == 5) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_06.name());
-                        } else if (position == 9) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_07.name());
-                        } else if (position == 8) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.SBJC_08.name());
-                        } else {
-                            return;
-                        }
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, SBJCInspectionMap.get(s));
                         break;
                     case switchover:
                         return;
@@ -249,9 +238,9 @@ public class TypeListActivity extends BaseActivity {
                         else return;
                         break;
                     case TJWT: //图解五通
-                        intent.setClass(_this,TJWTActivity.class);
-                        intent.putExtra("title",titleList.get(position));
-                        intent.putExtra("pic",tjwtList.get(position).pic);
+                        intent.setClass(_this, TJWTActivity.class);
+                        intent.putExtra("title", titleList.get(position));
+                        intent.putExtra("pic", tjwtList.get(position).pic);
                         break;
                 }
                 startActivity(intent);
