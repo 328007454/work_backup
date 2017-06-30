@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Message;
-import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -29,7 +28,6 @@ import android.widget.TextView;
 
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.core.utils.AppUtils;
-import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -49,7 +47,6 @@ import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 import com.cnksi.sjjc.util.TTSUtils;
-import com.cnksi.tts.ISpeakCallback;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
@@ -78,7 +75,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     public static final int USER_LOGIN_SUCCESS = NO_LOGIN_USER + 1;//登录成功
     public static final int SHOW_UPDATE_LOG_DIALOG = USER_LOGIN_SUCCESS + 1;
     public static final int USER_COUNT_NOT_ACTIVITE = SHOW_UPDATE_LOG_DIALOG + 1;
-    private String speakContent;
     @ViewInject(R.id.txt_user_layout)
     private RelativeLayout userLayout;
     @ViewInject(R.id.user1_img)
@@ -96,9 +92,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     @ViewInject(R.id.tv_version)//版本信息
     private TextView mTvVersion;
 
-    @ViewInject(R.id.et_username)//添加登录人员账号
-    private EditText mEtUserName;
-
     @ViewInject(R.id.et_password)//添加登录人员密码
     private EditText mEtPassword;
 
@@ -115,7 +108,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private ArrayAdapter<String> arrayAdapter;
     private Dialog updateLogDialog;
     private AppVersion remoteSjjcAppVersion;
-    private AppVersion remoteXunshiAppVersion;
     private AppVersion currentVersion;
     private DialogCopyTipsBinding layout;
     private String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -130,6 +122,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
      */
     private int count = 0;
     private long startTime = 0;
+    private boolean isGrantPermission = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,8 +151,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                     manager = _this.getPackageManager();
                     infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
                     remoteSjjcAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-                    remoteXunshiAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + infoXunshi.versionCode + "'").expr("and file_name like '%xunshi%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-
                     String apkPath = "";
                     //增加下载APK文件夹
                     SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
@@ -215,13 +206,14 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
             @Override
             public void afterTextChanged(final Editable s) {
-                mFixedThreadPoolExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        usersName = UserService.getInstance().searchUsersName(s.toString());
-                        mHandler.sendEmptyMessage(LOAD_DATA);
-                    }
-                });
+                if (isGrantPermission)
+                    mFixedThreadPoolExecutor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            usersName = UserService.getInstance().searchUsersName(s.toString());
+                            mHandler.sendEmptyMessage(LOAD_DATA);
+                        }
+                    });
             }
         });
         if (BuildConfig.DEBUG) {
@@ -345,7 +337,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
      * @param login true 登录系统 false 添加登录人员
      */
     private void loginUser(boolean login) {
-
         //登录系统
         if (login) {
             if (null != mCurrentUserOne || null != mCurrentUserTwo)
@@ -364,7 +355,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             CToast.showShort(_this, R.string.et_password_hint_str);
             return;
         }
-        CustomApplication.getExcutorService().execute(new Runnable() {
+        mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 //根据用户名和密码查询
@@ -421,31 +412,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     protected void onRefresh(Message msg) {
         super.onRefresh(msg);
         switch (msg.what) {
-            case INIT_SPEECH:
-                // 读取内容
-                if (!TextUtils.isEmpty(speakContent))
-                    TTSUtils.getInstance().startSpeaking(speakContent, new ISpeakCallback.Stub() {
-                        @Override
-                        public void onSpeakBegin() throws RemoteException {
-                            CLog.e();
-                        }
-
-                        @Override
-                        public void onSpeakPaused() throws RemoteException {
-                            CLog.e();
-                        }
-
-                        @Override
-                        public void onSpeakResumed() throws RemoteException {
-                            CLog.e();
-                        }
-
-                        @Override
-                        public void onCompleted(String error) throws RemoteException {
-                            CLog.e();
-                        }
-                    });
-                break;
             //添加已登录账号
             case SAME_ACCOUNT:
                 CToast.showShort(_this, R.string.login_the_same_account);
@@ -484,10 +450,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case USER_LOGIN_SUCCESS:
                 loginSystem();
                 break;
-            //更新APP
-//            case CoreConfig.INSTALL_APP_CODE:
-//                FileUtils.deleteAllFiles(new File(Config.LOGFOLDER));
-//                break;
             case SHOW_UPDATE_LOG_DIALOG:
                 if (null != updateLogDialog && null != currentVersion) {
                     layout.tvDialogTitle.setText("本次更新内容");
@@ -534,24 +496,24 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
      */
     private void loginSystem() {
         String username = "";
-        String userAccout = "";
+        String userAccount = "";
         if (mCurrentUserOne != null && mCurrentUserTwo != null) {
             username = mCurrentUserOne.username + Config.COMMA_SEPARATOR + mCurrentUserTwo.username;
-            userAccout = mCurrentUserOne.account + Config.COMMA_SEPARATOR + mCurrentUserTwo.account;
+            userAccount = mCurrentUserOne.account + Config.COMMA_SEPARATOR + mCurrentUserTwo.account;
             PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
         } else if (mCurrentUserOne != null) {
             username = mCurrentUserOne.username;
-            userAccout = mCurrentUserOne.account;
+            userAccount = mCurrentUserOne.account;
             PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
         } else if (mCurrentUserTwo != null) {
             username = mCurrentUserTwo.username;
-            userAccout = mCurrentUserTwo.account;
+            userAccount = mCurrentUserTwo.account;
             PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserTwo.dept_id);
         } else {
             return;
         }
         PreferencesUtils.put(_this, Config.CURRENT_LOGIN_USER, username);
-        PreferencesUtils.put(_this, Config.CURRENT_LOGIN_ACCOUNT, userAccout);
+        PreferencesUtils.put(_this, Config.CURRENT_LOGIN_ACCOUNT, userAccount);
         //保存登录班组和账号
 
 //        Intent intent = new Intent(_this, LauncherActivity.class);
@@ -577,8 +539,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
      * @param content
      */
     protected void speak(String content) {
-        speakContent = content;
-        mHandler.sendEmptyMessage(INIT_SPEECH);
+        TTSUtils.getInstance().startSpeaking(content);
     }
 
     @Override
@@ -597,5 +558,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
         CustomApplication.getInstance().initApp();
         LocationUtil.getInstance().preSearchGps(mCurrentActivity);
+        isGrantPermission = true;
     }
 }
