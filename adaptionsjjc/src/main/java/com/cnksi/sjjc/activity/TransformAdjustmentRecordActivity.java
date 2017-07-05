@@ -130,33 +130,37 @@ public class TransformAdjustmentRecordActivity extends BaseActivity {
                 break;
             case R.id.btn_confirm_save:
                 boolean isSaveTask = true;
-                List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
-                for (int i = 0; i < listDbModel.size(); i++) {
-                    DbModel dbModel = listDbModel.get(i);
-                    String bcds = listBcds.get(i).getText().toString();
-                    String dzcs = listDzcs.get(i).getText().toString();
-                    if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
-                        continue;
-                    }
-                    mReportJzlby = listReport.get(i);
-                    mReportJzlby.bdz_id = dbModel.getString("bdzid");
-                    mReportJzlby.bdz_name = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
-                    mReportJzlby.device_id = dbModel.getString("deviceid");
-                    mReportJzlby.device_name = dbModel.getString("name");
-                    mReportJzlby.report_id = currentReportId;
-                    mReportJzlby.bcds = bcds;
-                    mReportJzlby.dzcs = dzcs;
-                    mReportJzlby.last_modify_time = DateUtils.getCurrentLongTime();
-                    saveList.add(mReportJzlby);
+                if (listDbModel != null || listDbModel.size() > 0) {
 
+
+                    List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
+                    for (int i = 0; i < listDbModel.size(); i++) {
+                        DbModel dbModel = listDbModel.get(i);
+                        String bcds = listBcds.get(i).getText().toString();
+                        String dzcs = listDzcs.get(i).getText().toString();
+                        if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
+                            continue;
+                        }
+                        mReportJzlby = listReport.get(i);
+                        mReportJzlby.bdz_id = dbModel.getString("bdzid");
+                        mReportJzlby.bdz_name = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
+                        mReportJzlby.device_id = dbModel.getString("deviceid");
+                        mReportJzlby.device_name = dbModel.getString("name");
+                        mReportJzlby.report_id = currentReportId;
+                        mReportJzlby.bcds = bcds;
+                        mReportJzlby.dzcs = dzcs;
+                        mReportJzlby.last_modify_time = DateUtils.getCurrentLongTime();
+                        saveList.add(mReportJzlby);
+
+                    }
+                    try {
+                        ReportJzlbyqfjkgService.getInstance().saveOrUpdate(saveList);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
                 }
                 try {
-                    ReportJzlbyqfjkgService.getInstance().saveOrUpdate(saveList);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    TaskService.getInstance().update( WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                    TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
                     setResult(RESULT_OK);
                 } catch (DbException e) {
                     e.printStackTrace();
