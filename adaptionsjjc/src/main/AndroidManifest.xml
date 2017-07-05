@@ -137,12 +137,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
-            android:name=".activity.CopyAllValueActivity2"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
         <activity
             android:name=".activity.CopyAllValueActivity3"
             android:configChanges="keyboardHidden|screenSize|orientation"

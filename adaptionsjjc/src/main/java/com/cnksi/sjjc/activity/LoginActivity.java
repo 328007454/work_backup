@@ -217,8 +217,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             }
         });
         if (BuildConfig.DEBUG) {
-            autoCompleteTextView.setText("DuW0014");
-            mEtPassword.setText("dw831026*");
+            autoCompleteTextView.setText("Zhangys3210");
+            mEtPassword.setText("1");
         }
 
         findViewById(R.id.ivLogo).setOnLongClickListener(new View.OnLongClickListener() {
