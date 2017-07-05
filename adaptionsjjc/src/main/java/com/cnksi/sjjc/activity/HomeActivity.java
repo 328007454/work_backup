@@ -29,6 +29,7 @@ import com.cnksi.sjjc.View.Banner;
 import com.cnksi.sjjc.adapter.BdzAdapter;
 import com.cnksi.sjjc.adapter.DefectAdapter;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
+import com.cnksi.sjjc.adapter.HomeSafetyToolAdapter;
 import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
 import com.cnksi.sjjc.bean.AppVersion;
 import com.cnksi.sjjc.bean.Bdz;
@@ -52,6 +53,7 @@ import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
+import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -81,13 +83,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private Map<String, ArrayList<DefectRecord>> mCrisisMap = new HashMap<>();
     private Map<String, ArrayList<DefectRecord>> mSerioutMap = new HashMap<>();
     private Map<String, ArrayList<DefectRecord>> mCommonMap = new HashMap<>();
-    private ArrayList<DefectRecord> recordCrisis;
-    private ArrayList<DefectRecord> recordSerious;
-    private ArrayList<DefectRecord> recordCommon;
+
     //当前选中的变电站id
     private String currentSelectBdzId;
     //主页任务适配器
     private HomeTaskItemAdapter taskItemAdapter;
+    private HomeSafetyToolAdapter safetyToolAdapter;
     //变电站listview
     private ListView mPowerStationListView;
     //变电站弹出对话框
@@ -99,8 +100,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changedStatusColor();
-//        homePageBinding = ActivityHomePageBinding.inflate(LayoutInflater.from(getApplicationContext()));
-//        setContentView(homePageBinding.getRoot());
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
@@ -258,7 +257,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
             }
         });
-
+        safetyToolAdapter = new HomeSafetyToolAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
 //        loadData();
     }
 
@@ -425,6 +424,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         TabType type;
         TextView tv;
         List<Task> tasks = new ArrayList<>();
+        List<DbModel> safetyTools = new ArrayList<>();
 
         public TaskType(TextView tv, TabType type) {
             this.type = type;
@@ -469,10 +469,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                             taskList = TaskService.getInstance().
                                     findTaskListByLimit(3, InspectionType.maintenance.name(), InspectionType.switchover.name());
                             break;
-                        case operations:
-                            taskList = TaskService.getInstance().
-                                    findOperationTaskByLimit(3);
-                            break;
+                        case safetytool:
+                            SqlInfo sqlInfo = new SqlInfo("SELECT id,num,name,short_name,name_pinyin,status,bdz_id,bdz_name,next_check_time FROM gqj_info where dept_id=? and dlt=0 AND next_check_time is NOT NULL ORDER BY next_check_time limit 4;");
+                            sqlInfo.addBindArg(new KeyValue("dept_id", "12"));
+                            try {
+                                safetyTools = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+                            } catch (DbException e) {
+                                e.printStackTrace();
+                            }
+                            return;
                         case switching:
                             taskList = TaskService.getInstance().findWorkTicketTask();
                             break;
@@ -502,7 +507,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private enum TabType {
-        inspection("设备巡视"), maintenance("设备维护"), switching("倒闸操作"), operations("运维一体化");
+        inspection("设备巡视"), maintenance("设备维护"), switching("倒闸操作"), safetytool("安全工器具");
         String zhName;
 
         TabType(String zhName) {
@@ -519,7 +524,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         tabs[0] = new TaskType(homePageBinding.tvDeviceInspection, TabType.inspection);
         tabs[1] = new TaskType(homePageBinding.tvDeviceMaintenance, TabType.maintenance);
         tabs[2] = new TaskType(homePageBinding.tvTransferSwitching, TabType.switching);
-        tabs[3] = new TaskType(homePageBinding.tvOperations, TabType.operations);
+        tabs[3] = new TaskType(homePageBinding.tvOperations, TabType.safetytool);
         select(tabs[0]);
         for (final TaskType tab : tabs) {
             tab.setOnClickListener(new View.OnClickListener() {
@@ -533,12 +538,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void select(TaskType dataType) {
         if (currentDataType == dataType) return;
-
+        homePageBinding.dataContainer.removeAllViews();
         currentDataType = dataType;
         for (TaskType tab : tabs) {
             tab.setSelected(tab == dataType);
         }
-        taskItemAdapter.setList(currentDataType.tasks);
+        if (currentDataType.type == TabType.safetytool) {
+            taskItemAdapter.removeAllViews();
+            safetyToolAdapter.setList(currentDataType.safetyTools);
+        } else
+            taskItemAdapter.setList(currentDataType.tasks);
     }
 
     /**
