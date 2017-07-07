@@ -33,7 +33,6 @@ import com.cnksi.sjjc.databinding.HwcwBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.HwcwService;
-import com.cnksi.sjjc.service.ModifyRecordService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
@@ -136,20 +135,20 @@ public class HWCWMainActivity extends BaseActivity {
                         currentSelect = position;
                         currentHwcw = mReportHwcwList.get(position);
 //                        _this.getResources().getColor(R.color.grass_color)
-                        view.setBackgroundColor(ContextCompat.getColor(_this,R.color.grass_color));
+                        view.setBackgroundColor(ContextCompat.getColor(_this, R.color.grass_color));
                         tv.setVisibility(View.VISIBLE);
                     } else if (currentSelect != position) {
                         View v = binding.lvContainer.getChildAt(currentSelect);
                         v.findViewById(R.id.tv_editting_show).setVisibility(View.GONE);
 //                        _this.getResources().getColor(R.color.tran)
-                        v.setBackgroundColor(ContextCompat.getColor(_this,R.color.tran));
+                        v.setBackgroundColor(ContextCompat.getColor(_this, R.color.tran));
 //                        _this.getResources().getColor(R.color.grass_color)
-                        view.setBackgroundColor(ContextCompat.getColor(_this,R.color.grass_color));
+                        view.setBackgroundColor(ContextCompat.getColor(_this, R.color.grass_color));
                         tv.setVisibility(View.VISIBLE);
                         currentSelect = position;
                         currentHwcw = mReportHwcwList.get(position);
                     } else {
-                        view.setBackgroundColor(ContextCompat.getColor(_this,R.color.tran));
+                        view.setBackgroundColor(ContextCompat.getColor(_this, R.color.tran));
                         tv.setVisibility(View.GONE);
                         currentSelect = -1;
                         currentHwcw = null;
@@ -168,19 +167,19 @@ public class HWCWMainActivity extends BaseActivity {
                                 currentSelect = position;
                                 currentHwcw = mReportHwcwList.get(position);
 //                                _this.getResources().getColor(R.color.grass_color)
-                                view.setBackgroundColor(ContextCompat.getColor(_this,R.color.grass_color));
+                                view.setBackgroundColor(ContextCompat.getColor(_this, R.color.grass_color));
                                 tv.setVisibility(View.VISIBLE);
                             } else if (currentSelect != position) {
                                 View v = binding.lvContainer.getChildAt(currentSelect);
                                 v.findViewById(R.id.tv_editting_show).setVisibility(View.GONE);
 //                                _this.getResources().getColor(R.color.tran)
-                                v.setBackgroundColor(ContextCompat.getColor(_this,R.color.tran));
-                                view.setBackgroundColor(ContextCompat.getColor(_this,R.color.grass_color));
+                                v.setBackgroundColor(ContextCompat.getColor(_this, R.color.tran));
+                                view.setBackgroundColor(ContextCompat.getColor(_this, R.color.grass_color));
                                 tv.setVisibility(View.VISIBLE);
                                 currentSelect = position;
                                 currentHwcw = mReportHwcwList.get(position);
                             } else {
-                                view.setBackgroundColor(ContextCompat.getColor(_this,R.color.tran));
+                                view.setBackgroundColor(ContextCompat.getColor(_this, R.color.tran));
                                 tv.setVisibility(View.GONE);
                                 currentSelect = -1;
                                 currentHwcw = null;
@@ -320,12 +319,9 @@ public class HWCWMainActivity extends BaseActivity {
         currentReport.endtime = DateUtils.getCurrentTime(CoreConfig.dateFormat2);
         try {
             ReportService.getInstance().saveOrUpdate(currentReport);
-            TaskService.getInstance().update( WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
         } catch (DbException e) {
             e.printStackTrace();
-        } finally {
-            ModifyRecordService.getInstance().saveOrUpdateModifyRecord(currentReportId, Report.REPORTID, "report", Config.ModifyOperation.add.name());
-
         }
         isNeedUpdateTaskState = true;
         startActivity(new Intent(_this, HongWaiCeWenReportActivity.class));
@@ -544,8 +540,6 @@ public class HWCWMainActivity extends BaseActivity {
             ReportService.getInstance().saveOrUpdate(currentReport);
         } catch (DbException e) {
             e.printStackTrace();
-        } finally {
-            ModifyRecordService.getInstance().saveOrUpdateModifyRecord(currentReportId, Report.REPORTID, "report", "update");
         }
         if (currentHwcw == null) {
             currentHwcw = new ReportHwcw();

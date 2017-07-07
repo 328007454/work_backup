@@ -307,7 +307,4 @@ public class Config extends CoreConfig {
             return this.value;
         }
     }
-
-    public final static boolean NEW_COPY = true;
-
 }

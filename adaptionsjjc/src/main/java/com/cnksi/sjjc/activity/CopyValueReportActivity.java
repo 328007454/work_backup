@@ -132,7 +132,7 @@ public class CopyValueReportActivity extends BaseReportActivity {
 	private void OnViewClick(View view) {
 		switch (view.getId()) {
 		case R.id.tv_continue_inspection: // 继续巡检
-				processor.gotoInspcetion(_this);
+				processor.gotoInspection(_this);
                 this.finish();
 			break;
 		}

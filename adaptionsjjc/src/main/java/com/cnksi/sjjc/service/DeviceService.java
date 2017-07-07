@@ -2,7 +2,6 @@ package com.cnksi.sjjc.service;
 
 import android.text.TextUtils;
 
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.Device;
@@ -347,17 +346,9 @@ public class DeviceService extends BaseService<Device> {
             dropTrigger("device");
             String sql = "update device set has_copy ='N'";
             CustomApplication.getDbManager().execNonQuery(sql);
-            if (Config.NEW_COPY) {
-                sql = "update device set has_copy = 'Y' where deviceid in (select distinct deviceid from copy_item);";
-            } else {
-                sql = "UPDATE device set has_copy='Y' WHERE deviceid IN"
-                        + "(select DISTINCT(d.deviceid) deviceid from standards s "
-                        + "left JOIN device_unit du on s.duid = du.duid LEFT JOIN device_type dt on dt.dtid = du.dtid"
-                        + "	LEFT JOIN device d on d.dtid = dt.dtid "
-                        + "where s.resulttype = '1' AND d.dlt <> '1' AND du.dlt <> '1' AND s.dlt <> '1' AND dt.dlt <> '1')";
-            }
+            sql = "update device set has_copy = 'Y' where deviceid in (select distinct deviceid from copy_item);";
             CustomApplication.getDbManager().execNonQuery(sql);
-            createTrigger("device","deviceid");
+            createTrigger("device", "deviceid");
             isSuccess = true;
         } catch (DbException e) {
             e.printStackTrace();
@@ -373,7 +364,7 @@ public class DeviceService extends BaseService<Device> {
         try {
 
             String triggerSql = String.format("DROP TRIGGER  If Exists %s_insert_trigger", tableName);
-           execSql(triggerSql);
+            execSql(triggerSql);
             triggerSql = String.format("DROP TRIGGER If Exists %s_update_trigger", tableName);
             execSql(triggerSql);
 

@@ -200,20 +200,13 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                                             e.printStackTrace(System.out);
                                         }
                                         if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
-                                            if (Config.NEW_COPY) {
-                                                listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
-                                                copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
-                                            } else {
-                                                listDbModel = ReportJzlbyqfjkgService.getInstance().getPartDeviceAndReport(currentBdzId, "分接开关动作次数", currentReportId);
-                                            }
+                                            listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
+                                            copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
                                         }
 
                                         if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
                                             try {
-                                                if (Config.NEW_COPY)
-                                                    listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
-                                                else
-                                                    listDevice = DeviceService.getInstance().getDevicesByName(currentBdzId, "保护差流");
+                                                listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
                                                 exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(currentBdzId, currentReportId);
                                                 for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
                                                     CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
@@ -263,20 +256,11 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                             i += 1;
                         }
                     }
-                    if (Config.NEW_COPY) {
-                        mTvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + copyTotalDbmodel.size());
-                        if (i == copyTotalDbmodel.size()) {
-                            mTvInspectionContinue.setText("查看详情");
-                        } else {
-                            mTvInspectionContinue.setText("继续记录");
-                        }
+                    mTvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + copyTotalDbmodel.size());
+                    if (i == copyTotalDbmodel.size()) {
+                        mTvInspectionContinue.setText("查看详情");
                     } else {
-                        mTvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + listDbModel.size());
-                        if (i == listDbModel.size()) {
-                            mTvInspectionContinue.setText("查看详情");
-                        } else {
-                            mTvInspectionContinue.setText("继续记录");
-                        }
+                        mTvInspectionContinue.setText("继续记录");
                     }
                     if (fenJieKaiGuanContentAdapter == null) {
                         fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, listDbModel, currentInspectionType);
@@ -338,10 +322,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                 if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
                     intentDiff = new Intent(_this, DifferentialMotionRecordActivity2.class);
                 } else if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
-                    if (Config.NEW_COPY)
-                        intentDiff = new Intent(_this, NewTransformRecordActivity.class);
-                    else
-                        intentDiff = new Intent(_this, TransformAdjustmentRecordActivity.class);
+                    intentDiff = new Intent(_this, NewTransformRecordActivity.class);
                 } else {
                     intentDiff = new Intent(_this, IndoorHumitureRecordActivity.class);
                 }

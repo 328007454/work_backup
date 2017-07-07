@@ -64,7 +64,7 @@ public abstract class CopyDataInterface {
      *
      * @param activity
      */
-    public abstract void gotoInspcetion(Activity activity);
+    public abstract void gotoInspection(Activity activity);
 
     /**
      * 获得抄录结果  1/345格式

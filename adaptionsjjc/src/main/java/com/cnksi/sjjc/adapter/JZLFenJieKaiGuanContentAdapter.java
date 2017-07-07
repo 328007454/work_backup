@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.CdbhclValue;
-import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.enmu.InspectionType;
@@ -31,6 +29,7 @@ public class JZLFenJieKaiGuanContentAdapter extends SimpleBaseAdapter {
     private DbModel model;
     private ReportCdbhcl mCdbhcl;
     private CdbhclValue value;
+
     public JZLFenJieKaiGuanContentAdapter(Context context, List<? extends Object> dataList, String currentInspectionType) {
         super(context, dataList);
         this.currentInspectionType = currentInspectionType;
@@ -60,22 +59,16 @@ public class JZLFenJieKaiGuanContentAdapter extends SimpleBaseAdapter {
             holder.bcdsContainer.setVisibility(View.VISIBLE);
             holder.dongZuoContainer.setVisibility(View.VISIBLE);
             holder.cdbhContaner.setVisibility(View.GONE);
-            if (Config.NEW_COPY) {
-                holder.txtTitle.setText(model.getString(ReportJzlbyqfjkg.DEVICE_NAME));
-                if (TextUtils.isEmpty(model.getString(ReportJzlbyqfjkg.BCDS)))
-                    holder.bcdsContainer.setVisibility(View.GONE);
-                if (TextUtils.isEmpty(model.getString(ReportJzlbyqfjkg.DZCS)))
-                    holder.dongZuoContainer.setVisibility(View.GONE);
-                holder.partTitleTwo.setText("分接开关动作次数");
-                holder.partTitleOne.setText("分接开关调整后档位");
-                holder.txtDzcs.setText(model.getString(ReportJzlbyqfjkg.DZCS));
-                holder.txtBcds.setText(model.getString(ReportJzlbyqfjkg.BCDS));
-            } else {
-                holder.txtTitle.setText(model.getString(Device.NAME));
-                holder.txtBcds.setText(model.getString(ReportJzlbyqfjkg.BCDS));
-                holder.txtDzcs.setText(model.getString(ReportJzlbyqfjkg.DZCS));
-            }
 
+            holder.txtTitle.setText(model.getString(ReportJzlbyqfjkg.DEVICE_NAME));
+            if (TextUtils.isEmpty(model.getString(ReportJzlbyqfjkg.BCDS)))
+                holder.bcdsContainer.setVisibility(View.GONE);
+            if (TextUtils.isEmpty(model.getString(ReportJzlbyqfjkg.DZCS)))
+                holder.dongZuoContainer.setVisibility(View.GONE);
+            holder.partTitleTwo.setText("分接开关动作次数");
+            holder.partTitleOne.setText("分接开关调整后档位");
+            holder.txtDzcs.setText(model.getString(ReportJzlbyqfjkg.DZCS));
+            holder.txtBcds.setText(model.getString(ReportJzlbyqfjkg.BCDS));
         } else if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
             holder.txtCdbhTitle.setText(value.getName());
             holder.txtCdbhContent.setText(value.getValue());

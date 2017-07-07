@@ -3,13 +3,11 @@ package com.cnksi.sjjc.processor;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.activity.CopyBaseDataActivity;
 import com.cnksi.sjjc.bean.Standards;
 import com.cnksi.sjjc.service.CopyItemService;
 import com.cnksi.sjjc.service.CopyResultService;
 import com.cnksi.sjjc.service.DeviceService;
-import com.cnksi.sjjc.service.TaskService;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -35,34 +33,20 @@ public class PressWaterProcessor extends CopyDataInterface {
 
     @Override
     public List<DbModel> findAllDeviceHasCopyValue(String currentFunctionModel, String bdzId) throws DbException {
-        String selector = "";
-        if (Config.NEW_COPY) {
-            selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key='" + getCopyType() + "' and dlt = '0' )";
-            return DeviceService.getInstance().findDeviceHasCopyValueBySelector(selector, bdzId);
-        } else {
-            selector = "and dtid in(select dtid from device_type WHERE name like 'SF6断路%气动%') ";
-            return DeviceService.getInstance().findDeviceHasCopyValueBySelector(currentFunctionModel, selector, bdzId);
-        }
-
+        String selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key='" + getCopyType() + "' and dlt = '0' )";
+        return DeviceService.getInstance().findDeviceHasCopyValueBySelector(selector, bdzId);
     }
 
     @Override
-    public void gotoInspcetion(Activity activity) {
+    public void gotoInspection(Activity activity) {
         activity.startActivity(new Intent(activity, CopyBaseDataActivity.class));
     }
 
     @Override
     public String getCopyResult(String bdzId) {
-
-        if (!Config.NEW_COPY) {
-            long copyCount = TaskService.getInstance().queryCopyData(reportId);
-            long totalCount = TaskService.getInstance().queryCopyDataTatalPress(bdzId, "and dt.name LIKE 'SF6断路器%液压%'  ", filter);
-            return copyCount + "/" + totalCount;
-        } else {
-            long copyCount = CopyResultService.getInstance().getReportCopyCount(reportId);
-            long totalCount = CopyItemService.getInstance().getCopyItemCount(bdzId, getCopyType());
-            return copyCount + "/" + totalCount;
-        }
+        long copyCount = CopyResultService.getInstance().getReportCopyCount(reportId);
+        long totalCount = CopyItemService.getInstance().getCopyItemCount(bdzId, getCopyType());
+        return copyCount + "/" + totalCount;
     }
 
     @Override

@@ -13,7 +13,6 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.View.WeatherView1;
 import com.cnksi.sjjc.bean.Report;
@@ -135,11 +134,7 @@ public class CopyBaseDataActivity extends BaseActivity {
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
-                if (!Config.NEW_COPY) {
-                    startActivity(new Intent(_this, CopyAllValueActivity.class));
-                } else {
-                    startActivity(new Intent(_this, CopyAllValueActivity3.class));
-                }
+                startActivity(new Intent(_this, CopyAllValueActivity3.class));
                 break;
             case R.id.btn_back:
                 this.finish();

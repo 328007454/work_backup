@@ -39,8 +39,6 @@ public class HwcwService extends BaseService<ReportHwcw> {
         } catch (DbException e) {
             e.printStackTrace();
             return false;
-        } finally {
-            ModifyRecordService.getInstance().saveOrUpdateModifyRecord(bean.id, ReportHwcw.ID, "report_hwcw_frd", "update");
         }
     }
 

@@ -79,16 +79,10 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
                     mReport = ReportService.getInstance().findById(currentReportId);
                     bdzId = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_ID, "");
                     reportId = PreferencesUtils.getString(_this, Config.CURRENT_REPORT_ID, "");
-                    if (Config.NEW_COPY) {
-                        if (true) {
-                            listDevices = DeviceService.getInstance().getDevicesByNameWays1(bdzId, Config.DIFFERENTIAL_RECORD_KEY);
-                            for (CopyItem item : listDevices) {
-                                CdbhclValue.addObject(item, cdbhclValueList);
-                            }
-                        } else
-                            listDevice = DeviceService.getInstance().getDevicesByNameWays(bdzId, Config.DIFFERENTIAL_RECORD_KEY);
-                    } else
-                        listDevice = DeviceService.getInstance().getDevicesByName(bdzId, "差流");
+                    listDevices = DeviceService.getInstance().getDevicesByNameWays1(bdzId, Config.DIFFERENTIAL_RECORD_KEY);
+                    for (CopyItem item : listDevices) {
+                        CdbhclValue.addObject(item, cdbhclValueList);
+                    }
                     List<ReportCdbhcl> exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(bdzId, reportId);
                     if (null != exitCdbhclList && !exitCdbhclList.isEmpty()) {
                         for (ReportCdbhcl report : exitCdbhclList) {

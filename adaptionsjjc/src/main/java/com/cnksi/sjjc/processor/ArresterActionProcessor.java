@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.cnksi.core.utils.CToast;
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.View.ChartDialog;
-import com.cnksi.sjjc.activity.CopyAllValueActivity;
 import com.cnksi.sjjc.activity.CopyAllValueActivity3;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Device;
@@ -19,7 +17,6 @@ import com.cnksi.sjjc.bean.Standards;
 import com.cnksi.sjjc.service.CopyItemService;
 import com.cnksi.sjjc.service.CopyResultService;
 import com.cnksi.sjjc.service.DeviceService;
-import com.cnksi.sjjc.service.TaskService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -48,37 +45,22 @@ public class ArresterActionProcessor extends CopyDataInterface {
 
     @Override
     public List<DbModel> findAllDeviceHasCopyValue(String currentFunctionModel, String bdzId) throws DbException {
-        if (Config.NEW_COPY) {
-            String selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key in('"+getCopyType()+"') and dlt = '0' )";
-            return DeviceService.getInstance().findDeviceHasCopyValueBySelector(selector,bdzId);
-        } else {
-            return DeviceService.getInstance().findAllDeviceHasCopyValue(currentFunctionModel,
-                    bdzId, "避雷器");
-        }
+
+        String selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key in('" + getCopyType() + "') and dlt = '0' )";
+        return DeviceService.getInstance().findDeviceHasCopyValueBySelector(selector, bdzId);
     }
 
 
     @Override
-    public void gotoInspcetion(Activity activity) {
-        if (!Config.NEW_COPY)
-            activity.startActivity(new Intent(activity, CopyAllValueActivity.class));
-        else
-            activity.startActivity(new Intent(activity, CopyAllValueActivity3.class));
+    public void gotoInspection(Activity activity) {
+        activity.startActivity(new Intent(activity, CopyAllValueActivity3.class));
     }
 
     @Override
     public String getCopyResult(String bdzId) {
-
-
-        if (!Config.NEW_COPY) {
-            long copyCount = TaskService.getInstance().queryCopyData(reportId);
-            long totalCount = TaskService.getInstance().queryCopyDataTatal(bdzId, "避雷器", null);
-            return copyCount + "/" + totalCount;
-        } else {
-            long copyCount = CopyResultService.getInstance().getReportCopyCount(reportId);
-            long totalCount = CopyItemService.getInstance().getCopyItemCount(bdzId, getCopyType());
-            return copyCount + "/" + totalCount;
-        }
+        long copyCount = CopyResultService.getInstance().getReportCopyCount(reportId);
+        long totalCount = CopyItemService.getInstance().getCopyItemCount(bdzId, getCopyType());
+        return copyCount + "/" + totalCount;
     }
 
     @Override

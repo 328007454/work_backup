@@ -22,9 +22,6 @@ import com.cnksi.core.utils.SqliteUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.AnimalReportActivity;
-import com.cnksi.sjjc.activity.batteryactivity.BatteryTestActivity;
-import com.cnksi.sjjc.activity.batteryactivity.BatteryTestReportActivity;
-import com.cnksi.sjjc.activity.CopyAllValueActivity;
 import com.cnksi.sjjc.activity.CopyAllValueActivity3;
 import com.cnksi.sjjc.activity.CopyBaseDataActivity;
 import com.cnksi.sjjc.activity.CopyValueReportActivity;
@@ -33,13 +30,14 @@ import com.cnksi.sjjc.activity.GetSendLetterActivity;
 import com.cnksi.sjjc.activity.GetSendLetterReportActivity;
 import com.cnksi.sjjc.activity.HWCWMainActivity;
 import com.cnksi.sjjc.activity.HongWaiCeWenReportActivity;
-import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActivity;
 import com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity;
-import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.activity.NewTransformRecordActivity;
 import com.cnksi.sjjc.activity.PreventAnimalActivity;
 import com.cnksi.sjjc.activity.TaskRemindActivity;
-import com.cnksi.sjjc.activity.TransformAdjustmentRecordActivity;
+import com.cnksi.sjjc.activity.batteryactivity.BatteryTestActivity;
+import com.cnksi.sjjc.activity.batteryactivity.BatteryTestReportActivity;
+import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActivity;
+import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
 import com.cnksi.sjjc.adapter.TaskRemindAdapter;
 import com.cnksi.sjjc.bean.Bdz;
@@ -50,7 +48,6 @@ import com.cnksi.sjjc.enmu.TaskStatus;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.inter.OnFragmentEventListener;
 import com.cnksi.sjjc.service.BdzService;
-import com.cnksi.sjjc.service.ModifyRecordService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
@@ -306,7 +303,6 @@ public class TaskRemindFragment extends BaseCoreFragment {
                 String loginUser = PreferencesUtils.getString(getContext(), Config.CURRENT_LOGIN_USER, "");
                 report = new Report(task.taskid, task.bdzid, task.bdzname, task.inspection, loginUser);
                 ReportService.getInstance().saveOrUpdate(report);
-                ModifyRecordService.getInstance().saveOrUpdateModifyRecord(report.reportid, Report.REPORTID, ReportService.getInstance().getTable().getName(), Config.ModifyOperation.add.name());
             }
             PreferencesUtils.put(getActivity(), Config.CURRENT_TASK_ID, task.taskid);
             PreferencesUtils.put(getActivity(), Config.CURRENT_REPORT_ID, report.reportid);
@@ -338,10 +334,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         break;
                     //交直流分接开关
                     case SBJC_05:
-                        if (Config.NEW_COPY)
-                            intent.setClass(getContext(), NewTransformRecordActivity.class);
-                        else
-                            intent.setClass(getContext(), TransformAdjustmentRecordActivity.class);
+                        intent.setClass(getContext(), NewTransformRecordActivity.class);
                         break;
                     case SBJC_06_gas:
                     case SBJC_06_sf6:
@@ -350,10 +343,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         intent.setClass(getContext(), CopyBaseDataActivity.class);
                         break;
                     case SBJC_07:
-                        if (!Config.NEW_COPY)
-                            intent.setClass(getContext(), CopyAllValueActivity.class);
-                        else
-                            intent.setClass(getContext(), CopyAllValueActivity3.class);
+                        intent.setClass(getContext(), CopyAllValueActivity3.class);
                         break;
                     case SBJC_08:
                         intent.setClass(getContext(), CopyBaseDataActivity.class);
