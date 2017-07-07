@@ -470,7 +470,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                             break;
                         case safetytool:
                             SqlInfo sqlInfo = new SqlInfo("SELECT id,num,name,short_name,name_pinyin,status,bdz_id,bdz_name,next_check_time FROM gqj_info where dept_id=? and dlt=0 AND next_check_time is NOT NULL ORDER BY next_check_time limit 4;");
-                            sqlInfo.addBindArg(new KeyValue("dept_id", "12"));
+                            sqlInfo.addBindArg(new KeyValue("dept_id", PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "")));
                             try {
                                 safetyTools = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
                             } catch (DbException e) {
