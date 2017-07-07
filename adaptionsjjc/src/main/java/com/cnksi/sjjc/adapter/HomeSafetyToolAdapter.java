@@ -1,23 +1,18 @@
 package com.cnksi.sjjc.adapter;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ItemHomeSafetyToolBinding;
+import com.cnksi.sjjc.util.ActivityUtil;
 
 import org.xutils.db.table.DbModel;
 
 import java.util.List;
-
-import static com.cnksi.sjjc.bean.Users.DEPT_ID;
 
 /**
  * @version 1.0
@@ -29,16 +24,13 @@ import static com.cnksi.sjjc.bean.Users.DEPT_ID;
 public class HomeSafetyToolAdapter extends BaseLinearBindingAdapter<ItemHomeSafetyToolBinding, DbModel> {
     View lookMore;
 
-    public HomeSafetyToolAdapter(final Context context, List<DbModel> data, final LinearLayout container) {
+    public HomeSafetyToolAdapter(final Activity context, List<DbModel> data, final LinearLayout container) {
         super(context, data, container, R.layout.item_home_safety_tool);
         lookMore = LayoutInflater.from(context).inflate(R.layout.item_look_more, null, false);
         lookMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setComponent(new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.maintenance.SafetyToolsRemindActivity"));
-                intent.putExtra("dept_id", PreferencesUtils.get(CustomApplication.getAppContext(), DEPT_ID, ""));
-                context.startActivity(intent);
+                ActivityUtil.startSafetyRemindActivity(context);
             }
         });
     }

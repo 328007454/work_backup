@@ -230,7 +230,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         homePageBinding.homeInclude.deviceXunshi.setOnClickListener(this);
         homePageBinding.homeInclude.deviceWeihu.setOnClickListener(this);
         homePageBinding.homeInclude.deviceOperate.setOnClickListener(this);
-        homePageBinding.homeInclude.deviceUnify.setOnClickListener(this);
+        homePageBinding.homeInclude.safetyTool.setOnClickListener(this);
         homePageBinding.homeInclude.deviceDefect.setOnClickListener(this);
         homePageBinding.homeInclude.deviceCopy.setOnClickListener(this);
         homePageBinding.homeInclude.deviceTjwt.setOnClickListener(this);
@@ -287,14 +287,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.device_operate:
                 ActivityUtil.startOperateActivity(_this);
                 break;
-            //跳转到运维一体化
-            case R.id.device_unify:
-                ActivityUtil.startUnifyActivity(_this);
+            //跳转到安全工器具
+            case R.id.safety_tool:
+                ActivityUtil.startSafetyToolActivity(_this);
                 break;
             //跳转到设备缺陷
             case R.id.device_defect:
-//                CToast.showShort(mCurrentActivity, "工程师正在玩命开发中！敬请期待！");
-                ActivityUtil.startDefecControlActivity(_this);
+                ActivityUtil.startDefectControlActivity(_this);
                 break;
             //跳转到数据抄录
             case R.id.device_copy:

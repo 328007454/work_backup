@@ -51,8 +51,8 @@ public class ActivityUtil {
         ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
         Intent intent2 = new Intent();
         intent2.setComponent(componentName);
-        intent2.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
-        intent2.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent2.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
+        intent2.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
         activity.startActivity(intent2);
     }
 
@@ -61,12 +61,32 @@ public class ActivityUtil {
         ComponentName componentName1 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
         String typeName = InspectionType.operation.name();
         intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
-        intent1.putExtra(Config.CURRENT_LOGIN_USER, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
-        intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, (String) PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent1.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
+        intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
         intent1.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(activity, Config.CURRENT_DEPARTMENT_ID, ""));
         intent1.setComponent(componentName1);
         activity.startActivity(intent1);
     }
+
+    public static void startSafetyToolActivity(Activity activity) {
+        Intent intent = new Intent();
+        ComponentName componentName1 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.maintenance.SafetyBdzListActivity");
+        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(activity, Config.CURRENT_DEPARTMENT_ID, ""));
+        intent.setComponent(componentName1);
+        activity.startActivity(intent);
+    }
+
+    public static void startSafetyRemindActivity(Activity activity) {
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.maintenance.SafetyToolsRemindActivity"));
+        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(activity, Config.CURRENT_DEPARTMENT_ID, ""));
+        activity.startActivity(intent);
+    }
+
 
     public static void startShuJuJianCe(Activity activity) {
         Intent intent = new Intent(activity, TypeListActivity.class);
@@ -83,15 +103,14 @@ public class ActivityUtil {
 
     public static void startSync(Activity activity) {
         if (BuildConfig.USE_NETWORK_SYNC) {
-            KSyncConfig.getInstance()
-                    .startNetWorkSync(activity);
+            KSyncConfig.getInstance().startNetWorkSync(activity);
         } else {
             KSyncConfig.getInstance().startUsbWorkSync(activity);
         }
 
     }
 
-    public static void startDefecControlActivity(BaseActivity activity) {
+    public static void startDefectControlActivity(BaseActivity activity) {
         Intent intent = new Intent(activity, DefectControlActivity.class);
         activity.startActivity(intent);
     }
