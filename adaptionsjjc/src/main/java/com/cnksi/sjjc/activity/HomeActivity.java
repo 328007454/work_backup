@@ -469,7 +469,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                     findTaskListByLimit(3, InspectionType.maintenance.name(), InspectionType.switchover.name());
                             break;
                         case safetytool:
-                            SqlInfo sqlInfo = new SqlInfo("SELECT id,num,name,short_name,name_pinyin,status,bdz_id,bdz_name,next_check_time FROM gqj_info where dept_id=? and dlt=0 AND next_check_time is NOT NULL ORDER BY next_check_time limit 4;");
+                            String sql = "SELECT id,num,name,short_name,name_pinyin,status,bdz_id,bdz_name,next_check_time FROM gqj_info where dept_id=? and dlt=0 " +
+                                    "and status not in('inTest','stop') and  datetime(next_check_time, '-1 month') <= datetime('now', 'localtime', 'start of day') " +
+                                    " ORDER BY next_check_time limit 4;";
+                            SqlInfo sqlInfo = new SqlInfo(sql);
                             sqlInfo.addBindArg(new KeyValue("dept_id", PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "")));
                             try {
                                 safetyTools = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
