@@ -163,8 +163,7 @@
 
                         <com.cnksi.sjjc.View.UnderLineTextView
                             android:id="@+id/tv_operations"
-                            style="@style/UnderLineTextViewStyle"
-                            android:text="运维一体化" />
+                            style="@style/UnderLineTextViewStyle" />
                     </LinearLayout>
                 </LinearLayout>
 

@@ -471,7 +471,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         case safetytool:
                             String sql = "SELECT id,num,name,short_name,name_pinyin,status,bdz_id,bdz_name,next_check_time FROM gqj_info where dept_id=? and dlt=0 " +
                                     "and status not in('inTest','stop') and  datetime(next_check_time, '-1 month') <= datetime('now', 'localtime', 'start of day') " +
-                                    " ORDER BY next_check_time limit 4;";
+                                    " ORDER BY next_check_time limit 3;";
                             SqlInfo sqlInfo = new SqlInfo(sql);
                             sqlInfo.addBindArg(new KeyValue("dept_id", PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "")));
                             try {
