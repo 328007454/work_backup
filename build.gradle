@@ -12,15 +12,12 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
-    }
-}
+
 
 allprojects {
     repositories {
         maven { url 'http://mvn.cnksi.com/content/groups/public/' }
+        jcenter()
     }
 }
 
