@@ -141,6 +141,8 @@ public class KSyncConfig {
             DbModel model = CustomApplication.getDbManager().findDbModelFirst(info);
             if (model != null) {
                 downFolder.add("admin/" + model.getString("short_name_pinyin")+"/apk");
+                downFolder.add("admin/" + model.getString("short_name_pinyin")+"/gqj");
+                uploadFolder.add("admin/" + model.getString("short_name_pinyin")+"/gqj");
             }
         } catch (DbException e) {
             e.printStackTrace();
