@@ -1,19 +1,13 @@
 package com.cnksi.core.activity;
 
-import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
-import android.os.RemoteException;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +18,6 @@ import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.common.UpdateInfor;
 import com.cnksi.core.okhttp.OkHttpUtils;
 import com.cnksi.core.okhttp.callback.Callback;
-import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.FunctionUtils;
@@ -32,20 +25,13 @@ import com.cnksi.core.utils.NetWorkUtil;
 import com.cnksi.core.utils.PermissionsChecker;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.UpdateUtils;
-import com.cnksi.core.utils.VPNUtils;
 import com.cnksi.core.view.CustomerDialog;
-
-import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
-import de.blinkt.openvpn.api.APIVpnProfile;
-import de.blinkt.openvpn.api.IOpenVPNAPIService;
-import de.blinkt.openvpn.api.IOpenVPNStatusCallback;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -199,111 +185,27 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
         }
     }
 
-    protected IOpenVPNAPIService mVPNService = null;
-    protected ServiceConnection mVPNConnection = null;
-    protected IOpenVPNStatusCallback mVPNCallback = null;
-    private boolean isStartedVPN = false;
+
+
     protected String mStartUUID = "";
 
-    /**
-     * 初始化ServiceConnection
-     *
-     * @throws Exception
-     */
-    protected void initServiceConnection(final String ovpnAssetsFile, String vpnAPKFilePath) throws Exception {
-        if (AppUtils.isAppInstalled(mCurrentActivity, CoreConfig.OPEN_VPN_PACKAGE_NAME)) {
-            if (!isStartedVPN) {
-                mVPNConnection = new ServiceConnection() {
-                    public void onServiceConnected(ComponentName className, IBinder service) {
-                        mVPNService = IOpenVPNAPIService.Stub.asInterface(service);
-                        try {
-                            Intent intent = mVPNService.prepare(getPackageName());
-                            if (intent != null) {
-                                startActivityForResult(intent, CoreConfig.ICS_OPENVPN_PERMISSION);
-                            } else {
-                                onActivityResult(CoreConfig.ICS_OPENVPN_PERMISSION, Activity.RESULT_OK, null);
-
-                                try {
-                                    isStartedVPN = VPNUtils.startVPN(mCurrentActivity, mVPNService, ovpnAssetsFile);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    public void onServiceDisconnected(ComponentName className) {
-                        mVPNService = null;
-                        isStartedVPN = false;
-                    }
-                };
-                VPNUtils.bindVpnAPIService(mCurrentActivity, mVPNConnection);
-            }
-        } else {
-            AppUtils.installAPK(mCurrentActivity, vpnAPKFilePath);
-            this.finish();
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == CoreConfig.ICS_OPENVPN_PERMISSION) {
-                try {
-                    if (mVPNService != null) {
-                        List<APIVpnProfile> vpnProfileList = mVPNService.getProfiles();
-                        if (vpnProfileList != null && !vpnProfileList.isEmpty()) {
-                            mStartUUID = vpnProfileList.get(0).mUUID;
-                        }
-                        mVPNService.registerStatusCallback(new IOpenVPNStatusCallback.Stub() {
-                            @Override
-                            public void newStatus(String uuid, String state, String message, String level) throws RemoteException {
-                                JSONObject jsonObj = new JSONObject();
-                                try {
-                                    jsonObj.put("VPNuuid", uuid);
-                                    jsonObj.put("VPNstate", state);
-                                    jsonObj.put("VPNmessage", message);
-                                    jsonObj.put("VPNlevel", level);
-                                } catch (Exception e) {
-                                }
-                                mHandler.sendMessage(mHandler.obtainMessage(CoreConfig.ICS_OPENVPN_MESSAGE_CODE, jsonObj.toString()));
-                            }
-                        });
-                        if (!TextUtils.isEmpty(mStartUUID)) {
-                            Intent requestpermission = mVPNService.prepareVPNService();
-                            if (requestpermission == null) {
-                                onActivityResult(CoreConfig.START_PROFILE_BYUUID, Activity.RESULT_OK, null);
-                            } else {
-                                startActivityForResult(requestpermission, CoreConfig.START_PROFILE_BYUUID);
-                            }
-                        }
-                    }
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-            } else if (requestCode == CoreConfig.START_PROFILE_BYUUID) {
-                try {
-                    mVPNService.startProfile(mStartUUID);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+            if (requestCode == PermissionActivity.REQUEST_PERMISSION_CODE && resultCode == PermissionActivity.PERMISSIONS_DENIED) {
+                // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+                compeletlyExitSystem();
+            } else if (requestCode == PermissionActivity.REQUEST_PERMISSION_CODE && resultCode == PermissionActivity.PERMISSIONS_GRANTED) {
+                isCheckPermission = true;
+                //获得权限后的操作
+                afterGrantedPermissions();
             }
-        } else if (requestCode == PermissionActivity.REQUEST_PERMISSION_CODE && resultCode == PermissionActivity.PERMISSIONS_DENIED) {
-            // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
-            compeletlyExitSystem();
-        } else if (requestCode == PermissionActivity.REQUEST_PERMISSION_CODE && resultCode == PermissionActivity.PERMISSIONS_GRANTED) {
-            isCheckPermission = true;
-            //获得权限后的操作
-            afterGrantedPermissions();
         }
     }
 
-    protected void checkUpdateVersion(final String downloadFolder, String downloadFileName) {
-//        checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mCurrentActivity, CoreConfig.PROGRAM_APP_CODE));
-    }
+
 
     private boolean isPms = false;
 

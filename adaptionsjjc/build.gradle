@@ -8,6 +8,37 @@ def uuid() {
     return "---" + UUID.randomUUID().toString();
 }
 
+def branch() {
+    try {
+        Process process = Runtime.getRuntime().exec("git status")
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        String matchBranch = "On branch "
+        String matchTag = "HEAD detached at "
+        while ((line = bufferedReader.readLine()) != null) {
+            int index = line.indexOf(matchBranch)
+            if (index >= 0) index += matchBranch.length()
+            else if (index < 0) index = line.indexOf(matchTag)
+            if (index >= 0) index += matchTag.length()
+            if (index >= 0) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = index; i < line.length(); i++) {
+                    char c = line.charAt(i);
+                    if (c == ' ')
+                        if (sb.length == 0) continue
+                        else {
+                            return sb.toString()
+                        }
+                    sb.append(c);
+                }
+                return sb.toString();
+            }
+        }
+    } catch (Exception e) {
+        return "unknown";
+    }
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -16,8 +47,8 @@ android {
         applicationId "com.cnksi.sjjc"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 24
-        versionName "2.3"
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
         vectorDrawables.useSupportLibrary = true
     }
     dataBinding {
@@ -30,9 +61,6 @@ android {
             storeFile file("kingston.keystore")
             storePassword "kingston"
         }
-        debug {
-            //No debug
-        }
     }
     // 移除lint检查的error
     lintOptions {
@@ -42,8 +70,8 @@ android {
         release {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
             buildConfigField "boolean", "LOG_DEBUG", "false"
-            buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
-            buildConfigField "String", "SYNC_URL", "\"http://127.0.0.1:58888\""
+            buildConfigField "String", "SYNC_APP_ID", "\"${SYNC_APP_ID}\""
+            buildConfigField "String", "SYNC_URL", "\"${SYNC_URL}\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -53,17 +81,17 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
+
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        if (variant.buildType.name == "release") {
-                            // 输出apk名称
-                            def fileName = "sjjc_${defaultConfig.versionName}_release_${releaseTime()}.apk"
-                            output.outputFile = new File("E:\\CompanyProjectNew\\SJJCAPK", fileName)
+                        def fileName
+                        if (variant.buildType.name == "release")
+                            fileName = "sjjc_${defaultConfig.versionName}_release_${releaseTime()}_(${branch()}).apk"
+                        else fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
+                        if ("true" == JENKINS) {
+                            output.outputFile = new File("buildAPK", fileName)
                         } else {
-                            // 输出apk名称
-                            def fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
                             output.outputFile = new File("E:\\CompanyProjectNew\\SJJCAPK", fileName)
                         }
-
                     }
                 }
             }
@@ -76,14 +104,14 @@ android {
         }
     }
 
-    //需要编译的源码
+//需要编译的源码
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
             java.srcDirs = ['src/main/java']
         }
     }
-    //打开泛型和过时API编译报警�?相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391
+//打开泛型和过时API编译报警�?相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391
     tasks.withType(JavaCompile) {
         //-Xlint:none 关闭所有警�?
 //        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
