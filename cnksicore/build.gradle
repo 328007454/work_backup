@@ -9,12 +9,6 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        ndk {
-            moduleName "encrypt"  //设置�?so)文件名称
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
-            //输出指定三种abi体系结构下的so�?如果没有这句的话，lib下面就没有so文件
-            ldLibs "log" //增加log的lib�?
-        }
     }
     buildTypes {
         release {
