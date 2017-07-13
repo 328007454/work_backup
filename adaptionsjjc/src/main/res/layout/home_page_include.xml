@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class="">
 
@@ -35,7 +35,7 @@
                     android:layout_marginTop="30px"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/icon_tour" />
+                    app:srcCompat="@mipmap/icon_tour" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                     android:layout_marginTop="30px"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/icon_operate" />
+                    app:srcCompat="@mipmap/icon_operate" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
                     android:layout_marginTop="30px"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/icon_unify" />
+                    app:srcCompat="@mipmap/launch_safety_tool" />
 
                 <TextView
                     android:layout_width="wrap_content"

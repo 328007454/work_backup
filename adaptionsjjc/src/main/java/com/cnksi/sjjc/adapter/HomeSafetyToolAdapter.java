@@ -1,6 +1,9 @@
 package com.cnksi.sjjc.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -37,10 +40,32 @@ public class HomeSafetyToolAdapter extends BaseLinearBindingAdapter<ItemHomeSafe
 
     @Override
     public void convert(ItemHomeSafetyToolBinding holder, DbModel item, int position) {
+        holder.tvToolName.setText(item.getString("name"));
+        String num = item.getString("num");
+        holder.tvSerial.setText("编号：" + ("-1".equals(num) ? "" : num));
         String date = DateUtils.formatDateTime(item.getString("next_check_time"), "yyyy/MM/dd");
-        holder.tvDate.setText(date);
-        holder.tvName.setText(item.getString("name"));
-        holder.tvNum.setText(item.getString("num"));
+        holder.tvDate.setText("下次试验时间：" + (TextUtils.isEmpty(date) ? "未知" : date));
+        if ("-1".equals(item.getString("bdz_id"))) {
+            holder.tvBdzShort.setText("班");
+        } else
+            holder.tvBdzShort.setText(getShortName(item.getString("bdz_name")));
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.OVAL);
+        drawable.setColor(Color.parseColor("#fd6067"));
+        holder.tvBdzShort.setBackground(drawable);
+    }
+
+    private String getShortName(String bdzName) {
+        if (TextUtils.isEmpty(bdzName)) {
+            return "变";
+        } else {
+            for (char c : bdzName.toCharArray()) {
+                if (c >= '\u4e00' && c <= '\u9fa5') {
+                    return String.valueOf(c);
+                }
+            }
+            return String.valueOf(bdzName.charAt(0));
+        }
     }
 
     @Override

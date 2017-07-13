@@ -26,9 +26,20 @@
         <!--<attr name="indicator_animator" format="reference" />-->
         <!--<attr name="indicator_animator_reverse" format="reference" />-->
     </declare-styleable>
+
+
+    <attr name="lineColor" format="color" />
+    <attr name="lineHeight" />
     <declare-styleable name="UnderLineTextView">
-        <attr name="lineColor" format="color" />
-        <attr name="lineHeight" format="dimension" />
+        <attr name="lineColor" />
+        <attr name="lineHeight" />
         <attr name="textSelectColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="UnderLineLinearLayout">
+        <attr name="drawUnderLine" format="boolean" />
+        <attr name="marginLeft" format="dimension" />
+        <attr name="marginRight" format="dimension" />
+        <attr name="lineColor" />
+        <attr name="lineHeight" />
     </declare-styleable>
 </resources>

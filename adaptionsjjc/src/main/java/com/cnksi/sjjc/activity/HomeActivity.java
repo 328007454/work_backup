@@ -258,7 +258,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
         safetyToolAdapter = new HomeSafetyToolAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
-//        loadData();
     }
 
     @Override
