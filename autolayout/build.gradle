@@ -44,9 +44,6 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
