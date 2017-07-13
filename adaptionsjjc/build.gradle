@@ -18,8 +18,10 @@ def branch() {
         while ((line = bufferedReader.readLine()) != null) {
             int index = line.indexOf(matchBranch)
             if (index >= 0) index += matchBranch.length()
-            else if (index < 0) index = line.indexOf(matchTag)
-            if (index >= 0) index += matchTag.length()
+            else if (index < 0) {
+                index = line.indexOf(matchTag)
+                if (index >= 0) index += matchTag.length()
+            }
             if (index >= 0) {
                 StringBuilder sb = new StringBuilder();
                 for (int i = index; i < line.length(); i++) {
@@ -81,7 +83,6 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
-
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def fileName
                         if (variant.buildType.name == "release")
