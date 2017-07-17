@@ -89,7 +89,7 @@ android {
                             fileName = "sjjc_${defaultConfig.versionName}_release_${releaseTime()}_(${branch()}).apk"
                         else fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
                         if ("true" == JENKINS) {
-                            output.outputFile = new File("buildAPK", fileName)
+                            output.outputFile = new File("..\\buildAPK", fileName)
                         } else {
                             output.outputFile = new File("E:\\CompanyProjectNew\\SJJCAPK", fileName)
                         }
