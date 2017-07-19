@@ -217,6 +217,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
     private void setButtonStyle(boolean enabled) {
         if (!enabled) {
             mSyncInfos.clear();
+            mSyncInfoAdapter.notifyDataSetChanged();
             binding.tvInfoLabel.setText("同步日志");
         }
         binding.tvUpload.setEnabled(enabled);
