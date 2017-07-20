@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -129,8 +128,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_login);
         x.view().inject(_this);
-        initUI();
-        initData();
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, permissions);
     }
 
@@ -181,11 +178,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     }
 
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-    }
-
     private void initUI() {
         //设置版本信息
         mTvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(_this)));
@@ -206,18 +198,16 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
             @Override
             public void afterTextChanged(final Editable s) {
-                if (isGrantPermission)
-                    mFixedThreadPoolExecutor.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            usersName = UserService.getInstance().searchUsersName(s.toString());
-                            mHandler.sendEmptyMessage(LOAD_DATA);
-                        }
-                    });
+                mFixedThreadPoolExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        usersName = UserService.getInstance().searchUsersName(s.toString());
+                        mHandler.sendEmptyMessage(LOAD_DATA);
+                    }
+                });
             }
         });
         if (BuildConfig.DEBUG) {
-            autoCompleteTextView.setText("Zhangys3210");
             mEtPassword.setText("1");
         }
 
@@ -557,6 +547,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     public void allPermissionsGranted() {
         PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
         CustomApplication.getInstance().initApp();
+        initUI();
+        initData();
         LocationUtil.getInstance().preSearchGps(mCurrentActivity);
         isGrantPermission = true;
     }
