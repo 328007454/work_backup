@@ -392,7 +392,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     protected void onResume() {
         super.onResume();
         //清空当前登录信息
-        KSyncConfig.getInstance().setDept_id("-1");
+        if (isGrantPermission)
+            KSyncConfig.getInstance().setDept_id("-1");
         onClick(findViewById(R.id.ib_delete1));
         onClick(findViewById(R.id.ib_delete2));
     }
