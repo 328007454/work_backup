@@ -119,4 +119,28 @@ public class StringUtils {
         return String.valueOf((float) (Math.round(tempFloat * 100)) / 100);
     }
 
+    /**
+     * 获取三位小数点
+     */
+    public static String getTransformTep(String temperature,int num) {
+        Double tempFloat = 0.0d;
+        int sum =1;
+        try {
+            tempFloat = new Double(temperature);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "";
+        }
+        if (tempFloat == 0.0f)
+            return "0.0";
+        if (!temperature.contains("."))
+            return temperature;
+
+        for(int i=1;i<=num;i++){
+            sum = sum*10;
+        }
+
+        return String.valueOf((float) (Math.round(tempFloat * sum)) / sum);
+    }
+
 }

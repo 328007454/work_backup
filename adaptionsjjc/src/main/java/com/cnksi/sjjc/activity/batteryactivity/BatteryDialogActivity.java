@@ -410,10 +410,10 @@ public class BatteryDialogActivity extends AppCompatActivity {
                 if (null != batteryRecord) {
                     String imageStr = StringUtils.ArrayListToString(exitImageList);
                     if (batteryCheckType == 0) {
-                        batteryRecord.voltage = com.cnksi.sjjc.util.StringUtils.getTransformTep(value);
+                        batteryRecord.voltage = com.cnksi.sjjc.util.StringUtils.getTransformTep(value,3);
                         batteryRecord.voltageImages = imageStr;
                     } else {
-                        batteryRecord.resistance = com.cnksi.sjjc.util.StringUtils.getTransformTep(value);
+                        batteryRecord.resistance = com.cnksi.sjjc.util.StringUtils.getTransformTep(value,3);
                         batteryRecord.resistanceImages = imageStr;
                     }
                     batteryRecord.last_modify_time = DateUtils.getCurrentLongTime();
