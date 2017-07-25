@@ -481,10 +481,33 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
     }
 
+    private boolean thirdLogin() {
+        Bundle bundle = getIntent().getExtras();
+        if (null != bundle) {
+            String account = bundle.getString("account", "");
+            String password = bundle.getString("pwd", "");
+            if (TextUtils.isEmpty("account") || TextUtils.isEmpty("pwd")) return false;
+            Users user = UserService.getInstance().findUserByNameAndPwd(account, password);
+            if (null != user) {
+                PreferencesUtils.put(this, Config.CURRENT_LOGIN_USER, user.username);
+                PreferencesUtils.put(this, Config.CURRENT_LOGIN_ACCOUNT, user.account);
+                //保存登录班组和账号
+                PreferencesUtils.put(this, Config.CURRENT_DEPARTMENT_ID, user.dept_id);
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
+                return true;
+            } else {
+                CToast.showLong(this, "第三方登录拉起失败，Error：用户名或者密码错误");
+                return false;
+            }
+        }
+        return false;
+    }
 
     /**
      * 进入系统
      */
+
     private void loginSystem() {
         String username = "";
         String userAccount = "";
@@ -547,10 +570,12 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     @Override
     public void allPermissionsGranted() {
         PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
+        LocationUtil.getInstance().preSearchGps(mCurrentActivity);
         CustomApplication.getInstance().initApp();
+        isGrantPermission = true;
+        if (thirdLogin()) return;
         initUI();
         initData();
-        LocationUtil.getInstance().preSearchGps(mCurrentActivity);
-        isGrantPermission = true;
+
     }
 }
