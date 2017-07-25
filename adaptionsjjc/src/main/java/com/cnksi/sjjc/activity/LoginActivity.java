@@ -486,13 +486,14 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         if (null != bundle) {
             String account = bundle.getString("account", "");
             String password = bundle.getString("pwd", "");
-            if (TextUtils.isEmpty("account") || TextUtils.isEmpty("pwd")) return false;
+            if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) return false;
             Users user = UserService.getInstance().findUserByNameAndPwd(account, password);
             if (null != user) {
                 PreferencesUtils.put(this, Config.CURRENT_LOGIN_USER, user.username);
                 PreferencesUtils.put(this, Config.CURRENT_LOGIN_ACCOUNT, user.account);
                 //保存登录班组和账号
                 PreferencesUtils.put(this, Config.CURRENT_DEPARTMENT_ID, user.dept_id);
+                KSyncConfig.getInstance().setDept_id(user.dept_id);
                 startActivity(new Intent(this, HomeActivity.class));
                 finish();
                 return true;
