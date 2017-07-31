@@ -298,7 +298,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
     private void setTime(String serverTimeStr) {
         if (!TextUtils.isEmpty(serverTimeStr)) {
             try {
