@@ -47,7 +47,6 @@ import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.PlacedService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
-import com.cnksi.sjjc.sync.KSyncConfig;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.TTSUtils;
@@ -580,7 +579,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 DialogUtils.createTipsDialog(mCurrentActivity, "检测到本地设备数据为空，是否需要同步数据？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        KSyncConfig.getInstance().startNetWorkSync(mCurrentActivity);
+                        ActivityUtil.startSync(mCurrentActivity);
                     }
                 }, false).show();
             }
