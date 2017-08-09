@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,14 +99,17 @@ public class TourFragment extends BaseCoreFragment {
     public void toTaskPlan(String inspectionType) {
         CustomApplication.closeDbConnection();
         Intent intent = new Intent();
-        ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
-        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionType);
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_ACCOUNT, ""));
         intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(mCurrentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, ""));
-        intent.setComponent(componentName4);
+        if (TextUtils.isEmpty(inspectionType)) {
+            ComponentName componentName5 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.nari.NariActivity");
+            intent.setComponent(componentName5);
+        } else {
+            ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionType);
+            intent.setComponent(componentName4);
+        }
         startActivity(intent);
     }
-
-
 }

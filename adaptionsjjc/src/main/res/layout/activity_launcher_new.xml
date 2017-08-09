@@ -18,7 +18,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="40px"
+            android:layout_height="31px"
             android:background="#f0f0f0" />
 
         <View
@@ -39,11 +39,7 @@
             android:layout_height="2px"
             android:background="#e0e0e0" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="75px"
-            android:background="#f0f0f0"
-            android:visibility="gone" />
+
 
         <RelativeLayout
             android:id="@+id/main_radioGroupLL"
@@ -56,14 +52,14 @@
             <View
                 android:id="@+id/main_line_textView"
                 android:layout_width="match_parent"
-                android:layout_height="3px"
+                android:layout_height="1px"
                 android:layout_alignParentTop="true"
                 android:background="#dfdfdf" />
 
             <com.zhy.autolayout.AutoRadioGroup
                 android:id="@+id/main_radioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="165px"
+                android:layout_height="163px"
                 android:layout_gravity="left|bottom"
                 android:background="@color/new_launcher_bottom_back"
                 android:gravity="center"
