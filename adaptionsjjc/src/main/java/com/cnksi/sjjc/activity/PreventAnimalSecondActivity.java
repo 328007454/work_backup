@@ -193,7 +193,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
             public void onClick(View view) {
                 try {
                     preventionRecord.mousetrapInfo = etMouseInfo.getText().toString();
-                    preventionRecord.clearInfo=tvClear.getText().toString().trim();
+                    preventionRecord.clearInfo = tvClear.getText().toString().trim();
                     preventionRecord.last_modify_time = DateUtils.getCurrentLongTime();
                     PreventionService.getInstance().saveOrUpdate(preventionRecord);
                     report.endtime = DateUtils.getCurrentLongTime();
@@ -272,13 +272,15 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                 if (currentReportId.equals(record.reportId)) {
                     if (countCurrentReportId >= 1)
                         problemPosition = problemPosition + "\n";
-                    problemPosition += ++countCurrentReportId +"、"+ record.location + "_" + record.hole_detail + "_" + record.problem;
+                    problemPosition += ++countCurrentReportId + "、" + record.location + "_" + record.hole_detail + "_" + record.problem;
                 }
                 if (currentReportId.equals(record.clear_reportid) && "1".equals(record.status)) {
                     if (i >= 1)
                         morePostion = morePostion + "\n";
-                    morePostion += ++i + "、" + record.location + "_" + record.hole_detail+ "_" + record.problem+"_"+"已清除";
+                    morePostion += ++i + "、" + record.location + "_" + record.hole_detail + "_" + record.problem + "_" + "已清除";
                 }
+                if (null != preventionRecord && !TextUtils.isEmpty(preventionRecord.clearInfo))
+                    morePostion = preventionRecord.clearInfo;
             }
             if (problemPosition.endsWith(",")) {
                 problemPosition = problemPosition.substring(0, problemPosition.length() - 1);

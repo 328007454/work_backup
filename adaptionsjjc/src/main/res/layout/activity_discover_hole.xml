@@ -174,7 +174,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:paddingLeft="20px"
-                android:text="详细位置"
+                android:text="问题描述"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/tv_text_size" />
 

@@ -70,7 +70,7 @@ android {
     }
     buildTypes {
         release {
-            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
+            buildConfigField 'boolean', "USE_NETWORK_SYNC", "false";
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "SYNC_APP_ID", "\"${SYNC_APP_ID}\""
             buildConfigField "String", "SYNC_URL", "\"${SYNC_URL}\""
