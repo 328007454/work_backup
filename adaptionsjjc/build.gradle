@@ -98,7 +98,7 @@ android {
             }
         }
         debug {
-            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
+            buildConfigField 'boolean', "USE_NETWORK_SYNC", "false";
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
             buildConfigField "String", "SYNC_URL", "\"http://127.0.0.1:58888\""
