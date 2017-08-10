@@ -279,7 +279,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                         morePostion = morePostion + "\n";
                     morePostion += ++i + "、" + record.location + "_" + record.hole_detail + "_" + record.problem + "_" + "已清除";
                 }
-                if (null != preventionRecord && TextUtils.isEmpty(preventionRecord.clearInfo))
+                if (null != preventionRecord && !TextUtils.isEmpty(preventionRecord.clearInfo))
                     morePostion = preventionRecord.clearInfo;
             }
             if (problemPosition.endsWith(",")) {
