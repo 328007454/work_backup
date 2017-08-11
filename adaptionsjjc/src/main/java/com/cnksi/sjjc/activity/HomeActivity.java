@@ -94,12 +94,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private Dialog mPowerStationDialog = null;
     private AppVersion remoteSjjcAppVersion;
     private AppVersion remoteXunshiAppVersion;
+    long time1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changedStatusColor();
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+        checkIsNeedSync();
+        initUI();
+        initUpdateSystem();
+        initTabs();
+        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -107,16 +113,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 try {
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
+                    CustomApplication.getDbManager().execNonQuery("create index if not exists  'report_deviceid' on defect_record (`reportid`, `deviceid`)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        initUI();
-        initUpdateSystem();
-        initTabs();
-        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
-        checkIsNeedSync();
+
     }
 
     private void initUpdateSystem() {
