@@ -113,8 +113,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 try {
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
+                    CustomApplication.getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");
                     CustomApplication.getDbManager().execNonQuery("create index if not exists  'report_deviceid' on defect_record (`reportid`, `deviceid`)");
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_spic_deviceid_type on device(bdzid,spid,device_type)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_kind on standard_special(kind)");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
