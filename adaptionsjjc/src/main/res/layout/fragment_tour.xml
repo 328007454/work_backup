@@ -478,6 +478,7 @@
             android:gravity="center"
             android:onClick='@{()->event.toTaskPlan("")}'
             android:text="获取PMS计划"
+            android:visibility="gone"
             android:textColor="#05c8b8"
             android:textSize="44px" />
 
