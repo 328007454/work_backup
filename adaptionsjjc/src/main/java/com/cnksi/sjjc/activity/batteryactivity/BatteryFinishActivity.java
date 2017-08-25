@@ -194,7 +194,6 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
                 startActivity(intent);
                 ScreenManager.getScreenManager().popActivity(BatteryTestActivity.class);
                 isNeedUpdateTaskState = true;
-                this.finish();
             default:
                 break;
         }

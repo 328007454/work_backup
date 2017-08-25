@@ -1,8 +1,9 @@
 package com.cnksi.core.common;
 
-import java.util.Stack;
-
 import android.app.Activity;
+
+import java.util.Iterator;
+import java.util.Stack;
 
 public class ScreenManager {
 	private static Stack<Activity> activityStack;
@@ -25,8 +26,6 @@ public class ScreenManager {
 	public void popActivity(Activity activity) {
 		if (activity != null) {
 			activity.finish();
-			activityStack.remove(activity);
-			activity = null;
 		}
 	}
 
@@ -76,9 +75,12 @@ public class ScreenManager {
 
 	public void popActivity(Class<?> cls) {
 		if (activityStack != null && !activityStack.isEmpty()) {
-			for (Activity tempActivity : activityStack) {
-				if (tempActivity.getClass().equals(cls)) {
-					popActivity(tempActivity);
+			Iterator<Activity> activityIterator =  activityStack.iterator();
+			while (activityIterator.hasNext()){
+				Activity activity = activityIterator.next();
+				if(activity.getClass().equals(cls)){
+					activityIterator.remove();
+					popActivity(activity);
 				}
 			}
 		}

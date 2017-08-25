@@ -143,8 +143,8 @@ public class NewLauncherActivity extends BaseActivity {
                                 Bdz bdz = BdzService.getInstance().findById(bdzid);
                                 if (bdz != null) {
                                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
-                                    PreferencesUtils.put(_this,Config.LOCATION_BDZID,bdz.bdzid);
-                                    PreferencesUtils.put(_this,Config.LOCATION_BDZNAME,bdz.name);
+                                    PreferencesUtils.put(_this, Config.LOCATION_BDZID, bdz.bdzid);
+                                    PreferencesUtils.put(_this, Config.LOCATION_BDZNAME, bdz.name);
                                     break;
                                 }
                             } catch (DbException e) {
@@ -176,10 +176,12 @@ public class NewLauncherActivity extends BaseActivity {
                             public void run() {
                                 launcherBinding.lancherTitle.txtTeam.setText(department.name);
                                 initBDZDialog();
-                                launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty()?"":bdzList.get(0).name);
-                                PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
-                                PreferencesUtils.put(_this,Config.LOCATION_BDZID,bdzList.get(0).bdzid);
-                                PreferencesUtils.put(_this,Config.LOCATION_BDZNAME,bdzList.get(0).name);
+                                if (bdzList.isEmpty()) {
+                                    launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
+                                    PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
+                                    PreferencesUtils.put(_this, Config.LOCATION_BDZID, bdzList.get(0).bdzid);
+                                    PreferencesUtils.put(_this, Config.LOCATION_BDZNAME, bdzList.get(0).name);
+                                }
                             }
                         });
                 } catch (DbException e) {
@@ -252,8 +254,8 @@ public class NewLauncherActivity extends BaseActivity {
                 if (!bdz.name.contains("未激活")) {
                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
                     PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
-                    PreferencesUtils.put(_this,Config.LOCATION_BDZID,bdz.bdzid);
-                    PreferencesUtils.put(_this,Config.LOCATION_BDZNAME,bdz.name);
+                    PreferencesUtils.put(_this, Config.LOCATION_BDZID, bdz.bdzid);
+                    PreferencesUtils.put(_this, Config.LOCATION_BDZNAME, bdz.name);
                     mPowerStationDialog.dismiss();
                     locationHelper.stop();
                 } else
