@@ -128,7 +128,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("maintenance_xdcdyjc".equalsIgnoreCase(type)){
+                if("maintenance_xdcdyjc".equalsIgnoreCase(type)&&!getIntent().getBooleanExtra(Config.IS_FROM_SJJC,false)){
                     PreferencesUtils.put(_this,Config.CURRENT_MAINTANENCE_BATTERY,"");
                     Intent intent = new Intent();
                     ComponentName componentName;
@@ -136,7 +136,6 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                     intent.setComponent(componentName);
                     intent.putExtra(Config.CURRENT_INSPECTION_TYPE,currentInspectionType);
                     startActivity(intent);
-                    BatteryTestReportActivity.this.finish();
                 }
                 onBackPressed();
             }
@@ -266,6 +265,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
         switch (v.getId()) {
             case R.id.continue_inspection:
                 Intent intent = new Intent(this,BatteryTestActivity.class);
+                intent.putExtra(Config.IS_FROM_SJJC,getIntent().getBooleanExtra(Config.IS_FROM_SJJC,false));
                 startActivity(intent);
                 this.finish();
                 break;

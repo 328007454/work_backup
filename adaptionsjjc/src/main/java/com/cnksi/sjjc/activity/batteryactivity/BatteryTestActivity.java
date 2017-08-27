@@ -251,7 +251,7 @@ public class BatteryTestActivity extends BaseActivity {
                     e.printStackTrace();
                     Log.i("BatteryTestActivity", "返回键数据保存出错");
                 }
-                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done")) {
+                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done")&&!getIntent().getBooleanExtra(Config.IS_FROM_SJJC,false)) {
                     PreferencesUtils.put(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
                     Intent intent = new Intent();
                     ComponentName componentName;

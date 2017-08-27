@@ -134,6 +134,7 @@ public class Config extends CoreConfig {
     public static final String LOCATION_BDZID = "location_bdzId";
     public static final String LOCATION_BDZNAME = "location_bdzName";
     public static final String IS_AREADY_UPDATE = "isAreadyUpdate";
+    public static final String IS_FROM_SJJC ="isFromSJJC" ;
 
     public static String CURRENT_AREA = "lz";
 

@@ -56,6 +56,7 @@ public class ScreenManager {
 			if (activity.getClass().equals(cls)) {
 				break;
 			}
+			activityStack.remove(activity);
 			popActivity(activity);
 		}
 	}
