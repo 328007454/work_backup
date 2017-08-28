@@ -169,6 +169,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
             Intent intent = new Intent();
             intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(context, Config.CURRENT_LOGIN_USER, ""));
             intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(context, Config.CURRENT_LOGIN_ACCOUNT, ""));
+            intent.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(mCurrentActivity,Config.CURRENT_DEPARTMENT_ID,""));
             ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);
             intent.setComponent(componentName);
