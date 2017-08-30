@@ -213,6 +213,7 @@ public class BatteryTestActivity extends BaseActivity {
             PreferencesUtils.put(_this, Config.CURRENT_TASK_ID, currentTaskId);
             PreferencesUtils.put(_this, Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
             PreferencesUtils.put(_this, Config.CURRENT_INSPECTION_NAME, InspectionType.get(currentInspectionType).value);
+            PreferencesUtils.put(_this, Config.IS_FROM_PMS, true);
         }
         getIntentValue();
         inspectionType = InspectionType.get(currentInspectionType);
@@ -231,8 +232,11 @@ public class BatteryTestActivity extends BaseActivity {
         tvRight.setText("完成检测");
         tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
         tvRight.setTextColor(Color.WHITE);
-        if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, ""))) {
+        if (PreferencesUtils.get(_this, Config.IS_FROM_PMS, true)) {
             tvRight.setVisibility(View.GONE);
+        } else {
+            tvRight.setVisibility(View.VISIBLE);
+            PreferencesUtils.put(_this, Config.IS_FROM_PMS, false);
         }
         tvTitle.setText(inspectionType.value);
         btnBack.setOnClickListener(new View.OnClickListener() {
