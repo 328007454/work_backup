@@ -231,6 +231,9 @@ public class BatteryTestActivity extends BaseActivity {
         tvRight.setText("完成检测");
         tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
         tvRight.setTextColor(Color.WHITE);
+        if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, ""))) {
+            tvRight.setVisibility(View.GONE);
+        }
         tvTitle.setText(inspectionType.value);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,7 +254,7 @@ public class BatteryTestActivity extends BaseActivity {
                     e.printStackTrace();
                     Log.i("BatteryTestActivity", "返回键数据保存出错");
                 }
-                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done")&&!getIntent().getBooleanExtra(Config.IS_FROM_SJJC,false)) {
+                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done") && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                     PreferencesUtils.put(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
                     Intent intent = new Intent();
                     ComponentName componentName;
