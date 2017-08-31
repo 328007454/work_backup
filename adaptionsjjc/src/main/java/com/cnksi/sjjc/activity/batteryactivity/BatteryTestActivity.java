@@ -232,11 +232,11 @@ public class BatteryTestActivity extends BaseActivity {
         tvRight.setText("完成检测");
         tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
         tvRight.setTextColor(Color.WHITE);
-        if (PreferencesUtils.get(_this, Config.IS_FROM_PMS, true)) {
+        if (PreferencesUtils.get(_this, Config.IS_FROM_PMS, false)) {
             tvRight.setVisibility(View.GONE);
+            PreferencesUtils.put(_this, Config.IS_FROM_PMS, false);
         } else {
             tvRight.setVisibility(View.VISIBLE);
-            PreferencesUtils.put(_this, Config.IS_FROM_PMS, false);
         }
         tvTitle.setText(inspectionType.value);
         btnBack.setOnClickListener(new View.OnClickListener() {
