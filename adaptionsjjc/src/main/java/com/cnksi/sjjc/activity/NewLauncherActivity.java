@@ -176,7 +176,7 @@ public class NewLauncherActivity extends BaseActivity {
                             public void run() {
                                 launcherBinding.lancherTitle.txtTeam.setText(department.name);
                                 initBDZDialog();
-                                if (bdzList.isEmpty()) {
+                                if (!bdzList.isEmpty()) {
                                     launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
                                     PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
                                     PreferencesUtils.put(_this, Config.LOCATION_BDZID, bdzList.get(0).bdzid);
