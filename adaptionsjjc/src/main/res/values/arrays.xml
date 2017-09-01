@@ -71,7 +71,7 @@
     </string-array>
     <!-- #后面为该记录的枚举类型 -->
     <string-array name="SBJC">
-        <!--<item>红外测温记录#SBJC_01</item>-->
+        <item>红外测温记录#SBJC_01</item>
         <!--<item>保护屏红外热像检测月度记录#SBJC_02</item>-->
         <item>室内温湿度记录#SBJC_03</item>
         <item>差动保护差流记录#SBJC_04</item>

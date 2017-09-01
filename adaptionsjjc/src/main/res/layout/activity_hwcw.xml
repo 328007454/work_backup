@@ -191,7 +191,8 @@
                         android:background="@color/white"
                         android:gravity="center_vertical"
                         android:paddingLeft="20px"
-                        android:paddingRight="20px">
+                        android:paddingRight="20px"
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -241,6 +242,7 @@
                             android:inputType="numberDecimal" />
 
                         <ImageView
+                            android:visibility="gone"
                             android:id="@+id/iv_show_temp1_picture"
                             android:layout_width="80px"
                             android:layout_height="80px"
@@ -248,6 +250,7 @@
                             tools:ignore="ContentDescription" />
 
                         <ImageView
+                            android:visibility="gone"
                             android:id="@+id/ibtn_temp1"
                             android:layout_width="80px"
                             android:layout_height="80px"
@@ -289,14 +292,15 @@
                             android:inputType="numberDecimal" />
 
                         <ImageView
+                            android:visibility="gone"
                             android:id="@+id/iv_show_temp_picture"
                             android:layout_width="80px"
                             android:layout_height="80px"
                             android:layout_centerVertical="true"
-
                             tools:ignore="ContentDescription" />
 
                         <ImageView
+                            android:visibility="gone"
                             android:id="@+id/ibtn_temp"
                             android:layout_width="80px"
                             android:layout_height="80px"

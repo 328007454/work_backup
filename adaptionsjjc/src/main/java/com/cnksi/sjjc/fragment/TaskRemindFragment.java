@@ -146,7 +146,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                     String deparmentId = "";
                     if (null != mCurrentActivity) {
-                        PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+                        deparmentId=PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
                     }
                     WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1").expr("and bdzid in (select bdzid  from bdz where dept_id = '" + deparmentId + "' ) ");
                     if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
