@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static com.cnksi.sjjc.Config.CURRENT_DEPARTMENT_ID;
+
 /**
  * 每种类型列表
  */
@@ -142,6 +144,7 @@ public class TypeListActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
                 intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
+                intent.putExtra(CURRENT_DEPARTMENT_ID,PreferencesUtils.get(_this,CURRENT_DEPARTMENT_ID,""));
                 ComponentName componentName;
                 switch (mInspectionType) {
                     case SBXS:

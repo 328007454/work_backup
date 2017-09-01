@@ -69,6 +69,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
         intent4.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
         intent4.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_USER, ""));
         intent4.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent4.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(mCurrentActivity,Config.CURRENT_DEPARTMENT_ID,""));
         intent4.setComponent(componentName4);
         startActivity(intent4);
     }
