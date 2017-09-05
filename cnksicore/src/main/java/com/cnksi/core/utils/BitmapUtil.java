@@ -58,6 +58,7 @@ public class BitmapUtil {
     public static Bitmap getImageThumbnail(String imagePath, int width, int height) {
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig=Config.RGB_565;
         options.inJustDecodeBounds = true;
         // 获取这个图片的宽和高，注意此处的bitmap为null
         bitmap = BitmapFactory.decodeFile(imagePath, options);
@@ -205,6 +206,7 @@ public class BitmapUtil {
      */
     public static Bitmap postRotateBitmap(String imagePath, boolean isHandPostRotate) {
         BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Config.RGB_565;
         options.inJustDecodeBounds = true;
         Bitmap bitmapResult = null;
         int degree = readPictureDegree(imagePath);
@@ -957,16 +959,28 @@ public class BitmapUtil {
             options.inJustDecodeBounds = true;
             // 此时仅会将图片信息会保存至options对象内,decode方法不会返回bitmap对象
             BitmapFactory.decodeFile(srcPath, options);
+            options.inPreferredConfig = Config.RGB_565;
             // 计算缩放率
             scale = calculateInSampleSize(options, reqWidth, reqHeight);
             // 计算压缩比例,如inSampleSize=4时,图片会压缩成原图的1/4
             options.inSampleSize = scale;
             // 当inJustDecodeBounds设为false时,BitmapFactory.decode...就会返回图片对象了
             options.inJustDecodeBounds = false;
-            // 利用计算的比例值获取压缩后的图片对象
-            Bitmap bitmap = BitmapFactory.decodeFile(srcPath, options);
+
+            Bitmap bitmap = null;
+            try {
+                // 利用计算的比例值获取压缩后的图片对象
+                bitmap = BitmapFactory.decodeFile(srcPath, options);
+            } catch (Exception e) {
+                options.inSampleSize = calculateInSampleSize(options, 500, 500);
+                options.inJustDecodeBounds = false;
+                bitmap = BitmapFactory.decodeFile(srcPath, options);
+            }
             // 保存图片
             saveBitmap(bitmap, srcPath);
+            if (null != bitmap && !bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
         }
     }
 
@@ -981,6 +995,7 @@ public class BitmapUtil {
         if (!TextUtils.isEmpty(srcPath) && FileUtils.isFileExists(srcPath) && (new File(srcPath)).length() > length) {
             // 首先不加载图片,仅获取图片尺寸
             final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Config.RGB_565;
             // 当inJustDecodeBounds设为true时,不会加载图片仅获取图片尺寸信息
             options.inJustDecodeBounds = true;
             // 此时仅会将图片信息会保存至options对象内,decode方法不会返回bitmap对象
@@ -993,6 +1008,9 @@ public class BitmapUtil {
             Bitmap bitmap = BitmapFactory.decodeFile(srcPath, options);
             // 保存图片
             saveBitmap(bitmap, srcPath);
+            if (null != bitmap && !bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
         }
     }
 
