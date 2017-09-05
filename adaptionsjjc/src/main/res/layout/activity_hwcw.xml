@@ -455,6 +455,7 @@
                                 style="@style/NewHeatPointEditTextStyle"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:maxLength="8"
                                 android:inputType="numberDecimal" />
                         </LinearLayout>
                     </LinearLayout>

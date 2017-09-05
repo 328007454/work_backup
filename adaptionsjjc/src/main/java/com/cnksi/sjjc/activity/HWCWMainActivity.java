@@ -121,7 +121,6 @@ public class HWCWMainActivity extends BaseActivity {
         currentFuctionDevices = isBhpcw ? PMSDeviceType.second : PMSDeviceType.one;
         binding.setIsBhpcw(isBhpcw);
         tvTitle.setText(currentInspectionName);
-
         binding.lvContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
