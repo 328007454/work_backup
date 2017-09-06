@@ -148,7 +148,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                     startActivity(intent);
                     onBackPressed();
                 }else{
-                    ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                    ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
                     onBackPressed();
                 }
             }

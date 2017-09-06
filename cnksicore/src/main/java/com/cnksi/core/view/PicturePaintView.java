@@ -12,8 +12,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.cnksi.core.utils.ScreenUtils;
-
 public class PicturePaintView extends View {
 
     /**
@@ -25,13 +23,13 @@ public class PicturePaintView extends View {
     /**
      * bitmap对应的canvas
      */
-    private static Canvas floorCanvas;
+    private Canvas floorCanvas;
     private Canvas surfaceCanvas;
     /**
      * 底层与表层bitmap
      */
     private Bitmap floorBitmap;
-    private static  Bitmap surfaceBitmap;
+    private Bitmap surfaceBitmap;
     /**
      * 背景图片
      */
@@ -41,8 +39,8 @@ public class PicturePaintView extends View {
     /**
      * 屏幕宽度
      */
-    private int screenWidth = 0;
-    private int screenHeight = 0;
+    private int screenWidth = 1024;
+    private int screenHeight = 1024;
     /**
      * 画笔
      */
@@ -67,10 +65,12 @@ public class PicturePaintView extends View {
     public PicturePaintView(Context context, Bitmap bitmap) {
         super(context);
         this.bitmap = bitmap;
-        screenWidth = ScreenUtils.getScreenWidth(context);
-        screenHeight = ScreenUtils.getScreenHeight(context);
+//        screenWidth = ScreenUtils.getScreenWidth(context);
+//        screenHeight = ScreenUtils.getScreenHeight(context);
+
         init(context);
     }
+
 
     /**
      * 初始化
@@ -99,9 +99,10 @@ public class PicturePaintView extends View {
     /**
      * 保存笔记
      */
-    public static void saveMark() {
+    public void saveMark() {
         // 如果重新选择了图形，则需要将表层bitmap上的图像绘制到底层bitmap上进行保存
         floorCanvas.drawBitmap(surfaceBitmap, 0, 0, null);
+
     }
 
     @Override
@@ -115,7 +116,7 @@ public class PicturePaintView extends View {
 
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(floorBitmap, 0, 0, null);
-        drawCircle.drawCircle(surfaceCanvas);
+//        drawCircle.drawCircle(surfaceCanvas);
         canvas.drawBitmap(surfaceBitmap, 0, 0, null);
     }
 
@@ -131,7 +132,7 @@ public class PicturePaintView extends View {
             case MotionEvent.ACTION_MOVE:
                 drawCircle.onTouchMove(eventPoint);
             /*
-			 * 拖动过程中不停的将bitmap的颜色设置为透明（清空表层bitmap） 否则整个拖动过程的轨迹都会画出来
+             * 拖动过程中不停的将bitmap的颜色设置为透明（清空表层bitmap） 否则整个拖动过程的轨迹都会画出来
 			 */
                 surfaceBitmap.eraseColor(Color.TRANSPARENT);
                 invalidate();
@@ -140,4 +141,19 @@ public class PicturePaintView extends View {
         return true;
     }
 
+
+    public void  setBitmapNull(){
+        if (null != surfaceBitmap && !surfaceBitmap.isRecycled()) {
+            surfaceBitmap.recycle();
+            surfaceBitmap = null;
+        }
+        if (null != floorBitmap && !floorBitmap.isRecycled()) {
+            floorBitmap.recycle();
+            floorBitmap = null;
+        }
+        if (null != bitmap && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+    }
 }

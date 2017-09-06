@@ -86,7 +86,7 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHandler = new CustomerHanlder(mCurrentActivity = this);
-        ScreenManager.getScreenManager().pushActivity(mCurrentActivity);
+        ScreenManager.getInstance().pushActivity(mCurrentActivity);
     }
 
     /**
@@ -124,7 +124,7 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         CustomerDialog.dismissProgress();
-        ScreenManager.getScreenManager().popActivity(mCurrentActivity);
+        ScreenManager.getInstance().popActivity(mCurrentActivity);
         mHandler.removeCallbacks(null);
         super.onDestroy();
     }
@@ -160,7 +160,7 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
      */
     protected void compeletlyExitSystem() {
         // 退出
-        ScreenManager.getScreenManager().popAllActivityExceptOne(null);
+        ScreenManager.getInstance().popAllActivityExceptOne(null);
         android.os.Process.killProcess(android.os.Process.myPid());
         CoreApplication.getExcutorService().shutdownNow();
         System.exit(0);

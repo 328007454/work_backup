@@ -1,11 +1,11 @@
 package com.cnksi.sjjc.receiver;
 
-import com.cnksi.core.common.ScreenManager;
-import com.cnksi.sjjc.sync.DataSync;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.cnksi.core.common.ScreenManager;
+import com.cnksi.sjjc.sync.DataSync;
 
 public class USBBroardCastReceiver extends BroadcastReceiver {
 
@@ -18,8 +18,8 @@ public class USBBroardCastReceiver extends BroadcastReceiver {
             context.startActivity(newIntent);
         } else if (Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
             // 退出数据同步界面
-            if (ScreenManager.getScreenManager().hasActivity(DataSync.class)) {
-                ScreenManager.getScreenManager().popActivity(DataSync.class);
+            if (ScreenManager.getInstance().hasActivity(DataSync.class)) {
+                ScreenManager.getInstance().popActivity(DataSync.class);
             }
         }
     }

@@ -207,7 +207,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                 startActivity(intent);
                 _this.finish();
                 mSureDialog.dismiss();
-                ScreenManager.getScreenManager().popActivity(PreventAnimalActivity.class);
+                ScreenManager.getInstance().popActivity(PreventAnimalActivity.class);
 
             }
         });

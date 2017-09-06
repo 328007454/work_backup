@@ -165,7 +165,7 @@ public class CustomApplication extends CoreApplication {
     }
 
     public void restartApp() {
-        ScreenManager.getScreenManager().popAllActivityExceptOne(null);
+        ScreenManager.getInstance().popAllActivityExceptOne(null);
         Intent intent = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(getBaseContext().getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

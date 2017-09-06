@@ -58,7 +58,7 @@ public class BitmapUtil {
     public static Bitmap getImageThumbnail(String imagePath, int width, int height) {
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig=Config.RGB_565;
+        options.inPreferredConfig = Config.RGB_565;
         options.inJustDecodeBounds = true;
         // 获取这个图片的宽和高，注意此处的bitmap为null
         bitmap = BitmapFactory.decodeFile(imagePath, options);
@@ -832,6 +832,7 @@ public class BitmapUtil {
                 OutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(buffer);
                 outputStream.close();
+                bos.close();
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
