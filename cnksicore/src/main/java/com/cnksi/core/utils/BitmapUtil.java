@@ -841,6 +841,8 @@ public class BitmapUtil {
                 view.setDrawingCacheEnabled(false);
             }
         }
+        bitmap.recycle();
+        bitmap = null;
         return false;
     }
 

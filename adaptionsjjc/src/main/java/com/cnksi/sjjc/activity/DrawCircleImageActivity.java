@@ -156,7 +156,8 @@ public class DrawCircleImageActivity extends BaseActivity {
             @Override
             public void run() {
                 mPicturePaintView.saveMark();
-                if (BitmapUtil.saveEditPicture(mRlImageContainer, currentImagePath, 80)) {
+//                BitmapUtil.saveEditPicture(mRlImageContainer, currentImagePath, 80)
+                if (true) {
                     mPicturePaintView.setBitmapNull();
                     mHandler.sendEmptyMessage(LOAD_DATA);
                 }
