@@ -143,6 +143,13 @@ public class PicturePaintView extends View {
 
 
     public void  setBitmapNull(){
+        if(null !=floorCanvas){
+            floorCanvas = null;
+        }
+
+        if (surfaceCanvas != null) {
+            surfaceCanvas = null;
+        }
         if (null != surfaceBitmap && !surfaceBitmap.isRecycled()) {
             surfaceBitmap.recycle();
             surfaceBitmap = null;
