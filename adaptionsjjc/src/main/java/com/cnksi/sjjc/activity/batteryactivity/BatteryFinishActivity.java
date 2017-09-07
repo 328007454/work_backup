@@ -192,7 +192,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
                 }
                 Intent intent = new Intent(_this, BatteryTestReportActivity.class);
                 startActivity(intent);
-                ScreenManager.getScreenManager().popActivity(BatteryTestActivity.class);
+                ScreenManager.getInstance().popActivity(BatteryTestActivity.class);
                 isNeedUpdateTaskState = true;
                 this.finish();
             default:

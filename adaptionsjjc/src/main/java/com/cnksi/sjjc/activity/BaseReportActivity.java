@@ -69,7 +69,7 @@ public abstract class BaseReportActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 //                ScreenManager.getScreenManager().popAllActivityExceptOne(LauncherActivity.class);
-                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
                 onBackPressed();
             }
         });

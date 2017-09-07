@@ -521,7 +521,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
                     isNeedUpdateTaskState = true;
                     Intent intent = new Intent(_this, CopyValueReportActivity.class);
                     startActivity(intent);
-                    ScreenManager.getScreenManager().popActivity(CopyBaseDataActivity.class);
+                    ScreenManager.getInstance().popActivity(CopyBaseDataActivity.class);
                     _this.finish();
                     break;
                 case R.id.btn_cancel:
