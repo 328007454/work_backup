@@ -975,7 +975,7 @@ public class BitmapUtil {
                 // 利用计算的比例值获取压缩后的图片对象
                 bitmap = BitmapFactory.decodeFile(srcPath, options);
             } catch (Exception e) {
-                options.inSampleSize = calculateInSampleSize(options, 500, 500);
+                options.inSampleSize = calculateInSampleSize(options, 1024, 1024);
                 options.inJustDecodeBounds = false;
                 bitmap = BitmapFactory.decodeFile(srcPath, options);
             }

@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.cnksi.core.utils.ScreenUtils;
+
 public class PicturePaintView extends View {
 
     /**
@@ -39,8 +41,8 @@ public class PicturePaintView extends View {
     /**
      * 屏幕宽度
      */
-    private int screenWidth = 1024;
-    private int screenHeight = 1024;
+    private int screenWidth = 1;
+    private int screenHeight = 1;
     /**
      * 画笔
      */
@@ -65,8 +67,8 @@ public class PicturePaintView extends View {
     public PicturePaintView(Context context, Bitmap bitmap) {
         super(context);
         this.bitmap = bitmap;
-//        screenWidth = ScreenUtils.getScreenWidth(context);
-//        screenHeight = ScreenUtils.getScreenHeight(context);
+        screenWidth = ScreenUtils.getScreenWidth(context);
+        screenHeight = ScreenUtils.getScreenHeight(context);
 
         init(context);
     }
@@ -116,7 +118,7 @@ public class PicturePaintView extends View {
 
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(floorBitmap, 0, 0, null);
-//        drawCircle.drawCircle(surfaceCanvas);
+        drawCircle.drawCircle(surfaceCanvas);
         canvas.drawBitmap(surfaceBitmap, 0, 0, null);
     }
 

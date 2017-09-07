@@ -77,7 +77,7 @@ public class DrawCircleImageActivity extends BaseActivity {
                 // 首先压缩图片
                 File file = new File(currentImagePath);
                 if (file.exists()) {
-                    BitmapUtil.compressImage(file.getAbsolutePath(), 1024, 1024);
+                    BitmapUtil.compressImage(file.getAbsolutePath(), screenWidth, screenHeight);
                 }
                 final Bitmap bitmapTemp = BitmapUtil.getImageThumbnail(BitmapUtil.postRotateBitmap(currentImagePath, true), screenWidth, screenHeight);
                 if (bitmapTemp != null) {
@@ -156,8 +156,7 @@ public class DrawCircleImageActivity extends BaseActivity {
             @Override
             public void run() {
                 mPicturePaintView.saveMark();
-//                BitmapUtil.saveEditPicture(mRlImageContainer, currentImagePath, 80)
-                if (true) {
+                if (BitmapUtil.saveEditPicture(mRlImageContainer, currentImagePath, 80)) {
                     mPicturePaintView.setBitmapNull();
                     mHandler.sendEmptyMessage(LOAD_DATA);
                 }
