@@ -20,7 +20,6 @@ public class ScreenManager {
     }
 
     public static ScreenManager getInstance() {
-
         return SingleTonHolder.INSTANCE;
     }
 
