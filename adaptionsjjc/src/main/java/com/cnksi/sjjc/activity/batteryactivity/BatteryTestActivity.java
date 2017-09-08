@@ -213,6 +213,7 @@ public class BatteryTestActivity extends BaseActivity {
             PreferencesUtils.put(_this, Config.CURRENT_TASK_ID, currentTaskId);
             PreferencesUtils.put(_this, Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
             PreferencesUtils.put(_this, Config.CURRENT_INSPECTION_NAME, InspectionType.get(currentInspectionType).value);
+            PreferencesUtils.put(_this, Config.IS_FROM_PMS, true);
         }
         getIntentValue();
         inspectionType = InspectionType.get(currentInspectionType);
@@ -231,6 +232,12 @@ public class BatteryTestActivity extends BaseActivity {
         tvRight.setText("完成检测");
         tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
         tvRight.setTextColor(Color.WHITE);
+        if (PreferencesUtils.get(_this, Config.IS_FROM_PMS, false)) {
+            tvRight.setVisibility(View.GONE);
+            PreferencesUtils.put(_this, Config.IS_FROM_PMS, false);
+        } else {
+            tvRight.setVisibility(View.VISIBLE);
+        }
         tvTitle.setText(inspectionType.value);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,7 +258,7 @@ public class BatteryTestActivity extends BaseActivity {
                     e.printStackTrace();
                     Log.i("BatteryTestActivity", "返回键数据保存出错");
                 }
-                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done")&&!getIntent().getBooleanExtra(Config.IS_FROM_SJJC,false)) {
+                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done") && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                     PreferencesUtils.put(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
                     Intent intent = new Intent();
                     ComponentName componentName;

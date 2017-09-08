@@ -4,6 +4,7 @@ package com.cnksi.sjjc.activity;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
@@ -89,15 +90,22 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
                     if (mSpacingList != null) {
                         groupList.clear();
                         groupHashMap.clear();
+                        Long time0 = System.currentTimeMillis();
+                        Log.d("Tag", time0 + "");
+                        SqlInfo sqlInfo = new SqlInfo(
+                                "select * from device d where d.bdzid='" + currentBdzId + "' and d.dlt='0' and d.device_type='" + currentFunctionModel.name() + "'  group by d.deviceid order by sort");
+                        List<DbModel> mDeviceList = DeviceService.getInstance().findDbModelAll(sqlInfo);
                         for (Spacing mSpacing : mSpacingList) {
-                            SqlInfo sqlInfo = new SqlInfo(
-                                    "select * from device d where d.dlt='0' and d.spid='" + mSpacing.spid + "' and d.device_type='" + currentFunctionModel.name() + "'  group by d.deviceid order by sort");
-                            List<DbModel> mDeviceList = DeviceService.getInstance().findDbModelAll(sqlInfo);
-                            if (mDeviceList != null && !mDeviceList.isEmpty()) {
-                                groupList.add(mSpacing);
-                                groupHashMap.put(mSpacing, new ArrayList<DbModel>(mDeviceList));
+                            ArrayList<DbModel> dbModels = new ArrayList<DbModel>();
+                            for (DbModel dbModel : mDeviceList) {
+                                if (dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                                    dbModels.add(dbModel);
+                                }
                             }
+                            groupList.add(mSpacing);
+                            groupHashMap.put(mSpacing, dbModels);
                         }
+                        Log.d("Tag", (System.currentTimeMillis() - time0) + "");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

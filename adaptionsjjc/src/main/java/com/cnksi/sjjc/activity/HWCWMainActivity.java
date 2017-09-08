@@ -120,8 +120,9 @@ public class HWCWMainActivity extends BaseActivity {
         isBhpcw = currentInspectionType.equals(InspectionType.SBJC_02.name());
         currentFuctionDevices = isBhpcw ? PMSDeviceType.second : PMSDeviceType.one;
         binding.setIsBhpcw(isBhpcw);
+        binding.ivShowTempPicture.setVisibility(View.GONE);
+        binding.ivShowTemp1Picture.setVisibility(View.GONE);
         tvTitle.setText(currentInspectionName);
-
         binding.lvContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
@@ -709,17 +710,17 @@ public class HWCWMainActivity extends BaseActivity {
             binding.ivShowTakePicture.setImageBitmap(null);
         }
         if (!TextUtils.isEmpty(hwtx[0])) {
-            binding.ivShowTempPicture.setVisibility(View.VISIBLE);
+            binding.ivShowTempPicture.setVisibility(View.GONE);
             binding.ivShowTempPicture.setImageBitmap(BitmapUtil.getImageThumbnail(Config.RESULT_PICTURES_FOLDER + hwtx[0], newWidth, newWidth));
         } else {
             binding.ivShowTempPicture.setImageBitmap(null);
-            binding.ivShowTempPicture.setVisibility(View.INVISIBLE);
+            binding.ivShowTempPicture.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(hwtx[1])) {
-            binding.ivShowTemp1Picture.setVisibility(View.VISIBLE);
+            binding.ivShowTemp1Picture.setVisibility(View.GONE);
             binding.ivShowTemp1Picture.setImageBitmap(BitmapUtil.getImageThumbnail(Config.RESULT_PICTURES_FOLDER + hwtx[1], newWidth, newWidth));
         } else {
-            binding.ivShowTemp1Picture.setVisibility(View.INVISIBLE);
+            binding.ivShowTemp1Picture.setVisibility(View.GONE);
             binding.ivShowTemp1Picture.setImageBitmap(null);
         }
     }
