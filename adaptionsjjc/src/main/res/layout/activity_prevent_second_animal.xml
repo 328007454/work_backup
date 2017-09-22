@@ -453,7 +453,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/global_text_small_size_px" />
 
-        <EditText
+        <com.cnksi.sjjc.View.EditTextNoEmoj
             android:id="@+id/et_mouse_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -537,7 +537,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/global_text_small_size_px" />
 
-        <EditText
+        <com.cnksi.sjjc.View.EditTextNoEmoj
             android:id="@+id/tv_clear_position"
             android:layout_width="match_parent"
             android:layout_height="0dp"

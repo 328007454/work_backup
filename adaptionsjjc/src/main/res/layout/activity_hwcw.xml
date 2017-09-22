@@ -202,9 +202,23 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/tv_text_size" />
 
-                        <EditText
-                            android:id="@+id/et_input_heat_part"
+                        <!--<item name="android:layout_width">wrap_content</item>-->
+                        <!--<item name="android:gravity">right|center_vertical</item>-->
+                        <!--<item name="android:layout_height">wrap_content</item>-->
+                        <!--<item name="android:layout_alignParentRight">true</item>-->
+                        <!--<item name="android:layout_centerVertical">true</item>-->
+                        <!--<item name="android:background">@android:color/transparent</item>-->
+                        <!--<item name="android:hint">@string/please_input_value_str</item>-->
+                        <!--<item name="android:minWidth">@dimen/new_edit_text_minwidth</item>-->
+                        <!--<item name="android:minHeight">@dimen/new_edit_text_minheight</item>-->
+                        <!--<item name="android:textColor">@color/green_color</item>-->
+                        <!--<item name="android:textColorHint">@color/global_gray_text_color</item>-->
+                        <!--<item name="android:textSize">@dimen/tv_text_size</item>-->
+                        <!--<item name="android:selectAllOnFocus">true</item>-->
+
+                        <com.cnksi.sjjc.View.EditTextNoEmoj
                             style="@style/NewHeatPointEditTextStyle"
+                            android:id="@+id/et_input_heat_part"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
                     </LinearLayout>
@@ -485,10 +499,9 @@
                                 android:textColor="@color/global_text_color"
                                 android:textSize="@dimen/tv_text_size" />
 
-                            <EditText
+                            <com.cnksi.sjjc.View.EditTextNoEmoj
                                 android:id="@+id/et_test_instrument"
                                 style="@style/NewHeatPointEditTextStyle"
-
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
                         </LinearLayout>
@@ -593,7 +606,7 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/tv_text_size" />
 
-                        <EditText
+                        <com.cnksi.sjjc.View.EditTextNoEmoj
                             android:id="@+id/tv_remark_infor"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
