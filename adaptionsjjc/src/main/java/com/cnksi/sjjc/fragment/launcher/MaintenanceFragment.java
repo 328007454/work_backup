@@ -90,7 +90,6 @@ public class MaintenanceFragment extends BaseCoreFragment {
                                 / (maintenance.getMonthTaskCount() + switchover.getMonthTaskCount() + 0.0f) * 100);
                         mHandler.post(new Runnable() {
                             int i = 0;
-
                             @Override
                             public void run() {
                                 maintenanceBinding.progress.setProgress(i <= (int) percent ? i++ : percent);
@@ -180,5 +179,9 @@ public class MaintenanceFragment extends BaseCoreFragment {
         }
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

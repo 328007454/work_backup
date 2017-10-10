@@ -74,7 +74,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:drawablePadding="20px"
+                    android:drawablePadding="@dimen/_20px"
                     android:drawableTop="@drawable/ic_hompage_selector"
                     android:text="@string/menu_record"
                     android:textSize="@dimen/txt_bottom32px" />
@@ -97,10 +97,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:drawablePadding="20px"
+                    android:drawablePadding="@dimen/_20px"
                     android:drawableTop="@drawable/ic_sbxs_selector"
                     android:text="@string/menu_tour"
-                    android:textSize="@dimen/txt_bottom32px" />
+                    android:textSize="@dimen/txt_bottom32px"/>
 
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/menu_maintenance"
@@ -109,7 +109,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:drawablePadding="20px"
+                    android:drawablePadding="@dimen/_20px"
                     android:drawableTop="@drawable/ic_maintance_selector"
                     android:text="@string/menu_maintenance"
                     android:textSize="@dimen/txt_bottom32px" />
@@ -122,7 +122,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:drawablePadding="20px"
+                    android:drawablePadding="@dimen/_20px"
                     android:drawableTop="@drawable/ic_operater_selector"
                     android:text="@string/menu_operate"
                     android:textSize="@dimen/txt_bottom32px" />
@@ -134,7 +134,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:drawablePadding="20px"
+                    android:drawablePadding="@dimen/_20px"
                     android:drawableTop="@drawable/ic_unify_selector"
                     android:text="@string/menu_unify"
                     android:textSize="@dimen/txt_bottom32px" />

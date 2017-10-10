@@ -10,7 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="135px"
+        android:layout_height="wrap_content"
+        android:minHeight="135px"
         android:layout_marginTop="@dimen/global_margin_top_px"
         android:background="@color/gray_background_color"
         android:padding="@dimen/paddingRight">
@@ -18,7 +19,7 @@
         <TextView
             android:id="@+id/tv_hole"
             android:layout_width="wrap_content"
-            android:layout_height="72px"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:gravity="center"
