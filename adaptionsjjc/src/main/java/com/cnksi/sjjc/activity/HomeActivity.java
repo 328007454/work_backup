@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -106,23 +107,24 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         initUpdateSystem();
         initTabs();
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                DeviceService.getInstance().refreshDeviceHasCopy();
-                try {
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
-                    CustomApplication.getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");
-                    CustomApplication.getDbManager().execNonQuery("create index if not exists  'report_deviceid' on defect_record (`reportid`, `deviceid`)");
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_spic_deviceid_type on device(bdzid,spid,device_type)");
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_kind on standard_special(kind)");
-                } catch (Exception e) {
-                    e.printStackTrace();
+            mFixedThreadPoolExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    DeviceService.getInstance().refreshDeviceHasCopy();
+                    try {
+                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
+                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
+                        CustomApplication.getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");
+                        CustomApplication.getDbManager().execNonQuery("create index if not exists  'report_deviceid' on defect_record (`reportid`, `deviceid`)");
+                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
+                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_spic_deviceid_type on device(bdzid,spid,device_type)");
+                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_kind on standard_special(kind)");
+//                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_task_inspection on task(inspection)");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
 
     }
 
@@ -445,8 +447,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     List<Task> taskList = null;
                     switch (type) {
                         case inspection:
+                            long time0 = System.currentTimeMillis();
                             taskList = TaskService.getInstance().
                                     findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name(), InspectionType.professional.name());
+                           Log.d("TAG",System.currentTimeMillis()-time0+"time1");
                             if (taskList != null && taskList.size() > 0)
                                 for (Task task : taskList) {
                                     try {
@@ -468,6 +472,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                         e.printStackTrace();
                                     }
                                 }
+                            Log.d("TAG", System.currentTimeMillis() - time0 + "");
                             break;
                         case maintenance:
                             taskList = TaskService.getInstance().

@@ -249,7 +249,7 @@ public class TaskService extends BaseService<Task> {
         StringBuilder expr = new StringBuilder();
         expr.append(" and (");
         for (String inspection : inspections) {
-            expr.append(" inspection like '%").append(inspection).append("%'  ").append("or");
+            expr.append(" inspection like '").append(inspection).append("%'  ").append("or");
         }
         expr.delete(expr.length() - 2, expr.length());
         expr.append(") ");

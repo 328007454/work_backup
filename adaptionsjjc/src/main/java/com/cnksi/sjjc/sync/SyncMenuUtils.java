@@ -21,10 +21,12 @@ import android.widget.TextView;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.FileUtils;
+import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.ksynclib.adapter.PopMenuAdapter;
 import com.cnksi.ksynclib.utils.CommonUtils;
+import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 
