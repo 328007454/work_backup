@@ -190,24 +190,29 @@ public class SyncMenuUtils {
             @Override
             public void onClick(View v) {
                 listener.onClick(v);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String deviceId = ((TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-                        String uploadFileName = deviceId + "-" + CommonUtils.getCurrenTime() + ".db";
-                        boolean isSuccess = CommonUtils.copyFile(ksync.getKnConfig().getDbDir() + File.separator + ksync.getKnConfig().getDbName(), ksync.getKnConfig().getDbDir() + File.separator + uploadFileName, true);
-                        if (isSuccess) {
-                            File uploadFile = new File(ksync.getKnConfig().getDbDir(), uploadFileName);
-                            ksync.uploadFile(uploadFile);
-                            FileUtils.deleteFile(uploadFile.getAbsolutePath());
-                            handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件上传完成"));
-                        } else {
-                            handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件上传失败"));
-                        }
-                    }
-                }).start();
+                upLoadData(mActivity,ksync,handler);
+
             }
         });
+    }
+
+    private static void upLoadData(final  Activity mActivity,final KSync ksync,final Handler handler) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String deviceId = ((TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+                String uploadFileName = deviceId + "-" + CommonUtils.getCurrenTime() + ".db";
+                boolean isSuccess = CommonUtils.copyFile(ksync.getKnConfig().getDbDir() + File.separator + ksync.getKnConfig().getDbName(), ksync.getKnConfig().getDbDir() + File.separator + uploadFileName, true);
+                if (isSuccess) {
+                    File uploadFile = new File(ksync.getKnConfig().getDbDir(), uploadFileName);
+                    ksync.uploadFile(uploadFile);
+                    FileUtils.deleteFile(uploadFile.getAbsolutePath());
+                    handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件上传完成"));
+                } else {
+                    handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件上传失败"));
+                }
+            }
+        }).start();
     }
 
     private static List<DeleteModel> tables = new ArrayList<>();
