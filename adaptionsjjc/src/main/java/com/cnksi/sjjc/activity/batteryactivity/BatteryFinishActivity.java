@@ -76,6 +76,9 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
     //后台配置的蓄电池组
     private List<Battery> batteryList;
     private BatteryGroup batteryGroup;
+    private int totalCountUser;
+    private List<String> czrModels = new ArrayList<>();
+    private List<String> fzrModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
         String[] users = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_USER, "").split(",");
         for (String str : users) {
             showPeopleList.add(str);
+            czrModels.add(str);
         }
         if (showManagerAdapter == null) {
             showManagerAdapter = new ShowManagerAdapter(mCurrentActivity, showManagerList, R.layout.name_show_layout);
@@ -130,6 +134,11 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
             @Override
             public void run() {
                 String account = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
+                String[] accountS = account.split(",");
+                totalCountUser = accountS.length;
+                if (showPeopleAdapter != null) {
+                    showPeopleAdapter.setUserCount(totalCountUser);
+                }
                 try {
                     batteryGroupList = BatteryGroupService.getInstance().getAllGroup(currentReportId);
                     if (batteryGroupList.size() > 0)
@@ -261,9 +270,21 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
                 String name = (String) adapterView.getItemAtPosition(i);
                 peopleDialog.cancel();
                 if (flag.equalsIgnoreCase(MANAGER_FLAG)) {
+                    if (fzrModels.contains(name)) {
+                        CToast.showShort(_this, "负责人中已经有该成员了");
+                        return;
+                    } else {
+                        fzrModels.add(name);
+                    }
                     showManagerList.add(name);
                     showManagerAdapter.setList(showManagerList);
                 } else {
+                    if (czrModels.contains(name)) {
+                        CToast.showShort(_this, "测试人中已经有该成员了");
+                        return;
+                    } else {
+                        czrModels.add(name);
+                    }
                     showPeopleList.add(name);
                     showPeopleAdapter.setList(showPeopleList);
                 }
@@ -287,7 +308,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
     }
 
     @Override
-    public void itemClick(final View view, final Object o, int position) {
+    public void itemClick(final View view, final Object o, final int position) {
         if (view.getTag().equals(MANAGER_FLAG)) {
             if (showManagerList.size() == 1) {
                 CToast.showShort(mCurrentActivity, "至少要有一个测试负责人!");
@@ -303,9 +324,11 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
             @Override
             public void onClick(View v) {
                 if (view.getTag().equals(MANAGER_FLAG)) {
+                    fzrModels.remove(position);
                     showManagerList.remove(o);
                     showManagerAdapter.notifyDataSetChanged();
                 } else {
+                    czrModels.remove(position);
                     showPeopleList.remove(o);
                     showPeopleAdapter.notifyDataSetChanged();
                 }
