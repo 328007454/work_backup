@@ -65,7 +65,7 @@ import java.util.Map;
 
 /**
  * 首页界面
- * Created by han on 2017/3/24.
+ * @author han on 2017/3/24.
  */
 public class HomeActivity extends BaseActivity implements View.OnClickListener, ItemClickListener {
     private ActivityHomePageBinding homePageBinding;
