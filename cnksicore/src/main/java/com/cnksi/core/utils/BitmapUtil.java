@@ -58,7 +58,7 @@ public class BitmapUtil {
     public static Bitmap getImageThumbnail(String imagePath, int width, int height) {
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig=Config.RGB_565;
+        options.inPreferredConfig = Config.RGB_565;
         options.inJustDecodeBounds = true;
         // 获取这个图片的宽和高，注意此处的bitmap为null
         bitmap = BitmapFactory.decodeFile(imagePath, options);
@@ -832,6 +832,7 @@ public class BitmapUtil {
                 OutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(buffer);
                 outputStream.close();
+                bos.close();
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -840,6 +841,8 @@ public class BitmapUtil {
                 view.setDrawingCacheEnabled(false);
             }
         }
+        bitmap.recycle();
+        bitmap = null;
         return false;
     }
 
@@ -972,7 +975,7 @@ public class BitmapUtil {
                 // 利用计算的比例值获取压缩后的图片对象
                 bitmap = BitmapFactory.decodeFile(srcPath, options);
             } catch (Exception e) {
-                options.inSampleSize = calculateInSampleSize(options, 500, 500);
+                options.inSampleSize = calculateInSampleSize(options, 1024, 1024);
                 options.inJustDecodeBounds = false;
                 bitmap = BitmapFactory.decodeFile(srcPath, options);
             }

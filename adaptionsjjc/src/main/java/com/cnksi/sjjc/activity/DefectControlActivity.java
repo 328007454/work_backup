@@ -38,11 +38,8 @@ public class DefectControlActivity extends BaseActivity {
     private ActivityDefectControlBinding defectControlBinding;
     private List<Bdz> bdzList = new ArrayList<>();
     private DefectContentAdapter defectContentAdapter;
-
     //变电站弹出对话框
     private Dialog mPowerStationDialog = null;
-
-
     private Bdz currentBdz;
     private int defectLevel = 0;
 
@@ -53,7 +50,6 @@ public class DefectControlActivity extends BaseActivity {
         setChildView(defectControlBinding.getRoot());
         initUI();
         initData();
-
     }
 
     private void search() {
@@ -76,9 +72,7 @@ public class DefectControlActivity extends BaseActivity {
 
         defectControlBinding.setEvent(this);
         tvTitle.setText("缺陷管理");
-
         btnBack.setImageResource(R.drawable.ic_hompage_selector);
-
         btnBack.setVisibility(View.GONE);
         btnBackDefect.setVisibility(View.VISIBLE);
         btnBackDefect.setOnClickListener(new View.OnClickListener() {

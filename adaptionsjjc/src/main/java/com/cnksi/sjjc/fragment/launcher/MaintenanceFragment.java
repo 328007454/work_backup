@@ -69,6 +69,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
         intent4.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
         intent4.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_USER, ""));
         intent4.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent4.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(mCurrentActivity,Config.CURRENT_DEPARTMENT_ID,""));
         intent4.setComponent(componentName4);
         startActivity(intent4);
     }
@@ -89,7 +90,6 @@ public class MaintenanceFragment extends BaseCoreFragment {
                                 / (maintenance.getMonthTaskCount() + switchover.getMonthTaskCount() + 0.0f) * 100);
                         mHandler.post(new Runnable() {
                             int i = 0;
-
                             @Override
                             public void run() {
                                 maintenanceBinding.progress.setProgress(i <= (int) percent ? i++ : percent);
@@ -169,6 +169,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
             Intent intent = new Intent();
             intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(context, Config.CURRENT_LOGIN_USER, ""));
             intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(context, Config.CURRENT_LOGIN_ACCOUNT, ""));
+            intent.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(mCurrentActivity,Config.CURRENT_DEPARTMENT_ID,""));
             ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);
             intent.setComponent(componentName);
@@ -178,5 +179,9 @@ public class MaintenanceFragment extends BaseCoreFragment {
         }
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

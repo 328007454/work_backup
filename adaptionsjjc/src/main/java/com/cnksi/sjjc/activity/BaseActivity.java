@@ -37,12 +37,9 @@ import com.cnksi.core.utils.KeyBoardUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.core.view.PagerSlidingTabStrip;
-import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.sync.DataSync;
-import com.cnksi.sjjc.sync.KSyncConfig;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -447,7 +444,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @Override
     protected void compeletlyExitSystem() {
         // 退出
-        ScreenManager.getScreenManager().popAllActivityExceptOne(null);
+        ScreenManager.getInstance().popAllActivityExceptOne(null);
         android.os.Process.killProcess(android.os.Process.myPid());
         // PreferencesUtils.clear(_this);
         System.exit(0);

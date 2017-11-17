@@ -72,21 +72,18 @@ public class DrawCircleImageActivity extends BaseActivity {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
-
                 int screenWidth = ScreenUtils.getScreenWidth(_this);
                 int screenHeight = ScreenUtils.getScreenHeight(_this);
                 // 首先压缩图片
                 File file = new File(currentImagePath);
                 if (file.exists()) {
-                    BitmapUtil.compressImage(file.getAbsolutePath(), 1024, 1024);
+                    BitmapUtil.compressImage(file.getAbsolutePath(), screenWidth, screenHeight);
                 }
-                Bitmap bitmapTemp = BitmapUtil.getImageThumbnail(BitmapUtil.postRotateBitmap(currentImagePath, true), screenWidth, screenHeight);
+                final Bitmap bitmapTemp = BitmapUtil.getImageThumbnail(BitmapUtil.postRotateBitmap(currentImagePath, true), screenWidth, screenHeight);
                 if (bitmapTemp != null) {
                     mPicturePaintView = new PicturePaintView(_this, bitmapTemp);
-
                 }
                 mHandler.sendEmptyMessage(SAVE_DATA);
-
             }
         });
     }
@@ -102,12 +99,10 @@ public class DrawCircleImageActivity extends BaseActivity {
             case R.id.btn_save_mark:
 
                 saveMarkAndExit();
-                mPicturePaintView = null;
-                _this = null;
                 break;
             case R.id.btn_add_mark:
 
-                PicturePaintView.saveMark();
+                mPicturePaintView.saveMark();
 
                 break;
             case R.id.btn_clear_mark:
@@ -160,8 +155,9 @@ public class DrawCircleImageActivity extends BaseActivity {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                PicturePaintView.saveMark();
+                mPicturePaintView.saveMark();
                 if (BitmapUtil.saveEditPicture(mRlImageContainer, currentImagePath, 80)) {
+                    mPicturePaintView.setBitmapNull();
                     mHandler.sendEmptyMessage(LOAD_DATA);
                 }
             }

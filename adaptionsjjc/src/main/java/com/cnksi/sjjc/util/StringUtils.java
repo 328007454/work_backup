@@ -8,6 +8,8 @@ import com.cnksi.core.utils.FunctionUtils;
 import com.cnksi.sjjc.Config;
 
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 字符工具处理类
@@ -122,9 +124,9 @@ public class StringUtils {
     /**
      * 获取三位小数点
      */
-    public static String getTransformTep(String temperature,int num) {
+    public static String getTransformTep(String temperature, int num) {
         Double tempFloat = 0.0d;
-        int sum =1;
+        int sum = 1;
         try {
             tempFloat = new Double(temperature);
         } catch (Exception ex) {
@@ -136,11 +138,23 @@ public class StringUtils {
         if (!temperature.contains("."))
             return temperature;
 
-        for(int i=1;i<=num;i++){
-            sum = sum*10;
+        for (int i = 1; i <= num; i++) {
+            sum = sum * 10;
         }
 
         return String.valueOf((float) (Math.round(tempFloat * sum)) / sum);
     }
 
+    /**
+     * emoj表情判断
+     */
+    public static  boolean hasEmoji(String content) {
+
+        Pattern pattern = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]");
+        Matcher matcher = pattern.matcher(content);
+        if (matcher.find()) {
+            return true;
+        }
+        return false;
+    }
 }

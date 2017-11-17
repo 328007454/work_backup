@@ -89,7 +89,7 @@ public class CustomApplication extends CoreApplication {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-        AutoLayoutConifg.getInstance().useDeviceSize().init(this);
+//        AutoLayoutConifg.getInstance().useDeviceSize().init(this);
         TCAgent.LOG_ON = true;
         TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
         TCAgent.setReportUncaughtExceptions(true);
@@ -165,7 +165,7 @@ public class CustomApplication extends CoreApplication {
     }
 
     public void restartApp() {
-        ScreenManager.getScreenManager().popAllActivityExceptOne(null);
+        ScreenManager.getInstance().popAllActivityExceptOne(null);
         Intent intent = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(getBaseContext().getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

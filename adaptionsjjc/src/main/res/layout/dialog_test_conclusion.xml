@@ -88,7 +88,7 @@
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"/>
 
-            <EditText
+            <com.cnksi.sjjc.View.EditTextNoEmoj
                 android:id="@+id/status_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

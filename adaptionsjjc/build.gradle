@@ -86,7 +86,7 @@ android {
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def fileName
                         if (variant.buildType.name == "release")
-                            fileName = "sjjc_${defaultConfig.versionName}_release_${releaseTime()}_(${branch()}).apk"
+                            fileName = "sjjc_${defaultConfig.versionCode}_release_${releaseTime()}_(${branch()}).apk"
                         else fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
                         if ("true" == JENKINS) {
                             output.outputFile = new File("./buildAPK/", fileName)
@@ -110,6 +110,7 @@ android {
         main {
             jniLibs.srcDirs = ['libs']
             java.srcDirs = ['src/main/java']
+            aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
         }
     }
 //打开泛型和过时API编译报警�?相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391

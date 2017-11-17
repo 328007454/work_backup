@@ -136,6 +136,7 @@ public class Config extends CoreConfig {
     public static final String IS_AREADY_UPDATE = "isAreadyUpdate";
     public static final String IS_FROM_SJJC ="isFromSJJC" ;
     public static final String IS_FROM_PMS = "isFromPMS";
+    public static final String ADD_SQL_INDEX = "add_sql_index";
 
     public static String CURRENT_AREA = "lz";
 

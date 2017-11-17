@@ -6,92 +6,93 @@ import java.util.Iterator;
 import java.util.Stack;
 
 public class ScreenManager {
-	private static Stack<Activity> activityStack;
-	private static ScreenManager instance;
+    private  Stack<Activity> activityStack;
+    private ScreenManager instance;
 
-	private ScreenManager() {
-	}
+    private ScreenManager() {
+        if (activityStack == null) {
+            activityStack = new Stack<Activity>();
+        }
+    }
 
-	public static ScreenManager getScreenManager() {
-		if (instance == null) {
-			instance = new ScreenManager();
-		}
-		if (activityStack == null) {
-			activityStack = new Stack<Activity>();
-		}
-		return instance;
-	}
+    private static class SingleTonHolder {
+        private static final ScreenManager INSTANCE = new ScreenManager();
+    }
 
-	// 退出栈顶Activity
-	public void popActivity(Activity activity) {
-		if (activity != null) {
-			activity.finish();
-		}
-	}
+    public static ScreenManager getInstance() {
+        return SingleTonHolder.INSTANCE;
+    }
 
-	// 获得当前栈顶Activity
-	public Activity currentActivity() {
-		Activity activity = null;
-		if (activityStack != null && activityStack.size() > 0) {
-			activity = activityStack.lastElement();
-		}
-		return activity;
-	}
+    // 退出栈顶Activity
+    public void popActivity(Activity activity) {
+        if (activity != null) {
+            activity.finish();
+        }
+    }
 
-	// 将当前Activity推入栈中
-	public void pushActivity(Activity activity) {
-		if (activityStack == null) {
-			activityStack = new Stack<Activity>();
-		}
-		activityStack.add(activity);
-	}
+    // 获得当前栈顶Activity
+    public Activity currentActivity() {
+        Activity activity = null;
+        if (activityStack != null && activityStack.size() > 0) {
+            activity = activityStack.lastElement();
+        }
+        return activity;
+    }
 
-	// 退出栈中所有Activity
-	public void popAllActivityExceptOne(Class<?> cls) {
-		while (true) {
-			Activity activity = currentActivity();
-			if (activity == null) {
-				break;
-			}
-			if (activity.getClass().equals(cls)) {
-				break;
-			}
-			activityStack.remove(activity);
-			popActivity(activity);
-		}
-	}
-	
-	public boolean hasActivity(Class<?> cls) {
-		boolean flag = false;
-		if (activityStack != null && !activityStack.isEmpty()) {
-			for (Activity tempActivity : activityStack) {
-				if (tempActivity.getClass().equals(cls)) {
-					flag = true;
-					break;
-				}
-			}
-		}
-		return flag;
-	}
+    // 将当前Activity推入栈中
+    public void pushActivity(Activity activity) {
+        if (activityStack == null) {
+            activityStack = new Stack<Activity>();
+        }
+        activityStack.add(activity);
+    }
 
-	public void popActivity(Class<?> cls) {
-		if (activityStack != null && !activityStack.isEmpty()) {
-			Iterator<Activity> activityIterator =  activityStack.iterator();
-			while (activityIterator.hasNext()){
-				Activity activity = activityIterator.next();
-				if(activity.getClass().equals(cls)){
-					activityIterator.remove();
-					popActivity(activity);
-				}
-			}
-		}
-	}
+    // 退出栈中所有Activity
+    public void popAllActivityExceptOne(Class<?> cls) {
+        while (true) {
+            Activity activity = currentActivity();
+            if (activity == null) {
+                break;
+            }
+            if (activity.getClass().equals(cls)) {
+                break;
+            }
+            activityStack.remove(activity);
+            popActivity(activity);
+        }
+    }
 
-	public void popActivityList(Class<?>... clsList) {
-		if (activityStack != null && !activityStack.isEmpty()) {
-			for (Class<?> cls : clsList) {
-				popActivity(cls);
-			}
-		}
-	}
+    public boolean hasActivity(Class<?> cls) {
+        boolean flag = false;
+        if (activityStack != null && !activityStack.isEmpty()) {
+            for (Activity tempActivity : activityStack) {
+                if (tempActivity.getClass().equals(cls)) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        return flag;
+    }
+
+    public void popActivity(Class<?> cls) {
+        if (activityStack != null && !activityStack.isEmpty()) {
+            Iterator<Activity> activityIterator = activityStack.iterator();
+            while (activityIterator.hasNext()) {
+                Activity activity = activityIterator.next();
+                if (activity.getClass().equals(cls)) {
+                    activityIterator.remove();
+                    popActivity(activity);
+                }
+            }
+        }
+    }
+
+    public void popActivityList(Class<?>... clsList) {
+        if (activityStack != null && !activityStack.isEmpty()) {
+            for (Class<?> cls : clsList) {
+                popActivity(cls);
+            }
+        }
+    }
 }

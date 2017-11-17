@@ -33,6 +33,7 @@ import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.View.CustomRadioButton;
 import com.cnksi.sjjc.activity.DialogActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.activity.SignNameActivity;
@@ -555,9 +556,9 @@ public class YanShouStandardFargment extends BaseCoreFragment implements WidgetC
         @ViewInject(R.id.ll_container)
         private LinearLayout llContainer;
         @ViewInject(R.id.rb_yes)
-        private RadioButton rbYes;
+        private CustomRadioButton rbYes;
         @ViewInject(R.id.rb_no)
-        private RadioButton rbNo;
+        private CustomRadioButton rbNo;
         @ViewInject(R.id.et_input_problem)
         private EditText etProblem;
 

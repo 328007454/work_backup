@@ -144,7 +144,11 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     currentFunctionModel = getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
                     mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
                     // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
-                    WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1");
+                    String deparmentId = "";
+                    if (null != mCurrentActivity) {
+                        deparmentId=PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+                    }
+                    WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1").expr("and bdzid in (select bdzid  from bdz where dept_id = '" + deparmentId + "' ) ");
                     if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
                         // 未完成
                         whereBuilder = whereBuilder.and(Task.STATUS, "<>", Task.TaskStatus.done.name())
