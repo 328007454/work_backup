@@ -106,6 +106,13 @@ public class BatteryGroup extends BaseModel {
     @Column(name = REMARK)
     public String remark;
 
+    /**
+     * 测试仪器
+     */
+    public static final String TEST_INSTRUMENT="csyqmc";
+    @Column(name = TEST_INSTRUMENT)
+    public  String testInstrument ;
+
 
 
     //更新时间

@@ -293,6 +293,8 @@ public class Config extends CoreConfig {
     public static String SYNC_URL = BuildConfig.SYNC_URL;
     public final static String KEY_SYNC_URL = "key_sync_url";
     public final static String KEY_SYNC_APP_ID = "key_sync_app_id";
+    public static final String DIANYA="电压";
+    public static final String NEIZU="内阻";
 
     /**
      * 操作类型

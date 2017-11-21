@@ -515,7 +515,7 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                   >
 
                     <TextView
                         android:layout_width="match_parent"
@@ -523,18 +523,22 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="33px"
-                        android:text="充电电流"
+                        android:text="测试仪器名称"
                         android:textColor="@color/global_text_color"
                         android:textSize="@dimen/new_global_text_size" />
 
                     <EditText
+                        android:id="@+id/et_test_instrument"
+                        style="@style/NewHeatPointEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
+                        android:inputType="text"
+                        android:maxLength="20"
                         android:paddingLeft="33px"
-                        android:textColor="@color/radio_text_checked_color"
-                        android:textSize="@dimen/new_global_text_size" />
+                        android:selectAllOnFocus="false"
+                        android:textColor="@color/radio_text_checked_color" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

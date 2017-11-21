@@ -162,6 +162,13 @@ public class BatteryTestActivity extends BaseActivity {
     //单只标称电压字段容器
     @ViewInject(R.id.single_voltage)
     private EditText txtSingleVoltage;
+
+    /**
+     * 测试仪器名称
+     */
+    @ViewInject(R.id.et_test_instrument)
+    private EditText txtInstrument;
+
     private Battery currentBattery;
 
     private int currentCheckType;
@@ -198,7 +205,9 @@ public class BatteryTestActivity extends BaseActivity {
          * <b>NOTE :</b>设备检测CURRENT_TASK_ID不能存放在intent中传递，通过缓存传递
          */
         if (null != bundle && !TextUtils.isEmpty(bundle.getString(Config.CURRENT_TASK_ID))) {
-            currentInspectionType = InspectionType.SBJC_10.name();
+
+            String typeName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
+            currentInspectionType = typeName.contains(Config.DIANYA) ? InspectionType.SBJC_10.name() : InspectionType.SBJC_11.name();
             currentBdzId = bundle.getString(Config.CURRENT_BDZ_ID);
             currentBdzName = bundle.getString(Config.CURRENT_BDZ_NAME);
             currentReportId = bundle.getString(Config.CURRENT_REPORT_ID);
@@ -516,6 +525,7 @@ public class BatteryTestActivity extends BaseActivity {
         txtFuChongEle.setText(group.fcElectricty == null ? "" : group.fcElectricty + "");
         txtZVoltage.setText(group.zVoltage == null ? "" : group.zVoltage + "");
         txtFVoltage.setText(group.fVoltage == null ? "" : group.fVoltage);
+        txtInstrument.setText(TextUtils.isEmpty(group.testInstrument) ? "" : group.testInstrument);
 
     }
 
@@ -587,6 +597,7 @@ public class BatteryTestActivity extends BaseActivity {
             batteryGroup.fcElectricty = StringUtils.getTransformTep(txtFuChongEle.getText().toString());
             batteryGroup.zVoltage = StringUtils.getTransformTep(txtZVoltage.getText().toString());
             batteryGroup.fVoltage = StringUtils.getTransformTep(txtFVoltage.getText().toString());
+            batteryGroup.testInstrument = txtInstrument.getText().toString().trim();
         } else {
             return false;
         }
