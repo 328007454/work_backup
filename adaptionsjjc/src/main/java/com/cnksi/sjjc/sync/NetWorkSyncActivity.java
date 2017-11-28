@@ -147,7 +147,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             return;
         }
         switch (view.getId()) {
-            case R.id.tv_download: //下载数据
+            //下载数据
+            case R.id.tv_download:
                 SyncMenuUtils.ShowTipsDialog(currentActivity, KSyncConfig.getInstance().isHaveDept() ? " 确认要从服务器端更新数据么?" : "当前是未登陆状态，仅同步基础数据。\n确认从服务器端更新基础数据？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,7 +159,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     }
                 });
                 break;
-            case R.id.tv_upload://上传数据
+            //上传数据
+            case R.id.tv_upload:
                 SyncMenuUtils.ShowTipsDialog(currentActivity, " 确认要将本机数据更新到服务器端么?", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
