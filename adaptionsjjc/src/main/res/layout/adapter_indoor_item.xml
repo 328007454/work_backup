@@ -86,11 +86,10 @@
                 android:paddingRight="20px">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_weight="1"
                     android:gravity="left|center_vertical"
                     android:text="当前温度（℃）"
                     android:textColor="@color/global_text_color"
@@ -124,9 +123,8 @@
                 android:paddingRight="20px">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="left|center_vertical"
                     android:text="当前湿度（%RH）"
                     android:textColor="@color/global_text_color"

@@ -306,6 +306,9 @@ public class TaskRemindFragment extends BaseCoreFragment {
             if (null == report) {
                 String loginUser = PreferencesUtils.getString(getContext(), Config.CURRENT_LOGIN_USER, "");
                 report = new Report(task.taskid, task.bdzid, task.bdzname, task.inspection, loginUser);
+                report.inspectionValue = task.inspection_name;
+                report.reportSource = Config.SBJC;
+                report.departmentId = PreferencesUtils.getString(getActivity(),Config.CURRENT_DEPARTMENT_ID,"");
                 ReportService.getInstance().saveOrUpdate(report);
             }
             PreferencesUtils.put(getActivity(), Config.CURRENT_TASK_ID, task.taskid);

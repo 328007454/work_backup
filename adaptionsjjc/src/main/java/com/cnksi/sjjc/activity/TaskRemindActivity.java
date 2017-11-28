@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
@@ -40,6 +42,10 @@ public class TaskRemindActivity extends BaseActivity {
     @ViewInject(R.id.viewPager)
     private ViewPager mTaskViewPager;
 
+    @ViewInject(R.id.add_task)
+    private Button mBtAddTask;
+
+
     private FragmentPagerAdapter fragmentPagerAdapter;
     private ArrayList<Fragment> mFragmentList;
     private String[] titleArray = null;
@@ -55,33 +61,30 @@ public class TaskRemindActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //如果直接启动的TaskRemind则不需要在OnResume执行更新，因为是全新加载数据。
-        isNeedUpdateTaskState=false;
+        isNeedUpdateTaskState = false;
         setChildView(R.layout.activity_task_remind);
         getIntentValue();
         initUI();
     }
 
 
-
     private void initUI() {
         tvTitle.setText(R.string.inspection_task_remind_str);
-        btnRight.setVisibility(View.VISIBLE);
+        btnRight.setVisibility(View.GONE);
         btnRight.setImageResource(R.drawable.add_task_button_background);
         titleArray = getResources().getStringArray(R.array.TaskTitleArray);
         String mInspectionValue = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE_NAME);
         ////容错处理代码 避免别的地方回来拿不到type
         // start
-        if (TextUtils.isEmpty(mInspectionValue))
-        {
-            mInspectionValue=PreferencesUtils.getString(_this,Config.CURRENT_SELECT_TASK_TYPE_INSPECTION,"");
-        }else{
-            PreferencesUtils.put(_this,Config.CURRENT_SELECT_TASK_TYPE_INSPECTION,mInspectionValue);
+        if (TextUtils.isEmpty(mInspectionValue)) {
+            mInspectionValue = PreferencesUtils.getString(_this, Config.CURRENT_SELECT_TASK_TYPE_INSPECTION, "");
+        } else {
+            PreferencesUtils.put(_this, Config.CURRENT_SELECT_TASK_TYPE_INSPECTION, mInspectionValue);
         }
         //end
         mInspectionType = InspectionType.get(mInspectionValue);
         initFragmentList();
     }
-
 
 
     private void initFragmentList() {
@@ -128,16 +131,21 @@ public class TaskRemindActivity extends BaseActivity {
         mTaskViewPager.setOffscreenPageLimit(4);
     }
 
-    @Event(value = {R.id.btn_back, R.id.btn_right})
+    @Event(value = {R.id.btn_back, R.id.btn_right,R.id.add_task})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:
                 this.finish();
                 break;
             case R.id.btn_right:
+
+                break;
+            case R.id.add_task:
                 Intent intent = new Intent(this, AddTaskActivity.class);
                 intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
                 startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
+                break;
+            default:
                 break;
         }
     }
@@ -168,9 +176,9 @@ public class TaskRemindActivity extends BaseActivity {
         int textSize = AutoUtils.getPercentHeightSizeBigger((int) mCurrentActivity.getResources().getDimension(R.dimen.tab_strip_text_size_px));
         mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, textSize, mDisplayMetrics));
         // 设置Tab Indicator的颜色getResources().getColor(R.color.tab_strip_text_color)
-        mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(_this,R.color.tab_strip_text_color));
+        mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(_this, R.color.tab_strip_text_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-        mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(_this,R.color.tab_strip_text_color));
+        mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(_this, R.color.tab_strip_text_color));
         // 取消点击Tab时的背景色
         mPagerTabStrip.setTabBackground(0);
     }

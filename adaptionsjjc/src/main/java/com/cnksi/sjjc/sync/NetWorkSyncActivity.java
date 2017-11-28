@@ -196,8 +196,11 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                ksync.download();
-
+                if (!KSyncConfig.getInstance().isHaveDept()) {
+                    ksync.download("city", "users", "department", "pad_apk_version");
+                } else {
+                    ksync.download();
+                }
                 if (config.isDownFile()) {
                     isSyncFile = true;
                     //第一次同步的时候直接同步变电站数据 不需要再次初始化。
@@ -275,6 +278,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case KSync.SYNC_SUCCESS:
                     info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
+                    setButtonStyle(true);
                     break;
                 case KSync.SYNC_PING:
                     setNetwork(msg);

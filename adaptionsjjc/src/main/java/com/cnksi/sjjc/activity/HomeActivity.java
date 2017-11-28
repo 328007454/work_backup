@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -65,6 +66,7 @@ import java.util.Map;
 
 /**
  * 首页界面
+ *
  * @author han on 2017/3/24.
  */
 public class HomeActivity extends BaseActivity implements View.OnClickListener, ItemClickListener {
@@ -107,24 +109,24 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         initUpdateSystem();
         initTabs();
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
-            mFixedThreadPoolExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    DeviceService.getInstance().refreshDeviceHasCopy();
-                    try {
-                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
-                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
-                        CustomApplication.getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");
-                        CustomApplication.getDbManager().execNonQuery("create index if not exists  'report_deviceid' on defect_record (`reportid`, `deviceid`)");
-                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
-                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_spic_deviceid_type on device(bdzid,spid,device_type)");
-                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_kind on standard_special(kind)");
+        mFixedThreadPoolExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                DeviceService.getInstance().refreshDeviceHasCopy();
+                try {
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
+                    CustomApplication.getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");
+                    CustomApplication.getDbManager().execNonQuery("create index if not exists  'report_deviceid' on defect_record (`reportid`, `deviceid`)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_spic_deviceid_type on device(bdzid,spid,device_type)");
+                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_kind on standard_special(kind)");
 //                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_task_inspection on task(inspection)");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
 
     }
 
@@ -450,7 +452,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                             long time0 = System.currentTimeMillis();
                             taskList = TaskService.getInstance().
                                     findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name(), InspectionType.professional.name());
-                           Log.d("TAG",System.currentTimeMillis()-time0+"time1");
+                            Log.d("TAG", System.currentTimeMillis() - time0 + "time1");
                             if (taskList != null && taskList.size() > 0)
                                 for (Task task : taskList) {
                                     try {
@@ -600,5 +602,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         } catch (DbException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (event.getRepeatCount() == 0) {
+                    exitSystem();
+                }
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }

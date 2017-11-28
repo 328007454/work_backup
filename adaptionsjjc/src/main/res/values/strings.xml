@@ -152,6 +152,7 @@
     <string name="menu_record">首页</string>
     <string name="menu_maintenance">设备维护</string>
     <string name="menu_tour">设备巡视</string>
+    <string name="add_new_task">新建任务</string>
 
 
 </resources>

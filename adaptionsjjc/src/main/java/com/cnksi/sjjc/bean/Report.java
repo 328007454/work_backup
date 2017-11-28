@@ -127,6 +127,18 @@ public class Report extends BaseModel{
     @Column(name = INSERT_TIME)
     public String insertTime;
 
+    public static final String INSPECTION_VALUE = "inspection_value";
+    @Column(name = INSPECTION_VALUE)
+    public String inspectionValue;
+
+    public static final String REPORT_SOURCE = "report_source";
+    @Column(name = REPORT_SOURCE)
+    public String reportSource;
+
+    public static final String DEPARTMENTID = "dept_id";
+    @Column(name = DEPARTMENTID)
+    public String departmentId;
+
     public Report() {
     }
 
