@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.BitmapDrawable;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -98,6 +99,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private AppVersion remoteSjjcAppVersion;
     private AppVersion remoteXunshiAppVersion;
     long time1;
+    private static final String TAG = "Tag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             public void run() {
                 DeviceService.getInstance().refreshDeviceHasCopy();
                 try {
+                    long time = System.currentTimeMillis();
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
                     CustomApplication.getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");

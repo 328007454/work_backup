@@ -60,6 +60,7 @@ public class CustomRadioButton extends android.support.v7.widget.AppCompatRadioB
 
     }
 
+    @Override
     public void setCompoundDrawablesWithIntrinsicBounds(Drawable left,
                                                         Drawable top, Drawable right, Drawable bottom) {
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        android:background="@color/global_base_color"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/global_base_color"
+            android:gravity="center"
+            app:navigationIcon="@drawable/cancel_button_background"
+            app:title="测试仪器"
+            app:titleMarginStart="270px"
+            app:titleTextColor="@android:color/white">
+
+
+        </android.support.v7.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@android:color/white"
+
+            >
+
+            <TextView
+                android:id="@+id/txt__num"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="55px"
+                android:gravity="center_vertical"
+                android:text="序号"
+                android:textSize="@dimen/txt_size38px"/>
+
+            <TextView
+                android:id="@+id/txt_device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:text="名称"
+                android:textSize="@dimen/txt_size38px"/>
+
+            <TextView
+                android:id="@+id/txt_device_num"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30px"
+                android:gravity="center_vertical"
+                android:text="编号"
+                android:textSize="@dimen/txt_size38px"/>
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentBottom="true"
+                android:background="@color/gray_background_pressed_color"/>
+        </RelativeLayout>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/springview_layout"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="match_parent"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_battery_device"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+</layout>

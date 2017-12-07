@@ -102,7 +102,8 @@ public class TourFragment extends BaseCoreFragment {
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_ACCOUNT, ""));
         intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(mCurrentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, ""));
-        intent.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(mCurrentActivity,Config.CURRENT_DEPARTMENT_ID,""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, ""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_NAME, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_NAME, ""));
         if (TextUtils.isEmpty(inspectionType)) {
             ComponentName componentName5 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.nari.NariActivity");
             intent.setComponent(componentName5);

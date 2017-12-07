@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.KeyBoardUtils;
+import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.util.StringUtils;
 
 /**
@@ -37,7 +38,7 @@ public class EditTextNoEmoj extends AppCompatEditText {
     }
 
     private void addOnTextChangeListen() {
-        setBackground(null);
+        setBackground(getResources().getDrawable(R.color.white));
         this.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence sequence, int i, int i1, int i2) {

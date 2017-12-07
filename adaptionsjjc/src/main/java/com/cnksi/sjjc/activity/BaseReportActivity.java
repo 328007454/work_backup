@@ -2,6 +2,7 @@ package com.cnksi.sjjc.activity;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -16,7 +17,6 @@ import org.xutils.x;
 
 /**
  * @author wastrel
- *
  */
 public abstract class BaseReportActivity extends BaseActivity {
     public static final int ANIMATION = 0x2000;
@@ -38,13 +38,14 @@ public abstract class BaseReportActivity extends BaseActivity {
      * 返回主菜单按钮
      */
     protected ImageButton mBtnRight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_report);
         rlContainer = FindViewById(R.id.llbase);
         reportView = setReportView();
-        rlContainer.addView(reportView,new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT));
+        rlContainer.addView(reportView, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         AutoUtils.autoSize(reportView);
         reportView.setVisibility(View.INVISIBLE);
         x.view().inject(_this);
@@ -55,13 +56,15 @@ public abstract class BaseReportActivity extends BaseActivity {
     }
 
     private void initTitleBar() {
-        mTvTitle=FindViewById(R.id.tv_title);
-        mBtnRight =FindViewById(R.id.btn_right);
-        mBtnBack =FindViewById(R.id.btn_back);
+        mTvTitle = FindViewById(R.id.tv_title);
+        mBtnRight = FindViewById(R.id.btn_right);
+        mBtnRight.setVisibility(View.GONE);
+        mBtnBack = FindViewById(R.id.btn_back);
         mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionName));
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
                 onBackPressed();
             }
         });
@@ -93,6 +96,7 @@ public abstract class BaseReportActivity extends BaseActivity {
                 break;
         }
     }
+
     @SuppressWarnings("unchecked")
     protected <T extends View> T FindViewById(int id) {
         return (T) findViewById(id);
@@ -102,5 +106,18 @@ public abstract class BaseReportActivity extends BaseActivity {
     protected void onDestroy() {
         PlaySound.getIntance(_this).stop();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <size
+        android:width="60px"
+        android:height="60px" />
+    <solid android:color="@color/battery_color_type"/>
+
+</shape>

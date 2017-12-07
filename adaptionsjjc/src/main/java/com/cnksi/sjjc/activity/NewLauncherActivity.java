@@ -181,6 +181,7 @@ public class NewLauncherActivity extends BaseActivity {
                                     PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
                                     PreferencesUtils.put(_this, Config.LOCATION_BDZID, bdzList.get(0).bdzid);
                                     PreferencesUtils.put(_this, Config.LOCATION_BDZNAME, bdzList.get(0).name);
+                                    PreferencesUtils.put(_this,Config.CURRENT_DEPARTMENT_NAME,department.name);
                                 }
                             }
                         });

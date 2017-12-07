@@ -36,6 +36,7 @@ import com.cnksi.sjjc.activity.PreventAnimalActivity;
 import com.cnksi.sjjc.activity.TaskRemindActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestReportActivity;
+import com.cnksi.sjjc.activity.hwcw.NewHWCWActivity;
 import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActivity;
 import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
@@ -146,7 +147,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                     String deparmentId = "";
                     if (null != mCurrentActivity) {
-                        deparmentId=PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+                        deparmentId = PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
                     }
                     WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1").expr("and bdzid in (select bdzid  from bdz where dept_id = '" + deparmentId + "' ) ");
                     if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
@@ -308,7 +309,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                 report = new Report(task.taskid, task.bdzid, task.bdzname, task.inspection, loginUser);
                 report.inspectionValue = task.inspection_name;
                 report.reportSource = Config.SBJC;
-                report.departmentId = PreferencesUtils.getString(getActivity(),Config.CURRENT_DEPARTMENT_ID,"");
+                report.departmentId = PreferencesUtils.getString(getActivity(), Config.CURRENT_DEPARTMENT_ID, "");
                 ReportService.getInstance().saveOrUpdate(report);
             }
             PreferencesUtils.put(getActivity(), Config.CURRENT_TASK_ID, task.taskid);
@@ -324,7 +325,8 @@ public class TaskRemindFragment extends BaseCoreFragment {
                 switch (InspectionType.get(task.inspection)) {
                     //红外测温
                     case SBJC_01:
-                        intent.setClass(getContext(), HWCWMainActivity.class);
+//                        intent.setClass(getContext(), HWCWMainActivity.class);
+                        intent.setClass(getContext(), NewHWCWActivity.class);
                         break;
                     //保护屏红外成像
                     case SBJC_02:
