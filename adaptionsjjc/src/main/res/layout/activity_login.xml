@@ -320,6 +320,6 @@
         android:gravity="center"
         android:textColor="@color/sys_copyrights_text_color"
         android:textSize="38px"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </LinearLayout>
