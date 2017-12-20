@@ -97,11 +97,14 @@ public class NewHwcwReportActivity extends BaseReportActivity {
                 spaceBuilder.append(loopTime == hotLocations.size() ? location.spacingName : location.spacingName + "\n");
                 stringBuilder.append("发热设备:").append(deviceName).append("\n");
                 HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(location.hotPart);
-                for (HwcwHotPart.Result result : hotParts.result) {
-                    stringBuilder.append("发热部位名称：").append(result.bw_name).append("\n温度：").append(result.wd).append("\n");
+                if (hotParts != null && hotParts.result != null && !hotParts.result.isEmpty()) {
+                    for (HwcwHotPart.Result result : hotParts.result) {
+                        stringBuilder.append("发热部位名称：").append(result.bw_name).append("\n温度：").append(result.wd).append("\n");
+                    }
                 }
-                if (++loopTime != hotLocations.size())
+                if (++loopTime != hotLocations.size()) {
                     stringBuilder.append("\n");
+                }
             }
             mReportBinding.txtHotInfor.setText(stringBuilder.toString());
         }
