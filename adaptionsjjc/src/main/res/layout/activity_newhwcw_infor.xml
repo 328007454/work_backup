@@ -213,7 +213,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_mark"/>
 
-                <GridView
+                <com.cnksi.sjjc.View.DefineGridView
                     android:id="@+id/gv_test_manager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -222,11 +222,12 @@
                     android:cacheColorHint="@android:color/transparent"
                     android:gravity="center"
                     android:listSelector="@android:color/transparent"
+                    android:minHeight="180px"
                     android:numColumns="3"
                     android:scrollbarStyle="outsideOverlay"
                     android:stretchMode="columnWidth"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_new_person"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_test_person"/>
 
             </com.zhy.autolayout.AutoConstraintLayout>
         </ScrollView>

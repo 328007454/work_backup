@@ -259,6 +259,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            dataMap.clear();
             onBackPressed();
         }
         return true;

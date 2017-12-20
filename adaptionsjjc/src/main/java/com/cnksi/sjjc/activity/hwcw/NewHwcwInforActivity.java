@@ -133,8 +133,10 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
                 String deviceName = location.deviceName;
                 stringBuilder.append("\n发热设备:").append(deviceName).append("\n");
                 HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(location.hotPart);
-                for (HwcwHotPart.Result result : hotParts.result) {
-                    stringBuilder.append("发热部位名称：").append(result.bw_name).append("\n温度：").append(result.wd).append("\n");
+                if (hotParts != null && hotParts.result != null && !hotParts.result.isEmpty()) {
+                    for (HwcwHotPart.Result result : hotParts.result) {
+                        stringBuilder.append("发热部位名称：").append(result.bw_name).append("\n温度：").append(result.wd).append("(℃)\n");
+                    }
                 }
             }
             mInforBinding.etTempRecord.setText(stringBuilder.toString());

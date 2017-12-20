@@ -48,10 +48,10 @@ public class HwcwNewHotPartAdapter extends BaseRecyclerDataBindingAdapter<HwcwLo
         hotPartBinding.etEtting.setVisibility(View.GONE);
         hotPartBinding.txtHotDeviceName.setText(item.deviceName);
         if (!TextUtils.isEmpty(item.ratedCurrent)) {
-            infor = "额定电流：" + item.ratedCurrent;
+            infor = "额定电流：" + item.ratedCurrent + "(A)";
         }
         if (!TextUtils.isEmpty(item.fhdl)) {
-            infor = TextUtils.isEmpty(infor) ? "" : (infor + "\n" + "负荷电流：" + item.fhdl);
+            infor = TextUtils.isEmpty(infor) ? "" : (infor + "\n" + "负荷电流：" + item.fhdl + "(A)");
         }
         if (!TextUtils.isEmpty(item.hotPart)) {
             HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(item.hotPart);
@@ -59,7 +59,7 @@ public class HwcwNewHotPartAdapter extends BaseRecyclerDataBindingAdapter<HwcwLo
                 if (!TextUtils.isEmpty(infor) || i >= 1) {
                     infor += "\n";
                 }
-                infor = infor + "发热部位名称：" + result.bw_name + "\n" + "温度：" + result.wd;
+                infor = infor + "发热部位名称：" + result.bw_name + "\n" + "温度：" + result.wd + "(℃)";
                 i++;
             }
         }

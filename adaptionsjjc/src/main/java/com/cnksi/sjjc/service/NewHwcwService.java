@@ -40,9 +40,9 @@ public class NewHwcwService {
             if (TextUtils.isEmpty(baseInfo.testRange)) {
                 baseInfo.testRange = "全站";
             } else {
-                if (TextUtils.equals("是", baseInfo.isAllBdz)) {
+                if (TextUtils.isEmpty(baseInfo.testRange)&&TextUtils.equals("是", baseInfo.isAllBdz)) {
                     baseInfo.testRange = "全站";
-                } else if (TextUtils.equals("否", baseInfo.isAllBdz)) {
+                } else if (TextUtils.isEmpty(baseInfo.testRange)&&TextUtils.equals("否", baseInfo.isAllBdz)) {
                     baseInfo.testRange = "区域";
                 }
             }

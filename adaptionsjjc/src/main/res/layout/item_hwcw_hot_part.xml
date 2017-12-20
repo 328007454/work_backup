@@ -21,7 +21,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:paddingStart="@dimen/_30px"
-                android:text="发热设备"
+                android:text="发热部位"
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"
                 />
