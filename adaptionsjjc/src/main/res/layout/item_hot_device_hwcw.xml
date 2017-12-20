@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="2px"
-    android:background="@color/layout_color_gray">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/center_guideline"
-        android:layout_width="wrap_content"
+    <com.zhy.autolayout.AutoConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
-
-    <com.cnksi.sjjc.View.EditTextNoEmoj
-        android:id="@+id/et_hot_part_name"
-        style="@style/NewHeatPointEditTextStyle"
-        android:layout_width="0px"
-        android:layout_height="138px"
+        android:layout_marginBottom="@dimen/_20px"
         android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:hint="请输入负荷电流"
-        android:paddingStart="@dimen/_30px"
-        app:layout_constraintEnd_toStartOf="@id/center_guideline"
-        app:layout_constraintStart_toStartOf="parent"/>
+        >
 
-    <com.cnksi.sjjc.View.EditTextNoEmoj
-        android:id="@+id/et_hot_part_temp"
-        style="@style/NewHeatPointEditTextStyle"
-        android:layout_width="0px"
-        android:layout_height="138px"
-        android:layout_marginStart="2px"
-        android:background="@color/white"
-        android:gravity="center"
-        android:hint="请输入温度"
-        android:textColor="@color/global_text_color"
-        android:textSize="@dimen/tv_text_size"
-        app:layout_constraintEnd_toStartOf="@+id/aib_delete_hotpart"
-        app:layout_constraintStart_toEndOf="@+id/center_guideline"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <android.support.constraint.Guideline
+            android:id="@+id/center_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
 
-    <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/aib_delete_hotpart"
-        android:layout_width="120px"
-        android:layout_height="138px"
-        android:background="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/et_hot_part_temp"
-        app:srcCompat="@drawable/icon_hotdevicepart_delete"/>
+        <com.cnksi.sjjc.View.EditTextNoEmoj
+            android:id="@+id/et_hot_part_name"
+            style="@style/NewHeatPointEditTextStyle"
+            android:layout_width="0px"
+            android:layout_height="138px"
+            android:background="@drawable/add_copy_item_select_background"
+            android:gravity="left|center_vertical"
+            android:hint="请输入发热部位名称"
+            android:paddingStart="@dimen/_30px"
+            app:layout_constraintEnd_toStartOf="@id/center_guideline"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-</com.zhy.autolayout.AutoConstraintLayout>
+        <com.cnksi.sjjc.View.EditTextNoEmoj
+            android:id="@+id/et_hot_part_temp"
+            style="@style/NewHeatPointEditTextStyle"
+            android:layout_width="0px"
+            android:layout_height="138px"
+            android:layout_marginStart="2px"
+            android:background="@color/white"
+            android:gravity="center_vertical|right"
+            android:hint="请输入温度"
+            android:inputType="numberSigned|numberDecimal"
+            android:maxLength="5"
+            android:textColor="@color/green_color"
+            android:textSize="@dimen/tv_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/aib_delete_hotpart"
+            app:layout_constraintStart_toEndOf="@+id/center_guideline"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/aib_delete_hotpart"
+            android:layout_width="120px"
+            android:layout_height="138px"
+            android:background="@android:color/white"
+            android:onClick="onClick"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/et_hot_part_temp"
+            app:srcCompat="@drawable/icon_hotdevicepart_delete"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/gray_stroke_color"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </com.zhy.autolayout.AutoConstraintLayout>
+
+</layout>

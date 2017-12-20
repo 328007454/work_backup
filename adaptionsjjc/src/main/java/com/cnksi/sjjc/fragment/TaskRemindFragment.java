@@ -36,7 +36,8 @@ import com.cnksi.sjjc.activity.PreventAnimalActivity;
 import com.cnksi.sjjc.activity.TaskRemindActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestReportActivity;
-import com.cnksi.sjjc.activity.hwcw.NewHWCWActivity;
+import com.cnksi.sjjc.activity.hwcw.NewHwcwActivity;
+import com.cnksi.sjjc.activity.hwcw.NewHwcwReportActivity;
 import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActivity;
 import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
@@ -324,9 +325,9 @@ public class TaskRemindFragment extends BaseCoreFragment {
             if (task.status.equals(TaskStatus.undo.name())) {
                 switch (InspectionType.get(task.inspection)) {
                     //红外测温
-                    case SBJC_01:
+                    case SBJC_13:
 //                        intent.setClass(getContext(), HWCWMainActivity.class);
-                        intent.setClass(getContext(), NewHWCWActivity.class);
+                        intent.setClass(getContext(), NewHwcwActivity.class);
                         break;
                     //保护屏红外成像
                     case SBJC_02:
@@ -378,9 +379,9 @@ public class TaskRemindFragment extends BaseCoreFragment {
                 }
             } else {
                 switch (InspectionType.get(task.inspection)) {
-                    //红外测温
-                    case SBJC_01:
-                        intent.setClass(getContext(), HongWaiCeWenReportActivity.class);
+                    //设备测温
+                    case SBJC_13:
+                        intent.setClass(getContext(), NewHwcwReportActivity.class);
                         break;
                     //保护屏红外成像
                     case SBJC_02:

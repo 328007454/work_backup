@@ -130,7 +130,6 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
 
         mFixedThreadPoolExecutor.execute(new Runnable() {
             List<DbModel> dbModelList = null;
-
             @Override
             public void run() {
                 String account = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");

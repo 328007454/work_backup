@@ -1,10 +1,15 @@
 package com.cnksi.sjjc.activity;
 
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
@@ -16,6 +21,7 @@ import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
 import com.cnksi.sjjc.bean.Spacing;
+import com.cnksi.sjjc.databinding.ActivityDevicesExpadableListBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.SpacingService;
@@ -29,18 +35,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
-
+/**
+ * @author nothing 2017/12/11
+ */
 public class AllDeviceListActivity extends BaseActivity implements DeviceExpandabelListAdapter.OnAdapterViewClickListener {
 
     public final static String FUNCTION_MODEL = "fuction";
     public final static String BDZID = "bdzid";
 
-    @ViewInject(R.id.elv_container)
-    private ExpandableListView mElvContainer;
-
-    @ViewInject(R.id.tv_title)
-    private TextView tvTitle;
     private LinkedList<Spacing> groupList = new LinkedList<Spacing>();
     private HashMap<Spacing, ArrayList<DbModel>> groupHashMap = new HashMap<Spacing, ArrayList<DbModel>>();
     private DeviceExpandabelListAdapter mDeviceExpandableAdapater = null;
@@ -49,11 +53,19 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     private int currentClickGroupPosition = 0;
 
     private boolean isFinishAnimation = true;
+    private ActivityDevicesExpadableListBinding mExpadableListBinding;
+
+    private boolean isSearch = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isDefaultTitle = false;
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_devices_expadable_list);
+        mExpadableListBinding = DataBindingUtil.setContentView(_this, R.layout.activity_devices_expadable_list);
+        setSupportActionBar(mExpadableListBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+//        setChildView(R.layout.activity_devices_expadable_list);
         initUI();
         initData();
     }
@@ -61,20 +73,22 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     private void initUI() {
         currentFunctionModel = (PMSDeviceType) getIntent().getSerializableExtra(FUNCTION_MODEL);
         currentBdzId = getIntent().getStringExtra(BDZID);
-        tvTitle.setText("选择" + currentFunctionModel.toString());
-        mElvContainer.setOnGroupExpandListener(new OnGroupExpandListener() {
+        mExpadableListBinding.elvContainer.setOnGroupExpandListener(new OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
                 if (isFinishAnimation) {
                     for (int i = 0, count = mDeviceExpandableAdapater.getGroupCount(); i < count; i++) {
-                        if (i != groupPosition && mElvContainer.isGroupExpanded(i)) {
-                            mElvContainer.collapseGroup(i);
+                        if (i != groupPosition && mExpadableListBinding.elvContainer.isGroupExpanded(i)) {
+                            mExpadableListBinding.elvContainer.collapseGroup(i);
                         }
                     }
                 }
             }
         });
     }
+
+    List<DbModel> mDeviceList = null;
+    List<Spacing> mSpacingList = null;
 
     private void initData() {
         if (TextUtils.isEmpty(currentBdzId) || currentFunctionModel == null) {
@@ -86,7 +100,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
             @Override
             public void run() {
                 try {
-                    List<Spacing> mSpacingList = SpacingService.getInstance().findSpacingByModel(currentBdzId, currentFunctionModel.name());
+                    mSpacingList = SpacingService.getInstance().findSpacingByModel(currentBdzId, currentFunctionModel.name());
                     if (mSpacingList != null) {
                         groupList.clear();
                         groupHashMap.clear();
@@ -94,11 +108,12 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
                         Log.d("Tag", time0 + "");
                         SqlInfo sqlInfo = new SqlInfo(
                                 "select * from device d where d.bdzid='" + currentBdzId + "' and d.dlt='0' and d.device_type='" + currentFunctionModel.name() + "'  group by d.deviceid order by sort");
-                        List<DbModel> mDeviceList = DeviceService.getInstance().findDbModelAll(sqlInfo);
+                        mDeviceList = DeviceService.getInstance().findDbModelAll(sqlInfo);
                         for (Spacing mSpacing : mSpacingList) {
                             ArrayList<DbModel> dbModels = new ArrayList<DbModel>();
                             for (DbModel dbModel : mDeviceList) {
                                 if (dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                                    dbModel.add("spaceName", mSpacing.name);
                                     dbModels.add(dbModel);
                                 }
                             }
@@ -122,12 +137,12 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
                 if (mDeviceExpandableAdapater == null) {
                     mDeviceExpandableAdapater = new DeviceExpandabelListAdapter(_this);
                     mDeviceExpandableAdapater.setOnAdapterViewClickListener(this);
-                    mElvContainer.setAdapter(mDeviceExpandableAdapater);
+                    mExpadableListBinding.elvContainer.setAdapter(mDeviceExpandableAdapater);
                 }
                 mDeviceExpandableAdapater.setGroupList(groupList);
                 mDeviceExpandableAdapater.setGroupMap(groupHashMap);
                 if (groupList != null && !groupList.isEmpty() && mDeviceExpandableAdapater.getChildrenCountByGroup(currentClickGroupPosition) > 1) {
-                    mElvContainer.expandGroup(currentClickGroupPosition);
+                    mExpadableListBinding.elvContainer.expandGroup(currentClickGroupPosition);
                 }
                 break;
 
@@ -181,8 +196,72 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         //	if (childCount == 1) {
         //		OnItemViewClick(mElvContainer, v, mDeviceExpandableAdapater.getChild(groupPosition, 0), mDeviceExpandableAdapater.getGroup(groupPosition));
         //	} else {
-        mElvContainer.expandGroup(groupPosition, true);
+        mExpadableListBinding.elvContainer.expandGroup(groupPosition, true);
 //		}
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_view_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setQueryHint("输入设备编号或者名称");
+        SearchView.SearchAutoComplete autoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
+        autoComplete.setHintTextColor(getResources().getColor(android.R.color.white));
+        autoComplete.setTextColor(getResources().getColor(android.R.color.white));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                isSearch = true;
+                packagingData(newText);
+                return true;
+            }
+
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                isSearch = false;
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    private void packagingData(String text) {
+        groupList.clear();
+        groupHashMap.clear();
+        for (Spacing mSpacing : mSpacingList) {
+            ArrayList<DbModel> dbModels = new ArrayList<DbModel>();
+            for (DbModel dbModel : mDeviceList) {
+                if (!isSearch && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                    dbModel.add("spaceName", mSpacing.name);
+                    dbModels.add(dbModel);
+                } else if (isSearch && (mSpacing.name.contains(text) || mSpacing.pinyin.contains(text.toUpperCase(Locale.ENGLISH))) && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                    dbModel.add("spaceName", mSpacing.name);
+                    dbModels.add(dbModel);
+                }
+            }
+            if (!dbModels.isEmpty()) {
+                groupList.add(mSpacing);
+                groupHashMap.put(mSpacing, dbModels);
+            }
+        }
+        mHandler.sendEmptyMessage(LOAD_DATA);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return true;
     }
 
 }

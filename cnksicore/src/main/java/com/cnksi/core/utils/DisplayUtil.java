@@ -1,6 +1,7 @@
 package com.cnksi.core.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
@@ -147,9 +148,17 @@ public class DisplayUtil {
 
     /**
      * 获取缩放比列
+     *
      * @return
      */
-    public float getScale(){
-        return  Math.min(widthScale,heightScale);
+    public float getScale() {
+        return Math.min(widthScale, heightScale);
+    }
+
+    public float spToPx(Context context, float sp) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = sp * metrics.scaledDensity + 0.5f;
+        return px;
     }
 }

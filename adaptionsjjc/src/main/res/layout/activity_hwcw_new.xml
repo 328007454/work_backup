@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="setNull"
+            type="boolean"/>
+
+        <variable
+            name="TextUtils"
+            type="android.text.TextUtils"/>
+
+        <variable
+            name="location"
+            type="com.cnksi.sjjc.bean.hwcw.HwcwLocation"/>
+
+        <variable
+            name="baseInfo"
+            type="com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo"/>
+    </data>
 
     <ScrollView
         android:id="@+id/scr_root"
@@ -23,6 +43,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_baseinfo"
+                android:onClick="onClick"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/label_height"
                 android:background="@color/green_color"
@@ -45,6 +66,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo">
 
+                <android.support.constraint.Guideline
+                    android:id="@+id/center_guideline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_all_bdz"
@@ -56,7 +83,7 @@
                     android:text="是否是全站（区域）测温"
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
-                    app:layout_constraintEnd_toEndOf="@+id/center_guideline"
+                    app:layout_constraintEnd_toEndOf="@+id/center_guideline1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/container_baseinfo"/>
 
@@ -92,6 +119,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:button="@null"
+                        android:drawablePadding="10px"
                         android:drawableStart="@drawable/radio_button_selector"
                         android:text="否"
                         android:textColor="@color/radio_button_text_selector"
@@ -104,50 +132,84 @@
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_test_type"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0px"
                     android:layout_height="138px"
                     android:layout_marginTop="2px"
                     android:background="@color/white"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:paddingStart="@dimen/_30px"
                     android:text="测温类型"
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
+                    app:layout_constraintEnd_toStartOf="@+id/center_guideline1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_all_bdz"/>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
-                    android:id="@+id/et_input_heat_part"
-                    style="@style/NewHeatPointEditTextStyle"
-                    android:layout_width="0dp"
+                <com.zhy.autolayout.AutoRadioGroup
+                    android:layout_width="0px"
                     android:layout_height="138px"
                     android:layout_marginTop="2px"
                     android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingStart="30px"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/txt_test_type"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_all_bdz"
-                    />
+                    app:layout_constraintLeft_toRightOf="@+id/center_guideline1"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_all_bdz">
 
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/cb_puce"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawablePadding="10px"
+                        android:drawableStart="@drawable/radio_button_selector"
+                        android:text="普测"
+                        android:textColor="@color/radio_button_text_selector"
+                        android:textSize="@dimen/tv_text_size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/txt_all_bdz"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo"/>
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/cb_jingque"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="10px"
+                        android:drawableStart="@drawable/radio_button_selector"
+                        android:text="精确测温"
+                        android:textColor="@color/radio_button_text_selector"
+                        android:textSize="@dimen/tv_text_size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/txt_all_bdz"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo"/>
+                </com.zhy.autolayout.AutoRadioGroup>
 
                 <com.cnksi.sjjc.View.EditTextNoEmoj
+                    android:inputType="numberSigned|numberDecimal"
+                    android:maxLength="5"
                     android:id="@+id/et_temperature"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0px"
                     android:layout_height="138px"
                     android:background="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/center_guideline"
-                    app:layout_constraintStart_toStartOf="@+id/txt_temperature"
+                    android:text="@{baseInfo.temp}"
+                    app:layout_constraintRight_toLeftOf="@+id/center_guideline1"
+                    app:layout_constraintStart_toEndOf="@+id/txt_temperature"
                     app:layout_constraintTop_toTopOf="@+id/txt_temperature"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_temperature"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0px"
                     android:layout_height="138px"
                     android:layout_marginTop="2px"
                     android:background="@color/white"
                     android:gravity="center"
                     android:paddingStart="@dimen/_30px"
-                    android:text="环境温度（℃）"
+                    android:text="环境温度(℃)"
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
                     app:layout_constraintStart_toStartOf="parent"
@@ -157,25 +219,28 @@
                     android:id="@+id/txt_humidity"
                     android:layout_width="wrap_content"
                     android:layout_height="138px"
-                    android:layout_marginLeft="2px"
+                    android:layout_marginStart="2px"
                     android:background="@color/white"
                     android:gravity="center"
                     android:paddingStart="@dimen/_30px"
-                    android:text="湿度"
+                    android:text="湿度(%RH)"
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
-                    app:layout_constraintStart_toEndOf="@+id/center_guideline"
+                    app:layout_constraintStart_toEndOf="@+id/center_guideline1"
                     app:layout_constraintTop_toTopOf="@id/txt_temperature"/>
 
                 <com.cnksi.sjjc.View.EditTextNoEmoj
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
                     android:id="@+id/et_humidity"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0px"
                     android:layout_height="138px"
                     android:background="@color/white"
+                    android:text="@{baseInfo.shidu}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txt_humidity"
-                    app:layout_constraintTop_toTopOf="@id/txt_temperature"/>
+                    app:layout_constraintTop_toTopOf="@id/txt_humidity"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_wind"
@@ -185,10 +250,10 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:paddingStart="@dimen/_30px"
-                    android:text="风速（m/s）"
+                    android:text="风速(m/s)"
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_temperature"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_humidity"/>
 
                 <com.cnksi.sjjc.View.EditTextNoEmoj
                     android:id="@+id/et_wind"
@@ -196,6 +261,9 @@
                     android:layout_width="0px"
                     android:layout_height="138px"
                     android:background="@color/white"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
+                    android:text="@{baseInfo.fengsu}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txt_wind"
                     app:layout_constraintTop_toTopOf="@+id/txt_wind"/>
@@ -208,7 +276,7 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:paddingStart="@dimen/_30px"
-                    android:text="测温仪器（型号/编号）"
+                    android:text="测温仪器(型号/编号)"
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
                     app:layout_constraintTop_toBottomOf="@+id/txt_wind"/>
@@ -219,6 +287,7 @@
                     android:layout_width="0px"
                     android:layout_height="138px"
                     android:background="@color/white"
+                    android:text="@{baseInfo.testInstrument}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txt_temperature_device"
                     app:layout_constraintTop_toTopOf="@+id/txt_temperature_device"/>
@@ -262,7 +331,10 @@
                 android:drawableRight="@drawable/ic_arrow_right"
                 android:gravity="center_vertical|right"
                 android:hint="请点击此处跳转选择"
+                android:onClick="onClick"
                 android:paddingEnd="@dimen/_30px"
+                android:text='@{setNull==false?"":location.deviceName}'
+                android:textColor="@color/green_color"
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_hot_device"
@@ -281,14 +353,16 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintTop_toBottomOf="@+id/txt_hot_device"/>
 
-            <com.cnksi.sjjc.View.EditTextNoEmoj
-                android:id="@+id/et_hotdeivce_part"
-                style="@style/NewHeatPointEditTextStyle"
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_space_name"
                 android:layout_width="0px"
                 android:layout_height="138px"
                 android:background="@color/white"
-                android:drawablePadding="@dimen/_30px"
+                android:gravity="right|center_vertical"
                 android:paddingEnd="@dimen/_30px"
+                android:text='@{setNull==false?"":location.spacingName}'
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_hot_space"
                 app:layout_constraintTop_toTopOf="@+id/txt_hot_space"/>
@@ -301,7 +375,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:paddingStart="@dimen/_30px"
-                android:text="额定电流"
+                android:text="额定电流(A)"
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintTop_toBottomOf="@+id/txt_hot_space"/>
@@ -313,8 +387,11 @@
                 android:layout_height="138px"
                 android:background="@color/white"
                 android:drawablePadding="@dimen/_30px"
+                android:inputType="numberDecimal"
+                android:maxLength="5"
                 android:hint="请输入额定电流"
                 android:paddingEnd="@dimen/_30px"
+                android:text='@{setNull==false?"":location.ratedCurrent}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_electrcity"
                 app:layout_constraintTop_toTopOf="@+id/txt_electrcity"/>
@@ -327,7 +404,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:paddingStart="@dimen/_30px"
-                android:text="负荷电流"
+                android:text="负荷电流(A)"
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintTop_toBottomOf="@+id/txt_electrcity"/>
@@ -340,7 +417,10 @@
                 android:background="@color/white"
                 android:drawablePadding="@dimen/_30px"
                 android:hint="请输入负荷电流"
+                android:inputType="numberDecimal"
+                android:maxLength="5"
                 android:paddingEnd="@dimen/_30px"
+                android:text='@{setNull==false?"":location.fhdl}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_load_electricity"
                 app:layout_constraintTop_toTopOf="@+id/txt_load_electricity"/>
@@ -351,8 +431,9 @@
                 android:layout_height="@dimen/label_height"
                 android:layout_marginTop="32px"
                 android:background="@color/green_color"
-                android:drawableRight="@drawable/icon_devicepart_add"
+                android:drawableRight="@drawable/ic_open"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:paddingEnd="@dimen/_30px"
                 android:paddingStart="@dimen/_30px"
                 android:text="发热部位"
@@ -367,6 +448,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:divider="@color/layout_color_gray"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/txt_hot_part"
                 />
@@ -381,6 +463,7 @@
                 android:layout_marginStart="@dimen/_30px"
                 android:layout_marginTop="32px"
                 android:background="@drawable/red_button_background_selector"
+                android:onClick="onClick"
                 android:text="@string/dialog_cancel_text_str"
                 app:layout_constraintEnd_toStartOf="@+id/btn_confirm"
                 app:layout_constraintHorizontal_weight="1"
@@ -396,6 +479,7 @@
                 android:layout_marginLeft="@dimen/global_padding_half_left_right"
                 android:layout_marginStart="@dimen/_20px"
                 android:background="@drawable/grass_green_button_background_selector"
+                android:onClick="onClick"
                 android:text="@string/confirm_str"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="1"
@@ -410,7 +494,7 @@
                 android:background="@color/green_color"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_30px"
-                android:text="发热记录"
+                android:text="温度记录"
                 android:textColor="@color/white"
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -421,7 +505,6 @@
                 android:id="@+id/rl_hotrecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 app:layout_constraintTop_toBottomOf="@+id/txt_hot_record"/>
 
             <Button
@@ -435,6 +518,7 @@
                 android:layout_marginTop="30px"
                 android:layout_weight="1"
                 android:background="@drawable/grass_green_button_background_selector"
+                android:onClick="onClick"
                 android:text="@string/complete_test_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rl_hotrecord"/>

@@ -123,6 +123,7 @@
             android:name=".activity.AllDeviceListActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
+            android:theme="@style/BatteryDefect"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 
         <activity
@@ -149,9 +150,20 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 
         <activity
-            android:name=".activity.hwcw.NewHWCWActivity"
+            android:name=".activity.hwcw.NewHwcwActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+
+        <activity
+            android:name=".activity.hwcw.NewHwcwInforActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+
+        <activity
+            android:name=".activity.hwcw.NewHwcwReportActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity

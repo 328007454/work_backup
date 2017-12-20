@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_hot_device"
+                android:layout_width="wrap_content"
+                android:layout_height="138px"
+                android:layout_marginTop="2px"
+                android:background="@color/white"
+                android:gravity="center"
+                android:paddingStart="@dimen/_30px"
+                android:text="发热设备"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/tv_text_size"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_hot_device_name"
+                android:layout_width="0px"
+                android:layout_height="138px"
+                android:background="@color/white"
+                android:gravity="right|center_vertical"
+                android:paddingEnd="@dimen/_30px"
+                android:textSize="@dimen/tv_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_hot_device"
+                app:layout_constraintTop_toTopOf="@+id/txt_hot_device"/>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_hot_part_infomation"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical|right"
+                android:minHeight="138px"
+                android:paddingBottom="@dimen/_20px"
+                android:paddingEnd="@dimen/_30px"
+                android:text=""
+                android:textSize="@dimen/tv_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txt_hot_part_title"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_hot_part_title"
+                android:layout_width="0px"
+                android:layout_height="138px"
+                android:background="@color/white"
+                android:gravity="center_vertical|left"
+                android:paddingStart="@dimen/_30px"
+                android:text="发热详情"
+                android:textColor="@color/global_text_color"
+                android:textSize="@dimen/tv_text_size"
+                app:layout_constraintTop_toBottomOf="@+id/txt_hot_device"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:background="@color/gray_stroke_color"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/et_etting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30px"
+                android:background="@color/red_color"
+                android:gravity="center"
+                android:paddingEnd="@dimen/_20px"
+                android:paddingStart="@dimen/_20px"
+                android:text="编辑中"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tv_text_size"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_hot_part_title"
+                app:layout_constraintLeft_toRightOf="@+id/txt_hot_part_title"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</layout>

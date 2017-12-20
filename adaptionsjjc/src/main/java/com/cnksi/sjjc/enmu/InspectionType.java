@@ -74,7 +74,7 @@ public enum InspectionType {
 
     SBJC("数据抄录"),
     NEWSBJC("数据抄录"),
-    SBJC_01("红外测温"),
+    //    SBJC_01("红外测温"),
     SBJC_02("保护屏红外热像检测"),
     SBJC_03("室内温湿度记录"),
     SBJC_04("差动保护差流记录"),
@@ -89,6 +89,7 @@ public enum InspectionType {
     SBJC_10("蓄电池检测记录"),
     SBJC_11("蓄电池内阻检测记录"),
     SBJC_12("收发信机测试"),
+    SBJC_13("设备测温"),
     JYHYS("精益化验收"),
     JYHPJ("精益化评价"),
     TJWT("教育培训");
@@ -112,9 +113,10 @@ public enum InspectionType {
 
 
     public static InspectionType getForValue(String value) {
-        if (InspectionType.SBJC_01.value.equals(value)) {
-            return InspectionType.SBJC_01;
-        } else if (InspectionType.SBJC_02.value.equals(value)) {
+//        if (InspectionType.SBJC_01.value.equals(value)) {
+//            return InspectionType.SBJC_01;
+//        } else
+        if (InspectionType.SBJC_02.value.equals(value)) {
             return InspectionType.SBJC_02;
         } else if (InspectionType.SBJC_03.value.equals(value)) {
             return InspectionType.SBJC_03;
@@ -166,6 +168,8 @@ public enum InspectionType {
             return InspectionType.TJWT;
         } else if (InspectionType.NEWSBJC.value.equals(value)) {
             return InspectionType.NEWSBJC;
+        } else if (InspectionType.SBJC_13.value.equals(value)) {
+            return InspectionType.SBJC_13;
         }
         return null;
     }

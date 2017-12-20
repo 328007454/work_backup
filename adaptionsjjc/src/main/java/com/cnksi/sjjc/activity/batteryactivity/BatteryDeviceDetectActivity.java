@@ -33,7 +33,7 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
     private ActivityBatteryDeviceDetectBinding mDetectBinding;
     private BatteryDefetcDeviceAdapter mDefetcDeviceAdapter;
     private List<BatteryInstrument> datas = new ArrayList<>();
-    private int pageStart, pageNum;
+    private int pageStart;
 
 
     @Override

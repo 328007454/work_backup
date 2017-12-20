@@ -89,9 +89,11 @@
     <string name="cancel_str">取\t消</string>
     <string name="save_str">保\t存</string>
     <string name="complete_test_text">完成测试</string>
+    <string name="produce_hwcw_record">生成测温记录</string>
     <string name="login_no_user">没有登录人员,请添加</string>
     <string name="chadong_baohu_jilu">差动保护差流记录</string>
     <string name="have_not_save_data">当前编辑区还有未保存数据，是否要清除?</string>
+    <string name="delete_data">是否要删除本条数据</string>
 
     <!-- 工作票 -->
     <string name="wt_status">状态</string>

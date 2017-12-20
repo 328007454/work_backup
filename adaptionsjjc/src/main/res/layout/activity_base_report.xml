@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_root_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/ll_root_container"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_minheight_px"
-        android:background="@color/global_base_color" >
+        android:background="@color/global_base_color">
 
         <ImageButton
             android:id="@+id/btn_back"
@@ -18,27 +18,27 @@
             android:layout_height="@dimen/title_bar_minheight_px"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            app:srcCompat="@drawable/cancel_button_background"
             android:background="@android:color/transparent"
             android:contentDescription="@null"
             android:src="@drawable/cancel_button_background"
-            android:visibility="visible" />
+            android:visibility="visible"
+            app:srcCompat="@drawable/cancel_button_background"/>
 
         <com.cnksi.sjjc.View.AutoFitTextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/title_bar_minheight_px"
             android:layout_marginRight="@dimen/title_bar_minheight_px"
+            android:gravity="center"
             android:singleLine="true"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/tv_title_text_size" />
+            android:textSize="@dimen/tv_title_text_size"/>
 
         <ImageButton
-            style="@style/svgButtonAdd"
             android:id="@+id/btn_right"
+            style="@style/svgButtonAdd"
             android:layout_width="@dimen/title_bar_minheight_px"
             android:layout_height="@dimen/title_bar_minheight_px"
             android:layout_alignParentRight="true"
@@ -47,9 +47,6 @@
             android:contentDescription="@null"
             app:srcCompat="@drawable/return_main_menu_selector"
             />
-
-
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -57,21 +54,21 @@
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/global_padding_left_right_px"
         android:paddingRight="@dimen/global_padding_left_right_px"
-        android:paddingTop="@dimen/report_padding_top_px" >
+        android:paddingTop="@dimen/report_padding_top_px">
 
         <ImageView
-            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-            android:src="@mipmap/ic_report_exit" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_report_exit"/>
 
         <RelativeLayout
             android:id="@+id/llbase"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/global_padding_top_bottom_px"
-            android:layout_marginTop="@dimen/global_padding_half_left_right_px" >
+            android:layout_marginTop="@dimen/global_padding_half_left_right_px">
 
             <!--  -->
 
@@ -85,7 +82,7 @@
                 android:gravity="center"
                 android:text="@string/report_generating_str"
                 android:textColor="@color/global_gray_text_color"
-                android:textSize="@dimen/report_generate_text_size_px" />
+                android:textSize="@dimen/report_generate_text_size_px"/>
         </RelativeLayout>
     </RelativeLayout>
 
