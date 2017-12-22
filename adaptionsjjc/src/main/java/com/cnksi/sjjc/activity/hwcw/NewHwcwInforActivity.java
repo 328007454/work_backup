@@ -16,6 +16,7 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -98,7 +99,6 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
 
     private void initUI() {
         tvTitle.setText(currentBdzName + currentInspectionName + "记录");
-        mInforBinding.setInfo(mHwcwBaseInfo);
         resolveHotPart();
         String[] users = new String[]{""};
         if (TextUtils.isEmpty(mHwcwBaseInfo.testPerson)) {
@@ -120,6 +120,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
             @Override
             public void onClick(View view) {
                 saveData();
+                setResult(RESULT_OK);
                 _this.finish();
             }
         });
@@ -127,9 +128,12 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
 
     private void resolveHotPart() {
         int i = 0;
+        List<String> spaces = new ArrayList<>();
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
         if (!hotLocations.isEmpty()) {
             for (HwcwLocation location : hotLocations) {
+                if (!TextUtils.isEmpty(location.spacingName)&&!spaces.contains(location.spacingName))
+                    spaces.add(location.spacingName);
                 String deviceName = location.deviceName;
                 stringBuilder.append("\n发热设备:").append(deviceName).append("\n");
                 HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(location.hotPart);
@@ -140,8 +144,18 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
                 }
             }
             mInforBinding.etTempRecord.setText(stringBuilder.toString());
+            if (TextUtils.isEmpty(mHwcwBaseInfo.problem)) {
+                mInforBinding.etProblem.setText(stringBuilder.toString());
+            }
+            mHwcwBaseInfo.problem = stringBuilder.toString();
+            if (!spaces.isEmpty()) {
+                mHwcwBaseInfo.testLocation = StringUtils.ArrayListToString(spaces);
+            }
+        } else {
+            mInforBinding.etProblem.setText("无");
+            mInforBinding.etLocation.setText("全站间隔设备");
         }
-
+        mInforBinding.setInfo(mHwcwBaseInfo);
     }
 
     boolean isUpdateReport = false;

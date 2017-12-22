@@ -46,13 +46,6 @@ public class NewHwcwService {
                     baseInfo.testRange = "区域";
                 }
             }
-            if (TextUtils.isEmpty(baseInfo.testLocation)) {
-                baseInfo.testLocation = "全站间隔设备";
-            }
-
-            if (TextUtils.isEmpty(baseInfo.problem)) {
-                baseInfo.problem = "无";
-            }
             if (TextUtils.isEmpty(baseInfo.remark)) {
                 baseInfo.remark = "无";
             }

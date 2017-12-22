@@ -94,7 +94,9 @@ public class NewHwcwReportActivity extends BaseReportActivity {
             for (HwcwLocation location : hotLocations) {
                 String deviceName = location.deviceName;
                 deviceBuilder.append(loopTime == hotLocations.size() ? deviceName : deviceName + "\n");
-                spaceBuilder.append(loopTime == hotLocations.size() ? location.spacingName : location.spacingName + "\n");
+                if (!spaceBuilder.toString().contains(location.spacingName)) {
+                    spaceBuilder.append(loopTime == hotLocations.size() ? location.spacingName : location.spacingName + "\n");
+                }
                 stringBuilder.append("发热设备:").append(deviceName).append("\n");
                 HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(location.hotPart);
                 if (hotParts != null && hotParts.result != null && !hotParts.result.isEmpty()) {

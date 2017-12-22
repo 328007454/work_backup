@@ -61,6 +61,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/container_baseinfo"/>
 
                 <com.cnksi.sjjc.View.EditTextNoEmoj
+                    android:textColor="@color/deep_grey"
                     android:id="@+id/et_test_range"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,6 +97,7 @@
                     android:drawablePadding="@dimen/_30px"
                     android:hint="请输入测温位置"
                     android:minHeight="138px"
+                    android:textColor="@color/deep_grey"
                     android:paddingStart="@dimen/_30px"
                     android:text='@{info.testLocation}'
                     android:textSize="42px"
@@ -122,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:drawablePadding="@dimen/_30px"
+                    android:textColor="@color/deep_grey"
                     android:hint="请输入发现问题"
                     android:minHeight="138px"
                     android:paddingStart="@dimen/_30px"
@@ -151,6 +154,7 @@
                     android:background="@color/white"
                     android:drawablePadding="@dimen/_30px"
                     android:minHeight="138px"
+                    android:textColor="@color/deep_grey"
                     android:paddingStart="@dimen/_30px"
                     android:textSize="42px"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -175,6 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="138px"
                     android:background="@color/white"
+                    android:textColor="@color/deep_grey"
                     android:drawablePadding="@dimen/_30px"
                     android:paddingStart="@dimen/_30px"
                     android:text='@{info.remark}'

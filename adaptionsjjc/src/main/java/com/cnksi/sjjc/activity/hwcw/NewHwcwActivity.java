@@ -33,6 +33,7 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 设备测温主界面
@@ -47,6 +48,8 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
     private HwcwNewHotPartAdapter mHotPartAdapter;
     private List<HwcwLocation> hotLocations = new ArrayList<>();
     private HwcwBaseInfo mHwcwBaseInfo;
+    public static final int TO_NEWINFORACTIVITY = 0x111;
+    private List<String> selecteDevices = new ArrayList<>();
 
     /**
      * 当前选择设备
@@ -72,6 +75,9 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                 mHwcwBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
                 if (!TextUtils.isEmpty(mHwcwBaseInfo.id)) {
                     hotLocations = NewHwcwService.getInstance().getAllLocation(mHwcwBaseInfo.id);
+                    for (HwcwLocation location : hotLocations) {
+                        selecteDevices.add(location.deviceID);
+                    }
                 }
                 runOnUiThread(new Runnable() {
                     @Override
@@ -114,7 +120,6 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
     @Override
     protected void onResume() {
         super.onResume();
-            mHwcwBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
     }
 
     public void onClick(View view) {
@@ -146,7 +151,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
             case R.id.btn_confirm_save:
                 if (saveData()) {
                     Intent intent = new Intent(_this, NewHwcwInforActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, TO_NEWINFORACTIVITY);
                 } else {
                     CToast.showShort(_this, "请完成所有的基本信息填写！");
                 }
@@ -269,11 +274,24 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                 DbModel model = (DbModel) dataMap.get(Config.DEVICE_DATA);
                 if (model != null) {
                     currentDevice = model;
-                    mHwcwNewBinding.etHotdeivceName.setText(currentDevice.getString(Device.NAME));
-                    mHwcwNewBinding.txtSpaceName.setText(currentDevice.getString("spaceName"));
                     currentDeviceID = currentDevice.getString("deviceid");
                     currentSpaceID = currentDevice.getString("spid");
+                    if (selecteDevices.contains(currentDeviceID)) {
+                        DialogUtils.createTipsDialog(_this, "该设备已经被新增为发热设备，请在温度记录里点击编辑", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        }, false).show();
+                    } else {
+                        selecteDevices.add(currentDeviceID);
+                        mHwcwNewBinding.etHotdeivceName.setText(currentDevice.getString(Device.NAME));
+                        mHwcwNewBinding.txtSpaceName.setText(currentDevice.getString("spaceName"));
+                    }
                 }
+                break;
+            case TO_NEWINFORACTIVITY:
+                mHwcwBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
                 break;
             default:
                 break;
@@ -337,6 +355,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                 mHwcwNewBinding.llHotPart.removeAllViews();
                 childItemNum = 0;
                 mHotPartAdapter.notifyDataSetChanged();
+                selecteDevices.remove(position);
             }
         }, false).show();
     }
