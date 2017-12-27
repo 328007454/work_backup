@@ -86,7 +86,7 @@ android {
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def fileName
                         if (variant.buildType.name == "release")
-                            fileName = "sjjc_${defaultConfig.versionCode}_release_${releaseTime()}_(${branch()}).apk"
+                            fileName = "sjjc_${defaultConfig.versionCode}_${defaultConfig.versionName}_${releaseTime()}_release.apk"
                         else fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
                         if ("true" == JENKINS) {
                             output.outputFile = new File("./buildAPK/", fileName)

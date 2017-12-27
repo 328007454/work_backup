@@ -215,6 +215,8 @@ public class BatteryTestActivity extends BaseActivity {
      */
     private String testInstrumentNameId;
 
+    private String typeName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,7 +229,8 @@ public class BatteryTestActivity extends BaseActivity {
          */
         if (null != bundle && !TextUtils.isEmpty(bundle.getString(Config.CURRENT_TASK_ID))) {
 
-            String typeName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
+            typeName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
+            PreferencesUtils.put(mCurrentActivity, "typename", typeName);
             currentInspectionType = typeName.contains(Config.DIANYA) ? InspectionType.SBJC_10.name() : InspectionType.SBJC_11.name();
             currentBdzId = bundle.getString(Config.CURRENT_BDZ_ID);
             currentBdzName = bundle.getString(Config.CURRENT_BDZ_NAME);
@@ -283,12 +286,15 @@ public class BatteryTestActivity extends BaseActivity {
                     return;
                 }
                 try {
+                    currentReport.checkType = taskExpand.sbjcIsAllCheck;
                     ReportService.getInstance().saveOrUpdate(currentReport);
                 } catch (DbException e) {
                     e.printStackTrace();
                     Log.i("BatteryTestActivity", "返回键数据保存出错");
                 }
-                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done") && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
+                typeName = PreferencesUtils.getString(mCurrentActivity, "typename", "");
+                boolean xudianchi = typeName.contains(Config.XUDIANCHI) && (typeName.contains(Config.DIANYA) || typeName.contains(Config.NEIZU));
+                if (xudianchi && task.status.equalsIgnoreCase("done") && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                     PreferencesUtils.put(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
                     Intent intent = new Intent();
                     ComponentName componentName;
@@ -781,6 +787,7 @@ public class BatteryTestActivity extends BaseActivity {
     private String selectDeviceNum;
 
     private void saveOrUpdateReport() {
+        currentReport.checkType = taskExpand.sbjcIsAllCheck;
         currentReport.endtime = DateUtils.getCurrentLongTime();
         String valueTemp = txtTempreture.getText().toString();
         if (TextUtils.isEmpty(valueTemp)) {

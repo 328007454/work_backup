@@ -297,6 +297,8 @@ public class Config extends CoreConfig {
     public final static String KEY_SYNC_APP_ID = "key_sync_app_id";
     public static final String DIANYA = "电压";
     public static final String NEIZU = "内阻";
+    public static final String XUDIANCHI = "蓄电池";
+
     public static String CURRENT_DEPARTMENT_NAME = "current_department_name";
 
     /**

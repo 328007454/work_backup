@@ -96,6 +96,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
     private Map<String, Map<String, List<String>>> groupImageList = new HashMap<String, Map<String, List<String>>>();
     private BatteryGroup batteryGroups;
     private String type;
+    private String typeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,8 @@ public class BatteryTestReportActivity extends BaseReportActivity {
          * <b>NOTE :</b>设备检测CURRENT_TASK_ID不能存放在intent中传递，通过缓存传递
          */
         if (null != bundle && !TextUtils.isEmpty(bundle.getString(Config.CURRENT_TASK_ID))) {
+            typeName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
+            PreferencesUtils.put(mCurrentActivity, "typename", typeName);
             currentInspectionType = InspectionType.SBJC_10.name();
             currentBdzId = bundle.getString(Config.CURRENT_BDZ_ID);
             currentBdzName = bundle.getString(Config.CURRENT_BDZ_NAME);
@@ -129,7 +132,9 @@ public class BatteryTestReportActivity extends BaseReportActivity {
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ("maintenance_xdcdyjc".equalsIgnoreCase(type) && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
+                typeName = PreferencesUtils.getString(mCurrentActivity, "typename", "");
+                boolean xudianchi = typeName.contains(Config.XUDIANCHI) && (typeName.contains(Config.DIANYA) || typeName.contains(Config.NEIZU));
+                if (xudianchi && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                     PreferencesUtils.put(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
 //                    Intent intent = new Intent();
 //                    ComponentName componentName;
