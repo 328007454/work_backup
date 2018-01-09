@@ -287,6 +287,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                         selecteDevices.add(currentDeviceID);
                         mHwcwNewBinding.etHotdeivceName.setText(currentDevice.getString(Device.NAME));
                         mHwcwNewBinding.txtSpaceName.setText(currentDevice.getString("spaceName"));
+                        initHotPartItem();
                     }
                 }
                 break;
