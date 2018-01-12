@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cnksi.core.utils.CoreConfig;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -36,7 +38,7 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         ImageView defectImage = holder.getView(R.id.iv_defect_image);
         TextView defectContentTv = holder.getView(R.id.tv_defect_content);
         defectContentTv.setText(convert2DefectLevel(item));
-        holder.setText(R.id.tv_defect_device, "设备：" + item.devcie);
+        holder.setText(R.id.tv_defect_device, "设备：" + (TextUtils.isEmpty(item.devcie) ? "" : item.devcie));
         final ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.string2List(item.pics);
         if (listPicDis.size() > 0 && !TextUtils.isEmpty(listPicDis.get(0))) {
             x.image().bind(defectImage, Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)), CustomApplication.getLargeImageOptions());
@@ -51,6 +53,10 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
             defectImage.setImageResource(R.mipmap.icon_nodefect);
             defectImage.setOnClickListener(null);
         }
+
+        holder.setText(R.id.tv_defect_space, "间隔：" + (TextUtils.isEmpty(item.spname) ? "" : item.spname));
+        holder.setText(R.id.tv_record_person, "记录人员：" + (TextUtils.isEmpty(item.discoverer) ? "" : item.discoverer));
+        holder.setText(R.id.tv_date, "时间：" + (TextUtils.isEmpty(item.insertTime) ? "" : (DateUtils.formatDateTime(item.insertTime, CoreConfig.dateFormat1))));
 
     }
 

@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -35,8 +36,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
+ * @author luoxy
  * @version 1.0
- * @auth luoxy
  * @date 16/4/20
  */
 public class WeatherView1 extends LinearLayout {
@@ -47,14 +48,23 @@ public class WeatherView1 extends LinearLayout {
     private RecyclerView mRecyclerView;
 
     private ImageView mIcon;
+    /**
+     * label显示文字
+     */
+    private String mLabelStr;
+    /**
+     * label 显示文字的颜色
+     */
+    private int mLabelColor;
+    /**
+     * Label显示文字的大小
+     */
+    private int mLabelSize;
 
-    private String mLabelStr;// label显示的文字
-
-    private int mLabelColor;// label显示文字的颜色
-
-    private int mLabelSize;// Label显示文字大小
-
-    private int mLabelPaddingLeft;// label距离左边padding
+    /**
+     * label距离左边的padding
+     */
+    private int mLabelPaddingLeft;
 
     private int weatherResource;
     private int iconHeight;
@@ -127,19 +137,14 @@ public class WeatherView1 extends LinearLayout {
             titleBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.weather_title_layout, null, false);
             AutoUtils.auto(titleBinding.getRoot());
         }
-
-//        mLabel = new TextView(getContext());
         mLabel = titleBinding.title;
         LayoutParams leftLayoutParam = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         mLabel.setText(mLabelStr);
-//        mLabel.setGravity(Gravity.CENTER);
         mLabel.setTextColor(mLabelColor);
         mLabel.setPadding(mLabelPaddingLeft, 0, 0, 0);
         mLabel.setLayoutParams(leftLayoutParam);
         mLabelSize = AutoUtils.getPercentHeightSizeBigger(mLabelSize);
         mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLabelSize);
-//        this.addView(mLabel, leftLayoutParam);
-//        this.addView(titleBinding.getRoot());
 
         mRecyclerView = new RecyclerView(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -147,53 +152,35 @@ public class WeatherView1 extends LinearLayout {
         mRecyclerView.setAdapter(adapter1);
         LayoutParams middleLayoutParam = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         middleLayoutParam.weight = 1;
-        middleLayoutParam.gravity= Gravity.CENTER_VERTICAL;
-
+        middleLayoutParam.gravity = Gravity.CENTER_VERTICAL;
         this.addView(mRecyclerView, middleLayoutParam);
-
-//        mIcon = new ImageView(getContext());
-//        mIcon.setImageResource(iconResource);
-//        mIcon.setScaleType(ImageView.ScaleType.FIT_XY);
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(iconWidth,iconHeight);
-//        layoutParams.setMargins(iconWidth,0,0,0);
-//        mIcon.setLayoutParams(layoutParams);
-//        this.addView(mIcon);
         this.addView(bingding.getRoot());
-
-
-//        mIcon.setPadding(0, 10, 0, 10);
-//        LayoutParams rightLayoutParam = new LayoutParams(AutoUtils.getPercentWidthSizeBigger(29), AutoUtils.getPercentHeightSizeBigger(48));
-//        LayoutParams rightLayoutParam = new LayoutParams(29, 48);
-//        LayoutParams rightLayoutParam = new LayoutParams(iconWidth, LayoutParams.MATCH_PARENT);
-//        rightLayoutParam.gravity = Gravity.CENTER_VERTICAL;
-//        rightLayoutParam.rightMargin = iconMargin;
-//        rightLayoutParam.leftMargin=iconMargin;
-//        this.addView(mIcon, rightLayoutParam);
         bingding.arrow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 showWeatherDialog();
             }
         });
-//        int textSize = AutoUtils.getPercentWidthSizeBigger(mLabelSize);
-//        mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
     }
 
     class WeatherAdapter extends BaseRecyclerAdapter<String> {
 
-        // public WeatherAdapter(Context context, Collection<String> datas, int itemLayoutId) {
         public WeatherAdapter(RecyclerView v, Collection<String> datas, int itemLayoutId) {
             super(v, datas, itemLayoutId);
-            // super(context, datas, itemLayoutId);
         }
 
         @Override
         public void convert(RecyclerHolder holder, final String item, final int position, boolean isScrolling) {
             RadioButton radioButton = holder.getView(R.id.weather);
-            radioButton.setChecked(false);
             radioButton.setText(item);
-            if (currentWeather.equals(item))
+            if (currentWeather.equals(item)) {
                 radioButton.setChecked(true);
+            }else if (position == 0 && TextUtils.isEmpty(currentWeather)) {
+                radioButton.setChecked(true);
+                currentWeather = item;
+            }else{
+                radioButton.setChecked(false);
+            }
             radioButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

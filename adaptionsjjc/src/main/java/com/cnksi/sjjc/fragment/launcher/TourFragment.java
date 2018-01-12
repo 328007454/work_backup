@@ -3,6 +3,7 @@ package com.cnksi.sjjc.fragment.launcher;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -98,11 +99,16 @@ public class TourFragment extends BaseCoreFragment {
      */
     public void toTaskPlan(String inspectionType) {
         CustomApplication.closeDbConnection();
+        PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
+        PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         Intent intent = new Intent();
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_ACCOUNT, ""));
         intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(mCurrentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, ""));
-        intent.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(mCurrentActivity,Config.CURRENT_DEPARTMENT_ID,""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, ""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_NAME, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_NAME, ""));
+        intent.putExtra(Config.KEY_SYNC_URL, Config.SYNC_URL);
+        intent.putExtra(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         if (TextUtils.isEmpty(inspectionType)) {
             ComponentName componentName5 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.nari.NariActivity");
             intent.setComponent(componentName5);

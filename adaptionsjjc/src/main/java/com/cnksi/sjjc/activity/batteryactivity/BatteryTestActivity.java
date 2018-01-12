@@ -3,6 +3,7 @@ package com.cnksi.sjjc.activity.batteryactivity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
@@ -31,6 +32,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
@@ -38,6 +40,7 @@ import com.cnksi.sjjc.adapter.BatteryAdapter;
 import com.cnksi.sjjc.adapter.BatteryImageAdapter;
 import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryGroup;
+import com.cnksi.sjjc.bean.BatteryInstrument;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Task;
@@ -45,6 +48,7 @@ import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.BatteryGroupService;
+import com.cnksi.sjjc.service.BatteryInstrumentService;
 import com.cnksi.sjjc.service.BatteryRecordService;
 import com.cnksi.sjjc.service.BatteryService;
 import com.cnksi.sjjc.service.ReportService;
@@ -76,6 +80,7 @@ public class BatteryTestActivity extends BaseActivity {
     public static final int LOAD_BATTERY_RECORD_SUCCESS = LOAD_BATTERY_FAILURE + 1;
     public static final int DELETE_IMAGE = LOAD_BATTERY_RECORD_SUCCESS + 1;
     public static final int EDIT_BATTERY_INFO = 0x100;
+    public static final int BATTERY_DEVICEDEFECT_ACTIVITY = EDIT_BATTERY_INFO + 1;
 
     private List<Battery> batteryList;
 
@@ -162,6 +167,19 @@ public class BatteryTestActivity extends BaseActivity {
     //单只标称电压字段容器
     @ViewInject(R.id.single_voltage)
     private EditText txtSingleVoltage;
+
+    /**
+     * 跳转测试仪器名称界面
+     */
+    @ViewInject(R.id.iv_go_btdefect)
+    private ImageView ivGoDefect;
+
+    /**
+     * 测试仪器名称
+     */
+    @ViewInject(R.id.et_test_instrument)
+    private EditText txtInstrument;
+
     private Battery currentBattery;
 
     private int currentCheckType;
@@ -188,6 +206,18 @@ public class BatteryTestActivity extends BaseActivity {
 
     private String type = "";
 
+    /**
+     * 测试仪器名称
+     */
+    private String testInstrumentName;
+    /**
+     * 测试仪器名称ID
+     */
+    private String testInstrumentNameId;
+
+    private String typeName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,7 +228,10 @@ public class BatteryTestActivity extends BaseActivity {
          * <b>NOTE :</b>设备检测CURRENT_TASK_ID不能存放在intent中传递，通过缓存传递
          */
         if (null != bundle && !TextUtils.isEmpty(bundle.getString(Config.CURRENT_TASK_ID))) {
-            currentInspectionType = InspectionType.SBJC_10.name();
+
+            typeName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
+            PreferencesUtils.put(mCurrentActivity, "typename", typeName);
+            currentInspectionType = typeName.contains(Config.DIANYA) ? InspectionType.SBJC_10.name() : InspectionType.SBJC_11.name();
             currentBdzId = bundle.getString(Config.CURRENT_BDZ_ID);
             currentBdzName = bundle.getString(Config.CURRENT_BDZ_NAME);
             currentReportId = bundle.getString(Config.CURRENT_REPORT_ID);
@@ -253,12 +286,15 @@ public class BatteryTestActivity extends BaseActivity {
                     return;
                 }
                 try {
+                    currentReport.checkType = taskExpand.sbjcIsAllCheck;
                     ReportService.getInstance().saveOrUpdate(currentReport);
                 } catch (DbException e) {
                     e.printStackTrace();
                     Log.i("BatteryTestActivity", "返回键数据保存出错");
                 }
-                if ("maintenance_xdcdyjc".equalsIgnoreCase(PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "")) && task.status.equalsIgnoreCase("done") && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
+                typeName = PreferencesUtils.getString(mCurrentActivity, "typename", "");
+                boolean xudianchi = typeName.contains(Config.XUDIANCHI) && (typeName.contains(Config.DIANYA) || typeName.contains(Config.NEIZU));
+                if (xudianchi && task.status.equalsIgnoreCase("done") && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                     PreferencesUtils.put(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
                     Intent intent = new Intent();
                     ComponentName componentName;
@@ -516,6 +552,7 @@ public class BatteryTestActivity extends BaseActivity {
         txtFuChongEle.setText(group.fcElectricty == null ? "" : group.fcElectricty + "");
         txtZVoltage.setText(group.zVoltage == null ? "" : group.zVoltage + "");
         txtFVoltage.setText(group.fVoltage == null ? "" : group.fVoltage);
+        txtInstrument.setText(TextUtils.isEmpty(group.testInstrument) ? "" : group.testInstrument);
 
     }
 
@@ -587,6 +624,7 @@ public class BatteryTestActivity extends BaseActivity {
             batteryGroup.fcElectricty = StringUtils.getTransformTep(txtFuChongEle.getText().toString());
             batteryGroup.zVoltage = StringUtils.getTransformTep(txtZVoltage.getText().toString());
             batteryGroup.fVoltage = StringUtils.getTransformTep(txtFVoltage.getText().toString());
+            batteryGroup.testInstrument = txtInstrument.getText().toString().trim();
         } else {
             return false;
         }
@@ -669,7 +707,8 @@ public class BatteryTestActivity extends BaseActivity {
         });
     }
 
-    @Event({R.id.finish_record, R.id.tv_right, R.id.layout_image})
+
+    @Event({R.id.finish_record, R.id.tv_right, R.id.layout_image, R.id.iv_go_btdefect})
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.finish_record:
@@ -703,6 +742,10 @@ public class BatteryTestActivity extends BaseActivity {
                     ivShow.setBackgroundResource(R.mipmap.icon_down);
                 }
 
+                break;
+            case R.id.iv_go_btdefect:
+                Intent intent = new Intent(_this, BatteryDeviceDetectActivity.class);
+                startActivityForResult(intent, BATTERY_DEVICEDEFECT_ACTIVITY);
                 break;
             default:
                 break;
@@ -741,7 +784,10 @@ public class BatteryTestActivity extends BaseActivity {
 
     }
 
+    private String selectDeviceNum;
+
     private void saveOrUpdateReport() {
+        currentReport.checkType = taskExpand.sbjcIsAllCheck;
         currentReport.endtime = DateUtils.getCurrentLongTime();
         String valueTemp = txtTempreture.getText().toString();
         if (TextUtils.isEmpty(valueTemp)) {
@@ -766,7 +812,9 @@ public class BatteryTestActivity extends BaseActivity {
         }
         try {
             ReportService.getInstance().saveOrUpdate(currentReport);
-
+            if (!TextUtils.isEmpty(selectDeviceNum)) {
+                BatteryInstrumentService.getInstance().saveOrUpdateObject(testInstrumentNameId, selectDeviceNum);
+            }
             Intent intent = new Intent(this, BatteryFinishActivity.class);
             startActivity(intent);
         } catch (DbException e) {
@@ -834,6 +882,16 @@ public class BatteryTestActivity extends BaseActivity {
                         e.printStackTrace();
                         Log.e(TAG, "保存数据错误");
                     }
+                    break;
+                case BATTERY_DEVICEDEFECT_ACTIVITY:
+                    testInstrumentName = data.getStringExtra(BatteryInstrument.CSYQMC);
+                    testInstrumentNameId = data.getStringExtra(BatteryInstrument.ID);
+                    selectDeviceNum = data.getStringExtra(BatteryInstrument.SELECT_NUM);
+                    if (!TextUtils.isEmpty(testInstrumentName)) {
+                        txtInstrument.setText(testInstrumentName);
+                    }
+                    break;
+                default:
                     break;
             }
         }

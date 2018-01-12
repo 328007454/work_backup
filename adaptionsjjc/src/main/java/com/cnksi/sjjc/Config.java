@@ -134,9 +134,11 @@ public class Config extends CoreConfig {
     public static final String LOCATION_BDZID = "location_bdzId";
     public static final String LOCATION_BDZNAME = "location_bdzName";
     public static final String IS_AREADY_UPDATE = "isAreadyUpdate";
-    public static final String IS_FROM_SJJC ="isFromSJJC" ;
+    public static final String IS_FROM_SJJC = "isFromSJJC";
     public static final String IS_FROM_PMS = "isFromPMS";
     public static final String ADD_SQL_INDEX = "add_sql_index";
+    public static final String SBJC = "sbjc";
+
 
     public static String CURRENT_AREA = "lz";
 
@@ -293,6 +295,11 @@ public class Config extends CoreConfig {
     public static String SYNC_URL = BuildConfig.SYNC_URL;
     public final static String KEY_SYNC_URL = "key_sync_url";
     public final static String KEY_SYNC_APP_ID = "key_sync_app_id";
+    public static final String DIANYA = "电压";
+    public static final String NEIZU = "内阻";
+    public static final String XUDIANCHI = "蓄电池";
+
+    public static String CURRENT_DEPARTMENT_NAME = "current_department_name";
 
     /**
      * 操作类型

@@ -130,7 +130,6 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
 
         mFixedThreadPoolExecutor.execute(new Runnable() {
             List<DbModel> dbModelList = null;
-
             @Override
             public void run() {
                 String account = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
@@ -163,15 +162,18 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case LOAD_DATA:
-                if (!TextUtils.isEmpty(batteryGroup.testPersons)) {
+                if (batteryGroup!=null&&!TextUtils.isEmpty(batteryGroup.testPersons)) {
                     showPeopleList = com.cnksi.core.utils.StringUtils.string2List(batteryGroup.testPersons);
                     showPeopleAdapter.setList(showPeopleList);
                 }
-                if (!TextUtils.isEmpty(batteryGroup.testManager)) {
+                if (batteryGroup!=null&&!TextUtils.isEmpty(batteryGroup.testManager)) {
                     showManagerList = com.cnksi.core.utils.StringUtils.string2List(batteryGroup.testManager);
                     showManagerAdapter.setList(showManagerList);
                 }
-                txtConclusion.setText(batteryGroup.analysisResult == null ? "" : batteryGroup.analysisResult);
+                if(batteryGroup!=null){
+                    txtConclusion.setText(batteryGroup.analysisResult == null ? "" : batteryGroup.analysisResult);
+                }
+
                 break;
             default:
                 break;
@@ -189,10 +191,10 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
                 showPeopleDialog(PEOPLE_FLAG);
                 break;
             case R.id.btn_next:
-                if (showPeopleList.size() < 1 || showManagerList.size() < 1) {
-                    CToast.showShort(mCurrentActivity, "至少要有一个测试人和测试负责人!");
-                    return;
-                }
+//                if (showPeopleList.size() < 1 || showManagerList.size() < 1) {
+//                    CToast.showShort(mCurrentActivity, "至少要有一个测试人和测试负责人!");
+//                    return;
+//                }
                 cacheBatteryInfor();
                 try {
                     TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));

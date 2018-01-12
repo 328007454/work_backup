@@ -36,6 +36,8 @@ import com.cnksi.sjjc.activity.PreventAnimalActivity;
 import com.cnksi.sjjc.activity.TaskRemindActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestReportActivity;
+import com.cnksi.sjjc.activity.hwcw.NewHwcwActivity;
+import com.cnksi.sjjc.activity.hwcw.NewHwcwReportActivity;
 import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActivity;
 import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
@@ -146,7 +148,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                     String deparmentId = "";
                     if (null != mCurrentActivity) {
-                        deparmentId=PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+                        deparmentId = PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
                     }
                     WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1").expr("and bdzid in (select bdzid  from bdz where dept_id = '" + deparmentId + "' ) ");
                     if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
@@ -306,6 +308,9 @@ public class TaskRemindFragment extends BaseCoreFragment {
             if (null == report) {
                 String loginUser = PreferencesUtils.getString(getContext(), Config.CURRENT_LOGIN_USER, "");
                 report = new Report(task.taskid, task.bdzid, task.bdzname, task.inspection, loginUser);
+                report.inspectionValue = task.inspection_name;
+                report.reportSource = Config.SBJC;
+                report.departmentId = PreferencesUtils.getString(getActivity(), Config.CURRENT_DEPARTMENT_ID, "");
                 ReportService.getInstance().saveOrUpdate(report);
             }
             PreferencesUtils.put(getActivity(), Config.CURRENT_TASK_ID, task.taskid);
@@ -320,8 +325,9 @@ public class TaskRemindFragment extends BaseCoreFragment {
             if (task.status.equals(TaskStatus.undo.name())) {
                 switch (InspectionType.get(task.inspection)) {
                     //红外测温
-                    case SBJC_01:
-                        intent.setClass(getContext(), HWCWMainActivity.class);
+                    case SBJC_13:
+//                        intent.setClass(getContext(), HWCWMainActivity.class);
+                        intent.setClass(getContext(), NewHwcwActivity.class);
                         break;
                     //保护屏红外成像
                     case SBJC_02:
@@ -373,9 +379,9 @@ public class TaskRemindFragment extends BaseCoreFragment {
                 }
             } else {
                 switch (InspectionType.get(task.inspection)) {
-                    //红外测温
-                    case SBJC_01:
-                        intent.setClass(getContext(), HongWaiCeWenReportActivity.class);
+                    //设备测温
+                    case SBJC_13:
+                        intent.setClass(getContext(), NewHwcwReportActivity.class);
                         break;
                     //保护屏红外成像
                     case SBJC_02:

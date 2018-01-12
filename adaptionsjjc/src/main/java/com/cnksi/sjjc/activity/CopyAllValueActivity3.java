@@ -579,47 +579,6 @@ public class CopyAllValueActivity3 extends BaseActivity {
 
     }
 
-
-//    class ViewHolder {
-//        private CopyResult result;
-//        private String remark;
-//        private CopyItem item;
-//
-//        public ViewHolder(CopyResult result, View v, CopyItem item) {
-//            this.result = result;
-//            this.item = item;
-//        }
-//
-//        @ViewInject(R.id.et_copy_values)
-//        EditText etInput;
-//
-//        @Event({R.id.btn_sure, R.id.btn_cancel})
-//        private void onClick(View v) {
-//            switch (v.getId()) {
-//                case R.id.btn_cancel:
-//                    dialog.dismiss();
-//                    break;
-//                case R.id.btn_sure:
-//                    if (item.type_key.equalsIgnoreCase("youwei"))
-//                        result.valSpecial = "-1";
-//                    if ("Y".equals(item.val))
-//                        result.val = "-1";
-//                    else if ("Y".equals(item.val_a))
-//                        result.val_a = "-1";
-//                    else if ("Y".equals(item.val_b))
-//                        result.val_b = "-1";
-//                    else if ("Y".equals(item.val_c))
-//                        result.val_c = "-1";
-//                    else if ("Y".equals(item.val_o))
-//                        result.val_o = "-1";
-//                    result.remark = TextUtils.isEmpty(etInput.getText().toString()) ? "" : (TextUtils.isEmpty(result.remark) ? etInput.getText().toString() + "," : result.remark + etInput.getText().toString() + ",");
-//                    dialog.dismiss();
-//                    copyViewUtil.createCopyView(_this, data, copyContainer);
-//                    break;
-//            }
-//        }
-//    }
-
     private void saveNotClearCopyInfo(CopyResult result, View v, CopyItem item) {
         EditText etInput = (EditText) v;
         if ("youwei".equalsIgnoreCase(item.type_key))

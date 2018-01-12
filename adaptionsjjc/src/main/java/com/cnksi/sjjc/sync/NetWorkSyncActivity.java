@@ -26,6 +26,8 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
 import com.cnksi.sjjc.service.DepartmentService;
+import com.cnksi.sjjc.util.DialogUtils;
+import com.cnksi.sjjc.util.OnViewClickListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -147,7 +149,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             return;
         }
         switch (view.getId()) {
-            case R.id.tv_download: //下载数据
+            //下载数据
+            case R.id.tv_download:
                 SyncMenuUtils.ShowTipsDialog(currentActivity, KSyncConfig.getInstance().isHaveDept() ? " 确认要从服务器端更新数据么?" : "当前是未登陆状态，仅同步基础数据。\n确认从服务器端更新基础数据？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,7 +161,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     }
                 });
                 break;
-            case R.id.tv_upload://上传数据
+            //上传数据
+            case R.id.tv_upload:
                 SyncMenuUtils.ShowTipsDialog(currentActivity, " 确认要将本机数据更新到服务器端么?", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -194,8 +198,11 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                ksync.download();
-
+                if (!KSyncConfig.getInstance().isHaveDept()) {
+                    ksync.download("city", "users", "department", "pad_apk_version");
+                } else {
+                    ksync.download();
+                }
                 if (config.isDownFile()) {
                     isSyncFile = true;
                     //第一次同步的时候直接同步变电站数据 不需要再次初始化。
@@ -273,6 +280,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case KSync.SYNC_SUCCESS:
                     info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
+                    setButtonStyle(true);
+                    showDialogTips();
                     break;
                 case KSync.SYNC_PING:
                     setNetwork(msg);
@@ -296,6 +305,15 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             mSyncInfoAdapter.notifyDataSetChanged();
             binding.lvContainer.setSelection(mSyncInfoAdapter.getCount() - 1);
         }
+    }
+
+    private void showDialogTips() {
+        SyncMenuUtils.ShowTipsDialog(currentActivity, "基本数据已同步完成，可以返回开始运维工作；文件在后台下载，不影响使用", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentActivity.finish();
+            }
+        });
     }
 
     private void setTime(String serverTimeStr) {

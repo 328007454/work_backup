@@ -59,7 +59,7 @@
             <com.zhy.autolayout.AutoRadioGroup
                 android:id="@+id/main_radioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="163px"
+                android:layout_height="164px"
                 android:layout_gravity="left|bottom"
                 android:background="@color/new_launcher_bottom_back"
                 android:gravity="center"

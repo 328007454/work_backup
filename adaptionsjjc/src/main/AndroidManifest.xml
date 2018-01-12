@@ -123,6 +123,7 @@
             android:name=".activity.AllDeviceListActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
+            android:theme="@style/BatteryDefect"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 
         <activity
@@ -145,6 +146,24 @@
             android:name=".activity.HWCWMainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+
+        <activity
+            android:name=".activity.hwcw.NewHwcwActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+
+        <activity
+            android:name=".activity.hwcw.NewHwcwInforActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+
+        <activity
+            android:name=".activity.hwcw.NewHwcwReportActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
@@ -282,6 +301,13 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <!-- 蓄电池测试仪器界面 -->
+        <activity
+            android:name=".activity.batteryactivity.BatteryDeviceDetectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BatteryDefect"
             android:windowSoftInputMode="adjustPan"/>
 
         <!-- batterydialogActivity -->

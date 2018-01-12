@@ -6,12 +6,13 @@
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="30px">
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@color/white"
+                  android:gravity="center_vertical"
+                  android:minHeight="210px"
+                  android:orientation="horizontal"
+                  android:padding="30px">
 
         <ImageView
             android:id="@+id/iv_defect_image"
@@ -21,11 +22,11 @@
             android:contentDescription="@null"
             android:src="@mipmap/icon_nodefect"
             android:textColor="@android:color/white"
-            app:layout_auto_baseheight="width" />
+            app:layout_auto_baseheight="width"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
             android:orientation="vertical">
 
@@ -34,20 +35,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_marginBottom="5px"
                 android:gravity="center_vertical|left"
                 android:maxLines="2"
                 android:textColor="#626262"
-                android:textSize="38px" />
+                android:textSize="38px"/>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5px"
+                android:gravity="center"
+                android:textColor="#626262"
+                android:textSize="38px"/>
+
+            <TextView
+                android:id="@+id/tv_record_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5px"
+                android:gravity="center"
+                android:text="记录人员："
+                android:textColor="#626262"
+                android:textSize="38px"/>
+
+            <TextView
+                android:id="@+id/tv_defect_space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5px"
+                android:gravity="center"
+                android:text="间隔："
+                android:textColor="#626262"
+                android:textSize="38px"/>
 
             <TextView
                 android:id="@+id/tv_defect_device"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15px"
+                android:layout_marginBottom="5px"
                 android:gravity="center"
-                android:text="设备名称："
+                android:text="设备："
                 android:textColor="#626262"
-                android:textSize="38px" />
+                android:textSize="38px"/>
         </LinearLayout>
 
     </LinearLayout>

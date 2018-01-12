@@ -51,6 +51,14 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="BatteryDefect" parent="AppBaseTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
+
     <!-- MainMenuStyle -->
 
     <!-- 自定义进度条 -->
@@ -92,6 +100,7 @@
     </style>
 
     <style name="NewHeatPointEditTextStyle">
+        <item name="android:paddingEnd">@dimen/_30px</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:gravity">right|center_vertical</item>
         <item name="android:layout_height">wrap_content</item>
@@ -252,6 +261,7 @@
         <item name="android:paddingRight">35.5px</item>
         <item name="android:scaleType">centerInside</item>
     </style>
+
     <style name="UnderLineTextViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -262,7 +272,15 @@
         <item name="textSelectColor">#1bbc9b</item>
         <item name="lineHeight">4px</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <!--NavigationIcon和标题之间的距离-->
+    <style name="ToolbarStyle" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
 </resources>

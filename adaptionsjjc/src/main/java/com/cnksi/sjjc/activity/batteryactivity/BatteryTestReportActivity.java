@@ -96,6 +96,8 @@ public class BatteryTestReportActivity extends BaseReportActivity {
     private Map<String, Map<String, List<String>>> groupImageList = new HashMap<String, Map<String, List<String>>>();
     private BatteryGroup batteryGroups;
     private String type;
+    private String typeName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,12 +106,14 @@ public class BatteryTestReportActivity extends BaseReportActivity {
          * <b>NOTE :</b>设备检测CURRENT_TASK_ID不能存放在intent中传递，通过缓存传递
          */
         if (null != bundle && !TextUtils.isEmpty(bundle.getString(Config.CURRENT_TASK_ID))) {
+            typeName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
+            PreferencesUtils.put(mCurrentActivity, "typename", typeName);
             currentInspectionType = InspectionType.SBJC_10.name();
             currentBdzId = bundle.getString(Config.CURRENT_BDZ_ID);
             currentBdzName = bundle.getString(Config.CURRENT_BDZ_NAME);
             currentReportId = bundle.getString(Config.CURRENT_REPORT_ID);
             currentTaskId = bundle.getString(Config.CURRENT_TASK_ID);
-            currentInspectionName =  InspectionType.get(currentInspectionType).value;
+            currentInspectionName = InspectionType.get(currentInspectionType).value;
             type = bundle.getString(Config.CURRENT_INSPECTION_TYPE);
             String currentFolder = bundle.getString(Config.CURRENT_FILENAME);
             PreferencesUtils.put(_this, Config.PICTURE_PREFIX, currentFolder);
@@ -120,34 +124,38 @@ public class BatteryTestReportActivity extends BaseReportActivity {
             PreferencesUtils.put(_this, Config.CURRENT_TASK_ID, currentTaskId);
             PreferencesUtils.put(_this, Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
             PreferencesUtils.put(_this, Config.CURRENT_INSPECTION_NAME, InspectionType.get(currentInspectionType).value);
-        }else{
-            type = PreferencesUtils.getString(_this,Config.CURRENT_MAINTANENCE_BATTERY,"");
+        } else {
+            type = PreferencesUtils.getString(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
         }
         initData();
 //        tvTitle.setText(currentBdzName + currentInspectionName);
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("maintenance_xdcdyjc".equalsIgnoreCase(type)&&!getIntent().getBooleanExtra(Config.IS_FROM_SJJC,false)){
-                    PreferencesUtils.put(_this,Config.CURRENT_MAINTANENCE_BATTERY,"");
-                    Intent intent = new Intent();
-                    ComponentName componentName;
-                    componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
-                    intent.setComponent(componentName);
-                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE,currentInspectionType);
-                    startActivity(intent);
+                typeName = PreferencesUtils.getString(mCurrentActivity, "typename", "");
+                boolean xudianchi = typeName.contains(Config.XUDIANCHI) && (typeName.contains(Config.DIANYA) || typeName.contains(Config.NEIZU));
+                if (xudianchi && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
+                    PreferencesUtils.put(_this, Config.CURRENT_MAINTANENCE_BATTERY, "");
+//                    Intent intent = new Intent();
+//                    ComponentName componentName;
+//                    componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+//                    intent.setComponent(componentName);
+//                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE,currentInspectionType);
+//                    startActivity(intent);
                 }
+                ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
+
                 onBackPressed();
             }
         });
         mBtnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("maintenance_xdcdyjc".equalsIgnoreCase(type)){
-                    Intent intent = new Intent(BatteryTestReportActivity.this,HomeActivity.class);
+                if ("maintenance_xdcdyjc".equalsIgnoreCase(type)) {
+                    Intent intent = new Intent(BatteryTestReportActivity.this, HomeActivity.class);
                     startActivity(intent);
                     onBackPressed();
-                }else{
+                } else {
                     ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
                     onBackPressed();
                 }
@@ -157,7 +165,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
 
     @Override
     public View setReportView() {
-        return getLayoutInflater().inflate(R.layout.battery_test_layout,null);
+        return getLayoutInflater().inflate(R.layout.battery_test_layout, null);
     }
 
     private void initData() {
@@ -230,11 +238,11 @@ public class BatteryTestReportActivity extends BaseReportActivity {
     }
 
     private void initPage() {
-        txtColusion.setText(batteryGroups.analysisResult==null?"":batteryGroups.analysisResult);
+        txtColusion.setText(batteryGroups.analysisResult == null ? "" : batteryGroups.analysisResult);
         txtStartTime.setText(report.starttime);
         txtEndTime.setText(report.endtime);
-        txtInspectionPerson.setText(batteryGroups.testManager==null?"":batteryGroups.testManager);
-        txtTestPerson.setText(batteryGroups.testPersons==null?"":batteryGroups.testPersons);
+        txtInspectionPerson.setText(batteryGroups.testManager == null ? "" : batteryGroups.testManager);
+        txtTestPerson.setText(batteryGroups.testPersons == null ? "" : batteryGroups.testPersons);
         txtTemperature.setText(report.temperature + "℃");
         txtCheckType.setText(taskExtend.sbjcIsAllCheck == 0 ? "普测" : "抽测");
     }
@@ -264,8 +272,8 @@ public class BatteryTestReportActivity extends BaseReportActivity {
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.continue_inspection:
-                Intent intent = new Intent(this,BatteryTestActivity.class);
-                intent.putExtra(Config.IS_FROM_SJJC,getIntent().getBooleanExtra(Config.IS_FROM_SJJC,false));
+                Intent intent = new Intent(this, BatteryTestActivity.class);
+                intent.putExtra(Config.IS_FROM_SJJC, getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false));
                 startActivity(intent);
                 this.finish();
                 break;
@@ -285,7 +293,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                 //蓄电池内阻测试隐藏电压
                 if (InspectionType.SBJC_11.name().equals(report.inspection)) {
                     holder.getView(R.id.layout_voltage).setVisibility(View.GONE);
-                    holder.setText(R.id.voltage_record,resistanceMap.get(battery.bid)+"/"+battery.amount);
+                    holder.setText(R.id.voltage_record, resistanceMap.get(battery.bid) + "/" + battery.amount);
                 } else {
                     if (taskExtend.sbjcResistanceCheck == 0)
                         holder.getView(R.id.layout_resistance).setVisibility(View.GONE);
@@ -307,7 +315,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                         public void itemClick(View v, List<String> imageList, int position) {
                             Intent intent = new Intent(mCurrentActivity, ImageDetailsActivity.class);
                             intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
-                            intent.putExtra(Config.CANCEL_IMAGEURL_LIST,false);
+                            intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
                             intent.putStringArrayListExtra(Config.IMAGEURL_LIST, StringUtils.addStrToListItem(imageList, Config.RESULT_PICTURES_FOLDER));
                             intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, false);
                             startActivity(intent);

@@ -5,22 +5,22 @@
 
         <variable
             name="event"
-            type="com.cnksi.sjjc.fragment.launcher.MaintenanceFragment" />
+            type="com.cnksi.sjjc.fragment.launcher.MaintenanceFragment"/>
 
         <variable
             name="maintenance"
-            type="com.cnksi.sjjc.bean.TaskStatistic" />
+            type="com.cnksi.sjjc.bean.TaskStatistic"/>
 
         <variable
             name="switchover"
-            type="com.cnksi.sjjc.bean.TaskStatistic" />
+            type="com.cnksi.sjjc.bean.TaskStatistic"/>
 
-        <import type="com.cnksi.sjjc.enmu.InspectionType" />
+        <import type="com.cnksi.sjjc.enmu.InspectionType"/>
     </data>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,23 +32,25 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/new_launcher_line_bg" />
+                android:background="@color/new_launcher_line_bg"/>
 
-            <TextView
-                android:layout_width="200px"
-                android:layout_height="50px"
-                android:layout_marginTop="20px"
-                android:background="@drawable/new_launch_maintenance_bg"
-                android:gravity="center_vertical"
-                android:paddingLeft="40px"
-                android:text="日常维护"
-                android:textColor="@color/white"
-                android:textSize="36px" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="244px"
+                android:layout_height="294px"
+                android:onClick="@{()->event.gotoTaskList(InspectionType.maintenance.name())}"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="200px"
+                    android:layout_height="50px"
+                    android:layout_marginTop="20px"
+                    android:background="@drawable/new_launch_maintenance_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:text="日常维护"
+                    android:textColor="@color/white"
+                    android:textSize="36px"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,14 +70,14 @@
                             android:layout_height="wrap_content"
                             android:text="@{maintenance.todayTaskCount+`项`}"
                             android:textColor="#05c8b8"
-                            android:textSize="44px" />
+                            android:textSize="44px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="今日维护任务"
                             android:textColor="#c0bab9"
-                            android:textSize="34px" />
+                            android:textSize="34px"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -90,14 +92,14 @@
                             android:layout_height="wrap_content"
                             android:text="@{maintenance.todayTaskFinish+`项`}"
                             android:textColor="#05c8b8"
-                            android:textSize="44px" />
+                            android:textSize="44px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="今日已完成"
                             android:textColor="#c0bab9"
-                            android:textSize="34px" />
+                            android:textSize="34px"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -112,14 +114,14 @@
                             android:layout_height="wrap_content"
                             android:text="@{maintenance.monthTaskCount+`项`}"
                             android:textColor="#05c8b8"
-                            android:textSize="44px" />
+                            android:textSize="44px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="本月维护任务"
                             android:textColor="#c0bab9"
-                            android:textSize="34px" />
+                            android:textSize="34px"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -134,27 +136,27 @@
                             android:layout_height="wrap_content"
                             android:text="@{maintenance.monthTaskFinish+`项`}"
                             android:textColor="#05c8b8"
-                            android:textSize="44px" />
+                            android:textSize="44px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="本月已完成"
                             android:textColor="#c0bab9"
-                            android:textSize="34px" />
+                            android:textSize="34px"/>
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120px">
+                    android:layout_height="wrap_content">
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2px"
                         android:layout_marginTop="50px"
-                        android:background="@color/new_launcher_line_bg" />
+                        android:background="@color/new_launcher_line_bg"/>
 
                     <ImageView
                         android:id="@+id/iv_maintenance_list"
@@ -164,18 +166,9 @@
                         android:layout_marginRight="40px"
                         android:layout_marginTop="5px"
                         android:onClick="@{()->event.gotoTaskList(InspectionType.maintenance.name())}"
-                        android:src="@mipmap/icon_more_task" />
+                        android:src="@mipmap/icon_more_task"/>
 
-                    <TextView
-                        android:layout_width="200px"
-                        android:layout_height="50px"
-                        android:layout_alignParentBottom="true"
-                        android:background="@drawable/new_launch_switchover_bg"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="40px"
-                        android:text="轮换试验"
-                        android:textColor="@color/white"
-                        android:textSize="36px" />
+
                 </RelativeLayout>
 
             </LinearLayout>
@@ -183,8 +176,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="244px"
+                android:layout_height="294px"
+                android:onClick="@{()->event.gotoTaskList(InspectionType.switchover.name())}"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="200px"
+                    android:layout_height="50px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/new_launch_switchover_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="40px"
+                    android:text="轮换试验"
+                    android:textColor="@color/white"
+                    android:textSize="36px"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -204,14 +209,14 @@
                             android:layout_height="wrap_content"
                             android:text="@{switchover.todayTaskCount+`项`}"
                             android:textColor="#05c8b8"
-                            android:textSize="44px" />
+                            android:textSize="44px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="今日试验任务"
                             android:textColor="#c0bab9"
-                            android:textSize="34px" />
+                            android:textSize="34px"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -226,14 +231,14 @@
                             android:layout_height="wrap_content"
                             android:text="@{switchover.todayTaskFinish+`项`}"
                             android:textColor="#05c8b8"
-                            android:textSize="44px" />
+                            android:textSize="44px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="今日已完成"
                             android:textColor="#c0bab9"
-                            android:textSize="34px" />
+                            android:textSize="34px"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -248,14 +253,14 @@
                             android:layout_height="wrap_content"
                             android:text="@{switchover.monthTaskCount+`项`}"
                             android:textColor="#05c8b8"
-                            android:textSize="44px" />
+                            android:textSize="44px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="本月试验任务"
                             android:textColor="#c0bab9"
-                            android:textSize="34px" />
+                            android:textSize="34px"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -270,14 +275,14 @@
                             android:layout_height="wrap_content"
                             android:text="@{switchover.monthTaskFinish+`项`}"
                             android:textColor="#05c8b8"
-                            android:textSize="44px" />
+                            android:textSize="44px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="本月已完成"
                             android:textColor="#c0bab9"
-                            android:textSize="34px" />
+                            android:textSize="34px"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -290,7 +295,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2px"
                         android:layout_marginTop="50px"
-                        android:background="@color/new_launcher_line_bg" />
+                        android:background="@color/new_launcher_line_bg"/>
 
                     <ImageView
                         android:id="@+id/iv_switchover_list"
@@ -300,7 +305,7 @@
                         android:layout_marginRight="40px"
                         android:layout_marginTop="5px"
                         android:onClick="@{()->event.gotoTaskList(InspectionType.switchover.name())}"
-                        android:src="@mipmap/icon_more_task" />
+                        android:src="@mipmap/icon_more_task"/>
                 </RelativeLayout>
 
             </LinearLayout>
@@ -315,7 +320,7 @@
                 android:layout_marginLeft="40px"
                 android:layout_marginRight="40px"
                 app:backColor="@color/progress_backgroud"
-                app:textColor="@color/white" />
+                app:textColor="@color/white"/>
 
             <LinearLayout
                 android:id="@+id/ll_maintenance"
@@ -326,7 +331,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/new_launcher_line_bg" />
+                    android:background="@color/new_launcher_line_bg"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -341,20 +346,20 @@
                         android:layout_marginTop="60px"
                         android:text="日常维护任务"
                         android:textColor="#b3afaf"
-                        android:textSize="40px" />
+                        android:textSize="40px"/>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/new_launcher_line_bg" />
+                    android:background="@color/new_launcher_line_bg"/>
 
                 <com.cnksi.sjjc.View.MyScrollVListView
                     android:id="@+id/list_maintenance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/new_launcher_line_bg"
-                    android:dividerHeight="2px" />
+                    android:dividerHeight="2px"/>
             </LinearLayout>
 
             <LinearLayout
@@ -366,7 +371,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/new_launcher_line_bg" />
+                    android:background="@color/new_launcher_line_bg"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -381,20 +386,20 @@
                         android:layout_marginTop="60px"
                         android:text="轮换试验任务"
                         android:textColor="#b3afaf"
-                        android:textSize="40px" />
+                        android:textSize="40px"/>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:background="@color/new_launcher_line_bg" />
+                    android:background="@color/new_launcher_line_bg"/>
 
                 <com.cnksi.sjjc.View.MyScrollVListView
                     android:id="@+id/list_switchover"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/new_launcher_line_bg"
-                    android:dividerHeight="2px" />
+                    android:dividerHeight="2px"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

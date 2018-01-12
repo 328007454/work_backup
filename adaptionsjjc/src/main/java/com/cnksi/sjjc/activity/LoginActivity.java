@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -122,6 +124,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private int count = 0;
     private long startTime = 0;
     private boolean isGrantPermission = false;
+    private String userOnePassword;
+    private String userTwoPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,7 +187,12 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         //设置版本信息
         mTvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(_this)));
         String userName = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
-        if (!TextUtils.isEmpty(userName)) autoCompleteTextView.setText(userName);
+        if (!TextUtils.isEmpty(userName)) {
+            String[] userNames = userName.split(",");
+            autoCompleteTextView.setText(userNames[0]);
+            String pwd = PreferencesUtils.get(_this, userNames[0], "");
+            mEtPassword.setText(pwd);
+        }
         arrayAdapter = new ArrayAdapter<String>(_this, R.layout.user_name_drop_down_item, R.id.tv_user_name);
         autoCompleteTextView.setAdapter(arrayAdapter);
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
@@ -198,6 +208,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
             @Override
             public void afterTextChanged(final Editable s) {
+                String pwd = PreferencesUtils.get(_this, s.toString(), "");
+                mEtPassword.setText(pwd);
                 mFixedThreadPoolExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -207,10 +219,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 });
             }
         });
-        if (BuildConfig.DEBUG) {
-            mEtPassword.setText("1");
-            autoCompleteTextView.setText("LiW0014");
-        }
 
         findViewById(R.id.ivLogo).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -314,11 +322,11 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 Config.SYNC_URL = url;
                 String appId = getText(binding.etAppId);
                 if (!TextUtils.isEmpty(appId)) Config.SYNC_APP_ID = appId;
-                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
-                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
                 dialog.dismiss();
             }
         });
+        PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
+        PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         dialog.show();
     }
 
@@ -365,9 +373,11 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                     }
                     if (null == mCurrentUserOne) {
                         mCurrentUserOne = tempUser;
+                        userOnePassword = mEtPassword.getText().toString().trim();
                         mHandler.sendEmptyMessage(USER_ONE_LOGIN_SUCCESS);
                     } else if (null == mCurrentUserTwo) {
                         mCurrentUserTwo = tempUser;
+                        userTwoPassword = mEtPassword.getText().toString().trim();
                         mHandler.sendEmptyMessage(USER_TWO_LOGIN_SUCCESS);
                     }
                 }
@@ -378,12 +388,14 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                     if (null != tempUser) {
                         if ("未激活".equalsIgnoreCase(tempUser.pwd))
                             mHandler.sendEmptyMessage(USER_COUNT_NOT_ACTIVITE);
-                        else
+                        else {
                             mHandler.sendEmptyMessage(PWD_ERROR);
+                        }
                     } else {
                         mHandler.sendEmptyMessage(NO_SUCH_USER);
                     }
                 }
+
             }
         });
     }
@@ -517,22 +529,24 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             username = mCurrentUserOne.username + Config.COMMA_SEPARATOR + mCurrentUserTwo.username;
             userAccount = mCurrentUserOne.account + Config.COMMA_SEPARATOR + mCurrentUserTwo.account;
             PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
+            PreferencesUtils.put(_this, mCurrentUserOne.account, userOnePassword);
         } else if (mCurrentUserOne != null) {
             username = mCurrentUserOne.username;
             userAccount = mCurrentUserOne.account;
             PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
+            PreferencesUtils.put(_this, userAccount, userOnePassword);
         } else if (mCurrentUserTwo != null) {
             username = mCurrentUserTwo.username;
             userAccount = mCurrentUserTwo.account;
             PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserTwo.dept_id);
+            PreferencesUtils.put(_this, userAccount, userTwoPassword);
         } else {
             return;
         }
         PreferencesUtils.put(_this, Config.CURRENT_LOGIN_USER, username);
         PreferencesUtils.put(_this, Config.CURRENT_LOGIN_ACCOUNT, userAccount);
-        //保存登录班组和账号
 
-//        Intent intent = new Intent(_this, LauncherActivity.class);
+        //保存登录班组和账号
         Intent intent = new Intent(_this, HomeActivity.class);
         startActivity(intent);
         LoginActivity.this.finish();

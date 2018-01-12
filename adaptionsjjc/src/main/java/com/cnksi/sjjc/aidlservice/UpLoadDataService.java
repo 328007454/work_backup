@@ -80,7 +80,6 @@ public class UpLoadDataService extends Service {
         if (url.contains(":")) {
             url = url.substring(0, url.indexOf(":"));
         }
-//        ping("ping -i 3 " + url, handler);
     }
 
     @Nullable

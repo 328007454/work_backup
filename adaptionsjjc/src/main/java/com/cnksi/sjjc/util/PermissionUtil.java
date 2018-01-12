@@ -94,7 +94,8 @@ public class PermissionUtil {
             if (deniedPermissions.length > 0) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     //提示dialog
-                    showPermissionDeniedDialog(activity, deniedPermissions);
+//                    showPermissionDeniedDialog(activity, deniedPermissions);
+                    activity.requestPermissions(deniedPermissions, requestCode);
                 } else {
                     grantPermissionListener.allPermissionsGranted();
                 }
@@ -122,8 +123,8 @@ public class PermissionUtil {
             public void onClick(View v) {
                 if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
                     permissionDialog.dismiss();
-                        activity.requestPermissions(deniedPermissions, REQUEST_PERMISSIONS_CODE);
-                    }
+                    activity.requestPermissions(deniedPermissions, REQUEST_PERMISSIONS_CODE);
+                }
             }
         });
         permissionBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +132,7 @@ public class PermissionUtil {
             public void onClick(View v) {
 //                退出系统
                 permissionDialog.dismiss();
-                    CustomApplication.getInstance().exitApplication();
+                CustomApplication.getInstance().exitApplication();
             }
         });
         permissionDialog.show();
