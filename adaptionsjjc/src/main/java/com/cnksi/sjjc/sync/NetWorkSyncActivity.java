@@ -26,6 +26,8 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
 import com.cnksi.sjjc.service.DepartmentService;
+import com.cnksi.sjjc.util.DialogUtils;
+import com.cnksi.sjjc.util.OnViewClickListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -279,6 +281,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                 case KSync.SYNC_SUCCESS:
                     info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
                     setButtonStyle(true);
+                    showDialogTips();
                     break;
                 case KSync.SYNC_PING:
                     setNetwork(msg);
@@ -302,6 +305,15 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             mSyncInfoAdapter.notifyDataSetChanged();
             binding.lvContainer.setSelection(mSyncInfoAdapter.getCount() - 1);
         }
+    }
+
+    private void showDialogTips() {
+        SyncMenuUtils.ShowTipsDialog(currentActivity, "基本数据已同步完成，可以返回开始运维工作；文件在后台下载，不影响使用", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentActivity.finish();
+            }
+        });
     }
 
     private void setTime(String serverTimeStr) {
