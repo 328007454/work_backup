@@ -43,7 +43,6 @@ def branch() {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.cnksi.sjjc"
@@ -81,20 +80,18 @@ android {
             shrinkResources false//需要同minifyEnabled 共同使用
             signingConfig signingConfigs.release
             applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName
-                        if (variant.buildType.name == "release")
-                            fileName = "sjjc_${defaultConfig.versionCode}_${defaultConfig.versionName}_${releaseTime()}_release.apk"
-                        else fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
-                        if ("true" == JENKINS) {
-                            output.outputFile = new File("./buildAPK/", fileName)
-                        } else {
-                            output.outputFile = new File("E:\\CompanyProjectNew\\SJJCAPK", fileName)
-                        }
+                //修改apk输出路径
+                variant.getPackageApplication().outputDirectory = new File("E:\\CompanyProjectNew\\SJJCAPK")
+                variant.outputs.all { output ->
+                    if (variant.buildType.name == "release") {
+                        def fileName = "sjjc_${defaultConfig.versionCode}_${defaultConfig.versionName}_${releaseTime()}_release.apk"
+                        outputFileName = fileName
+                    } else {
+                        def fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
+                        outputFileName = fileName
                     }
                 }
+
             }
         }
         debug {
