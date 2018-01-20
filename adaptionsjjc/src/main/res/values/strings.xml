@@ -29,8 +29,6 @@
     <string name="please_select_after_today_date_str">请选择今天及以后的时间</string>
     <string name="please_select_power_station_str">请选择变电站</string>
     <string name="please_select_ylcs_str">请选择检测类别</string>
-    <string name="custom_defect_content_str">自定义缺陷内容</string>
-    <string name="defect_content_str">缺陷内容</string>
     <string name="defect_reason_str">缺陷原因</string>
     <string name="add_inspection_task_str">追加巡检任务</string>
     <string name="please_input_value_str">请输入</string>
@@ -73,7 +71,6 @@
     <string name="inspectorattendant_text_str">巡视人员</string>
 
     <!-- dialog -->
-    <string name="reference_value_str">数据参考范围</string>
     <string name="dialog_sure_str">确\t定</string>
     <string name="dialog_save_str">保\t存</string>
     <string name="dialog_cancle_str">取\t消</string>
@@ -96,14 +93,9 @@
     <string name="delete_data">是否要删除本条数据</string>
 
     <!-- 工作票 -->
-    <string name="wt_status">状态</string>
-    <string name="wt_principal">工作负责人</string>
-    <string name="wt_vaild_time">工作票有效时间</string>
 
 
     <!-- 发布请清空-->
-    <string name="test_text">测试文本</string>
-    <string name="test_date">2016-6-1 00:00</string>
 
     <string name="jiaozhiliu_fenjie_kaiguan">交直流变压器分接开关调整记录</string>
     <string name="indoor_tempreture_recoder">室内温湿度记录</string>

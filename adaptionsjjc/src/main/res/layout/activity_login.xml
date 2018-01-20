@@ -1,13 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_main_bg_color"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:keepScreenOn="true"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/app_main_bg_color"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:keepScreenOn="true"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +21,7 @@
             android:layout_height="115px"
             android:layout_alignParentLeft="true"
             android:contentDescription="@null"
-            android:src="@mipmap/ic_logo" />
+            android:src="@mipmap/ic_logo"/>
 
         <!-- key -->
 
@@ -34,7 +33,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@null"
             android:src="@mipmap/ic_face"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <!-- app名称 -->
 
@@ -48,7 +47,7 @@
             android:text="@string/app_name"
             android:textColor="@android:color/white"
             android:textSize="77px"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/f"
@@ -59,7 +58,7 @@
             android:text="@string/app_tips"
             android:textColor="@android:color/white"
             android:textSize="48px"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -96,7 +95,7 @@
                 android:text="admin"
                 android:textColorHint="@color/et_hint_color"
                 android:textSize="48px"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <AutoCompleteTextView
                 android:id="@+id/et_auto_username"
@@ -110,12 +109,12 @@
                 android:minHeight="120px"
                 android:text=""
                 android:textColorHint="@color/et_hint_color"
-                android:textSize="48px" />
+                android:textSize="48px"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3px"
-                android:background="@color/main_hr_bg_color" />
+                android:background="@color/main_hr_bg_color"/>
 
             <!-- 密码 -->
 
@@ -131,7 +130,7 @@
                 android:minHeight="120px"
                 android:text=""
                 android:textColorHint="@color/et_hint_color"
-                android:textSize="48px" />
+                android:textSize="48px"/>
         </LinearLayout>
 
         <!-- 添加 -->
@@ -148,7 +147,7 @@
             android:text="@string/btn_add_user_str"
             android:textColor="@android:color/white"
             android:textSize="48px"
-            android:visibility="visible" />
+            android:visibility="visible"/>
 
         <!-- 正在扫描（waiting_area_str） 和巡检人员（inspectorattendant_text_str） -->
 
@@ -157,7 +156,7 @@
             android:layout_height="66px"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="-66px"
-            android:background="@drawable/txt_back_selector" />
+            android:background="@drawable/txt_back_selector"/>
 
         <TextView
             android:id="@+id/msg"
@@ -168,7 +167,7 @@
             android:paddingBottom="24px"
             android:text="@string/inspectorattendant_text_str"
             android:textColor="@android:color/white"
-            android:textSize="48px" />
+            android:textSize="48px"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -191,15 +190,15 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    app:layout_auto_basewidth="height"
                     android:layout_width="325px"
-                    android:layout_height="325px">
+                    android:layout_height="325px"
+                    app:layout_auto_basewidth="height">
 
                     <RelativeLayout
-                        app:layout_auto_basewidth="height"
                         android:layout_width="265px"
                         android:layout_height="265px"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        app:layout_auto_basewidth="height">
 
                         <ImageView
                             android:id="@+id/user1_img"
@@ -211,7 +210,7 @@
                             android:padding="10px"
                             android:scaleType="fitXY"
                             app:layout_auto_basewidth="height"
-                            app:srcCompat="@drawable/ic_portrait_thum" />
+                            app:srcCompat="@drawable/ic_portrait_thum"/>
 
                     </RelativeLayout>
 
@@ -225,19 +224,19 @@
                         android:contentDescription="@null"
                         android:src="@mipmap/icon_delete"
                         android:visibility="invisible"
-                        app:layout_auto_basewidth="height" />
+                        app:layout_auto_basewidth="height"/>
                 </FrameLayout>
 
                 <FrameLayout
-                    app:layout_auto_basewidth="height"
                     android:layout_width="325px"
-                    android:layout_height="325px">
+                    android:layout_height="325px"
+                    app:layout_auto_basewidth="height">
 
                     <RelativeLayout
-                        app:layout_auto_basewidth="height"
                         android:layout_width="265px"
                         android:layout_height="265px"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        app:layout_auto_basewidth="height">
 
                         <ImageView
                             android:id="@+id/user2_img"
@@ -249,7 +248,7 @@
                             android:padding="10px"
                             android:scaleType="fitXY"
                             app:layout_auto_basewidth="height"
-                            app:srcCompat="@drawable/ic_portrait_thum" />
+                            app:srcCompat="@drawable/ic_portrait_thum"/>
                     </RelativeLayout>
 
                     <ImageButton
@@ -262,7 +261,7 @@
                         android:contentDescription="@null"
                         android:src="@mipmap/icon_delete"
                         android:visibility="invisible"
-                        app:layout_auto_basewidth="height" />
+                        app:layout_auto_basewidth="height"/>
                 </FrameLayout>
             </LinearLayout>
 
@@ -279,21 +278,21 @@
                     android:layout_width="325px"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="48px"
-                    android:text=""
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <TextView
-                    android:text=""
                     android:id="@+id/txt_loggin_second"
                     android:layout_width="325px"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="48px"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </RelativeLayout>
             <!-- 登录按钮 -->
 
@@ -302,12 +301,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="120px"
                 android:layout_marginBottom="40px"
-                android:background="@drawable/btn_login_bg_selector"
                 android:layout_marginLeft="35px"
                 android:layout_marginRight="35px"
+                android:background="@drawable/btn_login_bg_selector"
                 android:text="@string/login_str"
                 android:textColor="@android:color/white"
-                android:textSize="48px" />
+                android:textSize="48px"/>
         </LinearLayout>
     </RelativeLayout>
     <!-- 版权 -->
@@ -319,7 +318,6 @@
         android:layout_marginBottom="18px"
         android:gravity="center"
         android:textColor="@color/sys_copyrights_text_color"
-        android:textSize="38px"
-        android:visibility="gone" />
+        android:textSize="38px"/>
 
 </LinearLayout>

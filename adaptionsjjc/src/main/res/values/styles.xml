@@ -62,27 +62,6 @@
     <!-- MainMenuStyle -->
 
     <!-- 自定义进度条 -->
-    <style name="ProgressBar_Mini" parent="@android:style/Widget.ProgressBar.Horizontal">
-        <item name="android:maxHeight">@dimen/device_item_minheight</item>
-        <item name="android:minHeight">@dimen/device_item_minheight</item>
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:indeterminateDrawable">
-            @android:drawable/progress_indeterminate_horizontal
-        </item>
-        <item name="android:progressDrawable">@drawable/progressbar_background</item>
-    </style>
-
-    <style name="Widget.SeekBar.Normal" parent="@android:style/Widget.SeekBar">
-        <item name="android:maxHeight">8.0dip</item>
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:indeterminateDrawable">
-            @android:drawable/progress_indeterminate_horizontal
-        </item>
-        <item name="android:progressDrawable">@drawable/seekbar_horizontal</item>
-        <item name="android:minHeight">8.0dip</item>
-        <item name="android:thumb">@drawable/thumb_bar</item>
-        <item name="android:thumbOffset">10.0dip</item>
-    </style>
 
     <style name="DataSyncProgressBarStyleLarge">
         <item name="android:indeterminateDrawable">@drawable/progress_large</item>
@@ -151,34 +130,8 @@
         <item name="android:textSize">@dimen/global_text_size_px</item>
     </style>
 
-    <style name="Text">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:padding">@dimen/wt_text_padding</item>
-    </style>
-
-    <style name="SmallText" parent="Text">
-        <item name="android:textSize">@dimen/wt_small_text</item>
-        <item name="android:textColor">@color/dark_text</item>
-    </style>
-
-    <style name="LargeGreenText" parent="Text">
-        <item name="android:textSize">@dimen/wt_large_text</item>
-        <item name="android:textColor">@color/wt_green_color</item>
-    </style>
-
-    <style name="LargeDarkText" parent="Text">
-        <item name="android:textSize">@dimen/wt_large_text</item>
-        <item name="android:textColor">@color/dark_text</item>
-    </style>
-
     <style name="Line">
         <item name="android:background">#DDE1E4</item>
-    </style>
-
-    <style name="VLine" parent="Line">
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">@dimen/line_width</item>
     </style>
 
     <style name="HLine" parent="Line">
@@ -273,14 +226,6 @@
         <item name="lineHeight">4px</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
     <!--NavigationIcon和标题之间的距离-->
-    <style name="ToolbarStyle" parent="Base.Widget.AppCompat.Toolbar">
-        <item name="contentInsetStart">0dp</item>
-        <item name="contentInsetStartWithNavigation">0dp</item>
-    </style>
 
 </resources>

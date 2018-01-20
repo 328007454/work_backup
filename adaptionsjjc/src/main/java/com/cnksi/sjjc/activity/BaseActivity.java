@@ -38,14 +38,12 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
 
-import org.xutils.DbManager;
 import org.xutils.ImageManager;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -124,10 +122,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * 当前的报告id
      */
     protected String currentReportId = "";
-    /**
-     * Db验收实例
-     */
-    DbManager dbYShou;
 
     /**
      * 是否显示文件名
@@ -180,9 +174,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
         mVibrator = (Vibrator) _this.getSystemService(Context.VIBRATOR_SERVICE);
         if (isDefaultTitle)
             setContentView(R.layout.include_title);
-        if (PreferencesUtils.getBoolean(_this, Config.PERMISSION_STASTUS, false)) {
-            dbYShou = CustomApplication.getYanShouDbManager();
-        }
         x.view().inject(this);
     }
 

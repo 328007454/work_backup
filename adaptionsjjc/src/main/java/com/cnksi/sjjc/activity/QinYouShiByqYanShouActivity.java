@@ -22,6 +22,7 @@ import com.cnksi.core.utils.NumberUtil;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BindPopMenuAdapter;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
@@ -114,7 +115,7 @@ public class QinYouShiByqYanShouActivity extends BaseActivity {
         tvTitle.setText("油浸式变压器验收");
         titleArray = getResources().getStringArray(R.array.TaskTitleArray);
         try {
-            listType = (ArrayList<AcceptType>) dbYShou.selector(AcceptType.class).findAll();
+            listType = (ArrayList<AcceptType>) CustomApplication.getYanShouDbManager().selector(AcceptType.class).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }

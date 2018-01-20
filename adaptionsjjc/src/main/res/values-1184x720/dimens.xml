@@ -1,7 +1,6 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
 
-    <dimen name="_69px">46px</dimen>
     <dimen name="_60px">40px</dimen>
     <dimen name="_64px">42px</dimen>
     <dimen name="_20px">12px</dimen>

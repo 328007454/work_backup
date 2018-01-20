@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -16,7 +15,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -32,7 +30,6 @@ import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
-import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -105,7 +102,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     @ViewInject(R.id.et_auto_username)
     private AutoCompleteTextView autoCompleteTextView;
     private Users mCurrentUserOne, mCurrentUserTwo;
-    private List<String> usersName = new ArrayList<String>();
+    private List<String> usersName = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
     private Dialog updateLogDialog;
     private AppVersion remoteSjjcAppVersion;
@@ -150,7 +147,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 PackageManager manager = null;
                 try {
                     //获取巡视app安装版本号
-                    manager = _this.getPackageManager();
                     infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
                     remoteSjjcAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
                     String apkPath = "";
