@@ -368,7 +368,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 //根据用户名和密码查询
                 Users tempUser = null;
                 try {
-                    tempUser = UserService.getInstance().findUserByNameAndPwd(userName, AESUtil.decode(userPwd));
+                    tempUser = UserService.getInstance().findUserByNameAndPwd(userName, AESUtil.encode(userPwd));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

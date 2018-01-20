@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -29,7 +30,7 @@ public abstract class MD5Util {
 	 */
 	public static String encodeMD5Hex(String data) {
 		// 执行消息摘要
-		return DigestUtils.md5Hex(data);
+		return new String(Hex.encodeHex(DigestUtils.md5(data.getBytes())));
 	}
 
 	/**

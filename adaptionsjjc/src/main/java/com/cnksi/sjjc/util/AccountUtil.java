@@ -71,7 +71,7 @@ public class AccountUtil {
             times = accountTimes.get(account) + 1;
         }
         accountTimes.put(account, times);
-        CToast.showShort(context, "密码错误,您还有" + (ERRORINPUTMAX - times) + "输入密码的机会");
+        CToast.showShort(context, "密码错误,您还有" + (ERRORINPUTMAX - times) + "次输入密码的机会");
         if (times >= ERRORINPUTMAX) {
             PreferencesUtils.put(context, account, com.cnksi.core.utils.DateUtils.getCurrentLongTime());
             return true;

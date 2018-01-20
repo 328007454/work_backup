@@ -1,7 +1,7 @@
 package com.cnksi.sjjc.util;
 
 
-import org.apache.commons.net.util.Base64;
+import android.util.Base64;
 
 import java.math.BigInteger;
 
@@ -98,19 +98,6 @@ public class AESUtil {
         return null;
     }
 
-    public static void main(String[] args) throws Exception {
-        String content = "我爱你";
-        System.out.println("加密前：" + content);
-
-        System.out.println("加密密钥和解密密钥：" + KEY);
-
-        String encrypt = aesEncrypt(content, KEY);
-        System.out.println("加密后：" + encrypt);
-
-        String decrypt = aesDecrypt(encrypt, KEY);
-        System.out.println("解密后：" + decrypt);
-    }
-
     /**
      * aes解密
      *
@@ -151,7 +138,7 @@ public class AESUtil {
      * @return 编码后的base 64 code
      */
     public static String base64Encode(byte[] bytes) {
-        return Base64.encodeBase64String(bytes);
+        return Base64.encodeToString(bytes, Base64.NO_WRAP);
     }
 
     /**
@@ -162,8 +149,7 @@ public class AESUtil {
      * @throws Exception
      */
     public static byte[] base64Decode(String base64Code) throws Exception {
-//		return com.cnksi.core.utils.StringUtils.isEmpty(base64Code) ? null : new Base64Decoder.decodeBuffer(base64Code);
-        return com.cnksi.core.utils.StringUtils.isEmpty(base64Code) ? null : android.util.Base64.decode(base64Code.getBytes(), android.util.Base64.DEFAULT);
+        return com.cnksi.core.utils.StringUtils.isEmpty(base64Code) ? null : android.util.Base64.encode(base64Code.getBytes(), android.util.Base64.URL_SAFE);
     }
 
     /**
