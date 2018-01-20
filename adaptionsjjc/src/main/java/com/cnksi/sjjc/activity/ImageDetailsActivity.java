@@ -273,7 +273,7 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
 
                         }
                     });
-            ((ViewPager) container).addView(view, 0);
+            container.addView(view, 0);
             return view;
         }
 

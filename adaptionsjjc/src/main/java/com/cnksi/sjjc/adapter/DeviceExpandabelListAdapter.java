@@ -31,15 +31,15 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
 
     public interface OnAdapterViewClickListener {
 
-        public void OnAdapterViewClick(View view, DbModel mDevice);
+        void OnAdapterViewClick(View view, DbModel mDevice);
 
-        public void OnItemViewClick(AdapterView<?> parent, View view, DbModel mDevice, Spacing mCurrentSpacing);
+        void OnItemViewClick(AdapterView<?> parent, View view, DbModel mDevice, Spacing mCurrentSpacing);
 
-        public boolean onItemLongClick(AdapterView<?> parent, View view, DbModel mDevice, Spacing mCurrentSpacing);
+        boolean onItemLongClick(AdapterView<?> parent, View view, DbModel mDevice, Spacing mCurrentSpacing);
 
-        public boolean OnGroupItemLongClick(Spacing mSpacing);
+        boolean OnGroupItemLongClick(Spacing mSpacing);
 
-        public void OnGroupItemClick(Spacing mSpacing, View v, int groupPosition);
+        void OnGroupItemClick(Spacing mSpacing, View v, int groupPosition);
     }
 
     public void setOnAdapterViewClickListener(OnAdapterViewClickListener mOnAdapterViewClickListener) {

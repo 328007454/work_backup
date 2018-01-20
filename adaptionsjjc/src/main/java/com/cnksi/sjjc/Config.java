@@ -304,7 +304,7 @@ public class Config extends CoreConfig {
     /**
      * 操作类型
      */
-    public static enum ModifyOperation {
+    public enum ModifyOperation {
         add("增加"), update("修改"), delete("删除");
         private final String value;
 

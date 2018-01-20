@@ -12,10 +12,10 @@ public class JSObject {
 		}
 
 	public interface wvClientClickListener {
-		public void signName(String id);
-		public void takePicture(String id);
-		public void showIamge(String id);
-		public void save();
+		void signName(String id);
+		void takePicture(String id);
+		void showIamge(String id);
+		void save();
 	}
 
 	private wvClientClickListener wvEnventPro = null;

@@ -108,7 +108,7 @@ public class KSyncConfig {
         uploadFolder.clear();
         downFolder.add("lib");
         downFolder.add("lib/wt");
-        downFolder.add("signimg");;
+        downFolder.add("signimg");
         downFolder.add("download");
 
 

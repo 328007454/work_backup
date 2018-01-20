@@ -13,8 +13,6 @@ import com.cnksi.sjjc.R;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-;
-
 public class PlayVideoActivity extends Activity {
 	
 	@ViewInject(R.id.vv_audio)

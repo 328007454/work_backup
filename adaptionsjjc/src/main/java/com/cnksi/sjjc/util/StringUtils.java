@@ -152,9 +152,6 @@ public class StringUtils {
 
         Pattern pattern = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]");
         Matcher matcher = pattern.matcher(content);
-        if (matcher.find()) {
-            return true;
-        }
-        return false;
+        return matcher.find();
     }
 }

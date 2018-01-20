@@ -109,7 +109,7 @@ public class Task extends BaseModel{
     /**
      * 任务状态
      */
-    public static enum TaskStatus {
+    public enum TaskStatus {
         undo("未巡视"), doing("巡视中"), done("已完成");
         private final String value;
 

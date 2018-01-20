@@ -112,14 +112,14 @@ public class CopyBaseDataActivity extends BaseActivity {
                 } else if (TextUtils.isEmpty(StringUtils.getTransformTep(tempreture))) {
                     CToast.showShort(_this, "温度在-99.9℃到99.9℃");
                     return;
-                } else if ((-99.9f > (float) new Float(tempreture) || new Float(tempreture) > 99.99)) {
+                } else if ((-99.9f > new Float(tempreture) || new Float(tempreture) > 99.99)) {
                     CToast.showShort(_this, "温度在-99.9℃到99.9℃");
                     return;
                 }
                 if (TextUtils.isEmpty(StringUtils.getTransformTep(sd))) {
                     CToast.showShort(_this, "湿度在0到100");
                     return;
-                } else if (0 > (float) new Float(sd) || new Float(sd) > 100) {
+                } else if (0 > new Float(sd) || new Float(sd) > 100) {
                     CToast.showShort(_this, "湿度在0到100");
                     return;
                 }

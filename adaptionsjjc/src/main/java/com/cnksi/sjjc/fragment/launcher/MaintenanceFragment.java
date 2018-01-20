@@ -92,7 +92,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
                             int i = 0;
                             @Override
                             public void run() {
-                                maintenanceBinding.progress.setProgress(i <= (int) percent ? i++ : percent);
+                                maintenanceBinding.progress.setProgress(i <= percent ? i++ : percent);
                                 if (i <= percent)
                                     mHandler.postDelayed(this, 100);
                             }

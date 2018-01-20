@@ -125,14 +125,14 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
             }else if (TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.wd))) {
                 CToast.showShort(_this, "温度在-99.9℃到99.9℃");
                 return;
-            } else if ((-99.9f > (float) new Float(reportSnwsd.wd) || new Float(reportSnwsd.wd) > 99.99)) {
+            } else if ((-99.9f > new Float(reportSnwsd.wd) || new Float(reportSnwsd.wd) > 99.99)) {
                 CToast.showShort(_this, "温度在-99.9℃到99.9℃");
                 return;
             }
             if (TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.sd))) {
                 CToast.showShort(_this, "湿度在0到100");
                 return;
-            } else if ((0 > (float) new Float(reportSnwsd.sd) || new Float(reportSnwsd.sd) > 100)) {
+            } else if ((0 > new Float(reportSnwsd.sd) || new Float(reportSnwsd.sd) > 100)) {
                 CToast.showShort(_this, "湿度在0到100");
                 return;
             }

@@ -244,10 +244,6 @@ public class ReportSignname extends BaseModel{
 	}
 
 	public boolean isSign() {
-		if (TextUtils.isEmpty(signName) || TextUtils.isEmpty(img)) {
-			return false;
-		} else {
-			return true;
-		}
+        return !(TextUtils.isEmpty(signName) || TextUtils.isEmpty(img));
 	}
 }

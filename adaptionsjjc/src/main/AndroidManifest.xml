@@ -50,13 +50,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.LauncherActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 
         <activity
             android:name=".activity.NewLauncherActivity"

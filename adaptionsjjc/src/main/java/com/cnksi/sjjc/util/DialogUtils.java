@@ -267,7 +267,7 @@ public class DialogUtils {
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Dialog showDatePickerDialog(Activity context, boolean hasSelectTime, final DialogItemClickListener dialogClickListener) {
-        if (context != null && (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN ? !context.isDestroyed() : true)) {
+        if (context != null && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN || !context.isDestroyed())) {
             View timepickerview = LayoutInflater.from(context).inflate(R.layout.date_picker_layout, new ViewGroup(context) {
                 @Override
                 protected void onLayout(boolean changed, int l, int t, int r, int b) {

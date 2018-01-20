@@ -149,11 +149,7 @@ public class UploadDeviceStandards extends BaseModel {
      * @return
      */
     public boolean isImportant() {
-        if (!TextUtils.isEmpty(kind) && kind.contains(InspectionType.day.name())) {
-            return true;
-        } else {
-            return false;
-        }
+        return !TextUtils.isEmpty(kind) && kind.contains(InspectionType.day.name());
     }
 
     // 判断设备部件的图片是否存在，不存在采用默认的图片

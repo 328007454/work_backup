@@ -129,7 +129,7 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
 
         @Override
         public void afterTextChanged(Editable s) {
-            ReportSnwsd reportSnwsd = (ReportSnwsd) getItem(position);
+            ReportSnwsd reportSnwsd = getItem(position);
             if (ReportSnwsd.LOCATION.equalsIgnoreCase(tag))
                 reportSnwsd.location = s.toString();
             if (ReportSnwsd.WD.equalsIgnoreCase(tag))

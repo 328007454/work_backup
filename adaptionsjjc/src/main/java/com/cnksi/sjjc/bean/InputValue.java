@@ -20,12 +20,7 @@ public class InputValue {
         if (TextUtils.isEmpty(type)) {
             return false;
         }
-        else if ("date".equalsIgnoreCase(type))
-        {
-            return true;
-        }else{
-            return  false;
-        }
+        else return "date".equalsIgnoreCase(type);
     }
 
 }

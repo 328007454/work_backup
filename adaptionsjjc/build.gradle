@@ -5,14 +5,14 @@ def releaseTime() {
 }
 
 def uuid() {
-    return "---" + UUID.randomUUID().toString();
+    return "---" + UUID.randomUUID().toString()
 }
 
 def branch() {
     try {
         Process process = Runtime.getRuntime().exec("git status")
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()))
+        String line
         String matchBranch = "On branch "
         String matchTag = "HEAD detached at "
         while ((line = bufferedReader.readLine()) != null) {
@@ -23,21 +23,21 @@ def branch() {
                 if (index >= 0) index += matchTag.length()
             }
             if (index >= 0) {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder()
                 for (int i = index; i < line.length(); i++) {
-                    char c = line.charAt(i);
+                    char c = line.charAt(i)
                     if (c == ' ')
                         if (sb.length == 0) continue
                         else {
                             return sb.toString()
                         }
-                    sb.append(c);
+                    sb.append(c)
                 }
-                return sb.toString();
+                return sb.toString()
             }
         }
     } catch (Exception e) {
-        return "unknown";
+        return "unknown"
     }
 }
 
@@ -98,7 +98,7 @@ android {
             }
         }
         debug {
-            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true";
+            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
             buildConfigField "String", "SYNC_URL", "\"http://127.0.0.1:58888\""

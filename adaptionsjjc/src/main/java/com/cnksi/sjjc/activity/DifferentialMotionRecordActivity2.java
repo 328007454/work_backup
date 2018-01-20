@@ -44,7 +44,6 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
     private LinearLayout llContainer;
     //根据变电站id，报告id查询出差动保护相应的数据
     private Map<String, ReportCdbhcl> reportCdbhclsMap = new HashMap<String, ReportCdbhcl>();
-    ;
     //当前报告id
     private String reportId;
     //当前变电站id
@@ -140,7 +139,7 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
         String bdzName = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
         List<ReportCdbhcl> saveList = new ArrayList<>();
         for (CdbhclValue value : cdbhclValueList) {
-            if (!TextUtils.isEmpty(value.getValue()) && (99999999 < (float) new Float(value.getValue()) || 0 > (float) new Float(value.getValue()))) {
+            if (!TextUtils.isEmpty(value.getValue()) && (99999999 < new Float(value.getValue()) || 0 > new Float(value.getValue()))) {
                 return false;
             }
             if (reportCdbhclsMap.containsKey(value.getId())) {

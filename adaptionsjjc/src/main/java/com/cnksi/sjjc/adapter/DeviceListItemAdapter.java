@@ -38,9 +38,9 @@ public class DeviceListItemAdapter extends SimpleBaseAdapter {
 	private OnAdapterViewClickListener mOnAdapterViewClickListener;
 
 	public interface OnAdapterViewClickListener {
-		public void OnAdapterViewClick(View view, DbModel mDevice);
+		void OnAdapterViewClick(View view, DbModel mDevice);
 
-		public boolean OnAdapterLongViewClick(View view, DbModel mDevice);
+		boolean OnAdapterLongViewClick(View view, DbModel mDevice);
 	}
 
 	public void setOnAdapterViewClickListener(OnAdapterViewClickListener mOnAdapterViewClickListener) {

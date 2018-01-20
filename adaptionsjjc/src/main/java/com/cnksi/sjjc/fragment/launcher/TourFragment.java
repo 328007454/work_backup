@@ -85,7 +85,7 @@ public class TourFragment extends BaseCoreFragment {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        tourBinding.progress.setProgress(i <= (int) percent ? i++ : percent);
+                        tourBinding.progress.setProgress(i <= percent ? i++ : percent);
                         if (i <= percent)
                             mHandler.postDelayed(this, 100);
                     }

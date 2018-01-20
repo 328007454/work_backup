@@ -256,7 +256,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
         int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 7 / 9;
         int dialogheight = ScreenUtils.getScreenHeight(mCurrentActivity) * 6 / 10;
         if (null == peopleDialog) {
-            peopleBinding = (DialogPeople) DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.dialog_add_person, null, false);
+            peopleBinding = DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.dialog_add_person, null, false);
         }
         if (peopleDialog == null) {
             peopleDialog = DialogUtils.creatDialog(mCurrentActivity, peopleBinding.getRoot(), dialogWidth, dialogheight);
@@ -322,7 +322,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
                 return;
             }
         }
-        DialogUtils.showSureTipsDialog(mCurrentActivity, null, "是否确认删除 " + (String) o + "?", "确认", "取消", new OnViewClickListener() {
+        DialogUtils.showSureTipsDialog(mCurrentActivity, null, "是否确认删除 " + o + "?", "确认", "取消", new OnViewClickListener() {
             @Override
             public void onClick(View v) {
                 if (view.getTag().equals(MANAGER_FLAG)) {

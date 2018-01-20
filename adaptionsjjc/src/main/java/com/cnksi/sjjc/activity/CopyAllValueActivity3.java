@@ -228,7 +228,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
             @Override
             public void itemClick(View v, CopyItem copyItem, int position) {
                 KeyBoardUtils.closeKeybord(_this);
-                processor.showHistory(_this, copyItem);
+                CopyDataInterface.showHistory(_this, copyItem);
             }
 
             @Override

@@ -113,7 +113,7 @@ public class PermissionUtil {
      */
     private void showPermissionDeniedDialog(final Activity activity, final String[] deniedPermissions) {
         int dialogWidth = ScreenUtils.getScreenWidth(activity) * 7 / 9;
-        PermissionBinding permissionBinding = (PermissionBinding) DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.permission_dialog_tips, null, false);
+        PermissionBinding permissionBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.permission_dialog_tips, null, false);
         final Dialog permissionDialog = DialogUtils.creatDialog(activity, permissionBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         permissionBinding.tvDialogContent.setText("权限不足");
         permissionBinding.btnCancel.setText("退出程序");

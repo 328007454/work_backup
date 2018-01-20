@@ -3,7 +3,6 @@ package com.cnksi.sjjc.activity.batteryactivity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
@@ -32,7 +31,6 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
@@ -801,7 +799,7 @@ public class BatteryTestActivity extends BaseActivity {
             CToast.showShort(_this, "温度输入非法");
             return;
         }
-        if ((-99.9f > (float) new Float(valueTemp) || new Float(valueTemp) > 99.99)) {
+        if ((-99.9f > new Float(valueTemp) || new Float(valueTemp) > 99.99)) {
             CToast.showShort(_this, "温度在-99.9℃到99.9℃");
             return;
         }

@@ -736,9 +736,7 @@ public class HWCWMainActivity extends BaseActivity {
                 && isEmpty(binding.etTestInstrument) && isEmpty(binding.tvWindSpeed) && isEmpty(binding.tvRemarkInfor) && mImageList.size() == 0)
             if (isBhpcw)
 
-                if (isEmpty(binding.etInputHeatPartTempt1))
-                    return true;
-                else return false;
+                return isEmpty(binding.etInputHeatPartTempt1);
 
             else
                 return true;
