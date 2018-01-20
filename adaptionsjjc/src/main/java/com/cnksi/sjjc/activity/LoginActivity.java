@@ -45,6 +45,7 @@ import com.cnksi.sjjc.inter.GrantPermissionListener;
 import com.cnksi.sjjc.service.DepartmentService;
 import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.sync.KSyncConfig;
+import com.cnksi.sjjc.util.AESUtil;
 import com.cnksi.sjjc.util.AccountUtil;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
@@ -365,7 +366,12 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             @Override
             public void run() {
                 //根据用户名和密码查询
-                Users tempUser = UserService.getInstance().findUserByNameAndPwd(userName, userPwd);
+                Users tempUser = null;
+                try {
+                    tempUser = UserService.getInstance().findUserByNameAndPwd(userName, AESUtil.decode(userPwd));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //查询用户存在
                 if (null != tempUser) {
                     //判断与第一个用户是否相同
