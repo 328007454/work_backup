@@ -153,4 +153,5 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.code.gson:gson:2.2.4'
+    implementation files('libs/commons-codec-1.10.jar')
 }
