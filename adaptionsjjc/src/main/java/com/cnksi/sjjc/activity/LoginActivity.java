@@ -9,8 +9,10 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Html;
@@ -214,7 +216,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             @Override
             public void afterTextChanged(final Editable s) {
                 String pwd = PreferencesUtils.get(_this, s.toString(), "");
-                mEtPassword.setText(pwd);
+                if (!DateUtils.timeNormal(pwd)) {
+                    mEtPassword.setText(pwd);
+                }
                 mFixedThreadPoolExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
