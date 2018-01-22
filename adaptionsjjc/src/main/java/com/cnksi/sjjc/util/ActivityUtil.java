@@ -102,7 +102,7 @@ public class ActivityUtil {
 
 
     public static void startSync(Activity activity) {
-        if (BuildConfig.USE_NETWORK_SYNC) {
+        if (PreferencesUtils.getBoolean(activity,"SYNC_WAY",BuildConfig.USE_NETWORK_SYNC)) {
             KSyncConfig.getInstance().startNetWorkSync(activity);
         } else {
             KSyncConfig.getInstance().startUsbWorkSync(activity);

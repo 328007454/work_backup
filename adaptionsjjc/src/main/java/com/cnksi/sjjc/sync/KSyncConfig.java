@@ -30,20 +30,19 @@ import static com.cnksi.sjjc.CustomApplication.getDbManager;
  * @since 1.0
  */
 public class KSyncConfig {
-    final static KSyncConfig instance = new KSyncConfig();
-
     public static final String DEPT_ID = "dept_id";
-
-    public static KSyncConfig getInstance() {
-        return instance;
-    }
-
+    final static KSyncConfig instance = new KSyncConfig();
     private String dept_id;
     private Set<String> uploadFolder = new HashSet<>();
+    private Set<String> downFolder = new HashSet<>();
 
     private KSyncConfig() {
         //避免程序Crash之后失去了班组信息。
         dept_id = PreferencesUtils.getString(CustomApplication.getAppContext(), DEPT_ID, "-1");
+    }
+
+    public static KSyncConfig getInstance() {
+        return instance;
     }
 
     public String getDept_id() {
@@ -57,20 +56,19 @@ public class KSyncConfig {
         return this;
     }
 
-    private Set<String> downFolder = new HashSet<>();
-
-
     private void startSync(Context context, Intent intent) {
         intent.putExtra(DEPT_ID, getDept_id());
         context.startActivity(intent);
     }
 
     public void startNetWorkSync(Context context) {
+        PreferencesUtils.put(context, "SYNC_WAY", true);
         Intent intent = new Intent(context, NetWorkSyncActivity.class);
         startSync(context, intent);
     }
 
     public void startUsbWorkSync(Context context) {
+        PreferencesUtils.put(context, "SYNC_WAY", false);
         Intent intent = new Intent(context, UsbSyncActivity.class);
         startSync(context, intent);
     }
@@ -138,9 +136,9 @@ public class KSyncConfig {
         try {
             DbModel model = CustomApplication.getDbManager().findDbModelFirst(info);
             if (model != null) {
-                downFolder.add("admin/" + model.getString("short_name_pinyin")+"/apk");
-                downFolder.add("admin/" + model.getString("short_name_pinyin")+"/gqj");
-                uploadFolder.add("admin/" + model.getString("short_name_pinyin")+"/gqj");
+                downFolder.add("admin/" + model.getString("short_name_pinyin") + "/apk");
+                downFolder.add("admin/" + model.getString("short_name_pinyin") + "/gqj");
+                uploadFolder.add("admin/" + model.getString("short_name_pinyin") + "/gqj");
             }
         } catch (DbException e) {
             e.printStackTrace();

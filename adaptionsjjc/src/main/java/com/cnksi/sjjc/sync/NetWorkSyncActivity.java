@@ -26,8 +26,6 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
 import com.cnksi.sjjc.service.DepartmentService;
-import com.cnksi.sjjc.util.DialogUtils;
-import com.cnksi.sjjc.util.OnViewClickListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -89,6 +87,13 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         config = KSyncConfig.getInstance().getKNConfig(this);
         binding.tvSerialNumber.setText("设备ID:" + config.getClientid());
         ksync = new KSync(config, handler);
+        try {
+            HttpUtilsProxy.hack(ksync,config);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         String deptName = "无";
         dept_id = KSyncConfig.getInstance().getDept_id();
         if (!"-1".equals(dept_id)) {
