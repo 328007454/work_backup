@@ -1,13 +1,14 @@
 package com.cnksi.core.utils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.cnksi.core.application.CoreApplication;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 对SharedPreference的使用做了建议的封装，对外公布出put，get，remove，clear等等方法； 注意一点，里面所有的commit操作使用了SharedPreferencesCompat.apply进行了替代，目的是尽可能的使用apply代替commit 首先说下为什么，因为commit方法是同步的，并且我们很多时候的commit操作都是UI线程中，毕竟是IO操作，尽可能异步； 所以我们使用apply进行替代，apply异步的进行写入； 但是apply相当于commit来说是new API呢，为了更好的兼容，我们做了适配； SharedPreferencesCompat也可以给大家创建兼容类提供了一定的参考~~
@@ -103,6 +104,11 @@ public class PreferencesUtils {
     public static String getString(Context context, String key, String defaultValue) {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         return sp.getString(key, defaultValue);
+    }
+
+    public static String getString(String key, String defaultValue) {
+
+        return getString(CoreApplication.getAppContext(), key, defaultValue);
     }
 
     public static Integer getInt(Context context, String key, int defaultValue) {

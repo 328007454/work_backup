@@ -8,17 +8,13 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.nfc.Tag;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -35,7 +31,6 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
-import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -363,7 +358,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             CToast.showShort(_this, R.string.et_password_hint_str);
             return;
         }
-        if (AccountUtil.getmUtilInstance().JudgeAccountBlocked(mCurrentActivity, autoCompleteTextView.getText().toString())) {
+        if (AccountUtil.getUtilInstance().JudgeAccountBlocked(mCurrentActivity, autoCompleteTextView.getText().toString())) {
             return;
         }
         mFixedThreadPoolExecutor.execute(new Runnable() {
@@ -461,7 +456,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             // 密码错误
             case PWD_ERROR:
-                AccountUtil.getmUtilInstance().preBlockAccount(mCurrentActivity, autoCompleteTextView.getText().toString(), mEtPassword);
+                AccountUtil.getUtilInstance().preBlockAccount(mCurrentActivity, autoCompleteTextView.getText().toString(), mEtPassword);
                 break;
             // 没有登录人员
             case NO_LOGIN_USER:

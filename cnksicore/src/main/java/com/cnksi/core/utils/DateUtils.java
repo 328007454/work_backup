@@ -360,7 +360,6 @@ public class DateUtils {
 
     public static  boolean timeNormal(String time){
         boolean date = Pattern.compile(dateN).matcher(time).matches();
-
         return date;
     }
 
