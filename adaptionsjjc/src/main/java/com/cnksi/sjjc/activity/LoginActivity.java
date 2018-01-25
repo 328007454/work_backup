@@ -61,8 +61,7 @@ import java.util.List;
  * 登录界面
  */
 public class LoginActivity extends BaseActivity implements GrantPermissionListener {
-
-
+    
     private static final String TAG = "LoginActivity";
     public static final int SAME_ACCOUNT = 0x01111;//添加账号相同
     public static final int NO_SUCH_USER = SAME_ACCOUNT + 1;//没有对应账号
