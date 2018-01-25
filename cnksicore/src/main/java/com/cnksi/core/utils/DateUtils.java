@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * 时间格式化工具类
@@ -12,6 +13,10 @@ import java.util.Locale;
  * @author terry
  */
 public class DateUtils {
+    /**
+     * yyyy-MM-dd HH:mm:ss
+     */
+    private static String dateN = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}";
 
     private DateUtils() {
 
@@ -338,6 +343,24 @@ public class DateUtils {
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         cal.add(Calendar.DAY_OF_MONTH, -7);
         return df.format(cal.getTime());
+    }
+
+    /**
+     * 得到当前时间多少小时之前的时间
+     *
+     * @param hours
+     * @param formatter 时间格式
+     * @return
+     */
+    public static String getPreHour(int hours, String formatter) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR, -hours);
+        return getFormatterTime(calendar.getTime(), formatter);
+    }
+
+    public static  boolean timeNormal(String time){
+        boolean date = Pattern.compile(dateN).matcher(time).matches();
+        return date;
     }
 
 }

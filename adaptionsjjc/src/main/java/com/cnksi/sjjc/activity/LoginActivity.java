@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.sjjc.Config;
@@ -41,6 +42,8 @@ import com.cnksi.sjjc.inter.GrantPermissionListener;
 import com.cnksi.sjjc.service.DepartmentService;
 import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.sync.KSyncConfig;
+import com.cnksi.sjjc.util.AESUtil;
+import com.cnksi.sjjc.util.AccountUtil;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
@@ -186,7 +189,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             String[] userNames = userName.split(",");
             autoCompleteTextView.setText(userNames[0]);
             String pwd = PreferencesUtils.get(_this, userNames[0], "");
-            mEtPassword.setText(pwd);
+            if (!DateUtils.timeNormal(pwd)) {
+                mEtPassword.setText(pwd);
+            }
         }
         arrayAdapter = new ArrayAdapter<String>(_this, R.layout.user_name_drop_down_item, R.id.tv_user_name);
         autoCompleteTextView.setAdapter(arrayAdapter);
@@ -204,7 +209,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             @Override
             public void afterTextChanged(final Editable s) {
                 String pwd = PreferencesUtils.get(_this, s.toString(), "");
-                mEtPassword.setText(pwd);
+                if (!DateUtils.timeNormal(pwd)) {
+                    mEtPassword.setText(pwd);
+                }
                 mFixedThreadPoolExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -349,11 +356,19 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             CToast.showShort(_this, R.string.et_password_hint_str);
             return;
         }
+        if (AccountUtil.getUtilInstance().JudgeAccountBlocked(mCurrentActivity, autoCompleteTextView.getText().toString())) {
+            return;
+        }
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 //根据用户名和密码查询
-                Users tempUser = UserService.getInstance().findUserByNameAndPwd(userName, userPwd);
+                Users tempUser = null;
+                try {
+                    tempUser = UserService.getInstance().findUserByNameAndPwd(userName, AESUtil.encode(userPwd));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //查询用户存在
                 if (null != tempUser) {
                     //判断与第一个用户是否相同
@@ -439,7 +454,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 break;
             // 密码错误
             case PWD_ERROR:
-                CToast.showShort(_this, R.string.login_failed_password_str);
+                AccountUtil.getUtilInstance().preBlockAccount(mCurrentActivity, autoCompleteTextView.getText().toString(), mEtPassword);
                 break;
             // 没有登录人员
             case NO_LOGIN_USER:

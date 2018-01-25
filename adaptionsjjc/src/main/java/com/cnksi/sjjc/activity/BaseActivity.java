@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
@@ -63,6 +65,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static boolean isNeedUpdateTaskState = false;
     public boolean isDefaultTitle = true;
+    public static final int MY_PERMISSIONS_REQUEST_PACKAGE_USAGE_STATS = 1101;
     /**
      * 退出时间
      */

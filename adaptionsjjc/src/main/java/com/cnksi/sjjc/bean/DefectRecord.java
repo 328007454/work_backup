@@ -242,6 +242,7 @@ public class DefectRecord extends BaseModel {
                         String pics) {
         // defectid,discovered_date,discoverer ,defectcode
         this.reportid = reportid;
+        this.discoverer_unit=PreferencesUtils.getString(Config.CURRENT_DEPARTMENT_NAME,"");
         this.bdzid = bdzid;
         this.bdz = bdz;
         this.spid = spid;
@@ -295,6 +296,7 @@ public class DefectRecord extends BaseModel {
         this.has_track = "N";
         this.has_remove = "N";
         this.unit = unit;
+        this.discoverer_unit=PreferencesUtils.getString(Config.CURRENT_DEPARTMENT_NAME,"");
         this.insertTime = DateUtils.getCurrentLongTime();
     }
 

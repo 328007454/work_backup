@@ -249,6 +249,7 @@ public class LocationUtil {
         locationClient.unRegisterLocationListener(helper);
         helpers.remove(helper);
         if (helpers.isEmpty()) locationClient.stop();
+
     }
 
 
