@@ -2,6 +2,8 @@ package com.cnksi.sjjc.service;
 
 import android.text.TextUtils;
 
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.SwitchPic;
@@ -33,6 +35,7 @@ public class TaskService extends BaseService<Task> {
         if (null == instance) instance = new TaskService();
         return instance;
     }
+
 
     /* 删除计划任务 和已经巡视的报告数据
     *
@@ -150,6 +153,17 @@ public class TaskService extends BaseService<Task> {
     }
 
 
+    private String getUserExpr() {
+        String currentAcounts = PreferencesUtils.getString(Config.CURRENT_LOGIN_ACCOUNT, "");
+        String[] accoutArray = currentAcounts.split(",");
+        String accountExpr;
+        if (accoutArray.length > 1)
+            accountExpr = "and (create_account like ('%" + accoutArray[0] + "%') or create_account like ('%" + accoutArray[1] + "%')or members_account like('%" + accoutArray[0] + "%')  or members_account like('%" + accoutArray[1] + "%') or members_account is NULL)";
+        else
+            accountExpr = "and (create_account like ('%" + currentAcounts + "%') or members_account like('%" + currentAcounts + "%') or members_account is NULL or members_account = '')";
+        return accountExpr;
+    }
+
     public TaskStatistic getTaskStatistic(String inspectionType) {
         TaskStatistic result = new TaskStatistic();
         String inspectionExpr = TextUtils.isEmpty(inspectionType) ? " and (inspection like '%" + InspectionType.professional.name() + "%' or inspection like '%" + InspectionType.routine.name() + "%' or inspection like '%" + InspectionType.full.name() + "%' or inspection like '%" + InspectionType.special.name() + "%') " : " and inspection like '%" + inspectionType + "%' ";
@@ -157,15 +171,16 @@ public class TaskService extends BaseService<Task> {
         String mothTimeExpr = " and schedule_time BETWEEN datetime('now','localtime','start of month') AND datetime('now','localtime','start of month','+1 month','-1 second') ";
         String doneExpr = " and status='" + Task.TaskStatus.done.name() + "' ";
         long count = 0;
+        String accountExpr = getUserExpr();
         try {
             //今日维护任务
-            count = selector().expr(inspectionExpr).expr(todayTimeExpr).count();
+            count = selector().expr(inspectionExpr).expr(todayTimeExpr).expr(accountExpr).count();
             result.setTodayTaskCount(count);
         } catch (DbException e) {
             e.printStackTrace();
         }
         try {
-            count = selector().expr(doneExpr).expr(inspectionExpr).expr(todayTimeExpr).count();
+            count = selector().expr(doneExpr).expr(inspectionExpr).expr(todayTimeExpr).expr(accountExpr).count();
             result.setTodayTaskFinish(count);
         } catch (DbException e) {
             e.printStackTrace();
@@ -173,13 +188,13 @@ public class TaskService extends BaseService<Task> {
         }
         try {
             //今日维护任务
-            count = selector().expr(inspectionExpr).expr(mothTimeExpr).count();
+            count = selector().expr(inspectionExpr).expr(mothTimeExpr).expr(accountExpr).count();
             result.setMonthTaskCount(count);
         } catch (DbException e) {
             e.printStackTrace();
         }
         try {
-            count = selector().expr(doneExpr).expr(inspectionExpr).expr(mothTimeExpr).count();
+            count = selector().expr(doneExpr).expr(inspectionExpr).expr(mothTimeExpr).expr(accountExpr).count();
             result.setMonthTaskFinish(count);
         } catch (DbException e) {
             e.printStackTrace();
@@ -190,7 +205,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks = selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").findAll();
+            tasks = selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").expr(getUserExpr()).findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {
@@ -204,7 +219,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoSpecialTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").findAll();
+            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").expr(getUserExpr()).findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {

@@ -93,8 +93,6 @@ public class NewLauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changedStatusColor();
-//        launcherBinding = DataBindingUtil.inflate(LayoutInflater.from(getApplicationContext()), R.layout.activity_launcher_new, null, false);
-//        setContentView(launcherBinding.getRoot());
         launcherBinding = DataBindingUtil.setContentView(this, R.layout.activity_launcher_new);
         initUI();
         initFragments();
@@ -160,7 +158,7 @@ public class NewLauncherActivity extends BaseActivity {
 
     private void initBaseData() {
         getIntentValue();
-        String date = com.cnksi.core.utils.DateUtils.getCurrentTime("yyy年MM月dd日") + " " + DateUtils.getCurrentWeekDay();
+        String date = DateUtils.getCurrentTime("yyy年MM月dd日") + " " + DateUtils.getCurrentWeekDay();
         launcherBinding.lancherTitle.txtTime.setText(date);
         launcherBinding.lancherTitle.txtPerson.setText(PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_USER, ""));
         mFixedThreadPoolExecutor.execute(new Runnable() {
