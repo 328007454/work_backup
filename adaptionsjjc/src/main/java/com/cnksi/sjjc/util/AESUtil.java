@@ -149,7 +149,7 @@ public class AESUtil {
      * @throws Exception
      */
     public static byte[] base64Decode(String base64Code) throws Exception {
-        return com.cnksi.core.utils.StringUtils.isEmpty(base64Code) ? null : android.util.Base64.encode(base64Code.getBytes(), android.util.Base64.URL_SAFE);
+        return com.cnksi.core.utils.StringUtils.isEmpty(base64Code) ? null : android.util.Base64.encode(base64Code.getBytes(), Base64.NO_WRAP);
     }
 
     /**
