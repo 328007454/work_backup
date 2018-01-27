@@ -324,6 +324,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 Config.SYNC_URL = url;
                 String appId = getText(binding.etAppId);
                 if (!TextUtils.isEmpty(appId)) Config.SYNC_APP_ID = appId;
+                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
+                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
                 dialog.dismiss();
             }
         });
