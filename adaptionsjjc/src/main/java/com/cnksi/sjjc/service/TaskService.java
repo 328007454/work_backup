@@ -158,9 +158,9 @@ public class TaskService extends BaseService<Task> {
         String[] accoutArray = currentAcounts.split(",");
         String accountExpr;
         if (accoutArray.length > 1)
-            accountExpr = "and (create_account like ('%" + accoutArray[0] + "%') or create_account like ('%" + accoutArray[1] + "%')or members_account like('%" + accoutArray[0] + "%')  or members_account like('%" + accoutArray[1] + "%') or members_account is NULL)";
+            accountExpr = "and (create_account like ('%" + accoutArray[0] + "%') or create_account like ('%" + accoutArray[1] + "%')or members_account like('%" + accoutArray[0] + "%')  or members_account like('%" + accoutArray[1] + "%') or create_account is NULL or create_account = '')";
         else
-            accountExpr = "and (create_account like ('%" + currentAcounts + "%') or members_account like('%" + currentAcounts + "%') or members_account is NULL or members_account = '')";
+            accountExpr = "and (create_account like ('%" + currentAcounts + "%') or members_account like('%" + currentAcounts + "%') or create_account is NULL or create_account = '')";
         return accountExpr;
     }
 
@@ -251,7 +251,6 @@ public class TaskService extends BaseService<Task> {
     }
 
     public List<Task> findOperationTaskByLimit(int limit) {
-
         try {
             return selector().and(Task.TYPE, "=", InspectionType.operation.name()).orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
         } catch (DbException e) {

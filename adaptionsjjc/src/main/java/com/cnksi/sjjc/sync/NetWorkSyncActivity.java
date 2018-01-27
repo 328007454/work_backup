@@ -54,6 +54,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
     NetWorkSyncActivity currentActivity;
     String dept_id;
     boolean hasError = false;
+    Map<String, SyncInfo> cacheMap = new HashMap<>();
+    boolean pinging = false;
     private boolean isSyncFile = false;
 
     @Override
@@ -88,7 +90,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         binding.tvSerialNumber.setText("设备ID:" + config.getClientid());
         ksync = new KSync(config, handler);
         try {
-            HttpUtilsProxy.hack(ksync,config);
+            HttpUtilsProxy.hack(ksync, config);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -109,7 +111,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         }
         ping("ping -i 3 " + url, handler);
     }
-
 
     @Override
     public void onClick(View view) {
@@ -178,7 +179,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             default:
         }
     }
-
 
     private void upload() {
         setButtonStyle(false);
@@ -262,56 +262,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    Map<String, SyncInfo> cacheMap = new HashMap<>();
-
-    public class KHandler extends Handler {
-        @Override
-        public void handleMessage(final Message msg) {
-            Log.d("KHandler", String.valueOf(msg.obj));
-
-            SyncInfo info = null;
-            switch (msg.what) {
-                case KSync.SYNC_ERROR:
-                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_ERROR);
-                    setButtonStyle(true);
-                    hasError = true;
-                    break;
-                case KSync.SYNC_INFO:
-                    info = getSyncInfo(String.valueOf(msg.obj));
-                    break;
-                case KSync.SYNC_CONNECTING:
-                case KSync.SYNC_START:
-                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_INFO);
-                    break;
-                case KSync.SYNC_SUCCESS:
-                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
-                    setButtonStyle(true);
-                    showDialogTips();
-                    break;
-                case KSync.SYNC_PING:
-                    setNetwork(msg);
-                    return;
-                case KSync.SYNC_SERVER_TIME:
-                    //去设置时间
-                    // setTime(String.valueOf(msg.obj));
-                    return;
-                case DELETE_FINISHED:
-                    Toast.makeText(currentActivity, String.valueOf(msg.obj), Toast.LENGTH_SHORT).show();
-                    CustomerDialog.dismissProgress();
-                    break;
-                case KSync.SYNC_FINISH:
-                    Toast.makeText(currentActivity, String.valueOf(msg.obj), Toast.LENGTH_SHORT).show();
-                    setButtonStyle(true);
-                    break;
-            }
-            if (info != null) {
-                mSyncInfos.add(info);
-            }
-            mSyncInfoAdapter.notifyDataSetChanged();
-            binding.lvContainer.setSelection(mSyncInfoAdapter.getCount() - 1);
-        }
-    }
-
     private void showDialogTips() {
         SyncMenuUtils.ShowTipsDialog(currentActivity, "基本数据已同步完成，可以返回开始运维工作；文件在后台下载，不影响使用", new View.OnClickListener() {
             @Override
@@ -381,8 +331,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         super.onDestroy();
     }
 
-    boolean pinging = false;
-
     public void ping(final String cmdLine, final Handler handler) {
         if (pinging == true) return;
         pinging = true;
@@ -407,5 +355,55 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         }).start();
+    }
+
+    public class KHandler extends Handler {
+        @Override
+        public void handleMessage(final Message msg) {
+            Log.d("KHandler", String.valueOf(msg.obj));
+            if (isDestroyed()) {
+                return;
+            }
+            SyncInfo info = null;
+            switch (msg.what) {
+                case KSync.SYNC_ERROR:
+                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_ERROR);
+                    setButtonStyle(true);
+                    hasError = true;
+                    break;
+                case KSync.SYNC_INFO:
+                    info = getSyncInfo(String.valueOf(msg.obj));
+                    break;
+                case KSync.SYNC_CONNECTING:
+                case KSync.SYNC_START:
+                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_INFO);
+                    break;
+                case KSync.SYNC_SUCCESS:
+                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
+                    setButtonStyle(true);
+                    showDialogTips();
+                    break;
+                case KSync.SYNC_PING:
+                    setNetwork(msg);
+                    return;
+                case KSync.SYNC_SERVER_TIME:
+                    //去设置时间
+                    // setTime(String.valueOf(msg.obj));
+                    return;
+                case DELETE_FINISHED:
+                    Toast.makeText(currentActivity, String.valueOf(msg.obj), Toast.LENGTH_SHORT).show();
+                    CustomerDialog.dismissProgress();
+                    break;
+                case KSync.SYNC_FINISH:
+                    Toast.makeText(currentActivity, String.valueOf(msg.obj), Toast.LENGTH_SHORT).show();
+                    setButtonStyle(true);
+                    break;
+            }
+            if (info != null) {
+                mSyncInfos.add(info);
+            }
+            mSyncInfoAdapter.notifyDataSetChanged();
+            binding.lvContainer.setSelection(mSyncInfoAdapter.getCount() - 1);
+        }
     }
 }

@@ -32,6 +32,21 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         activity = context;
     }
 
+    public static CharSequence calculateRemindTime(DefectRecord defectRecord) {
+        if (defectRecord == null || TextUtils.isEmpty(defectRecord.discovered_date)) return "";
+        int day;
+        if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(defectRecord.defectlevel) || Config.CRISIS_LEVEL.equals(defectRecord.defectlevel)) {
+            day = 1;
+        } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(defectRecord.defectlevel) || Config.SERIOUS_LEVEL.equals(defectRecord.defectlevel)) {
+            day = 30;
+        } else {
+            day = 365;
+        }
+        String s = "到期时间：" + DateUtils.getAfterTime(defectRecord.discovered_date, day, "yyyy-MM-dd");
+        if (s.compareTo(DateUtils.getAfterTime(3)) > 0) {
+            return s;
+        } else return StringUtils.changeTextColor(s, Color.RED);
+    }
 
     @Override
     public void convert(ViewHolder holder, DefectRecord item, int position) {
@@ -56,10 +71,9 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
 
         holder.setText(R.id.tv_defect_space, "间隔：" + (TextUtils.isEmpty(item.spname) ? "" : item.spname));
         holder.setText(R.id.tv_record_person, "记录人员：" + (TextUtils.isEmpty(item.discoverer) ? "" : item.discoverer));
-        holder.setText(R.id.tv_date, "时间：" + (TextUtils.isEmpty(item.insertTime) ? "" : (DateUtils.formatDateTime(item.insertTime, CoreConfig.dateFormat1))));
-
+        holder.setText(R.id.tv_defect_discover_time, "时间：" + (TextUtils.isEmpty(item.discovered_date) ? "" : (DateUtils.formatDateTime(item.insertTime, CoreConfig.dateFormat1))));
+        holder.setText(R.id.tv_defect_remind_time, calculateRemindTime(item));
     }
-
 
     /**
      * 转换缺陷等级为 一般 严重 危机

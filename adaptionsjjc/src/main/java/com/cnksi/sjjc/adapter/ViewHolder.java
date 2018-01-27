@@ -26,14 +26,6 @@ public class ViewHolder {
 
     private Object tag;
 
-    public void setTag(Object tag) {
-        this.tag = tag;
-    }
-
-    public Object getTag() {
-        return tag;
-    }
-
     /**
      * 生成一个adapter的ViewHolder
      *
@@ -61,7 +53,6 @@ public class ViewHolder {
         rootView.setTag(this);
     }
 
-
     /**
      * 获得一个viewHolder
      *
@@ -80,6 +71,14 @@ public class ViewHolder {
             holder = (ViewHolder) convertView.getTag();
         }
         return holder;
+    }
+
+    public Object getTag() {
+        return tag;
+    }
+
+    public void setTag(Object tag) {
+        this.tag = tag;
     }
 
     /**
@@ -116,7 +115,7 @@ public class ViewHolder {
      * @param text
      * @return
      */
-    public ViewHolder setText(int viewId, String text) {
+    public ViewHolder setText(int viewId, CharSequence text) {
         TextView view = getView(viewId);
         view.setText(text);
         return this;

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 
-import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.Config;
@@ -20,26 +19,7 @@ import com.cnksi.sjjc.sync.KSyncConfig;
  * Created by lyndon on 2016/9/12.
  */
 public class ActivityUtil {
-    /**
-     * 启动变电运维智能移动作业平台
-     *
-     * @param activity 启动activity
-     * @param account  用户名 eg：FanY0010
-     * @param password 密码 eg：1
-     */
-    public static void openInspection(Activity activity, String account, String password) {
-        try {
-            Intent intent = new Intent();
-            ComponentName componentName = new ComponentName("com.cnksi.sjjc", "com.cnksi.sjjc.activity.LauncherActivity");
-            intent.setComponent(componentName);
-            intent.putExtra("u_account", account);
-            intent.putExtra("u_password", password);
-            activity.startActivity(intent);
-        } catch (Exception e) {
-            CToast.showShort(activity, "请安装变电运维智能移动作业平台");
-        }
 
-    }
 
     public static void startDeviceTourActivity(Activity activity, int id) {
         Intent intent = new Intent(activity, NewLauncherActivity.class);
@@ -48,7 +28,7 @@ public class ActivityUtil {
     }
 
     public static void startOperateActivity(Activity activity) {
-        ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
+        ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.czp.OperateTaskListActivity");
         Intent intent2 = new Intent();
         intent2.setComponent(componentName);
         intent2.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(activity, Config.CURRENT_LOGIN_USER, ""));
