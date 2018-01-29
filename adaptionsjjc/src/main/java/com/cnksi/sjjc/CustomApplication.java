@@ -20,7 +20,6 @@ import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
 import com.tendcloud.tenddata.TCAgent;
-import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import org.xutils.DbManager;
 import org.xutils.ex.DbException;
@@ -28,6 +27,7 @@ import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @version 1.0
@@ -42,6 +43,12 @@ import java.util.List;
  * @date 16/4/20
  */
 public class CustomApplication extends CoreApplication {
+    //数据库管理者
+    private static DbManager mDbManager = null;
+    private static DbManager PJDbManager = null;
+    private static DbManager yanShouDbManager = null;
+    private static CustomApplication mInstance = null;
+    private static int DataVersion = 13;
     private String[] filePathArray = {
             Config.BDZ_INSPECTION_FOLDER,
             Config.DATABASE_FOLDER,
@@ -56,20 +63,6 @@ public class CustomApplication extends CoreApplication {
             Config.BAK_FOLDER,
             Config.NFC_FOLDER,
             Config.WWWROOT_FOLDER};
-
-    //数据库管理者
-    private static DbManager mDbManager = null;
-    private static DbManager PJDbManager = null;
-    private static DbManager yanShouDbManager = null;
-
-
-    public HashMap<String, String> getCopyedMap() {
-        if (copyedMap == null)
-            copyedMap = new HashMap<>();
-        return copyedMap;
-    }
-
-
     private HashMap<String, String> copyedMap = new HashMap<>();
 
     public static DbManager getPJDbManager() {
@@ -81,35 +74,6 @@ public class CustomApplication extends CoreApplication {
 
     public static CustomApplication getInstance() {
         return mInstance;
-    }
-
-    private static CustomApplication mInstance = null;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mInstance = this;
-//        AutoLayoutConifg.getInstance().useDeviceSize().init(this);
-        TCAgent.LOG_ON = true;
-        TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
-        TCAgent.setReportUncaughtExceptions(true);
-        DisplayUtil.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
-        CLog.init(true);
-        PlaySound.initPlay(this);
-        CrashReportUploadHandler.init(mInstance, Config.LOGFOLDER).start();
-        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true) && !BuildConfig.USE_NETWORK_SYNC) {
-            com.cnksi.core.utils.NetWorkUtil.disableNetWork(this);
-        }
-        initRuntimeVar();
-        TTSUtils.init(getAppContext());
-        LocationUtil.init(getAppContext());
-        LLog.isLog = BuildConfig.LOG_DEBUG;
-    }
-
-    public void initApp() {
-        FileUtils.initFile(filePathArray);
-        copyAssetsToSDCard();
-        TCAgent.onError(mInstance, CrashHandler.getInstance().getUncaughtException());
     }
 
     /**
@@ -164,28 +128,6 @@ public class CustomApplication extends CoreApplication {
         return yanShouDbManager;
     }
 
-    public void restartApp() {
-        ScreenManager.getInstance().popAllActivityExceptOne(null);
-        Intent intent = getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(getBaseContext().getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        mInstance.startActivity(intent);
-        ActivityManager mActivityManager = (ActivityManager)
-                this.getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo>
-                mRunningProcess = mActivityManager
-                .getRunningAppProcesses();
-        for (ActivityManager.RunningAppProcessInfo amProcess :
-                mRunningProcess) {
-            if (amProcess.processName.equals("com.cnksi.bdzinspection")) {
-                android.os.Process.killProcess(amProcess.pid);
-                mActivityManager.killBackgroundProcesses(amProcess.processName);
-            }
-        }
-        android.os.Process.killProcess(android.os.Process.myPid());  //结束进程之前可以把你程序的注销或者退出代码放在这段代码之前
-
-    }
-
     /**
      * 自定义数据库配置 需要重写
      *
@@ -193,14 +135,14 @@ public class CustomApplication extends CoreApplication {
      */
 
     protected static DbManager.DaoConfig getDaoConfig() {
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(5)
+        int dbVersion = getDbVersion();
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override
                     public void onDbOpened(DbManager db) {
                         // 开启WAL, 对写入加速提升巨大
                         //db.getDatabase().enableWriteAheadLogging();
                         //此处不处理数据库版本更新  全权交给同步框架处理。
-                        db.getDaoConfig().setDbVersion(db.getDatabase().getVersion());
                         try {
                             db.addColumn(TaskExtend.class, "dlt");
                         } catch (DbException e) {
@@ -211,6 +153,7 @@ public class CustomApplication extends CoreApplication {
                 .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
                     @Override
                     public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
+                        saveDbVersion(newVersion);
                     }
                 }).setAllowTransaction(true);
         return config;
@@ -252,28 +195,6 @@ public class CustomApplication extends CoreApplication {
 //      .setCircular(false)
                 .build();
     }
-
-    private static int DataVersion = 13;
-
-    private void copyAssetsToSDCard() {
-        if (PreferencesUtils.getInt(mInstance, "DataVersion", 0) < DataVersion)
-            mExcutorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    delAllFile(Config.WWWROOT_FOLDER);
-                    if (copyAssetsToSDCard(mInstance, "www", Config.WWWROOT_FOLDER)) {
-                        PreferencesUtils.put(mInstance, "DataVersion", DataVersion);
-                        try {
-                            XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    copyAssetsToSDCard(mInstance, "database", Config.DATABASE_FOLDER);
-                }
-            });
-    }
-
 
     /**
      * 递归拷贝assets文件到SD卡
@@ -335,6 +256,101 @@ public class CustomApplication extends CoreApplication {
             }
         }
         return isSuccess;
+    }
+
+    private static int getDbVersion() {
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(Config.DATABASE_FOLDER + "dbVersion.prop"));
+            return Integer.parseInt(properties.getProperty("dbVersion", "1"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 1;
+        }
+    }
+
+    public static void saveDbVersion(int dbVersion) {
+        Properties properties = new Properties();
+        try {
+            properties.put("dbVersion", dbVersion + "");
+            properties.store(new FileOutputStream(Config.DATABASE_FOLDER + "dbVersion.prop"), "数据库版本");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public HashMap<String, String> getCopyedMap() {
+        if (copyedMap == null)
+            copyedMap = new HashMap<>();
+        return copyedMap;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mInstance = this;
+//        AutoLayoutConifg.getInstance().useDeviceSize().init(this);
+        TCAgent.LOG_ON = true;
+        TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
+        TCAgent.setReportUncaughtExceptions(true);
+        DisplayUtil.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
+        CLog.init(true);
+        PlaySound.initPlay(this);
+        CrashReportUploadHandler.init(mInstance, Config.LOGFOLDER).start();
+        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true) && !BuildConfig.USE_NETWORK_SYNC) {
+            com.cnksi.core.utils.NetWorkUtil.disableNetWork(this);
+        }
+        initRuntimeVar();
+        TTSUtils.init(getAppContext());
+        LocationUtil.init(getAppContext());
+        LLog.isLog = BuildConfig.LOG_DEBUG;
+    }
+
+    public void initApp() {
+        FileUtils.initFile(filePathArray);
+        copyAssetsToSDCard();
+        TCAgent.onError(mInstance, CrashHandler.getInstance().getUncaughtException());
+    }
+
+    public void restartApp() {
+        ScreenManager.getInstance().popAllActivityExceptOne(null);
+        Intent intent = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mInstance.startActivity(intent);
+        ActivityManager mActivityManager = (ActivityManager)
+                this.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo>
+                mRunningProcess = mActivityManager
+                .getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo amProcess :
+                mRunningProcess) {
+            if (amProcess.processName.equals("com.cnksi.bdzinspection")) {
+                android.os.Process.killProcess(amProcess.pid);
+                mActivityManager.killBackgroundProcesses(amProcess.processName);
+            }
+        }
+        android.os.Process.killProcess(android.os.Process.myPid());  //结束进程之前可以把你程序的注销或者退出代码放在这段代码之前
+
+    }
+
+    private void copyAssetsToSDCard() {
+        if (PreferencesUtils.getInt(mInstance, "DataVersion", 0) < DataVersion)
+            mExcutorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    delAllFile(Config.WWWROOT_FOLDER);
+                    if (copyAssetsToSDCard(mInstance, "www", Config.WWWROOT_FOLDER)) {
+                        PreferencesUtils.put(mInstance, "DataVersion", DataVersion);
+                        try {
+                            XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    copyAssetsToSDCard(mInstance, "database", Config.DATABASE_FOLDER);
+                }
+            });
     }
 
     public boolean delAllFile(String path) {

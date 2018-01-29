@@ -42,8 +42,9 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         } else {
             day = 365;
         }
-        String s = "到期时间：" + DateUtils.getAfterTime(defectRecord.discovered_date, day, "yyyy-MM-dd");
-        if (s.compareTo(DateUtils.getAfterTime(3)) > 0) {
+        String d=DateUtils.getAfterTime(defectRecord.discovered_date, day, "yyyy-MM-dd");
+        String s = "到期时间：" +d ;
+        if (d.compareTo(DateUtils.getAfterTime(3)) > 0) {
             return s;
         } else return StringUtils.changeTextColor(s, Color.RED);
     }
@@ -83,7 +84,6 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
      */
     public CharSequence convert2DefectLevel(DefectRecord item) {
         CharSequence result;
-
         if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
             result = StringUtils.changePartTextColor("[" + Config.GENERAL_LEVEL + "]" + item.description, Color.parseColor("#F1B55B"), 0, 6);
         } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
