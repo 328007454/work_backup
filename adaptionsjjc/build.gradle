@@ -73,7 +73,6 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "SYNC_APP_ID", "\"${SYNC_APP_ID}\""
             buildConfigField "String", "SYNC_URL", "\"${SYNC_URL}\""
-
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
@@ -91,7 +90,6 @@ android {
                         outputFileName = fileName
                     }
                 }
-
             }
         }
         debug {

@@ -68,7 +68,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".activity.TaskRemindActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"

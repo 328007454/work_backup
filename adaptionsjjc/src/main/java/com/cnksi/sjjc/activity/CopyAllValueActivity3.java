@@ -58,64 +58,43 @@ import java.util.Map;
 public class CopyAllValueActivity3 extends BaseActivity {
     private static final int LOAD_COPY_FINISIH = 0x10;
     private static final int LOAD_COPY_MAP = LOAD_COPY_FINISIH + 1;
+    String remarkInfor = "";
     private CopyDeviceAdapter deviceAdapter;
-
     @ViewInject(R.id.tv_title)
     private TextView mTvTitle;
-
     @ViewInject(R.id.gv_container)
     private GridView deviceListView;
-
-
     @ViewInject(R.id.copy_container)
     private LinearLayout copyContainer;
-
     @ViewInject(R.id.rl_copy_all_value_container)
     private RelativeLayout deviceLayout;
-
     @ViewInject(R.id.ll_root_container)
     private LinearLayout rootLayout1;
-
     @ViewInject(R.id.btn_next)
     private Button btnNext;
-
     @ViewInject(R.id.btn_pre)
     private Button btnPre;
-
     @ViewInject(R.id.ibtn_spread)
     private ImageButton btnSpread;
-
     @ViewInject(R.id.shadom_1)
     private LinearLayout layoutShadom;
-
     @ViewInject(R.id.shadom_tip_1)
     private TextView tvTip;
-
     private List<DbModel> copyDeviceList;
-
     private List<DbModel> copyMap;
-
     private List<TreeNode> data;
-
-    private DbModel currentDevice;
     //当前报告抄录结果
-
+    private DbModel currentDevice;
     private List<CopyResult> reportResultList;
-
     private HashMap<String, CopyResult> copyResultMap;
     private boolean isSpread = true;
     private boolean isFinish;
-
     private Dialog tipsDialog;
-
     private ViewCompleteHolder tipsholder;
-
     private String currentDeviceId;
-
     private CopyViewUtil copyViewUtil;
     // 抄录看不清弹出备注对话框
     private Dialog dialog;
-    String remarkInfor = "";
     //点击下一步后时间
     private long mAfterTime;
     //点击下一步的累计次数
@@ -217,7 +196,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
                 });
 //                remarkInfor = "";
 //                ViewHolder holder = new ViewHolder(result, v, item);
-                dialog = DialogUtils.creatDialog(_this, notClearDialogBinding.getRoot(),LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                dialog = DialogUtils.creatDialog(_this, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
                 // holder.etInput.setText("看不清");
 //                holder.remark = holder.etInput.getText().toString();
@@ -266,7 +245,6 @@ public class CopyAllValueActivity3 extends BaseActivity {
             @Override
             public void run() {
                 try {
-//					List<DbModel> deviceList = CopyItemService.getInstance().findAllDeviceHasCopyValue(currentInspectionType, currentBdzId);
                     List<DbModel> deviceList = processor.findAllDeviceHasCopyValue("one", currentBdzId);
                     copyDeviceList.clear();
                     if (null != deviceList && !deviceList.isEmpty()) {
@@ -502,53 +480,6 @@ public class CopyAllValueActivity3 extends BaseActivity {
         isSpread = !isSpread;
     }
 
-    class ViewCompleteHolder {
-        @ViewInject(R.id.tv_dialog_title)
-        private TextView mTvDialogTile;
-        @ViewInject(R.id.tv_copy)
-        private TextView tvCopy;
-        @ViewInject(R.id.rg)
-        RadioGroup rg;
-        @ViewInject(R.id.rb_yes)
-        private RadioButton rbYes;
-        @ViewInject(R.id.rb_no)
-        private RadioButton rbNo;
-        @ViewInject(R.id.tv_tips)
-        private TextView tvTips;
-        @ViewInject(R.id.btn_sure)
-        private Button mBtnSure;
-        @ViewInject(R.id.btn_cancel)
-        private Button mBtnCancel;
-
-        @Event({R.id.btn_sure, R.id.btn_cancel})
-        private void OnViewClick(View view) {
-            switch (view.getId()) {
-                case R.id.btn_sure:
-                    KeyBoardUtils.closeKeybord(_this);
-                    try {
-                        String checkRs = "";
-                        checkRs = rbYes.isChecked() ? "正常" : "不正常";
-                        processor.finishTask(currentTaskId, checkRs);
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-                    isNeedUpdateTaskState = true;
-                    Intent intent = new Intent(_this, CopyValueReportActivity.class);
-                    startActivity(intent);
-                    ScreenManager.getInstance().popActivity(CopyBaseDataActivity.class);
-                    _this.finish();
-                    break;
-                case R.id.btn_cancel:
-                    KeyBoardUtils.closeKeybord(_this);
-                    tipsDialog.dismiss();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
-
     @Override
     public void finish() {
         saveAll();
@@ -596,5 +527,52 @@ public class CopyAllValueActivity3 extends BaseActivity {
         result.remark = TextUtils.isEmpty(etInput.getText().toString()) ? "" : (TextUtils.isEmpty(result.remark) ? etInput.getText().toString() + "," : etInput.getText().toString());
         dialog.dismiss();
         copyViewUtil.createCopyView(_this, data, copyContainer);
+    }
+
+    class ViewCompleteHolder {
+        @ViewInject(R.id.rg)
+        RadioGroup rg;
+        @ViewInject(R.id.tv_dialog_title)
+        private TextView mTvDialogTile;
+        @ViewInject(R.id.tv_copy)
+        private TextView tvCopy;
+        @ViewInject(R.id.rb_yes)
+        private RadioButton rbYes;
+        @ViewInject(R.id.rb_no)
+        private RadioButton rbNo;
+        @ViewInject(R.id.tv_tips)
+        private TextView tvTips;
+        @ViewInject(R.id.btn_sure)
+        private Button mBtnSure;
+        @ViewInject(R.id.btn_cancel)
+        private Button mBtnCancel;
+
+        @Event({R.id.btn_sure, R.id.btn_cancel})
+        private void OnViewClick(View view) {
+            switch (view.getId()) {
+                case R.id.btn_sure:
+                    KeyBoardUtils.closeKeybord(_this);
+                    try {
+                        String checkRs = "";
+                        checkRs = rbYes.isChecked() ? "正常" : "不正常";
+                        processor.finishTask(currentTaskId, checkRs);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
+                    isNeedUpdateTaskState = true;
+                    Intent intent = new Intent(_this, CopyValueReportActivity.class);
+                    startActivity(intent);
+                    ScreenManager.getInstance().popActivity(CopyBaseDataActivity.class);
+                    _this.finish();
+                    break;
+                case R.id.btn_cancel:
+                    KeyBoardUtils.closeKeybord(_this);
+                    tipsDialog.dismiss();
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }
