@@ -177,7 +177,6 @@ public class CopyAllValueActivity3 extends BaseActivity {
 
         data = new ArrayList<>();
         copyViewUtil = new CopyViewUtil();
-//		copyViewUtil.setKeyBordListener(this);
         copyViewUtil.setItemLongClickListener(new CopyItemLongClickListener<CopyResult>() {
             @Override
             public void onItemLongClick(View v, final CopyResult result, int position, final CopyItem item) {
@@ -194,12 +193,8 @@ public class CopyAllValueActivity3 extends BaseActivity {
                         saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item);
                     }
                 });
-//                remarkInfor = "";
-//                ViewHolder holder = new ViewHolder(result, v, item);
                 dialog = DialogUtils.creatDialog(_this, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
-                // holder.etInput.setText("看不清");
-//                holder.remark = holder.etInput.getText().toString();
                 dialog.show();
             }
         });
@@ -410,7 +405,6 @@ public class CopyAllValueActivity3 extends BaseActivity {
         switch (v.getId()) {
             case R.id.tv_right:
                 saveAll();
-//			String tip = String.format(getText(R.string.dialog_tips_finish_str) + "", CopyResultService.getInstance().getCopyResult(currentBdzId, currentReportId, CopyItemService.getInstance().getCopyType()));
                 String tip = String.format(getText(R.string.dialog_tips_finish_str) + "", processor.getCopyResult(currentBdzId));
                 showTipsDialog(rootLayout1, tip);
                 break;

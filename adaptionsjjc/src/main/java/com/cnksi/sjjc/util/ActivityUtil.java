@@ -20,7 +20,6 @@ import com.cnksi.sjjc.sync.KSyncConfig;
  */
 public class ActivityUtil {
 
-
     public static void startDeviceTourActivity(Activity activity, int id) {
         Intent intent = new Intent(activity, NewLauncherActivity.class);
         intent.putExtra("position", id == R.id.device_xunshi ? 0 : 1);

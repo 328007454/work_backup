@@ -258,6 +258,10 @@ public class CustomApplication extends CoreApplication {
         return isSuccess;
     }
 
+    /**
+     * 从SDcard的配置文件中载入DbVersion  为了避免每次都要同步表结构的问题。
+     * @return
+     */
     private static int getDbVersion() {
         Properties properties = new Properties();
         try {
@@ -269,6 +273,10 @@ public class CustomApplication extends CoreApplication {
         }
     }
 
+    /**
+     * 将数据库版本保存到SDCARD上
+     * @param dbVersion
+     */
     public static void saveDbVersion(int dbVersion) {
         Properties properties = new Properties();
         try {
