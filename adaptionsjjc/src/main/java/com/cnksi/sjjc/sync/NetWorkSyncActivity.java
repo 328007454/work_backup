@@ -28,6 +28,10 @@ import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
 import com.cnksi.sjjc.service.DepartmentService;
 
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -206,6 +210,15 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
             public void run() {
                 if (!KSyncConfig.getInstance().isHaveDept()) {
                     ksync.download("city", "users", "department", "pad_apk_version");
+                    DbModel model = null;
+                    try {
+                        model = CustomApplication.getDbManager().findDbModelFirst(new SqlInfo("select short_name_pinyin from city"));
+                        String firstDownApk = "admin/" + model.getString("short_name_pinyin") + "/apk";
+                        ksync.downFile(firstDownApk);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
+
                 } else {
                     ksync.download();
                 }
@@ -383,7 +396,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
                     CustomApplication.saveDbVersion(ksync.getKnConfig().getDatabase().getVersion());
                     setButtonStyle(true);
-                    showDialogTips();
+                    if ((KSyncConfig.getInstance().isHaveDept())) {
+                        showDialogTips();
+                    }
                     break;
                 case KSync.SYNC_PING:
                     setNetwork(msg);

@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -64,7 +65,7 @@ import java.util.List;
  * 登录界面
  */
 public class LoginActivity extends BaseActivity implements GrantPermissionListener {
-    
+
     private static final String TAG = "LoginActivity";
     public static final int SAME_ACCOUNT = 0x01111;//添加账号相同
     public static final int NO_SUCH_USER = SAME_ACCOUNT + 1;//没有对应账号
@@ -149,6 +150,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 PackageManager manager = null;
                 try {
                     //获取巡视app安装版本号
+                    manager = _this.getPackageManager();
                     infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
                     remoteSjjcAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
                     String apkPath = "";
