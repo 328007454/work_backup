@@ -34,11 +34,6 @@ public class LocationUtil {
         return instance;
     }
 
-    public void setLocationUtilNull(){
-        if (instance!=null){
-            instance =null;
-        }
-    }
 
     private boolean isPrepare = false;
     private final Set<LocationHelper> helpers = new HashSet<>();
