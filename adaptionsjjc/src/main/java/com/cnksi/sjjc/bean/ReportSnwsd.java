@@ -15,6 +15,21 @@ public class ReportSnwsd extends BaseModel{
 	@Column(name = ID, isId = true)
 	public String id = UUID.randomUUID().toString();
 	
+	/**小室*/
+	public static final String GROUP_ID = "group_id";
+	@Column(name = GROUP_ID)
+	public String groupID;
+
+	/**报告id*/
+	public static final String GROUP_NAME = "group_name";
+	@Column(name = GROUP_NAME)
+	public String groupName;
+
+	/**是否是来自于report*/
+	public static final String IS_REPORT = "is_report";
+	@Column(name = IS_REPORT)
+	public String isReport;
+
 	/**报告id*/
 	public static final String REPORT_ID = "report_id";
 	@Column(name = REPORT_ID)

@@ -130,9 +130,9 @@ public class LocationUtil {
                     periodSuccess = true;
                     removeListener(this);
                 } else if (isKeep) {
-                    if (DistanceUtil.isEquals(lastLocation, bdLocation)) {
-                        return;//如果是持续模式则当两次返回位置不一样时再调用回调请求。
-                    }
+//                    if (DistanceUtil.isEquals(lastLocation, bdLocation)) {
+//                        return;//如果是持续模式则当两次返回位置不一样时再调用回调请求。
+//                    }
                 } else {
                     stop();
                 }
