@@ -286,7 +286,6 @@ public class LocationUtil {
                     locationClient.stop();
                 }
             }
-
             @Override
             public void onConnectHotSpotMessage(String s, int i) {
 
@@ -299,7 +298,5 @@ public class LocationUtil {
                 locationClient.stop();
             }
         }, 300 * 1000);
-
-
     }
 }
