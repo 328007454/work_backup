@@ -38,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <com.cnksi.sjjc.View.CustomRadioButton
+                <com.cnksi.sjjc.view.CustomRadioButton
                     android:id="@+id/status_yes"
                     style="@style/RadioButtonBaseStyle"
                     android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                     android:text="正常"
                     android:textSize="@dimen/tv_text_size"/>
 
-                <com.cnksi.sjjc.View.CustomRadioButton
+                <com.cnksi.sjjc.view.CustomRadioButton
                     android:id="@+id/status_no"
                     style="@style/RadioButtonBaseStyle"
                     android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"/>
 
-            <com.cnksi.sjjc.View.EditTextNoEmoj
+            <com.cnksi.sjjc.view.EditTextNoEmoj
                 android:id="@+id/status_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

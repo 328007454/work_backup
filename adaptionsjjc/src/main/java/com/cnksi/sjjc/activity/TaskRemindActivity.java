@@ -10,8 +10,6 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
@@ -41,9 +39,6 @@ public class TaskRemindActivity extends BaseActivity {
 
     @ViewInject(R.id.viewPager)
     private ViewPager mTaskViewPager;
-
-    @ViewInject(R.id.add_task)
-    private Button mBtAddTask;
 
 
     private FragmentPagerAdapter fragmentPagerAdapter;
@@ -89,7 +84,7 @@ public class TaskRemindActivity extends BaseActivity {
 
     private void initFragmentList() {
         if (mFragmentList == null) {
-            mFragmentList = new ArrayList<Fragment>();
+            mFragmentList = new ArrayList<>();
         }
         String[] functionModelArray = {Config.UNFINISH_MODEL, Config.FINISHED_MODEL, Config.ALL_TASK_MODEL, Config.OVER_DUE_MODEL};
         for (int i = 0; i < titleArray.length; i++) {
@@ -131,7 +126,7 @@ public class TaskRemindActivity extends BaseActivity {
         mTaskViewPager.setOffscreenPageLimit(4);
     }
 
-    @Event(value = {R.id.btn_back, R.id.btn_right,R.id.add_task})
+    @Event(value = {R.id.btn_back, R.id.btn_right, R.id.add_task})
     private void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:

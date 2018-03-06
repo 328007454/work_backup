@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cnksi.sjjc.View.LinearLayoutIntercept xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<com.cnksi.sjjc.view.LinearLayoutIntercept xmlns:android="http://schemas.android.com/apk/res/android"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
 
     <Button
         android:id="@+id/battery"
@@ -15,4 +15,4 @@
         android:text="第一组蓄电池"
         android:textColor="@color/battery_tab_color"
         android:textSize="44px" />
-</com.cnksi.sjjc.View.LinearLayoutIntercept>
+</com.cnksi.sjjc.view.LinearLayoutIntercept>

@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.cnksi.sjjc.View.LinearLayoutIntercept
+        <com.cnksi.sjjc.view.LinearLayoutIntercept
             android:id="@+id/bdz_contanier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,9 +45,9 @@
                 android:scaleType="centerInside"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ic_arrow_right" />
-        </com.cnksi.sjjc.View.LinearLayoutIntercept>
+        </com.cnksi.sjjc.view.LinearLayoutIntercept>
 
-        <com.cnksi.sjjc.View.LinearLayoutIntercept
+        <com.cnksi.sjjc.view.LinearLayoutIntercept
             android:id="@+id/type_ll_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,10 +77,10 @@
                 android:scaleType="centerInside"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_arrow_right" />
-        </com.cnksi.sjjc.View.LinearLayoutIntercept>
+        </com.cnksi.sjjc.view.LinearLayoutIntercept>
         <!-- 压力测试选择框-->
 
-        <com.cnksi.sjjc.View.LinearLayoutIntercept
+        <com.cnksi.sjjc.view.LinearLayoutIntercept
             android:id="@+id/type_jiance_ll_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                 android:scaleType="centerInside"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ic_arrow_right" />
-        </com.cnksi.sjjc.View.LinearLayoutIntercept>
+        </com.cnksi.sjjc.view.LinearLayoutIntercept>
         <!--测试分类 -->
         <LinearLayout
             android:id="@+id/ll_ceshi_container"
@@ -143,7 +143,7 @@
                 android:gravity="center_vertical|right"
                 android:orientation="horizontal">
 
-                <com.cnksi.sjjc.View.CustomRadioButton
+                <com.cnksi.sjjc.view.CustomRadioButton
                     android:id="@+id/radio_puce"
                     style="@style/RadioButtonBaseStyle"
                     android:layout_width="0dp"
@@ -161,7 +161,7 @@
                     android:textSize="@dimen/global_text_small_size_px"
                      />
 
-                <com.cnksi.sjjc.View.CustomRadioButton
+                <com.cnksi.sjjc.view.CustomRadioButton
                     android:id="@+id/radio_chouce"
                     style="@style/RadioButtonBaseStyle"
                     android:layout_width="0dp"
@@ -209,7 +209,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.cnksi.sjjc.View.CustomRadioButton
+                <com.cnksi.sjjc.view.CustomRadioButton
                     android:id="@+id/neizu_yes"
                     style="@style/RadioButtonBaseStyle"
                     android:layout_width="0dp"
@@ -226,7 +226,7 @@
                     android:textSize="@dimen/tv_text_size"
                     app:drawableSize="48px" />
 
-                <com.cnksi.sjjc.View.CustomRadioButton
+                <com.cnksi.sjjc.view.CustomRadioButton
                     android:id="@+id/neizu_no"
                     style="@style/RadioButtonBaseStyle"
                     android:layout_width="0dp"

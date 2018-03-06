@@ -106,7 +106,7 @@ android {
             jniLibs.srcDirs = ['libs']
             java.srcDirs = ['src/main/java']
             aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
-            res.srcDirs = ['src/main/res', 'res/gztz', 'src/main/res/gztz']
+            res.srcDirs = ['src/main/res', 'src/main/res-gztz']
         }
     }
 //打开泛型和过时API编译报警�?相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391

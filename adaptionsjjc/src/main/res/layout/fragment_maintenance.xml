@@ -310,7 +310,7 @@
 
             </LinearLayout>
 
-            <com.cnksi.sjjc.View.RoundedRectProgressBar
+            <com.cnksi.sjjc.view.RoundedRectProgressBar
                 android:id="@+id/progress"
                 style="@android:style/Widget.Holo.HorizontalScrollView"
                 android:layout_width="match_parent"
@@ -354,7 +354,7 @@
                     android:layout_height="2px"
                     android:background="@color/new_launcher_line_bg"/>
 
-                <com.cnksi.sjjc.View.MyScrollVListView
+                <com.cnksi.sjjc.view.MyScrollVListView
                     android:id="@+id/list_maintenance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -394,7 +394,7 @@
                     android:layout_height="2px"
                     android:background="@color/new_launcher_line_bg"/>
 
-                <com.cnksi.sjjc.View.MyScrollVListView
+                <com.cnksi.sjjc.view.MyScrollVListView
                     android:id="@+id/list_switchover"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

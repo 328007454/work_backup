@@ -82,6 +82,7 @@
         <item>蓄电池检测记录#SBJC_10</item>
         <item>蓄电池内阻检测记录#SBJC_11</item>
         <item>避雷器在线监测记录#SBJC_08</item>
+        <item>开关故障跳闸记录#SBJC_14</item>
     </string-array>
     <string-array name="DQSY">
         <item>事故照明切换试验</item>

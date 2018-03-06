@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.ChartDialog;
+import com.cnksi.sjjc.view.ChartDialog;
 import com.cnksi.sjjc.activity.CopyAllValueActivity3;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Device;

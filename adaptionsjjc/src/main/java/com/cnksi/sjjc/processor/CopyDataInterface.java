@@ -8,7 +8,7 @@ import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.ChartDialog;
+import com.cnksi.sjjc.view.ChartDialog;
 import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Device;

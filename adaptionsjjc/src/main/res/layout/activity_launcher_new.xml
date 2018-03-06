@@ -26,7 +26,7 @@
             android:layout_height="1px"
             android:background="#e0e0e0" />
 
-        <com.cnksi.sjjc.View.NoScrollViewPager
+        <com.cnksi.sjjc.view.NoScrollViewPager
             android:id="@+id/fragmen_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

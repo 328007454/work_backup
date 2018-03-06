@@ -51,7 +51,7 @@
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/new_global_text_size" />
 
-            <com.cnksi.sjjc.View.WeatherView1
+            <com.cnksi.sjjc.view.WeatherView1
                 android:id="@+id/weatherView1"
                 android:layout_width="match_parent"
                 android:layout_height="140px"

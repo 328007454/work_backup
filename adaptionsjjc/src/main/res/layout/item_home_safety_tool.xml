@@ -17,7 +17,7 @@
             android:textSize="40px"
             app:layout_auto_basewidth="height" />
 
-        <com.cnksi.sjjc.View.UnderLineLinearLayout
+        <com.cnksi.sjjc.view.UnderLineLinearLayout
             android:id="@+id/ll_root"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -59,6 +59,6 @@
                     android:textColor="#c0bab9"
                     android:textSize="36px" />
             </RelativeLayout>
-        </com.cnksi.sjjc.View.UnderLineLinearLayout>
+        </com.cnksi.sjjc.view.UnderLineLinearLayout>
     </LinearLayout>
 </layout>

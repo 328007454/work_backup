@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="layout_gztz_checkbox">
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingLeft">@dimen/_20px</item>
+        <item name="android:button">@drawable/checkbox_green_button_selector</item>
+        <item name="android:textColor">@color/radio_button_text_selector</item>
+        <item name="android:textSize">@dimen/tv_text_size</item>
+    </style>
+
+    <style name="layout_gztz_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">138px</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/global_text_color</item>
+        <item name="android:paddingStart">@dimen/_30px</item>
+        <item name="android:textSize">@dimen/tv_text_size</item>
+    </style>
+
+    <style name="layout_gztz_radiogroup">
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">138px</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">60px</item>
+    </style>
+
+    <style name="layout_gztz_input">
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">138px</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:drawablePadding">30px</item>
+        <item name="android:paddingEnd">@dimen/_30px</item>
+        <item name="android:textColor">@color/green_color</item>
+        <item name="android:textSize">@dimen/tv_text_size</item>
+        <item name="android:gravity">center_vertical|right</item>
+    </style>
+
+    <style name="layout_gztz_num_input">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">90px</item>
+        <item name="android:background">@drawable/add_copy_item_select_background</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:textColor">@color/green_color</item>
+        <item name="android:textSize">@dimen/tv_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:hint">请输入</item>
+    </style>
+
+    <style name="layout_gztz_infor_input">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0px</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">120px</item>
+        <item name="android:background">@drawable/add_copy_item_select_background</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:textColor">@color/green_color</item>
+        <item name="android:textSize">@dimen/tv_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:hint">请输入</item>
+    </style>
+</resources>

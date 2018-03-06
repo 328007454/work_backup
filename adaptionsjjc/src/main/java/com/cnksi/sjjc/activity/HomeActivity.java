@@ -8,7 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.BitmapDrawable;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -28,7 +27,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.Banner;
+import com.cnksi.sjjc.view.Banner;
 import com.cnksi.sjjc.adapter.BdzAdapter;
 import com.cnksi.sjjc.adapter.DefectAdapter;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
@@ -116,7 +115,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             public void run() {
                 DeviceService.getInstance().refreshDeviceHasCopy();
                 try {
-                    long time = System.currentTimeMillis();
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
                     CustomApplication.getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");
@@ -124,8 +122,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_spic_deviceid_type on device(bdzid,spid,device_type)");
                     CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_kind on standard_special(kind)");
-//                        CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_task_inspection on task(inspection)");
-                } catch (Exception e) {
+              } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -155,8 +152,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     e.printStackTrace();
                     apkPath = Config.DOWNLOAD_APP_FOLDER;
                 }
-
-
                 if (remoteSjjcAppVersion != null && remoteXunshiAppVersion != null && !PreferencesUtils.get(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
 //TODO:
                 } else if (remoteXunshiAppVersion != null && remoteSjjcAppVersion == null && PreferencesUtils.get(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
