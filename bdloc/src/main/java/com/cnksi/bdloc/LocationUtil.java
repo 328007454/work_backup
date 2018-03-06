@@ -140,14 +140,15 @@ public class LocationUtil {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        listener.locationSuccess(bdLocation);
+                        if (listener != null) {
+                            listener.locationSuccess(bdLocation);
+                        }
                     }
                 });
                 lastLocation = bdLocation;
                 lastLocationTime = System.currentTimeMillis();
             }
         }
-
 
         @Override
         public void onConnectHotSpotMessage(String s, int i) {
@@ -220,7 +221,6 @@ public class LocationUtil {
          * 恢复暂停的定位请求。
          */
         public void resume() {
-
             if (status == Status.pause) {
                 status = Status.start;
                 addListener(this);
@@ -228,7 +228,16 @@ public class LocationUtil {
                 sleepHelpers.remove(this);
                 if (period > MIN_INTERVAL_TIME) handler.postDelayed(PERIOD_TASK, period);
             }
+        }
 
+        public void destory() {
+            this.listener = null;
+            if (!helpers.isEmpty() && helpers.contains(this)) {
+                helpers.remove(this);
+            }
+            if (!sleepHelpers.isEmpty() && sleepHelpers.contains(this)) {
+                sleepHelpers.remove(this);
+            }
         }
     }
 
@@ -250,7 +259,6 @@ public class LocationUtil {
         locationClient.unRegisterLocationListener(helper);
         helpers.remove(helper);
         if (helpers.isEmpty()) locationClient.stop();
-
     }
 
 
@@ -286,6 +294,7 @@ public class LocationUtil {
                     locationClient.stop();
                 }
             }
+
             @Override
             public void onConnectHotSpotMessage(String s, int i) {
 
