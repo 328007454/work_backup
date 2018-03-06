@@ -140,7 +140,9 @@ public class LocationUtil {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        listener.locationSuccess(bdLocation);
+                        if (listener != null) {
+                            listener.locationSuccess(bdLocation);
+                        }
                     }
                 });
                 lastLocation = bdLocation;
@@ -230,8 +232,12 @@ public class LocationUtil {
 
         public void destory() {
             this.listener = null;
-            helpers.remove(this);
-            sleepHelpers.remove(this);
+            if (!helpers.isEmpty() && helpers.contains(this)) {
+                helpers.remove(this);
+            }
+            if (!sleepHelpers.isEmpty() && sleepHelpers.contains(this)) {
+                sleepHelpers.remove(this);
+            }
         }
     }
 
