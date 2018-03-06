@@ -620,4 +620,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         }
         return true;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

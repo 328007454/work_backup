@@ -130,14 +130,12 @@ public class LocationUtil {
                     //标记这一个周期已经完成定位。
                     periodSuccess = true;
                     removeListener(this);
-                    return;
                 } else if (isKeep) {
 //                    if (DistanceUtil.isEquals(lastLocation, bdLocation)) {
 //                        return;//如果是持续模式则当两次返回位置不一样时再调用回调请求。
 //                    }
                 } else {
                     stop();
-                    return;
                 }
                 handler.post(new Runnable() {
                     @Override
@@ -149,7 +147,6 @@ public class LocationUtil {
                 lastLocationTime = System.currentTimeMillis();
             }
         }
-
 
         @Override
         public void onConnectHotSpotMessage(String s, int i) {
@@ -222,7 +219,6 @@ public class LocationUtil {
          * 恢复暂停的定位请求。
          */
         public void resume() {
-
             if (status == Status.pause) {
                 status = Status.start;
                 addListener(this);
@@ -230,7 +226,12 @@ public class LocationUtil {
                 sleepHelpers.remove(this);
                 if (period > MIN_INTERVAL_TIME) handler.postDelayed(PERIOD_TASK, period);
             }
+        }
 
+        public void destory() {
+            this.listener = null;
+            helpers.remove(this);
+            sleepHelpers.remove(this);
         }
     }
 
@@ -252,7 +253,6 @@ public class LocationUtil {
         locationClient.unRegisterLocationListener(helper);
         helpers.remove(helper);
         if (helpers.isEmpty()) locationClient.stop();
-
     }
 
 
@@ -288,6 +288,7 @@ public class LocationUtil {
                     locationClient.stop();
                 }
             }
+
             @Override
             public void onConnectHotSpotMessage(String s, int i) {
 
