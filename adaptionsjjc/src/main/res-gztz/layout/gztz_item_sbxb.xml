@@ -3,7 +3,7 @@
     <TextView
         android:id="@+id/txt_device_type"
         style="@style/layout_gztz_title"
-        android:text="设备相别"/>
+        android:text="*设备相别"/>
 
     <LinearLayout
         android:id="@+id/rdg_device_type"

@@ -65,12 +65,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
             tvName.setText(title);
             tvValue.setHint(attributes.getString(R.styleable.SelectGroup_select_hint_str));
         }
-        tvValue.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                show();
-            }
-        });
+        tvValue.setOnClickListener(v -> show());
     }
 
     public void setSelectOnClickListener(View.OnClickListener onClickListener) {

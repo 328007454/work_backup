@@ -9,6 +9,7 @@
     </declare-styleable>
     <declare-styleable name="TextGroup">
         <attr name="title_str"/>
+        <attr name="default_str" format="string"/>
     </declare-styleable>
 
 

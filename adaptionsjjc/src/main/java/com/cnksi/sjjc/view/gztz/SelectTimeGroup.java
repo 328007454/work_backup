@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 
 import com.cnksi.core.utils.StringUtils;
@@ -47,43 +46,28 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
             String name = attributes.getString(R.styleable.SelectTimeGroup_title_str);
             tvName.setText(name);
             String str = attributes.getString(R.styleable.SelectTimeGroup_select_hint_str);
-            str = StringUtils.BlankToDefault(str, "请选择" + name);
+            str = StringUtils.BlankToDefault(str, "请选择" );
             tvValue.setHint(str);
         }
         switch (type) {
             case 0:
-                tvValue.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DialogUtils.showDatePickerDialog((Activity) context, new DialogUtils.DialogItemClickListener() {
-                            @Override
-                            public void confirm(String result, int position) {
-                                tvValue.setText(result);
-                            }
-                        });
-                    }
-                });
-                break;
-            case 1:
-                tvValue.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        DialogUtils.showDatePickerDialog((Activity) context, true, new DialogUtils.DialogItemClickListener() {
-                            @Override
-                            public void confirm(String result, int position) {
-                                tvValue.setText(result);
-                            }
-                        });
-                    }
-                });
-                break;
-            case 2:
-                DialogUtils.showTimePickerDialog((Activity) context, false, new DialogUtils.DialogItemClickListener() {
+                tvValue.setOnClickListener(v -> DialogUtils.showDatePickerDialog((Activity) context, new DialogUtils.DialogItemClickListener() {
                     @Override
                     public void confirm(String result, int position) {
                         tvValue.setText(result);
                     }
-                });
+                }));
+                break;
+            case 1:
+                tvValue.setOnClickListener(v -> DialogUtils.showDatePickerDialog((Activity) context, true, new DialogUtils.DialogItemClickListener() {
+                    @Override
+                    public void confirm(String result, int position) {
+                        tvValue.setText(result);
+                    }
+                }));
+                break;
+            case 2:
+                DialogUtils.showTimePickerDialog((Activity) context, false, (result, position) -> tvValue.setText(result));
         }
     }
 

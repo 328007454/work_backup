@@ -39,6 +39,15 @@ public class StringUtils {
         return (str == null || str.length() == 0);
     }
 
+    public static boolean isHasOneEmpty(String... arg) {
+        for (String s : arg) {
+            if (isEmpty(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 判断是否是手机号码
      *
@@ -640,6 +649,7 @@ public class StringUtils {
         tempFloat = (float) (Math.round(tempFloat * 100)) / 100;
         return String.valueOf(tempFloat);
     }
+
     /**
      * 检查输入的是否不符合数学意义上的数字
      */
