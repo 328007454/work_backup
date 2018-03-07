@@ -319,6 +319,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden"/>
 
+        <activity
+            android:name=".activity.GZTZRecordActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden"/>
+
         <!-- batteryfinishActivity -->
 
         <activity

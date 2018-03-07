@@ -71,7 +71,7 @@ public class UserService extends BaseService<Users> {
         if (u.length() > 0) {
             u = u.substring(0, u.length() - 1);
         }
-        String sql = "SELECT u.username,dp.name,u.dept_id FROM users u LEFT JOIN department dp on u.dept_id=dp.dept_id where u.dlt='0' and u.dept_id in(SELECT dept_id FROM users where account IN(" + u + "))";
+        String sql = "SELECT u.account account, u.username,dp.name,u.dept_id FROM users u LEFT JOIN department dp on u.dept_id=dp.id where u.dlt='0' and u.dept_id in(SELECT dept_id FROM users where account IN(" + u + "))";
         dbModels = findDbModelAll(new SqlInfo(sql));
         return dbModels;
     }

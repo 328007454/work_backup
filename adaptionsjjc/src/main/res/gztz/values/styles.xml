@@ -65,4 +65,15 @@
         <item name="android:gravity">center</item>
         <item name="android:hint">请输入</item>
     </style>
+
+
+    <style name="style_gztz_record_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">95px</item>
+        <item name="android:background">@drawable/linearlayout_stroke</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/_30px</item>
+        <item name="android:textColor">@color/wt_green_color</item>
+        <item name="android:textSize">@dimen/new_global_text_size</item>
+    </style>
 </resources>
