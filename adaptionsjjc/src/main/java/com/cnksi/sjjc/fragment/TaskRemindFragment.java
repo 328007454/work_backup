@@ -37,7 +37,7 @@ import com.cnksi.sjjc.activity.PreventAnimalActivity;
 import com.cnksi.sjjc.activity.TaskRemindActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestReportActivity;
-import com.cnksi.sjjc.activity.gztz.GZTZRecordActivity;
+import com.cnksi.sjjc.activity.gztz.TZQKActivity;
 import com.cnksi.sjjc.activity.hwcw.NewHwcwActivity;
 import com.cnksi.sjjc.activity.hwcw.NewHwcwReportActivity;
 import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActivity;
@@ -194,7 +194,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
         switch (msg.what) {
             case LOAD_DATA:
                 if (mDataList == null) {
-                    mDataList = new ArrayList<Task>();
+                    mDataList = new ArrayList<>();
                 }
                 if (mInspectionTaskAdapter == null) {
                     mInspectionTaskAdapter = new TaskRemindAdapter(getActivity(), mDataList, R.layout.inspection_task_item_remind);
@@ -337,8 +337,8 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     case SBJC_12:
                         intent.setClass(getContext(), GetSendLetterActivity.class);
                         break;
-                    case SBJC_14:
-                        intent.setClass(getContext(), GZTZRecordActivity.class);
+                    case SBJC_KGGZTZJL:
+                        intent.setClass(getContext(), TZQKActivity.class);
                         break;
                     default:
                         CToast.showLong(mCurrentActivity, "异常的数据检测类型");

@@ -1,14 +1,17 @@
 package com.cnksi.sjjc.view.gztz;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
-import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 
 /**
@@ -21,6 +24,7 @@ import com.cnksi.sjjc.view.UnderLineLinearLayout;
 public class SelectTimeGroup extends UnderLineLinearLayout {
 
     private TextView tvName, tvValue;
+
     public SelectTimeGroup(Context context) {
         this(context, null);
     }
@@ -29,7 +33,7 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
         this(context, attrs, 0);
     }
 
-    public SelectTimeGroup(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SelectTimeGroup(final Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(HORIZONTAL);
         setDrawUnderLine(true);
@@ -37,10 +41,50 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
         tvValue = (TextView) findViewById(R.id.tv_value);
         tvName = (TextView) findViewById(R.id.tv_name);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.SelectTimeGroup);
+        int type = 0;
         if (attributes != null) {
-            tvName.setText(attributes.getString(R.styleable.SelectTimeGroup_title_str));
-            tvValue.setHint(attributes.getString(R.styleable.SelectTimeGroup_select_hint_str));
+            type = attributes.getInt(R.styleable.SelectTimeGroup_select_type, 0);
+            String name = attributes.getString(R.styleable.SelectTimeGroup_title_str);
+            tvName.setText(name);
+            String str = attributes.getString(R.styleable.SelectTimeGroup_select_hint_str);
+            str = StringUtils.BlankToDefault(str, "请选择" + name);
+            tvValue.setHint(str);
         }
-        CustomerDialog.showDatePickerDialog()
+        switch (type) {
+            case 0:
+                tvValue.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DialogUtils.showDatePickerDialog((Activity) context, new DialogUtils.DialogItemClickListener() {
+                            @Override
+                            public void confirm(String result, int position) {
+                                tvValue.setText(result);
+                            }
+                        });
+                    }
+                });
+                break;
+            case 1:
+                tvValue.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DialogUtils.showDatePickerDialog((Activity) context, true, new DialogUtils.DialogItemClickListener() {
+                            @Override
+                            public void confirm(String result, int position) {
+                                tvValue.setText(result);
+                            }
+                        });
+                    }
+                });
+                break;
+            case 2:
+                DialogUtils.showTimePickerDialog((Activity) context, false, new DialogUtils.DialogItemClickListener() {
+                    @Override
+                    public void confirm(String result, int position) {
+                        tvValue.setText(result);
+                    }
+                });
+        }
+
     }
 }

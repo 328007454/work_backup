@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cnksi.sjjc.view.gztz.SelectGroup
+                android:id="@+id/gzdydj"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:select_hint_str="请选择"
+                app:title_str="重合闸动作情况"
+                />
+
+            <com.cnksi.sjjc.view.UnderLineLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:drawUnderLine="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:text="各项跳闸次数："
+                    />
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/layout_gztz_title"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="3px"
+                        android:text="A"
+                        />
+
+                    <com.cnksi.sjjc.view.ContainsEmojiEditText
+                        android:id="@+id/gxtzcs_a"
+                        style="@style/layout_gztz_num_input"
+                        android:layout_marginLeft="10px"
+                        android:text=""
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/layout_gztz_title"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="3px"
+                        android:text="B"
+                        />
+
+                    <com.cnksi.sjjc.view.ContainsEmojiEditText
+                        android:id="@+id/gxtzcs_b"
+                        style="@style/layout_gztz_num_input"
+                        android:layout_marginLeft="10px"
+                        android:text=""
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/layout_gztz_title"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="3px"
+                        android:text="C"
+                        />
+
+                    <com.cnksi.sjjc.view.ContainsEmojiEditText
+                        android:id="@+id/gxtzcs_c"
+                        style="@style/layout_gztz_num_input"
+                        android:layout_marginLeft="10px"
+                        android:text=""
+                        />
+                </LinearLayout>
+            </com.cnksi.sjjc.view.UnderLineLinearLayout>
+
+            <com.cnksi.sjjc.view.UnderLineLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:drawUnderLine="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:text="累积跳闸次数："
+                    />
+
+                <TextView
+                    android:id="@+id/ljtzcs_a"
+                    style="@style/layout_gztz_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="3px"
+                    android:layout_weight="1"
+                    android:text="A"
+                    />
+
+                <TextView
+                    android:id="@+id/ljtzcs_b"
+                    style="@style/layout_gztz_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="3px"
+                    android:layout_weight="1"
+                    android:text="B"
+                    />
+
+                <TextView
+                    android:id="@+id/ljtzcs_c"
+                    style="@style/layout_gztz_title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="3px"
+                    android:layout_weight="1"
+                    android:text="C"
+                    />
+            </com.cnksi.sjjc.view.UnderLineLinearLayout>
+
+            <com.cnksi.sjjc.view.UnderLineLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:drawUnderLine="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:text="故障电流（KA）："
+                    />
+            </com.cnksi.sjjc.view.UnderLineLinearLayout>
+
+            <com.cnksi.sjjc.view.UnderLineLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:drawUnderLine="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:text="二次故障电流（A）："
+                    />
+
+                <com.cnksi.sjjc.view.ContainsEmojiEditText
+                    android:id="@+id/ecgzdl"
+                    style="@style/layout_gztz_num_input"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_weight="-1"
+                    android:text=""
+                    />
+            </com.cnksi.sjjc.view.UnderLineLinearLayout>
+
+            <com.cnksi.sjjc.view.gztz.SelectTimeGroup
+                android:id="@+id/hfsdsj"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:select_type="ymdhm"
+                app:title_str="恢复送电时间"/>
+
+            <com.cnksi.sjjc.view.gztz.SelectTimeGroup
+                android:id="@+id/zhycdxsj"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:select_type="ymdhm"
+                app:title_str="最后一次大修时间"/>
+
+            <com.cnksi.sjjc.view.gztz.TextGroup
+                android:id="@+id/ldkgqk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_str="联动开关情况"/>
+
+            <com.cnksi.sjjc.view.gztz.SingleRadioGroup
+                android:id="@+id/yqtbhph"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:title_str="与其他保护配合"/>
+
+            <com.cnksi.sjjc.view.gztz.SingleRadioGroup
+                android:id="@+id/ylbzzph"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:title_str="与滤波、子站配合"/>
+
+            <com.cnksi.sjjc.view.gztz.SingleRadioGroup
+                android:id="@+id/yjkxtph"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:title_str="与监控系统配合"/>
+
+            <com.cnksi.sjjc.view.UnderLineLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:drawUnderLine="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:text="附件（现场照片）"
+                    />
+            </com.cnksi.sjjc.view.UnderLineLinearLayout>
+
+            <com.cnksi.sjjc.view.gztz.TextGroup
+                android:id="@+id/et_bz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_str="备注"/>
+
+            <com.cnksi.sjjc.view.gztz.SelectGroup
+                android:id="@+id/gzlbqmc"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:title_str="故障滤波器名称"/>
+
+            <com.cnksi.sjjc.view.gztz.TextGroup
+                android:id="@+id/gzlbqfx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_str="故障滤波器分析"/>
+
+            <com.cnksi.sjjc.view.gztz.TextGroup
+                android:id="@+id/gzlbqcj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_str="故障滤波器测距"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:orientation="horizontal"
+                android:padding="20px">
+
+                <Button
+                    android:id="@+id/btn_pre"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/global_padding_half_left_right"
+                    android:layout_weight="1"
+                    android:background="@drawable/red_button_background_selector"
+                    android:gravity="center"
+                    android:text="上一步"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/tv_text_size"/>
+
+                <Button
+                    android:id="@+id/btn_next"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20px"
+                    android:layout_weight="1"
+                    android:background="@drawable/grass_green_button_background_selector"
+                    android:gravity="center"
+                    android:text="确认，下一步"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/tv_text_size"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

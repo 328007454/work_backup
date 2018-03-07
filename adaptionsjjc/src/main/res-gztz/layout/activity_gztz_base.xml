@@ -44,7 +44,6 @@
                 <TextView
                     android:id="@+id/txt_device_type"
                     style="@style/layout_gztz_title"
-                    android:layout_marginTop="3px"
                     android:text="设备相别"/>
 
                 <LinearLayout
@@ -104,13 +103,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="138px"
                 app:select_hint_str="请选择故障发生时间"
+                app:select_type="ymdhm"
                 app:title_str="故障发生时间"/>
 
             <com.cnksi.sjjc.view.gztz.SelectGroup
                 android:id="@+id/gzdydj"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:select_hint_str="请选故障电压等级"
+                app:select_hint_str="请选择故障电压等级"
                 app:title_str="故障电压等级"
                 />
 

@@ -4,22 +4,28 @@
     <attr name="title_str" format="string"/>
     <attr name="select_hint_str" format="string"/>
     <declare-styleable name="SingleRadioGroup">
-        <attr name="select_str"></attr>
-        <attr name="title_str" ></attr>
+        <attr name="select_str"/>
+        <attr name="title_str"/>
     </declare-styleable>
     <declare-styleable name="TextGroup">
-        <attr name="title_str"></attr>
+        <attr name="title_str"/>
     </declare-styleable>
 
 
     <declare-styleable name="SelectGroup">
-        <attr name="title_str" ></attr>
-        <attr name="select_hint_str" />
+        <attr name="title_str"/>
+        <attr name="select_hint_str"/>
     </declare-styleable>
 
 
     <declare-styleable name="SelectTimeGroup">
-        <attr name="title_str" />
-        <attr name="select_hint_str" />
+        <attr name="title_str"/>
+        <attr name="select_hint_str"/>
+        <attr name="select_type">
+            <enum name="ymd" value="0"/>
+            <enum name="ymdhm" value="1"/>
+            <enum name="hms" value="2"/>
+            <enum name="hmsS" value="3"/>
+        </attr>
     </declare-styleable>
 </resources>

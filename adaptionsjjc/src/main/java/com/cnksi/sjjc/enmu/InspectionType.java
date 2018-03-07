@@ -90,7 +90,7 @@ public enum InspectionType {
     SBJC_11("蓄电池内阻检测记录"),
     SBJC_12("收发信机测试"),
     SBJC_13("设备测温"),
-    SBJC_14("开关故障跳闸"),
+    SBJC_KGGZTZJL("开关故障跳闸"),
     JYHYS("精益化验收"),
     JYHPJ("精益化评价"),
     TJWT("教育培训");

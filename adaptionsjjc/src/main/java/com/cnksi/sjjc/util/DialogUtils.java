@@ -15,13 +15,16 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cnksi.core.adapter.ViewHolder;
 import com.cnksi.core.utils.DisplayUtil;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.view.datepicker.NumericWheelAdapter;
 import com.cnksi.core.view.datepicker.WheelMain;
+import com.cnksi.core.view.datepicker.WheelView;
 import com.cnksi.sjjc.R;
 
 import org.xutils.view.annotation.Event;
@@ -328,6 +331,108 @@ public class DialogUtils {
     }
 
 
+    /**
+     * 选时间
+     *
+     * @param context
+     * @param dialogClickListener
+     * @return
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static Dialog showTimePickerDialog(Activity context, final boolean hasMills, final DialogItemClickListener dialogClickListener) {
+        if (context != null && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN || !context.isDestroyed())) {
+            View view = LayoutInflater.from(context).inflate(R.layout.time_picker_layout, null, false);
+            Calendar calendar = Calendar.getInstance();
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int min = calendar.get(Calendar.MINUTE);
+            final WheelView wv_hours = (WheelView) view.findViewById(com.cnksi.core.R.id.hour);
+            final WheelView wv_mins = (WheelView) view.findViewById(com.cnksi.core.R.id.min);
+            final WheelView wv_second = (WheelView) view.findViewById(com.cnksi.core.R.id.second);
+            final EditText wm = (EditText) view.findViewById(com.cnksi.core.R.id.et_mills);
+            if (!hasMills)
+                view.findViewById(com.cnksi.core.R.id.ll_mills).setVisibility(View.GONE);
+            wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
+            wv_hours.setCyclic(true);// 可循环滚动
+            wv_hours.setLabel("时");// 添加文字
+            wv_hours.setCurrentItem(hour);
+
+            wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
+            wv_mins.setCyclic(true);// 可循环滚动
+            wv_mins.setLabel("分");// 添加文字
+            wv_mins.setCurrentItem(min);
+
+            wv_second.setAdapter(new NumericWheelAdapter(0, 59));
+            wv_second.setCyclic(true);// 可循环滚动
+            wv_second.setLabel("秒");// 添加文字
+            wv_second.setCurrentItem(min);
+            wm.setText("000");
+            final Dialog datePickerDialog = new Dialog(context, R.style.DialogStyle);
+            View container = LayoutInflater.from(context).inflate(R.layout.date_picker_layout_dialog, new ViewGroup(context) {
+                @Override
+                protected void onLayout(boolean changed, int l, int t, int r, int b) {
+
+                }
+            }, false);
+            LinearLayout mLLDateContainer = (LinearLayout) view.findViewById(R.id.ll_date_container);
+            mLLDateContainer.addView(view);
+
+            view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    datePickerDialog.dismiss();
+                    String mimls = com.cnksi.core.utils.StringUtils.BlankToDefault(wm.getText().toString(), "0");
+                    String rs = String.format("%02d", wv_hours.getCurrentItem()) + ":" + String.format("%02d", wv_mins.getCurrentItem()) + ":" + String.format("%02d", wv_second.getCurrentItem());
+                    if (hasMills)
+                        rs = rs + " " + String.format("%03d", Integer.parseInt(mimls));
+                    dialogClickListener.confirm(rs, 0);
+                }
+            });
+            view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    datePickerDialog.dismiss();
+                }
+            });
+            // 设置对话框布局
+            datePickerDialog.setContentView(container);
+
+            Window mWindow = datePickerDialog.getWindow();
+            WindowManager.LayoutParams lp = mWindow.getAttributes();
+            lp.width = ScreenUtils.getScreenWidth(context);
+            mWindow.setGravity(Gravity.BOTTOM);
+            // 添加动画
+            mWindow.setWindowAnimations(R.style.DialogAnim);
+            mWindow.setAttributes(lp);
+            // 点击对话框外部关闭对话框
+            datePickerDialog.setCanceledOnTouchOutside(true);
+            // 显示对话框
+            datePickerDialog.show();
+
+            return datePickerDialog;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @author yj
+     * 通过databing来生成Dialog
+     * 2016/8/10 11:40
+     */
+    public static Dialog creatDialog(Context context, View view, int width, int height) {
+        Dialog dialog = new Dialog(context, R.style.DialogStyle);
+        dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(true);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();
+        windowParams.width = width;
+        windowParams.height = height;
+        dialogWindow.setAttributes(windowParams);
+
+        return dialog;
+    }
+
     public interface DialogItemClickListener {
         void confirm(String result, int position);
     }
@@ -362,24 +467,6 @@ public class DialogUtils {
                     break;
             }
         }
-    }
-
-    /**
-     * @author yj
-     * 通过databing来生成Dialog
-     * 2016/8/10 11:40
-     */
-    public static Dialog creatDialog(Context context, View view, int width, int height) {
-        Dialog dialog = new Dialog(context, R.style.DialogStyle);
-        dialog.setContentView(view);
-        dialog.setCanceledOnTouchOutside(true);
-        Window dialogWindow = dialog.getWindow();
-        WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();
-        windowParams.width = width;
-        windowParams.height = height;
-        dialogWindow.setAttributes(windowParams);
-
-        return dialog;
     }
 
 }

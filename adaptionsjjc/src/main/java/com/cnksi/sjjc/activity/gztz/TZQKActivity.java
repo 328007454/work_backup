@@ -21,7 +21,7 @@ import org.xutils.db.table.DbModel;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class GZTZRecordActivity extends BaseActivity {
+public class TZQKActivity extends BaseActivity {
     ActivityGztzBaseBinding binding;
 
     @Override
@@ -44,7 +44,23 @@ public class GZTZRecordActivity extends BaseActivity {
                 startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
             }
         });
-        binding.gzfssj
+        binding.gzdydj.setType("dydj");
+        binding.gzlx.setType("gzlx");
+        binding.gzsdtq.setType("gzsdtq");
+        binding.gzlb.setType("gzlb");
+        binding.tyfw.setType("gztyfw");
+        binding.btnSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(_this, BHDZQKActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    public void save() {
+
     }
 
     @Override
