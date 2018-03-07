@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.cnksi.sjjc.View.OverrideScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cnksi.sjjc.view.OverrideScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                                         xmlns:app="http://schemas.android.com/apk/res-auto"
                                         xmlns:tools="http://schemas.android.com/tools"
                                         android:layout_width="wrap_content"
@@ -697,4 +697,4 @@
         </RelativeLayout>
 
     </LinearLayout>
-</com.cnksi.sjjc.View.OverrideScrollView>
+</com.cnksi.sjjc.view.OverrideScrollView>

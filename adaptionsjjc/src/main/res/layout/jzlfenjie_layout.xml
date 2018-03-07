@@ -183,7 +183,8 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.cnksi.sjjc.View.DotView style="@style/DashStyle"
+    <com.cnksi.sjjc.view.DotView
+        style="@style/DashStyle"
         android:id="@+id/line_above_result"/>
 
     <TextView
@@ -255,7 +256,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.cnksi.sjjc.View.DotView style="@style/DashStyle" />
+    <com.cnksi.sjjc.view.DotView style="@style/DashStyle" />
 
     <ListView
         android:id="@+id/lv_report_content"

@@ -38,7 +38,7 @@
             android:textColor="@color/global_text_color"
             android:textSize="@dimen/tv_text_size" />
 
-        <com.cnksi.sjjc.View.CustomRadioButton
+        <com.cnksi.sjjc.view.CustomRadioButton
             android:id="@+id/rb_yes"
             style="@style/RadioButtonBaseStyle"
             android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
             app:drawableLeft="@drawable/radio_button_selector"
             app:drawableSize="48px" />
 
-        <com.cnksi.sjjc.View.CustomRadioButton
+        <com.cnksi.sjjc.view.CustomRadioButton
             android:id="@+id/rb_no"
             style="@style/RadioButtonBaseStyle"
             android:layout_width="wrap_content"

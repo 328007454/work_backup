@@ -170,7 +170,7 @@ public class WheelMain {
         if (!hasSelectTime)
             sb.append((wv_year.getCurrentItem() + START_YEAR)).append("-").append(String.format("%02d", wv_month.getCurrentItem() + 1)).append("-").append(String.format("%02d", wv_day.getCurrentItem() + 1));
         else
-            sb.append((wv_year.getCurrentItem() + START_YEAR)).append("-").append(String.format("%02d", wv_month.getCurrentItem() + 1)).append("-").append(String.format("%02d", wv_day.getCurrentItem() + 1)).append(" ").append(String.format("%02d", wv_hours.getCurrentItem())).append(":").append(String.format("%02d", wv_mins.getCurrentItem())).append(":00");
+            sb.append((wv_year.getCurrentItem() + START_YEAR)).append("-").append(String.format("%02d", wv_month.getCurrentItem() + 1)).append("-").append(String.format("%02d", wv_day.getCurrentItem() + 1)).append(" ").append(String.format("%02d", wv_hours.getCurrentItem())).append(":").append(String.format("%02d", wv_mins.getCurrentItem()));
         return sb.toString();
     }
 }

@@ -90,6 +90,7 @@ public enum InspectionType {
     SBJC_11("蓄电池内阻检测记录"),
     SBJC_12("收发信机测试"),
     SBJC_13("设备测温"),
+    SBJC_KGGZTZJL("开关故障跳闸"),
     JYHYS("精益化验收"),
     JYHPJ("精益化评价"),
     TJWT("教育培训");
@@ -112,65 +113,4 @@ public enum InspectionType {
     }
 
 
-    public static InspectionType getForValue(String value) {
-//        if (InspectionType.SBJC_01.value.equals(value)) {
-//            return InspectionType.SBJC_01;
-//        } else
-        if (InspectionType.SBJC_02.value.equals(value)) {
-            return InspectionType.SBJC_02;
-        } else if (InspectionType.SBJC_03.value.equals(value)) {
-            return InspectionType.SBJC_03;
-        } else if (InspectionType.SBJC_04.value.equals(value)) {
-            return InspectionType.SBJC_04;
-        } else if (InspectionType.SBJC_05.value.equals(value)) {
-            return InspectionType.SBJC_05;
-        } else if (InspectionType.SBJC_09.value.equals(value)) {
-            return InspectionType.SBJC_09;
-        } else if (InspectionType.SBJC_10.value.equals(value)) {
-            return InspectionType.SBJC_10;
-        } else if (InspectionType.SBJC_11.value.equals(value)) {
-            return InspectionType.SBJC_11;
-        } else if (InspectionType.SBXS.value.equals(value)) {
-            return InspectionType.SBXS;
-        } else if (InspectionType.SBJC_06.value.equals(value)) {
-            return InspectionType.SBJC_06;
-        } else if (InspectionType.SBJC_12.value.equals(value)) {
-            return InspectionType.SBJC_12;
-        } else if (InspectionType.SBJC_06_gas.value.equals(value)) {
-            return InspectionType.SBJC_06_gas;
-        } else if (InspectionType.SBJC_06_water.value.equals(value)) {
-            return InspectionType.SBJC_06_water;
-        } else if (InspectionType.SBJC_06_sf6.value.equals(value)) {
-            return InspectionType.SBJC_06_sf6;
-        } else if (InspectionType.SBJC_07.value.equals(value)) {
-            return InspectionType.SBJC_07;
-        } else if (InspectionType.SBJC_08.value.equals(value)) {
-            return InspectionType.SBJC_08;
-        } else if (InspectionType.SBXS.value.equals(value)) {
-            return InspectionType.SBXS;
-        } else if (InspectionType.GZP.value.equals(value)) {
-            return InspectionType.GZP;
-        } else if (InspectionType.SBJC.value.equals(value)) {
-            return InspectionType.SBJC;
-        } else if (InspectionType.switchover.value.equals(value)) {
-            return InspectionType.switchover;
-        } else if (InspectionType.maintenance.value.equals(value)) {
-            return InspectionType.maintenance;
-        } else if (InspectionType.exclusive.value.equals(value)) {
-            return InspectionType.exclusive;
-        } else if (InspectionType.JYHPJ.value.equals(value)) {
-            return InspectionType.JYHPJ;
-        } else if (InspectionType.JYHYS.value.equals(value)) {
-            return InspectionType.JYHYS;
-        } else if (InspectionType.TJWT.value.equals(value)) {
-            return InspectionType.TJWT;
-        } else if (InspectionType.JYHPJ.value.equals(value)) {
-            return InspectionType.TJWT;
-        } else if (InspectionType.NEWSBJC.value.equals(value)) {
-            return InspectionType.NEWSBJC;
-        } else if (InspectionType.SBJC_13.value.equals(value)) {
-            return InspectionType.SBJC_13;
-        }
-        return null;
-    }
 }

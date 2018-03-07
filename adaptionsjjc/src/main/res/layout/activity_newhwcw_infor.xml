@@ -60,7 +60,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/container_baseinfo"/>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
+                <com.cnksi.sjjc.view.EditTextNoEmoj
                     android:textColor="@color/deep_grey"
                     android:id="@+id/et_test_range"
                     android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_test_range"/>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
+                <com.cnksi.sjjc.view.EditTextNoEmoj
                     android:id="@+id/et_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_location"/>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
+                <com.cnksi.sjjc.view.EditTextNoEmoj
                     android:id="@+id/et_problem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_temp_record"/>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
+                <com.cnksi.sjjc.view.EditTextNoEmoj
                     android:id="@+id/et_mark"
                     android:layout_width="match_parent"
                     android:layout_height="138px"
@@ -218,7 +218,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_mark"/>
 
-                <com.cnksi.sjjc.View.DefineGridView
+                <com.cnksi.sjjc.view.DefineGridView
                     android:id="@+id/gv_test_manager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.cnksi.core.R;
 import com.cnksi.core.adapter.DividerItemDecoration;
-import com.cnksi.core.application.CoreApplication;
 import com.cnksi.core.okhttp.OkHttpUtils;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.CoreConfig;
@@ -44,20 +43,18 @@ public abstract class BaseCoreFragment extends Fragment {
     protected Activity mCurrentActivity = null;
     protected Bundle bundle = null;
     protected Fragment mCurrentFragment = null;
-    protected  int threadPoolSize = Runtime.getRuntime().availableProcessors();
+    protected int threadPoolSize = Runtime.getRuntime().availableProcessors();
     // 线程池
-    protected ExecutorService mExcutorService= Executors.newFixedThreadPool(threadPoolSize > 3 ? 3 : threadPoolSize);
+    protected ExecutorService mExcutorService = Executors.newFixedThreadPool(threadPoolSize > 3 ? 3 : threadPoolSize);
     /**
      * fragment管理器
      */
     protected FragmentManager mFManager = null;
     protected LayoutInflater mInflater = null;
-    private boolean injected = false;
     /**
      * 自定义Handler
      */
-    protected CustomerHanlder mHandler = null;
-
+    protected CustomHandler mHandler = new CustomHandler(this);
     /**
      * 是否可见的标志
      */
@@ -70,8 +67,8 @@ public abstract class BaseCoreFragment extends Fragment {
      * 是否是第一次加载
      */
     protected boolean isFirstLoad = true;
-
-    protected boolean isOnDetach = false;
+    protected boolean isOnDetach = true;
+    private boolean injected = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,14 +79,12 @@ public abstract class BaseCoreFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        mExcutorService = CoreApplication.getExcutorService();
         this.mCurrentActivity = getActivity();
         this.mCurrentFragment = this;
         isOnDetach = false;
         bundle = getArguments();
         mInflater = LayoutInflater.from(getActivity());
         mFManager = getChildFragmentManager();
-        mHandler = new CustomerHanlder(this);
         mVibrator = (Vibrator) mCurrentActivity.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
@@ -176,25 +171,6 @@ public abstract class BaseCoreFragment extends Fragment {
     protected abstract void initData();
 
     /**
-     * 自定义Handler
-     */
-    public static class CustomerHanlder extends Handler {
-        WeakReference<BaseCoreFragment> mFragment;
-
-        public CustomerHanlder(BaseCoreFragment mFragment) {
-            this.mFragment = new WeakReference<BaseCoreFragment>(mFragment);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            BaseCoreFragment mCurrentFragment = mFragment.get();
-            if (mCurrentFragment != null) {
-                mCurrentFragment.onRefresh(msg);
-            }
-        }
-    }
-
-    /**
      * 刷新数据
      *
      * @param msg
@@ -227,7 +203,6 @@ public abstract class BaseCoreFragment extends Fragment {
         mHandler.removeCallbacks(null);
     }
 
-
     /**
      * 设置RecyclerView 的样式
      *
@@ -256,7 +231,6 @@ public abstract class BaseCoreFragment extends Fragment {
         }
     }
 
-
     /**
      * 设置文本控件值
      *
@@ -278,6 +252,25 @@ public abstract class BaseCoreFragment extends Fragment {
     protected void setTextContent(View rootView, int resId, int contentId) {
         if (isAdded()) {
             ((TextView) rootView.findViewById(resId)).setText(contentId);
+        }
+    }
+
+    /**
+     * 自定义Handler
+     */
+    public static class CustomHandler extends Handler {
+        WeakReference<BaseCoreFragment> mFragment;
+
+        public CustomHandler(BaseCoreFragment mFragment) {
+            this.mFragment = new WeakReference<BaseCoreFragment>(mFragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            BaseCoreFragment mCurrentFragment = mFragment.get();
+            if (mCurrentFragment != null) {
+                mCurrentFragment.onRefresh(msg);
+            }
         }
     }
 }

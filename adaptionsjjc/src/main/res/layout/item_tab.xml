@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cnksi.sjjc.View.LinearLayoutIntercept xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<com.cnksi.sjjc.view.LinearLayoutIntercept xmlns:android="http://schemas.android.com/apk/res/android"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_tab"
@@ -12,4 +12,4 @@
         android:text="电器专用收发机"
         android:textColor="@color/tab_text_color"
         android:textSize="44px" />
-</com.cnksi.sjjc.View.LinearLayoutIntercept>
+</com.cnksi.sjjc.view.LinearLayoutIntercept>

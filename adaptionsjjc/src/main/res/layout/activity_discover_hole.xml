@@ -33,7 +33,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/tv_text_size" />
 
-            <com.cnksi.sjjc.View.LinearLayoutIntercept
+            <com.cnksi.sjjc.view.LinearLayoutIntercept
                 android:id="@+id/position_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                     android:scaleType="centerInside"
                     android:visibility="visible"
                     app:srcCompat="@drawable/ic_arrow_right" />
-            </com.cnksi.sjjc.View.LinearLayoutIntercept>
+            </com.cnksi.sjjc.view.LinearLayoutIntercept>
 
         </LinearLayout>
 

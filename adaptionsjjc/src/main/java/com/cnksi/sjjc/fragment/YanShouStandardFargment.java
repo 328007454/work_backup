@@ -19,7 +19,6 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,7 +32,7 @@ import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.CustomRadioButton;
+import com.cnksi.sjjc.view.CustomRadioButton;
 import com.cnksi.sjjc.activity.DialogActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.activity.SignNameActivity;

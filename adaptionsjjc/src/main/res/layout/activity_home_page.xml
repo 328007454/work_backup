@@ -50,7 +50,7 @@
                     android:textSize="@dimen/txt_size36px" />
             </LinearLayout>
 
-            <com.cnksi.sjjc.View.Banner
+            <com.cnksi.sjjc.view.Banner
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="400px"
@@ -122,7 +122,7 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
 
-                        <com.cnksi.sjjc.View.UnderLineTextView
+                        <com.cnksi.sjjc.view.UnderLineTextView
                             android:id="@+id/tv_device_inspection"
                             style="@style/UnderLineTextViewStyle"
                             android:text="设备巡视" />
@@ -135,7 +135,7 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
 
-                        <com.cnksi.sjjc.View.UnderLineTextView
+                        <com.cnksi.sjjc.view.UnderLineTextView
                             android:id="@+id/tv_device_maintenance"
                             style="@style/UnderLineTextViewStyle"
                             android:text="设备维护" />
@@ -148,7 +148,7 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
 
-                        <com.cnksi.sjjc.View.UnderLineTextView
+                        <com.cnksi.sjjc.view.UnderLineTextView
                             android:id="@+id/tv_transfer_switching"
                             style="@style/UnderLineTextViewStyle"
                             android:text="倒闸操作" />
@@ -161,7 +161,7 @@
                         android:layout_weight="1"
                         android:gravity="center_horizontal">
 
-                        <com.cnksi.sjjc.View.UnderLineTextView
+                        <com.cnksi.sjjc.view.UnderLineTextView
                             android:id="@+id/tv_operations"
                             style="@style/UnderLineTextViewStyle" />
                     </LinearLayout>

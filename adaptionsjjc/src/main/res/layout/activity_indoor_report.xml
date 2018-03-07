@@ -135,7 +135,7 @@
         </ScrollView>
 
 
-        <com.cnksi.sjjc.View.DotView
+        <com.cnksi.sjjc.view.DotView
             android:id="@+id/line_above_result"
             style="@style/DashStyle" />
 

@@ -190,7 +190,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo"/>
                 </com.zhy.autolayout.AutoRadioGroup>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
+                <com.cnksi.sjjc.view.EditTextNoEmoj
                     android:inputType="numberSigned|numberDecimal"
                     android:maxLength="5"
                     android:id="@+id/et_temperature"
@@ -231,7 +231,7 @@
                     app:layout_constraintStart_toEndOf="@+id/center_guideline1"
                     app:layout_constraintTop_toTopOf="@id/txt_temperature"/>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
+                <com.cnksi.sjjc.view.EditTextNoEmoj
                     android:inputType="numberDecimal"
                     android:maxLength="5"
                     android:id="@+id/et_humidity"
@@ -257,7 +257,7 @@
                     android:textSize="@dimen/tv_text_size"
                     app:layout_constraintTop_toBottomOf="@+id/txt_humidity"/>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
+                <com.cnksi.sjjc.view.EditTextNoEmoj
                     android:id="@+id/et_wind"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0px"
@@ -283,7 +283,7 @@
                     android:textSize="@dimen/tv_text_size"
                     app:layout_constraintTop_toBottomOf="@+id/txt_wind"/>
 
-                <com.cnksi.sjjc.View.EditTextNoEmoj
+                <com.cnksi.sjjc.view.EditTextNoEmoj
                     android:id="@+id/et_test_instrument"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0px"
@@ -382,7 +382,7 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintTop_toBottomOf="@+id/txt_hot_space"/>
 
-            <com.cnksi.sjjc.View.EditTextNoEmoj
+            <com.cnksi.sjjc.view.EditTextNoEmoj
                 android:id="@+id/et_electricity"
                 style="@style/NewHeatPointEditTextStyle"
                 android:layout_width="0px"
@@ -411,7 +411,7 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintTop_toBottomOf="@+id/txt_electrcity"/>
 
-            <com.cnksi.sjjc.View.EditTextNoEmoj
+            <com.cnksi.sjjc.view.EditTextNoEmoj
                 android:id="@+id/et_load_electricity"
                 style="@style/NewHeatPointEditTextStyle"
                 android:layout_width="0px"

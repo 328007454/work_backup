@@ -169,7 +169,7 @@
             android:textSize="@dimen/global_text_size_px" />
     </LinearLayout>
 
-    <com.cnksi.sjjc.View.DotView style="@style/DashStyle" />
+    <com.cnksi.sjjc.view.DotView style="@style/DashStyle" />
     <!-- 检测结果-->
     <LinearLayout
         android:layout_width="match_parent"

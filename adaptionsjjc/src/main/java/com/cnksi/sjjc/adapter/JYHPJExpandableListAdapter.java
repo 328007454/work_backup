@@ -4,19 +4,14 @@ import android.content.Context;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.cnksi.core.utils.RelayoutUtil;
-import com.cnksi.core.view.FollowListView;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.MyListView;
+import com.cnksi.sjjc.view.MyListView;
 import com.cnksi.sjjc.bean.EvaluationItem;
-import com.cnksi.sjjc.bean.EvaluationType;
-import com.cnksi.sjjc.bean.Spacing;
 
 import org.xutils.db.table.DbModel;
-import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 

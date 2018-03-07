@@ -185,7 +185,7 @@
                 android:src="@mipmap/icon_more_task"
                 android:visibility="gone"/>
 
-            <com.cnksi.sjjc.View.RoundedRectProgressBar
+            <com.cnksi.sjjc.view.RoundedRectProgressBar
                 android:id="@+id/progress"
                 style="@android:style/Widget.Holo.HorizontalScrollView"
                 android:layout_width="match_parent"

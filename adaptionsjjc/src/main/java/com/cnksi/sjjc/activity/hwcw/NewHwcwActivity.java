@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -25,7 +26,7 @@ import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.NewHwcwService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.GsonUtil;
-import com.google.gson.Gson;
+
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -33,7 +34,7 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * 设备测温主界面
@@ -237,7 +238,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
         if (!deviceHotList.isEmpty()) {
             HashMap<String, List<HashMap<String, String>>> listHashMap = new HashMap<>();
             listHashMap.put("result", deviceHotList);
-            json = new Gson().toJson(listHashMap);
+            json = JSON.toJSONString(listHashMap);
         }
         if (currentLocatoin == null) {
             HwcwLocation location = new HwcwLocation(mHwcwBaseInfo.id, currentSpaceID, currentDeviceID, deviceName, spaceName, ratedCurrent, loadCurrent, TextUtils.isEmpty(json) ? "" : json.toString());

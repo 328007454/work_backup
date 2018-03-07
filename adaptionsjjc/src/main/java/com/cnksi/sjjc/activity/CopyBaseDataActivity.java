@@ -14,7 +14,7 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.View.WeatherView1;
+import com.cnksi.sjjc.view.WeatherView1;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.service.ReportService;
 

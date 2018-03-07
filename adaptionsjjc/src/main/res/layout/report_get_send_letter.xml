@@ -117,7 +117,7 @@
             android:textSize="@dimen/global_text_size_1"/>
     </LinearLayout>
 
-    <com.cnksi.sjjc.View.DotView
+    <com.cnksi.sjjc.view.DotView
         android:layout_width="match_parent"
         android:layout_height="3px"
         android:layout_marginTop="30px"/>
@@ -224,7 +224,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.cnksi.sjjc.View.DotView
+        <com.cnksi.sjjc.view.DotView
             android:layout_width="match_parent"
             android:layout_height="3px"/>
 

@@ -103,7 +103,7 @@
                 </LinearLayout>
 
 
-                <com.cnksi.sjjc.View.WeatherView
+                <com.cnksi.sjjc.view.WeatherView
                     android:id="@+id/weatherView1"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/layout_height"
@@ -216,7 +216,7 @@
                         <!--<item name="android:textSize">@dimen/tv_text_size</item>-->
                         <!--<item name="android:selectAllOnFocus">true</item>-->
 
-                        <com.cnksi.sjjc.View.EditTextNoEmoj
+                        <com.cnksi.sjjc.view.EditTextNoEmoj
                             android:id="@+id/et_input_heat_part"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -499,7 +499,7 @@
                                 android:textColor="@color/global_text_color"
                                 android:textSize="@dimen/tv_text_size"/>
 
-                            <com.cnksi.sjjc.View.EditTextNoEmoj
+                            <com.cnksi.sjjc.view.EditTextNoEmoj
                                 android:id="@+id/et_test_instrument"
                                 style="@style/NewHeatPointEditTextStyle"
                                 android:layout_width="match_parent"
@@ -606,7 +606,7 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/tv_text_size"/>
 
-                        <com.cnksi.sjjc.View.EditTextNoEmoj
+                        <com.cnksi.sjjc.view.EditTextNoEmoj
                             android:id="@+id/tv_remark_infor"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -656,7 +656,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/tv_text_size"/>
 
-                <com.cnksi.sjjc.View.MyScrollVListView
+                <com.cnksi.sjjc.view.MyScrollVListView
                     android:id="@+id/lv_container"
                     android:layout_width="match_parent"
                     android:layout_height="600px"

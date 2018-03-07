@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:background="@color/white"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:background="@color/white"
+                android:id="@+id/item_device"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
+
+            <com.cnksi.sjjc.view.gztz.TextGroup
+                android:id="@+id/bhdzqk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_str="保护动作情况"/>
+
+            <com.cnksi.sjjc.view.gztz.TextGroup
+                android:id="@+id/gzjt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_str="故障简题"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:orientation="horizontal"
+                android:padding="20px">
+
+                <Button
+                    android:id="@+id/btn_pre"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/global_padding_half_left_right"
+                    android:layout_weight="1"
+                    android:background="@drawable/red_button_background_selector"
+                    android:gravity="center"
+                    android:text="上一步"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/tv_text_size"/>
+
+                <Button
+                    android:id="@+id/btn_next"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20px"
+                    android:layout_weight="1"
+                    android:background="@drawable/grass_green_button_background_selector"
+                    android:gravity="center"
+                    android:text="确认，下一步"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/tv_text_size"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>
