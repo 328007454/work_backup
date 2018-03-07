@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/txt_device_type"
+        style="@style/layout_gztz_title"
+        android:text="设备相别"/>
+
+    <LinearLayout
+        android:id="@+id/rdg_device_type"
+        style="@style/layout_gztz_radiogroup"
+        android:layout_weight="1">
+
+        <CheckBox
+            android:id="@+id/rb_a"
+            style="@style/layout_gztz_checkbox"
+            android:text="A"
+            />
+
+        <CheckBox
+            android:id="@+id/rb_b"
+            style="@style/layout_gztz_checkbox"
+            android:text="B"/>
+
+        <CheckBox
+            android:id="@+id/rb_c"
+            style="@style/layout_gztz_checkbox"
+            android:text="C"
+            />
+
+        <CheckBox
+            android:id="@+id/rb_o"
+            style="@style/layout_gztz_checkbox"
+            android:text="O"/>
+    </LinearLayout>
+</merge>

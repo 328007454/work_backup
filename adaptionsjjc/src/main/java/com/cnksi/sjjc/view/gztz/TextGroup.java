@@ -37,7 +37,7 @@ public class TextGroup extends UnderLineLinearLayout {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
         setDrawUnderLine(true);
-        setPadding(AutoUtils.getPercentHeightSize(30),0,0,0);
+        setPadding(AutoUtils.getPercentHeightSize(30), 0, 0, 0);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_text_group, this, true);
         editText = (EditText) findViewById(R.id.et_input);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -49,6 +49,14 @@ public class TextGroup extends UnderLineLinearLayout {
                 editText.setHint("请输入" + string);
             }
         }
+    }
 
+    public String getValueStr() {
+        return editText.getText().toString();
+    }
+
+    public void setValueStr(String s) {
+        if (s == null) s = "";
+        editText.setText(s);
     }
 }

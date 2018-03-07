@@ -85,6 +85,13 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
                     }
                 });
         }
+    }
 
+    public String getValueStr() {
+        return tvValue.getText().toString();
+    }
+
+    public void setValueStr(String valueStr) {
+        tvValue.setText(valueStr);
     }
 }
