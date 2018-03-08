@@ -250,9 +250,13 @@ public class LocationUtil {
     private void addListener(LocationHelper helper) {
         if (helpers.add(helper))
             locationClient.registerLocationListener(helper);
-        if (!locationClient.isStarted()) locationClient.start();
-        else
+        if (!locationClient.isStarted()) {
+            locationClient.start();
+            LLog.e("重新启动");
             locationClient.requestLocation();
+        } else {
+            locationClient.requestLocation();
+        }
     }
 
     private synchronized void removeListener(LocationHelper helper) {
