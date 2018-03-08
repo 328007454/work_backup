@@ -138,6 +138,10 @@
         <item name="android:layout_height">@dimen/line_width</item>
         <item name="android:layout_width">match_parent</item>
     </style>
+    <style name="VLine" parent="Line">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/line_width</item>
+    </style>
 
     <style name="PopwindowAnimtionStyle" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/dialog_enter</item>

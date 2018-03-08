@@ -1,6 +1,6 @@
 package com.cnksi.sjjc.service.gztz;
 
-import com.cnksi.sjjc.bean.gztz.SbjcGztzjlSbgzjl;
+import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.service.BaseService;
 
 import org.xutils.ex.DbException;
@@ -12,20 +12,20 @@ import org.xutils.ex.DbException;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class GZTZSbgzjlService extends BaseService<SbjcGztzjlSbgzjl> {
+public class GZTZSbgzjlService extends BaseService<SbjcGztzjl> {
     final static GZTZSbgzjlService instance = new GZTZSbgzjlService();
 
     protected GZTZSbgzjlService() {
-        super(SbjcGztzjlSbgzjl.class);
+        super(SbjcGztzjl.class);
     }
 
     public static GZTZSbgzjlService getInstance() {
         return instance;
     }
 
-    public SbjcGztzjlSbgzjl findByReportId(String reportId) {
+    public SbjcGztzjl findByReportId(String reportId) {
         try {
-            return selector().and(SbjcGztzjlSbgzjl.REPORTID, "=", reportId).findFirst();
+            return selector().and(SbjcGztzjl.REPORTID, "=", reportId).findFirst();
         } catch (DbException e) {
             RecordException(e);
             e.printStackTrace();

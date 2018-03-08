@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,7 +12,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
@@ -217,12 +215,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
     public void setChildView(View view) {
         rootContainer.addView(view);
         x.view().inject(this);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                KeyBoardUtils.closeKeybord(_this);
-                onBackPressed();
-            }
+        btnBack.setOnClickListener(v -> {
+            KeyBoardUtils.closeKeybord(_this);
+            onBackPressed();
         });
 
     }

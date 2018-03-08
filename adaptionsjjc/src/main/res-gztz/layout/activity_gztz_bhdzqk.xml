@@ -13,7 +13,7 @@
             android:orientation="vertical">
 
             <com.cnksi.sjjc.view.gztz.SelectGroup
-                android:id="@+id/gzdydj"
+                android:id="@+id/chzdzqk"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
                 app:select_hint_str="请选择"
@@ -23,8 +23,8 @@
             <com.cnksi.sjjc.view.UnderLineLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:drawUnderLine="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:drawUnderLine="true">
 
                 <TextView
                     style="@style/layout_gztz_title"
@@ -102,8 +102,9 @@
             <com.cnksi.sjjc.view.UnderLineLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:drawUnderLine="true"
-                android:orientation="horizontal">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:drawUnderLine="true">
 
                 <TextView
                     style="@style/layout_gztz_title"
@@ -136,25 +137,60 @@
                     android:layout_weight="1"
                     android:text="C"
                     />
+
+                <ImageView
+                    android:id="@+id/ljtzcs_modify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20px"
+                    android:layout_marginRight="@dimen/_30px"
+                    app:srcCompat="@drawable/ic_copy_hover"/>
             </com.cnksi.sjjc.view.UnderLineLinearLayout>
 
             <com.cnksi.sjjc.view.UnderLineLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:drawUnderLine="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:drawUnderLine="true">
 
                 <TextView
                     style="@style/layout_gztz_title"
                     android:text="故障电流（KA）："
+                    />
+
+                <com.cnksi.sjjc.view.ContainsEmojiEditText
+                    android:id="@+id/gzdl"
+                    style="@style/layout_gztz_num_input"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_weight="-1"
+                    android:text=""
+                    />
+
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:layout_marginLeft="@dimen/_20px"
+                    android:text="累计值"
+                    />
+
+                <com.cnksi.sjjc.view.gztz.InputCountView
+                    android:id="@+id/ljz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_20px"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:text="KA"
                     />
             </com.cnksi.sjjc.view.UnderLineLinearLayout>
 
             <com.cnksi.sjjc.view.UnderLineLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:drawUnderLine="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:drawUnderLine="true">
 
                 <TextView
                     style="@style/layout_gztz_title"
@@ -185,6 +221,46 @@
                 app:select_type="ymdhm"
                 app:title_str="最后一次大修时间"/>
 
+            <com.cnksi.sjjc.view.gztz.SelectGroup
+                android:id="@+id/bhsbmc"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:title_str="*保护设备名称"/>
+
+            <com.cnksi.sjjc.view.gztz.SelectGroup
+                android:id="@+id/bhmc"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:title_str="*保护名称"/>
+
+            <com.cnksi.sjjc.view.gztz.SelectTimeGroup
+                android:id="@+id/dzsj"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                app:select_type="ymdhm"
+                app:title_str="动作时间"/>
+
+            <com.cnksi.sjjc.view.UnderLineLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                android:orientation="horizontal"
+                app:drawUnderLine="true">
+
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:text="整定区（A）："
+                    />
+
+                <com.cnksi.sjjc.view.ContainsEmojiEditText
+                    android:id="@+id/zdq"
+                    style="@style/layout_gztz_num_input"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_weight="-1"
+                    android:text=""
+                    />
+            </com.cnksi.sjjc.view.UnderLineLinearLayout>
+
             <com.cnksi.sjjc.view.gztz.TextGroup
                 android:id="@+id/ldkgqk"
                 android:layout_width="match_parent"
@@ -212,8 +288,8 @@
             <com.cnksi.sjjc.view.UnderLineLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:drawUnderLine="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:drawUnderLine="true">
 
                 <TextView
                     style="@style/layout_gztz_title"

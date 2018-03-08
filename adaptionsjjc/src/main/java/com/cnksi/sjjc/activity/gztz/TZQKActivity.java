@@ -10,11 +10,9 @@ import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.bean.Device;
-import com.cnksi.sjjc.bean.gztz.SbjcGztzjlKgtzjl;
-import com.cnksi.sjjc.bean.gztz.SbjcGztzjlSbgzjl;
+import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
-import com.cnksi.sjjc.service.gztz.GZTZKgtzjlService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 
 import org.xutils.common.util.KeyValue;
@@ -30,8 +28,7 @@ import org.xutils.ex.DbException;
  */
 public class TZQKActivity extends BaseActivity {
     ActivityGztzBaseBinding binding;
-    SbjcGztzjlKgtzjl kgtzjl;
-    SbjcGztzjlSbgzjl sbgzjl;
+    SbjcGztzjl sbgzjl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +42,11 @@ public class TZQKActivity extends BaseActivity {
     }
 
     private void initView() {
-        binding.kgdlqbh.setSelectOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
-                intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
-                intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-                startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
-            }
+        binding.kgdlqbh.setSelectOnClickListener(v -> {
+            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
+            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
+            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
         binding.gztysb.setSelectOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +63,7 @@ public class TZQKActivity extends BaseActivity {
         binding.gzlb.setType("gzlb");
         binding.tyfw.setType("gztyfw");
         binding.btnSure.setOnClickListener(v -> {
-            if (save()) {
+            if (save(true)) {
                 Intent intent = new Intent(_this, BHDZQKActivity.class);
                 startActivity(intent);
             }
@@ -86,17 +80,14 @@ public class TZQKActivity extends BaseActivity {
     }
 
     private void initData() {
-        kgtzjl = GZTZKgtzjlService.getInstance().findByReportId(currentReportId);
-        if (kgtzjl == null) kgtzjl = SbjcGztzjlKgtzjl.create(currentReportId, currentBdzId);
         sbgzjl = GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
-        if (sbgzjl == null) sbgzjl = SbjcGztzjlSbgzjl.create(currentReportId);
-
-        binding.kgdlqbh.setKeyValue(new KeyValue(kgtzjl.dlqbh, kgtzjl.dlqmc));
-        binding.dlqtzqk.setValueStr(sbgzjl.bh_dlqtzqk);
-        binding.yyjjcqk.setValueStr(sbgzjl.bh_yyjjcqk);
-        binding.sbxb.setValueStr(kgtzjl.sbxb);
-        binding.sfdz.setValueStr(kgtzjl.sfdz);
-        binding.kgdzpj.setValueStr(kgtzjl.dzpj);
+        if (sbgzjl == null) sbgzjl = SbjcGztzjl.create(currentReportId, currentBdzId);
+        binding.kgdlqbh.setKeyValue(new KeyValue(sbgzjl.dlqbh, sbgzjl.dlqmc));
+        binding.dlqtzqk.setValueStr(sbgzjl.bhDlqtzqk);
+        binding.yyjjcqk.setValueStr(sbgzjl.bhYyjjcqk);
+        binding.sbxb.setValueStr(sbgzjl.sbxb);
+        binding.sfdz.setValueStr(sbgzjl.sfdz);
+        binding.kgdzpj.setValueStr(sbgzjl.dzpj);
         binding.sfzngz.setValueStr(sbgzjl.sfzngz);
         binding.gzfssj.setValueStr(sbgzjl.gzfssj);
         binding.gzdydj.setKeyValue(new KeyValue(sbgzjl.gzdydjK, sbgzjl.gzdydj));
@@ -108,11 +99,18 @@ public class TZQKActivity extends BaseActivity {
         binding.sfty.setValueStr(sbgzjl.sfty);
         binding.tyfw.setKeyValue(new KeyValue(sbgzjl.tyfwK, sbgzjl.tyfw));
         binding.gztysb.setKeyValue(new KeyValue(sbgzjl.gztysbK, sbgzjl.gztysb));
-        binding.dlqjcqk.setValueStr(kgtzjl.dlqjcqk);
-        binding.bz.setValueStr(kgtzjl.bz);
+        binding.dlqjcqk.setValueStr(sbgzjl.dlqjcqk);
+        binding.bz.setValueStr(sbgzjl.kgtzBz);
     }
 
-    private boolean save() {
+    static KeyValue NULL = new KeyValue(null, null);
+
+    /**
+     * @param isCheck 是否执行检查 返回时不应执行检查 而是直接存储
+     * @return
+     */
+    private boolean save(boolean isCheck) {
+
         KeyValue dlqbh = binding.kgdlqbh.getValue();
         String dlqtzqk = binding.dlqtzqk.getValueStr();
         String yyjjcqk = binding.yyjjcqk.getValueStr();
@@ -121,10 +119,7 @@ public class TZQKActivity extends BaseActivity {
         String kgdzpj = binding.kgdzpj.getValueStr();
         String sfzngz = binding.sfzngz.getValueStr();
         String gzfssj = binding.gzfssj.getValueStr();
-        if (dlqbh == null || StringUtils.isHasOneEmpty(dlqtzqk, yyjjcqk, sbxb, sfdz, kgdzpj, sfzngz, gzfssj)) {
-            CToast.showShort(this, "请检查带星号的项目是否均已填写！");
-            return false;
-        }
+
         KeyValue gzdydj = binding.gzdydj.getValue();
         KeyValue gzlx = binding.gzlx.getValue();
         KeyValue gzsdtq = binding.gzsdtq.getValue();
@@ -133,38 +128,52 @@ public class TZQKActivity extends BaseActivity {
         String sftz = binding.sftz.getValueStr();
         String sfty = binding.sfty.getValueStr();
         String dlqjcqk = binding.dlqjcqk.getValueStr();
-
-        if (gzdydj == null || gzlx == null || gzsdtq == null || gzlb == null || StringUtils.isHasOneEmpty(gzsfyj, sfty, sftz, dlqjcqk)) {
-            CToast.showShort(this, "请检查带星号的项目是否均已填写！");
-            return false;
-        }
-        KeyValue tyfw;
-        KeyValue gztysb;
-        if ("是".equals(sfty)) {
-            tyfw = binding.tyfw.getValue();
-            gztysb = binding.gztysb.getValue();
-            if (tyfw == null || gztysb == null) {
+        if (isCheck) {
+            if (dlqbh == null || StringUtils.isHasOneEmpty(dlqtzqk, yyjjcqk, sbxb, sfdz, kgdzpj, sfzngz, gzfssj)) {
+                CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                return false;
+            }
+            if (gzdydj == null || gzlx == null || gzsdtq == null || gzlb == null || StringUtils.isHasOneEmpty(gzsfyj, sfty, sftz, dlqjcqk)) {
                 CToast.showShort(this, "请检查带星号的项目是否均已填写！");
                 return false;
             }
         } else {
-            tyfw = new KeyValue(null, null);
-            gztysb = new KeyValue(null, null);
+            dlqbh = nullTo(dlqbh);
+            gzdydj = nullTo(gzdydj);
+            gzlx = nullTo(gzlx);
+            gzsdtq = nullTo(gzsdtq);
+            gzlb = nullTo(gzlb);
         }
+        KeyValue tyfw = null;
+        KeyValue gztysb = null;
+        if ("是".equals(sfty)) {
+            tyfw = binding.tyfw.getValue();
+            gztysb = binding.gztysb.getValue();
+            if (isCheck) {
+                if (tyfw == null || gztysb == null) {
+                    CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                    return false;
+                }
+            }
+        }
+        tyfw = nullTo(tyfw);
+        gztysb = nullTo(gztysb);
         String bz = binding.bz.getValueStr();
 
 
         //开关跳闸
-        kgtzjl.dlqbh = dlqbh.key;
-        kgtzjl.dlqmc = dlqbh.getValueStr();
-        kgtzjl.bz = bz;
-        kgtzjl.sbxb = sbxb;
-        kgtzjl.sfdz = sfdz;
-        kgtzjl.dzpj = kgdzpj;
-        kgtzjl.dlqjcqk = dlqjcqk;
+
+        sbgzjl.dlqbh = dlqbh.key;
+        sbgzjl.dlqmc = dlqbh.getValueStr();
+        sbgzjl.kgtzBz = bz;
+        sbgzjl.sbxb = sbxb;
+        sbgzjl.sfdz = sfdz;
+        sbgzjl.dzpj = kgdzpj;
+        sbgzjl.dlqjcqk = dlqjcqk;
 
 
         //设备故障记录
+
         sbgzjl.gzdydj = gzdydj.getValueStr();
         sbgzjl.gzdydjK = gzdydj.key;
         sbgzjl.gzfssj = gzfssj;
@@ -181,10 +190,9 @@ public class TZQKActivity extends BaseActivity {
         sbgzjl.tyfwK = tyfw.key;
         sbgzjl.gztysb = gztysb.getValueStr();
         sbgzjl.gztysbK = gztysb.key;
-        sbgzjl.bh_yyjjcqk = yyjjcqk;
-        sbgzjl.bh_dlqtzqk = dlqtzqk;
+        sbgzjl.bhYyjjcqk = yyjjcqk;
+        sbgzjl.bhDlqtzqk = dlqtzqk;
         try {
-            GZTZKgtzjlService.getInstance().saveOrUpdate(kgtzjl);
             GZTZSbgzjlService.getInstance().saveOrUpdate(sbgzjl);
             return true;
         } catch (DbException e) {
@@ -197,7 +205,12 @@ public class TZQKActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        save();
+        save(false);
+    }
+
+    private KeyValue nullTo(KeyValue keyValue) {
+        if (keyValue == null) return NULL;
+        else return keyValue;
     }
 
     @Override

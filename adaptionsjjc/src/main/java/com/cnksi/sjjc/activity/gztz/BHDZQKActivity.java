@@ -2,7 +2,6 @@ package com.cnksi.sjjc.activity.gztz;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzqkBinding;
@@ -23,23 +22,17 @@ public class BHDZQKActivity extends BaseActivity {
         binding = ActivityGztzBhdzqkBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
         getIntentValue();
-        setTitleText(currentBdzName + "保护动作记录");
+        setTitleText(currentBdzName + "保护动作情况");
         initView();
     }
 
     private void initView() {
-        binding.btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(_this, BHDZJLActivity.class);
-                startActivity(intent);
-            }
+        binding.btnNext.setOnClickListener(v -> {
+            Intent intent = new Intent(_this, BHDZJLActivity.class);
+            startActivity(intent);
         });
-        binding.btnPre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        binding.btnPre.setOnClickListener(v -> finish());
+        binding.chzdzqk.setType("chzdzqk");
+        binding.bhmc.setType("bhmc");
     }
 }
