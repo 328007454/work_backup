@@ -84,14 +84,5 @@
                 android:layout_height="wrap_content"
                 android:text=" ms"/>
         </com.cnksi.sjjc.view.UnderLineLinearLayout>
-
-
-        <com.cnksi.sjjc.view.gztz.SingleRadioGroup
-            android:background="@color/white"
-            android:id="@+id/bhdzpj"
-            android:layout_width="match_parent"
-            android:layout_height="138px"
-            app:select_str="正动|误动"
-            app:title_str="保护动作评价"/>
     </LinearLayout>
 </layout>

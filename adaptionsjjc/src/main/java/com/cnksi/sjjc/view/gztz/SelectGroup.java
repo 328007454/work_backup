@@ -74,6 +74,11 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         tvValue.setOnClickListener(onClickListener);
     }
 
+
+    public void setClickListener(View.OnClickListener onClickListener) {
+        setOnClickListener(onClickListener);
+    }
+
     public KeyValue getValue() {
         return keyValue;
     }
@@ -129,5 +134,9 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
 
     public ImageButton getDeleteButton() {
         return deleteButton;
+    }
+
+    public TextView getTvValueView() {
+        return tvValue;
     }
 }
