@@ -75,11 +75,6 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         tvValue.setOnClickListener(onClickListener);
     }
 
-
-    public void setClickListener(View.OnClickListener onClickListener) {
-        setOnClickListener(onClickListener);
-    }
-
     public KeyValue getValue() {
         return keyValue;
     }
@@ -140,5 +135,9 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
 
     public TextView getTvValueView() {
         return tvValue;
+    }
+
+    public String getValueStr() {
+        return tvValue.getText().toString();
     }
 }

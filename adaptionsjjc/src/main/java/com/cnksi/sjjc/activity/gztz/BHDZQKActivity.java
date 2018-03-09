@@ -6,7 +6,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.cnksi.core.utils.BitmapUtil;
+import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.FunctionUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
@@ -20,11 +22,15 @@ import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
 
 import org.xutils.common.util.KeyValue;
+import org.xutils.ex.DbException;
 import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+
+import static com.cnksi.sjjc.activity.gztz.TZQKActivity.NULL;
 
 /**
  * @version 1.0
@@ -36,7 +42,6 @@ import java.util.List;
 public class BHDZQKActivity extends BaseActivity {
     ActivityGztzBhdzqkBinding binding;
     private SbjcGztzjl sbjcGztzjl;
-    private boolean sftz;
     private String imageName;
     private List<String> photos;
 
@@ -53,8 +58,10 @@ public class BHDZQKActivity extends BaseActivity {
 
     private void initView() {
         binding.btnNext.setOnClickListener(v -> {
-            Intent intent = new Intent(_this, BHDZJLActivity.class);
-            startActivity(intent);
+            if (save(true)) {
+                Intent intent = new Intent(_this, BHDZJLActivity.class);
+                startActivity(intent);
+            }
         });
         binding.btnPre.setOnClickListener(v -> finish());
         binding.chzdzqk.setType("chzdzqk");
@@ -87,7 +94,7 @@ public class BHDZQKActivity extends BaseActivity {
         binding.ivTakePic.setOnClickListener(v -> {
             FunctionUtils.takePicture(this, imageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
         });
-        binding.ivShowPic.setOnClickListener(v -> showImageDetails(this, StringUtils.addStrToListItem(photos,Config.RESULT_PICTURES_FOLDER), true));
+        binding.ivShowPic.setOnClickListener(v -> showImageDetails(this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
     }
 
     private void initData() {
@@ -104,8 +111,7 @@ public class BHDZQKActivity extends BaseActivity {
                         binding.gzdl.setLjz(CalcUtils.String2Float(last.ljz));
                     }
                 }
-                sftz = "是".equals(sbjcGztzjl.sftz);
-                binding.chzdzqk.setVisibility(sftz ? View.VISIBLE : View.GONE);
+                binding.chzdzqk.setVisibility(sbjcGztzjl.isTz() ? View.VISIBLE : View.GONE);
 
 
                 if (!TextUtils.isEmpty(sbjcGztzjl.dzbhFj))
@@ -114,13 +120,7 @@ public class BHDZQKActivity extends BaseActivity {
                 showPic();
 
                 //处理ABCO 相别
-                int[] visbles = new int[]{0, 0, 0, 0};
-                for (char t : sbjcGztzjl.sbxb.toCharArray()) {
-                    if (t == 'A') visbles[0] = 1;
-                    if (t == 'B') visbles[1] = 1;
-                    if (t == 'C') visbles[2] = 1;
-                    if (t == 'O') visbles[3] = 1;
-                }
+                int[] visbles = sbjcGztzjl.getXb();
                 binding.ljtzcs.setXb(visbles);
                 binding.llA.setVisibility(visbles[0] == 1 ? View.VISIBLE : View.GONE);
                 binding.llB.setVisibility(visbles[1] == 1 ? View.VISIBLE : View.GONE);
@@ -144,8 +144,99 @@ public class BHDZQKActivity extends BaseActivity {
                 binding.gzlbqcj.setValueStr(sbjcGztzjl.gzGzlbcj);
             });
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        save(false);
+    }
 
+    private boolean save(boolean isCheck) {
+        KeyValue chtzql = binding.chzdzqk.getValue();
+        String a = getText(binding.gxtzcsA), b = getText(binding.gxtzcsB), c = getText(binding.gxtzcsC), o = getText(binding.gxtzcsO);
+        if (sbjcGztzjl.checkXbTzcs(a, b, c, o)) {
+            CToast.showShort(this, "请填写各项跳闸次数！");
+        }
+        HashMap<String, Integer> temp = new HashMap<>();
+        temp.put("A", CalcUtils.toInt(a, 0));
+        temp.put("B", CalcUtils.toInt(b, 0));
+        temp.put("C", CalcUtils.toInt(c, 0));
+        temp.put("O", CalcUtils.toInt(o, 0));
+        String gxtzcs = JSON.toJSONString(temp);
+        String ljtzcs = binding.ljtzcs.getValuesStr();
+        String gzdl = binding.gzdl.getGzdl();
+        String ljz = binding.gzdl.getLjz();
+        String ecgzdl = getText(binding.ecgzdl);
+
+        String hfsdsj = binding.hfsdsj.getValueStr();
+        String zhycdxsj = binding.zhycdxsj.getValueStr();
+
+        KeyValue bhsbmc = binding.bhsbmc.getValue();
+        KeyValue bhmc = binding.bhmc.getValue();
+        String dzsj = binding.dzsj.getValueStr();
+        String zdq = getText(binding.zdq);
+        String ldkgql = binding.ldkgqk.getValueStr();
+        if (isCheck) {
+            if ((chtzql == null && sbjcGztzjl.isTz()) || bhmc == null || bhsbmc == null || StringUtils.isHasOneEmpty(gzdl, ljz, ecgzdl, dzsj, zdq, ldkgql)) {
+                CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                return false;
+            } else {
+                chtzql = nullTo(chtzql);
+                bhmc = nullTo(bhmc);
+                bhsbmc = nullTo(bhsbmc);
+            }
+        }
+        String yqtbhph = binding.yqtbhph.getValueStr();
+        String ylbzzph = binding.ylbzzph.getValueStr();
+        String yjkxtph = binding.yjkxtph.getValueStr();
+        String fjzp = StringUtils.ArrayListToString(photos);
+        String bz = binding.etBz.getValueStr();
+        KeyValue gzlbq = binding.gzlbqmc.getValue();
+        String gzlbqfx = binding.gzlbqfx.getValueStr();
+        String gzlbqcj = binding.gzlbqcj.getValueStr();
+        if (isCheck) {
+            if (gzlbq != null) {
+                if (StringUtils.isHasOneEmpty(gzlbqfx, gzlbqcj)) {
+                    CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                    return false;
+                }
+            }
+        } else {
+            gzlbq = nullTo(gzlbq);
+        }
+        sbjcGztzjl.chzdzqk = chtzql.getValueStr();
+        sbjcGztzjl.chzdzqkK = chtzql.key;
+        sbjcGztzjl.gxtzcs = gxtzcs;
+        sbjcGztzjl.ljtzcs = ljtzcs;
+        sbjcGztzjl.gzdl = gzdl;
+        sbjcGztzjl.ljz = ljz;
+        sbjcGztzjl.ecgzdl = ecgzdl;
+        sbjcGztzjl.hfsdsj = hfsdsj;
+        sbjcGztzjl.zhycdxsj = zhycdxsj;
+        sbjcGztzjl.bhsbmc = bhsbmc.getValueStr();
+        sbjcGztzjl.bhsbmcK = bhsbmc.key;
+        sbjcGztzjl.bhmc = bhmc.getValueStr();
+        sbjcGztzjl.bhmcK = bhmc.key;
+        sbjcGztzjl.bhdzsj = dzsj;
+        sbjcGztzjl.zdq = zdq;
+        sbjcGztzjl.ldkgqk = ldkgql;
+        sbjcGztzjl.yqtbhph = yqtbhph;
+        sbjcGztzjl.ylbzzph = ylbzzph;
+        sbjcGztzjl.yjkxtph = yjkxtph;
+        sbjcGztzjl.dzbhFj = fjzp;
+        sbjcGztzjl.dzbhBz = bz;
+        sbjcGztzjl.gzGzlbqmc = gzlbq.getValueStr();
+        sbjcGztzjl.gzGzlbqmcK = gzlbq.key;
+        sbjcGztzjl.gzGzlbfx = gzlbqfx;
+        sbjcGztzjl.gzGzlbcj = gzlbqcj;
+        try {
+            GZTZSbgzjlService.getInstance().saveOrUpdate(sbjcGztzjl);
+            return true;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private void showPic() {
@@ -162,6 +253,11 @@ public class BHDZQKActivity extends BaseActivity {
             binding.tvPicNum.setVisibility(View.VISIBLE);
             binding.tvPicNum.setText(photos.size() + "");
         }
+    }
+
+    private KeyValue nullTo(KeyValue keyValue) {
+        if (keyValue == null) return NULL;
+        else return keyValue;
     }
 
     @Override

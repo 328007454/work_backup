@@ -2,12 +2,12 @@ package com.cnksi.sjjc.activity.gztz;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.bean.Device;
+import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzjlBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.view.gztz.BhdzjlGroup;
@@ -29,9 +29,10 @@ import java.util.List;
  */
 public class BHDZJLActivity extends BaseActivity {
     ActivityGztzBhdzjlBinding binding;
-    TextView view;
     List<BhdzjlGroup> groups = new ArrayList<>();
     BhdzjlGroup selectGroup;
+    SbjcGztzjl sbjcGztzjl;
+    boolean isFirstLoad = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,16 @@ public class BHDZJLActivity extends BaseActivity {
             startActivity(intent);
         });
         addOtherDevice();
+    }
+
+    private void initData(){
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isFirstLoad = false;
     }
 
     private void saveData() {
@@ -78,6 +89,32 @@ public class BHDZJLActivity extends BaseActivity {
     }
 
 
+    public void rebuildStr() {
+        if (!isFirstLoad) {
+            StringBuilder bhdzqk = new StringBuilder();
+            bhdzqk.append(currentBdzName).append("XXX线路").append("故障,");
+            for (BhdzjlGroup group : groups) {
+                bhdzqk.append(group.toString());
+            }
+            if (sbjcGztzjl.isTz()) {
+                bhdzqk.append("开关跳闸，").append(sbjcGztzjl.chzdzqk).append(",");
+            } else bhdzqk.append("开关未跳闸，");
+            StringBuilder gzjt = new StringBuilder(bhdzqk.toString());
+
+            bhdzqk.append("二次故障电流").append(sbjcGztzjl.ecgzdl).append("A，")
+                    .append("一次故障电流").append(sbjcGztzjl.gzdl).append("KA");
+
+            gzjt.append("故障相别").append(sbjcGztzjl.sbxb);
+            gzjt.append("故障一次电流").append(sbjcGztzjl.gzdl).append("A，")
+                    .append("二次值").append(sbjcGztzjl.ecgzdl).append("KA,");
+            gzjt.append(sbjcGztzjl.getXbGzjt());
+            gzjt.append("累积故障电流").append(sbjcGztzjl.ljz).append("KA,");
+            gzjt.append(sbjcGztzjl.getXbLjGzjt());
+            binding.bhdzqk.setValueStr(bhdzqk.toString());
+            binding.gzjt.setValueStr(gzjt.toString());
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (RESULT_OK == resultCode) {
@@ -87,6 +124,7 @@ public class BHDZJLActivity extends BaseActivity {
                     if (model != null) {
                         selectGroup.setDeviceSelectValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
                     }
+                    rebuildStr();
                     break;
                 //选择保护设备
                 case Config.ACTIVITY_CHOSE_DEVICE + 1:
@@ -94,6 +132,7 @@ public class BHDZJLActivity extends BaseActivity {
                     if (model != null) {
                         selectGroup.setBHDeviceSelectValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
                     }
+                    rebuildStr();
                     break;
             }
         }

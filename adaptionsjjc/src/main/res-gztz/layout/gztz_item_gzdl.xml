@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         style="@style/layout_gztz_title"
-        android:text="故障电流（KA）："
+        android:text="*故障电流（KA）："
         />
 
     <com.cnksi.sjjc.view.ContainsEmojiEditText

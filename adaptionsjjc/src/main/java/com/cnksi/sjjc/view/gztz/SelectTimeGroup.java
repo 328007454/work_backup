@@ -22,7 +22,7 @@ import com.cnksi.sjjc.view.UnderLineLinearLayout;
  */
 public class SelectTimeGroup extends UnderLineLinearLayout {
 
-    private TextView tvName, tvValue;
+    protected TextView tvName, tvValue;
 
     public SelectTimeGroup(Context context) {
         this(context, null);

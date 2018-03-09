@@ -23,8 +23,7 @@ public class GzdlGroup extends UnderLineLinearLayout {
 
     private EditText eddl;
     private InputCountView countView;
-
-    int count;
+    private float old = 0;
 
     public GzdlGroup(Context context) {
         this(context, null);
@@ -44,7 +43,9 @@ public class GzdlGroup extends UnderLineLinearLayout {
         eddl.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                countView.add(CalcUtils.String2Float(s.toString()));
+                float newF = CalcUtils.String2Float(s.toString());
+                countView.add(newF - old);
+                old = newF;
             }
         });
     }

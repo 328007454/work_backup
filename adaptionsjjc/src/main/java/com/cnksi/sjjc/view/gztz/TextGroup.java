@@ -62,4 +62,17 @@ public class TextGroup extends UnderLineLinearLayout {
         if (s == null) return;
         editText.setText(s);
     }
+
+    public void setMustInput(boolean isMust) {
+        String name = tvName.getText().toString();
+        if (isMust) {
+            if (!name.startsWith("*")) {
+                tvName.setText("*" + name);
+            }
+        } else {
+            if (name.startsWith("*")) {
+                tvName.setText(name.substring(1));
+            }
+        }
+    }
 }

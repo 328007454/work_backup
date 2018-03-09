@@ -1,10 +1,13 @@
 package com.cnksi.sjjc.view.gztz;
 
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cnksi.sjjc.activity.gztz.BHDZJLActivity;
 import com.cnksi.sjjc.databinding.GztzItemBhdzjlYjlxBinding;
+import com.cnksi.sjjc.inter.SimpleTextWatcher;
 
 /**
  * @version 1.0
@@ -32,9 +35,29 @@ public class BhdzjlYjGroup {
         binding.delete.setOnClickListener(view -> {
             group.removeView(this);
         });
+        binding.bhdzsj.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                group.rebulidStr();
+            }
+        });
+        binding.bhyjlx.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                group.rebulidStr();
+            }
+        });
     }
 
-    public View getRoot(){
+    public View getRoot() {
         return binding.getRoot();
+    }
+
+    @Override
+    public String toString() {
+        String a = binding.bhdzsj.getText().toString();
+        String b = binding.bhyjlx.getText().toString();
+        if (TextUtils.isEmpty(a)) return "";
+        else return a + "ms" + b + ",";
     }
 }

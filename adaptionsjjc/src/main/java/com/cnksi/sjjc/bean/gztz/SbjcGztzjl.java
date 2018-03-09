@@ -1,5 +1,9 @@
 package com.cnksi.sjjc.bean.gztz;
 
+import android.text.TextUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
 
@@ -217,7 +221,7 @@ public class SbjcGztzjl {
     /***/
     public static final String CHZDZQK_K = "chzdzqk_k";
     @Column(name = CHZDZQK_K)
-    public String chzdzqkK  ;
+    public String chzdzqkK;
     /**
      * 各项跳闸次数（json格式）
      */
@@ -238,10 +242,12 @@ public class SbjcGztzjl {
     public static final String GZDL = "gzdl";
     @Column(name = GZDL)
     public String gzdl;
-    /**累计值*/
+    /**
+     * 累计值
+     */
     public static final String LJZ = "ljz";
     @Column(name = LJZ)
-    public String ljz  ;
+    public String ljz;
     /**
      * 二次故障电流
      */
@@ -422,5 +428,61 @@ public class SbjcGztzjl {
         rs.reportid = currentReportId;
         rs.createTime = DateUtils.getCurrentLongTime();
         return rs;
+    }
+
+    public boolean isTz() {
+        return "是".equals(sftz);
+    }
+
+    public int[] getXb() {
+        int[] visbles = new int[]{0, 0, 0, 0};
+        for (char t : sbxb.toCharArray()) {
+            if (t == 'A') visbles[0] = 1;
+            if (t == 'B') visbles[1] = 1;
+            if (t == 'C') visbles[2] = 1;
+            if (t == 'O') visbles[3] = 1;
+        }
+        return visbles;
+    }
+
+    public String getXbGzjt() {
+        StringBuilder builder = new StringBuilder("本次跳闸次数：");
+        int[] xb = getXb();
+        JSONObject object = JSON.parseObject(gxtzcs);
+        if (xb[0] == 1) builder.append("A相：").append(object.getIntValue("A") + ",");
+        if (xb[1] == 1) builder.append("B相：").append(object.getIntValue("B") + ",");
+        if (xb[2] == 1) builder.append("C相：").append(object.getIntValue("C") + ",");
+        if (xb[3] == 1) builder.append("O相：").append(object.getIntValue("O") + ",");
+        builder.deleteCharAt(builder.length() - 1);
+        return builder.toString();
+    }
+
+    public String getXbLjGzjt() {
+        StringBuilder builder = new StringBuilder("累积跳闸次数：");
+        int[] xb = getXb();
+        JSONObject object = JSON.parseObject(ljtzcs);
+        if (xb[0] == 1) builder.append("A相：").append(object.getIntValue("A") + ",");
+        if (xb[1] == 1) builder.append("B相：").append(object.getIntValue("B") + ",");
+        if (xb[2] == 1) builder.append("C相：").append(object.getIntValue("C") + ",");
+        if (xb[3] == 1) builder.append("O相：").append(object.getIntValue("O") + ",");
+        builder.deleteCharAt(builder.length() - 1);
+        return builder.toString();
+    }
+
+    public boolean checkXbTzcs(String a, String b, String c, String o) {
+        int[] xb = getXb();
+        if (xb[0] == 1 && TextUtils.isEmpty(a)) {
+            return false;
+        }
+        if (xb[1] == 1 && TextUtils.isEmpty(b)) {
+            return false;
+        }
+        if (xb[2] == 1 && TextUtils.isEmpty(c)) {
+            return false;
+        }
+        if (xb[3] == 1 && TextUtils.isEmpty(o)) {
+            return false;
+        }
+        return true;
     }
 }

@@ -1,10 +1,14 @@
 package com.cnksi.sjjc.view.gztz;
 
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.activity.gztz.BHDZJLActivity;
 import com.cnksi.sjjc.databinding.GztzItemBhdzjlSbBinding;
+import com.cnksi.sjjc.inter.SimpleTextWatcher;
 
 import org.xutils.common.util.KeyValue;
 
@@ -33,16 +37,20 @@ public class BhdzjlGroup {
         } else {
             binding.sbmc.setVisible(View.GONE, View.VISIBLE);
         }
-        binding.sbmc.setSelectOnClickListener(view -> {
-            listener.onSelectListener(this,false);
-        });
-        binding.bhsbmc.setSelectOnClickListener(v -> listener.onSelectListener(this,true));
+        binding.sbmc.setSelectOnClickListener(view -> listener.onSelectListener(this, false));
+        binding.bhsbmc.setSelectOnClickListener(v -> listener.onSelectListener(this, true));
         binding.sbmc.getAddButton().setOnClickListener(view -> {
             activity.addOtherDevice();
         });
 
         binding.sbmc.getDeleteButton().setOnClickListener(view -> {
             activity.removeView(this);
+        });
+        binding.bhqdsj.tvValue.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                rebulidStr();
+            }
         });
     }
 
@@ -66,11 +74,30 @@ public class BhdzjlGroup {
     public void setDeviceSelectValue(KeyValue value) {
         binding.sbmc.setKeyValue(value);
     }
+
     public void setBHDeviceSelectValue(KeyValue value) {
         binding.bhsbmc.setKeyValue(value);
     }
 
     public interface onSelctListener {
-        void onSelectListener(BhdzjlGroup group,boolean isBhsb);
+        void onSelectListener(BhdzjlGroup group, boolean isBhsb);
+    }
+
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        String bhxh = binding.bhsbmc.getValueStr();
+        if (!TextUtils.isEmpty(bhxh)) {
+            builder.append(bhxh).append("保护").append(StringUtils.BlankToDefault(binding.bhqdsj.getValueStr(), "  "))
+                    .append("启动保护,");
+            for (BhdzjlYjGroup list : lists) {
+                builder.append(list.toString());
+            }
+            return builder.toString();
+        }
+        return "";
+    }
+
+    public void rebulidStr() {
+        activity.rebuildStr();
     }
 }

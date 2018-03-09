@@ -168,14 +168,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="138px"
                 app:select_type="ymdhm"
-                app:title_str="*恢复送电时间"/>
+                app:title_str="恢复送电时间"/>
 
             <com.cnksi.sjjc.view.gztz.SelectTimeGroup
                 android:id="@+id/zhycdxsj"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
                 app:select_type="ymdhm"
-                app:title_str="*最后一次大修时间"/>
+                app:title_str="最后一次大修时间"/>
 
             <com.cnksi.sjjc.view.gztz.SelectGroup
                 android:id="@+id/bhsbmc"
@@ -305,19 +305,19 @@
                 android:id="@+id/gzlbqmc"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:title_str="*故障滤波器名称"/>
+                app:title_str="故障滤波器名称"/>
 
             <com.cnksi.sjjc.view.gztz.TextGroup
                 android:id="@+id/gzlbqfx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title_str="*故障滤波器分析"/>
+                app:title_str="故障滤波器分析"/>
 
             <com.cnksi.sjjc.view.gztz.TextGroup
                 android:id="@+id/gzlbqcj"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title_str="*故障滤波器测距"/>
+                app:title_str="故障滤波器测距"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
