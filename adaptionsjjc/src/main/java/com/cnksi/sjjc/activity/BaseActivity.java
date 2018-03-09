@@ -134,7 +134,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
     protected String voicer = "xiaoyan";
 
-    protected static HashMap<String, Object> dataMap = new HashMap<String, Object>();
+    protected static HashMap<String, Object> dataMap = new HashMap<>();
     protected ExecutorService mFixedThreadPoolExecutor = mExcutorService;
 
     @ViewInject(R.id.btn_back)

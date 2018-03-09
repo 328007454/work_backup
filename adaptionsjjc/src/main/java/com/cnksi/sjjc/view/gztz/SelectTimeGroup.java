@@ -46,7 +46,7 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
             String name = attributes.getString(R.styleable.SelectTimeGroup_title_str);
             tvName.setText(name);
             String str = attributes.getString(R.styleable.SelectTimeGroup_select_hint_str);
-            str = StringUtils.BlankToDefault(str, "请选择" );
+            str = StringUtils.BlankToDefault(str, "请选择");
             tvValue.setHint(str);
         }
         switch (type) {
@@ -67,7 +67,10 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
                 }));
                 break;
             case 2:
-                DialogUtils.showTimePickerDialog((Activity) context, false, (result, position) -> tvValue.setText(result));
+                tvValue.setOnClickListener(v -> DialogUtils.showTimePickerDialog((Activity) context, false, (result, position) -> tvValue.setText(result)));
+                break;
+            case 3:
+                tvValue.setOnClickListener(v -> DialogUtils.showTimePickerDialog((Activity) context, true, (result, position) -> tvValue.setText(result)));
         }
     }
 

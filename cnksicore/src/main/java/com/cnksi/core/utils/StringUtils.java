@@ -619,12 +619,13 @@ public class StringUtils {
         if (TextUtils.isEmpty(str)) {
             for (String s : defaultValue) {
                 if (!TextUtils.isEmpty(s)) {
-                    rs = s;
-                    break;
+                    return s;
                 }
             }
-        }
-        return rs;
+            if (defaultValue.length > 0) return defaultValue[defaultValue.length - 1];
+            else return str;
+        } else
+            return rs;
     }
 
     public static String NullToBlank(String str) {

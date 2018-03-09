@@ -32,4 +32,13 @@ public class GZTZSbgzjlService extends BaseService<SbjcGztzjl> {
         }
         return null;
     }
+
+    public SbjcGztzjl findLastByDeviceId(String deviceId, String reportId) {
+        try {
+            return selector().and(SbjcGztzjl.REPORTID, "!=", reportId).and(SbjcGztzjl.DLQBH, "=", deviceId).orderBy(SbjcGztzjl.CREATE_TIME, true).findFirst();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

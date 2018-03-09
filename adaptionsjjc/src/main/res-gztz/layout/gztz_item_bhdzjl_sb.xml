@@ -9,6 +9,11 @@
         android:background="@color/white"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20px"
+            android:background="@color/gray_background_color"/>
+
         <com.cnksi.sjjc.view.gztz.SelectGroup
             android:id="@+id/sbmc"
             android:layout_width="match_parent"
@@ -29,7 +34,7 @@
             android:id="@+id/bhqdsj"
             android:layout_width="match_parent"
             android:layout_height="138px"
-            app:select_type="ymdhm"
+            app:select_type="hmsS"
             app:title_str="保护启动时间"/>
 
         <LinearLayout

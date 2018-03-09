@@ -63,6 +63,12 @@ public class SbjcGztzjl {
     public static final String SBXB = "sbxb";
     @Column(name = SBXB)
     public String sbxb;
+    /**
+     * 设备相别
+     */
+    public static final String SBXBK = "sbxb_k";
+    @Column(name = SBXBK)
+    public String sbxbK;
 
     /**
      * 是否动作：Y（是）/N（否）
@@ -124,6 +130,12 @@ public class SbjcGztzjl {
     public static final String GZSDTQ = "gzsdtq";
     @Column(name = GZSDTQ)
     public String gzsdtq;
+    /**
+     * 故障时段天气
+     */
+    public static final String GZSDTQK = "gzsdtq_k";
+    @Column(name = GZSDTQK)
+    public String gzsdtqK;
 
     /**
      * 故障是否越级（Y/N）
@@ -202,7 +214,10 @@ public class SbjcGztzjl {
     public static final String CHZDZQK = "chzdzqk";
     @Column(name = CHZDZQK)
     public String chzdzqk;
-
+    /***/
+    public static final String CHZDZQK_K = "chzdzqk_k";
+    @Column(name = CHZDZQK_K)
+    public String chzdzqkK  ;
     /**
      * 各项跳闸次数（json格式）
      */
@@ -223,7 +238,10 @@ public class SbjcGztzjl {
     public static final String GZDL = "gzdl";
     @Column(name = GZDL)
     public String gzdl;
-
+    /**累计值*/
+    public static final String LJZ = "ljz";
+    @Column(name = LJZ)
+    public String ljz  ;
     /**
      * 二次故障电流
      */

@@ -48,14 +48,11 @@ public class TZQKActivity extends BaseActivity {
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
-        binding.gztysb.setSelectOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
-                intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
-                intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-                startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
-            }
+        binding.gztysb.setSelectOnClickListener(v -> {
+            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
+            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
+            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
         });
         binding.gzdydj.setType("dydj");
         binding.gzlx.setType("gzlx");
@@ -77,6 +74,7 @@ public class TZQKActivity extends BaseActivity {
                 binding.gztysb.setVisibility(View.GONE);
             }
         }, true);
+        binding.sbxb.setType("sbxb");
     }
 
     private void initData() {
@@ -85,14 +83,14 @@ public class TZQKActivity extends BaseActivity {
         binding.kgdlqbh.setKeyValue(new KeyValue(sbgzjl.dlqbh, sbgzjl.dlqmc));
         binding.dlqtzqk.setValueStr(sbgzjl.bhDlqtzqk);
         binding.yyjjcqk.setValueStr(sbgzjl.bhYyjjcqk);
-        binding.sbxb.setValueStr(sbgzjl.sbxb);
+        binding.sbxb.setKeyValue(new KeyValue(sbgzjl.sbxbK, sbgzjl.sbxb));
         binding.sfdz.setValueStr(sbgzjl.sfdz);
         binding.kgdzpj.setValueStr(sbgzjl.dzpj);
         binding.sfzngz.setValueStr(sbgzjl.sfzngz);
         binding.gzfssj.setValueStr(sbgzjl.gzfssj);
         binding.gzdydj.setKeyValue(new KeyValue(sbgzjl.gzdydjK, sbgzjl.gzdydj));
         binding.gzlx.setKeyValue(new KeyValue(sbgzjl.gzlxK, sbgzjl.gzlx));
-        binding.gzsdtq.setKeyValue(new KeyValue("", sbgzjl.gzsdtq));
+        binding.gzsdtq.setKeyValue(new KeyValue(sbgzjl.gzsdtqK, sbgzjl.gzsdtq));
         binding.gzsfyj.setValueStr(sbgzjl.gzsfyj);
         binding.gzlb.setKeyValue(new KeyValue(sbgzjl.gzlbK, sbgzjl.gzlb));
         binding.sftz.setValueStr(sbgzjl.sftz);
@@ -114,7 +112,7 @@ public class TZQKActivity extends BaseActivity {
         KeyValue dlqbh = binding.kgdlqbh.getValue();
         String dlqtzqk = binding.dlqtzqk.getValueStr();
         String yyjjcqk = binding.yyjjcqk.getValueStr();
-        String sbxb = binding.sbxb.getValueStr();
+        KeyValue sbxb = binding.sbxb.getValue();
         String sfdz = binding.sfdz.getValueStr();
         String kgdzpj = binding.kgdzpj.getValueStr();
         String sfzngz = binding.sfzngz.getValueStr();
@@ -129,7 +127,7 @@ public class TZQKActivity extends BaseActivity {
         String sfty = binding.sfty.getValueStr();
         String dlqjcqk = binding.dlqjcqk.getValueStr();
         if (isCheck) {
-            if (dlqbh == null || StringUtils.isHasOneEmpty(dlqtzqk, yyjjcqk, sbxb, sfdz, kgdzpj, sfzngz, gzfssj)) {
+            if (dlqbh == null || sbxb == null || StringUtils.isHasOneEmpty(dlqtzqk, yyjjcqk, sfdz, kgdzpj, sfzngz, gzfssj)) {
                 CToast.showShort(this, "请检查带星号的项目是否均已填写！");
                 return false;
             }
@@ -143,6 +141,7 @@ public class TZQKActivity extends BaseActivity {
             gzlx = nullTo(gzlx);
             gzsdtq = nullTo(gzsdtq);
             gzlb = nullTo(gzlb);
+            sbxb = nullTo(sbxb);
         }
         KeyValue tyfw = null;
         KeyValue gztysb = null;
@@ -166,7 +165,8 @@ public class TZQKActivity extends BaseActivity {
         sbgzjl.dlqbh = dlqbh.key;
         sbgzjl.dlqmc = dlqbh.getValueStr();
         sbgzjl.kgtzBz = bz;
-        sbgzjl.sbxb = sbxb;
+        sbgzjl.sbxb = sbxb.getValueStr();
+        sbgzjl.sbxbK = sbxb.key;
         sbgzjl.sfdz = sfdz;
         sbgzjl.dzpj = kgdzpj;
         sbgzjl.dlqjcqk = dlqjcqk;
@@ -183,6 +183,7 @@ public class TZQKActivity extends BaseActivity {
         sbgzjl.gzlxK = gzlx.key;
         sbgzjl.sfzngz = sfzngz;
         sbgzjl.gzsdtq = gzsdtq.getValueStr();
+        sbgzjl.gzsdtqK = gzsdtq.key;
         sbgzjl.gzsfyj = gzsfyj;
         sbgzjl.sfty = sfty;
         sbgzjl.sftz = sftz;

@@ -17,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="138px"
                 app:select_hint_str="请选择"
-                app:title_str="重合闸动作情况"
+                app:title_str="*重合闸动作情况"
                 />
 
             <com.cnksi.sjjc.view.UnderLineLinearLayout
@@ -28,10 +28,11 @@
 
                 <TextView
                     style="@style/layout_gztz_title"
-                    android:text="各项跳闸次数："
+                    android:text="*各项跳闸次数："
                     />
 
                 <LinearLayout
+                    android:id="@+id/ll_a"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -49,12 +50,13 @@
                         android:id="@+id/gxtzcs_a"
                         style="@style/layout_gztz_num_input"
                         android:layout_marginLeft="10px"
+                        android:inputType="number"
                         android:text=""
                         />
                 </LinearLayout>
 
                 <LinearLayout
-
+                    android:id="@+id/ll_b"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -72,11 +74,13 @@
                         android:id="@+id/gxtzcs_b"
                         style="@style/layout_gztz_num_input"
                         android:layout_marginLeft="10px"
+                        android:inputType="number"
                         android:text=""
                         />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_c"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -94,58 +98,49 @@
                         android:id="@+id/gxtzcs_c"
                         style="@style/layout_gztz_num_input"
                         android:layout_marginLeft="10px"
+                        android:inputType="number"
+                        android:text=""
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_o"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/_30px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/layout_gztz_title"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="3px"
+                        android:text="O"
+                        />
+
+                    <com.cnksi.sjjc.view.ContainsEmojiEditText
+                        android:id="@+id/gxtzcs_o"
+                        style="@style/layout_gztz_num_input"
+                        android:layout_marginLeft="10px"
+                        android:inputType="number"
                         android:text=""
                         />
                 </LinearLayout>
             </com.cnksi.sjjc.view.UnderLineLinearLayout>
 
-            <com.cnksi.sjjc.view.UnderLineLinearLayout
+            <com.cnksi.sjjc.view.gztz.TzcsGroup
+                android:id="@+id/ljtzcs"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                app:drawUnderLine="true">
+                android:gravity="center_vertical"/>
 
-                <TextView
-                    style="@style/layout_gztz_title"
-                    android:text="累积跳闸次数："
-                    />
 
-                <TextView
-                    android:id="@+id/ljtzcs_a"
-                    style="@style/layout_gztz_title"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="3px"
-                    android:layout_weight="1"
-                    android:text="A"
-                    />
+            <com.cnksi.sjjc.view.gztz.GzdlGroup
+                android:id="@+id/gzdl"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                />
 
-                <TextView
-                    android:id="@+id/ljtzcs_b"
-                    style="@style/layout_gztz_title"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="3px"
-                    android:layout_weight="1"
-                    android:text="B"
-                    />
-
-                <TextView
-                    android:id="@+id/ljtzcs_c"
-                    style="@style/layout_gztz_title"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="3px"
-                    android:layout_weight="1"
-                    android:text="C"
-                    />
-
-                <ImageView
-                    android:id="@+id/ljtzcs_modify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20px"
-                    android:layout_marginRight="@dimen/_30px"
-                    app:srcCompat="@drawable/ic_copy_hover"/>
-            </com.cnksi.sjjc.view.UnderLineLinearLayout>
 
             <com.cnksi.sjjc.view.UnderLineLinearLayout
                 android:layout_width="match_parent"
@@ -155,46 +150,7 @@
 
                 <TextView
                     style="@style/layout_gztz_title"
-                    android:text="故障电流（KA）："
-                    />
-
-                <com.cnksi.sjjc.view.ContainsEmojiEditText
-                    android:id="@+id/gzdl"
-                    style="@style/layout_gztz_num_input"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="10px"
-                    android:layout_weight="-1"
-                    android:text=""
-                    />
-
-                <TextView
-                    style="@style/layout_gztz_title"
-                    android:layout_marginLeft="@dimen/_20px"
-                    android:text="累计值"
-                    />
-
-                <com.cnksi.sjjc.view.gztz.InputCountView
-                    android:id="@+id/ljz"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_20px"
-                    android:gravity="center_vertical"/>
-
-                <TextView
-                    style="@style/layout_gztz_title"
-                    android:text="KA"
-                    />
-            </com.cnksi.sjjc.view.UnderLineLinearLayout>
-
-            <com.cnksi.sjjc.view.UnderLineLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="138px"
-                android:orientation="horizontal"
-                app:drawUnderLine="true">
-
-                <TextView
-                    style="@style/layout_gztz_title"
-                    android:text="二次故障电流（A）："
+                    android:text="*二次故障电流（A）："
                     />
 
                 <com.cnksi.sjjc.view.ContainsEmojiEditText
@@ -212,14 +168,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="138px"
                 app:select_type="ymdhm"
-                app:title_str="恢复送电时间"/>
+                app:title_str="*恢复送电时间"/>
 
             <com.cnksi.sjjc.view.gztz.SelectTimeGroup
                 android:id="@+id/zhycdxsj"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
                 app:select_type="ymdhm"
-                app:title_str="最后一次大修时间"/>
+                app:title_str="*最后一次大修时间"/>
 
             <com.cnksi.sjjc.view.gztz.SelectGroup
                 android:id="@+id/bhsbmc"
@@ -238,7 +194,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="138px"
                 app:select_type="ymdhm"
-                app:title_str="动作时间"/>
+                app:title_str="*动作时间"/>
 
             <com.cnksi.sjjc.view.UnderLineLinearLayout
                 android:layout_width="match_parent"
@@ -248,7 +204,7 @@
 
                 <TextView
                     style="@style/layout_gztz_title"
-                    android:text="整定区（A）："
+                    android:text="*整定区（A）："
                     />
 
                 <com.cnksi.sjjc.view.ContainsEmojiEditText
@@ -256,6 +212,7 @@
                     style="@style/layout_gztz_num_input"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="10px"
+                    android:inputType="number"
                     android:layout_weight="-1"
                     android:text=""
                     />
@@ -265,25 +222,25 @@
                 android:id="@+id/ldkgqk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title_str="联动开关情况"/>
+                app:title_str="*联动开关情况"/>
 
             <com.cnksi.sjjc.view.gztz.SingleRadioGroup
                 android:id="@+id/yqtbhph"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:title_str="与其他保护配合"/>
+                app:title_str="*与其他保护配合"/>
 
             <com.cnksi.sjjc.view.gztz.SingleRadioGroup
                 android:id="@+id/ylbzzph"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:title_str="与滤波、子站配合"/>
+                app:title_str="*与滤波、子站配合"/>
 
             <com.cnksi.sjjc.view.gztz.SingleRadioGroup
                 android:id="@+id/yjkxtph"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:title_str="与监控系统配合"/>
+                app:title_str="*与监控系统配合"/>
 
             <com.cnksi.sjjc.view.UnderLineLinearLayout
                 android:layout_width="match_parent"
@@ -295,6 +252,47 @@
                     style="@style/layout_gztz_title"
                     android:text="附件（现场照片）"
                     />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_show_pic"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/iv_take_pic"
+                        android:scaleType="fitXY"
+                        app:layout_auto_baseheight="width"
+                         />
+
+                    <TextView
+                        android:id="@+id/tv_pic_num"
+                        android:layout_width="@dimen/new_text_width_and_height"
+                        android:layout_height="@dimen/new_text_width_and_height"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="140px"
+                        android:layout_marginTop="20px"
+                        android:background="@drawable/text_background_color"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/new_text_picture_size"
+                        app:layout_auto_baseheight="width" />
+
+                    <ImageView
+                        android:id="@+id/iv_take_pic"
+                        style="@style/svgButtonCamera"
+                        android:layout_width="135px"
+                        android:layout_height="135px"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20px"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@null"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/camera_button_background" />
+                </RelativeLayout>
             </com.cnksi.sjjc.view.UnderLineLinearLayout>
 
             <com.cnksi.sjjc.view.gztz.TextGroup
@@ -307,19 +305,19 @@
                 android:id="@+id/gzlbqmc"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:title_str="故障滤波器名称"/>
+                app:title_str="*故障滤波器名称"/>
 
             <com.cnksi.sjjc.view.gztz.TextGroup
                 android:id="@+id/gzlbqfx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title_str="故障滤波器分析"/>
+                app:title_str="*故障滤波器分析"/>
 
             <com.cnksi.sjjc.view.gztz.TextGroup
                 android:id="@+id/gzlbqcj"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title_str="故障滤波器测距"/>
+                app:title_str="*故障滤波器测距"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

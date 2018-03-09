@@ -1,13 +1,7 @@
 package com.cnksi.sjjc.activity.gztz;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cnksi.sjjc.Config;
@@ -15,16 +9,13 @@ import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzjlBinding;
-import com.cnksi.sjjc.databinding.ActivityGztzBhdzqkBinding;
-import com.cnksi.sjjc.databinding.GztzItemBhdzjlSbBinding;
-import com.cnksi.sjjc.databinding.GztzItemBhdzjlYjlxBinding;
-import com.cnksi.sjjc.databinding.GztzItemSelectGroupBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
-import com.cnksi.sjjc.view.gztz.SelectGroup;
+import com.cnksi.sjjc.view.gztz.BhdzjlGroup;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +30,8 @@ import java.util.List;
 public class BHDZJLActivity extends BaseActivity {
     ActivityGztzBhdzjlBinding binding;
     TextView view;
+    List<BhdzjlGroup> groups = new ArrayList<>();
+    BhdzjlGroup selectGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,77 +55,28 @@ public class BHDZJLActivity extends BaseActivity {
 
     private void saveData() {
 
-
     }
 
     /**
      * 点击设备名称后的+号则增加一次设备整体布局
      */
-    private void addOtherDevice() {
-        GztzItemBhdzjlSbBinding sbBinding = GztzItemBhdzjlSbBinding.inflate(LayoutInflater.from(_this));
-        ImageButton addBt = sbBinding.sbmc.getAddButton();
-        ImageButton delBt = sbBinding.sbmc.getDeleteButton();
-        //首次进来需要加载一次原件类型布局
-        addOtherYJLX(sbBinding);
-        binding.itemDevice.addView(sbBinding.getRoot());
-
-        if (binding.itemDevice.getChildCount() == 1) {
-            sbBinding.sbmc.setVisible(View.VISIBLE, View.GONE);
-        } else {
-            sbBinding.sbmc.setVisible(View.GONE, View.VISIBLE);
-        }
-
-        addBt.setTag(binding.itemDevice.getChildCount());
-        delBt.setTag(sbBinding);
-
-        sbBinding.sbmc.getTvValueView().setOnClickListener(view -> {
+    public void addOtherDevice() {
+        BhdzjlGroup group = new BhdzjlGroup(this, binding.itemDevice);
+        group.setListener((group1, isBhsb) -> {
+            selectGroup = group1;
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
-            this.view = (TextView) view;
+            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0));
         });
-        sbBinding.sbmc.getAddButton().setOnClickListener(view -> {
-            addOtherDevice();
-        });
-
-        sbBinding.sbmc.getDeleteButton().setOnClickListener(view -> {
-            GztzItemBhdzjlSbBinding sbBinding1 = (GztzItemBhdzjlSbBinding) view.getTag();
-            binding.itemDevice.removeView(sbBinding1.getRoot());
-        });
-
+        groups.add(group);
     }
 
-    /**
-     * 设备里的保护原件类型＋号点击 则增加一次相关原件布局
-     *
-     * @param sbBinding
-     */
-    private void addOtherYJLX(GztzItemBhdzjlSbBinding sbBinding) {
-        GztzItemBhdzjlYjlxBinding yjlxBinding = GztzItemBhdzjlYjlxBinding.inflate(LayoutInflater.from(_this));
-        sbBinding.yjlx.addView(yjlxBinding.getRoot());
-        LinearLayout parentLayout = (LinearLayout) yjlxBinding.getRoot().getParent();
-        if (parentLayout.getChildCount() == 1) {
-            yjlxBinding.add.setVisibility(View.VISIBLE);
-            yjlxBinding.delete.setVisibility(View.GONE);
-            yjlxBinding.add.setTag(sbBinding);
-        } else {
-            yjlxBinding.add.setVisibility(View.GONE);
-            yjlxBinding.delete.setVisibility(View.VISIBLE);
-        }
-        yjlxBinding.add.setTag(sbBinding);
-        yjlxBinding.delete.setTag(yjlxBinding);
-
-        yjlxBinding.add.setOnClickListener(view -> {
-            GztzItemBhdzjlSbBinding sbBinding1 = (GztzItemBhdzjlSbBinding) view.getTag();
-            addOtherYJLX(sbBinding1);
-        });
-        yjlxBinding.delete.setOnClickListener(view -> {
-            GztzItemBhdzjlYjlxBinding yjlxBinding1 = (GztzItemBhdzjlYjlxBinding) view.getTag();
-            LinearLayout layout = (LinearLayout) yjlxBinding1.getRoot().getParent();
-            layout.removeView(yjlxBinding1.getRoot());
-        });
+    public void removeView(BhdzjlGroup v) {
+        groups.remove(v);
+        binding.itemDevice.removeView(v.getRoot());
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -141,7 +85,14 @@ public class BHDZJLActivity extends BaseActivity {
                 case Config.ACTIVITY_CHOSE_DEVICE:
                     DbModel model = (DbModel) dataMap.get(Config.DEVICE_DATA);
                     if (model != null) {
-                        view.setText(model.getString(Device.NAME));
+                        selectGroup.setDeviceSelectValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                    }
+                    break;
+                //选择保护设备
+                case Config.ACTIVITY_CHOSE_DEVICE + 1:
+                    model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    if (model != null) {
+                        selectGroup.setBHDeviceSelectValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
                     }
                     break;
             }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,7 +85,8 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
     }
 
     public void setKeyValue(KeyValue keyValue) {
-        this.keyValue = keyValue;
+        if (!TextUtils.isEmpty(keyValue.key))
+            this.keyValue = keyValue;
         tvValue.setText(keyValue.getValueStr());
     }
 

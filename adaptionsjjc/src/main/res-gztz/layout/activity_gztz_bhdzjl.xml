@@ -2,10 +2,10 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
-        android:background="@color/white"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <LinearLayout
 
@@ -14,12 +14,17 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:background="@color/white"
                 android:id="@+id/item_device"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical"
                 />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20px"
+                android:background="@color/gray_background_color"/>
 
             <com.cnksi.sjjc.view.gztz.TextGroup
                 android:id="@+id/bhdzqk"

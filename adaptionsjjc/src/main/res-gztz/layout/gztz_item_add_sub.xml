@@ -19,9 +19,10 @@
             android:text="—"
             android:textSize="44px"/>
 
-        <View android:layout_width="@dimen/line_height"
-              android:background="@color/line_color"
-              android:layout_height="match_parent"/>
+        <View
+            android:layout_width="@dimen/line_height"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
 
         <EditText
             android:id="@+id/et_value"
@@ -30,14 +31,14 @@
             android:layout_weight="2"
             android:background="@null"
             android:gravity="center"
-            android:inputType="numberSigned"
+            android:inputType="numberDecimal"
             android:singleLine="true"
             android:textSize="38px"/>
 
         <View
-              android:layout_width="@dimen/line_height"
-              android:background="@color/line_color"
-              android:layout_height="match_parent"/>
+            android:layout_width="@dimen/line_height"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"/>
 
         <TextView
             android:id="@+id/bt_add"

@@ -35,11 +35,12 @@
                 app:title_str="*原因及检查情况"/>
 
 
-            <com.cnksi.sjjc.view.gztz.SbxbGroup
+            <com.cnksi.sjjc.view.gztz.SelectGroup
                 android:id="@+id/sbxb"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal"
+                app:title_str="设备相别"/>
 
 
             <com.cnksi.sjjc.view.gztz.SingleRadioGroup
