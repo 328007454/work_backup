@@ -190,14 +190,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
 
     @Override
     public void OnGroupItemClick(Spacing mSpacing, View v, int groupPosition) {
-        // TODO Auto-generated method stub
-        //	currentClickGroupPosition = groupPosition;
-        //	int childCount = mDeviceExpandableAdapater.getChildrenCountByGroup(groupPosition);
-        //	if (childCount == 1) {
-        //		OnItemViewClick(mElvContainer, v, mDeviceExpandableAdapater.getChild(groupPosition, 0), mDeviceExpandableAdapater.getGroup(groupPosition));
-        //	} else {
         mExpadableListBinding.elvContainer.expandGroup(groupPosition, true);
-//		}
     }
 
     @Override

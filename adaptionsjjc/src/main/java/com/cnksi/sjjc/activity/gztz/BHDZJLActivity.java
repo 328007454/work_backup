@@ -28,10 +28,10 @@ import java.util.List;
  * @since 1.0
  */
 public class BHDZJLActivity extends BaseActivity {
-    ActivityGztzBhdzjlBinding binding;
-    TextView view;
-    List<BhdzjlGroup> groups = new ArrayList<>();
-    BhdzjlGroup selectGroup;
+    private ActivityGztzBhdzjlBinding binding;
+    private List<BhdzjlGroup> groups = new ArrayList<>();
+    private BhdzjlGroup selectGroup;
+    public static final String DEVICE_BIGID = "bigid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +53,6 @@ public class BHDZJLActivity extends BaseActivity {
         addOtherDevice();
     }
 
-    private void saveData() {
-
-    }
 
     /**
      * 点击设备名称后的+号则增加一次设备整体布局
@@ -64,10 +61,10 @@ public class BHDZJLActivity extends BaseActivity {
         BhdzjlGroup group = new BhdzjlGroup(this, binding.itemDevice);
         group.setListener((group1, isBhsb) -> {
             selectGroup = group1;
-            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
-            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
-            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0));
+            Intent intentDevices = new Intent(_this, BHDZJLXZSBActivity.class);
+            String device = "5,14";
+            intentDevices.putExtra(DEVICE_BIGID, device);
+            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
         groups.add(group);
     }
@@ -97,6 +94,10 @@ public class BHDZJLActivity extends BaseActivity {
                     break;
             }
         }
+    }
+
+    private void saveData() {
+
     }
 }
 

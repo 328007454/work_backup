@@ -135,6 +135,11 @@ public class Device extends BaseModel {
     @Column(name = NAME_SHORT)
     public String name_short;
 
+    // 设备简称名称
+    public static final String PMS_NAME = "pms_name";
+    @Column(name = PMS_NAME)
+    public String pmsName;
+
     public static final String CREATETIME = "createtime";
     @Column(name = CREATETIME)
     public String createtime;
