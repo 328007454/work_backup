@@ -4,16 +4,18 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cnksi.core.adapter.ViewHolder;
 import com.cnksi.core.utils.DisplayUtil;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BaseAdapter;
 import com.cnksi.sjjc.service.gztz.GZTZSjlyService;
@@ -63,7 +65,8 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         if (attributes != null) {
             title = attributes.getString(R.styleable.SelectGroup_title_str);
             tvName.setText(title);
-            tvValue.setHint(attributes.getString(R.styleable.SelectGroup_select_hint_str));
+            String hint = attributes.getString(R.styleable.SelectGroup_select_hint_str);
+            tvValue.setHint(StringUtils.BlankToDefault(hint, "请选择"));
         }
         tvValue.setOnClickListener(v -> show());
     }
@@ -82,18 +85,20 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
     }
 
     public void setKeyValue(KeyValue keyValue) {
-        this.keyValue = keyValue;
+        if (!TextUtils.isEmpty(keyValue.key))
+            this.keyValue = keyValue;
         tvValue.setText(keyValue.getValueStr());
     }
 
     private void initDialog() {
+        List<KeyValue> keyValues = GZTZSjlyService.getInstance().findByType(type);
         int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
-        int dialogHeight = DisplayUtil.getInstance().getHeight() * 3 / 5;
+        int dialogHeight = keyValues.size() > 5 ? DisplayUtil.getInstance().getHeight() * 3 / 5 :
+                ViewGroup.LayoutParams.WRAP_CONTENT;
         ViewHolder holder = new ViewHolder(getContext(), this, R.layout.content_list_dialog, false);
         AutoUtils.autoSize(holder.getRootView());
         ListView lv = holder.getView(R.id.lv_container);
         holder.setText(R.id.tv_dialog_title, title);
-        List<KeyValue> keyValues = GZTZSjlyService.getInstance().findByType(type);
         adapter = new BaseAdapter<KeyValue>(getContext(), keyValues, R.layout.dialog_content_child_item) {
             @Override
             public void convert(com.cnksi.sjjc.adapter.ViewHolder holder, KeyValue item, int position) {
@@ -101,12 +106,9 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
             }
         };
         //设置adapter的listView点击事件
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setKeyValue((KeyValue) adapter.getItem(position));
-                selectDialog.dismiss();
-            }
+        lv.setOnItemClickListener((parent, view, position, id) -> {
+            setKeyValue((KeyValue) adapter.getItem(position));
+            selectDialog.dismiss();
         });
         lv.setAdapter(adapter);
         selectDialog = DialogUtils.createDialog(getContext(), holder, dialogWidth, dialogHeight, true);

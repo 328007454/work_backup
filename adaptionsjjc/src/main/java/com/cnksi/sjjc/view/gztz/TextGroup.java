@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -37,7 +38,7 @@ public class TextGroup extends UnderLineLinearLayout {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
         setDrawUnderLine(true);
-        setPadding(AutoUtils.getPercentHeightSize(30),0,0,0);
+        setPadding(AutoUtils.getPercentHeightSize(30), 0, 0, 0);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_text_group, this, true);
         editText = (EditText) findViewById(R.id.et_input);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -46,9 +47,19 @@ public class TextGroup extends UnderLineLinearLayout {
             String string = attributes.getString(R.styleable.TextGroup_title_str);
             if (!TextUtils.isEmpty(string)) {
                 tvName.setText(string);
-                editText.setHint("请输入" + string);
+                editText.setHint("请输入");
             }
+            string = attributes.getString(R.styleable.TextGroup_default_str);
+            editText.setText(StringUtils.NullToBlank(string));
         }
+    }
 
+    public String getValueStr() {
+        return editText.getText().toString();
+    }
+
+    public void setValueStr(String s) {
+        if (s == null) return;
+        editText.setText(s);
     }
 }

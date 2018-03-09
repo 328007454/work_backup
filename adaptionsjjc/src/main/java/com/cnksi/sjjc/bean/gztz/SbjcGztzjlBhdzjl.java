@@ -19,15 +19,10 @@ public class SbjcGztzjlBhdzjl{
 	@Column(name = REPORTID)
 	public String reportid  ;
 	
-	/**保护动作时间*/
-	public static final String BHDZSJ = "bhdzsj";
-	@Column(name = BHDZSJ)
-	public String bhdzsj  ;
-	
-	/**整定区*/
-	public static final String ZDQ = "zdq";
-	@Column(name = ZDQ)
-	public String zdq  ;
+	/**故障跳闸id*/
+	public static final String GZTZJL_ID = "gztzjl_id";
+	@Column(name = GZTZJL_ID)
+	public String gztzjlId  ;
 	
 	/***/
 	public static final String SBMC = "sbmc";
@@ -40,64 +35,24 @@ public class SbjcGztzjlBhdzjl{
 	public String sbmcK  ;
 	
 	/**保护设备名称*/
-	public static final String BHSBMC = "bhsbmc";
-	@Column(name = BHSBMC)
-	public String bhsbmc  ;
+	public static final String BH_SBMC = "bh_sbmc";
+	@Column(name = BH_SBMC)
+	public String bhSbmc  ;
 	
-	/***/
-	public static final String BHSBMC_K = "bhsbmc_k";
-	@Column(name = BHSBMC_K)
-	public String bhsbmcK  ;
+	/**设备名称*/
+	public static final String BH_SBMC_K = "bh_sbmc_k";
+	@Column(name = BH_SBMC_K)
+	public String bhSbmcK  ;
 	
-	/**装置型号*/
-	public static final String ZZXH = "zzxh";
-	@Column(name = ZZXH)
-	public String zzxh  ;
+	/**启动时间*/
+	public static final String BHQDSJ = "bhqdsj";
+	@Column(name = BHQDSJ)
+	public String bhqdsj  ;
 	
-	/**动作评价*/
-	public static final String DZPJ = "dzpj";
-	@Column(name = DZPJ)
-	public String dzpj  ;
-	
-	/**联动开关情况*/
-	public static final String LDKGQK = "ldkgqk";
-	@Column(name = LDKGQK)
-	public String ldkgqk  ;
-	
-	/**与其他保护配合（Y/N)*/
-	public static final String YQTBHPH = "yqtbhph";
-	@Column(name = YQTBHPH)
-	public String yqtbhph  ;
-	
-	/**与录波、子站配合*/
-	public static final String YLBZZPH = "ylbzzph";
-	@Column(name = YLBZZPH)
-	public String ylbzzph  ;
-	
-	/**与监控系统配合*/
-	public static final String YJKXTPH = "yjkxtph";
-	@Column(name = YJKXTPH)
-	public String yjkxtph  ;
-	
-	/**检查日期*/
-	public static final String JCRQ = "jcrq";
-	@Column(name = JCRQ)
-	public String jcrq  ;
-	
-	/**检查人*/
-	public static final String JCR = "jcr";
-	@Column(name = JCR)
-	public String jcr  ;
-	
-	/***/
-	public static final String JCR_K = "jcr_k";
-	@Column(name = JCR_K)
-	public String jcrK  ;
-	
-	/**备注*/
-	public static final String BZ = "bz";
-	@Column(name = BZ)
-	public String bz  ;
+	/**保护原件类型及动作时间*/
+	public static final String BHYJLXJDZSJ = "bhyjlxjdzsj";
+	@Column(name = BHYJLXJDZSJ)
+	public String bhyjlxjdzsj  ;
 	
 	/***/
 	public static final String DLT = "dlt";

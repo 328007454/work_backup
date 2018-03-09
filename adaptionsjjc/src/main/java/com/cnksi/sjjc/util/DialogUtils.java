@@ -26,6 +26,7 @@ import com.cnksi.core.view.datepicker.NumericWheelAdapter;
 import com.cnksi.core.view.datepicker.WheelMain;
 import com.cnksi.core.view.datepicker.WheelView;
 import com.cnksi.sjjc.R;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -341,7 +342,9 @@ public class DialogUtils {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Dialog showTimePickerDialog(Activity context, final boolean hasMills, final DialogItemClickListener dialogClickListener) {
         if (context != null && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN || !context.isDestroyed())) {
-            View view = LayoutInflater.from(context).inflate(R.layout.time_picker_layout, null, false);
+            View container = LayoutInflater.from(context).inflate(R.layout.date_picker_layout_dialog, null, false);
+            LinearLayout mLLDateContainer = (LinearLayout) container.findViewById(R.id.ll_date_container);
+            View view = LayoutInflater.from(context).inflate(R.layout.time_picker_layout, mLLDateContainer, true);
             Calendar calendar = Calendar.getInstance();
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int min = calendar.get(Calendar.MINUTE);
@@ -366,37 +369,24 @@ public class DialogUtils {
             wv_second.setLabel("秒");// 添加文字
             wv_second.setCurrentItem(min);
             wm.setText("000");
+            int textSize = AutoUtils.getPercentHeightSizeBigger(54);
+            wv_second.TEXT_SIZE = textSize;
+            wv_hours.TEXT_SIZE = textSize;
+            wv_mins.TEXT_SIZE = textSize;
             final Dialog datePickerDialog = new Dialog(context, R.style.DialogStyle);
-            View container = LayoutInflater.from(context).inflate(R.layout.date_picker_layout_dialog, new ViewGroup(context) {
-                @Override
-                protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
-                }
-            }, false);
-            LinearLayout mLLDateContainer = (LinearLayout) view.findViewById(R.id.ll_date_container);
-            mLLDateContainer.addView(view);
 
-            view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    datePickerDialog.dismiss();
-                    String mimls = com.cnksi.core.utils.StringUtils.BlankToDefault(wm.getText().toString(), "0");
-                    String rs = String.format("%02d", wv_hours.getCurrentItem()) + ":" + String.format("%02d", wv_mins.getCurrentItem()) + ":" + String.format("%02d", wv_second.getCurrentItem());
-                    if (hasMills)
-                        rs = rs + " " + String.format("%03d", Integer.parseInt(mimls));
-                    dialogClickListener.confirm(rs, 0);
-                }
+            container.findViewById(R.id.confirm).setOnClickListener(v -> {
+                datePickerDialog.dismiss();
+                String mimls = com.cnksi.core.utils.StringUtils.BlankToDefault(wm.getText().toString(), "0");
+                String rs = String.format("%02d", wv_hours.getCurrentItem()) + ":" + String.format("%02d", wv_mins.getCurrentItem()) + ":" + String.format("%02d", wv_second.getCurrentItem());
+                if (hasMills)
+                    rs = rs + " " + String.format("%03d", Integer.parseInt(mimls));
+                dialogClickListener.confirm(rs, 0);
             });
-            view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    datePickerDialog.dismiss();
-                }
-            });
+            container.findViewById(R.id.cancel).setOnClickListener(v -> datePickerDialog.dismiss());
             // 设置对话框布局
             datePickerDialog.setContentView(container);
-
             Window mWindow = datePickerDialog.getWindow();
             WindowManager.LayoutParams lp = mWindow.getAttributes();
             lp.width = ScreenUtils.getScreenWidth(context);

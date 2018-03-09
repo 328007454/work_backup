@@ -39,6 +39,15 @@ public class StringUtils {
         return (str == null || str.length() == 0);
     }
 
+    public static boolean isHasOneEmpty(String... arg) {
+        for (String s : arg) {
+            if (isEmpty(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 判断是否是手机号码
      *
@@ -610,12 +619,13 @@ public class StringUtils {
         if (TextUtils.isEmpty(str)) {
             for (String s : defaultValue) {
                 if (!TextUtils.isEmpty(s)) {
-                    rs = s;
-                    break;
+                    return s;
                 }
             }
-        }
-        return rs;
+            if (defaultValue.length > 0) return defaultValue[defaultValue.length - 1];
+            else return str;
+        } else
+            return rs;
     }
 
     public static String NullToBlank(String str) {
@@ -640,6 +650,7 @@ public class StringUtils {
         tempFloat = (float) (Math.round(tempFloat * 100)) / 100;
         return String.valueOf(tempFloat);
     }
+
     /**
      * 检查输入的是否不符合数学意义上的数字
      */

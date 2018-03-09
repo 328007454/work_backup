@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -59,4 +60,29 @@ public class SingleRadioGroup extends UnderLineLinearLayout {
             tvName.setText(title);
         }
     }
+
+    public String getValueStr() {
+        if (buttonA.isChecked()) {
+            return buttonA.getText().toString();
+        }
+        if (buttonB.isChecked())
+            return buttonB.getText().toString();
+        return null;
+    }
+
+    public void setValueStr(String str) {
+        if (TextUtils.equals(buttonA.getText().toString(), str)) {
+            buttonA.setChecked(true);
+        }
+        if (TextUtils.equals(buttonB.getText().toString(), str)) {
+            buttonB.setChecked(true);
+        }
+    }
+
+    public void setOnCheckChangeListener(CompoundButton.OnCheckedChangeListener listener, boolean isA) {
+        if (isA)
+            buttonA.setOnCheckedChangeListener(listener);
+        else buttonB.setOnCheckedChangeListener(listener);
+    }
+
 }
