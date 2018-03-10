@@ -15,7 +15,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -309,27 +308,19 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         final Dialog dialog = DialogUtils.createDialog(mCurrentActivity, binding, true);
         binding.etNewUrl.setText(Config.SYNC_URL);
         binding.etAppId.setText(Config.SYNC_APP_ID);
-        binding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+        binding.btnCancel.setOnClickListener(v -> dialog.dismiss());
+        binding.btnSure.setOnClickListener(v -> {
+            String url = getText(binding.etNewUrl).trim();
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+            } else {
+                url = "http://" + url;
             }
-        });
-        binding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = getText(binding.etNewUrl).trim();
-                if (url.startsWith("http://") || url.startsWith("https://")) {
-                } else {
-                    url = "http://" + url;
-                }
-                Config.SYNC_URL = url;
-                String appId = getText(binding.etAppId);
-                if (!TextUtils.isEmpty(appId)) Config.SYNC_APP_ID = appId;
-                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
-                PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
-                dialog.dismiss();
-            }
+            Config.SYNC_URL = url;
+            String appId = getText(binding.etAppId);
+            if (!TextUtils.isEmpty(appId)) Config.SYNC_APP_ID = appId;
+            PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
+            PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
+            dialog.dismiss();
         });
         PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
         PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
@@ -363,54 +354,51 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         if (AccountUtil.getUtilInstance().JudgeAccountBlocked(mCurrentActivity, autoCompleteTextView.getText().toString())) {
             return;
         }
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                //根据用户名和密码查询
-                Users tempUser = null;
-                try {
-                    tempUser = UserService.getInstance().findUserByNameAndPwd(userName, AESUtil.encode(userPwd));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //查询用户存在
-                if (null != tempUser) {
-                    //判断与第一个用户是否相同
-                    if (null != mCurrentUserOne && mCurrentUserOne.account.equals(tempUser.account)) {
-                        mHandler.sendEmptyMessage(SAME_ACCOUNT);
-                        return;
-                    }
-                    //判断与第二个用户是否相同
-                    if (null != mCurrentUserTwo && mCurrentUserTwo.account.equals(tempUser.account)) {
-                        mHandler.sendEmptyMessage(SAME_ACCOUNT);
-                        return;
-                    }
-                    if (null == mCurrentUserOne) {
-                        mCurrentUserOne = tempUser;
-                        userOnePassword = mEtPassword.getText().toString().trim();
-                        mHandler.sendEmptyMessage(USER_ONE_LOGIN_SUCCESS);
-                    } else if (null == mCurrentUserTwo) {
-                        mCurrentUserTwo = tempUser;
-                        userTwoPassword = mEtPassword.getText().toString().trim();
-                        mHandler.sendEmptyMessage(USER_TWO_LOGIN_SUCCESS);
-                    }
-                }
-                //查询用户不存在
-                else {
-                    //根据用户名查询
-                    tempUser = UserService.getInstance().findUserByAccount(userName);
-                    if (null != tempUser) {
-                        if ("未激活".equalsIgnoreCase(tempUser.pwd))
-                            mHandler.sendEmptyMessage(USER_COUNT_NOT_ACTIVITE);
-                        else {
-                            mHandler.sendEmptyMessage(PWD_ERROR);
-                        }
-                    } else {
-                        mHandler.sendEmptyMessage(NO_SUCH_USER);
-                    }
-                }
-
+        mFixedThreadPoolExecutor.execute(() -> {
+            //根据用户名和密码查询
+            Users tempUser = null;
+            try {
+                tempUser = UserService.getInstance().findUserByNameAndPwd(userName, AESUtil.encode(userPwd));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            //查询用户存在
+            if (null != tempUser) {
+                //判断与第一个用户是否相同
+                if (null != mCurrentUserOne && mCurrentUserOne.account.equals(tempUser.account)) {
+                    mHandler.sendEmptyMessage(SAME_ACCOUNT);
+                    return;
+                }
+                //判断与第二个用户是否相同
+                if (null != mCurrentUserTwo && mCurrentUserTwo.account.equals(tempUser.account)) {
+                    mHandler.sendEmptyMessage(SAME_ACCOUNT);
+                    return;
+                }
+                if (null == mCurrentUserOne) {
+                    mCurrentUserOne = tempUser;
+                    userOnePassword = mEtPassword.getText().toString().trim();
+                    mHandler.sendEmptyMessage(USER_ONE_LOGIN_SUCCESS);
+                } else if (null == mCurrentUserTwo) {
+                    mCurrentUserTwo = tempUser;
+                    userTwoPassword = mEtPassword.getText().toString().trim();
+                    mHandler.sendEmptyMessage(USER_TWO_LOGIN_SUCCESS);
+                }
+            }
+            //查询用户不存在
+            else {
+                //根据用户名查询
+                tempUser = UserService.getInstance().findUserByAccount(userName);
+                if (null != tempUser) {
+                    if ("未激活".equalsIgnoreCase(tempUser.pwd))
+                        mHandler.sendEmptyMessage(USER_COUNT_NOT_ACTIVITE);
+                    else {
+                        mHandler.sendEmptyMessage(PWD_ERROR);
+                    }
+                } else {
+                    mHandler.sendEmptyMessage(NO_SUCH_USER);
+                }
+            }
+
         });
     }
 
@@ -569,12 +557,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         if ("-1".equals(dept_id)) {
             CToast.showLong(mCurrentActivity, "当前登录帐号无任何班组信息！");
         } else
-            mExcutorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    DepartmentService.getInstance().deleteOtherDataByDept(dept_id);
-                }
-            });
+            mExcutorService.execute(() -> DepartmentService.getInstance().deleteOtherDataByDept(dept_id));
     }
 
     /**

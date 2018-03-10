@@ -51,6 +51,7 @@ android {
         versionCode VERSION_CODE as int
         versionName VERSION_NAME
         vectorDrawables.useSupportLibrary = true
+        buildConfigField 'boolean', "HAS_WEB_ASSETS", HAS_WEB_ASSETS
     }
     dataBinding {
         enabled true
@@ -68,6 +69,7 @@ android {
         abortOnError false
     }
     buildTypes {
+
         release {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
             buildConfigField "boolean", "LOG_DEBUG", "false"
@@ -107,6 +109,9 @@ android {
             java.srcDirs = ['src/main/java']
             aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
             res.srcDirs = ['src/main/res', 'src/main/res-gztz']
+            if ("ture"==HAS_WEB_ASSETS)
+            assets.srcDirs=['src/main/assets','src/main/assets-web']
+            else  assets.srcDirs=['src/main/assets']
         }
     }
 //打开泛型和过时API编译报警�?相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391

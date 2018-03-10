@@ -260,6 +260,7 @@ public class CustomApplication extends CoreApplication {
 
     /**
      * 从SDcard的配置文件中载入DbVersion  为了避免每次都要同步表结构的问题。
+     *
      * @return
      */
     private static int getDbVersion() {
@@ -275,6 +276,7 @@ public class CustomApplication extends CoreApplication {
 
     /**
      * 将数据库版本保存到SDCARD上
+     *
      * @param dbVersion
      */
     public static void saveDbVersion(int dbVersion) {
@@ -344,20 +346,19 @@ public class CustomApplication extends CoreApplication {
 
     private void copyAssetsToSDCard() {
         if (PreferencesUtils.getInt(mInstance, "DataVersion", 0) < DataVersion)
-            mExcutorService.execute(new Runnable() {
-                @Override
-                public void run() {
+            mExcutorService.execute(() -> {
+                if (BuildConfig.HAS_WEB_ASSETS) {
                     delAllFile(Config.WWWROOT_FOLDER);
-                    if (copyAssetsToSDCard(mInstance, "www", Config.WWWROOT_FOLDER)) {
-                        PreferencesUtils.put(mInstance, "DataVersion", DataVersion);
+                    if (copyAssetsToSDCard(mInstance, "src/main/assets-web/www", Config.WWWROOT_FOLDER)) {
                         try {
                             XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    copyAssetsToSDCard(mInstance, "database", Config.DATABASE_FOLDER);
                 }
+                copyAssetsToSDCard(mInstance, "database", Config.DATABASE_FOLDER);
+                PreferencesUtils.put(mInstance, "DataVersion", DataVersion);
             });
     }
 
