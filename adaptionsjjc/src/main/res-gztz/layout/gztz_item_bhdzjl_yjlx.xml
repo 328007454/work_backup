@@ -75,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="30px"
                 android:layout_weight="-1"
+                android:inputType="number"
                 android:gravity="center_vertical|left"
                 android:text=""
                 />

@@ -9,7 +9,6 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 import org.xutils.db.table.DbModel;
 
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -265,5 +264,13 @@ public class ReportSignname extends BaseModel {
 
     public boolean isSign() {
         return !(TextUtils.isEmpty(signName) || TextUtils.isEmpty(img));
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

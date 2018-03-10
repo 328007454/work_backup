@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cnksi.sjjc.activity.gztz.BHDZJLActivity;
+import com.cnksi.sjjc.bean.gztz.BhyjBean;
 import com.cnksi.sjjc.databinding.GztzItemBhdzjlYjlxBinding;
 import com.cnksi.sjjc.inter.SimpleTextWatcher;
 
@@ -18,6 +19,7 @@ import com.cnksi.sjjc.inter.SimpleTextWatcher;
  */
 public class BhdzjlYjGroup {
     GztzItemBhdzjlYjlxBinding binding;
+    BhyjBean bhyjBean;
 
     public BhdzjlYjGroup(BHDZJLActivity activity, BhdzjlGroup group) {
         binding = GztzItemBhdzjlYjlxBinding.inflate(activity.getLayoutInflater(), group.binding.yjlx, true);
@@ -49,9 +51,27 @@ public class BhdzjlYjGroup {
         });
     }
 
+    public void setBhyjBean(BhyjBean bhyjBean) {
+        this.bhyjBean = bhyjBean;
+        binding.bhyjlx.setText(bhyjBean.bhyjlx);
+        binding.bhdzsj.setText(bhyjBean.bhdzsj);
+    }
+
+    public BhyjBean getBhyjBean() {
+
+        String lx = binding.bhyjlx.getText().toString();
+        String sj = binding.bhdzsj.getText().toString();
+        if (TextUtils.isEmpty(lx) && TextUtils.isEmpty(sj)) return null;
+        if (bhyjBean == null) bhyjBean = new BhyjBean();
+        bhyjBean.bhdzsj = sj;
+        bhyjBean.bhyjlx = lx;
+        return bhyjBean;
+    }
+
     public View getRoot() {
         return binding.getRoot();
     }
+
 
     @Override
     public String toString() {

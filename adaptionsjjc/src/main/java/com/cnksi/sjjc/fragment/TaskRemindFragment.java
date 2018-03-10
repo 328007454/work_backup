@@ -37,6 +37,7 @@ import com.cnksi.sjjc.activity.PreventAnimalActivity;
 import com.cnksi.sjjc.activity.TaskRemindActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestActivity;
 import com.cnksi.sjjc.activity.batteryactivity.BatteryTestReportActivity;
+import com.cnksi.sjjc.activity.gztz.GZTZReportActivity;
 import com.cnksi.sjjc.activity.gztz.TZQKActivity;
 import com.cnksi.sjjc.activity.hwcw.NewHwcwActivity;
 import com.cnksi.sjjc.activity.hwcw.NewHwcwReportActivity;
@@ -139,52 +140,48 @@ public class TaskRemindFragment extends BaseCoreFragment {
 
     public void query() {
         if (!isOnDetach)
-            mExcutorService.execute(new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        currentFunctionModel = getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
-                        mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
-                        // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
-                        String deparmentId = "";
-                        if (null != mCurrentActivity) {
-                            deparmentId = PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
-                        }
-                        WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1").expr("and bdzid in (select bdzid  from bdz where dept_id = '" + deparmentId + "' ) ");
-                        if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
-                            // 未完成
-                            whereBuilder = whereBuilder.and(Task.STATUS, "<>", Task.TaskStatus.done.name())
-                                    .expr("AND " + Task.SCHEDULE_TIME + ">=" + SqliteUtils.DATE_TIME_START_OF_DAY);
-                        } else if (Config.FINISHED_MODEL.equalsIgnoreCase(currentFunctionModel)) {
-                            // 完成
-                            whereBuilder = whereBuilder.and(Task.STATUS, "=", Task.TaskStatus.done.name());
-                        } else if (Config.OVER_DUE_MODEL.equalsIgnoreCase(currentFunctionModel)) {
-                            // 逾期
-                            whereBuilder = whereBuilder.expr("AND " + Task.SCHEDULE_TIME + "< " + SqliteUtils.DATE_TIME_START_OF_DAY
-                                    + " AND (status = 'doing' OR status = 'undo') ");
-                        }
-                        if (null != mInspectionType) {
-                            whereBuilder.expr("AND " + Task.INSPECTION + " like '%" + mInspectionType.name() + "%'");
-                        }
-                        mDataList = TaskService.getInstance().selector().and(whereBuilder).orderBy(Task.SCHEDULE_TIME).findAll();
-                        // 遍历当前已完成的任务，查询是否有新增缺陷
-                        if (mDataList != null) {
-                            DbModel model = ReportService.getInstance().findDbModelFirst(new SqlInfo("SELECT group_concat(taskid) as rs FROM report where is_upload='N'"));
-                            String rs = model.getString("rs");
-                            if (!TextUtils.isEmpty(rs)) {
-                                String taskIds[] = rs.split(CoreConfig.COMMA_SEPARATOR);
-                                List<String> arr = Arrays.asList(taskIds);
-                                for (int i = 0, count = mDataList.size(); i < count; i++) {
-                                    mDataList.get(i).isUpload = arr.contains(mDataList.get(i).taskid) ? "N" : "Y";
-                                }
+            mExcutorService.execute(() -> {
+                try {
+                    currentFunctionModel = getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
+                    mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
+                    // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
+                    String deparmentId = "";
+                    if (null != mCurrentActivity) {
+                        deparmentId = PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+                    }
+                    WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1").expr("and bdzid in (select bdzid  from bdz where dept_id = '" + deparmentId + "' ) ");
+                    if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
+                        // 未完成
+                        whereBuilder = whereBuilder.and(Task.STATUS, "<>", Task.TaskStatus.done.name())
+                                .expr("AND " + Task.SCHEDULE_TIME + ">=" + SqliteUtils.DATE_TIME_START_OF_DAY);
+                    } else if (Config.FINISHED_MODEL.equalsIgnoreCase(currentFunctionModel)) {
+                        // 完成
+                        whereBuilder = whereBuilder.and(Task.STATUS, "=", Task.TaskStatus.done.name());
+                    } else if (Config.OVER_DUE_MODEL.equalsIgnoreCase(currentFunctionModel)) {
+                        // 逾期
+                        whereBuilder = whereBuilder.expr("AND " + Task.SCHEDULE_TIME + "< " + SqliteUtils.DATE_TIME_START_OF_DAY
+                                + " AND (status = 'doing' OR status = 'undo') ");
+                    }
+                    if (null != mInspectionType) {
+                        whereBuilder.expr("AND " + Task.INSPECTION + " like '%" + mInspectionType.name() + "%'");
+                    }
+                    mDataList = TaskService.getInstance().selector().and(whereBuilder).orderBy(Task.SCHEDULE_TIME).findAll();
+                    // 遍历当前已完成的任务，查询是否有新增缺陷
+                    if (mDataList != null) {
+                        DbModel model = ReportService.getInstance().findDbModelFirst(new SqlInfo("SELECT group_concat(taskid) as rs FROM report where is_upload='N'"));
+                        String rs = model.getString("rs");
+                        if (!TextUtils.isEmpty(rs)) {
+                            String taskIds[] = rs.split(CoreConfig.COMMA_SEPARATOR);
+                            List<String> arr = Arrays.asList(taskIds);
+                            for (int i = 0, count = mDataList.size(); i < count; i++) {
+                                mDataList.get(i).isUpload = arr.contains(mDataList.get(i).taskid) ? "N" : "Y";
                             }
                         }
-                        mHandler.sendEmptyMessage(LOAD_DATA);
-
-                    } catch (DbException e) {
-                        e.printStackTrace();
                     }
+                    mHandler.sendEmptyMessage(LOAD_DATA);
+
+                } catch (DbException e) {
+                    e.printStackTrace();
                 }
             });
     }
@@ -356,7 +353,6 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         break;
                     //室内温湿度记录
                     case SBJC_03:
-//                        intent.setClass(getContext(), JZLFenJieKaiGuanReportActivity.class);
                         intent.setClass(getContext(), IndoorHumitureReportActivity.class);
                         break;
                     //差动保护
@@ -389,6 +385,9 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     case SBJC_07:
                     case SBJC_08:
                         intent.setClass(getContext(), CopyValueReportActivity.class);
+                        break;
+                    case SBJC_KGGZTZJL:
+                        intent.setClass(getContext(), GZTZReportActivity.class);
                         break;
                     default:
                         throw new RuntimeException("异常的数据检测类型");

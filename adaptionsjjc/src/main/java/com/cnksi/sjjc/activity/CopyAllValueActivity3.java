@@ -28,7 +28,6 @@ import com.cnksi.sjjc.adapter.TreeNode;
 import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.CopyResult;
 import com.cnksi.sjjc.databinding.ActivityCopyDialogBinding;
-import com.cnksi.sjjc.inter.CopyItemLongClickListener;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.processor.CopyDataInterface;
 import com.cnksi.sjjc.processor.ProcessorFactory;
@@ -177,26 +176,13 @@ public class CopyAllValueActivity3 extends BaseActivity {
 
         data = new ArrayList<>();
         copyViewUtil = new CopyViewUtil();
-        copyViewUtil.setItemLongClickListener(new CopyItemLongClickListener<CopyResult>() {
-            @Override
-            public void onItemLongClick(View v, final CopyResult result, int position, final CopyItem item) {
-                final ActivityCopyDialogBinding notClearDialogBinding = ActivityCopyDialogBinding.inflate(getLayoutInflater());
-                notClearDialogBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                notClearDialogBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item);
-                    }
-                });
-                dialog = DialogUtils.creatDialog(_this, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
-                dialog.show();
-            }
+        copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
+            final ActivityCopyDialogBinding notClearDialogBinding = ActivityCopyDialogBinding.inflate(getLayoutInflater());
+            notClearDialogBinding.btnCancel.setOnClickListener(v1 -> dialog.dismiss());
+            notClearDialogBinding.btnSure.setOnClickListener(v12 -> saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
+            dialog = DialogUtils.creatDialog(_this, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
+            dialog.show();
         });
         copyViewUtil.setItemClickListener(new ItemClickListener<CopyItem>() {
             @Override
@@ -236,20 +222,17 @@ public class CopyAllValueActivity3 extends BaseActivity {
     }
 
     private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<DbModel> deviceList = processor.findAllDeviceHasCopyValue("one", currentBdzId);
-                    copyDeviceList.clear();
-                    if (null != deviceList && !deviceList.isEmpty()) {
-                        copyDeviceList.addAll(deviceList);
-                        setCurrentDevice(0);
-                    }
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                } catch (DbException e) {
-                    e.printStackTrace();
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                List<DbModel> deviceList = processor.findAllDeviceHasCopyValue("one", currentBdzId);
+                copyDeviceList.clear();
+                if (null != deviceList && !deviceList.isEmpty()) {
+                    copyDeviceList.addAll(deviceList);
+                    setCurrentDevice(0);
                 }
+                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
     }

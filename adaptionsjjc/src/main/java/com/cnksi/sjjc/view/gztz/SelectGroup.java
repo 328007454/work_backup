@@ -43,6 +43,8 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
     private String type;
     private ImageButton addButton;
     private ImageButton deleteButton;
+    private onSelectItemListener listener;
+    String hint;
 
     public SelectGroup(Context context) {
         this(context, null);
@@ -65,7 +67,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         if (attributes != null) {
             title = attributes.getString(R.styleable.SelectGroup_title_str);
             tvName.setText(title);
-            String hint = attributes.getString(R.styleable.SelectGroup_select_hint_str);
+            hint = attributes.getString(R.styleable.SelectGroup_select_hint_str);
             tvValue.setHint(StringUtils.BlankToDefault(hint, "请选择"));
         }
         tvValue.setOnClickListener(v -> show());
@@ -82,6 +84,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
     public void setKeyValue(KeyValue keyValue) {
         if (!TextUtils.isEmpty(keyValue.key))
             this.keyValue = keyValue;
+        else this.keyValue = null;
         tvValue.setText(keyValue.getValueStr());
     }
 
@@ -103,6 +106,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         //设置adapter的listView点击事件
         lv.setOnItemClickListener((parent, view, position, id) -> {
             setKeyValue((KeyValue) adapter.getItem(position));
+            if (listener != null) listener.onselect(keyValue);
             selectDialog.dismiss();
         });
         lv.setAdapter(adapter);
@@ -118,6 +122,21 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
             initDialog();
         }
         selectDialog.show();
+    }
+
+    public void setMustInput(boolean isMust) {
+        String name = tvName.getText().toString();
+        if (isMust) {
+            if (!name.startsWith("*")) {
+                tvName.setText("*" + name);
+            }
+            tvValue.setHint(hint);
+        } else {
+            if (name.startsWith("*")) {
+                tvName.setText(name.substring(1));
+            }
+            tvValue.setHint("");
+        }
     }
 
     public void setVisible(int addVisible, int deleteVisible) {
@@ -139,5 +158,14 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
 
     public String getValueStr() {
         return tvValue.getText().toString();
+    }
+
+    public void setListener(onSelectItemListener listener) {
+        this.listener = listener;
+    }
+
+
+    public interface onSelectItemListener {
+        void onselect(KeyValue value);
     }
 }

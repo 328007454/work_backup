@@ -80,12 +80,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                         selecteDevices.add(location.deviceID);
                     }
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initUI();
-                    }
-                });
+                runOnUiThread(() -> initUI());
             }
         });
 
@@ -382,20 +377,17 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
             return false;
         }
         mHwcwBaseInfo.setData(isAllBdz, testType, temp, shidu, fengsu, testInstrument, currentReportId, currentBdzId, currentBdzName);
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    CustomApplication.getDbManager().saveOrUpdate(mHwcwBaseInfo);
-                    if (!hotLocations.isEmpty()) {
-                        CustomApplication.getDbManager().saveOrUpdate(hotLocations);
-                    }
-                    if (!deleteLocations.isEmpty()) {
-                        CustomApplication.getDbManager().saveOrUpdate(deleteLocations);
-                    }
-                } catch (DbException e) {
-                    e.printStackTrace();
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                CustomApplication.getDbManager().saveOrUpdate(mHwcwBaseInfo);
+                if (!hotLocations.isEmpty()) {
+                    CustomApplication.getDbManager().saveOrUpdate(hotLocations);
                 }
+                if (!deleteLocations.isEmpty()) {
+                    CustomApplication.getDbManager().saveOrUpdate(deleteLocations);
+                }
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
         return true;

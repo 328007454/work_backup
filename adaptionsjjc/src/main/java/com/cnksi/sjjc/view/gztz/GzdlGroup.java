@@ -54,6 +54,10 @@ public class GzdlGroup extends UnderLineLinearLayout {
         countView.setFirst(ljz);
     }
 
+    public void setGzdl(float gzdl) {
+        eddl.setText(String.valueOf(gzdl));
+    }
+
     public String getGzdl() {
         return eddl.getText().toString();
     }

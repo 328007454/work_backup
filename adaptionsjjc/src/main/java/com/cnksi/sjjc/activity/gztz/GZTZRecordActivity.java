@@ -1,30 +1,38 @@
 package com.cnksi.sjjc.activity.gztz;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
+import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSignname;
+import com.cnksi.sjjc.bean.Task;
+import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzRecordBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
-import com.cnksi.sjjc.databinding.HomePageIncludeBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.service.ReportService;
+import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.service.UserService;
+import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.util.DialogUtils;
 
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
@@ -48,6 +56,7 @@ public class GZTZRecordActivity extends BaseActivity {
     private AddPeopleAdapter peopleAdapter;
     private List<DbModel> selectDbModel = new ArrayList<>();
     private List<DbModel> dbModelList;
+    private SbjcGztzjl sbjcGztzjl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +68,7 @@ public class GZTZRecordActivity extends BaseActivity {
 
     private void initUI() {
         getIntentValue();
-        mRecordBinding.includeTitle.tvTitle.setText(currentBdzName+"设备跳闸情况记录");
+        mRecordBinding.includeTitle.tvTitle.setText(currentBdzName + "设备跳闸情况记录");
         if (showPeopleAdapter == null) {
             showPeopleAdapter = new ShowPeopleAdapter(mCurrentActivity, showPeopleList, R.layout.name_show_layout);
         }
@@ -67,7 +76,16 @@ public class GZTZRecordActivity extends BaseActivity {
         mRecordBinding.txtAddPerson.setOnClickListener(view -> showPeopleDialog());
         mRecordBinding.includeTitle.btnBack.setOnClickListener(view -> this.finish());
         mRecordBinding.btnSave.setOnClickListener(view -> {
+            if (selectDbModel.size() == 0) {
+                CToast.showShort(this, "至少选择一个检查人");
+                return;
+            }
             saveData();
+            startActivity(new Intent(this, GZTZReportActivity.class));
+            ScreenManager.getInstance().popActivity(TZQKActivity.class);
+            ScreenManager.getInstance().popActivity(BHDZJLActivity.class);
+            ScreenManager.getInstance().popActivity(BHDZQKActivity.class);
+            finish();
         });
         showPeopleAdapter.setClickWidget(new ItemClickListener() {
             @Override
@@ -102,8 +120,15 @@ public class GZTZRecordActivity extends BaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            runOnUiThread(() -> showPeopleAdapter.setList(showPeopleList));
+        });
+        mFixedThreadPoolExecutor.execute(() -> {
+            sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
             runOnUiThread(() -> {
-                showPeopleAdapter.setList(showPeopleList);
+                mRecordBinding.txtDeviceName.setText(sbjcGztzjl.dlqmc);
+                mRecordBinding.txtTime.setText(sbjcGztzjl.gzfssj);
+                mRecordBinding.txtProtectInfor.setText(sbjcGztzjl.bhdzqk);
+                mRecordBinding.txtGzInfor.setText(sbjcGztzjl.gzjt);
             });
         });
     }
@@ -112,15 +137,32 @@ public class GZTZRecordActivity extends BaseActivity {
      * 保存数据
      */
     public void saveData() {
+        List<ReportSignname> saveList = new ArrayList<>();
+        StringBuilder person = new StringBuilder();
+        StringBuilder ids = new StringBuilder();
         for (DbModel model : selectDbModel) {
-            try {
-                ReportSignname signname = new ReportSignname(model, currentReportId);
-                CustomApplication.getDbManager().saveOrUpdate(signname);
-            } catch (Exception e) {
-                e.printStackTrace();
+            ReportSignname signname = new ReportSignname(model, currentReportId);
+            saveList.add(signname);
+            person.append(signname.getName()).append(",");
+            if (!TextUtils.isEmpty(signname.getAccount())) {
+                ids.append(signname.getAccount()).append(",");
             }
         }
+        person.deleteCharAt(person.length() - 1);
+        if (ids.length() > 0) ids.deleteCharAt(ids.length() - 1);
+        sbjcGztzjl.jcr = person.toString();
+        sbjcGztzjl.jcrK = ids.toString();
+        sbjcGztzjl.jcrq = DateUtils.getCurrentLongTime();
+        try {
+            GZTZSbgzjlService.getInstance().saveOrUpdate(sbjcGztzjl);
+            TaskService.getInstance().update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            ReportService.getInstance().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", currentReportId),
+                    new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()), new KeyValue(Report.PERSONS, person.toString()));
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
+
 
     /**
      * 选择检查人员对话框

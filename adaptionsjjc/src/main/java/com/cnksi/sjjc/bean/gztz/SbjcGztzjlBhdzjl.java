@@ -1,5 +1,7 @@
 package com.cnksi.sjjc.bean.gztz;
 
+import com.cnksi.sjjc.util.FunctionUtil;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -53,11 +55,20 @@ public class SbjcGztzjlBhdzjl{
 	public static final String BHYJLXJDZSJ = "bhyjlxjdzsj";
 	@Column(name = BHYJLXJDZSJ)
 	public String bhyjlxjdzsj  ;
+
+	/**保护动作评价*/
+	public static final String BHDZPJ = "bh_dzpj";
+	@Column(name = BHDZPJ)
+	public String bhdzpj  ;
 	
 	/***/
 	public static final String DLT = "dlt";
 	@Column(name = DLT)
 	public int dlt  =0 ;
 	
-	
+	public static SbjcGztzjlBhdzjl create(){
+		SbjcGztzjlBhdzjl s=new SbjcGztzjlBhdzjl();
+		s.id= FunctionUtil.getPrimarykey();
+		return s;
+	}
 }

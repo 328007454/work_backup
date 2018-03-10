@@ -138,6 +138,7 @@ public class Config extends CoreConfig {
     public static final String IS_FROM_PMS = "isFromPMS";
     public static final String ADD_SQL_INDEX = "add_sql_index";
     public static final String SBJC = "sbjc";
+    public static final String DEVICE_BIGID = "big_id";
 
 
     public static String CURRENT_AREA = "lz";

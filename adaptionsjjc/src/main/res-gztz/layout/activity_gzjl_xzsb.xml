@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/global_base_color"
+            android:gravity="center"
+            app:navigationIcon="@drawable/cancel_button_background"
+            app:title="选择设备"
+            app:titleMarginStart="210px"
+            app:titleTextColor="@android:color/white">
+        </android.support.v7.widget.Toolbar>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rlv_container"
+            android:paddingStart="@dimen/_30px"
+            android:paddingEnd="@dimen/_30px"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+</layout>

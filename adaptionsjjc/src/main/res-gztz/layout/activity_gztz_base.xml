@@ -57,11 +57,35 @@
                 android:background="@color/white"
                 app:select_str="正动|误动"
                 app:title_str="*开关动作评价"/>
+            <com.cnksi.sjjc.view.UnderLineLinearLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="138px"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/_30px"
+                app:drawUnderLine="true">
 
+                <TextView
+                    style="@style/layout_gztz_title"
+                    android:text="*故障线路"
+                    />
+
+                <com.cnksi.sjjc.view.ContainsEmojiEditText
+                    android:id="@+id/gzxl"
+                    style="@style/layout_gztz_num_input"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="30px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text=""
+                    />
+
+            </com.cnksi.sjjc.view.UnderLineLinearLayout>
             <com.cnksi.sjjc.view.gztz.SingleRadioGroup
                 android:id="@+id/sfzngz"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
+                android:visibility="gone"
                 android:background="@color/white"
                 app:title_str="*是否站内故障"/>
 
@@ -109,6 +133,7 @@
                 android:id="@+id/gzlb"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
+                android:visibility="gone"
                 app:select_hint_str="请选择故障类别"
                 app:title_str="*故障类别"
                 />

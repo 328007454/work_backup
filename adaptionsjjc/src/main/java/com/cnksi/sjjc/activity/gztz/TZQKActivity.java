@@ -2,6 +2,7 @@ package com.cnksi.sjjc.activity.gztz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.cnksi.core.utils.CToast;
@@ -13,6 +14,7 @@ import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
+import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 
 import org.xutils.common.util.KeyValue;
@@ -41,17 +43,44 @@ public class TZQKActivity extends BaseActivity {
         initData();
     }
 
+
     private void initView() {
         binding.kgdlqbh.setSelectOnClickListener(v -> {
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
+            String bigIds = DeviceService.getInstance().findBigId("DLQ");
+            if (bigIds != null) {
+                intentDevices.putExtra(AllDeviceListActivity.BIGID, bigIds);
+                intentDevices.putExtra(Config.TITLE_NAME, "选择断路器");
+            } else {
+                CToast.showShort(this, "没有找到别名为DLQ的设备大类！");
+            }
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
         binding.gztysb.setSelectOnClickListener(v -> {
+            KeyValue keyValue = binding.tyfw.getValue();
+            if (keyValue == null) {
+                CToast.showShort(this, "请先选择停运范围！");
+                return;
+            }
+            if ("全站".equals(keyValue.getValueStr())) {
+                CToast.showShort(this, "全站设备均停运，无需选择！");
+                return;
+            }
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
+            if ("主变".equals(keyValue.getValueStr())) {
+                String s1 = DeviceService.getInstance().findBigId("BYQ");
+                String s2 = DeviceService.getInstance().findBigId("ZYB");
+                String rs;
+                if (s1 != null && s2 != null) {
+                    rs = s1 + "," + s2;
+                } else rs = StringUtils.BlankToDefault(s1, s2);
+                intentDevices.putExtra(AllDeviceListActivity.BIGID, rs);
+                intentDevices.putExtra(Config.TITLE_NAME, "请选择变压器");
+            }
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
         });
         binding.gzdydj.setType("dydj");
@@ -75,6 +104,13 @@ public class TZQKActivity extends BaseActivity {
             }
         }, true);
         binding.sbxb.setType("sbxb");
+        binding.tyfw.setListener(v -> {
+            if ("全站".equals(v.getValueStr())) {
+                binding.gztysb.setKeyValue(new KeyValue("", ""));
+                binding.gztysb.setMustInput(false);
+            } else binding.gztysb.setMustInput(true);
+        });
+
     }
 
     private void initData() {
@@ -85,6 +121,7 @@ public class TZQKActivity extends BaseActivity {
         binding.yyjjcqk.setValueStr(sbgzjl.bhYyjjcqk);
         binding.sbxb.setKeyValue(new KeyValue(sbgzjl.sbxbK, sbgzjl.sbxb));
         binding.sfdz.setValueStr(sbgzjl.sfdz);
+        binding.gzxl.setText(sbgzjl.gzxl);
         binding.kgdzpj.setValueStr(sbgzjl.dzpj);
         binding.sfzngz.setValueStr(sbgzjl.sfzngz);
         binding.gzfssj.setValueStr(sbgzjl.gzfssj);
@@ -92,16 +129,22 @@ public class TZQKActivity extends BaseActivity {
         binding.gzlx.setKeyValue(new KeyValue(sbgzjl.gzlxK, sbgzjl.gzlx));
         binding.gzsdtq.setKeyValue(new KeyValue(sbgzjl.gzsdtqK, sbgzjl.gzsdtq));
         binding.gzsfyj.setValueStr(sbgzjl.gzsfyj);
-        binding.gzlb.setKeyValue(new KeyValue(sbgzjl.gzlbK, sbgzjl.gzlb));
+        if (TextUtils.isEmpty(sbgzjl.gzlb)) {
+            binding.gzlb.setKeyValue(new KeyValue("01", "交流故障"));
+        } else
+            binding.gzlb.setKeyValue(new KeyValue(sbgzjl.gzlbK, sbgzjl.gzlb));
         binding.sftz.setValueStr(sbgzjl.sftz);
         binding.sfty.setValueStr(sbgzjl.sfty);
         binding.tyfw.setKeyValue(new KeyValue(sbgzjl.tyfwK, sbgzjl.tyfw));
+        if ("全站".equals(sbgzjl.tyfw)) {
+            binding.gztysb.setMustInput(false);
+        }
         binding.gztysb.setKeyValue(new KeyValue(sbgzjl.gztysbK, sbgzjl.gztysb));
         binding.dlqjcqk.setValueStr(sbgzjl.dlqjcqk);
         binding.bz.setValueStr(sbgzjl.kgtzBz);
     }
 
-    static KeyValue NULL = new KeyValue(null, null);
+    public static KeyValue NULL = new KeyValue(null, null);
 
     /**
      * @param isCheck 是否执行检查 返回时不应执行检查 而是直接存储
@@ -117,7 +160,7 @@ public class TZQKActivity extends BaseActivity {
         String kgdzpj = binding.kgdzpj.getValueStr();
         String sfzngz = binding.sfzngz.getValueStr();
         String gzfssj = binding.gzfssj.getValueStr();
-
+        String gzxl = getText(binding.gzxl);
         KeyValue gzdydj = binding.gzdydj.getValue();
         KeyValue gzlx = binding.gzlx.getValue();
         KeyValue gzsdtq = binding.gzsdtq.getValue();
@@ -127,7 +170,7 @@ public class TZQKActivity extends BaseActivity {
         String sfty = binding.sfty.getValueStr();
         String dlqjcqk = binding.dlqjcqk.getValueStr();
         if (isCheck) {
-            if (dlqbh == null || sbxb == null || StringUtils.isHasOneEmpty(dlqtzqk, yyjjcqk, sfdz, kgdzpj, sfzngz, gzfssj)) {
+            if (dlqbh == null || sbxb == null || StringUtils.isHasOneEmpty(dlqtzqk, gzxl, yyjjcqk, sfdz, kgdzpj, sfzngz, gzfssj)) {
                 CToast.showShort(this, "请检查带星号的项目是否均已填写！");
                 return false;
             }
@@ -149,7 +192,7 @@ public class TZQKActivity extends BaseActivity {
             tyfw = binding.tyfw.getValue();
             gztysb = binding.gztysb.getValue();
             if (isCheck) {
-                if (tyfw == null || gztysb == null) {
+                if (tyfw == null || (!"全站".equals(tyfw.getValueStr()) && gztysb == null)) {
                     CToast.showShort(this, "请检查带星号的项目是否均已填写！");
                     return false;
                 }
@@ -181,6 +224,7 @@ public class TZQKActivity extends BaseActivity {
         sbgzjl.gzlbK = gzlb.key;
         sbgzjl.gzlx = gzlx.getValueStr();
         sbgzjl.gzlxK = gzlx.key;
+        sbgzjl.gzxl = gzxl;
         sbgzjl.sfzngz = sfzngz;
         sbgzjl.gzsdtq = gzsdtq.getValueStr();
         sbgzjl.gzsdtqK = gzsdtq.key;
@@ -195,6 +239,7 @@ public class TZQKActivity extends BaseActivity {
         sbgzjl.bhDlqtzqk = dlqtzqk;
         try {
             GZTZSbgzjlService.getInstance().saveOrUpdate(sbgzjl);
+            Cache.GZTZJL = sbgzjl;
             return true;
         } catch (DbException e) {
             e.printStackTrace();

@@ -96,7 +96,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_protect"/>
 
-
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_gz"
                     style="@style/style_gztz_record_title"

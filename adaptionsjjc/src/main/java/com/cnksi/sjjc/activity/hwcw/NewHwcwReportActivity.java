@@ -1,16 +1,11 @@
 package com.cnksi.sjjc.activity.hwcw;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.view.View;
 
 import com.cnksi.core.utils.DisplayUtil;
@@ -63,24 +58,16 @@ public class NewHwcwReportActivity extends BaseReportActivity {
     }
 
     private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mReport = ReportService.getInstance().selector().and(Report.REPORTID, "=", currentReportId).findFirst();
-                    mBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
-                    if (!TextUtils.isEmpty(mBaseInfo.id)) {
-                        hotLocations = NewHwcwService.getInstance().getAllLocation(mBaseInfo.id);
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            refreshData();
-                        }
-                    });
-                } catch (DbException e) {
-                    e.printStackTrace();
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                mReport = ReportService.getInstance().selector().and(Report.REPORTID, "=", currentReportId).findFirst();
+                mBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
+                if (!TextUtils.isEmpty(mBaseInfo.id)) {
+                    hotLocations = NewHwcwService.getInstance().getAllLocation(mBaseInfo.id);
                 }
+                runOnUiThread(() -> refreshData());
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
     }

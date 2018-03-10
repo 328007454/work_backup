@@ -6,6 +6,7 @@ import android.os.Looper;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
+import com.baidu.location.LLSInterface;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
@@ -247,18 +248,28 @@ public class LocationUtil {
         stop
     }
 
-    private void addListener(LocationHelper helper) {
-        if (helpers.add(helper))
+    private void addListener(final LocationHelper helper) {
+        if (helpers.add(helper)) {
             locationClient.registerLocationListener(helper);
-        if (!locationClient.isStarted()) locationClient.start();
-        else
+        }
+        if (!locationClient.isStarted()) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    locationClient.start();
+                }
+            }, 3000);
+        } else {
             locationClient.requestLocation();
+        }
     }
 
     private synchronized void removeListener(LocationHelper helper) {
         locationClient.unRegisterLocationListener(helper);
         helpers.remove(helper);
-        if (helpers.isEmpty()) locationClient.stop();
+        if (helpers.isEmpty()) {
+            locationClient.stop();
+        }
     }
 
 

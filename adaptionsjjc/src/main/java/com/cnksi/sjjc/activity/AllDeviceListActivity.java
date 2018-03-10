@@ -7,16 +7,13 @@ import android.os.Message;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnGroupExpandListener;
-import android.widget.TextView;
 
 import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
@@ -29,7 +26,6 @@ import com.cnksi.sjjc.service.SpacingService;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +40,8 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
 
     public final static String FUNCTION_MODEL = "fuction";
     public final static String BDZID = "bdzid";
-
+    public final static String BIGID = "bigid";
+    public final static String SPCAEID = "spcaeid";
     private LinkedList<Spacing> groupList = new LinkedList<Spacing>();
     private HashMap<Spacing, ArrayList<DbModel>> groupHashMap = new HashMap<Spacing, ArrayList<DbModel>>();
     private DeviceExpandabelListAdapter mDeviceExpandableAdapater = null;
@@ -65,22 +62,19 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         setSupportActionBar(mExpadableListBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-//        setChildView(R.layout.activity_devices_expadable_list);
         initUI();
+        mExpadableListBinding.toolbar.setTitle(StringUtils.BlankToDefault(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
         initData();
     }
 
     private void initUI() {
         currentFunctionModel = (PMSDeviceType) getIntent().getSerializableExtra(FUNCTION_MODEL);
         currentBdzId = getIntent().getStringExtra(BDZID);
-        mExpadableListBinding.elvContainer.setOnGroupExpandListener(new OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                if (isFinishAnimation) {
-                    for (int i = 0, count = mDeviceExpandableAdapater.getGroupCount(); i < count; i++) {
-                        if (i != groupPosition && mExpadableListBinding.elvContainer.isGroupExpanded(i)) {
-                            mExpadableListBinding.elvContainer.collapseGroup(i);
-                        }
+        mExpadableListBinding.elvContainer.setOnGroupExpandListener(groupPosition -> {
+            if (isFinishAnimation) {
+                for (int i = 0, count = mDeviceExpandableAdapater.getGroupCount(); i < count; i++) {
+                    if (i != groupPosition && mExpadableListBinding.elvContainer.isGroupExpanded(i)) {
+                        mExpadableListBinding.elvContainer.collapseGroup(i);
                     }
                 }
             }
@@ -95,38 +89,44 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
             CToast.showShort(_this, "没有获取到正确的变电站和设备类别");
             return;
         }
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    mSpacingList = SpacingService.getInstance().findSpacingByModel(currentBdzId, currentFunctionModel.name());
-                    if (mSpacingList != null) {
-                        groupList.clear();
-                        groupHashMap.clear();
-                        Long time0 = System.currentTimeMillis();
-                        Log.d("Tag", time0 + "");
-                        SqlInfo sqlInfo = new SqlInfo(
-                                "select * from device d where d.bdzid='" + currentBdzId + "' and d.dlt='0' and d.device_type='" + currentFunctionModel.name() + "'  group by d.deviceid order by sort");
-                        mDeviceList = DeviceService.getInstance().findDbModelAll(sqlInfo);
-                        for (Spacing mSpacing : mSpacingList) {
-                            ArrayList<DbModel> dbModels = new ArrayList<DbModel>();
-                            for (DbModel dbModel : mDeviceList) {
-                                if (dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
-                                    dbModel.add("spaceName", mSpacing.name);
-                                    dbModels.add(dbModel);
-                                }
+        String spid = getIntent().getStringExtra(SPCAEID);
+        String bigId = getIntent().getStringExtra(BIGID);
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                mSpacingList = SpacingService.getInstance().findSpacingByModel(currentBdzId, currentFunctionModel.name());
+                if (mSpacingList != null) {
+                    groupList.clear();
+                    groupHashMap.clear();
+                    String expr = "";
+                    if (!TextUtils.isEmpty(spid)) {
+                        expr += " and d.spid='" + spid + "' ";
+                    }
+                    if (!TextUtils.isEmpty(bigId)) {
+                        expr += " and d.bigid in(" + bigId + ") ";
+                    }
+                    SqlInfo sqlInfo = new SqlInfo(
+                            "select * from device d where d.bdzid='" + currentBdzId + "'" + expr +
+                                    " and d.dlt='0' and d.device_type='" + currentFunctionModel.name() +
+                                    "'  group by d.deviceid order by sort");
+                    mDeviceList = DeviceService.getInstance().findDbModelAll(sqlInfo);
+                    for (Spacing mSpacing : mSpacingList) {
+                        ArrayList<DbModel> dbModels = new ArrayList<>();
+                        for (DbModel dbModel : mDeviceList) {
+                            if (dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                                dbModel.add("spaceName", mSpacing.name);
+                                dbModels.add(dbModel);
                             }
+                        }
+                        if (dbModels.size() > 0) {
                             groupList.add(mSpacing);
                             groupHashMap.put(mSpacing, dbModels);
                         }
-                        Log.d("Tag", (System.currentTimeMillis() - time0) + "");
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -190,14 +190,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
 
     @Override
     public void OnGroupItemClick(Spacing mSpacing, View v, int groupPosition) {
-        // TODO Auto-generated method stub
-        //	currentClickGroupPosition = groupPosition;
-        //	int childCount = mDeviceExpandableAdapater.getChildrenCountByGroup(groupPosition);
-        //	if (childCount == 1) {
-        //		OnItemViewClick(mElvContainer, v, mDeviceExpandableAdapater.getChild(groupPosition, 0), mDeviceExpandableAdapater.getGroup(groupPosition));
-        //	} else {
         mExpadableListBinding.elvContainer.expandGroup(groupPosition, true);
-//		}
     }
 
     @Override
@@ -223,12 +216,9 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
             }
 
         });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                isSearch = false;
-                return false;
-            }
+        searchView.setOnCloseListener(() -> {
+            isSearch = false;
+            return false;
         });
         return super.onCreateOptionsMenu(menu);
     }

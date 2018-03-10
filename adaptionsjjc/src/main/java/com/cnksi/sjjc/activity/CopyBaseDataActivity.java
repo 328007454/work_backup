@@ -62,18 +62,15 @@ public class CopyBaseDataActivity extends BaseActivity {
     }
 
     private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mReport = ReportService.getInstance().findById(currentReportId);
-                    if (mReport != null) {
-                        mReport.starttime = TextUtils.isEmpty(mReport.starttime) ? DateUtils.getCurrentLongTime() : mReport.starttime;
-                        mHandler.sendEmptyMessage(LOAD_DATA);
-                    }
-                } catch (DbException e) {
-                    e.printStackTrace();
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                mReport = ReportService.getInstance().findById(currentReportId);
+                if (mReport != null) {
+                    mReport.starttime = TextUtils.isEmpty(mReport.starttime) ? DateUtils.getCurrentLongTime() : mReport.starttime;
+                    mHandler.sendEmptyMessage(LOAD_DATA);
                 }
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
     }

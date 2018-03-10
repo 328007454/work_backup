@@ -108,6 +108,19 @@ public class SbjcGztzjl {
     public static final String GZDYDJ = "gzdydj";
     @Column(name = GZDYDJ)
     public String gzdydj;
+    /**
+     * 故障线路
+     */
+    public static final String GZXL = "gzxl";
+    @Column(name = GZXL)
+    public String gzxl;
+    /**
+     *
+     */
+    public static final String GZXL_K = "gzxl_k";
+    @Column(name = GZXL_K)
+    public String gzxlK;
+
 
     /**
      * 故障电压等级key值
@@ -449,11 +462,12 @@ public class SbjcGztzjl {
         StringBuilder builder = new StringBuilder("本次跳闸次数：");
         int[] xb = getXb();
         JSONObject object = JSON.parseObject(gxtzcs);
-        if (xb[0] == 1) builder.append("A相：").append(object.getIntValue("A") + ",");
-        if (xb[1] == 1) builder.append("B相：").append(object.getIntValue("B") + ",");
-        if (xb[2] == 1) builder.append("C相：").append(object.getIntValue("C") + ",");
-        if (xb[3] == 1) builder.append("O相：").append(object.getIntValue("O") + ",");
+        if (xb[0] == 1) builder.append("A相:").append(object.getIntValue("A") + ",");
+        if (xb[1] == 1) builder.append("B相:").append(object.getIntValue("B") + ",");
+        if (xb[2] == 1) builder.append("C相:").append(object.getIntValue("C") + ",");
+        if (xb[3] == 1) builder.append("O相:").append(object.getIntValue("O") + ",");
         builder.deleteCharAt(builder.length() - 1);
+        builder.append(",");
         return builder.toString();
     }
 

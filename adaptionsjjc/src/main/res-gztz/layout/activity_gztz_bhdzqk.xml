@@ -159,6 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="10px"
                     android:layout_weight="-1"
+                    android:inputType="numberDecimal"
                     android:text=""
                     />
             </com.cnksi.sjjc.view.UnderLineLinearLayout>
@@ -234,7 +235,7 @@
                 android:id="@+id/ylbzzph"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:title_str="*与滤波、子站配合"/>
+                app:title_str="*与录波、子站配合"/>
 
             <com.cnksi.sjjc.view.gztz.SingleRadioGroup
                 android:id="@+id/yjkxtph"
@@ -305,19 +306,19 @@
                 android:id="@+id/gzlbqmc"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                app:title_str="故障滤波器名称"/>
+                app:title_str="故障录波器名称"/>
 
             <com.cnksi.sjjc.view.gztz.TextGroup
                 android:id="@+id/gzlbqfx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title_str="故障滤波器分析"/>
+                app:title_str="故障录波器分析"/>
 
             <com.cnksi.sjjc.view.gztz.TextGroup
                 android:id="@+id/gzlbqcj"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title_str="故障滤波器测距"/>
+                app:title_str="故障录波器测距"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

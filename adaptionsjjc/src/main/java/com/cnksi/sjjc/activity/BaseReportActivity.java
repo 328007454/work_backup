@@ -61,20 +61,13 @@ public abstract class BaseReportActivity extends BaseActivity {
         mBtnRight.setVisibility(View.GONE);
         mBtnBack = FindViewById(R.id.btn_back);
         mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionName));
-        mBtnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
-                onBackPressed();
-            }
+        mBtnBack.setOnClickListener(v -> {
+            ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
+            onBackPressed();
         });
-        mBtnRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                ScreenManager.getScreenManager().popAllActivityExceptOne(LauncherActivity.class);
-                ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
-                onBackPressed();
-            }
+        mBtnRight.setOnClickListener(v -> {
+         ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
+            onBackPressed();
         });
     }
 

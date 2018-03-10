@@ -3,17 +3,22 @@ package com.cnksi.sjjc.activity.gztz;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.cnksi.core.utils.CToast;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
+import com.cnksi.sjjc.bean.gztz.SbjcGztzjlBhdzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzjlBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
+import com.cnksi.sjjc.service.gztz.GZTZBhdzjlService;
+import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.view.gztz.BhdzjlGroup;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,44 +48,60 @@ public class BHDZJLActivity extends BaseActivity {
         getIntentValue();
         setTitleText(currentBdzName + "保护动作记录");
         initView();
+        initData();
     }
 
     private void initView() {
         binding.btnNext.setOnClickListener(v -> {
-            saveData();
-            Intent intent = new Intent(_this, GZTZRecordActivity.class);
-            startActivity(intent);
+            if (saveData(true)) {
+                Intent intent = new Intent(_this, GZTZRecordActivity.class);
+                startActivity(intent);
+            }
         });
+        binding.btnPre.setOnClickListener(v -> onBackPressed());
         addOtherDevice();
     }
 
-    private void initData(){
-
+    private void initData() {
+        sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
+        mFixedThreadPoolExecutor.execute(() -> {
+            List<SbjcGztzjlBhdzjl> bhdzjls = GZTZBhdzjlService.getInstance().findByGzjl(sbjcGztzjl.id);
+            runOnUiThread(() -> {
+                if (bhdzjls != null && bhdzjls.size() > 0) {
+                    groups.get(0).setRecord(bhdzjls.get(0));
+                    for (int i = 1; i < bhdzjls.size(); i++) {
+                        addOtherDevice().setRecord(bhdzjls.get(i));
+                    }
+                }
+                isFirstLoad = false;
+            });
+        });
+        binding.gzjt.setValueStr(sbjcGztzjl.gzjt);
+        binding.bhdzqk.setValueStr(sbjcGztzjl.bhdzqk);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isFirstLoad = false;
-    }
-
-    private void saveData() {
-
-    }
 
     /**
      * 点击设备名称后的+号则增加一次设备整体布局
      */
-    public void addOtherDevice() {
+    public BhdzjlGroup addOtherDevice() {
         BhdzjlGroup group = new BhdzjlGroup(this, binding.itemDevice);
         group.setListener((group1, isBhsb) -> {
             selectGroup = group1;
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
-            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
+            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, isBhsb ? PMSDeviceType.one : PMSDeviceType.second);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
+
+            intentDevices.putExtra(Config.TITLE_NAME, isBhsb ? "请选择一次设备" : "请选择二次设备");
+            if (isBhsb) {
+                if (group1.getBhsb() != null) {
+                    intentDevices.putExtra(AllDeviceListActivity.SPCAEID, group1.getBhsb().getString(Device.SPID));
+                }
+            }
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0));
         });
         groups.add(group);
+        return group;
     }
 
     public void removeView(BhdzjlGroup v) {
@@ -88,6 +109,12 @@ public class BHDZJLActivity extends BaseActivity {
         binding.itemDevice.removeView(v.getRoot());
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        saveData(false);
+    }
 
     public void rebuildStr() {
         if (!isFirstLoad) {
@@ -123,6 +150,7 @@ public class BHDZJLActivity extends BaseActivity {
                     DbModel model = (DbModel) dataMap.get(Config.DEVICE_DATA);
                     if (model != null) {
                         selectGroup.setDeviceSelectValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                        selectGroup.setBhsb(model);
                     }
                     rebuildStr();
                     break;
@@ -136,6 +164,40 @@ public class BHDZJLActivity extends BaseActivity {
                     break;
             }
         }
+    }
+
+    private boolean saveData(boolean isCheck) {
+        List<SbjcGztzjlBhdzjl> rs = new ArrayList<>();
+        for (BhdzjlGroup group : groups) {
+            SbjcGztzjlBhdzjl temp = group.getRecord();
+            if (temp != null) {
+                rs.add(temp);
+            }
+        }
+        int i = 0;
+        for (SbjcGztzjlBhdzjl r : rs) {
+            r.gztzjlId = sbjcGztzjl.id;
+            r.reportid = currentReportId;
+            if (r.dlt == 0) {
+                i++;
+            }
+        }
+        if (i == 0) {
+            if (isCheck)
+                CToast.showShort(this, "你至少要选择一组保护设备");
+            return false;
+        }
+        sbjcGztzjl.bhdzqk = binding.bhdzqk.getValueStr();
+        sbjcGztzjl.gzjt = binding.gzjt.getValueStr();
+        try {
+            GZTZSbgzjlService.getInstance().saveOrUpdate(sbjcGztzjl);
+            GZTZBhdzjlService.getInstance().saveOrUpdate(rs);
+            return true;
+        } catch (DbException e) {
+            e.printStackTrace();
+            CToast.showShort(this, "保存失败");
+        }
+        return false;
     }
 }
 

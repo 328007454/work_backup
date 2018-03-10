@@ -1,56 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
-    <RelativeLayout
-        android:id="@+id/rl_device_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/device_green_border_background_selector"
-        android:minHeight="@dimen/device_item_minheight_px"
-        android:minWidth="@dimen/device_item_minwidth_px">
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_device_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/device_green_border_background_selector"
+            android:minHeight="@dimen/device_item_minheight_px"
+            android:minWidth="@dimen/device_item_minwidth_px">
 
 
-        <!-- 设备名称 -->
-        <ImageView
-            android:id="@+id/ibt_copy_pen"
-            app:srcCompat="@drawable/ic_green_finish"
-            android:layout_width="29px"
-            android:layout_height="41px"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/device_item_name_padding_left_px"
-            android:background="@android:color/transparent"
-            android:contentDescription="@null"
-            android:scaleType="centerInside"
-            android:visibility="gone" />
+            <!-- 设备名称 -->
+            <ImageView
+                android:id="@+id/ibt_copy_pen"
+                android:layout_width="29px"
+                android:layout_height="41px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/device_item_name_padding_left_px"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_green_finish"/>
+
+            <TextView
+                android:id="@+id/tv_device_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/ibt_copy_pen"
+                android:gravity="center"
+                android:maxLines="2"
+                android:paddingLeft="@dimen/device_item_name_padding_left_px"
+                android:paddingRight="@dimen/device_item_name_padding_right_px"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/device_item_name_text_size_px"/>
+
+
+        </RelativeLayout>
+
+        <!-- 是否有抄录数据 -->
 
         <TextView
-            android:layout_toRightOf="@id/ibt_copy_pen"
-            android:id="@+id/tv_device_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:maxLines="2"
-            android:paddingLeft="@dimen/device_item_name_padding_left_px"
-            android:paddingRight="@dimen/device_item_name_padding_right_px"
-            android:textColor="@color/green_color"
-            android:textSize="@dimen/device_item_name_text_size_px" />
+            android:id="@+id/tv_copy_data"
+            android:layout_width="@dimen/device_item_minheight_px"
+            android:layout_height="@dimen/device_item_half_minwidht_px"
+            android:minHeight="@dimen/device_item_minheight_px"
+            android:minWidth="@dimen/device_item_half_minwidht_px"/>
 
-
-    </RelativeLayout>
-
-    <!-- 是否有抄录数据 -->
-
-    <TextView
-        android:id="@+id/tv_copy_data"
-        android:layout_width="@dimen/device_item_minheight_px"
-        android:layout_height="@dimen/device_item_half_minwidht_px"
-        android:minHeight="@dimen/device_item_minheight_px"
-        android:minWidth="@dimen/device_item_half_minwidht_px" />
-
-</FrameLayout>
+    </FrameLayout>
+</layout>

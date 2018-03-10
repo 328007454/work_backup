@@ -110,22 +110,18 @@ public class CopyValueReportActivity extends BaseReportActivity {
 
 	private void initData() {
 
-		mFixedThreadPoolExecutor.execute(new Runnable() {
+		mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                // 查询状态
+            //	mCurrentDepartment = DepartmentService.getInstance().findDepartmentById(currentDepartmentId);
+                status = processor.getCopyResult(currentBdzId);
+                report = ReportService.getInstance().findById(currentReportId);
 
-			@Override
-			public void run() {
-				try {
-					// 查询状态
-				//	mCurrentDepartment = DepartmentService.getInstance().findDepartmentById(currentDepartmentId);
-					status = processor.getCopyResult(currentBdzId);
-					report = ReportService.getInstance().findById(currentReportId);
-
-				} catch (DbException e) {
-					e.printStackTrace();
-				}
-				mHandler.sendEmptyMessage(LOAD_DATA);
-			}
-		});
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
+        });
 	}
 
     @Event({R.id.tv_continue_inspection, R.id.ibtn_cancel, R.id.ibtn_exit})

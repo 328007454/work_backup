@@ -7,21 +7,27 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cnksi.core.utils.BitmapUtil;
 import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.FunctionUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzqkBinding;
+import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.inter.SimpleTextWatcher;
+import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
 
 import org.xutils.common.util.KeyValue;
+import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 import org.xutils.x;
 
@@ -63,7 +69,7 @@ public class BHDZQKActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        binding.btnPre.setOnClickListener(v -> finish());
+        binding.btnPre.setOnClickListener(v -> onBackPressed());
         binding.chzdzqk.setType("chzdzqk");
         binding.bhmc.setType("bhmc");
         binding.gxtzcsA.addTextChangedListener(new SimpleTextWatcher() {
@@ -95,11 +101,31 @@ public class BHDZQKActivity extends BaseActivity {
             FunctionUtils.takePicture(this, imageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
         });
         binding.ivShowPic.setOnClickListener(v -> showImageDetails(this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
+        binding.bhsbmc.setSelectOnClickListener(v -> {
+            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
+            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
+            intentDevices.putExtra(Config.TITLE_NAME, "请选择二次设备");
+            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
+        });
+        binding.gzlbqmc.setSelectOnClickListener(v -> {
+            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.second);
+            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
+            String bigIds = DeviceService.getInstance().findBigId("GZLBQ");
+            if (bigIds != null) {
+                intentDevices.putExtra(AllDeviceListActivity.BIGID, bigIds);
+                intentDevices.putExtra(Config.TITLE_NAME, "请选择故障录波器");
+            } else {
+                CToast.showShort(this, "没有找到别名为GZLBQ的设备大类！");
+            }
+            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
+        });
     }
 
     private void initData() {
         mFixedThreadPoolExecutor.execute(() -> {
-            sbjcGztzjl = GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
+            sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
             SbjcGztzjl last = GZTZSbgzjlService.getInstance().findLastByDeviceId(sbjcGztzjl.dlqbh, currentReportId);
             runOnUiThread(() -> {
                 if (last != null) {
@@ -113,7 +139,6 @@ public class BHDZQKActivity extends BaseActivity {
                 }
                 binding.chzdzqk.setVisibility(sbjcGztzjl.isTz() ? View.VISIBLE : View.GONE);
 
-
                 if (!TextUtils.isEmpty(sbjcGztzjl.dzbhFj))
                     photos = Arrays.asList(StringUtils.NullToBlank(sbjcGztzjl.dzbhFj).split(","));
                 else photos = new ArrayList<>();
@@ -126,6 +151,21 @@ public class BHDZQKActivity extends BaseActivity {
                 binding.llB.setVisibility(visbles[1] == 1 ? View.VISIBLE : View.GONE);
                 binding.llC.setVisibility(visbles[2] == 1 ? View.VISIBLE : View.GONE);
                 binding.llO.setVisibility(visbles[3] == 1 ? View.VISIBLE : View.GONE);
+                if (!TextUtils.isEmpty(sbjcGztzjl.gxtzcs)) {
+                    JSONObject object = JSON.parseObject(sbjcGztzjl.gxtzcs);
+                    binding.gxtzcsA.setText(object.getString("A"));
+                    binding.gxtzcsB.setText(object.getString("B"));
+                    binding.gxtzcsC.setText(object.getString("C"));
+                    binding.gxtzcsO.setText(object.getString("O"));
+                }
+                if (!TextUtils.isEmpty(sbjcGztzjl.ljtzcs)) {
+                    binding.ljtzcs.setValuesStr(sbjcGztzjl.ljtzcs);
+                }
+                if (!TextUtils.isEmpty(sbjcGztzjl.ljz))
+                    binding.gzdl.setLjz(CalcUtils.String2Float(sbjcGztzjl.ljz));
+                if (!TextUtils.isEmpty(sbjcGztzjl.gzdl))
+                    binding.gzdl.setGzdl(CalcUtils.String2Float(sbjcGztzjl.gzdl));
+
                 binding.chzdzqk.setKeyValue(new KeyValue(sbjcGztzjl.chzdzqkK, sbjcGztzjl.chzdzqk));
                 binding.ecgzdl.setText(StringUtils.NullToBlank(sbjcGztzjl.ecgzdl));
                 binding.hfsdsj.setValueStr(sbjcGztzjl.hfsdsj);
@@ -155,15 +195,22 @@ public class BHDZQKActivity extends BaseActivity {
     private boolean save(boolean isCheck) {
         KeyValue chtzql = binding.chzdzqk.getValue();
         String a = getText(binding.gxtzcsA), b = getText(binding.gxtzcsB), c = getText(binding.gxtzcsC), o = getText(binding.gxtzcsO);
-        if (sbjcGztzjl.checkXbTzcs(a, b, c, o)) {
-            CToast.showShort(this, "请填写各项跳闸次数！");
+        String gxtzcs;
+        if (!sbjcGztzjl.checkXbTzcs(a, b, c, o)) {
+            if (isCheck) {
+                CToast.showShort(this, "请填写各项跳闸次数！");
+                return false;
+            } else {
+                gxtzcs = null;
+            }
+        } else {
+            HashMap<String, Integer> temp = new HashMap<>();
+            temp.put("A", CalcUtils.toInt(a, 0));
+            temp.put("B", CalcUtils.toInt(b, 0));
+            temp.put("C", CalcUtils.toInt(c, 0));
+            temp.put("O", CalcUtils.toInt(o, 0));
+            gxtzcs = JSON.toJSONString(temp);
         }
-        HashMap<String, Integer> temp = new HashMap<>();
-        temp.put("A", CalcUtils.toInt(a, 0));
-        temp.put("B", CalcUtils.toInt(b, 0));
-        temp.put("C", CalcUtils.toInt(c, 0));
-        temp.put("O", CalcUtils.toInt(o, 0));
-        String gxtzcs = JSON.toJSONString(temp);
         String ljtzcs = binding.ljtzcs.getValuesStr();
         String gzdl = binding.gzdl.getGzdl();
         String ljz = binding.gzdl.getLjz();
@@ -181,11 +228,12 @@ public class BHDZQKActivity extends BaseActivity {
             if ((chtzql == null && sbjcGztzjl.isTz()) || bhmc == null || bhsbmc == null || StringUtils.isHasOneEmpty(gzdl, ljz, ecgzdl, dzsj, zdq, ldkgql)) {
                 CToast.showShort(this, "请检查带星号的项目是否均已填写！");
                 return false;
-            } else {
-                chtzql = nullTo(chtzql);
-                bhmc = nullTo(bhmc);
-                bhsbmc = nullTo(bhsbmc);
             }
+            chtzql = nullTo(chtzql);
+        } else {
+            chtzql = nullTo(chtzql);
+            bhmc = nullTo(bhmc);
+            bhsbmc = nullTo(bhsbmc);
         }
         String yqtbhph = binding.yqtbhph.getValueStr();
         String ylbzzph = binding.ylbzzph.getValueStr();
@@ -202,9 +250,8 @@ public class BHDZQKActivity extends BaseActivity {
                     return false;
                 }
             }
-        } else {
-            gzlbq = nullTo(gzlbq);
         }
+        gzlbq = nullTo(gzlbq);
         sbjcGztzjl.chzdzqk = chtzql.getValueStr();
         sbjcGztzjl.chzdzqkK = chtzql.key;
         sbjcGztzjl.gxtzcs = gxtzcs;
@@ -282,7 +329,20 @@ public class BHDZQKActivity extends BaseActivity {
                     }
                     showPic();
                     break;
-
+                case Config.ACTIVITY_CHOSE_DEVICE:
+                    DbModel model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    if (model != null) {
+                        binding.bhsbmc.setKeyValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                    }
+                    break;
+                case Config.ACTIVITY_CHOSE_DEVICE + 1:
+                    model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    if (model != null) {
+                        binding.gzlbqmc.setKeyValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                        binding.gzlbqcj.setMustInput(true);
+                        binding.gzlbqfx.setMustInput(true);
+                    }
+                    break;
             }
         }
     }

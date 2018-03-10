@@ -94,7 +94,7 @@ public class TzcsGroup extends UnderLineLinearLayout {
         a.setText("A:" + intA);
         b.setText("B:" + intB);
         c.setText("C:" + intC);
-        o.setText("C:" + intO);
+        o.setText("O:" + intO);
     }
 
     public void setValuesStr(String json) {
@@ -129,10 +129,10 @@ public class TzcsGroup extends UnderLineLinearLayout {
 
     public String getValuesStr() {
         HashMap<String, Integer> map = new HashMap<>();
-        map.put("A", CalcUtils.toInt(a.getText().toString(), 0));
-        map.put("B", CalcUtils.toInt(b.getText().toString(), 0));
-        map.put("C", CalcUtils.toInt(c.getText().toString(), 0));
-        map.put("O", CalcUtils.toInt(o.getText().toString(), 0));
+        map.put("A", CalcUtils.toInt(a.getText().toString().replace("A:",""), 0));
+        map.put("B", CalcUtils.toInt(b.getText().toString().replace("B:",""), 0));
+        map.put("C", CalcUtils.toInt(c.getText().toString().replace("C:",""), 0));
+        map.put("O", CalcUtils.toInt(o.getText().toString().replace("O:",""), 0));
         return JSON.toJSONString(map);
     }
 }

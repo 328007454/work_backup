@@ -239,6 +239,24 @@ public class DeviceService extends BaseService<Device> {
         }
     }
 
+
+    public String findBigId(String alias) {
+        SqlInfo sqlInfo = new SqlInfo("SELECT * FROM `device_bigtype` where alias_pinyin like '%" + alias + "%'; ");
+        try {
+            List<DbModel> models = findDbModelAll(sqlInfo);
+            if (models != null && models.size() > 0) {
+                StringBuilder bigids = new StringBuilder();
+                for (DbModel model : models) {
+                    bigids.append(model.getString("bigid")).append(",");
+                }
+                return bigids.deleteCharAt(bigids.length() - 1).toString();
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * 修改后的查询抄录方式
      *

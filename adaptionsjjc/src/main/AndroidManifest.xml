@@ -73,6 +73,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+
         <activity
             android:name=".activity.NewTransformRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -326,12 +327,24 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden"/>
 
+        <!--保护动作记录设备选择-->
+        <activity
+            android:name=".activity.gztz.BHDZJLXZSBActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BatteryDefect"
+            android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden"/>
+        <!--故障跳闸生成报告界面-->
         <activity
             android:name=".activity.gztz.GZTZRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden"/>
-
+        <!--故障跳闸报告界面-->
+        <activity
+            android:name=".activity.gztz.GZTZReportActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- batteryfinishActivity -->
         <activity
             android:name=".activity.batteryactivity.BatteryFinishActivity"

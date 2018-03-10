@@ -16,13 +16,13 @@ import java.util.List;
  * @since 1.0
  */
 public class GZTZBhdzjlService extends BaseService<SbjcGztzjlBhdzjl> {
-    static final GZTZSbgzjlService instance = new GZTZSbgzjlService();
+    static final GZTZBhdzjlService instance = new GZTZBhdzjlService();
 
     private GZTZBhdzjlService() {
         super(SbjcGztzjlBhdzjl.class);
     }
 
-    public static GZTZSbgzjlService getInstance() {
+    public static GZTZBhdzjlService getInstance() {
         return instance;
     }
 
