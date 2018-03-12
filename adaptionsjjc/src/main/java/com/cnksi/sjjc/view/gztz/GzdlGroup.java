@@ -3,6 +3,7 @@ package com.cnksi.sjjc.view.gztz;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ public class GzdlGroup extends UnderLineLinearLayout {
     private EditText eddl;
     private InputCountView countView;
     private float old = 0;
+    private boolean isFirstIn = true;
 
     public GzdlGroup(Context context) {
         this(context, null);
@@ -44,7 +46,11 @@ public class GzdlGroup extends UnderLineLinearLayout {
             @Override
             public void afterTextChanged(Editable s) {
                 float newF = CalcUtils.String2Float(s.toString());
-                countView.add(newF - old);
+                if (!isFirstIn) {
+                    countView.add(newF - old);
+                } else {
+                    isFirstIn = false;
+                }
                 old = newF;
             }
         });

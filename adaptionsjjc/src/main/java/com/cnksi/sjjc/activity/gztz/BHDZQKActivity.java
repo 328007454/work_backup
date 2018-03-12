@@ -180,7 +180,7 @@ public class BHDZQKActivity extends BaseActivity {
                 binding.yjkxtph.setValueStr(sbjcGztzjl.yjkxtph);
                 binding.etBz.setValueStr(sbjcGztzjl.dzbhBz);
                 binding.gzlbqmc.setKeyValue(new KeyValue(sbjcGztzjl.gzGzlbqmcK, sbjcGztzjl.gzGzlbqmc));
-                binding.gzlbqfx.setValueStr(sbjcGztzjl.gzGzlbqmc);
+                binding.gzlbqfx.setValueStr(sbjcGztzjl.gzGzlbfx);
                 binding.gzlbqcj.setValueStr(sbjcGztzjl.gzGzlbcj);
             });
         });

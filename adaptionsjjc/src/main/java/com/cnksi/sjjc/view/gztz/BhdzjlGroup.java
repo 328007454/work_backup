@@ -70,7 +70,8 @@ public class BhdzjlGroup {
         binding.bhdzpj.setValueStr(record.bhdzpj);
         if (!TextUtils.isEmpty(record.bhyjlxjdzsj)) {
             List<BhyjBean> bhyjBeans = JSON.parseArray(record.bhyjlxjdzsj, BhyjBean.class);
-            lists.get(0).setBhyjBean(bhyjBeans.get(0));
+            if (!bhyjBeans.isEmpty())
+                lists.get(0).setBhyjBean(bhyjBeans.get(0));
             for (int i = 1; i < bhyjBeans.size(); i++) {
                 addOtherYJLX().setBhyjBean(bhyjBeans.get(i));
             }

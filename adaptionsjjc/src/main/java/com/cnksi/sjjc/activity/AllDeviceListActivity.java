@@ -9,6 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -17,12 +18,14 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
+import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.Spacing;
 import com.cnksi.sjjc.databinding.ActivityDevicesExpadableListBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.SpacingService;
 
+import org.w3c.dom.Text;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.view.annotation.Event;
@@ -198,7 +201,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         getMenuInflater().inflate(R.menu.search_view_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        searchView.setQueryHint("输入设备编号或者名称");
+        searchView.setQueryHint("输入设备名称");
         SearchView.SearchAutoComplete autoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
         autoComplete.setHintTextColor(getResources().getColor(android.R.color.white));
         autoComplete.setTextColor(getResources().getColor(android.R.color.white));
@@ -223,17 +226,16 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         return super.onCreateOptionsMenu(menu);
     }
 
-
     private void packagingData(String text) {
         groupList.clear();
         groupHashMap.clear();
         for (Spacing mSpacing : mSpacingList) {
             ArrayList<DbModel> dbModels = new ArrayList<DbModel>();
             for (DbModel dbModel : mDeviceList) {
-                if (!isSearch && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                if (isSearch && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid) && (dbModel.getString("name").contains(text) || dbModel.getString(Device.NAME_PINYIN).contains(text.toUpperCase(Locale.ENGLISH)))) {
                     dbModel.add("spaceName", mSpacing.name);
                     dbModels.add(dbModel);
-                } else if (isSearch && (mSpacing.name.contains(text) || mSpacing.pinyin.contains(text.toUpperCase(Locale.ENGLISH))) && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                } else if (isSearch && (!TextUtils.isEmpty(mSpacing.name)&&mSpacing.name.contains(text) || !TextUtils.isEmpty(mSpacing.pinyin)&&mSpacing.pinyin.contains(text.toUpperCase(Locale.ENGLISH))) && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
                     dbModel.add("spaceName", mSpacing.name);
                     dbModels.add(dbModel);
                 }

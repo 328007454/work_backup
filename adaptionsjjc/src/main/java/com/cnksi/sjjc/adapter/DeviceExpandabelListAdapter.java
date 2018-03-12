@@ -2,6 +2,7 @@ package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,7 +183,7 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
 //		if (getChildrenCountByGroup(groupPosition) > 1) {
         if (true) {
             holder.mTvDeviceInterval
-                    .setText(group.name + "(" + String.valueOf(getChildrenCountByGroup(groupPosition)) + ")");
+                    .setText(TextUtils.isEmpty(group.name)?"":group.name + "(" + String.valueOf(getChildrenCountByGroup(groupPosition)) + ")");
             if (isExpanded) {
                 holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_shrink, 0);
             } else {
