@@ -284,10 +284,8 @@ public class HWCWMainActivity extends BaseActivity {
                 }
                 break;
             case R.id.ibtn_temp:
-                startActivityForResult(new Intent(_this, HwcwPriviewActivity.class), THERM_ONE);
                 break;
             case R.id.ibtn_temp1:
-                startActivityForResult(new Intent(_this, HwcwPriviewActivity.class), THERM_SECOND);
                 break;
             case R.id.iv_show_temp_picture:
                 if (TextUtils.isEmpty(hwtx[0])) {

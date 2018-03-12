@@ -145,7 +145,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':cnksicore')
 //    compile project(':bdloc')
-    compile(name: 'flironesdk', ext: 'aar')
+//    compile(name: 'flironesdk', ext: 'aar')
     compile('com.cnksi:ksynclib:3.1.8') {
         exclude module: 'fastjson'
     }
