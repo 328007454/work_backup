@@ -45,6 +45,12 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
     private ImageButton deleteButton;
     private onSelectItemListener listener;
     String hint;
+    private DataProvider dataProvider = new DataProvider() {
+        @Override
+        public List<KeyValue> getData() {
+            return GZTZSjlyService.getInstance().findByType(type);
+        }
+    };
 
     public SelectGroup(Context context) {
         this(context, null);
@@ -89,7 +95,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
     }
 
     private void initDialog() {
-        List<KeyValue> keyValues = GZTZSjlyService.getInstance().findByType(type);
+        List<KeyValue> keyValues = dataProvider.getData();
         int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
         int dialogHeight = keyValues.size() > 5 ? DisplayUtil.getInstance().getHeight() * 3 / 5 :
                 ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -167,5 +173,13 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
 
     public interface onSelectItemListener {
         void onselect(KeyValue value);
+    }
+
+    public interface DataProvider {
+        List<KeyValue> getData();
+    }
+
+    public void setDataProvider(DataProvider dataProvider) {
+        this.dataProvider = dataProvider;
     }
 }

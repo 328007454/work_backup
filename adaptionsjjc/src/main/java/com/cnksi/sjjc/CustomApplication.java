@@ -356,8 +356,8 @@ public class CustomApplication extends CoreApplication {
                             e.printStackTrace();
                         }
                     }
+                    copyAssetsToSDCard(mInstance, "database", Config.DATABASE_FOLDER);
                 }
-                copyAssetsToSDCard(mInstance, "database", Config.DATABASE_FOLDER);
                 PreferencesUtils.put(mInstance, "DataVersion", DataVersion);
             });
     }

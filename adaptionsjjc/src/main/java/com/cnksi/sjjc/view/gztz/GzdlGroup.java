@@ -3,7 +3,6 @@ package com.cnksi.sjjc.view.gztz;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -42,15 +41,12 @@ public class GzdlGroup extends UnderLineLinearLayout {
         LayoutInflater.from(context).inflate(R.layout.gztz_item_gzdl, this, true);
         eddl = (EditText) findViewById(R.id.et_gzdl);
         countView = (InputCountView) findViewById(R.id.ljz);
+        countView.setMin(0.0f);
         eddl.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 float newF = CalcUtils.String2Float(s.toString());
-                if (!isFirstIn) {
-                    countView.add(newF - old);
-                } else {
-                    isFirstIn = false;
-                }
+                countView.add(newF - old);
                 old = newF;
             }
         });

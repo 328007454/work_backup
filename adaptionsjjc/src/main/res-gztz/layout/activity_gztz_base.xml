@@ -57,36 +57,23 @@
                 android:background="@color/white"
                 app:select_str="正动|误动"
                 app:title_str="*开关动作评价"/>
-            <com.cnksi.sjjc.view.UnderLineLinearLayout
-                android:background="@color/white"
+
+            <com.cnksi.sjjc.view.gztz.SelectGroup
+                android:id="@+id/gzxl"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
+                android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingEnd="@dimen/_30px"
-                app:drawUnderLine="true">
+                app:drawUnderLine="true"
+                app:title_str="故障线路"/>
 
-                <TextView
-                    style="@style/layout_gztz_title"
-                    android:text="*故障线路"
-                    />
-
-                <com.cnksi.sjjc.view.ContainsEmojiEditText
-                    android:id="@+id/gzxl"
-                    style="@style/layout_gztz_num_input"
-                    android:layout_width="match_parent"
-                    android:layout_marginLeft="30px"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|left"
-                    android:text=""
-                    />
-
-            </com.cnksi.sjjc.view.UnderLineLinearLayout>
             <com.cnksi.sjjc.view.gztz.SingleRadioGroup
                 android:id="@+id/sfzngz"
                 android:layout_width="match_parent"
                 android:layout_height="138px"
-                android:visibility="gone"
                 android:background="@color/white"
+                android:visibility="gone"
                 app:title_str="*是否站内故障"/>
 
 

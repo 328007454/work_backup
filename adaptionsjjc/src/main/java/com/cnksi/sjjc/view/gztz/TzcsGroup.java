@@ -120,7 +120,7 @@ public class TzcsGroup extends UnderLineLinearLayout {
     }
 
     public void addO(int x) {
-        c.setText("O:" + (intO + x));
+        o.setText("O:" + (intO + x));
     }
 
     private String getIntStr(TextView s) {

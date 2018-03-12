@@ -16,6 +16,7 @@ import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
+import com.cnksi.sjjc.service.gztz.PmsXianluService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
@@ -110,7 +111,7 @@ public class TZQKActivity extends BaseActivity {
                 binding.gztysb.setMustInput(false);
             } else binding.gztysb.setMustInput(true);
         });
-
+        binding.gzxl.setDataProvider(() -> PmsXianluService.getInstance().findXianluByBdz(currentBdzId));
     }
 
     private void initData() {
@@ -121,7 +122,7 @@ public class TZQKActivity extends BaseActivity {
         binding.yyjjcqk.setValueStr(sbgzjl.bhYyjjcqk);
         binding.sbxb.setKeyValue(new KeyValue(sbgzjl.sbxbK, sbgzjl.sbxb));
         binding.sfdz.setValueStr(sbgzjl.sfdz);
-        binding.gzxl.setText(sbgzjl.gzxl);
+        binding.gzxl.setKeyValue(new KeyValue(sbgzjl.gzxlK, sbgzjl.gzxl));
         binding.kgdzpj.setValueStr(sbgzjl.dzpj);
         binding.sfzngz.setValueStr(sbgzjl.sfzngz);
         binding.gzfssj.setValueStr(sbgzjl.gzfssj);
@@ -160,7 +161,7 @@ public class TZQKActivity extends BaseActivity {
         String kgdzpj = binding.kgdzpj.getValueStr();
         String sfzngz = binding.sfzngz.getValueStr();
         String gzfssj = binding.gzfssj.getValueStr();
-        String gzxl = getText(binding.gzxl);
+        KeyValue gzxl = binding.gzxl.getValue();
         KeyValue gzdydj = binding.gzdydj.getValue();
         KeyValue gzlx = binding.gzlx.getValue();
         KeyValue gzsdtq = binding.gzsdtq.getValue();
@@ -170,7 +171,7 @@ public class TZQKActivity extends BaseActivity {
         String sfty = binding.sfty.getValueStr();
         String dlqjcqk = binding.dlqjcqk.getValueStr();
         if (isCheck) {
-            if (dlqbh == null || sbxb == null || StringUtils.isHasOneEmpty(dlqtzqk, gzxl, yyjjcqk, sfdz, kgdzpj, sfzngz, gzfssj)) {
+            if (dlqbh == null || sbxb == null || gzxl == null || StringUtils.isHasOneEmpty(dlqtzqk, yyjjcqk, sfdz, kgdzpj, sfzngz, gzfssj)) {
                 CToast.showShort(this, "请检查带星号的项目是否均已填写！");
                 return false;
             }
@@ -185,6 +186,7 @@ public class TZQKActivity extends BaseActivity {
             gzsdtq = nullTo(gzsdtq);
             gzlb = nullTo(gzlb);
             sbxb = nullTo(sbxb);
+            gzxl = nullTo(gzxl);
         }
         KeyValue tyfw = null;
         KeyValue gztysb = null;
@@ -224,7 +226,8 @@ public class TZQKActivity extends BaseActivity {
         sbgzjl.gzlbK = gzlb.key;
         sbgzjl.gzlx = gzlx.getValueStr();
         sbgzjl.gzlxK = gzlx.key;
-        sbgzjl.gzxl = gzxl;
+        sbgzjl.gzxl = gzxl.getValueStr();
+        sbgzjl.gzxlK = gzxl.key;
         sbgzjl.sfzngz = sfzngz;
         sbgzjl.gzsdtq = gzsdtq.getValueStr();
         sbgzjl.gzsdtqK = gzsdtq.key;

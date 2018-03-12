@@ -161,10 +161,11 @@ public class BHDZQKActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(sbjcGztzjl.ljtzcs)) {
                     binding.ljtzcs.setValuesStr(sbjcGztzjl.ljtzcs);
                 }
-                if (!TextUtils.isEmpty(sbjcGztzjl.ljz))
-                    binding.gzdl.setLjz(CalcUtils.String2Float(sbjcGztzjl.ljz));
                 if (!TextUtils.isEmpty(sbjcGztzjl.gzdl))
                     binding.gzdl.setGzdl(CalcUtils.String2Float(sbjcGztzjl.gzdl));
+                if (!TextUtils.isEmpty(sbjcGztzjl.ljz))
+                    binding.gzdl.setLjz(CalcUtils.String2Float(sbjcGztzjl.ljz));
+
 
                 binding.chzdzqk.setKeyValue(new KeyValue(sbjcGztzjl.chzdzqkK, sbjcGztzjl.chzdzqk));
                 binding.ecgzdl.setText(StringUtils.NullToBlank(sbjcGztzjl.ecgzdl));

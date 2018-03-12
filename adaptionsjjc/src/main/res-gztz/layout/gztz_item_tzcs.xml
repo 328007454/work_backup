@@ -32,7 +32,9 @@
         android:layout_marginTop="3px"
         android:layout_weight="1"
         android:text="C"
-        /> <TextView
+        />
+
+    <TextView
         android:id="@+id/ljtzcs_o"
         style="@style/layout_gztz_title"
         android:layout_width="wrap_content"
