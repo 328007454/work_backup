@@ -178,19 +178,18 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
                 mContext.getResources().getDimensionPixelSize(R.dimen.global_padding_left_right),
                 mContext.getResources().getDimensionPixelSize(R.dimen.global_padding_top_bottom));
         //mContext.getResources().getColor(R.color.green_color)
-        holder.mTvDeviceInterval.setTextColor(ContextCompat.getColor(mContext,R.color.green_color));
+        holder.mTvDeviceInterval.setTextColor(ContextCompat.getColor(mContext, R.color.green_color));
 
 //		if (getChildrenCountByGroup(groupPosition) > 1) {
-        if (true) {
+        if (true && group != null) {
             holder.mTvDeviceInterval
-                    .setText(TextUtils.isEmpty(group.name)?"":group.name + "(" + String.valueOf(getChildrenCountByGroup(groupPosition)) + ")");
+                    .setText(TextUtils.isEmpty(group.name) ? "" : group.name + "(" + String.valueOf(getChildrenCountByGroup(groupPosition)) + ")");
             if (isExpanded) {
                 holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_shrink, 0);
             } else {
                 holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_open, 0);
             }
-        } else
-        {
+        } else if (group != null) {
             holder.mTvDeviceInterval.setText(group.name);
             holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }

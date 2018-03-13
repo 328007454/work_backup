@@ -59,6 +59,11 @@ public class Spacing extends BaseModel{
 	public String pinyin;
 
 
+	public static  final String DEVICE_TYPE="device_type";
+	@Column(name = DEVICE_TYPE)
+	public String deviceType;
+
+
 
 	// 电压等级从lookup表中查询type=voltage
 	public static final String VOLTAGE = "voltage";

@@ -40,7 +40,7 @@ public class ArresterCheckOLProcessor extends CopyDataInterface {
 
     @Override
     public String getCopyType() {
-        return "blqdzcs_xldlz";
+        return "blqdzcs_dzcs','blqdzcs_xldlz";
     }
 
     @Override

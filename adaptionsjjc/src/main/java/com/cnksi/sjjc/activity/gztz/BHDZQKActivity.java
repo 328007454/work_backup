@@ -183,6 +183,10 @@ public class BHDZQKActivity extends BaseActivity {
                 binding.gzlbqmc.setKeyValue(new KeyValue(sbjcGztzjl.gzGzlbqmcK, sbjcGztzjl.gzGzlbqmc));
                 binding.gzlbqfx.setValueStr(sbjcGztzjl.gzGzlbfx);
                 binding.gzlbqcj.setValueStr(sbjcGztzjl.gzGzlbcj);
+                if (null!=binding.gzlbqmc.getValue()&&!TextUtils.isEmpty(binding.gzlbqmc.getValue().getValueStr())) {
+                    binding.gzlbqfx.setMustInput(true);
+                    binding.gzlbqcj.setMustInput(true);
+                }
             });
         });
     }

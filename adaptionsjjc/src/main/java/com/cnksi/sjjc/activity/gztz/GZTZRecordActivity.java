@@ -120,7 +120,11 @@ public class GZTZRecordActivity extends BaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            runOnUiThread(() -> showPeopleAdapter.setList(showPeopleList));
+            runOnUiThread(() -> {
+                showPeopleAdapter.setUserCount(showPeopleList.size());
+                showPeopleAdapter.setList(showPeopleList);
+
+            });
         });
         mFixedThreadPoolExecutor.execute(() -> {
             sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
@@ -183,6 +187,10 @@ public class GZTZRecordActivity extends BaseActivity {
 
         peopleBinding.lvPeople.setOnItemClickListener((adapterView, view, i, l) -> {
             String name = (String) adapterView.getAdapter().getItem(i);
+            if (showPeopleList.contains(name)) {
+                CToast.showShort(_this, "已经存在该人员");
+                return;
+            }
             showPeopleList.add(name);
             showPeopleAdapter.notifyDataSetChanged();
             selectDbModel.add(dbModelList.get(i));

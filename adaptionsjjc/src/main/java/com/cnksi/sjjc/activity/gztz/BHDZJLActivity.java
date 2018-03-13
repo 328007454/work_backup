@@ -97,6 +97,8 @@ public class BHDZJLActivity extends BaseActivity {
                 if (group1.getBhsb() != null) {
                     intentDevices.putExtra(AllDeviceListActivity.SPCAEID, group1.getBhsb().getString(Device.SPID));
                 }
+            }else{
+                intentDevices.putExtra(Config.SECOND_SPACE_AND_ONE_DEVICE,true);
             }
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0));
         });

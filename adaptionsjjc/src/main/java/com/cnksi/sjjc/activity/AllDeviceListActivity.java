@@ -94,6 +94,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         }
         String spid = getIntent().getStringExtra(SPCAEID);
         String bigId = getIntent().getStringExtra(BIGID);
+        boolean secondSpaceAndOneDevice = getIntent().getBooleanExtra(Config.SECOND_SPACE_AND_ONE_DEVICE, false);
         mFixedThreadPoolExecutor.execute(() -> {
             try {
                 mSpacingList = SpacingService.getInstance().findSpacingByModel(currentBdzId, currentFunctionModel.name());
@@ -115,7 +116,10 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
                     for (Spacing mSpacing : mSpacingList) {
                         ArrayList<DbModel> dbModels = new ArrayList<>();
                         for (DbModel dbModel : mDeviceList) {
-                            if (dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                            if (secondSpaceAndOneDevice &&dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)&&mSpacing.deviceType.contains("one")) {
+                                dbModel.add("spaceName", mSpacing.name);
+                                dbModels.add(dbModel);
+                            } else if (!secondSpaceAndOneDevice&&dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
                                 dbModel.add("spaceName", mSpacing.name);
                                 dbModels.add(dbModel);
                             }
@@ -147,6 +151,10 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
                 if (groupList != null && !groupList.isEmpty() && mDeviceExpandableAdapater.getChildrenCountByGroup(currentClickGroupPosition) > 1) {
                     mExpadableListBinding.elvContainer.expandGroup(currentClickGroupPosition);
                 }
+//                int size = mExpadableListBinding.elvContainer.getCount();
+//                for (int i = 0; i < size; i++) {
+//                    mExpadableListBinding.elvContainer.expandGroup(i);
+//                }
                 break;
 
             default:
@@ -227,15 +235,17 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     }
 
     private void packagingData(String text) {
-        groupList.clear();
-        groupHashMap.clear();
+        synchronized (groupList) {
+            groupList.clear();
+            groupHashMap.clear();
+        }
         for (Spacing mSpacing : mSpacingList) {
             ArrayList<DbModel> dbModels = new ArrayList<DbModel>();
             for (DbModel dbModel : mDeviceList) {
                 if (isSearch && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid) && (dbModel.getString("name").contains(text) || dbModel.getString(Device.NAME_PINYIN).contains(text.toUpperCase(Locale.ENGLISH)))) {
                     dbModel.add("spaceName", mSpacing.name);
                     dbModels.add(dbModel);
-                } else if (isSearch && (!TextUtils.isEmpty(mSpacing.name)&&mSpacing.name.contains(text) || !TextUtils.isEmpty(mSpacing.pinyin)&&mSpacing.pinyin.contains(text.toUpperCase(Locale.ENGLISH))) && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                } else if (isSearch && (!TextUtils.isEmpty(mSpacing.name) && mSpacing.name.contains(text) || !TextUtils.isEmpty(mSpacing.pinyin) && mSpacing.pinyin.contains(text.toUpperCase(Locale.ENGLISH))) && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
                     dbModel.add("spaceName", mSpacing.name);
                     dbModels.add(dbModel);
                 }

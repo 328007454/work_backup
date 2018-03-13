@@ -76,9 +76,9 @@ public class TzcsGroup extends UnderLineLinearLayout {
             viewHolder.llO.setVisibility(visbles[3] == 1 ? VISIBLE : GONE);
         }
         viewHolder.gxtzcsA.setText(getIntStr(a));
-        viewHolder.gxtzcsC.setText(getIntStr(b));
-        viewHolder.gxtzcsB.setText(getIntStr(c));
-        viewHolder.gxtzcsO.setText(getIntStr(c));
+        viewHolder.gxtzcsC.setText(getIntStr(c));
+        viewHolder.gxtzcsB.setText(getIntStr(b));
+        viewHolder.gxtzcsO.setText(getIntStr(o));
         dialog.show();
     }
 
