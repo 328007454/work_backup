@@ -38,6 +38,7 @@ import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 故障跳闸记录情况
@@ -57,6 +58,7 @@ public class GZTZRecordActivity extends BaseActivity {
     private List<DbModel> selectDbModel = new ArrayList<>();
     private List<DbModel> dbModelList;
     private SbjcGztzjl sbjcGztzjl;
+    private String deptID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,7 @@ public class GZTZRecordActivity extends BaseActivity {
                             showPeopleList.add(model.getString("username"));
                             selectDbModel.add(model);
                         }
+                        deptID = model.getString("dept_id");
                         peopleList.add(model.getString("username"));
                     }
                 }
@@ -202,6 +205,11 @@ public class GZTZRecordActivity extends BaseActivity {
                 peopleList.add(peopleBinding.etName.getText().toString());
                 peopleAdapter.setList(peopleList);
                 peopleBinding.lvPeople.setSelection(peopleAdapter.getCount());
+                DbModel model = new DbModel();
+                model.add("account", UUID.randomUUID().toString());
+                model.add("name", peopleBinding.etName.getText().toString());
+                model.add("dept_id", deptID);
+                dbModelList.add(model);
                 peopleBinding.etName.setText("");
             }
         });

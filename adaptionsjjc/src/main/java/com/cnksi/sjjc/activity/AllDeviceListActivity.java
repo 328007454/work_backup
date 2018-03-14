@@ -116,10 +116,10 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
                     for (Spacing mSpacing : mSpacingList) {
                         ArrayList<DbModel> dbModels = new ArrayList<>();
                         for (DbModel dbModel : mDeviceList) {
-                            if (secondSpaceAndOneDevice &&dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)&&mSpacing.deviceType.contains("one")) {
+                            if (secondSpaceAndOneDevice && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid) && mSpacing.deviceType.contains("one")) {
                                 dbModel.add("spaceName", mSpacing.name);
                                 dbModels.add(dbModel);
-                            } else if (!secondSpaceAndOneDevice&&dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                            } else if (!secondSpaceAndOneDevice && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
                                 dbModel.add("spaceName", mSpacing.name);
                                 dbModels.add(dbModel);
                             }
@@ -235,10 +235,8 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     }
 
     private void packagingData(String text) {
-        synchronized (groupList) {
-            groupList.clear();
-            groupHashMap.clear();
-        }
+        groupList.clear();
+        groupHashMap.clear();
         for (Spacing mSpacing : mSpacingList) {
             ArrayList<DbModel> dbModels = new ArrayList<DbModel>();
             for (DbModel dbModel : mDeviceList) {
