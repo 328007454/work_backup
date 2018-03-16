@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="6dp"
-    android:orientation="vertical" >
+<layout>
 
-    <ListView
-        android:id="@+id/lv_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@color/sync_divider_line_color"
-        android:dividerHeight="0.3dp"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:padding="6dp">
 
-</LinearLayout>
+        <ListView
+            android:id="@+id/lv_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/sync_divider_line_color"
+            android:dividerHeight="0.3dp"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"/>
+
+    </LinearLayout>
+</layout>

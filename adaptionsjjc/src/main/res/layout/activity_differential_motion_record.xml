@@ -1,56 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
 
 
-    <ListView
+        <ListView
 
-        android:id="@+id/lv_container"
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@color/line_color"
-        android:dividerHeight="2px"
-        android:listSelector="@android:color/transparent"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/ll_container1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-
-        <ScrollView
+            android:id="@+id/lv_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/line_color"
+            android:dividerHeight="2px"
+            android:listSelector="@android:color/transparent"
+            android:visibility="gone"/>
 
-            <LinearLayout
-                android:id="@+id/ll_container"
+        <LinearLayout
+            android:id="@+id/ll_container1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:layout_height="wrap_content">
 
-        </ScrollView>
+                <LinearLayout
+                    android:id="@+id/ll_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
 
+            </ScrollView>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_confirm_save"
+            style="@style/NewButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20px"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:background="@drawable/red_button_background_selector"
+            android:text="@string/complete_test_text"
+            android:textSize="@dimen/global_text_size_px"
+            android:visibility="visible"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_confirm_save"
-        style="@style/NewButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:textSize="@dimen/global_text_size_px"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20px"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:background="@drawable/red_button_background_selector"
-        android:text="@string/complete_test_text"
-        android:visibility="visible" />
-</LinearLayout>
+</layout>

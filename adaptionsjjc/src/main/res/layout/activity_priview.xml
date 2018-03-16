@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin">
 
 
-    <ImageView
-        tools:ignore="ContentDescription"
-        android:id="@+id/thermal_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter" />
+        <ImageView
+            android:id="@+id/thermal_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            tools:ignore="ContentDescription"/>
 
-    <TextView
-        android:id="@+id/tip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:textColor="#000000" />
+        <TextView
+            android:id="@+id/tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textColor="#000000"/>
 
-    <Button
-        android:id="@+id/rock"
-        style="@style/NewButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/grass_green_button_background_selector"
-        android:onClick="onClick"
-        android:text="旋转90°" />
-
-
-    <TextView
-        android:id="@+id/power"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tip"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:scaleType="fitCenter"
-        android:textColor="#000000" />
+        <Button
+            android:id="@+id/rock"
+            style="@style/NewButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/grass_green_button_background_selector"
+            android:onClick="onClick"
+            android:text="旋转90°"/>
 
 
-    <Button
-        android:id="@+id/take_picture"
-        style="@style/NewButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/global_padding_half_left_right"
-        android:background="@drawable/grass_green_button_background_selector"
-        android:onClick="onClick"
-        android:text="确定" />
+        <TextView
+            android:id="@+id/power"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tip"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:scaleType="fitCenter"
+            android:textColor="#000000"/>
 
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/take_picture"
+            style="@style/NewButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/global_padding_half_left_right"
+            android:background="@drawable/grass_green_button_background_selector"
+            android:onClick="onClick"
+            android:text="确定"/>
+
+
+    </RelativeLayout>
+</layout>

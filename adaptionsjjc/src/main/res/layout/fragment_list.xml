@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/ll_root_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout>
 
-    <ListView
-        android:id="@+id/lv_container"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_root_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@color/line_color"
-        android:dividerHeight="2px"
-        android:listSelector="@android:color/transparent"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <ListView
+            android:id="@+id/lv_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/line_color"
+            android:dividerHeight="2px"
+            android:listSelector="@android:color/transparent"/>
 
 
         <Button
@@ -35,4 +36,5 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/global_text_size_px"
             android:visibility="gone"/>
-</LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout>
 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <LinearLayout
-        android:id="@+id/rl_battery_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/device_green_border_background_selector"
-        android:clickable="true"
-        android:gravity="center"
-        android:minHeight="@dimen/device_item_minheight_px"
-        android:minWidth="@dimen/device_item_minwidth_px"
-        android:orientation="horizontal">
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_battery_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
+        <LinearLayout
+            android:id="@+id/rl_battery_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/device_green_border_background_selector"
+            android:clickable="true"
             android:gravity="center"
-            android:singleLine="true"
-            android:textColor="@color/green_color"
-            android:textSize="@dimen/device_item_name_text_size_px" />
+            android:minHeight="@dimen/device_item_minheight_px"
+            android:minWidth="@dimen/device_item_minwidth_px"
+            android:orientation="horizontal">
 
-        <!-- 电池组名称 -->
-        <TextView
+            <TextView
+                android:id="@+id/tv_battery_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/device_item_name_text_size_px"/>
 
-            android:id="@+id/tv_voltage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="40dp"
-            android:background="@drawable/battery_voltage_background"
-            android:gravity="center"
-            android:padding="@dimen/battery_voltage_padding_top"
-            android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/battery_voltage_text_size_px" />
+            <!-- 电池组名称 -->
+            <TextView
+
+                android:id="@+id/tv_voltage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/battery_voltage_background"
+                android:gravity="center"
+                android:minWidth="40dp"
+                android:padding="@dimen/battery_voltage_padding_top"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/battery_voltage_text_size_px"/>
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
-</LinearLayout>
+</layout>
