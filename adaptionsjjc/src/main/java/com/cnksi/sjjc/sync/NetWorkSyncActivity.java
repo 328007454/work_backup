@@ -1,11 +1,9 @@
 package com.cnksi.sjjc.sync;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
@@ -114,44 +112,41 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         if (url.contains(":")) {
             url = url.substring(0, url.indexOf(":"));
         }
-        ping("ping -i 3 " + url, handler);
+        //ping("ping -i 3 " + url, handler);
     }
 
     @Override
     public void onClick(View view) {
         hasError = false;
         if (view.getId() == R.id.ibtn_sync_menu) {
-            SyncMenuUtils.showMenuPopWindow(currentActivity, binding.ibtnSyncMenu, R.array.NetSyncMenuArray, new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    switch (position) {
-                        case 0:// 切换到USB同步
-                            SyncMenuUtils.changeSync(currentActivity);
-                            break;
-                        case 1:// 删除数据库
-                            SyncMenuUtils.dropDb(currentActivity, ksync, handler);
-                            break;
-                        case 2: // 删除文件
-                            SyncMenuUtils.deleteBakFile(currentActivity, ksync, handler);
-                            break;
-                        case 3: // 上传数据库
-                            SyncMenuUtils.uploadDatabase(currentActivity, ksync, handler, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    mSyncInfos.clear();
-                                    mSyncInfoAdapter.notifyDataSetChanged();
-                                }
-                            });
-                            break;
-                        case 4://删除除本班组以外的数据
-                            SyncMenuUtils.deleteOtherDepartmentData(currentActivity, handler, dept_id);
-                            break;
+            SyncMenuUtils.showMenuPopWindow(currentActivity, binding.ibtnSyncMenu, R.array.NetSyncMenuArray, (parent, view1, position, id) -> {
+                switch (position) {
+                    case 0:// 切换到USB同步
+                        SyncMenuUtils.changeSync(currentActivity);
+                        break;
+                    case 1:// 删除数据库
+                        SyncMenuUtils.dropDb(currentActivity, ksync, handler);
+                        break;
+                    case 2: // 删除文件
+                        SyncMenuUtils.deleteBakFile(currentActivity, ksync, handler);
+                        break;
+                    case 3: // 上传数据库
+                        SyncMenuUtils.uploadDatabase(currentActivity, ksync, handler, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mSyncInfos.clear();
+                                mSyncInfoAdapter.notifyDataSetChanged();
+                            }
+                        });
+                        break;
+                    case 4://删除除本班组以外的数据
+                        SyncMenuUtils.deleteOtherDepartmentData(currentActivity, handler, dept_id);
+                        break;
 
-                        default:
-                            break;
-                    }
-
+                    default:
+                        break;
                 }
+
             });
             return;
         }
@@ -162,23 +157,19 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         switch (view.getId()) {
             //下载数据
             case R.id.tv_download:
-                SyncMenuUtils.ShowTipsDialog(currentActivity, KSyncConfig.getInstance().isHaveDept() ? " 确认要从服务器端更新数据么?" : "当前是未登陆状态，仅同步基础数据。\n确认从服务器端更新基础数据？", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!KSyncConfig.getInstance().isHaveDept()) {
-                            handler.sendMessage(handler.obtainMessage(KSync.SYNC_INFO, "当前没有登陆，本次同步仅同步基础数据！"));
-                        }
-                        download();
+                SyncMenuUtils.ShowTipsDialog(currentActivity, KSyncConfig.getInstance().isHaveDept() ? " 确认要从服务器端更新数据么?" : "当前是未登陆状态，仅同步基础数据。\n确认从服务器端更新基础数据？", v -> {
+                    cacheMap.clear();
+                    if (!KSyncConfig.getInstance().isHaveDept()) {
+                        handler.sendMessage(handler.obtainMessage(KSync.SYNC_INFO, "当前没有登陆，本次同步仅同步基础数据！"));
                     }
+                    download();
                 });
                 break;
             //上传数据
             case R.id.tv_upload:
-                SyncMenuUtils.ShowTipsDialog(currentActivity, " 确认要将本机数据更新到服务器端么?", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        upload();
-                    }
+                SyncMenuUtils.ShowTipsDialog(currentActivity, " 确认要将本机数据更新到服务器端么?", v -> {
+                    cacheMap.clear();
+                    upload();
                 });
                 break;
             default:
@@ -187,17 +178,14 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
 
     private void upload() {
         setButtonStyle(false);
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                ksync.uploadData();
-                if (config.isUploadFile()) {
-                    isSyncFile = true;
-                    if (TextUtils.isEmpty(config.getUploadFolder())) {
-                        ksync.uploadFile();
-                    } else {
-                        ksync.uploadFile(config.getUploadFolder());
-                    }
+        executorService.execute(() -> {
+            ksync.uploadData();
+            if (config.isUploadFile()) {
+                isSyncFile = true;
+                if (TextUtils.isEmpty(config.getUploadFolder())) {
+                    ksync.uploadFile();
+                } else {
+                    ksync.uploadFile(config.getUploadFolder());
                 }
             }
         });
@@ -205,33 +193,30 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
 
     private void download() {
         setButtonStyle(false);
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                if (!KSyncConfig.getInstance().isHaveDept()) {
-                    ksync.download("city", "users", "department", "pad_apk_version");
-                    DbModel model = null;
-                    try {
-                        model = CustomApplication.getDbManager().findDbModelFirst(new SqlInfo("select short_name_pinyin from city"));
-                        String firstDownApk = "admin/" + model.getString("short_name_pinyin") + "/apk";
-                        ksync.downFile(firstDownApk);
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    ksync.download();
+        executorService.execute(() -> {
+            if (!KSyncConfig.getInstance().isHaveDept()) {
+                ksync.download("city", "users", "department", "pad_apk_version");
+                DbModel model = null;
+                try {
+                    model = CustomApplication.getDbManager().findDbModelFirst(new SqlInfo("select short_name_pinyin from city"));
+                    String firstDownApk = "admin/" + model.getString("short_name_pinyin") + "/apk";
+                    ksync.downFile(firstDownApk);
+                } catch (DbException e) {
+                    e.printStackTrace();
                 }
-                if (config.isDownFile()) {
-                    isSyncFile = true;
-                    //第一次同步的时候直接同步变电站数据 不需要再次初始化。
+
+            } else {
+                ksync.download();
+            }
+            if (config.isDownFile()) {
+                isSyncFile = true;
+                //第一次同步的时候直接同步变电站数据 不需要再次初始化。
 //                    KSyncConfig.getInstance().initFolder();
 //                    config.configDownFolder(KSyncConfig.getInstance().getDownFolderString());
-                    if (TextUtils.isEmpty(config.getDownFolder())) {
-                        ksync.downFile();
-                    } else {
-                        ksync.downFile(config.getDownFolder());
-                    }
+                if (TextUtils.isEmpty(config.getDownFolder())) {
+                    ksync.downFile();
+                } else {
+                    ksync.downFile(config.getDownFolder());
                 }
             }
         });
@@ -285,22 +270,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-    private void setTime(String serverTimeStr) {
-        if (!TextUtils.isEmpty(serverTimeStr)) {
-            try {
-                long serverTime = Long.parseLong(serverTimeStr);
-                if (Math.abs(serverTime - System.currentTimeMillis()) > 5 * 60 * 1000) {
-                    Toast.makeText(currentActivity, "手机时间不正确，请设置手机时间", Toast.LENGTH_LONG).show();
-                    //时间设置
-                    Intent mTimeIntent = new Intent(Settings.ACTION_DATE_SETTINGS);
-                    startActivity(mTimeIntent);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     /**
      * 设置当前的网络质量
      *
@@ -348,25 +317,22 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
     public void ping(final String cmdLine, final Handler handler) {
         if (pinging == true) return;
         pinging = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Process p = Runtime.getRuntime().exec(cmdLine);
-                    BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(p.getInputStream()), 8192);
-                    do {
-                        String s1 = bufferedreader.readLine();
-                        if (s1 == null) {
-                            bufferedreader.close();
-                            p.destroy();
-                            break;
-                        }
-                        handler.sendMessage(handler.obtainMessage(SYNC_PING, s1));
-                    } while (pinging);
-                } catch (IOException ioexception) {
-                    ioexception.printStackTrace();
-                    handler.sendMessage(handler.obtainMessage(SYNC_ERROR, "命令失败,错误原因:" + ioexception.getMessage()));
-                }
+        new Thread(() -> {
+            try {
+                Process p = Runtime.getRuntime().exec(cmdLine);
+                BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(p.getInputStream()), 8192);
+                do {
+                    String s1 = bufferedreader.readLine();
+                    if (s1 == null) {
+                        bufferedreader.close();
+                        p.destroy();
+                        break;
+                    }
+                    handler.sendMessage(handler.obtainMessage(SYNC_PING, s1));
+                } while (pinging);
+            } catch (IOException ioexception) {
+                ioexception.printStackTrace();
+                handler.sendMessage(handler.obtainMessage(SYNC_ERROR, "命令失败,错误原因:" + ioexception.getMessage()));
             }
         }).start();
     }
@@ -395,7 +361,6 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                 case KSync.SYNC_SUCCESS:
                     info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
                     CustomApplication.saveDbVersion(ksync.getKnConfig().getDatabase().getVersion());
-                    setButtonStyle(true);
                     if ((KSyncConfig.getInstance().isHaveDept())) {
                         showDialogTips();
                     }

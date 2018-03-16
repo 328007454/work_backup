@@ -73,12 +73,16 @@ public class KSyncConfig {
         startSync(context, intent);
     }
 
+    public KNConfig config = null;
+
     public KNConfig getKNConfig(Context context) {
         initFolder();
         String deviceId = DeviceUtils.getSerialNumber(context);
-        KNConfig config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
+        config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
                 Config.SYNC_URL, deviceId, getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
         config.configDebug(BuildConfig.DEBUG);
+        config.configAppid(Config.SYNC_APP_ID);
+        config.configUrl(Config.SYNC_URL);
         config.configDownFolder(getFolderString(downFolder));
         config.configUploadFolder(getFolderString(uploadFolder));
         config.configDynicParam("dept_id", dept_id);
@@ -106,7 +110,7 @@ public class KSyncConfig {
         uploadFolder.clear();
         downFolder.add("lib");
         downFolder.add("lib/wt");
-        downFolder.add("signimg");
+        //  downFolder.add("signimg");
         downFolder.add("download");
 
 

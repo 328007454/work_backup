@@ -52,6 +52,9 @@ android {
         versionName VERSION_NAME
         vectorDrawables.useSupportLibrary = true
         buildConfigField 'boolean', "HAS_WEB_ASSETS", HAS_WEB_ASSETS
+        ndk {
+            abiFilters 'armeabi'
+        }
     }
     dataBinding {
         enabled true
@@ -144,7 +147,7 @@ repositories { flatDir { dirs 'libs' } }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':cnksicore')
-    compile('com.cnksi:ksynclib:3.1.8') {
+    compile('com.cnksi:ksynclib:3.1.8-xj') {
         exclude module: 'fastjson'
     }
     compile project(':autolayout')

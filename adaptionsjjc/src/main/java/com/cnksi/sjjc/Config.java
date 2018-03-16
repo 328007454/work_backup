@@ -40,7 +40,7 @@ public class Config extends CoreConfig {
     public static final String LOGFOLDER = BDZ_INSPECTION_FOLDER + "log/";
     public static final String DOWNLOAD_APP_FOLDER = BDZ_INSPECTION_FOLDER + "download/";
     public static final String PICTURES_FOLDER = BDZ_INSPECTION_FOLDER + "";
-    public static final String WWWROOT_FOLDER = BDZ_INSPECTION_FOLDER + "src/main/assets-web/www/";
+    public static final String WWWROOT_FOLDER = BDZ_INSPECTION_FOLDER + "www/";
     public static final String RESULT_PICTURES_FOLDER = BDZ_INSPECTION_FOLDER + "";
     public static final String CUSTOMER_PICTURES_FOLDER = BDZ_INSPECTION_FOLDER + "";
     public static final String AUDIO_FOLDER = BDZ_INSPECTION_FOLDER + "audio/";

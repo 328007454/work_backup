@@ -82,7 +82,7 @@ public class CustomApplication extends CoreApplication {
      * @return
      */
     public static DbManager getDbManager() {
-        if (mDbManager == null) {
+        if (mDbManager == null||!mDbManager.getDatabase().isOpen()) {
             mDbManager = x.getDb(getDaoConfig());
         }
         return mDbManager;
@@ -137,25 +137,17 @@ public class CustomApplication extends CoreApplication {
     protected static DbManager.DaoConfig getDaoConfig() {
         int dbVersion = getDbVersion();
         DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
-                .setDbOpenListener(new DbManager.DbOpenListener() {
-                    @Override
-                    public void onDbOpened(DbManager db) {
-                        // 开启WAL, 对写入加速提升巨大
-                        //db.getDatabase().enableWriteAheadLogging();
-                        //此处不处理数据库版本更新  全权交给同步框架处理。
-                        try {
-                            db.addColumn(TaskExtend.class, "dlt");
-                        } catch (DbException e) {
+                .setDbOpenListener(db -> {
+                    // 开启WAL, 对写入加速提升巨大
+                    //db.getDatabase().enableWriteAheadLogging();
+                    //此处不处理数据库版本更新  全权交给同步框架处理。
+                    try {
+                        db.addColumn(TaskExtend.class, "dlt");
+                    } catch (DbException e) {
 
-                        }
                     }
                 })
-                .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
-                    @Override
-                    public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
-                        saveDbVersion(newVersion);
-                    }
-                }).setAllowTransaction(true);
+                .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
         return config;
     }
 
@@ -349,7 +341,7 @@ public class CustomApplication extends CoreApplication {
             mExcutorService.execute(() -> {
                 if (BuildConfig.HAS_WEB_ASSETS) {
                     delAllFile(Config.WWWROOT_FOLDER);
-                    if (copyAssetsToSDCard(mInstance, "src/main/assets-web/www", Config.WWWROOT_FOLDER)) {
+                    if (copyAssetsToSDCard(mInstance, "www", Config.WWWROOT_FOLDER)) {
                         try {
                             XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
                         } catch (Exception e) {
