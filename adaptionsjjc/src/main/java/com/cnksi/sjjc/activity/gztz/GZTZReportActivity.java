@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.activity.BaseReportActivity;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
@@ -38,14 +38,24 @@ public class GZTZReportActivity extends BaseReportActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+        loadData();
     }
 
-    private void initData() {
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    public void loadData() {
         try {
             report = ReportService.getInstance().findById(currentReportId);
             if (report == null) {
-                CToast.showShort(mCurrentActivity, "数据异常，没有查询到报告！！！");
+                ToastUtils.showMessage("数据异常，没有查询到报告！！！");
                 return;
             }
             if (Cache.GZTZJL != null) {

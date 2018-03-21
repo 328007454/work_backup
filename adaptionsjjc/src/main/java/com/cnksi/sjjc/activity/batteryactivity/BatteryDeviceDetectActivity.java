@@ -11,7 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
@@ -44,12 +45,22 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
         setSupportActionBar(mDetectBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        initUI();
+        initView();
         initLoadWidget();
-        initData();
+        searchData();
     }
 
-    private void initUI() {
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    public void initView() {
         mDefetcDeviceAdapter = new BatteryDefetcDeviceAdapter(mDetectBinding.rvBatteryDevice, datas, R.layout.item_battery_defdevice);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mDetectBinding.rvBatteryDevice.setLayoutManager(layoutManager);
@@ -74,34 +85,31 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
 
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                CToast.showShort(_this, "正在加载");
+                ToastUtils.showMessage("正在加载");
                 loadMoreData(((++pageStart) * 50), 50);
                 mDetectBinding.springviewLayout.finishLoadmore(2000);
             }
         });
     }
 
-    private void initData() {
+    public void searchData() {
         loadMoreData(0, 50);
     }
 
     private void loadMoreData(final int pageStart, final int pageNum) {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                final List<BatteryInstrument> instruments = BatteryInstrumentService.getInstance().findAllInstrument(pageStart, pageNum);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!instruments.isEmpty()) {
-                            datas.addAll(instruments);
-                            mDefetcDeviceAdapter.setList(datas);
-                        } else {
-                            CToast.showShort(_this, "没有配置数据");
-                        }
+        ExecutorManager.executeTaskSerially(() -> {
+            final List<BatteryInstrument> instruments = BatteryInstrumentService.getInstance().findAllInstrument(pageStart, pageNum);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!instruments.isEmpty()) {
+                        datas.addAll(instruments);
+                        mDefetcDeviceAdapter.setList(datas);
+                    } else {
+                        ToastUtils.showMessage("没有配置数据");
                     }
-                });
-            }
+                }
+            });
         });
     }
 
@@ -132,7 +140,7 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return true;
@@ -142,27 +150,24 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
         mDetectBinding.springviewLayout.setEnableLoadmore(false);
         datas.clear();
         mDefetcDeviceAdapter.notifyDataSetChanged();
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                if (TextUtils.isEmpty(text)) {
-                    loadMoreData(pageStart = 0, 50);
-                    mDetectBinding.springviewLayout.setEnableLoadmore(true);
-                    return;
-                }
-                final List<BatteryInstrument> instrumentList = BatteryInstrumentService.getInstance().findAllLikeName(text);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!instrumentList.isEmpty()) {
-                            datas.addAll(instrumentList);
-                            mDefetcDeviceAdapter.setList(datas);
-                        } else {
-                            CToast.showShort(_this, "没有配置数据");
-                        }
-                    }
-                });
+        ExecutorManager.executeTaskSerially(() -> {
+            if (TextUtils.isEmpty(text)) {
+                loadMoreData(pageStart = 0, 50);
+                mDetectBinding.springviewLayout.setEnableLoadmore(true);
+                return;
             }
+            final List<BatteryInstrument> instrumentList = BatteryInstrumentService.getInstance().findAllLikeName(text);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!instrumentList.isEmpty()) {
+                        datas.addAll(instrumentList);
+                        mDefetcDeviceAdapter.setList(datas);
+                    } else {
+                        ToastUtils.showMessage("没有配置数据");
+                    }
+                }
+            });
         });
     }
 

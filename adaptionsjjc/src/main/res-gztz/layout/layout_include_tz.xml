@@ -1,108 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="138px">
+<layout>
 
-    <LinearLayout
-        android:id="@+id/ll_container_A"
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/ll_container_B"
-        app:layout_constraintStart_toStartOf="parent">
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="138px">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txt_action_infor_a"
-            style="@style/layout_gztz_title"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="3px"
-            android:text="A"
-            />
+        <LinearLayout
+            android:id="@+id/ll_container_A"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/ll_container_B"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <com.cnksi.sjjc.view.ContainsEmojiEditText
-            android:id="@+id/et_update_name_a"
-            style="@style/layout_gztz_num_input"
-            android:layout_marginLeft="10px"
-            android:text=""
-            />
-    </LinearLayout>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_action_infor_a"
+                style="@style/layout_gztz_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3px"
+                android:text="A"
+                />
 
-    <LinearLayout
-        android:id="@+id/ll_container_B"
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/ll_container_C"
-        app:layout_constraintStart_toEndOf="@+id/ll_container_A">
+            <com.cnksi.sjjc.view.ContainsEmojiEditText
+                android:id="@+id/et_update_name_a"
+                style="@style/layout_gztz_num_input"
+                android:layout_marginLeft="10px"
+                android:text=""
+                />
+        </LinearLayout>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txt_action_infor_b"
-            style="@style/layout_gztz_title"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="3px"
-            android:text="B"
-            />
+        <LinearLayout
+            android:id="@+id/ll_container_B"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/ll_container_C"
+            app:layout_constraintStart_toEndOf="@+id/ll_container_A">
 
-        <com.cnksi.sjjc.view.ContainsEmojiEditText
-            android:id="@+id/et_update_name_b"
-            style="@style/layout_gztz_num_input"
-            android:layout_marginLeft="10px"
-            android:text=""
-            />
-    </LinearLayout>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_action_infor_b"
+                style="@style/layout_gztz_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3px"
+                android:text="B"
+                />
 
-    <LinearLayout
-        android:id="@+id/ll_container_C"
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/ll_container_O"
-        app:layout_constraintStart_toEndOf="@+id/ll_container_B">
+            <com.cnksi.sjjc.view.ContainsEmojiEditText
+                android:id="@+id/et_update_name_b"
+                style="@style/layout_gztz_num_input"
+                android:layout_marginLeft="10px"
+                android:text=""
+                />
+        </LinearLayout>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txt_action_infor_c"
-            style="@style/layout_gztz_title"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="3px"
-            android:text="C"
-            />
+        <LinearLayout
+            android:id="@+id/ll_container_C"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/ll_container_O"
+            app:layout_constraintStart_toEndOf="@+id/ll_container_B">
 
-        <com.cnksi.sjjc.view.ContainsEmojiEditText
-            android:id="@+id/et_update_name_c"
-            style="@style/layout_gztz_num_input"
-            android:layout_marginLeft="10px"
-            android:text=""
-            />
-    </LinearLayout>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_action_infor_c"
+                style="@style/layout_gztz_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3px"
+                android:text="C"
+                />
 
-    <LinearLayout
-        android:id="@+id/ll_container_O"
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ll_container_C">
+            <com.cnksi.sjjc.view.ContainsEmojiEditText
+                android:id="@+id/et_update_name_c"
+                style="@style/layout_gztz_num_input"
+                android:layout_marginLeft="10px"
+                android:text=""
+                />
+        </LinearLayout>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/txt_action_infor_o"
-            style="@style/layout_gztz_title"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="3px"
-            android:text="O"
-            />
+        <LinearLayout
+            android:id="@+id/ll_container_O"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ll_container_C">
 
-        <com.cnksi.sjjc.view.ContainsEmojiEditText
-            android:id="@+id/et_update_name_o"
-            style="@style/layout_gztz_num_input"
-            android:layout_marginLeft="10px"
-            android:text=""
-            />
-    </LinearLayout>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_action_infor_o"
+                style="@style/layout_gztz_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3px"
+                android:text="O"
+                />
 
-</android.support.constraint.ConstraintLayout>
+            <com.cnksi.sjjc.view.ContainsEmojiEditText
+                android:id="@+id/et_update_name_o"
+                style="@style/layout_gztz_num_input"
+                android:layout_marginLeft="10px"
+                android:text=""
+                />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

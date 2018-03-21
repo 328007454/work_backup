@@ -8,11 +8,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
-import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
@@ -64,29 +65,40 @@ public class GZTZRecordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRecordBinding = DataBindingUtil.setContentView(_this, R.layout.activity_gztz_record);
-        initUI();
-        initData();
+        initView();
+        loadData();
     }
 
-    private void initUI() {
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
         getIntentValue();
         mRecordBinding.includeTitle.tvTitle.setText(currentBdzName + "设备跳闸情况记录");
         if (showPeopleAdapter == null) {
-            showPeopleAdapter = new ShowPeopleAdapter(mCurrentActivity, showPeopleList, R.layout.name_show_layout);
+            showPeopleAdapter = new ShowPeopleAdapter(mActivity, showPeopleList, R.layout.name_show_layout);
         }
         mRecordBinding.gvPeople.setAdapter(showPeopleAdapter);
         mRecordBinding.txtAddPerson.setOnClickListener(view -> showPeopleDialog());
         mRecordBinding.includeTitle.btnBack.setOnClickListener(view -> this.finish());
         mRecordBinding.btnSave.setOnClickListener(view -> {
             if (selectDbModel.size() == 0) {
-                CToast.showShort(this, "至少选择一个检查人");
+                ToastUtils.showMessage("至少选择一个检查人");
                 return;
             }
             saveData();
             startActivity(new Intent(this, GZTZReportActivity.class));
-            ScreenManager.getInstance().popActivity(TZQKActivity.class);
-            ScreenManager.getInstance().popActivity(BHDZJLActivity.class);
-            ScreenManager.getInstance().popActivity(BHDZQKActivity.class);
+            ScreenManager.getScreenManager().popActivity(TZQKActivity.class);
+            ScreenManager.getScreenManager().popActivity(BHDZJLActivity.class);
+            ScreenManager.getScreenManager().popActivity(BHDZQKActivity.class);
             finish();
         });
         showPeopleAdapter.setClickWidget(new ItemClickListener() {
@@ -105,10 +117,10 @@ public class GZTZRecordActivity extends BaseActivity {
     }
 
 
-    private void initData() {
-        mFixedThreadPoolExecutor.execute(() -> {
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
             try {
-                String account = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
+                String account = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
                 dbModelList = UserService.getInstance().getAllUser(account);
                 if (null != dbModelList && !dbModelList.isEmpty()) {
                     for (DbModel model : dbModelList) {
@@ -129,7 +141,7 @@ public class GZTZRecordActivity extends BaseActivity {
 
             });
         });
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTaskSerially(() -> {
             sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
             runOnUiThread(() -> {
                 mRecordBinding.txtDeviceName.setText(sbjcGztzjl.dlqmc);
@@ -175,13 +187,13 @@ public class GZTZRecordActivity extends BaseActivity {
      * 选择检查人员对话框
      */
     private void showPeopleDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 7 / 9;
-        int dialogheight = ScreenUtils.getScreenHeight(mCurrentActivity) * 6 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
+        int dialogheight = ScreenUtils.getScreenHeight(mActivity) * 6 / 10;
         if (null == peopleDialog) {
             peopleBinding = DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.dialog_add_person, null, false);
         }
         if (peopleDialog == null) {
-            peopleDialog = DialogUtils.creatDialog(mCurrentActivity, peopleBinding.getRoot(), dialogWidth, dialogheight);
+            peopleDialog = DialogUtils.creatDialog(mActivity, peopleBinding.getRoot(), dialogWidth, dialogheight);
         }
         if (peopleAdapter == null) {
             peopleAdapter = new AddPeopleAdapter(_this, peopleList, R.layout.text_view_layout);
@@ -191,7 +203,7 @@ public class GZTZRecordActivity extends BaseActivity {
         peopleBinding.lvPeople.setOnItemClickListener((adapterView, view, i, l) -> {
             String name = (String) adapterView.getAdapter().getItem(i);
             if (showPeopleList.contains(name)) {
-                CToast.showShort(_this, "已经存在该人员");
+                ToastUtils.showMessage( "已经存在该人员");
                 return;
             }
             showPeopleList.add(name);

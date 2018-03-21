@@ -1,19 +1,21 @@
 package com.cnksi.sjjc.adapter;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cnksi.core.utils.CoreConfig;
-import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.DefectControlActivity;
 import com.cnksi.sjjc.bean.DefectRecord;
+import com.cnksi.sjjc.util.CoreConfig;
+import com.cnksi.sjjc.util.DateUtils;
 
 import org.xutils.x;
 
@@ -55,9 +57,11 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         TextView defectContentTv = holder.getView(R.id.tv_defect_content);
         defectContentTv.setText(convert2DefectLevel(item));
         holder.setText(R.id.tv_defect_device, "设备：" + (TextUtils.isEmpty(item.devcie) ? "" : item.devcie));
-        final ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.string2List(item.pics);
+        final ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.stringToList(item.pics);
         if (listPicDis.size() > 0 && !TextUtils.isEmpty(listPicDis.get(0))) {
-            x.image().bind(defectImage, Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)), CustomApplication.getLargeImageOptions());
+            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)));
+            if (bitmap!=null)
+                defectImage.setImageBitmap(bitmap);
             defectImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

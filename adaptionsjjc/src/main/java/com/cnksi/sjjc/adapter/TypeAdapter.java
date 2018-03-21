@@ -5,8 +5,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cnksi.core.adapter.BaseAdapter;
-import com.cnksi.core.adapter.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
@@ -31,9 +29,31 @@ public class TypeAdapter extends BaseAdapter<String> {
         this.inspectionType = inspectionType;
     }
 
-    @Override
-    public void convert(ViewHolder holder, final String item, final int position) {
+    /**
+     * @param holder
+     * @param item
+     * @param position [0-position)可以点击
+     */
+    public void setClickable(ViewHolder holder, final String item, final int maxPosition, final int position) {
+        if (position >= maxPosition) {
+//            context.getResources().getColor(R.color.global_gray_text_color)
+            holder.getRootView().setBackgroundColor(ContextCompat.getColor(context, R.color.global_gray_text_color));
+        } else {
+            holder.getRootView().setBackgroundResource(R.drawable.task_item_background_selector);
+        }
+        holder.getRootView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != itemClickListener) {
+                    //通过字符串传递maxPosition
+                    itemClickListener.itemClick(v, item + " " + maxPosition, position);
+                }
+            }
+        });
+    }
 
+    @Override
+    public void convert(com.cnksi.sjjc.adapter.ViewHolder holder, String item, int position) {
         ImageView typeImage = holder.getView(R.id.type_image);
         switch (inspectionType) {
             case SBXS:
@@ -81,28 +101,5 @@ public class TypeAdapter extends BaseAdapter<String> {
                 break;
         }
         holder.setText(R.id.type_value, item);
-    }
-
-    /**
-     * @param holder
-     * @param item
-     * @param position [0-position)可以点击
-     */
-    public void setClickable(ViewHolder holder, final String item, final int maxPosition, final int position) {
-        if (position >= maxPosition) {
-//            context.getResources().getColor(R.color.global_gray_text_color)
-            holder.getRootView().setBackgroundColor(ContextCompat.getColor(context, R.color.global_gray_text_color));
-        } else {
-            holder.getRootView().setBackgroundResource(R.drawable.task_item_background_selector);
-        }
-        holder.getRootView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != itemClickListener) {
-                    //通过字符串传递maxPosition
-                    itemClickListener.itemClick(v, item + " " + maxPosition, position);
-                }
-            }
-        });
     }
 }

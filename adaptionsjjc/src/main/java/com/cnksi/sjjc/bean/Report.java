@@ -1,7 +1,7 @@
 package com.cnksi.sjjc.bean;
 
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.core.utils.FunctionUtils;
+import com.cnksi.sjjc.util.FunctionUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

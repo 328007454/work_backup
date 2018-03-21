@@ -7,17 +7,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.TextView;
 
-import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.UriUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.JSObject;
 import com.cnksi.sjjc.MyWebChromeClient;
-import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.databinding.ActivityWebviewBinding;
+import com.cnksi.sjjc.util.CoreConfig;
 
-import org.xutils.view.annotation.ViewInject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,50 +23,54 @@ import java.util.ArrayList;
  * Created by han on 2016/5/5.
  */
 public class WorkPlanInformationActivity extends BaseActivity {
-
-    @ViewInject(R.id.web_view)
-    private WebView webView;
-    @ViewInject(R.id.tv_title)
-    private TextView tvTitle;
-
     private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> uploadMessage;
     private String imageName;
+
+    private ActivityWebviewBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_webview);
-        initUI();
-
+        binding = ActivityWebviewBinding.inflate(getLayoutInflater());
+        setChildView(binding.getRoot());
     }
+
     JSObject jsInterface;
-    // 初始化webView
+
+    // 初始化binding.webView
     @SuppressLint("NewApi")
-    private void initUI() {
-        tvTitle.setText("变电站（发电厂）第一种工作票");
-        webView.getSettings().setJavaScriptEnabled(true);
+    @Override
+    public void initUI() {
+        mTitleBinding.tvTitle.setText("变电站（发电厂）第一种工作票");
+        binding.webView.getSettings().setJavaScriptEnabled(true);
         jsInterface = new JSObject(_this);
-        // webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-       // webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setAllowContentAccess(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-        webView.getSettings().setAllowFileAccessFromFileURLs(true);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        //webView.setWebChromeClient(new ChromeClient());
+        // binding.webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        binding.webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        // binding.webView.getSettings().setLoadWithOverviewMode(true);
+        binding.webView.getSettings().setAllowFileAccess(true);
+        binding.webView.getSettings().setAllowContentAccess(true);
+        binding.webView.getSettings().setDomStorageEnabled(true);
+        binding.webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        binding.webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        binding.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        //binding.webView.setWebChromeClient(new ChromeClient());
         jsInterface.setWvClientClickListener(new webviewClick());
-        webView.setWebChromeClient(new MyWebChromeClient());
-        webView.setWillNotCacheDrawing(true);
+        binding.webView.setWebChromeClient(new MyWebChromeClient());
+        binding.webView.setWillNotCacheDrawing(true);
 //        String imagePath="file:///storage/emulated/0/BdzInspection/result_pictures/35143e8efd8bfa9f946a7a541a79d35a778c1.jpg";
 //        String html = "<html><head></head><body><img src=\""+ imagePath + "\"></body></html>";
-//        webView.loadData(html, "text/html","utf-8");
+//        binding.webView.loadData(html, "text/html","utf-8");
         String htmlPath = "file:///sdcard/BdzInspection/www/index.html";
         String baseUrl = "file:///sdcard/BdzInspection/www/";
-        webView.loadUrl(htmlPath);
-        //webView.loadDataWithBaseURL(htmlPath, "", "text/html", "utf-8", null);
-        webView.addJavascriptInterface(jsInterface, "JsTest");
+        binding.webView.loadUrl(htmlPath);
+        //binding.webView.loadDataWithBaseURL(htmlPath, "", "text/html", "utf-8", null);
+        binding.webView.addJavascriptInterface(jsInterface, "JsTest");
+    }
+
+    @Override
+    public void initData() {
+
     }
 //
 //    class ChromeClient extends WebChromeClient {
@@ -105,86 +106,82 @@ public class WorkPlanInformationActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==RESULT_OK)
-        {
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 //签名
                 case 100:
                     Uri result = UriUtils.getImageContentUri(this, Config.WORKTICKIT_PIC + imageName);
-                    callJsSign(jsId,result.toString());
-                break;
+                    callJsSign(jsId, result.toString());
+                    break;
                 case CoreConfig.ACTION_IMAGE:
-                    Uri pic=UriUtils.getImageContentUri(this,Config.WORKTICKIT_PIC+imageName);
-                    File file=new File(Config.WORKTICKIT_PIC+imageName);
-                    callJs(jsId,file.getAbsolutePath() );
+                    Uri pic = UriUtils.getImageContentUri(this, Config.WORKTICKIT_PIC + imageName);
+                    File file = new File(Config.WORKTICKIT_PIC + imageName);
+                    callJs(jsId, file.getAbsolutePath());
 
-                break;
+                    break;
             }
         }
     }
-    private String jsId="";
-    public void callJs(final  String id,final String path)
-    {
+
+    private String jsId = "";
+
+    public void callJs(final String id, final String path) {
         mHandler.post(new Runnable() {
 
             @Override
             public void run() {
                 // TODO Auto-generated method stub
                 //调用JS中的 函数，当然也可以不传参
-                String str="javascript:androidCallJS('"+id+"','"+path+"')";
-                webView.loadUrl(str);
-                jsId="";
+                String str = "javascript:androidCallJS('" + id + "','" + path + "')";
+                binding.webView.loadUrl(str);
+                jsId = "";
             }
         });
     }
 
-    public void callJsSign(final String id,final String path)
-    {
+    public void callJsSign(final String id, final String path) {
         mHandler.post(new Runnable() {
 
             @Override
             public void run() {
                 // TODO Auto-generated method stub
                 //调用JS中的 函数，当然也可以不传参
-                String str="javascript:androidCallqx('"+id+"','"+path+"')";
-                webView.loadUrl(str);
-                jsId="";
+                String str = "javascript:androidCallqx('" + id + "','" + path + "')";
+                binding.webView.loadUrl(str);
+                jsId = "";
             }
         });
     }
-
 
 
     class webviewClick implements JSObject.wvClientClickListener {
 
         @Override
         public void signName(String id) {
-            jsId=id;
-            Intent intent=new Intent(_this,SignNameActivity.class);
-            imageName=jsId+".jpg";
-            File file=new File(Config.WORKTICKIT_PIC+imageName);
-            if (file.exists())
-            {
+            jsId = id;
+            Intent intent = new Intent(_this, SignNameActivity.class);
+            imageName = jsId + ".jpg";
+            File file = new File(Config.WORKTICKIT_PIC + imageName);
+            if (file.exists()) {
                 file.delete();
             }
-            intent.putExtra(Config.SIGN_FILENAME,Config.WORKTICKIT_PIC+imageName);
+            intent.putExtra(Config.SIGN_FILENAME, Config.WORKTICKIT_PIC + imageName);
             // TODO Auto-generated method stub
-            startActivityForResult(intent,100);
+            startActivityForResult(intent, 100);
         }
 
         @Override
         public void takePicture(String id) {
-           jsId=id;
-            imageName=jsId+".jpg";
-            File file=new File(Config.WORKTICKIT_PIC+imageName);
-            if (file.exists())
-           {
+            jsId = id;
+            imageName = jsId + ".jpg";
+            File file = new File(Config.WORKTICKIT_PIC + imageName);
+            if (file.exists()) {
                 file.delete();
             }
 //            FunctionUtils.takePicture(WorkPlanInformationActivity.this,
 //                   imageName,Config.WORKTICKIT_PIC);
-           Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            Uri imageUri = Uri.fromFile(new File(Config.WORKTICKIT_PIC,imageName));
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Uri imageUri = Uri.fromFile(new File(Config.WORKTICKIT_PIC, imageName));
 //指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             startActivityForResult(intent, CoreConfig.ACTION_IMAGE);
@@ -192,9 +189,9 @@ public class WorkPlanInformationActivity extends BaseActivity {
 
         @Override
         public void showIamge(String id) {
-            ArrayList<String> pics=new ArrayList<String>();
-            pics.add(Config.WORKTICKIT_PIC+id+".jpg");
-            showImageDetails(mCurrentActivity,0,pics,false);
+            ArrayList<String> pics = new ArrayList<String>();
+            pics.add(Config.WORKTICKIT_PIC + id + ".jpg");
+            showImageDetails(mActivity, 0, pics, false);
         }
 
         @Override

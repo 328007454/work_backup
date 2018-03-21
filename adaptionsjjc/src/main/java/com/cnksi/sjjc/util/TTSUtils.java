@@ -8,7 +8,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.tts.ISpeakCallback;
 import com.cnksi.tts.ISpeakInterface;
@@ -91,7 +91,7 @@ public class TTSUtils {
 
 
     public boolean isConnect() {
-        if (!isConnect) CToast.showShort(CustomApplication.getAppContext(), "没有连接到TTS服务。");
+        if (!isConnect) ToastUtils.showMessage( "没有连接到TTS服务。");
         return isConnect;
     }
 }

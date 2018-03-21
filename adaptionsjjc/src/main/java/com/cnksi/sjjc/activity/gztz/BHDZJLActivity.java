@@ -3,7 +3,8 @@ package com.cnksi.sjjc.activity.gztz;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
@@ -48,7 +49,18 @@ public class BHDZJLActivity extends BaseActivity {
         getIntentValue();
         setTitleText(currentBdzName + "保护动作记录");
         initView();
-        initData();
+        loadData();
+
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     private void initView() {
@@ -62,9 +74,9 @@ public class BHDZJLActivity extends BaseActivity {
         addOtherDevice();
     }
 
-    private void initData() {
+    public void loadData() {
         sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTaskSerially(() -> {
             List<SbjcGztzjlBhdzjl> bhdzjls = GZTZBhdzjlService.getInstance().findByGzjl(sbjcGztzjl.id);
             runOnUiThread(() -> {
                 if (bhdzjls != null && bhdzjls.size() > 0) {
@@ -97,8 +109,8 @@ public class BHDZJLActivity extends BaseActivity {
                 if (group1.getBhsb() != null) {
                     intentDevices.putExtra(AllDeviceListActivity.SPCAEID, group1.getBhsb().getString(Device.SPID));
                 }
-            }else{
-                intentDevices.putExtra(Config.SECOND_SPACE_AND_ONE_DEVICE,true);
+            } else {
+                intentDevices.putExtra(Config.SECOND_SPACE_AND_ONE_DEVICE, true);
             }
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0));
         });
@@ -186,7 +198,7 @@ public class BHDZJLActivity extends BaseActivity {
         }
         if (i == 0) {
             if (isCheck)
-                CToast.showShort(this, "你至少要选择一组保护设备");
+                ToastUtils.showMessage("你至少要选择一组保护设备");
             return false;
         }
         sbjcGztzjl.bhdzqk = binding.bhdzqk.getValueStr();
@@ -197,7 +209,7 @@ public class BHDZJLActivity extends BaseActivity {
             return true;
         } catch (DbException e) {
             e.printStackTrace();
-            CToast.showShort(this, "保存失败");
+            ToastUtils.showMessage( "保存失败");
         }
         return false;
     }

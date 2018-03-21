@@ -38,7 +38,7 @@ public class DefectRecordService {
     public List<DefectRecord> queryCurrentBdzExistDefectList(String bdzId, int level) {
         List<DefectRecord> defects = null;
         try {
-            Selector<DefectRecord> selector = CustomApplication.getDbManager().selector(DefectRecord.class).where(DefectRecord.HAS_TRACK, "=", "N")
+            Selector<DefectRecord> selector = CustomApplication.getInstance().getDbManager().selector(DefectRecord.class).where(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.HAS_REMOVE, "=", "N")
                     .and(DefectRecord.IS_COPY, "<>", "Y");
             if (!TextUtils.isEmpty(bdzId)) {
@@ -63,7 +63,7 @@ public class DefectRecordService {
     public List<DefectRecord> queryCurrentBdzExistDefectList() {
         List<DefectRecord> defects = null;
         try {
-            defects = CustomApplication.getDbManager().selector(DefectRecord.class).where(DefectRecord.HAS_TRACK, "=", "N")
+            defects = CustomApplication.getInstance().getDbManager().selector(DefectRecord.class).where(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.HAS_REMOVE, "=", "N")
                     .and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")

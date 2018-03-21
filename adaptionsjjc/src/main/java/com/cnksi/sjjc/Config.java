@@ -2,9 +2,9 @@ package com.cnksi.sjjc;
 
 import android.os.Environment;
 
-import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.SDCardUtils;
+import com.cnksi.sjjc.util.CoreConfig;
 
 /**
  * @version 1.0

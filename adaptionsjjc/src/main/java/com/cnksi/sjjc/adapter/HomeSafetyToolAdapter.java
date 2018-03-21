@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.cnksi.core.utils.DateUtils;
+import com.cnksi.sjjc.util.DateUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ItemHomeSafetyToolBinding;
 import com.cnksi.sjjc.util.ActivityUtil;

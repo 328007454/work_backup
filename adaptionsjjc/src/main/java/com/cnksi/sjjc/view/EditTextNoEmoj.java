@@ -6,7 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.util.StringUtils;
 
@@ -49,7 +49,7 @@ public class EditTextNoEmoj extends AppCompatEditText {
             public void afterTextChanged(Editable editable) {
                 if(StringUtils.hasEmoji(editable.toString())){
                    setText(inputText);
-                    CToast.showShort(getContext(),"请不要输入表情符号");
+                    ToastUtils.showMessage("请不要输入表情符号");
                 }
             }
         });

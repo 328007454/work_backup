@@ -9,14 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.cnksi.core.utils.RelayoutUtil;
 import com.cnksi.core.view.FollowListView;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Spacing;
 
 import org.xutils.db.table.DbModel;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -92,17 +89,30 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
                              ViewGroup parent) {
-
+        ArrayList<DbModel> mDeviceList = getChildList(groupPosition);
         ViewChildHolder holder = null;
         if (convertView == null) {
             holder = new ViewChildHolder();
             convertView = mInflater.inflate(R.layout.expandable_gridview_child_item, parent, false);
-            RelayoutUtil.reLayoutViewHierarchy(convertView);
-            x.view().inject(holder, convertView);
             convertView.setTag(holder);
+            holder.mFollowListView = (FollowListView) convertView.findViewById(R.id.gv_container);
         } else {
             holder = (ViewChildHolder) convertView.getTag();
         }
+        holder.mFollowListView.setOnItemClickListener((view, view1, i, l) -> {
+            if (mOnAdapterViewClickListener != null) {
+                mOnAdapterViewClickListener.OnItemViewClick(view, view1, mDeviceList.get(i), getGroup(groupPosition));
+            }
+        });
+
+        holder.mFollowListView.setOnItemLongClickListener((view, view1, i, l) -> {
+            if (mOnAdapterViewClickListener != null) {
+                return mOnAdapterViewClickListener.onItemLongClick(view, view1, mDeviceList.get(i),
+                        getGroup(groupPosition));
+            }
+            return false;
+        });
+
 
         DeviceListItemAdapter mDeviceItemAdapter = mAdapterMap.get(groupPosition);
         if (mDeviceItemAdapter == null) {
@@ -118,7 +128,7 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
                 }
             }
         }
-        ArrayList<DbModel> mDeviceList = getChildList(groupPosition);
+
         mDeviceItemAdapter.setList(mDeviceList);
         holder.setCurrentDeviceListAndSpacing(mDeviceList, getGroup(groupPosition));
         holder.mFollowListView.setAdapter(mDeviceItemAdapter);
@@ -135,25 +145,7 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
             this.mDeviceList = mDeviceList;
             this.mCurrentSpacing = mCurrentSpacing;
         }
-
-        @ViewInject(R.id.gv_container)
         private FollowListView mFollowListView;
-
-        @Event(R.id.gv_container)
-        private void OnItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (mOnAdapterViewClickListener != null) {
-                mOnAdapterViewClickListener.OnItemViewClick(parent, view, mDeviceList.get(position), mCurrentSpacing);
-            }
-        }
-
-        @Event(R.id.gv_container)
-        private boolean OnItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            if (mOnAdapterViewClickListener != null) {
-                return mOnAdapterViewClickListener.onItemLongClick(parent, view, mDeviceList.get(position),
-                        mCurrentSpacing);
-            }
-            return false;
-        }
     }
 
     @Override
@@ -165,8 +157,8 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
         if (convertView == null) {
             holder = new ViewGroupHolder();
             convertView = mInflater.inflate(R.layout.group_item, parent, false);
-            x.view().inject(holder, convertView);
             convertView.setTag(holder);
+            holder.mTvDeviceInterval = (TextView) convertView.findViewById(R.id.tv_group_item);
         } else {
             holder = (ViewGroupHolder) convertView.getTag();
         }
@@ -179,7 +171,11 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
                 mContext.getResources().getDimensionPixelSize(R.dimen.global_padding_top_bottom));
         //mContext.getResources().getColor(R.color.green_color)
         holder.mTvDeviceInterval.setTextColor(ContextCompat.getColor(mContext, R.color.green_color));
-
+        holder.mTvDeviceInterval.setOnClickListener(view -> {
+            if (mOnAdapterViewClickListener != null) {
+                mOnAdapterViewClickListener.OnGroupItemClick(group, view, groupPosition);
+            }
+        });
 //		if (getChildrenCountByGroup(groupPosition) > 1) {
         if (true && group != null) {
             holder.mTvDeviceInterval
@@ -198,21 +194,9 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
     }
 
     class ViewGroupHolder {
-
         public Spacing mSpacing;
-
         public int groupPosition;
-
-        @ViewInject(R.id.tv_group_item)
         TextView mTvDeviceInterval;
-
-
-        @Event({R.id.tv_group_item})
-        private void OnViewClick(View view) {
-            if (mOnAdapterViewClickListener != null) {
-                mOnAdapterViewClickListener.OnGroupItemClick(mSpacing, view, groupPosition);
-            }
-        }
 
     }
 

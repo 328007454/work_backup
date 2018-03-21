@@ -8,7 +8,9 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
-import com.cnksi.core.utils.DisplayUtil;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.DensityUtils;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseReportActivity;
 import com.cnksi.sjjc.bean.Report;
@@ -42,8 +44,18 @@ public class NewHwcwReportActivity extends BaseReportActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initUI();
-        initData();
+        initView();
+        loadData();
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     @Override
@@ -52,13 +64,15 @@ public class NewHwcwReportActivity extends BaseReportActivity {
         return mReportBinding.getRoot();
     }
 
-    private void initUI() {
-        tvTitle.setText(currentBdzName + currentInspectionName + "报告");
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionName + "报告");
         mBtnRight.setVisibility(View.VISIBLE);
     }
 
-    private void initData() {
-        mFixedThreadPoolExecutor.execute(() -> {
+
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
             try {
                 mReport = ReportService.getInstance().selector().and(Report.REPORTID, "=", currentReportId).findFirst();
                 mBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
@@ -100,8 +114,8 @@ public class NewHwcwReportActivity extends BaseReportActivity {
 
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         spannableStringBuilder.append("温度：").append(mBaseInfo.temp).append("℃");
-        AbsoluteSizeSpan grayRelativeSizeSpan = new AbsoluteSizeSpan((int) DisplayUtil.getInstance().spToPx(getApplicationContext(), 14));
-        AbsoluteSizeSpan greenRelativeSizeSpan = new AbsoluteSizeSpan((int) DisplayUtil.getInstance().spToPx(getApplicationContext(), 18));
+        AbsoluteSizeSpan grayRelativeSizeSpan = new AbsoluteSizeSpan((int) DensityUtils.sp2px(getApplicationContext(), 14));
+        AbsoluteSizeSpan greenRelativeSizeSpan = new AbsoluteSizeSpan((int)  DensityUtils.sp2px(getApplicationContext(), 18));
         ForegroundColorSpan grayForegroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.global_gray_text_color));
         ForegroundColorSpan greenForegroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.green_color));
         spannableStringBuilder.setSpan(grayRelativeSizeSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);

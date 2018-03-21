@@ -1,19 +1,19 @@
 package com.cnksi.sjjc.activity.indoortempretureactivity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
+import android.view.LayoutInflater;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.utils.RelayoutUtil;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.view.WeatherView1;
+import com.cnksi.sjjc.databinding.ActivityIndoorHumitureBinding;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity;
 import com.cnksi.sjjc.bean.Report;
@@ -22,32 +22,17 @@ import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.service.BaseService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 /**
  * 室内温湿度界面
  */
 public class IndoorHumitureRecordActivity extends BaseActivity {
-    //    @ViewInject(R.id.btn_complete_record)
-//    private Button btDone;
-    //标题
-    @ViewInject(R.id.tv_title)
-    private TextView tvTitle;
 
-    @ViewInject(R.id.weatherView1)
-    private WeatherView1 weatherView;
-
-    //当前温度
-    @ViewInject(R.id.et_current_humidity)
-    private EditText etCurHumidiyt;
-    //当前湿度
-    @ViewInject(R.id.et_test_instrument)
-    private EditText etCurInstrument;
     //报告id
     private String reportId;
     //变电站Id
@@ -57,27 +42,32 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
     //报告表
     private Report mReport;
 
+    private ActivityIndoorHumitureBinding mHumitureBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View containerView = getLayoutInflater().inflate(R.layout.activity_indoor_humiture, null, false);
-        RelayoutUtil.reLayoutViewHierarchy(containerView);
-        setChildView(containerView);
+        mHumitureBinding = DataBindingUtil.inflate(LayoutInflater.from(getApplicationContext()), R.layout.activity_indoor_humiture, null, false);
+        AutoUtils.auto(mHumitureBinding.getRoot());
+        setChildView(mHumitureBinding.getRoot());
         initUI();
         initData();
         getIntentValue();
+        initOnclick();
+        
     }
 
-    private void initUI() {
-        tvTitle.setText(R.string.indoor_tempreture_recoder);
+    @Override
+    public void initUI() {
+        mTitleBinding.tvTitle.setText(R.string.indoor_tempreture_recoder);
     }
 
-    private void initData() {
-        bdzId = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_ID, "");
-        reportId = PreferencesUtils.getString(_this, Config.CURRENT_REPORT_ID, "");
-        bdzName = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+    @Override
+    public void initData() {
+        bdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
+        reportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
+        bdzName = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");
+        ExecutorManager.executeTaskSerially(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -91,47 +81,49 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
 
     }
 
-    @Event({R.id.btn_complete_record, R.id.btn_back})
-    private void onViewClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_complete_record:
-                if (TextUtils.isEmpty(etCurInstrument.getText().toString()) || TextUtils.isEmpty(etCurHumidiyt.getText().toString())) {
-                    CToast.showLong(_this, "请输入完整信息");
-                    return;
-                }
-                ReportSnwsd snwsd = new ReportSnwsd();
-                String weather = weatherView.getSelectWeather();
-                snwsd.report_id = reportId;
-                snwsd.bdz_id = bdzId;
-                snwsd.bdz_name = bdzName;
-                snwsd.wd = etCurInstrument.getText().toString();
-                snwsd.sd = etCurHumidiyt.getText().toString();
-                mReport.tq = weather.isEmpty() ? "" : weather;
-                mReport.temperature = snwsd.wd;
-                mReport.humidity = snwsd.sd;
-                mReport.endtime = DateUtils.getCurrentLongTime();
-                try {
-                    BaseService.getInstance(ReportSnwsd.class).saveOrUpdate(snwsd);
-                    ReportService.getInstance().saveOrUpdate(mReport);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                if (!TextUtils.isEmpty(snwsd.sd) && !TextUtils.isEmpty(snwsd.wd)) {
-                    try {
-                        TaskService.getInstance().update( WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
-                startActivity(intent);
-                setResult(RESULT_OK);
-                this.finish();
-                break;
-            case R.id.btn_back:
-                this.finish();
-            default:
-                break;
+
+    private void initOnclick() {
+        mHumitureBinding.btnCompleteRecord.setOnClickListener((v) -> {
+            saveData();
+        });
+        mTitleBinding.btnBack.setOnClickListener((v) -> {
+            this.finish();
+        });
+    }
+
+    private void saveData() {
+        
+        if (TextUtils.isEmpty(mHumitureBinding.etTestInstrument.getText().toString()) || TextUtils.isEmpty( mHumitureBinding.etCurrentHumidity.getText().toString())) {
+            ToastUtils.showMessageLong("请输入完整信息");
+            return;
         }
+        ReportSnwsd snwsd = new ReportSnwsd();
+        String weather = mHumitureBinding.weatherView1.getSelectWeather();
+        snwsd.report_id = reportId;
+        snwsd.bdz_id = bdzId;
+        snwsd.bdz_name = bdzName;
+        snwsd.wd = mHumitureBinding.etTestInstrument.getText().toString();
+        snwsd.sd =  mHumitureBinding.etCurrentHumidity.getText().toString();
+        mReport.tq = weather.isEmpty() ? "" : weather;
+        mReport.temperature = snwsd.wd;
+        mReport.humidity = snwsd.sd;
+        mReport.endtime = DateUtils.getCurrentLongTime();
+        try {
+            BaseService.getInstance(ReportSnwsd.class).saveOrUpdate(snwsd);
+            ReportService.getInstance().saveOrUpdate(mReport);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        if (!TextUtils.isEmpty(snwsd.sd) && !TextUtils.isEmpty(snwsd.wd)) {
+            try {
+                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+        }
+        Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
+        startActivity(intent);
+        setResult(RESULT_OK);
+        this.finish();
     }
 }

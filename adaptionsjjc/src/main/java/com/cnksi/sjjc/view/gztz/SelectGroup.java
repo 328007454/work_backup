@@ -13,9 +13,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cnksi.core.adapter.ViewHolder;
-import com.cnksi.core.utils.DisplayUtil;
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.DisplayUtils;
+import com.cnksi.sjjc.adapter.ViewHolder;
+import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BaseAdapter;
 import com.cnksi.sjjc.service.gztz.GZTZSjlyService;
@@ -96,8 +96,8 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
 
     private void initDialog() {
         List<KeyValue> keyValues = dataProvider.getData();
-        int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
-        int dialogHeight = keyValues.size() > 5 ? DisplayUtil.getInstance().getHeight() * 3 / 5 :
+        int dialogWidth = DisplayUtils.getInstance().getWidth() * 9 / 10;
+        int dialogHeight = keyValues.size() > 5 ? DisplayUtils.getInstance().getHeight() * 3 / 5 :
                 ViewGroup.LayoutParams.WRAP_CONTENT;
         ViewHolder holder = new ViewHolder(getContext(), this, R.layout.content_list_dialog, false);
         AutoUtils.autoSize(holder.getRootView());

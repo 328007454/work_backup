@@ -48,7 +48,6 @@ public abstract class BaseReportActivity extends BaseActivity {
         rlContainer.addView(reportView, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         AutoUtils.autoSize(reportView);
         reportView.setVisibility(View.INVISIBLE);
-        x.view().inject(_this);
         getIntentValue();
         initTitleBar();
         mHandler.sendEmptyMessageDelayed(VIBRATOR, 500);
@@ -62,11 +61,11 @@ public abstract class BaseReportActivity extends BaseActivity {
         mBtnBack = FindViewById(R.id.btn_back);
         mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionName));
         mBtnBack.setOnClickListener(v -> {
-            ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
+            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
             onBackPressed();
         });
         mBtnRight.setOnClickListener(v -> {
-         ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
+         ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
             onBackPressed();
         });
     }
@@ -78,7 +77,7 @@ public abstract class BaseReportActivity extends BaseActivity {
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case ANIMATION:
-                PlaySound.getIntance(mCurrentActivity).play(R.raw.print_out);
+                PlaySound.getIntance(mActivity).play(R.raw.print_out);
                 reportView.setVisibility(View.VISIBLE);
                 translateAnimRun(reportView, -reportView.getHeight() * 92 / 100, 0.0f);
                 break;
@@ -105,7 +104,7 @@ public abstract class BaseReportActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                ScreenManager.getInstance().popAllActivityExceptOne(HomeActivity.class);
+                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
                 break;
             default:
                 break;

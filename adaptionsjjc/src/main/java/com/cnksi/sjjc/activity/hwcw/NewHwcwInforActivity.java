@@ -5,18 +5,16 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -37,6 +35,7 @@ import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.GsonUtil;
 import com.cnksi.sjjc.util.OnViewClickListener;
+import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -65,11 +64,17 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
         mInforBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_newhwcw_infor, null, false);
         setChildView(mInforBinding.getRoot());
         getIntentValue();
-        iniData();
+        initView();
+        loadData();
     }
 
-    private void iniData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+    @Override
+    public void initUI() {
+
+    }
+
+    private void loadData() {
+        ExecutorManager.executeTaskSerially(new Runnable() {
             List<DbModel> dbModelList = null;
 
             @Override
@@ -78,7 +83,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
                 if (!TextUtils.isEmpty(mHwcwBaseInfo.id)) {
                     hotLocations = NewHwcwService.getInstance().getAllLocation(mHwcwBaseInfo.id);
                 }
-                String account = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
+                String account = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
                 try {
                     dbModelList = UserService.getInstance().getAllUser(account);
                 } catch (DbException e) {
@@ -97,12 +102,12 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
         });
     }
 
-    private void initUI() {
-        tvTitle.setText(currentBdzName + currentInspectionName + "记录");
+    public void initView() {
+        mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionName + "记录");
         resolveHotPart();
         String[] users = new String[]{""};
         if (TextUtils.isEmpty(mHwcwBaseInfo.testPerson)) {
-            users = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_USER, "").split(",");
+            users = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "").split(",");
         } else {
             users = mHwcwBaseInfo.testPerson.split(",");
         }
@@ -111,12 +116,12 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
             czrModels.add(str);
         }
         if (showPeopleAdapter == null) {
-            showPeopleAdapter = new ShowPeopleAdapter(mCurrentActivity, showPeopleList, R.layout.name_show_layout);
+            showPeopleAdapter = new ShowPeopleAdapter(mActivity, showPeopleList, R.layout.name_show_layout);
         }
         mInforBinding.gvTestManager.setAdapter(showPeopleAdapter);
         showPeopleAdapter.setUserCount(1);
         showPeopleAdapter.setClickWidget(this);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        mTitleBinding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveData();
@@ -126,14 +131,20 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
         });
     }
 
+    @Override
+    public void initData() {
+
+    }
+
     private void resolveHotPart() {
         int i = 0;
         List<String> spaces = new ArrayList<>();
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
         if (!hotLocations.isEmpty()) {
             for (HwcwLocation location : hotLocations) {
-                if (!TextUtils.isEmpty(location.spacingName)&&!spaces.contains(location.spacingName))
+                if (!TextUtils.isEmpty(location.spacingName) && !spaces.contains(location.spacingName)) {
                     spaces.add(location.spacingName);
+                }
                 String deviceName = location.deviceName;
                 stringBuilder.append("\n发热设备:").append(deviceName).append("\n");
                 HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(location.hotPart);
@@ -149,7 +160,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
             }
             mHwcwBaseInfo.problem = stringBuilder.toString();
             if (!spaces.isEmpty()) {
-                mHwcwBaseInfo.testLocation = StringUtils.ArrayListToString(spaces);
+                mHwcwBaseInfo.testLocation = StringUtils.arrayListToString(spaces);
             }
         } else {
             mInforBinding.etProblem.setText("无");
@@ -184,12 +195,12 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
         String testLocation = mInforBinding.etLocation.getText().toString();
         String testProblem = mInforBinding.etProblem.getText().toString();
         String testRemark = mInforBinding.etMark.getText().toString();
-        String testPeople = com.cnksi.core.utils.StringUtils.ArrayListToString(showPeopleList);
+        String testPeople = StringUtils.arrayListToString(showPeopleList);
         mHwcwBaseInfo.setRecordData(testRange, testLocation, testProblem, testRemark, testPeople);
         try {
-            CustomApplication.getDbManager().saveOrUpdate(mHwcwBaseInfo);
+            CustomApplication.getInstance().getDbManager().saveOrUpdate(mHwcwBaseInfo);
             if (isUpdateReport) {
-                CustomApplication.getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", currentReportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
+                CustomApplication.getInstance().getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", currentReportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
                 TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
             }
         } catch (DbException e) {
@@ -200,10 +211,10 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
     @Override
     public void itemClick(View v, final Object o, final int position) {
         if (showPeopleList.size() == 1) {
-            CToast.showShort(mCurrentActivity, "至少要有一个负责人!");
+            ToastUtils.showMessage("至少要有一个负责人!");
             return;
         }
-        DialogUtils.showSureTipsDialog(mCurrentActivity, null, "是否确认删除 " + o + "?", "确认", "取消", new OnViewClickListener() {
+        DialogUtils.showSureTipsDialog(mActivity, null, "是否确认删除 " + o + "?", "确认", "取消", new OnViewClickListener() {
             @Override
             public void onClick(View v) {
                 czrModels.remove(position);
@@ -224,13 +235,13 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
 
     private void showPeopleDialog() {
 
-        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 7 / 9;
-        int dialogheight = ScreenUtils.getScreenHeight(mCurrentActivity) * 6 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
+        int dialogheight = ScreenUtils.getScreenHeight(mActivity) * 6 / 10;
         if (null == peopleDialog) {
             peopleBinding = DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.dialog_add_person, null, false);
         }
         if (peopleDialog == null) {
-            peopleDialog = DialogUtils.creatDialog(mCurrentActivity, peopleBinding.getRoot(), dialogWidth, dialogheight);
+            peopleDialog = DialogUtils.creatDialog(mActivity, peopleBinding.getRoot(), dialogWidth, dialogheight);
         }
         if (peopleAdapter == null) {
             peopleAdapter = new AddPeopleAdapter(_this, peopleList, R.layout.text_view_layout);
@@ -243,7 +254,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
                 String name = (String) adapterView.getItemAtPosition(i);
                 peopleDialog.cancel();
                 if (czrModels.contains(name)) {
-                    CToast.showShort(_this, "测试人中已经有该成员了");
+                    ToastUtils.showMessage("测试人中已经有该成员了");
                     return;
                 } else {
                     czrModels.add(name);

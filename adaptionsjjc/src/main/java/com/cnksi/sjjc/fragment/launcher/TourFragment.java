@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
@@ -40,6 +41,11 @@ public class TourFragment extends BaseCoreFragment {
     }
 
     @Override
+    public int getFragmentLayout() {
+        return 0;
+    }
+
+    @Override
     protected void lazyLoad() {
 
     }
@@ -57,9 +63,9 @@ public class TourFragment extends BaseCoreFragment {
         initData();
     }
 
-    @Override
+
     protected void initData() {
-        mExcutorService.execute(new Runnable() {
+        ExecutorManager.executeTaskSerially(new Runnable() {
             @Override
             public void run() {
                 final TaskStatistic result = TaskService.getInstance().getTaskStatistic("");
@@ -99,14 +105,14 @@ public class TourFragment extends BaseCoreFragment {
      */
     public void toTaskPlan(String inspectionType) {
         CustomApplication.closeDbConnection();
-        PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
-        PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
+        PreferencesUtils.put(Config.KEY_SYNC_URL, Config.SYNC_URL);
+        PreferencesUtils.put(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         Intent intent = new Intent();
-        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_USER, ""));
-        intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_LOGIN_ACCOUNT, ""));
-        intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(mCurrentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, ""));
-        intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, ""));
-        intent.putExtra(Config.CURRENT_DEPARTMENT_NAME, PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_NAME, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get( Config.CURRENT_LOGIN_USER, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, ""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_NAME, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, ""));
         intent.putExtra(Config.KEY_SYNC_URL, Config.SYNC_URL);
         intent.putExtra(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         if (TextUtils.isEmpty(inspectionType)) {

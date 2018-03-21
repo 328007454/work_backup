@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DifferentialMotionRecordAdapter4;
@@ -18,6 +19,7 @@ import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.Task;
+import com.cnksi.sjjc.databinding.ActivityDifferentialMotionRecordBinding;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportCdbhclService;
 import com.cnksi.sjjc.service.ReportService;
@@ -27,8 +29,6 @@ import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,8 +40,6 @@ import java.util.Map;
  * 差动保护差流界面
  */
 public class DifferentialMotionRecordActivity2 extends BaseActivity {
-    @ViewInject(R.id.ll_container)
-    private LinearLayout llContainer;
     //根据变电站id，报告id查询出差动保护相应的数据
     private Map<String, ReportCdbhcl> reportCdbhclsMap = new HashMap<String, ReportCdbhcl>();
     //当前报告id
@@ -57,47 +55,52 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
     private Report mReport;
     private List<CdbhclValue> cdbhclValueList = new ArrayList<>();
 
+    private ActivityDifferentialMotionRecordBinding mRecordBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_differential_motion_record);
+        mRecordBinding = ActivityDifferentialMotionRecordBinding.inflate(LayoutInflater.from(getApplicationContext()));
+        setChildView(mRecordBinding.getRoot());
+
         getIntentValue();
         initUI();
+        initOnclick();
         initData();
     }
 
-    private void initUI() {
-        tvTitle.setText(R.string.chadong_baohu_jilu);
+
+    @Override
+    public void initUI() {
+        mTitleBinding.tvTitle.setText(R.string.chadong_baohu_jilu);
     }
 
-    private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mReport = ReportService.getInstance().findById(currentReportId);
-                    bdzId = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_ID, "");
-                    reportId = PreferencesUtils.getString(_this, Config.CURRENT_REPORT_ID, "");
-                    listDevices = DeviceService.getInstance().getDevicesByNameWays1(bdzId, Config.DIFFERENTIAL_RECORD_KEY);
-                    for (CopyItem item : listDevices) {
-                        CdbhclValue.addObject(item, cdbhclValueList);
-                    }
-                    List<ReportCdbhcl> exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(bdzId, reportId);
-                    if (null != exitCdbhclList && !exitCdbhclList.isEmpty()) {
-                        for (ReportCdbhcl report : exitCdbhclList) {
-                            for (CdbhclValue value : cdbhclValueList) {
-                                if (value.getId().equalsIgnoreCase(report.device_id)) {
-                                    value.reportValue(report, value);
-                                    reportCdbhclsMap.put(value.getId(), report);
-                                }
-
+    @Override
+    public void initData() {
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                mReport = ReportService.getInstance().findById(currentReportId);
+                bdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
+                reportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
+                listDevices = DeviceService.getInstance().getDevicesByNameWays1(bdzId, Config.DIFFERENTIAL_RECORD_KEY);
+                for (CopyItem item : listDevices) {
+                    CdbhclValue.addObject(item, cdbhclValueList);
+                }
+                List<ReportCdbhcl> exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(bdzId, reportId);
+                if (null != exitCdbhclList && !exitCdbhclList.isEmpty()) {
+                    for (ReportCdbhcl report : exitCdbhclList) {
+                        for (CdbhclValue value : cdbhclValueList) {
+                            if (value.getId().equalsIgnoreCase(report.device_id)) {
+                                value.reportValue(report, value);
+                                reportCdbhclsMap.put(value.getId(), report);
                             }
+
                         }
                     }
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                } catch (DbException e) {
-                    e.printStackTrace();
                 }
+                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
     }
@@ -106,37 +109,33 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case LOAD_DATA:
-                mDifferentRecordAdapter4 = new DifferentialMotionRecordAdapter4(this, cdbhclValueList, R.layout.infraed_thermometer_item, llContainer);
+                mDifferentRecordAdapter4 = new DifferentialMotionRecordAdapter4(this, cdbhclValueList, R.layout.infraed_thermometer_item, mRecordBinding.llContainer);
                 break;
             default:
                 break;
         }
     }
 
-    @Event({R.id.btn_back, R.id.btn_confirm_save})
-    private void onViewClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_back:
+    private void initOnclick() {
+        mRecordBinding.btnConfirmSave.setOnClickListener((v) -> {
+            if (saveData()) {
+                Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
+                startActivity(intent);
+                setResult(RESULT_OK);
                 this.finish();
-                break;
-            case R.id.btn_confirm_save:
-                if (saveData()) {
-                    Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
-                    startActivity(intent);
-                    setResult(RESULT_OK);
-                    this.finish();
-                } else {
-                    CToast.showShort(_this, "输入数据有误，请核对");
-                }
-                break;
-            default:
-                break;
-        }
+            } else {
+                ToastUtils.showMessage("输入数据有误，请核对");
+            }
+        });
+        mTitleBinding.btnBack.setOnClickListener((v) -> {
+            finish();
+        });
     }
+
 
     private boolean saveData() {
         ReportCdbhcl mCdReport;
-        String bdzName = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
+        String bdzName = PreferencesUtils.get( Config.CURRENT_BDZ_NAME, "");
         List<ReportCdbhcl> saveList = new ArrayList<>();
         for (CdbhclValue value : cdbhclValueList) {
             if (!TextUtils.isEmpty(value.getValue()) && (99999999 < new Float(value.getValue()) || 0 > new Float(value.getValue()))) {

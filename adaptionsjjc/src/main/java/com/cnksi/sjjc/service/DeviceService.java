@@ -363,9 +363,9 @@ public class DeviceService extends BaseService<Device> {
         try {
             dropTrigger("device");
             String sql = "update device set has_copy ='N'";
-            CustomApplication.getDbManager().execNonQuery(sql);
+            CustomApplication.getInstance().getDbManager().execNonQuery(sql);
             sql = "update device set has_copy = 'Y' where deviceid in (select distinct deviceid from copy_item);";
-            CustomApplication.getDbManager().execNonQuery(sql);
+            CustomApplication.getInstance().getDbManager().execNonQuery(sql);
             createTrigger("device", "deviceid");
             isSuccess = true;
         } catch (DbException e) {

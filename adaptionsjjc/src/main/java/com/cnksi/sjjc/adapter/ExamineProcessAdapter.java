@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cnksi.core.utils.BitmapUtil;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -16,6 +15,7 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.util.BitmapUtil;
 
 import org.xutils.x;
 
@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
 
-    private String[] locations=new String[]{"主控室","高压室","一次设备","保护室","电缆层","二次设备","其它地点"};
+    private String[] locations = new String[]{"主控室", "高压室", "一次设备", "保护室", "电缆层", "二次设备", "其它地点"};
 
     private ItemClickListener<PreventionRecord> itemClickListener;
 
@@ -52,32 +52,32 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
         ArrayList<String> listPic = null;
         switch (position) {
             case 0:
-                listPic = StringUtils.string2List(record.main_controll_images == null ? "" : record.main_controll_images);
+                listPic = StringUtils.stringToList(record.main_controll_images == null ? "" : record.main_controll_images);
                 break;
             case 1:
-                listPic = StringUtils.string2List(record.hyperbaric_images == null ? "" : record.hyperbaric_images);
+                listPic = StringUtils.stringToList(record.hyperbaric_images == null ? "" : record.hyperbaric_images);
                 break;
             case 2:
-                listPic = StringUtils.string2List(record.one_device_images == null ? "" : record.one_device_images);
+                listPic = StringUtils.stringToList(record.one_device_images == null ? "" : record.one_device_images);
                 break;
             case 3:
-                listPic = StringUtils.string2List(record.protect_images == null ? "" : record.protect_images);
+                listPic = StringUtils.stringToList(record.protect_images == null ? "" : record.protect_images);
                 break;
             case 4:
-                listPic = StringUtils.string2List(record.cable_images == null ? "" : record.cable_images);
+                listPic = StringUtils.stringToList(record.cable_images == null ? "" : record.cable_images);
                 break;
             case 5:
-                listPic = StringUtils.string2List(record.second_device_images == null ? "" : record.second_device_images);
+                listPic = StringUtils.stringToList(record.second_device_images == null ? "" : record.second_device_images);
                 break;
             case 6:
-                listPic = StringUtils.string2List(record.other_images == null ? "" : record.other_images);
+                listPic = StringUtils.stringToList(record.other_images == null ? "" : record.other_images);
                 break;
             default:
                 break;
         }
 
         holder.setText(R.id.tv_examine_area, locations[position]);
-        checkExitHole( locations[position], holder);
+        checkExitHole(locations[position], holder);
 
         TextView tvPicNum = holder.getView(R.id.tv_hole_num);
         ImageView ivShowPic = holder.getView(R.id.iv_show_pic);
@@ -88,7 +88,7 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
         if (null != listPic && listPic.size() > 0) {
 
 
-            if(listPic.size()>1){
+            if (listPic.size() > 1) {
                 tvPicNum.setVisibility(View.VISIBLE);
                 tvPicNum.setText("" + listPic.size());
             }
@@ -96,8 +96,7 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
             String picName = listPic.get(0);
             Bitmap bmPicture = BitmapUtil.getOptimizedBitmap(Config.RESULT_PICTURES_FOLDER + picName);
             if (bmPicture != null) {
-                x.image().bind(((ImageView)holder.getView(R.id.iv_show_pic)),Config.RESULT_PICTURES_FOLDER+picName, CustomApplication.getLargeImageOptions());
-//                ivShowPic.setImageBitmap(bmPicture);
+                ivShowPic.setImageBitmap(bmPicture);
             }
         }
 
@@ -107,7 +106,8 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
             public void onClick(View view) {
                 if (null != itemClickListener) {
                     view.setTag(locations[position]);
-                }   itemClickListener.itemClick(view, record, position);
+                }
+                itemClickListener.itemClick(view, record, position);
             }
         });
         ivShowPic.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +129,7 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
                 if (location.equals(record.location)) {
                     holder.setVisibility(R.id.iv_sign_find_hole, View.VISIBLE);
 //                    context.getResources().getColor(R.color.yellow_color)
-                    ((TextView) holder.getView(R.id.tv_examine_area)).setTextColor(ContextCompat.getColor(context,R.color.yellow_color));
+                    ((TextView) holder.getView(R.id.tv_examine_area)).setTextColor(ContextCompat.getColor(context, R.color.yellow_color));
                     break;
                 }
             }

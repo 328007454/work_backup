@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.sjjc.util.CoreConfig;
 
 import java.util.Calendar;
 import java.util.Collection;

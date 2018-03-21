@@ -9,12 +9,11 @@ import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
@@ -24,11 +23,10 @@ import com.cnksi.sjjc.databinding.ActivityDevicesExpadableListBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.SpacingService;
+import com.cnksi.sjjc.util.StringUtils;
 
-import org.w3c.dom.Text;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
-import org.xutils.view.annotation.Event;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,12 +63,13 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         setSupportActionBar(mExpadableListBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        initUI();
         mExpadableListBinding.toolbar.setTitle(StringUtils.BlankToDefault(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
-        initData();
+        initOnClick();
     }
 
-    private void initUI() {
+
+    @Override
+    public void initUI() {
         currentFunctionModel = (PMSDeviceType) getIntent().getSerializableExtra(FUNCTION_MODEL);
         currentBdzId = getIntent().getStringExtra(BDZID);
         mExpadableListBinding.elvContainer.setOnGroupExpandListener(groupPosition -> {
@@ -87,15 +86,16 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     List<DbModel> mDeviceList = null;
     List<Spacing> mSpacingList = null;
 
-    private void initData() {
+    @Override
+    public void initData() {
         if (TextUtils.isEmpty(currentBdzId) || currentFunctionModel == null) {
-            CToast.showShort(_this, "没有获取到正确的变电站和设备类别");
+            ToastUtils.showMessage("没有获取到正确的变电站和设备类别");
             return;
         }
         String spid = getIntent().getStringExtra(SPCAEID);
         String bigId = getIntent().getStringExtra(BIGID);
         boolean secondSpaceAndOneDevice = getIntent().getBooleanExtra(Config.SECOND_SPACE_AND_ONE_DEVICE, false);
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTaskSerially(() -> {
             try {
                 mSpacingList = SpacingService.getInstance().findSpacingByModel(currentBdzId, currentFunctionModel.name());
                 if (mSpacingList != null) {
@@ -151,26 +151,16 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
                 if (groupList != null && !groupList.isEmpty() && mDeviceExpandableAdapater.getChildrenCountByGroup(currentClickGroupPosition) > 1) {
                     mExpadableListBinding.elvContainer.expandGroup(currentClickGroupPosition);
                 }
-//                int size = mExpadableListBinding.elvContainer.getCount();
-//                for (int i = 0; i < size; i++) {
-//                    mExpadableListBinding.elvContainer.expandGroup(i);
-//                }
                 break;
-
             default:
                 break;
         }
     }
 
-    @Event(value = R.id.btn_back)
-    private void onViewClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_back:
-                this.finish();
-                break;
-            default:
-                break;
-        }
+    private void initOnClick() {
+        mTitleBinding.btnBack.setOnClickListener(view -> {
+            this.finish();
+        });
     }
 
     @Override

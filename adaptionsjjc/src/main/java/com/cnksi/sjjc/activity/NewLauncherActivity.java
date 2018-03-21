@@ -17,16 +17,17 @@ import com.cnksi.bdloc.DistanceUtil;
 import com.cnksi.bdloc.LatLng;
 import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
-import com.cnksi.core.adapter.ViewHolder;
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.core.utils.DisplayUtil;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
+import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.Department;
 import com.cnksi.sjjc.bean.Spacing;
@@ -91,17 +92,24 @@ public class NewLauncherActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isDefaultTitle = false;
         super.onCreate(savedInstanceState);
         changedStatusColor();
         launcherBinding = DataBindingUtil.setContentView(this, R.layout.activity_launcher_new);
-        initUI();
+        inUI();
         initFragments();
         setFragmentToHomePager();
         initBaseData();
 
     }
 
-    private void initUI() {
+    @Override
+    public void initUI() {
+
+    }
+
+
+    public void inUI() {
         launcherBinding.mainRadioGroup.setOnCheckedChangeListener(checkedChangeListener);
         launcherBinding.lancherTitle.exitSystem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +120,7 @@ public class NewLauncherActivity extends BaseActivity {
                         super.onClick(v);
                         Intent intent = new Intent(_this, LoginActivity.class);
                         startActivity(intent);
-                        mCurrentActivity.finish();
+                        mActivity.finish();
                     }
                 });
             }
@@ -141,8 +149,8 @@ public class NewLauncherActivity extends BaseActivity {
                                 Bdz bdz = BdzService.getInstance().findById(bdzid);
                                 if (bdz != null) {
                                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
-                                    PreferencesUtils.put(_this, Config.LOCATION_BDZID, bdz.bdzid);
-                                    PreferencesUtils.put(_this, Config.LOCATION_BDZNAME, bdz.name);
+                                    PreferencesUtils.put(Config.LOCATION_BDZID, bdz.bdzid);
+                                    PreferencesUtils.put( Config.LOCATION_BDZNAME, bdz.name);
                                     break;
                                 }
                             } catch (DbException e) {
@@ -156,35 +164,37 @@ public class NewLauncherActivity extends BaseActivity {
         locationHelper.start();
     }
 
+    @Override
+    public void initData() {
+
+    }
+
     private void initBaseData() {
         getIntentValue();
         String date = DateUtils.getCurrentTime("yyy年MM月dd日") + " " + DateUtils.getCurrentWeekDay();
         launcherBinding.lancherTitle.txtTime.setText(date);
-        launcherBinding.lancherTitle.txtPerson.setText(PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_USER, ""));
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                String deparmentId = PreferencesUtils.get(_this, Config.CURRENT_DEPARTMENT_ID, "");
-                try {
-                    bdzList = (ArrayList<Bdz>) CustomApplication.getDbManager().findAll(Bdz.class);
-                    final Department department = CustomApplication.getDbManager().selector(Department.class).where(Department.ID, "=", deparmentId).and(Department.DLT, "<>", 1).findFirst();
-                    if (null != department)
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                launcherBinding.lancherTitle.txtTeam.setText(department.name);
-                                initBDZDialog();
-                                if (!bdzList.isEmpty()) {
-                                    launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
-                                    PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
-                                    PreferencesUtils.put(_this, Config.LOCATION_BDZID, bdzList.get(0).bdzid);
-                                    PreferencesUtils.put(_this, Config.LOCATION_BDZNAME, bdzList.get(0).name);
-                                    PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_NAME, department.name);
-                                }
+        launcherBinding.lancherTitle.txtPerson.setText(PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
+        ExecutorManager.executeTaskSerially(() -> {
+            String deparmentId = PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, "");
+            try {
+                bdzList = (ArrayList<Bdz>) CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
+                final Department department = CustomApplication.getInstance().getDbManager().selector(Department.class).where(Department.ID, "=", deparmentId).and(Department.DLT, "<>", 1).findFirst();
+                if (null != department)
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            launcherBinding.lancherTitle.txtTeam.setText(department.name);
+                            initBDZDialog();
+                            if (!bdzList.isEmpty()) {
+                                launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
+                                PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
+                                PreferencesUtils.put(Config.LOCATION_BDZID, bdzList.get(0).bdzid);
+                                PreferencesUtils.put(Config.LOCATION_BDZNAME, bdzList.get(0).name);
+                                PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, department.name);
                             }
-                        });
-                } catch (DbException e) {
-                }
+                        }
+                    });
+            } catch (DbException e) {
             }
         });
     }
@@ -240,8 +250,8 @@ public class NewLauncherActivity extends BaseActivity {
     }
 
     private void initBDZDialog() {
-        int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
-        final int dialogHeight = bdzList.size() > 8 ? DisplayUtil.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
+        int dialogWidth = DisplayUtils.getInstance().getWidth() * 9 / 10;
+        final int dialogHeight = bdzList.size() > 8 ? DisplayUtils.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
         final ViewHolder holder = new ViewHolder(this, null, R.layout.content_list_dialog, false);
         AutoUtils.autoSize(holder.getRootView());
         mPowerStationListView = holder.getView(R.id.lv_container);
@@ -252,13 +262,13 @@ public class NewLauncherActivity extends BaseActivity {
             public void itemClick(View v, Bdz bdz, int position) {
                 if (!bdz.name.contains("未激活")) {
                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
-                    PreferencesUtils.put(_this, Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
-                    PreferencesUtils.put(_this, Config.LOCATION_BDZID, bdz.bdzid);
-                    PreferencesUtils.put(_this, Config.LOCATION_BDZNAME, bdz.name);
+                    PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
+                    PreferencesUtils.put(Config.LOCATION_BDZID, bdz.bdzid);
+                    PreferencesUtils.put( Config.LOCATION_BDZNAME, bdz.name);
                     mPowerStationDialog.dismiss();
                     locationHelper.stop();
                 } else
-                    CToast.showShort(_this, "该变电站未激活");
+                    ToastUtils.showMessage("该变电站未激活");
             }
 
             @Override

@@ -2,24 +2,20 @@ package com.cnksi.sjjc.fragment;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
+import android.databinding.DataBindingUtil;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.CoreConfig;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.SqliteUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.AnimalReportActivity;
@@ -29,8 +25,6 @@ import com.cnksi.sjjc.activity.CopyValueReportActivity;
 import com.cnksi.sjjc.activity.DifferentialMotionRecordActivity2;
 import com.cnksi.sjjc.activity.GetSendLetterActivity;
 import com.cnksi.sjjc.activity.GetSendLetterReportActivity;
-import com.cnksi.sjjc.activity.HWCWMainActivity;
-import com.cnksi.sjjc.activity.HongWaiCeWenReportActivity;
 import com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity;
 import com.cnksi.sjjc.activity.NewTransformRecordActivity;
 import com.cnksi.sjjc.activity.PreventAnimalActivity;
@@ -48,6 +42,8 @@ import com.cnksi.sjjc.adapter.TaskRemindAdapter;
 import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Task;
+import com.cnksi.sjjc.databinding.ContentListDialogBinding;
+import com.cnksi.sjjc.databinding.FragmentListBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.enmu.TaskStatus;
 import com.cnksi.sjjc.inter.ItemClickListener;
@@ -55,15 +51,13 @@ import com.cnksi.sjjc.inter.OnFragmentEventListener;
 import com.cnksi.sjjc.service.BdzService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
+import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.DialogUtils;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,13 +75,10 @@ public class TaskRemindFragment extends BaseCoreFragment {
      * 巡检任务的数据集合
      */
     public List<Task> mDataList = null;
-    @ViewInject(R.id.lv_container)
-    private ListView mLvContainer;
     /**
      * 主菜单界面点击的巡检类型
      */
     private InspectionType mInspectionType;
-    private ViewFunctionHolder mOPtionsHolder = null;
     private TaskRemindAdapter mInspectionTaskAdapter = null;
 
     /**
@@ -102,16 +93,17 @@ public class TaskRemindFragment extends BaseCoreFragment {
 
     private OnFragmentEventListener mOnFragmentEventListener;
 
+    private FragmentListBinding listBinding;
+
     public void setOnFragmentEventListener(OnFragmentEventListener mOnFragmentEventListener) {
         this.mOnFragmentEventListener = mOnFragmentEventListener;
+
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        x.view().inject(view);
-        initData();
-        return view;
+    public int getFragmentLayout() {
+        return R.layout.fragment_list;
     }
 
     @Override
@@ -125,6 +117,8 @@ public class TaskRemindFragment extends BaseCoreFragment {
 
     @Override
     protected void initUI() {
+        listBinding = (FragmentListBinding) fragmentDataBinding;
+        initData();
 
     }
 
@@ -133,21 +127,20 @@ public class TaskRemindFragment extends BaseCoreFragment {
     }
 
 
-    @Override
     protected void initData() {
         query();
     }
 
     public void query() {
-        if (!isOnDetach)
-            mExcutorService.execute(() -> {
+        if (!isOnDetach) {
+            ExecutorManager.executeTaskSerially(() -> {
                 try {
                     currentFunctionModel = getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
                     mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
                     // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                     String deparmentId = "";
-                    if (null != mCurrentActivity) {
-                        deparmentId = PreferencesUtils.getString(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+                    if (null != mActivity) {
+                        deparmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
                     }
                     WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1").expr("and bdzid in (select bdzid  from bdz where dept_id = '" + deparmentId + "' ) ");
                     if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
@@ -184,6 +177,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     e.printStackTrace();
                 }
             });
+        }
     }
 
     @Override
@@ -206,7 +200,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                             deleteReport(task);
                         }
                     });
-                    mLvContainer.setAdapter(mInspectionTaskAdapter);
+                    listBinding.lvContainer.setAdapter(mInspectionTaskAdapter);
                 } else {
                     mInspectionTaskAdapter.setList(mDataList);
                 }
@@ -233,21 +227,42 @@ public class TaskRemindFragment extends BaseCoreFragment {
     /**
      * 已完成的长按操作Dialog
      */
-    private void showDefectDialog(Task mTask) {
+    ContentListDialogBinding dialogBinding;
+
+    private void showDefectDialog(final Task mTask) {
         if (mListContentDialogAdapter == null) {
             List<String> functionArray = Arrays.asList(getResources().getStringArray(R.array.IsUploadOrDeleteArray));
-            mListContentDialogAdapter = new ListContentDialogAdapter(mCurrentActivity, functionArray, R.layout.dialog_content_child_item);
+            mListContentDialogAdapter = new ListContentDialogAdapter(mActivity, functionArray, R.layout.dialog_content_child_item);
         }
         if (mFinishOptionDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 9 / 10;
-            mFinishOptionDialog = DialogUtils.createDialog(mCurrentActivity, mLvContainer,
-                    R.layout.content_list_dialog,
-                    mOPtionsHolder == null ? mOPtionsHolder = new ViewFunctionHolder() : mOPtionsHolder, dialogWidth,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.content_list_dialog, null, false);
+            mFinishOptionDialog = DialogUtils.creatDialog(getContext(), dialogBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
-        mOPtionsHolder.mLvContainer.setAdapter(mListContentDialogAdapter);
-        mOPtionsHolder.mTvTitle.setText(R.string.task_function_title_str);
-        mOPtionsHolder.setCurrentItmeData(mTask);
+        dialogBinding.lvContainer.setAdapter(mListContentDialogAdapter);
+        dialogBinding.tvDialogTitle.setText(R.string.task_function_title_str);
+        dialogBinding.lvContainer.setOnItemClickListener((view, view1, position, l) -> {
+            switch (position) {
+                case 0:
+                    // 上传
+                    TaskService.getInstance().isUploadCurrentTask(mTask, true);
+                    break;
+                case 1:
+                    // 不上传
+                    TaskService.getInstance().isUploadCurrentTask(mTask, false);
+                    break;
+                case 2:
+                    // 删除
+                    TaskService.getInstance().deleteTaskAndReportById(mTask.taskid);
+                    break;
+                default:
+                    break;
+            }
+            if (mOnFragmentEventListener != null) {
+                mOnFragmentEventListener.updateTaskStatused();
+            }
+            mFinishOptionDialog.dismiss();
+        });
         mFinishOptionDialog.show();
     }
 
@@ -263,23 +278,24 @@ public class TaskRemindFragment extends BaseCoreFragment {
             Report report = ReportService.getInstance().getReportByTask(task.taskid);
 
             Bdz bdz = BdzService.getInstance().findById(task.bdzid);
-            if (!FileUtils.isFileExists(Config.BDZ_INSPECTION_FOLDER + bdz.folder))
+            if (!FileUtils.isFileExists(Config.BDZ_INSPECTION_FOLDER + bdz.folder)) {
                 FileUtils.makeDirectory(Config.BDZ_INSPECTION_FOLDER + bdz.folder);
+            }
             if (null == report) {
-                String loginUser = PreferencesUtils.getString(getContext(), Config.CURRENT_LOGIN_USER, "");
+                String loginUser = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                 report = new Report(task.taskid, task.bdzid, task.bdzname, task.inspection, loginUser);
                 report.inspectionValue = task.inspection_name;
                 report.reportSource = Config.SBJC;
-                report.departmentId = PreferencesUtils.getString(getActivity(), Config.CURRENT_DEPARTMENT_ID, "");
+                report.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
                 ReportService.getInstance().saveOrUpdate(report);
             }
-            PreferencesUtils.put(getActivity(), Config.CURRENT_TASK_ID, task.taskid);
-            PreferencesUtils.put(getActivity(), Config.CURRENT_REPORT_ID, report.reportid);
-            PreferencesUtils.put(getActivity(), Config.PICTURE_PREFIX, bdz.folder + "/");
-            PreferencesUtils.put(getActivity(), Config.CURRENT_BDZ_ID, task.bdzid);
-            PreferencesUtils.put(getActivity(), Config.CURRENT_BDZ_NAME, task.bdzname);
-            PreferencesUtils.put(getActivity(), Config.CURRENT_INSPECTION_TYPE, task.inspection);
-            PreferencesUtils.put(getActivity(), Config.CURRENT_INSPECTION_NAME, task.inspection_name);
+            PreferencesUtils.put(Config.CURRENT_TASK_ID, task.taskid);
+            PreferencesUtils.put(Config.CURRENT_REPORT_ID, report.reportid);
+            PreferencesUtils.put(Config.PICTURE_PREFIX, bdz.folder + "/");
+            PreferencesUtils.put(Config.CURRENT_BDZ_ID, task.bdzid);
+            PreferencesUtils.put(Config.CURRENT_BDZ_NAME, task.bdzname);
+            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, task.inspection);
+            PreferencesUtils.put(Config.CURRENT_INSPECTION_NAME, task.inspection_name);
 
             Intent intent = new Intent();
             if (task.status.equals(TaskStatus.undo.name())) {
@@ -291,7 +307,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         break;
                     //保护屏红外成像
                     case SBJC_02:
-                        intent.setClass(getContext(), HWCWMainActivity.class);
+//                        intent.setClass(getContext(), HWCWMainActivity.class);
                         break;
                     //室内温湿度记录
                     case SBJC_03:
@@ -338,7 +354,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         intent.setClass(getContext(), TZQKActivity.class);
                         break;
                     default:
-                        CToast.showLong(mCurrentActivity, "异常的数据检测类型");
+                        ToastUtils.showMessageLong("异常的数据检测类型");
                         return;
                 }
             } else {
@@ -349,7 +365,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         break;
                     //保护屏红外成像
                     case SBJC_02:
-                        intent.setClass(getContext(), HongWaiCeWenReportActivity.class);
+//                        intent.setClass(getContext(), HongWaiCeWenReportActivity.class);
                         break;
                     //室内温湿度记录
                     case SBJC_03:
@@ -393,44 +409,10 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         throw new RuntimeException("异常的数据检测类型");
                 }
             }
-            mCurrentActivity.startActivityForResult(intent, TaskRemindActivity.FINISH_TASK);
+            mActivity.startActivityForResult(intent, TaskRemindActivity.FINISH_TASK);
         } catch (DbException e) {
             e.printStackTrace();
         }
 
-    }
-
-    // 已完成的dialog的viewHolder
-    class ViewFunctionHolder {
-        @ViewInject(R.id.tv_dialog_title)
-        TextView mTvTitle;
-        @ViewInject(R.id.lv_container)
-        ListView mLvContainer;
-        private Task currentTask;
-
-        private void setCurrentItmeData(Task currentTask) {
-            this.currentTask = currentTask;
-        }
-
-        @Event(value = {R.id.lv_container}, type = AdapterView.OnItemClickListener.class)
-        private void OnItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (position) {
-                case 0:
-                    TaskService.getInstance().isUploadCurrentTask(currentTask, true);// 上传
-                    break;
-                case 1:
-                    TaskService.getInstance().isUploadCurrentTask(currentTask, false);// 不上传
-                    break;
-                case 2:
-                    TaskService.getInstance().deleteTaskAndReportById(currentTask.taskid);// 删除
-                    break;
-                default:
-                    break;
-            }
-            if (mOnFragmentEventListener != null) {
-                mOnFragmentEventListener.updateTaskStatused();
-            }
-            mFinishOptionDialog.dismiss();
-        }
     }
 }

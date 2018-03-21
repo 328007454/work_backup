@@ -18,8 +18,8 @@ public class USBBroardCastReceiver extends BroadcastReceiver {
             context.startActivity(newIntent);
         } else if (Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
             // 退出数据同步界面
-            if (ScreenManager.getInstance().hasActivity(DataSync.class)) {
-                ScreenManager.getInstance().popActivity(DataSync.class);
+            if (ScreenManager.getScreenManager().hasActivity(DataSync.class)) {
+                ScreenManager.getScreenManager().popActivity(DataSync.class);
             }
         }
     }

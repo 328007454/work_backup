@@ -135,12 +135,12 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity
-            android:name=".activity.HWCWMainActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <!--<activity-->
+            <!--android:name=".activity.HWCWMainActivity"-->
+            <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
 
         <activity
             android:name=".activity.hwcw.NewHwcwActivity"
@@ -168,20 +168,20 @@
             android:name=".activity.WorkPlanInformationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity
-            android:name=".activity.JYHPJActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity
-            android:name=".activity.PJMainActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity
-            android:name=".activity.HongWaiCeWenReportActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <!--<activity-->
+            <!--android:name=".activity.JYHPJActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
+        <!--<activity-->
+            <!--android:name=".activity.PJMainActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
+        <!--<activity-->
+            <!--android:name=".activity.HongWaiCeWenReportActivity"-->
+            <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
         <activity
             android:name=".activity.SignNameActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -212,12 +212,12 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- dialogActivity -->
 
-        <activity
-            android:name=".activity.DialogActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyle"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <!--<activity-->
+            <!--android:name=".activity.DialogActivity"-->
+            <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/MyDialogStyle"-->
+            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
 
         <!-- 播放视频Activity -->
 
@@ -226,11 +226,11 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity
-            android:name=".activity.QinYouShiByqYanShouActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+        <!--<activity-->
+            <!--android:name=".activity.QinYouShiByqYanShouActivity"-->
+            <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustPan"/>-->
         <activity
             android:name=".activity.GetSendLetterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"

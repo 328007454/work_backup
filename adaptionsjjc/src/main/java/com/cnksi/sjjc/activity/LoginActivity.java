@@ -26,16 +26,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cnksi.bdloc.LocationUtil;
-import com.cnksi.core.utils.AppUtils;
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.AppVersion;
 import com.cnksi.sjjc.bean.Users;
+import com.cnksi.sjjc.databinding.ActivityLoginBinding;
 import com.cnksi.sjjc.databinding.DialogCopyTipsBinding;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
@@ -45,6 +45,8 @@ import com.cnksi.sjjc.sync.KSyncConfig;
 import com.cnksi.sjjc.util.AESUtil;
 import com.cnksi.sjjc.util.AccountUtil;
 import com.cnksi.sjjc.util.ActivityUtil;
+import com.cnksi.sjjc.util.AppUtils;
+import com.cnksi.sjjc.util.DateUtils;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 import com.cnksi.sjjc.util.TTSUtils;
@@ -52,8 +54,6 @@ import com.cnksi.sjjc.util.TTSUtils;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -75,34 +75,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     public static final int USER_LOGIN_SUCCESS = NO_LOGIN_USER + 1;//登录成功
     public static final int SHOW_UPDATE_LOG_DIALOG = USER_LOGIN_SUCCESS + 1;
     public static final int USER_COUNT_NOT_ACTIVITE = SHOW_UPDATE_LOG_DIALOG + 1;
-    @ViewInject(R.id.txt_user_layout)
-    private RelativeLayout userLayout;
-    @ViewInject(R.id.user1_img)
-    private ImageView user1ImageView;//登录人员1
-
-    @ViewInject(R.id.txt_loggin_first)
-    private TextView txtLogFirst;//登录人员1姓名
-
-    @ViewInject(R.id.user2_img)
-    private ImageView user2ImageView;//登录人员2
-
-    @ViewInject(R.id.txt_loggin_second)
-    private TextView txtLogSecond;//登录人员2
-
-    @ViewInject(R.id.tv_version)//版本信息
-    private TextView mTvVersion;
-
-    @ViewInject(R.id.et_password)//添加登录人员密码
-    private EditText mEtPassword;
-
-    @ViewInject(R.id.ib_delete1)//删除登录人员1
-    private ImageButton delete1;
-
-    @ViewInject(R.id.ib_delete2)//删除登录人员2
-    private ImageButton delete2;
-
-    @ViewInject(R.id.et_auto_username)
-    private AutoCompleteTextView autoCompleteTextView;
     private Users mCurrentUserOne, mCurrentUserTwo;
     private List<String> usersName = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
@@ -126,21 +98,32 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private String userOnePassword;
     private String userTwoPassword;
 
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_login);
-        x.view().inject(_this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, permissions);
     }
 
-    private void initData() {
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void inData() {
         layout = DialogCopyTipsBinding.inflate(getLayoutInflater());
         int dialogWidth = ScreenUtils.getScreenWidth(_this) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         updateLogDialog = DialogUtils.creatDialog(_this, layout.getRoot(), dialogWidth, dialogHeight);
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTaskSerially(new Runnable() {
             @Override
             public void run() {
                 PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
@@ -151,12 +134,12 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                     //获取巡视app安装版本号
                     manager = _this.getPackageManager();
                     infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
-                    remoteSjjcAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    remoteSjjcAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
                     String apkPath = "";
                     //增加下载APK文件夹
                     SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
                     try {
-                        DbModel model = CustomApplication.getDbManager().findDbModelFirst(info1);
+                        DbModel model = CustomApplication.getInstance().getDbManager().findDbModelFirst(info1);
                         if (model != null) {
                             apkPath = "admin/" + model.getString("short_name_pinyin") + "/apk";
                         }
@@ -167,12 +150,12 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                         checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
                                 Config.PCODE, false, TextUtils.isEmpty(remoteSjjcAppVersion.description) ? "修复bug,优化流畅度" : remoteSjjcAppVersion.description);
                     }
-                    if (null != remoteSjjcAppVersion && PreferencesUtils.get(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
-                        PreferencesUtils.put(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false);
+                    if (null != remoteSjjcAppVersion && PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+                        PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, false);
                     }
-                    currentVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + version + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    currentVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + version + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
                     if (currentVersion == null)
-                        currentVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + infoXunshi.versionCode + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                        currentVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + infoXunshi.versionCode + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -182,21 +165,21 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     }
 
 
-    private void initUI() {
+    public void inUI() {
         //设置版本信息
-        mTvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(_this)));
-        String userName = PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_ACCOUNT, "");
+        binding.tvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(_this)));
+        String userName = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         if (!TextUtils.isEmpty(userName)) {
             String[] userNames = userName.split(",");
-            autoCompleteTextView.setText(userNames[0]);
-            String pwd = PreferencesUtils.get(_this, userNames[0], "");
+            binding.etAutoUsername.setText(userNames[0]);
+            String pwd = PreferencesUtils.get(userNames[0], "");
             if (!DateUtils.timeNormal(pwd)) {
-                mEtPassword.setText(pwd);
+                binding.etPassword.setText(pwd);
             }
         }
         arrayAdapter = new ArrayAdapter<String>(_this, R.layout.user_name_drop_down_item, R.id.tv_user_name);
-        autoCompleteTextView.setAdapter(arrayAdapter);
-        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+        binding.etAutoUsername.setAdapter(arrayAdapter);
+        binding.etAutoUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -209,95 +192,75 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
             @Override
             public void afterTextChanged(final Editable s) {
-                String pwd = PreferencesUtils.get(_this, s.toString(), "");
+                String pwd = PreferencesUtils.get(s.toString(), "");
                 if (!DateUtils.timeNormal(pwd)) {
-                    mEtPassword.setText(pwd);
+                    binding.etPassword.setText(pwd);
                 }
-                mFixedThreadPoolExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        usersName = UserService.getInstance().searchUsersName(s.toString());
-                        mHandler.sendEmptyMessage(LOAD_DATA);
-                    }
+                ExecutorManager.executeTaskSerially(() -> {
+                    usersName = UserService.getInstance().searchUsersName(s.toString());
+                    mHandler.sendEmptyMessage(LOAD_DATA);
                 });
             }
         });
 
-        findViewById(R.id.ivLogo).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                modifySyncURL();
-                return true;
-            }
+        findViewById(R.id.ivLogo).setOnLongClickListener(v -> {
+            modifySyncURL();
+            return true;
         });
     }
 
-    @Event(value = {R.id.b_add_people_button, R.id.mask_wifi, R.id.ib_delete1, R.id.ib_delete2, R.id.b_login_button, R.id.ivLogo, R.id.tv_version})
-    private void onClick(View v) {
-        switch (v.getId()) {
-            //添加登录人员
-            case R.id.b_add_people_button:
-                loginUser(false);
-                break;
-            case R.id.mask_wifi:
-                if (count == 0) {
-                    startTime = System.currentTimeMillis();
+    private void initOnClick() {
+        binding.bLoginButton.setOnClickListener(view -> loginUser(true));
+        binding.ivLogo.setOnClickListener(view -> ActivityUtil.startSync(mActivity));
+        binding.tvVersion.setOnClickListener(view -> {
+            mHandler.sendEmptyMessage(SHOW_UPDATE_LOG_DIALOG);
+        });
+        binding.bAddPeopleButton.setOnClickListener(view -> {
+            loginUser(false);
+        });
+        binding.maskWifi.setOnClickListener(view -> {
+            if (count == 0) {
+                startTime = System.currentTimeMillis();
+                count++;
+            } else {
+                if (System.currentTimeMillis() - startTime < 500) {
                     count++;
-                    break;
                 } else {
-                    if (System.currentTimeMillis() - startTime < 500) {
-                        count++;
-                    } else {
-                        count = 0;
-                    }
-                    startTime = System.currentTimeMillis();
-                }
-                if (count >= 5) {
-                    boolean maskWifi = !PreferencesUtils.get(_this, Config.MASK_WIFI, true);
-                    PreferencesUtils.put(_this, Config.MASK_WIFI, maskWifi);
-                    if (maskWifi) {
-                        com.cnksi.core.utils.NetWorkUtil.disableNetWork(_this);
-                        CToast.showShort(_this, "打开WIFI屏蔽");
-                    } else {
-                        CToast.showShort(_this, "关闭WIFI屏蔽");
-                    }
                     count = 0;
                 }
-                break;
-            //删除第一个登录人员
-            case R.id.ib_delete1:
-                mCurrentUserOne = null;
-                delete1.setVisibility(View.INVISIBLE);
-                user1ImageView.setImageResource(R.drawable.ic_portrait_thum);
-                txtLogFirst.setVisibility(View.GONE);
-                if (delete2.getVisibility() == View.INVISIBLE)
-                    userLayout.setVisibility(View.INVISIBLE);
-                else userLayout.setVisibility(View.VISIBLE);
-                break;
-            //删除第二个登录人员
-            case R.id.ib_delete2:
-                mCurrentUserTwo = null;
-                delete2.setVisibility(View.INVISIBLE);
-                user2ImageView.setImageResource(R.drawable.ic_portrait_thum);
-                txtLogSecond.setVisibility(View.GONE);
-                if (delete1.getVisibility() == View.INVISIBLE)
-                    userLayout.setVisibility(View.INVISIBLE);
-                else userLayout.setVisibility(View.VISIBLE);
-                break;
-            //登录系统
-            case R.id.b_login_button:
-                loginUser(true);
-                break;
-            //跳转数据同步
-            case R.id.ivLogo:
-                ActivityUtil.startSync(mCurrentActivity);
-                break;
-            case R.id.tv_version:
-                mHandler.sendEmptyMessage(SHOW_UPDATE_LOG_DIALOG);
-                break;
-            default:
-                break;
-        }
+                startTime = System.currentTimeMillis();
+            }
+            if (count >= 5) {
+                boolean maskWifi = !PreferencesUtils.get(Config.MASK_WIFI, true);
+                PreferencesUtils.put(Config.MASK_WIFI, maskWifi);
+                if (maskWifi) {
+                    com.cnksi.core.utils.NetWorkUtils.disableNetWork(_this);
+                    ToastUtils.showMessage("打开WIFI屏蔽");
+                } else {
+                    ToastUtils.showMessage("关闭WIFI屏蔽");
+                }
+                count = 0;
+            }
+        });
+
+        binding.ibDelete1.setOnClickListener(view -> {
+            mCurrentUserOne = null;
+            binding.ibDelete1.setVisibility(View.INVISIBLE);
+            binding.user1Img.setImageResource(R.drawable.ic_portrait_thum);
+            binding.txtLogginFirst.setVisibility(View.GONE);
+            if (binding.ibDelete2.getVisibility() == View.INVISIBLE)
+                binding.txtUserLayout.setVisibility(View.INVISIBLE);
+            else binding.txtUserLayout.setVisibility(View.VISIBLE);
+        });
+        binding.ibDelete2.setOnClickListener(view -> {
+            mCurrentUserTwo = null;
+            binding.ibDelete2.setVisibility(View.INVISIBLE);
+            binding.user2Img.setImageResource(R.drawable.ic_portrait_thum);
+            binding.txtLogginSecond.setVisibility(View.GONE);
+            if (binding.ibDelete1.getVisibility() == View.INVISIBLE)
+                binding.txtUserLayout.setVisibility(View.INVISIBLE);
+            else binding.txtUserLayout.setVisibility(View.VISIBLE);
+        });
     }
 
     /**
@@ -305,7 +268,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
      */
     private void modifySyncURL() {
         final ModifySyncUrlBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_modify_iphost, null, false);
-        final Dialog dialog = DialogUtils.createDialog(mCurrentActivity, binding, true);
+        final Dialog dialog = DialogUtils.createDialog(mActivity, binding, true);
         binding.etNewUrl.setText(Config.SYNC_URL);
         binding.etAppId.setText(Config.SYNC_APP_ID);
         binding.btnCancel.setOnClickListener(v -> dialog.dismiss());
@@ -318,12 +281,12 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             Config.SYNC_URL = url;
             String appId = getText(binding.etAppId);
             if (!TextUtils.isEmpty(appId)) Config.SYNC_APP_ID = appId;
-            PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
-            PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
+            PreferencesUtils.put(Config.KEY_SYNC_URL, Config.SYNC_URL);
+            PreferencesUtils.put(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
             dialog.dismiss();
         });
-        PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_URL, Config.SYNC_URL);
-        PreferencesUtils.put(mCurrentActivity, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
+        PreferencesUtils.put(Config.KEY_SYNC_URL, Config.SYNC_URL);
+        PreferencesUtils.put(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         dialog.show();
     }
 
@@ -341,20 +304,20 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             return;
         }
         //添加登录人员
-        final String userName = autoCompleteTextView.getText().toString().trim();
-        final String userPwd = mEtPassword.getText().toString().trim();
+        final String userName = binding.etAutoUsername.getText().toString().trim();
+        final String userPwd = binding.etPassword.getText().toString().trim();
         if (TextUtils.isEmpty(userName)) {
-            CToast.showShort(_this, R.string.et_user_hint_str);
+            ToastUtils.showMessage(R.string.et_user_hint_str);
             return;
         }
         if (TextUtils.isEmpty(userPwd)) {
-            CToast.showShort(_this, R.string.et_password_hint_str);
+            ToastUtils.showMessage(R.string.et_password_hint_str);
             return;
         }
-        if (AccountUtil.getUtilInstance().JudgeAccountBlocked(mCurrentActivity, autoCompleteTextView.getText().toString())) {
+        if (AccountUtil.getUtilInstance().JudgeAccountBlocked(mActivity, binding.etAutoUsername.getText().toString())) {
             return;
         }
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTaskSerially(() -> {
             //根据用户名和密码查询
             Users tempUser = null;
             try {
@@ -376,11 +339,11 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 }
                 if (null == mCurrentUserOne) {
                     mCurrentUserOne = tempUser;
-                    userOnePassword = mEtPassword.getText().toString().trim();
+                    userOnePassword = binding.etPassword.getText().toString().trim();
                     mHandler.sendEmptyMessage(USER_ONE_LOGIN_SUCCESS);
                 } else if (null == mCurrentUserTwo) {
                     mCurrentUserTwo = tempUser;
-                    userTwoPassword = mEtPassword.getText().toString().trim();
+                    userTwoPassword = binding.etPassword.getText().toString().trim();
                     mHandler.sendEmptyMessage(USER_TWO_LOGIN_SUCCESS);
                 }
             }
@@ -409,8 +372,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         //清空当前登录信息
         if (isGrantPermission)
             KSyncConfig.getInstance().setDept_id("-1");
-        onClick(findViewById(R.id.ib_delete1));
-        onClick(findViewById(R.id.ib_delete2));
     }
 
 
@@ -420,37 +381,37 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         switch (msg.what) {
             //添加已登录账号
             case SAME_ACCOUNT:
-                CToast.showShort(_this, R.string.login_the_same_account);
+                ToastUtils.showMessage(R.string.login_the_same_account);
                 break;
             // 用户1登陆成功
             case USER_ONE_LOGIN_SUCCESS:
-                setUserLoginSuccess(mCurrentUserOne, user1ImageView);
-                delete1.setVisibility(View.VISIBLE);
-                txtLogFirst.setVisibility(View.VISIBLE);
-                txtLogFirst.setText(mCurrentUserOne.username);
-                userLayout.setVisibility(View.VISIBLE);
+                setUserLoginSuccess(mCurrentUserOne, binding.user1Img);
+                binding.ibDelete1.setVisibility(View.VISIBLE);
+                binding.txtLogginFirst.setVisibility(View.VISIBLE);
+                binding.txtLogginFirst.setText(mCurrentUserOne.username);
+                binding.txtUserLayout.setVisibility(View.VISIBLE);
                 hideKeyboard();
                 break;
             // 用户2登陆成功
             case USER_TWO_LOGIN_SUCCESS:
-                setUserLoginSuccess(mCurrentUserTwo, user2ImageView);
-                delete2.setVisibility(View.VISIBLE);
-                txtLogSecond.setVisibility(View.VISIBLE);
-                txtLogSecond.setText(mCurrentUserTwo.username);
-                userLayout.setVisibility(View.VISIBLE);
+                setUserLoginSuccess(mCurrentUserTwo, binding.user2Img);
+                binding.ibDelete2.setVisibility(View.VISIBLE);
+                binding.txtLogginSecond.setVisibility(View.VISIBLE);
+                binding.txtLogginSecond.setText(mCurrentUserTwo.username);
+                binding.txtUserLayout.setVisibility(View.VISIBLE);
                 hideKeyboard();
                 break;
             // 没有对应账号
             case NO_SUCH_USER:
-                CToast.showShort(_this, R.string.login_failed_str);
+                ToastUtils.showMessage(R.string.login_failed_str);
                 break;
             // 密码错误
             case PWD_ERROR:
-                AccountUtil.getUtilInstance().preBlockAccount(mCurrentActivity, autoCompleteTextView.getText().toString(), mEtPassword);
+                AccountUtil.getUtilInstance().preBlockAccount(mActivity, binding.etAutoUsername.getText().toString(), binding.etPassword);
                 break;
             // 没有登录人员
             case NO_LOGIN_USER:
-                CToast.showShort(_this, R.string.login_no_user);
+                ToastUtils.showMessage(R.string.login_no_user);
                 break;
             //登录成功
             case USER_LOGIN_SUCCESS:
@@ -469,7 +430,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 arrayAdapter.addAll(usersName);
                 break;
             case USER_COUNT_NOT_ACTIVITE:
-                CToast.showShort(_this, R.string.login_user_not_activte);
+                ToastUtils.showMessage(R.string.login_user_not_activte);
                 break;
             default:
                 break;
@@ -491,8 +452,8 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         } else {
             mImageView.setImageBitmap(bm);
         }
-        autoCompleteTextView.setText("");
-        mEtPassword.setText("");
+        binding.etAutoUsername.setText("");
+        binding.etPassword.setText("");
 
     }
 
@@ -504,16 +465,16 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) return false;
             Users user = UserService.getInstance().findUserByNameAndPwd(account, password);
             if (null != user) {
-                PreferencesUtils.put(this, Config.CURRENT_LOGIN_USER, user.username);
-                PreferencesUtils.put(this, Config.CURRENT_LOGIN_ACCOUNT, user.account);
+                PreferencesUtils.put(Config.CURRENT_LOGIN_USER, user.username);
+                PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, user.account);
                 //保存登录班组和账号
-                PreferencesUtils.put(this, Config.CURRENT_DEPARTMENT_ID, user.dept_id);
+                PreferencesUtils.put(Config.CURRENT_DEPARTMENT_ID, user.dept_id);
                 KSyncConfig.getInstance().setDept_id(user.dept_id);
                 startActivity(new Intent(this, HomeActivity.class));
                 finish();
                 return true;
             } else {
-                CToast.showLong(this, "第三方登录拉起失败，Error：用户名或者密码错误");
+                ToastUtils.showMessage("第三方登录拉起失败，Error：用户名或者密码错误");
                 return false;
             }
         }
@@ -530,23 +491,23 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         if (mCurrentUserOne != null && mCurrentUserTwo != null) {
             username = mCurrentUserOne.username + Config.COMMA_SEPARATOR + mCurrentUserTwo.username;
             userAccount = mCurrentUserOne.account + Config.COMMA_SEPARATOR + mCurrentUserTwo.account;
-            PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
-            PreferencesUtils.put(_this, mCurrentUserOne.account, userOnePassword);
+            PreferencesUtils.put(Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
+            PreferencesUtils.put(mCurrentUserOne.account, userOnePassword);
         } else if (mCurrentUserOne != null) {
             username = mCurrentUserOne.username;
             userAccount = mCurrentUserOne.account;
-            PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
-            PreferencesUtils.put(_this, userAccount, userOnePassword);
+            PreferencesUtils.put(Config.CURRENT_DEPARTMENT_ID, mCurrentUserOne.dept_id);
+            PreferencesUtils.put(userAccount, userOnePassword);
         } else if (mCurrentUserTwo != null) {
             username = mCurrentUserTwo.username;
             userAccount = mCurrentUserTwo.account;
-            PreferencesUtils.put(_this, Config.CURRENT_DEPARTMENT_ID, mCurrentUserTwo.dept_id);
-            PreferencesUtils.put(_this, userAccount, userTwoPassword);
+            PreferencesUtils.put(Config.CURRENT_DEPARTMENT_ID, mCurrentUserTwo.dept_id);
+            PreferencesUtils.put(userAccount, userTwoPassword);
         } else {
             return;
         }
-        PreferencesUtils.put(_this, Config.CURRENT_LOGIN_USER, username);
-        PreferencesUtils.put(_this, Config.CURRENT_LOGIN_ACCOUNT, userAccount);
+        PreferencesUtils.put(Config.CURRENT_LOGIN_USER, username);
+        PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
 
         //保存登录班组和账号
         Intent intent = new Intent(_this, HomeActivity.class);
@@ -555,9 +516,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         final String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
         KSyncConfig.getInstance().setDept_id(dept_id);
         if ("-1".equals(dept_id)) {
-            CToast.showLong(mCurrentActivity, "当前登录帐号无任何班组信息！");
+            ToastUtils.showMessage("当前登录帐号无任何班组信息！");
         } else
-            mExcutorService.execute(() -> DepartmentService.getInstance().deleteOtherDataByDept(dept_id));
+            ExecutorManager.executeTaskSerially(() -> DepartmentService.getInstance().deleteOtherDataByDept(dept_id));
     }
 
     /**
@@ -582,13 +543,14 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
     @Override
     public void allPermissionsGranted() {
-        PreferencesUtils.put(_this, Config.PERMISSION_STASTUS, true);
-        LocationUtil.getInstance().preSearchGps(mCurrentActivity);
+        PreferencesUtils.put(Config.PERMISSION_STASTUS, true);
+        LocationUtil.getInstance().preSearchGps(mActivity);
         CustomApplication.getInstance().initApp();
         isGrantPermission = true;
         if (thirdLogin()) return;
-        initUI();
-        initData();
+        inUI();
+        inData();
+        initOnClick();
 
     }
 }

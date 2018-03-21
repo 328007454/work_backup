@@ -2,10 +2,11 @@ package com.cnksi.sjjc.processor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.icu.text.UnicodeSetSpanner;
 import android.text.TextUtils;
 
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.DateUtils;
+import com.cnksi.sjjc.util.DateUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.ChartDialog;
@@ -138,8 +139,8 @@ public abstract class CopyDataInterface {
      * @throws DbException
      */
     public void finishTask(String taskId, String remark) throws DbException {
-        CustomApplication.getDbManager().update(Task.class, WhereBuilder.b(Task.TASKID, "=", taskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
-        CustomApplication.getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
+        CustomApplication.getInstance().getDbManager().update(Task.class, WhereBuilder.b(Task.TASKID, "=", taskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+        CustomApplication.getInstance().getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
     }
 
     /**
@@ -169,7 +170,7 @@ public abstract class CopyDataInterface {
         sqlInfo.addBindArg(new KeyValue("", deviceId));
         sqlInfo.addBindArg(new KeyValue("", standId));
         sqlInfo.addBindArg(new KeyValue("", bdzId));
-        return CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+        return CustomApplication.getInstance().getDbManager().findDbModelAll(sqlInfo);
     }
 
     /**
@@ -231,7 +232,7 @@ public abstract class CopyDataInterface {
 
         }
         if (modelList == null || modelList.size() < 1) {
-            CToast.showShort(activity, "当前没有历史抄录记录");
+            ToastUtils.showMessage("当前没有历史抄录记录");
             return;
         }
         List<String> xLabe = new ArrayList<>();
@@ -277,10 +278,10 @@ public abstract class CopyDataInterface {
         sqlInfo.addBindArg(new KeyValue("", item.deviceid));
         sqlInfo.addBindArg(new KeyValue("", item.id));
         try {
-            List<DbModel> resultModel = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+            List<DbModel> resultModel = CustomApplication.getInstance().getDbManager().findDbModelAll(sqlInfo);
 
             if (resultModel == null || resultModel.size() < 1) {
-                CToast.showShort(context, "当前没有历史抄录记录");
+                ToastUtils.showMessage("当前没有历史抄录记录");
                 return;
             }
             String title = context.getString(R.string.data_history_record_format_str, item.description.replace("(" + item.unit + ")", ""));
@@ -310,7 +311,7 @@ public abstract class CopyDataInterface {
 
             if (resultValues.size()<1)
             {
-                CToast.showShort(context,"当前没有历史抄录记录");
+                ToastUtils.showMessage("当前没有历史抄录记录");
                 return;
             }
             List<ChartDialog.LineSet> yValues = new ArrayList<>();

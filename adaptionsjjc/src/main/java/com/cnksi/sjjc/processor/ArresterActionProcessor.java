@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.ChartDialog;
@@ -77,7 +77,7 @@ public class ArresterActionProcessor extends CopyDataInterface {
             e.printStackTrace();
         }
         if (modelList == null || modelList.size() < 1) {
-            CToast.showShort(activity, "当前设备没有历史抄录记录");
+            ToastUtils.showMessageLong( "当前设备没有历史抄录记录");
             return;
         }
         List<String> xLabe = new ArrayList<>();
@@ -124,7 +124,7 @@ public class ArresterActionProcessor extends CopyDataInterface {
     @Override
     public void finishTask(String taskId, String remark) throws DbException {
         super.finishTask(taskId, remark);
-        CustomApplication.getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.JCQK, remark));
+        CustomApplication.getInstance().getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.JCQK, remark));
     }
 
     @Override

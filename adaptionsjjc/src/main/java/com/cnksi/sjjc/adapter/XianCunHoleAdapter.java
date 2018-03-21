@@ -9,12 +9,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.inter.ItemClickListenerPicture;
+import com.cnksi.sjjc.util.BitmapUtil;
 
 import org.xutils.x;
 
@@ -44,10 +46,10 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         listPicClear.clear();
         listPicXC.clear();
         if (!TextUtils.isEmpty(item.hole_images)) {
-            listPicXC = StringUtils.string2List(item.hole_images);
+            listPicXC = StringUtils.stringToList(item.hole_images);
         }
         if (!TextUtils.isEmpty(item.clear_images)) {
-            listPicClear = StringUtils.string2List(item.clear_images);
+            listPicClear = StringUtils.stringToList(item.clear_images);
         }
         //发现孔洞照片数量
         TextView tvDiscoverNum = holder.getView(R.id.tv_discoverhole_num);
@@ -64,7 +66,10 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         final TextView tvClearNum = holder.getView(R.id.tv_clearhole_num);
         holder.setText(R.id.tv_hole, item.location + "_" + item.hole_detail);
         if (listPicXC != null&&!listPicXC.isEmpty()) {
-            x.image().bind(((ImageView) holder.getView(R.id.img_discoverhole_pic)), Config.RESULT_PICTURES_FOLDER + listPicXC.get(0), CustomApplication.getLargeImageOptions());
+            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + listPicXC.get(0));
+            if (bitmap == null) {
+                ((ImageView) holder.getView(R.id.img_discoverhole_pic)).setImageBitmap(bitmap);
+            }
             if (listPicXC.size() == 0 || listPicXC.size() == 1) {
                 tvDiscoverNum.setVisibility(View.GONE);
             } else {
@@ -76,7 +81,10 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
             ((ImageView) holder.getView(R.id.img_discoverhole_pic)).setImageBitmap(bm);
         }
         if (listPicClear != null&&!listPicClear.isEmpty()) {
-            x.image().bind(((ImageView) holder.getView(R.id.img_clearhole_pic)), Config.RESULT_PICTURES_FOLDER + listPicClear.get(0), CustomApplication.getLargeImageOptions());
+            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + listPicXC.get(0));
+            if (bitmap == null) {
+                ((ImageView) holder.getView(R.id.img_clearhole_pic)).setImageBitmap(bitmap);
+            }
             if (listPicClear.size() == 0 || listPicClear.size() == 1) {
                 tvClearNum.setVisibility(View.GONE);
             } else {

@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
 
 /**
  * 字符串处理工具类
+ *
+ * @author kkk
  */
 public class StringUtils {
 
@@ -113,9 +115,11 @@ public class StringUtils {
     }
 
     public static CharSequence changeTextColor(CharSequence content, @ColorInt int color) {
-        if (content.length() > 0)
+        if (content.length() > 0) {
             return changePartTextColor(content, color, 0, content.length());
-        else return "";
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -166,9 +170,13 @@ public class StringUtils {
      * @return
      */
     public static boolean containsChinese(String s) {
-        if (null == s || "".equals(s.trim())) return false;
+        if (null == s || "".equals(s.trim())) {
+            return false;
+        }
         for (int i = 0; i < s.length(); i++) {
-            if (isChinese(s.charAt(i))) return true;
+            if (isChinese(s.charAt(i))) {
+                return true;
+            }
         }
         return false;
     }

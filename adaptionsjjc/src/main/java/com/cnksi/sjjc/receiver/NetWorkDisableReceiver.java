@@ -12,8 +12,8 @@ public class NetWorkDisableReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
 
-        if (PreferencesUtils.getBoolean(context, Config.MASK_WIFI, true)) {
-            com.cnksi.core.utils.NetWorkUtil.disableNetWork(context);
+        if (PreferencesUtils.get(Config.MASK_WIFI, true)) {
+            com.cnksi.core.utils.NetWorkUtils.disableNetWork(context);
         }
     }
 }
