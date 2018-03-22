@@ -21,14 +21,18 @@ public class TJWTActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityTjwtBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
+        initView();
+    }
+
+    @Override
+    public void initUI() {
 
     }
 
     /**
      * 初始化UI
      */
-    @Override
-    public void initUI() {
+    public void initView() {
         Intent intent = getIntent();
         //标题
         String title = intent.getStringExtra("title");

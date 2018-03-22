@@ -41,6 +41,7 @@ public abstract class BaseReportActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isDefaultTitle = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_report);
         rlContainer = FindViewById(R.id.llbase);

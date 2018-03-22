@@ -69,17 +69,25 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPreventAnimalBinding.inflate(getLayoutInflater());
-
         setChildView(binding.getRoot());
         getIntentValue();
-        initUI();
-        initData();
+        initView();
+        loadData();
         initOnClick();
     }
 
-
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
         mTitleBinding.tvTitle.setText("现存孔洞");
         binding.btnNext.setVisibility(View.VISIBLE);
         binding.btnNext.setText("提交");
@@ -94,8 +102,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     }
 
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             holeRecords = HoleReportService.getInstance().getAllHoleRecord(currentReportId, currentBdzId);
             if (holeRecords != null && !holeRecords.isEmpty()) {

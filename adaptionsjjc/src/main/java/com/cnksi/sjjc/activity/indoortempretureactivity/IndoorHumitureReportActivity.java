@@ -33,6 +33,18 @@ public class IndoorHumitureReportActivity extends BaseReportActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initView();
+        loadData();
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     @Override
@@ -41,13 +53,13 @@ public class IndoorHumitureReportActivity extends BaseReportActivity {
         return reportBinding.getRoot();
     }
 
-    @Override
-    public void initUI() {
+
+    public void initView() {
        mTvTitle.setText(currentBdzName + "室内温湿度记录报告");
     }
 
-    @Override
-    public void initData() {
+
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 report = ReportService.getInstance().findById(currentReportId);

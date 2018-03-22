@@ -67,7 +67,6 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
         mHwcwNewBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_hwcw_new, null, false);
         setChildView(mHwcwNewBinding.getRoot());
         getIntentValue();
-        initView();
         loadData();
     }
 
@@ -91,7 +90,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                     selecteDevices.add(location.deviceID);
                 }
             }
-            runOnUiThread(() -> initUI());
+            runOnUiThread(() -> initView());
         });
     }
 

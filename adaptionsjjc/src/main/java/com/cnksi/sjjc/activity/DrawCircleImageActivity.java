@@ -46,12 +46,17 @@ public class DrawCircleImageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDrawCircleBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
+        initView();
         initOnClick();
     }
 
-
     @Override
     public void initUI() {
+
+    }
+
+
+    public void initView() {
         currentImagePath = getIntent().getStringExtra(Config.CURRENT_IMAGE_NAME);
         mTitleBinding.tvTitle.setText("标记图片");
         initBitmap();

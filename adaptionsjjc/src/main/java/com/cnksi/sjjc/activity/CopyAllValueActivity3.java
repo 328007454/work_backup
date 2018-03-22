@@ -112,13 +112,24 @@ public class CopyAllValueActivity3 extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCopyAll3Binding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
+        initView();
+        loadData();
         setDeviceListDisplay();
         initOnClick();
     }
 
-
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
         getIntentValue();
         processor = ProcessorFactory.getProcessor(currentInspectionType, currentReportId);
         mTitleBinding.tvTitle.setText(currentInspectionName + "记录" + "");
@@ -205,8 +216,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
         }
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 List<DbModel> deviceList = processor.findAllDeviceHasCopyValue("one", currentBdzId);

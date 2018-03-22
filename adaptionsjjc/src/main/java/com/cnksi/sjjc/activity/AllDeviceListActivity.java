@@ -64,12 +64,23 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         mExpadableListBinding.toolbar.setTitle(StringUtils.BlankToDefault(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
+        initView();
+        loadData();
         initOnClick();
     }
 
-
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
         currentFunctionModel = (PMSDeviceType) getIntent().getSerializableExtra(FUNCTION_MODEL);
         currentBdzId = getIntent().getStringExtra(BDZID);
         mExpadableListBinding.elvContainer.setOnGroupExpandListener(groupPosition -> {
@@ -86,8 +97,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     List<DbModel> mDeviceList = null;
     List<Spacing> mSpacingList = null;
 
-    @Override
-    public void initData() {
+    public void loadData() {
         if (TextUtils.isEmpty(currentBdzId) || currentFunctionModel == null) {
             ToastUtils.showMessage("没有获取到正确的变电站和设备类别");
             return;

@@ -74,11 +74,22 @@ public class PreventAnimalActivity extends BaseActivity {
             saveData();
             PreventAnimalActivity.this.finish();
         });
+        initView();
+        loadData();
         initOnClick();
     }
 
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    public void initView() {
         mTitleBinding.tvTitle.setText("防小动物措施检查");
         mTitleBinding.tvRight.setText("现存孔洞");
         mTitleBinding.tvRight.setVisibility(View.VISIBLE);
@@ -108,8 +119,7 @@ public class PreventAnimalActivity extends BaseActivity {
         binding.lvExamineProcess.setAdapter(adapter);
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 preventionRecord = PreventionService.getInstance().findPreventionRecordByReoprtId(currentReportId);

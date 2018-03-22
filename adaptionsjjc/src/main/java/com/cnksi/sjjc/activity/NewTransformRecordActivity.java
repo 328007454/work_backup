@@ -53,23 +53,33 @@ public class NewTransformRecordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDifferentialMotionRecordBinding.inflate(getLayoutInflater());
-        setChildView(binding.getRoot());
         getIntentValue();
+        setChildView(binding.getRoot());
+        initView();
+        loadData();
         initOnClick();
 
     }
 
-
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
         mTitleBinding.tvTitle.setText(R.string.jiaozhiliu_fenjie_kaiguan);
         binding.llContainer1.setVisibility(View.VISIBLE);
         binding.lvContainer.setVisibility(View.GONE);
 
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         bdzid = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         ExecutorManager.executeTaskSerially(() -> {
             try {

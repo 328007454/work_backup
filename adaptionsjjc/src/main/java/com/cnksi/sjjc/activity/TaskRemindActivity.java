@@ -54,11 +54,16 @@ public class TaskRemindActivity extends BaseActivity {
         
         setChildView(mRemindBinding.getRoot());
         getIntentValue();
+        initView();
         iniOnClick();
     }
 
     @Override
     public void initUI() {
+
+    }
+
+    public void initView() {
         mTitleBinding.tvTitle.setText(R.string.inspection_task_remind_str);
         mTitleBinding.tvRight.setVisibility(View.GONE);
         mTitleBinding.btnRight.setImageResource(R.drawable.add_task_button_background);

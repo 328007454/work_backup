@@ -65,20 +65,28 @@ public class DiscoverHoleActivity extends BaseActivity {
         binding = ActivityDiscoverHoleBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
         getIntentValue();
-        initUI();
-        initData();
+        initView();
+        loadData();
         initOnClick();
     }
 
-
     @Override
     public void initUI() {
-        mTitleBinding.tvTitle.setText("发现孔洞");
-        binding.tvHoleNum.setVisibility(View.GONE);
+
     }
 
     @Override
     public void initData() {
+
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText("发现孔洞");
+        binding.tvHoleNum.setVisibility(View.GONE);
+    }
+
+    public void loadData() {
         areaList = Arrays.asList(getResources().getStringArray(R.array.AnimalPositionArray));
         mHandler.sendEmptyMessage(LOAD_DATA);
     }

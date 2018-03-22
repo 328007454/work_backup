@@ -23,19 +23,19 @@ public class PlayVideoActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		binding = DataBindingUtil.setContentView(this,R.layout.activity_play_video);
-		initUI();
-		initData();
+		initView();
+		loadData();
 	}
 
 
 
-	protected void initUI() {
+	protected void initView() {
 		String videoPath = getIntent().getStringExtra(Config.VIDEO_PATH);
 		
 		initVideoView(videoPath);
 	}
 
-	protected void initData() {
+	protected void loadData() {
 		
 	}
 	

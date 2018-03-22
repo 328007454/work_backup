@@ -55,7 +55,6 @@ public class TypeListActivity extends BaseActivity {
         mInspectionType = InspectionType.get(mInspectionValue);
         inUI();
         inData();
-        initData();
     }
 
     @Override

@@ -34,14 +34,19 @@ public class WorkPlanInformationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityWebviewBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
+        initView();
+    }
+
+    @Override
+    public void initUI() {
+
     }
 
     JSObject jsInterface;
 
     // 初始化binding.webView
     @SuppressLint("NewApi")
-    @Override
-    public void initUI() {
+    public void initView() {
         mTitleBinding.tvTitle.setText("变电站（发电厂）第一种工作票");
         binding.webView.getSettings().setJavaScriptEnabled(true);
         jsInterface = new JSObject(_this);

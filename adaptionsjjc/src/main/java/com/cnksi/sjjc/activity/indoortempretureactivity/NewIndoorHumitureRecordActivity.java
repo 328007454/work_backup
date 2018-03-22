@@ -50,19 +50,28 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
         binding = DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.activity_new_indoor_humiture, null, false);
         setChildView(binding.getRoot());
         getIntentValue();
-        initUI();
-        initData();
+        initView();
+        loadData();
         initOnclick();
     }
 
     @Override
     public void initUI() {
-        mTitleBinding.tvTitle.setText(R.string.indoor_tempreture_recoder);
-        mTitleBinding.btnBack.setOnClickListener(v -> NewIndoorHumitureRecordActivity.this.finish());
+
     }
 
     @Override
     public void initData() {
+
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(R.string.indoor_tempreture_recoder);
+        mTitleBinding.btnBack.setOnClickListener(v -> NewIndoorHumitureRecordActivity.this.finish());
+    }
+
+    public void loadData() {
 
         ExecutorManager.executeTaskSerially(() -> {
             try {

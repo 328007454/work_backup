@@ -62,21 +62,28 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
         super.onCreate(savedInstanceState);
         mRecordBinding = ActivityDifferentialMotionRecordBinding.inflate(LayoutInflater.from(getApplicationContext()));
         setChildView(mRecordBinding.getRoot());
-
         getIntentValue();
-        initUI();
+        initView();
+        loadData();
         initOnclick();
-        initData();
     }
-
 
     @Override
     public void initUI() {
-        mTitleBinding.tvTitle.setText(R.string.chadong_baohu_jilu);
+
     }
 
     @Override
     public void initData() {
+
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(R.string.chadong_baohu_jilu);
+    }
+
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 mReport = ReportService.getInstance().findById(currentReportId);
@@ -135,7 +142,7 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
 
     private boolean saveData() {
         ReportCdbhcl mCdReport;
-        String bdzName = PreferencesUtils.get( Config.CURRENT_BDZ_NAME, "");
+        String bdzName = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");
         List<ReportCdbhcl> saveList = new ArrayList<>();
         for (CdbhclValue value : cdbhclValueList) {
             if (!TextUtils.isEmpty(value.getValue()) && (99999999 < new Float(value.getValue()) || 0 > new Float(value.getValue()))) {

@@ -66,8 +66,9 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mImageDetailsBinding = ActivityImageDetailsBinding.inflate(getLayoutInflater());
-
         setChildView(mImageDetailsBinding.getRoot());
+        initView();
+        loadData();
         imageList = getIntent().getStringArrayListExtra(Config.IMAGEURL_LIST);
         imageList.remove(Config.CURRENT_IMAGE_NAME);
         currentPosition = position = getIntent().getIntExtra(Config.CURRENT_IMAGE_POSITION, 0);
@@ -85,6 +86,15 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
 
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    public void initView() {
         initOnClick();
     }
 
@@ -135,8 +145,7 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
     }
 
     @SuppressWarnings("deprecation")
-    @Override
-    public void initData() {
+    public void loadData() {
 
         viewAdapter = new ViewPagerAdapter();
         mImageDetailsBinding.viewPager.setAdapter(viewAdapter);

@@ -50,20 +50,30 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
         mHumitureBinding = DataBindingUtil.inflate(LayoutInflater.from(getApplicationContext()), R.layout.activity_indoor_humiture, null, false);
         AutoUtils.auto(mHumitureBinding.getRoot());
         setChildView(mHumitureBinding.getRoot());
-        initUI();
-        initData();
         getIntentValue();
+        initView();
+        loadData();
         initOnclick();
         
     }
 
     @Override
     public void initUI() {
-        mTitleBinding.tvTitle.setText(R.string.indoor_tempreture_recoder);
+
     }
 
     @Override
     public void initData() {
+
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(R.string.indoor_tempreture_recoder);
+    }
+
+
+    public void loadData() {
         bdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         reportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
         bdzName = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");

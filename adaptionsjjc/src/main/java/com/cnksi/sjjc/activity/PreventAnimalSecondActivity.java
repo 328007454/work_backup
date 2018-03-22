@@ -87,12 +87,23 @@ public class PreventAnimalSecondActivity extends BaseActivity {
         binding = ActivityPreventSecondAnimalBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
         getIntentValue();
+        initView();
+        loadData();
         initOnClick();
     }
 
-
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
         mTitleBinding.tvTitle.setText("防小动物措施检查");
         binding.radioSwitch.setOnCheckedChangeListener(checkedChangeListener);
         binding.radioIndoor.setOnCheckedChangeListener(checkedChangeListener);
@@ -102,8 +113,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
         binding.radioRatsbane.setOnCheckedChangeListener(checkedChangeListener);
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 preventionRecord = PreventionService.getInstance().findPreventionRecordByReoprtId(currentReportId);

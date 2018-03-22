@@ -72,9 +72,19 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initUI();
-        initData();
+        initView();
+        loadData();
         initOnclick();
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
 
@@ -86,8 +96,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
         return mJzlfenjieLayoutBinding.getRoot();
     }
 
-    @Override
-    public void initUI() {
+    public void initView() {
 
         if (currentInspectionType.equals(InspectionType.SBJC_03.name())) {
             mTvTitle.setText(currentBdzName + "室内温湿度记录报告");
@@ -123,8 +132,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
 
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
                     try {
                         report = ReportService.getInstance().findById(currentReportId);
@@ -251,7 +259,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
 
 
     private void initOnclick() {
-        mTitleBinding.btnBack.setOnClickListener((v) -> {
+        mBtnBack.setOnClickListener((v) -> {
             Intent intent = new Intent(_this, TaskRemindActivity.class);
             startActivity(intent);
             this.finish();

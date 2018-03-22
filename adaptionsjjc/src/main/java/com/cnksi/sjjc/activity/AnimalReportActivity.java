@@ -57,7 +57,19 @@ public class AnimalReportActivity extends BaseReportActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getIntentValue();
+        initView();
+        loadData();
         initOnClick();
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
 
@@ -68,13 +80,11 @@ public class AnimalReportActivity extends BaseReportActivity {
     }
 
 
-    @Override
-    public void initUI() {
+    public void initView() {
         binding.tvInspectionPerson.setText(PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 report = ReportService.getInstance().findById(currentReportId);

@@ -39,12 +39,23 @@ public class CopyValueReportActivity extends BaseReportActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         processor = ProcessorFactory.getProcessor(currentInspectionType, currentReportId);
+        initView();
+        loadData();
         initOnClick();
     }
 
-
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
 
     }
 
@@ -55,8 +66,7 @@ public class CopyValueReportActivity extends BaseReportActivity {
     }
 
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 // 查询状态

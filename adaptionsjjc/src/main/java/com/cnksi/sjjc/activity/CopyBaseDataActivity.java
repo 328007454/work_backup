@@ -27,17 +27,27 @@ public class CopyBaseDataActivity extends BaseActivity {
         binding = ActivityCopybasedataBinding.inflate(getLayoutInflater());
         getIntentValue();
         setChildView(binding.getRoot());
+        initView();
+        loadData();
         initOnClick();
     }
 
-
     @Override
     public void initUI() {
-        mTitleBinding.tvTitle.setText(currentInspectionName);
+
     }
 
     @Override
     public void initData() {
+
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(currentInspectionName);
+    }
+
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 mReport = ReportService.getInstance().findById(currentReportId);

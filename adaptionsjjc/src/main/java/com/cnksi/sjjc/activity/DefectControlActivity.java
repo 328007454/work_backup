@@ -49,6 +49,18 @@ public class DefectControlActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         defectControlBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_defect_control, null, false);
         setChildView(defectControlBinding.getRoot());
+        initView();
+        loadData();
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     private void search() {
@@ -62,8 +74,7 @@ public class DefectControlActivity extends BaseActivity {
             });
         });
     }
-    @Override
-    public void initUI() {
+    public void initView() {
 
         defectControlBinding.setEvent(this);
         mTitleBinding.tvTitle.setText("缺陷管理");
@@ -86,8 +97,7 @@ public class DefectControlActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         defectControlBinding.defectType.setAdapter(
                 new DefectTypeAdapter(this,
                         Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray)),

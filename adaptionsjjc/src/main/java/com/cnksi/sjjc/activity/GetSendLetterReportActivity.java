@@ -47,11 +47,21 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+        initView();
+        loadData();
     }
 
     @Override
     public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    public void initView() {
         initOnClick();
     }
 
@@ -62,8 +72,7 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
         return binding.getRoot();
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 currentReport = ReportService.getInstance().getReportById(currentReportId);

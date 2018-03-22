@@ -84,15 +84,25 @@ public class GetSendLetterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityGetSendLetterBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
-        mTitleBinding.tvTitle.setText("收发信机测试");
         getIntentValue();
-        initData();
+        initView();
+        loadData();
+        mTitleBinding.tvTitle.setText("收发信机测试");
         initOnclick();
     }
 
+    @Override
+    public void initUI() {
+
+    }
 
     @Override
     public void initData() {
+
+    }
+
+
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 report = ReportService.getInstance().getReportById(currentReportId);
@@ -109,8 +119,7 @@ public class GetSendLetterActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public void initUI() {
+    public void initView() {
         binding.radioChannel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {

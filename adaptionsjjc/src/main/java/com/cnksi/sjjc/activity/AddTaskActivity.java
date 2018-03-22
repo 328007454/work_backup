@@ -46,6 +46,15 @@ import java.util.UUID;
  * @author kkk
  */
 public class AddTaskActivity extends BaseActivity {
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
 
     public static final int LOAD_BDZ_DATA = 0x01;
     private String mPressureDetectionType = "";
@@ -92,11 +101,12 @@ public class AddTaskActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mTaskBinding = ActivityAddTaskBinding.inflate(getLayoutInflater());
         setChildView(mTaskBinding.getRoot());
+        initView();
+        loadData();
         initOnclick();
     }
 
-    @Override
-    public void initUI() {
+    public void initView() {
 
         mTitleBinding.tvTitle.setText(R.string.add_inspection_task_str);
         mTaskBinding.tvInspectionDate.setText(DateUtils.getCurrentShortTime());
@@ -125,8 +135,7 @@ public class AddTaskActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void initData() {
+    public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 String bdzId = PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, "");
