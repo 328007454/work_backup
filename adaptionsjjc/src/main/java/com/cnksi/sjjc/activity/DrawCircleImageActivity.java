@@ -142,7 +142,7 @@ public class DrawCircleImageActivity extends BaseActivity {
         ExecutorManager.executeTaskSerially(() -> {
             mPicturePaintView.saveMark();
             if (saveEditPicture(binding.rlCirclePicture, currentImagePath, 80)) {
-//                mPicturePaintView.setBitmapNull();
+                mPicturePaintView.setBitmapNull();
                 mHandler.sendEmptyMessage(LOAD_DATA);
             }
         });

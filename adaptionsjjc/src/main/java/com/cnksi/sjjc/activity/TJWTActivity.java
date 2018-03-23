@@ -55,8 +55,8 @@ public class TJWTActivity extends BaseActivity {
             @Override
             public void onGlobalLayout() {
                 if (binding.zoomImageView.getWidth() != 0) {
-//                    binding.zoomImageView.setScrollDistance(0, 10000);
-//                    binding.zoomImageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    binding.zoomImageView.setScrollDistance(0, 10000);
+                    binding.zoomImageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
             }
         });
