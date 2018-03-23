@@ -53,13 +53,12 @@ public class MaintenanceFragment extends BaseCoreFragment {
 
     @Override
     protected void initUI() {
-        //   maintenanceBinding.ivMaintenanceList.setOnClickListener();
-        maintenanceBinding.setEvent(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        maintenanceBinding.setEvent(this);
         initData();
     }
 
@@ -73,9 +72,9 @@ public class MaintenanceFragment extends BaseCoreFragment {
         Intent intent4 = new Intent();
         ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
         intent4.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
-        intent4.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get( Config.CURRENT_LOGIN_USER, ""));
-        intent4.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get( Config.CURRENT_LOGIN_ACCOUNT, ""));
-        intent4.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID,""));
+        intent4.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
+        intent4.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent4.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
         intent4.setComponent(componentName4);
         startActivity(intent4);
     }
@@ -95,6 +94,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
                                 / (maintenance.getMonthTaskCount() + switchover.getMonthTaskCount() + 0.0f) * 100);
                         mHandler.post(new Runnable() {
                             int i = 0;
+
                             @Override
                             public void run() {
                                 maintenanceBinding.progress.setProgress(i <= percent ? i++ : percent);
@@ -174,7 +174,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
             Intent intent = new Intent();
             intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
             intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
-            intent.putExtra(Config.CURRENT_DEPARTMENT_ID,PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID,""));
+            intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
             ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);
             intent.setComponent(componentName);

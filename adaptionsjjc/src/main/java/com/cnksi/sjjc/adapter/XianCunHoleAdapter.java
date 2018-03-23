@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -65,9 +66,9 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         //清除照片的数量
         final TextView tvClearNum = holder.getView(R.id.tv_clearhole_num);
         holder.setText(R.id.tv_hole, item.location + "_" + item.hole_detail);
-        if (listPicXC != null&&!listPicXC.isEmpty()) {
+        if (listPicXC != null && !listPicXC.isEmpty()) {
             Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + listPicXC.get(0));
-            if (bitmap == null) {
+            if (bitmap != null) {
                 ((ImageView) holder.getView(R.id.img_discoverhole_pic)).setImageBitmap(bitmap);
             }
             if (listPicXC.size() == 0 || listPicXC.size() == 1) {
@@ -80,9 +81,12 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
             Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_clear_default);
             ((ImageView) holder.getView(R.id.img_discoverhole_pic)).setImageBitmap(bm);
         }
-        if (listPicClear != null&&!listPicClear.isEmpty()) {
-            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + listPicXC.get(0));
-            if (bitmap == null) {
+        if (listPicClear != null && !listPicClear.isEmpty()) {
+            long time = System.currentTimeMillis();
+
+            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + listPicClear.get(0));
+            Log.d("Tag", (System.currentTimeMillis() - time) + "");
+            if (bitmap != null) {
                 ((ImageView) holder.getView(R.id.img_clearhole_pic)).setImageBitmap(bitmap);
             }
             if (listPicClear.size() == 0 || listPicClear.size() == 1) {

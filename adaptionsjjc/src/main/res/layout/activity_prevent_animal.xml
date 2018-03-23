@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@color/special_tips_background_color"
-                  android:orientation="vertical">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/ll_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/special_tips_background_color"
+                    android:paddingBottom="@dimen/_60px"
+        >
 
         <RelativeLayout
             android:id="@+id/re_container"
             android:layout_width="match_parent"
             android:layout_height="135px"
+            android:layout_alignParentTop="true"
             android:layout_marginTop="@dimen/global_margin_top_px"
             android:background="@color/gray_background_color"
             android:padding="@dimen/paddingRight">
@@ -39,21 +42,12 @@
 
         </RelativeLayout>
 
-        <ListView
-            android:id="@+id/lv_examine_process"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-
-        </ListView>
-
         <Button
             android:id="@+id/btn_next"
             android:layout_width="match_parent"
             android:layout_height="100px"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/device_photo_tips_minheight_px"
             android:layout_marginLeft="@dimen/global_padding_left_right_px"
             android:layout_marginRight="@dimen/global_padding_left_right_px"
             android:layout_marginTop="@dimen/global_padding_top_bottom_px"
@@ -62,5 +56,22 @@
             android:text="下一步"
             android:textColor="@android:color/white"
             android:textSize="@dimen/global_text_size_px"/>
-    </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/btn_next"
+            android:layout_below="@id/re_container">
+
+            <ListView
+                android:id="@+id/lv_examine_process"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+            </ListView>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 </layout>

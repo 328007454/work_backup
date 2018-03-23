@@ -66,7 +66,6 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         mExpadableListBinding.toolbar.setTitle(StringUtils.BlankToDefault(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
         initView();
         loadData();
-        initOnClick();
     }
 
     @Override
@@ -167,11 +166,11 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         }
     }
 
-    private void initOnClick() {
-        mTitleBinding.btnBack.setOnClickListener(view -> {
-            this.finish();
-        });
-    }
+//    private void initOnClick() {
+//       mTitleBinding.btnBack.setOnClickListener(view -> {
+//            this.finish();
+//        });
+//    }
 
     @Override
     public void OnAdapterViewClick(View view, DbModel mDevice) {

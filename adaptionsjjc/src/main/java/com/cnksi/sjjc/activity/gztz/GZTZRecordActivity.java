@@ -96,9 +96,7 @@ public class GZTZRecordActivity extends BaseActivity {
             }
             saveData();
             startActivity(new Intent(this, GZTZReportActivity.class));
-            ScreenManager.getScreenManager().popActivity(TZQKActivity.class);
-            ScreenManager.getScreenManager().popActivity(BHDZJLActivity.class);
-            ScreenManager.getScreenManager().popActivity(BHDZQKActivity.class);
+            ScreenManager.getScreenManager().popActivityList(new Class[]{TZQKActivity.class, BHDZJLActivity.class, BHDZQKActivity.class});
             finish();
         });
         showPeopleAdapter.setClickWidget(new ItemClickListener() {
@@ -203,7 +201,7 @@ public class GZTZRecordActivity extends BaseActivity {
         peopleBinding.lvPeople.setOnItemClickListener((adapterView, view, i, l) -> {
             String name = (String) adapterView.getAdapter().getItem(i);
             if (showPeopleList.contains(name)) {
-                ToastUtils.showMessage( "已经存在该人员");
+                ToastUtils.showMessage("已经存在该人员");
                 return;
             }
             showPeopleList.add(name);

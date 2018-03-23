@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -210,6 +211,7 @@ public class BatteryDialogActivity extends AppCompatActivity {
         }
 
     }
+
     private void initOnClick() {
         binding.takePicture.setOnClickListener(view -> {
             if (0 == batteryCheckType) {
@@ -238,6 +240,28 @@ public class BatteryDialogActivity extends AppCompatActivity {
             } else {
                 finish();
             }
+        });
+
+        binding.btnSure.setOnClickListener(view -> {
+            if ("0".equalsIgnoreCase(typeStr)) {
+                if (batteryCode.equalsIgnoreCase(String.valueOf(battery.amount))
+                        || (2 == String.valueOf(battery.amount).length() && batteryCode.substring(1).equalsIgnoreCase(String.valueOf(battery.amount)))
+                        || (1 == String.valueOf(battery.amount).length() && batteryCode.substring(2).equalsIgnoreCase(String.valueOf(battery.amount)))) {
+                    Toast.makeText(this, "当前电池数为最后一节了", Toast.LENGTH_LONG).show();
+                    saveData();
+                    finishDialog();
+                    return;
+                }
+                if (saveData()) {
+                    setChangedBatteryCode();
+                } else {
+                    ToastUtils.showMessage("请输入正确的值!");
+                    return;
+                }
+            } else {
+                finishDialog();
+            }
+
         });
     }
 

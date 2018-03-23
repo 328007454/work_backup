@@ -159,12 +159,10 @@ public class PreventAnimalActivity extends BaseActivity {
         mTitleBinding.tvRight.setOnClickListener(view -> {
             Intent intent = new Intent(_this, XianCunHoleActivity.class);
             startActivityForResult(intent, REFRESH_UI);
-            startActivity(intent);
         });
         binding.tvFindHole.setOnClickListener(view -> {
             Intent intent = new Intent(_this, DiscoverHoleActivity.class);
             startActivityForResult(intent, REFRESH_UI);
-            startActivity(intent);
         });
     }
 

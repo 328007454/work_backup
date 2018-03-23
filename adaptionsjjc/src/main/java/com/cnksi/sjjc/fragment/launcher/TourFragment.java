@@ -52,7 +52,7 @@ public class TourFragment extends BaseCoreFragment {
 
     @Override
     protected void initUI() {
-        tourBinding.setEvent(this);
+
     }
 
     int i = 0;
@@ -60,7 +60,9 @@ public class TourFragment extends BaseCoreFragment {
     @Override
     public void onResume() {
         super.onResume();
+        tourBinding.setEvent(this);
         initData();
+
     }
 
 
@@ -108,7 +110,7 @@ public class TourFragment extends BaseCoreFragment {
         PreferencesUtils.put(Config.KEY_SYNC_URL, Config.SYNC_URL);
         PreferencesUtils.put(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         Intent intent = new Intent();
-        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get( Config.CURRENT_LOGIN_USER, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
         intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, ""));
         intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
