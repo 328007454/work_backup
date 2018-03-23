@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cnksi.core.utils.DisplayUtil;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.DialogModifyLjtzcsBinding;
 import com.cnksi.sjjc.util.CalcUtils;
@@ -58,7 +58,7 @@ public class TzcsGroup extends UnderLineLinearLayout {
 
     private void showModifyDialog() {
         if (dialog == null) {
-            int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
+            int dialogWidth = DisplayUtils.getInstance().getWidth() * 9 / 10;
             viewHolder = DialogModifyLjtzcsBinding.inflate(LayoutInflater.from(getContext()));
             dialog = DialogUtils.creatDialog(getContext(), viewHolder.getRoot(), dialogWidth, -2);
             viewHolder.btnCancel.setOnClickListener(v -> dialog.dismiss());

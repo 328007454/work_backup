@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;

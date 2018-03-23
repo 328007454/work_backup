@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/fragment_record_defect_content_green_title_background"
-              android:minHeight="300px"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/global_padding_half_left_right">
+<layout>
 
-    <!-- 缺陷原因 -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@drawable/fragment_record_defect_content_green_title_background"
+                  android:minHeight="300px"
+                  android:orientation="vertical"
+                  android:paddingBottom="@dimen/global_padding_half_left_right">
 
-    <TextView
-        android:id="@+id/tv_dialog_title"
-        android:layout_width="match_parent"
-        android:layout_height="120px"
-        android:background="@drawable/bdz_title_background"
-        android:gravity="center"
-        android:text="@string/defect_reason_str"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/global_text_size_1"/>
+        <!-- 缺陷原因 -->
 
-    <ListView
-        android:id="@+id/lv_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@color/line_color"
-        android:dividerHeight="@dimen/line_half_width_px"
-        android:listSelector="@android:color/transparent"/>
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:background="@drawable/bdz_title_background"
+            android:gravity="center"
+            android:text="@string/defect_reason_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/global_text_size_1"/>
 
-</LinearLayout>
+        <ListView
+            android:id="@+id/lv_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/line_color"
+            android:dividerHeight="@dimen/line_half_width_px"
+            android:listSelector="@android:color/transparent"/>
+
+    </LinearLayout>
+</layout>

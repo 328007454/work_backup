@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.cnksi.core.utils.CoreConfig;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

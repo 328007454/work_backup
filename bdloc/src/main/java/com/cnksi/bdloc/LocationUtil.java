@@ -46,7 +46,7 @@ public class LocationUtil {
         locationClientOption.setCoorType("bd09ll"); // 设置坐标类型
         locationClientOption.setScanSpan(MIN_INTERVAL_TIME); // 定位间隔时间
         locationClientOption.setTimeOut(300000);// 定位超时时间30s
-        locationClientOption.setLocationMode(LocationMode.Hight_Accuracy);
+        locationClientOption.setLocationMode(LocationMode.Device_Sensors);
         locationClientOption.setLocationNotify(true);
         locationClient = new LocationClient(context.getApplicationContext(), locationClientOption);
     }

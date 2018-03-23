@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.ChartDialog;
 import com.cnksi.sjjc.activity.CopyAllValueActivity3;
@@ -108,7 +108,7 @@ public class ArresterCheckOLProcessor extends CopyDataInterface {
             e.printStackTrace();
         }
         if (modelList == null || modelList.size() < 1) {
-            CToast.showShort(activity, "当前设备没有历史抄录记录");
+            ToastUtils.showMessage("当前设备没有历史抄录记录");
             return;
         }
         List<String> xLabe = new ArrayList<>();

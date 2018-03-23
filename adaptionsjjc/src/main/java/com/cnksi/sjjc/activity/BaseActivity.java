@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,37 +25,37 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cnksi.core.activity.BaseCoreActivity;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.KeyBoardUtils;
+import com.cnksi.core.utils.NetWorkUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.utils.RelayoutUtil;
+import com.cnksi.sjjc.util.UpdateUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.databinding.IncludeTitleBinding;
+import com.cnksi.sjjc.util.CoreConfig;
+import com.cnksi.sjjc.util.FunctionUtils;
+import com.cnksi.sjjc.util.KeyBoardUtils;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
 
-import org.xutils.ImageManager;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * @author luoxy
  * @version 1.0
- * @auth luoxy
  * @date 16/4/23
  */
 public abstract class BaseActivity extends BaseCoreActivity {
@@ -73,11 +74,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
     protected static final int BACK_PRESSED_INTERVAL = 2000;
     public static final int INIT_SPEECH = -0x101001;
-
-    /**
-     * 图片显示工具类
-     */
-    protected ImageManager mBitmapUtils = x.image();
     /**
      * 第一次加载数据
      */
@@ -135,30 +131,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
     protected String voicer = "xiaoyan";
 
     protected static HashMap<String, Object> dataMap = new HashMap<>();
-    protected ExecutorService mFixedThreadPoolExecutor = mExcutorService;
-
-    @ViewInject(R.id.btn_back)
-    protected ImageView btnBack;
-
-    @ViewInject(R.id.btn_back_defect)
-    protected ImageView btnBackDefect;
-
-    @ViewInject(R.id.btn_right)
-    protected ImageView btnRight;
-
-    @ViewInject(R.id.tv_right)
-    protected TextView tvRight;
-
-    @ViewInject(R.id.tv_title)
-    protected TextView tvTitle;
-
-    @ViewInject(R.id.root_container)
-    protected LinearLayout rootContainer;
-
-    @ViewInject(R.id.shadom_rela)
-    protected RelativeLayout layoutRelat;
-
-    //   protected SpeechSynthesizer mTts;
     public Vibrator mVibrator;
 
     /**
@@ -168,16 +140,30 @@ public abstract class BaseActivity extends BaseCoreActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
+    protected  IncludeTitleBinding mTitleBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _this = this;
         mVibrator = (Vibrator) _this.getSystemService(Context.VIBRATOR_SERVICE);
-        if (isDefaultTitle)
-            setContentView(R.layout.include_title);
-        x.view().inject(this);
+//        if (isDefaultTitle) {
+//            setContentView(R.layout.include_title);
+//        }
     }
 
+
+    @Override
+    public void getRootDataBinding() {
+        if (isDefaultTitle) {
+            mTitleBinding = DataBindingUtil.setContentView(mActivity, R.layout.include_title);
+        }
+    }
+
+    @Override
+    public int getLayoutResId() {
+        return 0;
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -187,13 +173,11 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        x.view().inject(this);
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
-        x.view().inject(this);
     }
 
 
@@ -203,19 +187,18 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * @param layoutResID
      */
     public void setChildView(int layoutResID) {
-        View view = LayoutInflater.from(this).inflate(layoutResID, rootContainer, false);
+        View view = LayoutInflater.from(this).inflate(layoutResID, mTitleBinding.rootContainer, false);
         setChildView(view);
     }
 
     /**
      * 设置container内容
      *
-     * @param view
+     * @param
      */
     public void setChildView(View view) {
-        rootContainer.addView(view);
-        x.view().inject(this);
-        btnBack.setOnClickListener(v -> {
+        mTitleBinding.rootContainer.addView(view);
+        mTitleBinding.btnBack.setOnClickListener(v -> {
             KeyBoardUtils.closeKeybord(_this);
             onBackPressed();
         });
@@ -229,10 +212,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * @param params
      */
     public void setChildView(View view, ViewGroup.LayoutParams params) {
-        RelayoutUtil.reLayoutViewHierarchy(view);
-        RelayoutUtil.relayoutLayoutParams(params);
-        rootContainer.addView(view, params);
-        x.view().inject(this);
+        mTitleBinding.rootContainer.addView(view, params);
     }
 
 
@@ -254,7 +234,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
             view = new AutoRelativeLayout(context, attrs);
         }
 
-        if (view != null) return view;
+        if (view != null) {
+            return view;
+        }
 
         return super.onCreateView(name, context, attrs);
     }
@@ -316,22 +298,13 @@ public abstract class BaseActivity extends BaseCoreActivity {
         showImageDetails(context, 0, mImageUrlList, false);
     }
 
-    /**
-     * 加强版Toast 避免重复提示
-     */
-
-    public void Toast(String msg) {
-        CToast.showShort(_this, msg);
-    }
-
-
     public void getIntentValue() {
-        currentBdzId = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_ID, "");
-        currentBdzName = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
-        currentReportId = PreferencesUtils.getString(_this, Config.CURRENT_REPORT_ID, "");
-        currentTaskId = PreferencesUtils.getString(_this, Config.CURRENT_TASK_ID, "");
-        currentInspectionType = PreferencesUtils.getString(_this, Config.CURRENT_INSPECTION_TYPE, "");
-        currentInspectionName = PreferencesUtils.getString(_this, Config.CURRENT_INSPECTION_NAME, "");
+        currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
+        currentBdzName = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");
+        currentReportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
+        currentTaskId = PreferencesUtils.get(Config.CURRENT_TASK_ID, "");
+        currentInspectionType = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE, "");
+        currentInspectionName = PreferencesUtils.get(Config.CURRENT_INSPECTION_NAME, "");
     }
 
     public boolean isEmpty(TextView tv) {
@@ -343,14 +316,16 @@ public abstract class BaseActivity extends BaseCoreActivity {
     }
 
     public String getText(TextView tv) {
-        if (tv == null)
+        if (tv == null) {
             return "";
-        else return tv.getText().toString();
+        } else {
+            return tv.getText().toString();
+        }
 
     }
 
     public void setTitleText(CharSequence str) {
-        tvTitle.setText(str);
+        mTitleBinding.tvTitle.setText(str);
     }
 
     public void setViewVisible(View v, int Mode) {
@@ -433,7 +408,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @Override
     protected void compeletlyExitSystem() {
         // 退出
-        ScreenManager.getInstance().popAllActivityExceptOne(null);
+        ScreenManager.getScreenManager().popAllActivityExceptOne(null);
         android.os.Process.killProcess(android.os.Process.myPid());
         // PreferencesUtils.clear(_this);
         System.exit(0);
@@ -552,6 +527,41 @@ public abstract class BaseActivity extends BaseCoreActivity {
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+    }
+    
+    private boolean isPms = false;
+    private String updateContent;
+    private String mDownloadFolder;
+    private String mDownloadFile;
+    protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, boolean isPms, String updateContent) {
+        this.updateContent = updateContent;
+        this.isPms = isPms;
+        checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mActivity, CoreConfig.PROGRAM_APP_CODE));
+    }
+
+    /**
+     * 检测更新
+     */
+    protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, final String appCode) {
+        mDownloadFolder = downloadFolder;
+        mDownloadFile = downloadFileName;
+        ExecutorManager.executeTaskSerially(() -> {
+            if (mUpdateFile == null) {
+                mUpdateFile = UpdateUtils.hasUpdateApk(mActivity, downloadFolder,isPms);
+                if (mUpdateFile != null) {
+                    mHandler.sendEmptyMessage(CoreConfig.INSTALL_APP_CODE);
+                } else if (null == mUpdateFile) {
+                    return;
+                } else {
+                    if (NetWorkUtils.isNetworkConnected(mActivity)) {
+                        // 上传用户信息 检查升级
+                        Map<String, String> params = UpdateUtils.getDeviceInforMapParams(mActivity, appCode);
+                    }
+                }
+            } else {
+                mHandler.sendEmptyMessage(CoreConfig.INSTALL_APP_CODE);
+            }
+        });
     }
 
 

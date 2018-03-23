@@ -60,7 +60,7 @@ public class BatteryInstrumentService extends BaseService<BatteryInstrument> {
 
         try {
             String sql = "update test_instrument set select_num=" + selectDeviceNum + " , last_modify_time='" + DateUtils.getCurrentLongTime() + "' where id = '" + id + "'";
-            CustomApplication.getDbManager().executeUpdateDelete(sql);
+            CustomApplication.getInstance().getDbManager().executeUpdateDelete(sql);
         } catch (DbException e) {
             e.printStackTrace();
         }

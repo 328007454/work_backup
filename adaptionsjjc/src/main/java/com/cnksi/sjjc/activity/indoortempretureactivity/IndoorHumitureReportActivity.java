@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseReportActivity;
 import com.cnksi.sjjc.bean.Report;
@@ -32,8 +33,18 @@ public class IndoorHumitureReportActivity extends BaseReportActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initUI();
-        initData();
+        initView();
+        loadData();
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     @Override
@@ -42,24 +53,22 @@ public class IndoorHumitureReportActivity extends BaseReportActivity {
         return reportBinding.getRoot();
     }
 
-    private void initUI() {
-        tvTitle.setText(currentBdzName + "室内温湿度记录报告");
 
+    public void initView() {
+       mTvTitle.setText(currentBdzName + "室内温湿度记录报告");
     }
 
-    private void initData() {
-        mExcutorService.execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            report = ReportService.getInstance().findById(currentReportId);
-                                            mReportList = BaseService.getInstance(ReportSnwsd.class).selector().and(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
-                                        } catch (DbException e) {
-                                            e.printStackTrace();
-                                        }
-                                        mHandler.sendEmptyMessage(LOAD_DATA);
-                                    }
-                                }
+
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                report = ReportService.getInstance().findById(currentReportId);
+                mReportList = BaseService.getInstance(ReportSnwsd.class).selector().and(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
+        }
 
         );
     }

@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.UpDataToReportManager;

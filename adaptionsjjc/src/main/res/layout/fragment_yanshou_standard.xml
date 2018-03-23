@@ -1,179 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#EFEFEF">
+<layout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <View
-            android:id="@+id/view_background"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/hwcw_line_height"
-            android:background="#EFEFEF"
-            android:visibility="gone"/>
-
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="#EFEFEF">
 
         <LinearLayout
-            android:id="@+id/ll_root_container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-
-            <TextView
-                android:id="@+id/tv_group_title"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/green_color"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/hwcw_line_height"
-                android:text="变压器关键点见证标准卡"
-                android:textColor="@color/white"
-                android:textSize="@dimen/yw_title_gqj_size"/>
-
-
-            <ExpandableListView
-                android:id="@+id/elv_jichu_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:cacheColorHint="@android:color/transparent"
-                android:childDivider="@android:color/transparent"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
-                android:fadeScrollbars="true"
-                android:fadingEdge="vertical"
-                android:fastScrollEnabled="true"
-                android:groupIndicator="@null"
-                android:listSelector="@android:color/transparent"
-                android:visibility="gone"/>
-
-            <RelativeLayout
-                android:id="@+id/re_container"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#dde9e7">
-
-                <TextView
-                    android:id="@+id/tv_panorama"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/hwcw_line_height"
-                    android:textColor="@color/app_base_green_color"
-                    android:textSize="@dimen/yw_title_gqj_size"/>
-
-                <ImageView
-                    android:id="@+id/iv_image_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/hwcw_line_height"
-                    tools:ignore="ContentDescription" />
-
-
-            </RelativeLayout>
-            <!--动态增加基础信息布局-->
-            <LinearLayout
-                android:id="@+id/ll_dongtai_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"/>
-
-            <ListView
-                android:id="@+id/il_base_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <View
+                android:id="@+id/view_background"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/hwcw_line_height"
                 android:background="#EFEFEF"
-                android:visibility="gone"
-                />
+                android:visibility="gone"/>
 
-            <ExpandableListView
-                android:id="@+id/elv_container"
+
+            <LinearLayout
+                android:id="@+id/ll_root_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cacheColorHint="@android:color/transparent"
-                android:childDivider="@android:color/transparent"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
-                android:fadeScrollbars="true"
-                android:fadingEdge="vertical"
-                android:fastScrollEnabled="true"
-                android:groupIndicator="@null"
-                android:listSelector="@android:color/transparent"/>
-        </LinearLayout>
-
-        <!-- 新建验收标准卡-->
-        <RelativeLayout
-            android:id="@+id/ll_container_add"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible"
-            >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:background="@drawable/grass_green_button_background_selector"
-                android:gravity="center"
-                >
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
 
                 <TextView
-                    android:id="@+id/tv_add_yanshou_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="left|center_vertical"
-                    android:minHeight="@dimen/new_button_minheight"
-                    android:text="@string/new_yanshou_card"
+                    android:id="@+id/tv_group_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/green_color"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/hwcw_line_height"
+                    android:text="变压器关键点见证标准卡"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/new_global_text_size"/>
+                    android:textSize="@dimen/yw_title_gqj_size"/>
 
-                <ImageView
-                    android:id="@+id/iv_img"
-                    android:layout_width="wrap_content"
+
+                <ExpandableListView
+                    android:id="@+id/elv_jichu_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:childDivider="@android:color/transparent"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="0dp"
+                    android:fadeScrollbars="true"
+                    android:fadingEdge="vertical"
+                    android:fastScrollEnabled="true"
+                    android:groupIndicator="@null"
+                    android:listSelector="@android:color/transparent"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:id="@+id/re_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#dde9e7">
+
+                    <TextView
+                        android:id="@+id/tv_panorama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/hwcw_line_height"
+                        android:textColor="@color/app_base_green_color"
+                        android:textSize="@dimen/yw_title_gqj_size"/>
+
+                    <ImageView
+                        android:id="@+id/iv_image_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/hwcw_line_height"
+                        tools:ignore="ContentDescription"/>
+
+
+                </RelativeLayout>
+                <!--动态增加基础信息布局-->
+                <LinearLayout
+                    android:id="@+id/ll_dongtai_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+                <ListView
+                    android:id="@+id/il_base_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hwcw_line_height"
+                    android:background="#EFEFEF"
+                    android:visibility="gone"
+                    />
+
+                <ExpandableListView
+                    android:id="@+id/elv_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:childDivider="@android:color/transparent"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="0dp"
+                    android:fadeScrollbars="true"
+                    android:fadingEdge="vertical"
+                    android:fastScrollEnabled="true"
+                    android:groupIndicator="@null"
+                    android:listSelector="@android:color/transparent"/>
+            </LinearLayout>
+
+            <!-- 新建验收标准卡-->
+            <RelativeLayout
+                android:id="@+id/ll_container_add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@id/tv_add_yanshou_card"
-                    android:src="@mipmap/icon_add"
-                    tools:ignore="ContentDescription" />
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:background="@drawable/grass_green_button_background_selector"
+                    android:gravity="center"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_add_yanshou_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="left|center_vertical"
+                        android:minHeight="@dimen/new_button_minheight"
+                        android:text="@string/new_yanshou_card"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/new_global_text_size"/>
+
+                    <ImageView
+                        android:id="@+id/iv_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/tv_add_yanshou_card"
+                        android:src="@mipmap/icon_add"
+                        tools:ignore="ContentDescription"/>
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
 
 
-        <Button
-            android:id="@+id/btn_confirm"
-            style="@style/NewButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/nine_oval_size"
-            android:layout_marginLeft="@dimen/view_pager_dot_margin_bottom"
-            android:layout_marginRight="@dimen/view_pager_dot_margin_bottom"
-            android:background="@drawable/red_button_background_selector"
-            android:text="提交"
-            android:visibility="gone"/>
+            <Button
+                android:id="@+id/btn_confirm"
+                style="@style/NewButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/nine_oval_size"
+                android:layout_marginLeft="@dimen/view_pager_dot_margin_bottom"
+                android:layout_marginRight="@dimen/view_pager_dot_margin_bottom"
+                android:background="@drawable/red_button_background_selector"
+                android:text="提交"
+                android:visibility="gone"/>
 
-    </LinearLayout>
+        </LinearLayout>
 
 
-</FrameLayout>
+    </FrameLayout>
+</layout>

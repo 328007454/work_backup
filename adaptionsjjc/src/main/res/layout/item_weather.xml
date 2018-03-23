@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+<layout>
 
-    <com.cnksi.sjjc.view.CustomRadioButton
-        android:id="@+id/weather"
-        style="@style/RadioButtonBaseStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="140px"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical"
-        android:button="@null"
-        android:clickable="true"
-        android:textSize="42px"
-        app:drawableLeft="@drawable/radio_button_selector"
-        app:drawableSize="48px" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:orientation="horizontal">
 
-</LinearLayout>
+        <com.cnksi.sjjc.view.CustomRadioButton
+            android:id="@+id/weather"
+            style="@style/RadioButtonBaseStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="140px"
+            android:layout_gravity="center_horizontal"
+            android:button="@null"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:textSize="42px"
+            app:drawableLeft="@drawable/radio_button_selector"
+            app:drawableSize="48px"/>
+
+    </LinearLayout>
+</layout>

@@ -3,7 +3,7 @@ package com.cnksi.sjjc.util;
 import java.io.File;
 import java.io.IOException;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 
 import android.content.Context;
@@ -99,7 +99,7 @@ public class MediaRecorderUtils {
 			e.printStackTrace();
 		}
 		isPlaying = true;
-		CToast.showShort(CustomApplication.getInstance(), "正在播放...");
+		ToastUtils.showMessage( "正在播放...");
 	}
 
 	public void stopPlayAudio() {

@@ -19,16 +19,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.cnksi.core.utils.CLog;
-import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.FileUtils;
-import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.ksynclib.adapter.PopMenuAdapter;
 import com.cnksi.ksynclib.utils.CommonUtils;
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.util.FileUtil;
 
 import org.xutils.ex.DbException;
 
@@ -175,7 +174,7 @@ public class SyncMenuUtils {
                         Set<String> downFolder = KSyncConfig.getInstance().getDownFolder();
                         uploadFolder.removeAll(downFolder);//如果该文件夹是下载文件夹则忽略
                         for (String s : uploadFolder) {
-                            FileUtils.deleteBakFiles(ksync.getKnConfig().getBaseFolder() + s, time);
+                            FileUtil.deleteBakFiles(ksync.getKnConfig().getBaseFolder() + s, time);
                         }
                         handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件删除完成"));
                     }
@@ -220,7 +219,7 @@ public class SyncMenuUtils {
 
     public static void deleteOtherDepartmentData(final Activity activity, final Handler handler, final String dept_id) {
         if (TextUtils.isEmpty(dept_id) || "-1".equals(dept_id)) {
-            CToast.showLong(activity, "当前没有班组，请在登陆后的界面点击进入同步界面操作！");
+            ToastUtils.showMessageLong("当前没有班组，请在登陆后的界面点击进入同步界面操作！");
             return;
         }
         SyncMenuUtils.ShowTipsDialog(activity, "是否要删除当前班组以外的数据？", new View.OnClickListener() {
@@ -234,7 +233,7 @@ public class SyncMenuUtils {
                         int delRows = 0;
                         for (DeleteModel model : tables) {
                             try {
-                                int count = CustomApplication.getDbManager().executeUpdateDelete(model.getDeleteSql(dept_id));
+                                int count = CustomApplication.getInstance().getDbManager().executeUpdateDelete(model.getDeleteSql(dept_id));
                                 CLog.w("delete " + model.tbl + " " + count + " rows");
                                 delRows += count;
                             } catch (DbException e) {

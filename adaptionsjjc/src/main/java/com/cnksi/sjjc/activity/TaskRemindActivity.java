@@ -16,13 +16,12 @@ import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
+import com.cnksi.sjjc.databinding.ActivityTaskRemindBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.fragment.TaskRemindFragment;
 import com.cnksi.sjjc.inter.OnFragmentEventListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,13 +33,6 @@ public class TaskRemindActivity extends BaseActivity {
     public static final int ADD_TASK_REQUEST_CODE = 0x01;
 
     public static final int FINISH_TASK = 0x777;
-    @ViewInject(R.id.tab_strip)
-    private PagerSlidingTabStrip mPagerTabStrip;
-
-    @ViewInject(R.id.viewPager)
-    private ViewPager mTaskViewPager;
-
-
     private FragmentPagerAdapter fragmentPagerAdapter;
     private ArrayList<Fragment> mFragmentList;
     private String[] titleArray = null;
@@ -51,34 +43,47 @@ public class TaskRemindActivity extends BaseActivity {
     // 当前选中的position
     private int currentSelectedPosition = 0;
 
+    ActivityTaskRemindBinding mRemindBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //如果直接启动的TaskRemind则不需要在OnResume执行更新，因为是全新加载数据。
         isNeedUpdateTaskState = false;
-        setChildView(R.layout.activity_task_remind);
+        mRemindBinding = ActivityTaskRemindBinding.inflate(getLayoutInflater());
+        
+        setChildView(mRemindBinding.getRoot());
         getIntentValue();
-        initUI();
+        initView();
+        iniOnClick();
     }
 
+    @Override
+    public void initUI() {
 
-    private void initUI() {
-        tvTitle.setText(R.string.inspection_task_remind_str);
-        btnRight.setVisibility(View.GONE);
-        btnRight.setImageResource(R.drawable.add_task_button_background);
+    }
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(R.string.inspection_task_remind_str);
+        mTitleBinding.tvRight.setVisibility(View.GONE);
+        mTitleBinding.btnRight.setImageResource(R.drawable.add_task_button_background);
         titleArray = getResources().getStringArray(R.array.TaskTitleArray);
         String mInspectionValue = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE_NAME);
         ////容错处理代码 避免别的地方回来拿不到type
         // start
         if (TextUtils.isEmpty(mInspectionValue)) {
-            mInspectionValue = PreferencesUtils.getString(_this, Config.CURRENT_SELECT_TASK_TYPE_INSPECTION, "");
+            mInspectionValue = PreferencesUtils.get( Config.CURRENT_SELECT_TASK_TYPE_INSPECTION, "");
         } else {
-            PreferencesUtils.put(_this, Config.CURRENT_SELECT_TASK_TYPE_INSPECTION, mInspectionValue);
+            PreferencesUtils.put( Config.CURRENT_SELECT_TASK_TYPE_INSPECTION, mInspectionValue);
         }
         //end
         mInspectionType = InspectionType.get(mInspectionValue);
         initFragmentList();
+    }
+
+    @Override
+    public void initData() {
+
     }
 
 
@@ -103,10 +108,10 @@ public class TaskRemindActivity extends BaseActivity {
             mFragmentList.add(mTaskFragment);
         }
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArray));
-        mTaskViewPager.setAdapter(fragmentPagerAdapter);
-        mPagerTabStrip.setViewPager(mTaskViewPager);
+        mRemindBinding.viewPager.setAdapter(fragmentPagerAdapter);
+        mRemindBinding.tabStrip.setViewPager(mRemindBinding.viewPager);
 
-        mPagerTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mRemindBinding.tabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -122,27 +127,38 @@ public class TaskRemindActivity extends BaseActivity {
 
             }
         });
-        setPagerTabStripValue(mPagerTabStrip);
-        mTaskViewPager.setOffscreenPageLimit(4);
+        setPagerTabStripValue(mRemindBinding.tabStrip);
+        mRemindBinding.viewPager.setOffscreenPageLimit(4);
     }
 
-    @Event(value = {R.id.btn_back, R.id.btn_right, R.id.add_task})
-    private void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back:
-                this.finish();
-                break;
-            case R.id.btn_right:
+//    @Event(value = {R.id.btn_back, R.id.btn_right, R.id.add_task})
+//    private void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.btn_back:
+//                this.finish();
+//                break;
+//            case R.id.btn_right:
+//
+//                break;
+//            case R.id.add_task:
+//                Intent intent = new Intent(this, AddTaskActivity.class);
+//                intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
+//                startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
-                break;
-            case R.id.add_task:
-                Intent intent = new Intent(this, AddTaskActivity.class);
-                intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
-                startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
-                break;
-            default:
-                break;
-        }
+
+    public void iniOnClick(){
+        mTitleBinding.btnBack.setOnClickListener((view) -> this.finish());
+        mRemindBinding.addTask.setOnClickListener((v) -> {
+            Intent intent = new Intent(this, AddTaskActivity.class);
+            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
+            startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
+        });
+
     }
 
 
@@ -155,8 +171,9 @@ public class TaskRemindActivity extends BaseActivity {
     }
 
     /**
-     * 对PagerSlidingmPagerTabStriptrip的各项属性进行赋值。
+     * 对PagerSlidingmRemindBinding.tabStriptrip的各项属性进行赋值。
      */
+    @Override
     protected void setPagerTabStripValue(PagerSlidingTabStrip mPagerTabStrip) {
 
         // 当前屏幕密度
@@ -168,7 +185,7 @@ public class TaskRemindActivity extends BaseActivity {
         // 设置Tab Indicator的高度
         mPagerTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics));
         // 设置Tab标题文字的大小
-        int textSize = AutoUtils.getPercentHeightSizeBigger((int) mCurrentActivity.getResources().getDimension(R.dimen.tab_strip_text_size_px));
+        int textSize = AutoUtils.getPercentHeightSizeBigger((int) _this.getResources().getDimension(R.dimen.tab_strip_text_size_px));
         mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, textSize, mDisplayMetrics));
         // 设置Tab Indicator的颜色getResources().getColor(R.color.tab_strip_text_color)
         mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(_this, R.color.tab_strip_text_color));
@@ -185,7 +202,7 @@ public class TaskRemindActivity extends BaseActivity {
             switch (requestCode) {
                 case ADD_TASK_REQUEST_CODE:
                     updateTaskStatus();
-                    mTaskViewPager.setCurrentItem(0, false);
+                    mRemindBinding.viewPager.setCurrentItem(0, false);
                     break;
                 case FINISH_TASK:
                     updateTaskStatus();

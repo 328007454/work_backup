@@ -5,10 +5,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.CoreConfig;
-import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import java.util.HashMap;
 
@@ -38,7 +36,7 @@ public class AccountUtil {
      * @return
      */
     public boolean JudgeAccountBlocked(Context context, String account) {
-        String oldTime = PreferencesUtils.getString(context, account, "");
+        String oldTime = PreferencesUtils.get(account, "");
         if (TextUtils.isEmpty(oldTime)) {
             return false;
         } else {
@@ -47,9 +45,9 @@ public class AccountUtil {
             }
             boolean larger = DateUtils.compareDate(oldTime, DateUtils.getPreHour(1, CoreConfig.dateFormat2), CoreConfig.dateFormat2);
             if (larger) {
-                CToast.showShort(context, "您的帐号已被锁定,请于一个小时之后重试");
+                ToastUtils.showMessage("您的帐号已被锁定,请于一个小时之后重试");
             } else {
-                PreferencesUtils.remove(context, account);
+                PreferencesUtils.remove(account);
             }
             return larger;
         }
@@ -70,9 +68,9 @@ public class AccountUtil {
             times = accountTimes.get(account) + 1;
         }
         accountTimes.put(account, times);
-        CToast.showShort(context, "密码错误,您还有" + (ERRORINPUTMAX - times) + "次输入密码的机会");
+        ToastUtils.showMessage("密码错误,您还有" + (ERRORINPUTMAX - times) + "次输入密码的机会");
         if (times >= ERRORINPUTMAX) {
-            PreferencesUtils.put(context, account, com.cnksi.core.utils.DateUtils.getCurrentLongTime());
+            PreferencesUtils.put(account, com.cnksi.core.utils.DateUtils.getCurrentLongTime());
             return true;
         } else {
             if (view instanceof EditText) {

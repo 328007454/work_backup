@@ -8,9 +8,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.core.utils.RelayoutUtil;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.IndoorWeathearAdapter;
@@ -27,7 +27,6 @@ import com.cnksi.sjjc.util.StringUtils;
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
 
 import java.util.List;
 
@@ -49,39 +48,43 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.activity_new_indoor_humiture, null, false);
-        RelayoutUtil.reLayoutViewHierarchy(binding.getRoot());
         setChildView(binding.getRoot());
         getIntentValue();
-        initUI();
-        initData();
+        initView();
+        loadData();
+        initOnclick();
     }
 
-    private void initUI() {
-        tvTitle.setText(R.string.indoor_tempreture_recoder);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewIndoorHumitureRecordActivity.this.finish();
-            }
-        });
+    @Override
+    public void initUI() {
+
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mReport = ReportService.getInstance().findById(currentReportId);
-                    if (null != mReport)
-                        mReport.starttime = DateUtils.getCurrentLongTime();
-                    mReportList = BaseService.getInstance(ReportSnwsd.class).selector().and(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
-                    if (null == mReportList || mReportList.isEmpty())
-                        mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                } catch (DbException e) {
-                    e.printStackTrace();
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(R.string.indoor_tempreture_recoder);
+        mTitleBinding.btnBack.setOnClickListener(v -> NewIndoorHumitureRecordActivity.this.finish());
+    }
+
+    public void loadData() {
+
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                mReport = ReportService.getInstance().findById(currentReportId);
+                if (null != mReport)
+                    mReport.starttime = DateUtils.getCurrentLongTime();
+                mReportList = BaseService.getInstance(ReportSnwsd.class).selector().and(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
+                if (null == mReportList || mReportList.isEmpty()) {
+                    mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
                 }
+                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
 
@@ -101,39 +104,35 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
         }
     }
 
-    @Event({R.id.btn_confirm_save, R.id.btn_back})
-    private void onViewClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_confirm_save:
-                saveData();
-                break;
-            default:
-                break;
-        }
 
+    public void initOnclick() {
+        binding.btnConfirmSave.setOnClickListener((v) -> {
+            saveData();
+        });
     }
+
 
     private void saveData() {
         if (TextUtils.isEmpty(binding.weatherView1.getSelectWeather())) {
-            CToast.showLong(_this, "请选择天气");
+            ToastUtils.showMessage( "请选择天气");
             return;
         }
         for (ReportSnwsd reportSnwsd : mReportList) {
             if (TextUtils.isEmpty(reportSnwsd.location) || TextUtils.isEmpty(reportSnwsd.wd) || TextUtils.isEmpty(reportSnwsd.sd)) {
-                CToast.showLong(_this, "请填写完相应的数据");
+                ToastUtils.showMessage(  "请填写完相应的数据");
                 return;
-            }else if (TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.wd))) {
-                CToast.showShort(_this, "温度在-99.9℃到99.9℃");
+            } else if (TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.wd))) {
+                ToastUtils.showMessage( "温度在-99.9℃到99.9℃");
                 return;
             } else if ((-99.9f > new Float(reportSnwsd.wd) || new Float(reportSnwsd.wd) > 99.99)) {
-                CToast.showShort(_this, "温度在-99.9℃到99.9℃");
+                ToastUtils.showMessage( "温度在-99.9℃到99.9℃");
                 return;
             }
             if (TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.sd))) {
-                CToast.showShort(_this, "湿度在0到100");
+                ToastUtils.showMessage(  "湿度在0到100");
                 return;
             } else if ((0 > new Float(reportSnwsd.sd) || new Float(reportSnwsd.sd) > 100)) {
-                CToast.showShort(_this, "湿度在0到100");
+                ToastUtils.showMessage( "湿度在0到100");
                 return;
             }
             reportSnwsd.last_modify_time = DateUtils.getCurrentLongTime();

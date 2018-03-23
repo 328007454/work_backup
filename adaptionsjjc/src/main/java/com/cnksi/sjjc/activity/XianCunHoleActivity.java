@@ -5,17 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cnksi.core.utils.BitmapUtil;
-import com.cnksi.core.utils.CoreConfig;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.core.utils.FunctionUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -23,14 +22,16 @@ import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.XianCunHoleAdapter;
 import com.cnksi.sjjc.bean.HoleRecord;
+import com.cnksi.sjjc.databinding.ActivityPreventAnimalBinding;
+import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.cnksi.sjjc.inter.ItemClickListenerPicture;
 import com.cnksi.sjjc.service.HoleReportService;
+import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
+import com.cnksi.sjjc.util.FunctionUtils;
 
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,13 +46,6 @@ import java.util.Map;
  */
 public class XianCunHoleActivity extends BaseActivity implements ItemClickListenerPicture {
 
-    @ViewInject(R.id.lv_examine_process)
-    private ListView lvHole;
-    @ViewInject(R.id.btn_next)
-    private Button btNext;
-
-    @ViewInject(R.id.re_container)
-    private RelativeLayout reContainer;
 
     private XianCunHoleAdapter mXCHoleAdapter;
     private List<String> picList = new ArrayList<>();
@@ -70,22 +64,36 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     private HoleRecord item;
     //判断是否是返回键
     private boolean isBack = false;
+    private ActivityPreventAnimalBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_prevent_animal);
+        binding = ActivityPreventAnimalBinding.inflate(getLayoutInflater());
+        setChildView(binding.getRoot());
         getIntentValue();
-        initUI();
-        initData();
+        initView();
+        loadData();
+        initOnClick();
     }
 
-    private void initUI() {
-        tvTitle.setText("现存孔洞");
-        btNext.setVisibility(View.VISIBLE);
-        btNext.setText("提交");
-        reContainer.setVisibility(View.GONE);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText("现存孔洞");
+        binding.btnNext.setVisibility(View.VISIBLE);
+        binding.btnNext.setText("提交");
+        binding.reContainer.setVisibility(View.GONE);
+        mTitleBinding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isBack = true;
@@ -95,19 +103,16 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     }
 
 
-    private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                holeRecords = HoleReportService.getInstance().getAllHoleRecord(currentReportId, currentBdzId);
-                if (holeRecords != null && !holeRecords.isEmpty()) {
-                    for (HoleRecord record : holeRecords) {
-                        clearPicMap.put(record.id, record);
-                    }
-
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
+            holeRecords = HoleReportService.getInstance().getAllHoleRecord(currentReportId, currentBdzId);
+            if (holeRecords != null && !holeRecords.isEmpty()) {
+                for (HoleRecord record : holeRecords) {
+                    clearPicMap.put(record.id, record);
                 }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+
             }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
 
 
@@ -120,7 +125,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
             case LOAD_DATA:
                 if (mXCHoleAdapter == null) {
                     mXCHoleAdapter = new XianCunHoleAdapter(_this, holeRecords, R.layout.xiancun_hole_adapter);
-                    lvHole.setAdapter(mXCHoleAdapter);
+                    binding.lvExamineProcess.setAdapter(mXCHoleAdapter);
                     mXCHoleAdapter.setItemClickListener(this);
                 } else {
                     mXCHoleAdapter.setList(holeRecords);
@@ -138,18 +143,18 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
             if (requestCode == TAKEPIC_REQUEST) {//拍照返回请求
                 File file = new File(Config.RESULT_PICTURES_FOLDER, imgName);
                 if (file.exists()) {
-                    BitmapUtil.compressImage(file.getAbsolutePath(), 3);
-                    String pictureContent = DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) + "\n" + currentHole + "\n" + PreferencesUtils.getString(_this, Config.CURRENT_LOGIN_USER, "");
+                    BitmapUtils.compressImage(file.getAbsolutePath(), 3);
+                    String pictureContent = DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) + "\n" + currentHole + "\n" + PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                 }
 
             } else if (requestCode == CANCEL_RESULT_LOAD_IMAGE) {//删除照片请求
                 ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
-                ArrayList<String> allPicList = StringUtils.string2List(item.clear_images);
+                ArrayList<String> allPicList = StringUtils.stringToList(item.clear_images);
                 for (String imageUrl : cancleImagList) {
                     allPicList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
                 }
-                item.clear_images = StringUtils.ArrayListToString(allPicList);
+                item.clear_images = StringUtils.arrayListToString(allPicList);
                 clearPicMap.put(item.id, item);
                 mHandler.sendEmptyMessage(LOAD_DATA);
             } else if (requestCode == LOAD_DATA) {
@@ -194,8 +199,8 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
                 ArrayList<String> listPicClear = null;
                 item = (HoleRecord) o;
                 if (!TextUtils.isEmpty(item.clear_images)) {
-                    listPicClear = StringUtils.string2List(item.clear_images);
-                    showImageDetails(mCurrentActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicClear, Config.RESULT_PICTURES_FOLDER), true);
+                    listPicClear = StringUtils.stringToList(item.clear_images);
+                    showImageDetails(mActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicClear, Config.RESULT_PICTURES_FOLDER), true);
                 }
 
                 break;
@@ -203,8 +208,8 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
                 ArrayList<String> listPicDis = null;
                 item = (HoleRecord) o;
                 if (!TextUtils.isEmpty(item.hole_images)) {
-                    listPicDis = StringUtils.string2List(item.hole_images);
-                    showImageDetails(mCurrentActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
+                    listPicDis = StringUtils.stringToList(item.hole_images);
+                    showImageDetails(mActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
                 }
                 break;
             default:
@@ -215,103 +220,68 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
     /**
      * 清除所有的展示的清除孔洞照片
      */
+    DialogTipsBinding mTipsBinding;
+
     private void showClearAllPicDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 9 / 10;
-        if (mClearHolder == null) {
-            mClearHolder = new ClearHolder();
-        }
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         if (mClearDialog == null) {
-            mClearDialog = DialogUtils.createDialog(mCurrentActivity, null, R.layout.dialog_tips, mClearHolder, dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
-
+            mTipsBinding = DialogTipsBinding.inflate(LayoutInflater.from(getApplicationContext()));
+            mClearDialog = DialogUtils.creatDialog(mActivity, mTipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
-        mClearHolder.tvContent.setText("是否删除该孔洞所有清除后照片");
-        mClearHolder.tvTitle.setText("提示");
+        mTipsBinding.tvDialogContent.setText("是否删除该孔洞所有清除后照片");
+        mTitleBinding.tvTitle.setText("提示");
         mClearDialog.show();
-        mClearHolder.btCancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mClearDialog.dismiss();
-            }
-        });
+        mTipsBinding.btnCancel.setOnClickListener(view -> mClearDialog.dismiss());
 
-        mClearHolder.btFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!TextUtils.isEmpty(item.clear_images)) {
-                    item.clear_images = "";
-                    item.status = "0";
-                    clearPicMap.put(item.id, item);
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                }
-                mClearDialog.dismiss();
+        mTipsBinding.btnSure.setOnClickListener(view -> {
+            if (!TextUtils.isEmpty(item.clear_images)) {
+                item.clear_images = "";
+                item.status = "0";
+                clearPicMap.put(item.id, item);
+                mHandler.sendEmptyMessage(LOAD_DATA);
             }
+            mClearDialog.dismiss();
         });
     }
 
     private String clearPosition = "";
     private Dialog mClearDialog;
-    private ClearHolder mClearHolder;
 
-    @Event(R.id.btn_next)
-    private void clickEvent(View view) {
-        for (HoleRecord record : holeRecords) {
-            if (!TextUtils.isEmpty(record.clear_images) && currentReportId.equals(record.clear_reportid)) {
-                clearPosition += record.location + "_" + record.hole_detail + "\n";
+    private void initOnClick() {
+        binding.btnNext.setOnClickListener(view -> {
+            for (HoleRecord record : holeRecords) {
+                if (!TextUtils.isEmpty(record.clear_images) && currentReportId.equals(record.clear_reportid)) {
+                    clearPosition += record.location + "_" + record.hole_detail + "\n";
+                }
             }
-        }
-        showClearHoleDialog(clearPosition);
-        clearPosition = "";
-
+            showClearHoleDialog(clearPosition);
+            clearPosition = "";
+        });
     }
 
     /**
      * 清除部分清除孔洞的照片
      */
     private void showClearHoleDialog(final String clearPosition) {
-        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 9 / 10;
-        if (mClearHolder == null) {
-            mClearHolder = new ClearHolder();
-        }
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         if (mClearDialog == null) {
-            mClearDialog = DialogUtils.createDialog(mCurrentActivity, null, R.layout.dialog_tips, mClearHolder, dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
-
+            mTipsBinding = DialogTipsBinding.inflate(LayoutInflater.from(getApplicationContext()));
+            mClearDialog = DialogUtils.creatDialog(mActivity, mTipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
         if (!TextUtils.isEmpty(clearPosition)) {
-            mClearHolder.tvContent.setText("是否清除以下孔洞：\n" + clearPosition);
-
+            mTipsBinding.tvDialogContent.setText("是否清除以下孔洞：\n" + clearPosition);
         } else {
-            mClearHolder.tvContent.setText("目前没有清除的孔洞：\n" + clearPosition);
+            mTipsBinding.tvDialogContent.setText("目前没有清除的孔洞：\n" + clearPosition);
         }
         mClearDialog.show();
-        mClearHolder.tvTitle.setText("确认清除孔洞");
-        mClearHolder.btCancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mClearDialog.dismiss();
-            }
+        mTipsBinding.tvDialogTitle.setText("确认清除孔洞");
+        mTipsBinding.btnCancel.setOnClickListener((View.OnClickListener) view -> mClearDialog.dismiss());
+
+        mTipsBinding.btnSure.setOnClickListener((View.OnClickListener) view -> {
+            saveData();
+            mClearDialog.dismiss();
+
         });
-
-        mClearHolder.btFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveData();
-                mClearDialog.dismiss();
-
-            }
-        });
-
-    }
-
-    class ClearHolder {
-        @ViewInject(R.id.tv_dialog_title)
-        private TextView tvTitle;
-        @ViewInject(R.id.tv_dialog_content)
-        private TextView tvContent;
-
-        @ViewInject(R.id.btn_cancel)
-        private Button btCancle;
-        @ViewInject(R.id.btn_sure)
-        private Button btFinish;
 
     }
 

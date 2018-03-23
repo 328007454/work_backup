@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cnksi.core.utils.BitmapUtils;
+
 import org.xutils.x;
 
 /**
@@ -157,7 +159,6 @@ public class ViewHolder {
      */
     public ViewHolder setImageByUrl(int viewId, String url) {
         ImageView imageView = getView(viewId);
-        x.image().bind(imageView, url);
         return this;
     }
 
@@ -185,5 +186,10 @@ public class ViewHolder {
 
     public ViewDataBinding getDataBinding() {
         return dataBinding;
+    }
+
+    public void setVisable(int viewId, int visible) {
+        getView(viewId).setVisibility(visible);
+
     }
 }

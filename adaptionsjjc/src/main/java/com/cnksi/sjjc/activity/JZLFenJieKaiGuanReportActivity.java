@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.view.InnerListView;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
@@ -21,6 +23,7 @@ import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
+import com.cnksi.sjjc.databinding.JzlfenjieLayoutBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportCdbhclService;
@@ -29,8 +32,6 @@ import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,84 +43,8 @@ import java.util.List;
 public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
     public static final int ANIMATION = 0X100;
     public static final int VIBRATOR = ANIMATION + 1;
-    /**
-     * 巡检开始时间
-     */
-    @ViewInject(R.id.tv_inspection_start_time)
-    private TextView mTvInspectionStartTime;
 
-    /**
-     * 巡检结束时间
-     */
-    @ViewInject(R.id.tv_inspection_end_time)
-    private TextView mTvInspectionEndTime;
-    /**
-     * 巡检人员
-     */
-    @ViewInject(R.id.tv_inspection_person)
-    private TextView mTvInspectionPerson;
-    /**
-     * 温度
-     */
-    @ViewInject(R.id.tv_inspection_temperature)
-    private TextView mTvInspectionTemperature;
-    /**
-     * 温度标题
-     */
-    @ViewInject(R.id.tv_inspection_temperature_title)
-    private TextView mTvInspectionTemperatureTitle;
-    /**
-     * 湿度
-     */
-    @ViewInject(R.id.tv_inspection_humidity)
-    private TextView mTvInspectionHumidity;
-    /**
-     * 湿度标题
-     */
-    @ViewInject(R.id.tv_inspection_humidity_title)
-    private TextView mTvInspectionHumidityTitle;
-    /**
-     * 天气
-     */
-    @ViewInject(R.id.tv_inspection_weather)
-    private TextView mTvInspectionWeather;
-    /**
-     * 天气标题
-     */
-    @ViewInject(R.id.tv_inspection_weather_title)
-    private TextView mTvInspectionWeatherTitle;
 
-    /**
-     * 巡检结果
-     */
-    @ViewInject(R.id.tv_inspection_result)
-    private TextView mTvInspectionResult;
-
-    /**
-     * 继续巡检
-     */
-    @ViewInject(R.id.tv_continue_inspection)
-    private TextView mTvInspectionContinue;
-    @ViewInject(R.id.lv_container)
-    private InnerListView lvContainer;
-    @ViewInject(R.id.viewPager)
-    private ViewPager viewPager;
-    @ViewInject(R.id.tv_title)
-    private TextView tvTitle;
-    @ViewInject(R.id.ll_report_content_container)
-    private LinearLayout mLLReportContentContainer;
-    @ViewInject(R.id.ll_jiance_result)
-    private LinearLayout mLLReportResultContainer;
-    @ViewInject(R.id.re_viewpager_container)
-    private RelativeLayout mLLReportViewPagerContainer;
-    @ViewInject(R.id.line_above_result)
-    private View viewLine;
-    //记录结果
-    @ViewInject(R.id.tv_result)
-    private TextView tvResult;
-    //记录结果
-    @ViewInject(R.id.lv_report_content)
-    private ListView lvResultContent;
     /**
      * 当前报告
      */
@@ -142,32 +67,48 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
     private int countCopyCdbhcl;
     private List<CdbhclValue> cdbhclValueList = new ArrayList<>();
 
+    private JzlfenjieLayoutBinding mJzlfenjieLayoutBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        initUI();
-        initData();
+        initView();
+        loadData();
+        initOnclick();
     }
 
     @Override
-    public View setReportView() {
-        return getLayoutInflater().inflate(R.layout.jzlfenjie_layout, null);
+    public void initUI() {
+
     }
 
-    private void initUI() {
+    @Override
+    public void initData() {
+
+    }
+
+
+    @Override
+    public View setReportView() {
+
+        mJzlfenjieLayoutBinding = JzlfenjieLayoutBinding.inflate(LayoutInflater.from(getApplicationContext()));
+
+        return mJzlfenjieLayoutBinding.getRoot();
+    }
+
+    public void initView() {
 
         if (currentInspectionType.equals(InspectionType.SBJC_03.name())) {
-            tvTitle.setText(currentBdzName + "室内温湿度记录报告");
-            mLLReportResultContainer.setVisibility(View.GONE);
-            mLLReportViewPagerContainer.setVisibility(View.GONE);
-            viewLine.setVisibility(View.GONE);
+            mTvTitle.setText(currentBdzName + "室内温湿度记录报告");
+            mJzlfenjieLayoutBinding.llJianceResult.setVisibility(View.GONE);
+            mJzlfenjieLayoutBinding.reViewpagerContainer.setVisibility(View.GONE);
+            mJzlfenjieLayoutBinding.lineAboveResult.setVisibility(View.GONE);
         } else if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
-            tvTitle.setText(currentBdzName + "分接开关记录报告");
+            mTvTitle.setText(currentBdzName + "分接开关记录报告");
             setViewGone();
         } else if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
-            tvTitle.setText(currentBdzName + "差动保护记录报告");
-            tvResult.setText("记录结果");
+            mTvTitle.setText(currentBdzName + "差动保护记录报告");
+            mJzlfenjieLayoutBinding.tvResult.setText("记录结果");
             setViewGone();
         }
     }
@@ -177,60 +118,63 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
      */
 
     private void setViewGone() {
-        tvResult.setText("记录结果");
-        tvResult.setVisibility(View.VISIBLE);
-        lvResultContent.setVisibility(View.VISIBLE);
-        mTvInspectionTemperature.setVisibility(View.GONE);
-        mTvInspectionHumidity.setVisibility(View.GONE);
-        mTvInspectionWeather.setVisibility(View.GONE);
-        mTvInspectionTemperatureTitle.setVisibility(View.GONE);
-        mTvInspectionHumidityTitle.setVisibility(View.GONE);
-        mTvInspectionWeatherTitle.setVisibility(View.GONE);
-        mLLReportViewPagerContainer.setVisibility(View.GONE);
+
+        mJzlfenjieLayoutBinding.tvResult.setText("记录结果");
+        mJzlfenjieLayoutBinding.tvResult.setVisibility(View.VISIBLE);
+        mJzlfenjieLayoutBinding.lvReportContent.setVisibility(View.VISIBLE);
+        mJzlfenjieLayoutBinding.tvInspectionTemperature.setVisibility(View.GONE);
+        mJzlfenjieLayoutBinding.tvInspectionHumidity.setVisibility(View.GONE);
+        mJzlfenjieLayoutBinding.tvInspectionWeather.setVisibility(View.GONE);
+        mJzlfenjieLayoutBinding.tvInspectionTemperatureTitle.setVisibility(View.GONE);
+        mJzlfenjieLayoutBinding.tvInspectionTemperatureTitle.setVisibility(View.GONE);
+        mJzlfenjieLayoutBinding.tvInspectionWeatherTitle.setVisibility(View.GONE);
+        mJzlfenjieLayoutBinding.reViewpagerContainer.setVisibility(View.GONE);
 
     }
 
-    private void initData() {
-        mExcutorService.execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            report = ReportService.getInstance().findById(currentReportId);
-                                        } catch (DbException e) {
-                                            e.printStackTrace(System.out);
-                                        }
-                                        if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
-                                            listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
-                                            copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
-                                        }
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
+                    try {
+                        report = ReportService.getInstance().findById(currentReportId);
+                    } catch (DbException e) {
+                        e.printStackTrace(System.out);
+                    }
+                    if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
+                        listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
+                        copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
+                    }
 
-                                        if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
-                                            try {
-                                                listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
-                                                exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(currentBdzId, currentReportId);
-                                                for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
-                                                    CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
-                                                }
-                                                for (DbModel modle : listDevice) {
-                                                    if (modle.getString(CopyItem.VAL).equalsIgnoreCase("Y"))
-                                                        countCopyCdbhcl += 1;
-                                                    if (modle.getString(CopyItem.VAL_A).equalsIgnoreCase("Y"))
-                                                        countCopyCdbhcl += 1;
-                                                    if (modle.getString(CopyItem.VAL_B).equalsIgnoreCase("Y"))
-                                                        countCopyCdbhcl += 1;
-                                                    if (modle.getString(CopyItem.VAL_C).equalsIgnoreCase("Y"))
-                                                        countCopyCdbhcl += 1;
-                                                    if (modle.getString(CopyItem.VAL_O).equalsIgnoreCase("Y"))
-                                                        countCopyCdbhcl += 1;
-                                                }
-                                            } catch (DbException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-
-                                        mHandler.sendEmptyMessage(LOAD_DATA);
-                                    }
+                    if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
+                        try {
+                            listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
+                            exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(currentBdzId, currentReportId);
+                            for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
+                                CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
+                            }
+                            for (DbModel modle : listDevice) {
+                                if (modle.getString(CopyItem.VAL).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
                                 }
+                                if (modle.getString(CopyItem.VAL_A).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                                if (modle.getString(CopyItem.VAL_B).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                                if (modle.getString(CopyItem.VAL_C).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                                if (modle.getString(CopyItem.VAL_O).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                            }
+                        } catch (DbException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    mHandler.sendEmptyMessage(LOAD_DATA);
+                }
 
         );
     }
@@ -240,12 +184,14 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
         super.onRefresh(msg);
         switch (msg.what) {
             case LOAD_DATA:
-                mTvInspectionStartTime.setText(report.starttime);
-                mTvInspectionEndTime.setText(report.endtime);
-                mTvInspectionPerson.setText(report.persons);
-                mTvInspectionTemperature.setText(report.temperature.contains(getString(R.string.temperature_unit_str)) ? report.temperature : report.temperature + getString(R.string.temperature_unit_str));
-                mTvInspectionHumidity.setText(report.humidity.contains(getString(R.string.humidity_unit_str)) ? report.humidity : report.humidity + getString(R.string.humidity_unit_str));
-                mTvInspectionWeather.setText(report.tq);
+                mJzlfenjieLayoutBinding.tvInspectionStartTime.setText(report.starttime);
+
+                mJzlfenjieLayoutBinding.tvInspectionEndTime.setText(report.endtime);
+
+                mJzlfenjieLayoutBinding.tvInspectionPerson.setText(report.persons);
+                mJzlfenjieLayoutBinding.tvInspectionTemperature.setText(report.temperature.contains(getString(R.string.temperature_unit_str)) ? report.temperature : report.temperature + getString(R.string.temperature_unit_str));
+                mJzlfenjieLayoutBinding.tvInspectionHumidity.setText(report.humidity.contains(getString(R.string.humidity_unit_str)) ? report.humidity : report.humidity + getString(R.string.humidity_unit_str));
+                mJzlfenjieLayoutBinding.tvInspectionWeather.setText(report.tq);
                 if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
                     int i = 0;
                     for (DbModel model : listDbModel) {
@@ -256,17 +202,17 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                             i += 1;
                         }
                     }
-                    mTvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + copyTotalDbmodel.size());
+                    mJzlfenjieLayoutBinding.tvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + copyTotalDbmodel.size());
                     if (i == copyTotalDbmodel.size()) {
-                        mTvInspectionContinue.setText("查看详情");
+                        mJzlfenjieLayoutBinding.tvContinueInspection.setText("查看详情");
                     } else {
-                        mTvInspectionContinue.setText("继续记录");
+                        mJzlfenjieLayoutBinding.tvContinueInspection.setText("继续记录");
                     }
                     if (fenJieKaiGuanContentAdapter == null) {
-                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, listDbModel, currentInspectionType);
-                        lvResultContent.setAdapter(fenJieKaiGuanContentAdapter);
+                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, listDbModel, currentInspectionType,R.layout.jzlfenjiekaiguan_adapter);
+                        mJzlfenjieLayoutBinding.lvReportContent.setAdapter(fenJieKaiGuanContentAdapter);
                     } else {
-                        fenJieKaiGuanContentAdapter.setList(listDbModel);
+                        fenJieKaiGuanContentAdapter.setListModel(listDbModel);
                     }
                 }
                 if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
@@ -289,17 +235,17 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                         }
 
                     }
-                    mTvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + countCopyCdbhcl);
+                    mJzlfenjieLayoutBinding.tvInspectionResult.setText("记录完成情况:\t\t" + i + "/" + countCopyCdbhcl);
                     if (i == listDevice.size()) {
-                        mTvInspectionContinue.setText("查看详情");
+                        mJzlfenjieLayoutBinding.tvContinueInspection.setText("查看详情");
                     } else {
-                        mTvInspectionContinue.setText("继续记录");
+                        mJzlfenjieLayoutBinding.tvContinueInspection.setText("继续记录");
                     }
                     if (fenJieKaiGuanContentAdapter == null) {
-                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, cdbhclValueList, currentInspectionType);
-                        lvResultContent.setAdapter(fenJieKaiGuanContentAdapter);
+                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, cdbhclValueList, currentInspectionType,R.layout.jzlfenjiekaiguan_adapter);
+                        mJzlfenjieLayoutBinding.lvReportContent.setAdapter(fenJieKaiGuanContentAdapter);
                     } else {
-                        fenJieKaiGuanContentAdapter.setList(cdbhclValueList);
+                        fenJieKaiGuanContentAdapter.setListBean(cdbhclValueList);
                     }
                 }
                 break;
@@ -310,28 +256,27 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
 
     private Intent intentDiff;
 
-    @Event({R.id.btn_back, R.id.tv_continue_inspection})
-    private void onViewClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_back:
-                Intent intent = new Intent(_this, TaskRemindActivity.class);
-                startActivity(intent);
-                this.finish();
-                break;
-            case R.id.tv_continue_inspection:
-                if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
-                    intentDiff = new Intent(_this, DifferentialMotionRecordActivity2.class);
-                } else if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
-                    intentDiff = new Intent(_this, NewTransformRecordActivity.class);
-                } else {
-                    intentDiff = new Intent(_this, IndoorHumitureRecordActivity.class);
-                }
-                startActivity(intentDiff);
-                this.finish();
 
-                break;
-            default:
-                break;
-        }
+
+    private void initOnclick() {
+        mBtnBack.setOnClickListener((v) -> {
+            Intent intent = new Intent(_this, TaskRemindActivity.class);
+            startActivity(intent);
+            this.finish();
+
+        });
+
+        mJzlfenjieLayoutBinding.tvContinueInspection.setOnClickListener((v) -> {
+            if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
+                intentDiff = new Intent(_this, DifferentialMotionRecordActivity2.class);
+            } else if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
+                intentDiff = new Intent(_this, NewTransformRecordActivity.class);
+            } else {
+                intentDiff = new Intent(_this, IndoorHumitureRecordActivity.class);
+            }
+            startActivity(intentDiff);
+            this.finish();
+        });
+
     }
 }

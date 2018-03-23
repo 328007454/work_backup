@@ -3,12 +3,12 @@ package com.cnksi.sjjc.bean;
 import android.text.TextUtils;
 
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.core.utils.FunctionUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.service.BaseService;
 import com.cnksi.sjjc.util.CalcUtils;
+import com.cnksi.sjjc.util.FunctionUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.annotation.Column;
@@ -242,7 +242,7 @@ public class DefectRecord extends BaseModel {
                         String pics) {
         // defectid,discovered_date,discoverer ,defectcode
         this.reportid = reportid;
-        this.discoverer_unit=PreferencesUtils.getString(Config.CURRENT_DEPARTMENT_NAME,"");
+        this.discoverer_unit=PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME,"");
         this.bdzid = bdzid;
         this.bdz = bdz;
         this.spid = spid;
@@ -256,7 +256,7 @@ public class DefectRecord extends BaseModel {
         this.pics = pics;
         this.defectid = getDefectId();
         this.discovered_date = DateUtils.getCurrentLongTime();
-        this.discoverer = PreferencesUtils.getString(CustomApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
+        this.discoverer = PreferencesUtils.get( Config.CURRENT_LOGIN_USER, "");
         this.defectcode = getDefectId();
         this.standid = standid;
         this.has_track = "N";
@@ -291,12 +291,12 @@ public class DefectRecord extends BaseModel {
         this.val = val;
         this.defectid = getDefectId();
         this.discovered_date = DateUtils.getCurrentLongTime();
-        this.discoverer = PreferencesUtils.getString(CustomApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
+        this.discoverer = PreferencesUtils.get( Config.CURRENT_LOGIN_USER, "");
         this.defectcode = getDefectId();
         this.has_track = "N";
         this.has_remove = "N";
         this.unit = unit;
-        this.discoverer_unit=PreferencesUtils.getString(Config.CURRENT_DEPARTMENT_NAME,"");
+        this.discoverer_unit=PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME,"");
         this.insertTime = DateUtils.getCurrentLongTime();
     }
 
@@ -315,7 +315,7 @@ public class DefectRecord extends BaseModel {
         this.duid = model.getString(DeviceStandards.DUID);
         this.duname = model.getString(DUNAME); // 设备部件名称;
         this.unit = TextUtils.isEmpty(model.getString(UNIT)) ? "" : model.getString(UNIT);
-        this.discoverer = PreferencesUtils.getString(CustomApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
+        this.discoverer = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
         this.description = model.getString(DESCRIPTION); // 巡视标准id
         this.standid = model.getString(DeviceStandards.STAID);
         this.oldval = model.getString(OLDVAL);

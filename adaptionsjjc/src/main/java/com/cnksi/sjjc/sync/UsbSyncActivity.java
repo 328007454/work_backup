@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;

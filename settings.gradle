@@ -4,5 +4,5 @@
 ////include ":myapplication"
 //=======
 include ':cnksicore', ':adaptionsjjc', ':tts', ':bdloc'
-include ':autolayout'
+include ':autolayoutsjjc'
 

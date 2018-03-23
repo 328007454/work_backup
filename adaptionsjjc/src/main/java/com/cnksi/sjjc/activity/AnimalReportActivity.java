@@ -11,7 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cnksi.core.utils.BitmapUtil;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.Config;
@@ -19,13 +20,12 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.Report;
+import com.cnksi.sjjc.databinding.AnimalLayoutBinding;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;
 import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,66 +37,7 @@ import java.util.List;
 public class AnimalReportActivity extends BaseReportActivity {
     public static final int ANIMATION = 0X100;
     public static final int VIBRATOR = ANIMATION + 1;
-    /**
-     * 巡检开始时间
-     */
-    @ViewInject(R.id.tv_inspection_start_time)
-    private TextView mTvInspectionStartTime;
 
-    /**
-     * 巡检结束时间
-     */
-    @ViewInject(R.id.tv_inspection_end_time)
-    private TextView mTvInspectionEndTime;
-    /**
-     * 巡检人员
-     */
-    @ViewInject(R.id.tv_inspection_person)
-    private TextView mTvInspectionPerson;
-
-    //开关柜孔洞
-    @ViewInject(R.id.tv_kaiguangui)
-    private TextView tvKaiGuan;
-    //室内孔洞
-    @ViewInject(R.id.tv_shineikongdong)
-    private TextView tvInroom;
-    //室外孔洞
-    @ViewInject(R.id.tv_shiwaikongdong)
-    private TextView tvOutRoom;
-    //鼠药放置情况
-    @ViewInject(R.id.tv_menchuang)
-    private TextView tvMen;
-    //捕鼠器fangzhiqingk
-    @ViewInject(R.id.tv_shuyaoqi)
-    private TextView tvShuYao;
-    //门窗严密
-    @ViewInject(R.id.tv_bushuqi)
-    private TextView tvBuShu;
-    //发现孔洞
-    @ViewInject(R.id.tv_discoverhole)
-    private TextView tvDiscover;
-    //清除孔洞
-    @ViewInject(R.id.tv_clearhole)
-    private TextView tvClear;
-
-    //检查图片
-    @ViewInject(R.id.img_jianchaprocess)
-    private ImageView imgJianCha;
-    //检查图片数量
-    @ViewInject(R.id.tv_pic_num)
-    private TextView tvJianChaNum;
-    //发现孔洞
-    @ViewInject(R.id.img_discoverhole)
-    private ImageView imgDisHole;
-    //发现孔洞数量
-    @ViewInject(R.id.tv_discoverhole_num)
-    private TextView tvDisNum;
-    //清除孔洞
-    @ViewInject(R.id.img_clearhole)
-    private ImageView imgClearHole;
-    //清除孔洞数量
-    @ViewInject(R.id.tv_clearhole_num)
-    private TextView tvClearNum;
     private String jianChaPics = "";
     private String disHolePics = "";
     private String clearHolePics = "";
@@ -110,38 +51,50 @@ public class AnimalReportActivity extends BaseReportActivity {
     private List<HoleRecord> mHoleList;
     private int discoverHoleCount;
 
+    private AnimalLayoutBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getIntentValue();
-        initUI();
-        initData();
+        initView();
+        loadData();
+        initOnClick();
     }
 
     @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    @Override
     public View setReportView() {
-        return getLayoutInflater().inflate(R.layout.animal_layout, null);
+        binding = AnimalLayoutBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
     }
 
-    private void initUI() {
-        mTvInspectionPerson.setText(PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
 
+    public void initView() {
+        binding.tvInspectionPerson.setText(PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
     }
 
-    private void initData() {
-        mExcutorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    report = ReportService.getInstance().findById(currentReportId);
-                    preventionRecord = PreventionService.getInstance().findPreventionRecordByReoprtId(currentReportId);
-                    mHoleList = HoleReportService.getInstance().getCurrentClearRecord(currentReportId, currentBdzId);
-                } catch (DbException e) {
-                    e.printStackTrace(System.out);
-                }
-
-                mHandler.sendEmptyMessage(LOAD_DATA);
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                report = ReportService.getInstance().findById(currentReportId);
+                preventionRecord = PreventionService.getInstance().findPreventionRecordByReoprtId(currentReportId);
+                mHoleList = HoleReportService.getInstance().getCurrentClearRecord(currentReportId, currentBdzId);
+            } catch (DbException e) {
+                e.printStackTrace(System.out);
             }
+
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -153,8 +106,8 @@ public class AnimalReportActivity extends BaseReportActivity {
         super.onRefresh(msg);
         switch (msg.what) {
             case LOAD_DATA:
-                mTvInspectionStartTime.setText(report.starttime);
-                mTvInspectionEndTime.setText(report.endtime);
+                binding.tvInspectionStartTime.setText(report.starttime);
+                binding.tvInspectionEndTime.setText(report.endtime);
                 String mainPic = preventionRecord.main_controll_images;
                 String gaoYaPic = preventionRecord.hyperbaric_images;
                 String oneDevicePic = preventionRecord.one_device_images;
@@ -162,51 +115,53 @@ public class AnimalReportActivity extends BaseReportActivity {
                 String dianLanPic = preventionRecord.cable_images;
                 String secondDevicPic = preventionRecord.second_device_images;
                 String otherPic = preventionRecord.other_images;
+
                 if (0 == preventionRecord.switchStatus) {
-                    tvKaiGuan.setText("正常");
+                    binding.tvKaiguangui.setText("正常");
                     //getResources().getColor(R.color.green_color)
-                    tvKaiGuan.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                    binding.tvKaiguangui.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
                 } else {
-                    tvKaiGuan.setText("不正常");
-                    tvKaiGuan.setTextColor(Color.RED);
+                    binding.tvKaiguangui.setText("不正常");
+                    binding.tvKaiguangui.setTextColor(Color.RED);
                 }
                 if (0 == preventionRecord.inroomStatus) {
-                    tvInroom.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
-                    tvInroom.setText("正常");
+                    binding.tvShineikongdong.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                    binding.tvShineikongdong.setText("正常");
                 } else {
-                    tvInroom.setText("不正常");
-                    tvInroom.setTextColor(Color.RED);
+                    binding.tvShineikongdong.setText("不正常");
+                    binding.tvShineikongdong.setTextColor(Color.RED);
                 }
                 if (0 == preventionRecord.outroomStatus) {
-                    tvOutRoom.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
-                    tvOutRoom.setText("正常");
+                    binding.tvShiwaikongdong.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                    binding.tvShiwaikongdong.setText("正常");
                 } else {
-                    tvOutRoom.setText("不正常");
-                    tvOutRoom.setTextColor(Color.RED);
+                    binding.tvShiwaikongdong.setText("不正常");
+                    binding.tvShiwaikongdong.setTextColor(Color.RED);
                 }
                 if (0 == preventionRecord.doorWindowStatus) {
-                    tvMen.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
-                    tvMen.setText("正常");
+                    binding.tvMenchuang.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                    binding.tvMenchuang.setText("正常");
                 } else {
-                    tvMen.setText("不正常");
-                    tvMen.setTextColor(Color.RED);
+                    binding.tvMenchuang.setText("不正常");
+                    binding.tvMenchuang.setTextColor(Color.RED);
                 }
 //                if (0==preventionRecord.ratsbaneStatus) {
-//                    tvShuYao.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
-//                    tvShuYao.setText("正常");
+//                    binding.tvShuyaoqi.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+//                    binding.tvShuyaoqi.setText("正常");
 //                } else {
-//                    tvShuYao.setText("不正常");
-//                    tvShuYao.setTextColor(Color.RED);
+//                    binding.tvShuyaoqi.setText("不正常");
+//                    binding.tvShuyaoqi.setTextColor(Color.RED);
 //                }
 //                if (0==preventionRecord.mousetrapStatus) {
-//                    tvBuShu.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
-//                    tvBuShu.setText("正常");
+//                    binding.tvBushuqi.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+//                    binding.tvBushuqi.setText("正常");
 //                } else {
-//                    tvBuShu.setText("不正常");
-//                    tvBuShu.setTextColor(Color.RED);
+//                    binding.tvBushuqi.setText("不正常");
+//                    binding.tvBushuqi.setTextColor(Color.RED);
 //                }
-                tvBuShu.setTextColor(getResources().getColor(R.color.green_color));
-                tvBuShu.setText(preventionRecord.mousetrapInfo);
+
+                binding.tvBushuqi.setTextColor(getResources().getColor(R.color.green_color));
+                binding.tvBushuqi.setText(preventionRecord.mousetrapInfo);
                 jianChaPics = (mainPic == null ? "" : mainPic) + (gaoYaPic == null ? "" : "," + gaoYaPic) +
                         (oneDevicePic == null ? "" : "," + oneDevicePic) + (protectPic == null ? "" : "," + protectPic) +
                         (dianLanPic == null ? "" : "," + dianLanPic) + (secondDevicPic == null ? "" : "," + secondDevicPic) +
@@ -248,96 +203,100 @@ public class AnimalReportActivity extends BaseReportActivity {
     private ArrayList<String> clearList;
 
     private void setReportPics() {
+
         if (!TextUtils.isEmpty(jianChaPics)) {
-            jiaChaList = StringUtils.string2List(jianChaPics);
+            jiaChaList = StringUtils.stringToList(jianChaPics);
             if (jiaChaList.size() != 0) {
-                tvJianChaNum.setVisibility(View.VISIBLE);
-                imgJianCha.setVisibility(View.VISIBLE);
-                tvJianChaNum.setText(jiaChaList.size() + "");
+                binding.tvPicNum.setVisibility(View.VISIBLE);
+                binding.imgJianchaprocess.setVisibility(View.VISIBLE);
+                binding.tvPicNum.setText(jiaChaList.size() + "");
                 if (jiaChaList.size() == 1) {
-                    tvJianChaNum.setVisibility(View.GONE);
+                    binding.tvPicNum.setVisibility(View.GONE);
                 }
                 String picName = jiaChaList.get(0);
-                Bitmap bmPicture = BitmapUtil.getOptimizedBitmap(Config.RESULT_PICTURES_FOLDER + picName);
+                Bitmap bmPicture = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + picName);
                 if (bmPicture != null) {
-                    imgJianCha.setImageBitmap(bmPicture);
+                    binding.imgJianchaprocess.setImageBitmap(bmPicture);
                 }
             }
         } else {
-            tvJianChaNum.setVisibility(View.GONE);
-            imgJianCha.setVisibility(View.INVISIBLE);
+            binding.tvPicNum.setVisibility(View.GONE);
+            binding.imgJianchaprocess.setVisibility(View.INVISIBLE);
         }
 
-        tvDiscover.setText(discoverHoleCount == 0 ? "无" : discoverHoleCount + "");
+        binding.tvDiscoverhole.setText(discoverHoleCount == 0 ? "无" : discoverHoleCount + "");
         if (!TextUtils.isEmpty(disHolePics)) {
 
-            disList = StringUtils.string2List(disHolePics);
-//            tvDiscover.setText(disList.size()+"");
+            disList = StringUtils.stringToList(disHolePics);
+//            binding.tvDiscoverhole.setText(disList.size()+"");
             String picName = disList.get(0);
-            imgDisHole.setVisibility(View.VISIBLE);
-            Bitmap bmPicture = BitmapUtil.getOptimizedBitmap(Config.RESULT_PICTURES_FOLDER + picName);
+            binding.imgDiscoverhole.setVisibility(View.VISIBLE);
+            Bitmap bmPicture = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + picName);
+
             if (bmPicture != null) {
-                imgDisHole.setImageBitmap(bmPicture);
+                binding.imgDiscoverhole.setImageBitmap(bmPicture);
             }
             if (disList.size() > 1) {
-                tvDisNum.setVisibility(View.VISIBLE);
-                tvDisNum.setText(disList.size() + "");
+                binding.tvDiscoverholeNum.setVisibility(View.VISIBLE);
+                binding.tvDiscoverholeNum.setText(disList.size() + "");
             } else {
-                tvDisNum.setVisibility(View.INVISIBLE);
+                binding.tvDiscoverholeNum.setVisibility(View.INVISIBLE);
             }
         } else {
-//            tvDiscover.setText("无");
-            tvDisNum.setVisibility(View.GONE);
-            imgDisHole.setVisibility(View.INVISIBLE);
+//            binding.tvDiscoverhole.setText("无");
+            binding.tvDiscoverholeNum.setVisibility(View.GONE);
+            binding.imgDiscoverhole.setVisibility(View.INVISIBLE);
         }
+
         if (!TextUtils.isEmpty(clearHolePics)) {
-            clearList = StringUtils.string2List(clearHolePics);
-            tvClear.setText(clearList.size() + "");
+            clearList = StringUtils.stringToList(clearHolePics);
+            binding.tvClearhole.setText(clearList.size() + "");
             String picName = clearList.get(0);
-            imgClearHole.setVisibility(View.VISIBLE);
-            Bitmap bmPicture = BitmapUtil.getOptimizedBitmap(Config.RESULT_PICTURES_FOLDER + picName);
+            binding.imgClearhole.setVisibility(View.VISIBLE);
+            Bitmap bmPicture = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + picName);
             if (bmPicture != null) {
-                imgClearHole.setImageBitmap(bmPicture);
+                binding.imgClearhole.setImageBitmap(bmPicture);
             }
             if (clearList.size() > 1) {
 
-                tvClearNum.setText(clearList.size() + "");
+                binding.tvClearholeNum.setText(clearList.size() + "");
             } else {
-                tvClearNum.setVisibility(View.INVISIBLE);
+                binding.tvClearholeNum.setVisibility(View.INVISIBLE);
             }
         } else {
-            tvClear.setText("无");
-            tvClearNum.setVisibility(View.GONE);
-            imgClearHole.setVisibility(View.INVISIBLE);
+            binding.tvClearhole.setText("无");
+            binding.tvClearholeNum.setVisibility(View.GONE);
+            binding.imgClearhole.setVisibility(View.INVISIBLE);
         }
     }
 
-    @Event({R.id.tv_continue_inspection, R.id.img_jianchaprocess, R.id.img_discoverhole, R.id.img_clearhole, R.id.tv_continue_inspection})
-    private void onViewClick(View view) {
-        ArrayList<String> watchPics = null;
-        switch (view.getId()) {
-            case R.id.tv_continue_inspection:
-                Intent intent1 = new Intent(_this, PreventAnimalActivity.class);
-                startActivity(intent1);
-                this.finish();
-                break;
-            case R.id.img_jianchaprocess:
-                watchPics = jiaChaList;
-                break;
-            case R.id.img_discoverhole:
-                watchPics = disList;
-                break;
-            case R.id.img_clearhole:
-                watchPics = clearList;
-                break;
+    ArrayList<String> watchPics = null;
 
-            default:
-                break;
-        }
+    private void initOnClick() {
+        binding.tvContinueInspection.setOnClickListener(view -> {
+            Intent intent1 = new Intent(_this, PreventAnimalActivity.class);
+            startActivity(intent1);
+            this.finish();
+        });
+        binding.imgJianchaprocess.setOnClickListener(view -> {
+            watchPics = jiaChaList;
+            save();
+        });
+
+        binding.imgDiscoverhole.setOnClickListener(view -> {
+            watchPics = disList;
+            save();
+        });
+
+        binding.imgClearhole.setOnClickListener(view -> {
+            watchPics = clearList;
+            save();
+        });
+    }
+
+    private void save() {
         if (watchPics != null && watchPics.size() > 0) {
-
-            showImageDetails(mCurrentActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(watchPics, Config.RESULT_PICTURES_FOLDER), false, false);
+            showImageDetails(mActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(watchPics, Config.RESULT_PICTURES_FOLDER), false, false);
         }
-
     }
 }

@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
@@ -46,11 +47,22 @@ public class BHDZJLXZSBActivity extends BaseActivity {
         setSupportActionBar(mXzsbBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        initUI();
-        initData();
+        initView();
+        loadData();
     }
 
-    private void initUI() {
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
         getIntentValue();
         mXzsbBinding.toolbar.setTitle("请选择对应设备");
         mAdapter = new BHDZJLDeviceAdapter(mXzsbBinding.rlvContainer, mDevices, R.layout.device_item);
@@ -68,9 +80,9 @@ public class BHDZJLXZSBActivity extends BaseActivity {
         });
     }
 
-    private void initData() {
+    public void loadData() {
         String deviceBigIds = getIntent().getStringExtra("bigid");
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTaskSerially(() -> {
             String sql = " and  bigid in (" + deviceBigIds + ")";
             try {
                 mDevices = DeviceService.getInstance().selector().and(Device.BDZID, "=", currentBdzId).expr(sql).findAll();

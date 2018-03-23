@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<layout>
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="100px"
-        android:gravity="center_vertical"
-        android:textColor="@color/global_text_color"
-        android:textSize="@dimen/tv_text_size"/>
+    <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.cnksi.sjjc.view.ContainsEmojiEditText
-        android:id="@+id/et_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20px"
-        android:layout_marginRight="@dimen/_30px"
-        android:background="@drawable/add_copy_item_select_background"
-        android:cursorVisible="true"
-        android:gravity="left"
-        android:hint="请输入"
-        android:minHeight="120px"
-        android:padding="@dimen/_10px"
-        android:textColor="@color/global_text_color"
-        android:textSize="@dimen/tv_text_size"/>
-</merge>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"/>
+
+        <com.cnksi.sjjc.view.ContainsEmojiEditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20px"
+            android:layout_marginRight="@dimen/_30px"
+            android:background="@drawable/add_copy_item_select_background"
+            android:cursorVisible="true"
+            android:gravity="left"
+            android:hint="请输入"
+            android:minHeight="120px"
+            android:padding="@dimen/_10px"
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"/>
+    </merge>
+</layout>

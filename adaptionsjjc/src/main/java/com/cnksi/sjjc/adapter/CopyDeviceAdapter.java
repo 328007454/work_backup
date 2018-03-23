@@ -55,13 +55,13 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
         txtDevice.setText(item.getString("name"));
         if (currentSelectedPosition == position) {
             deviceContainer.setBackgroundResource(R.drawable.copy_all_value_item_selected_background);
-            txtDevice.setTextColor(ContextCompat.getColor(mContext, android.R.color.white));
+            txtDevice.setTextColor(ContextCompat.getColor(context, android.R.color.white));
 //            txtDevice.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_white_unfinish, 0, 0, 0);
             ibCopy.setImageResource(R.drawable.ic_white_unfinish);
         } else {
             deviceContainer
                     .setBackgroundResource(R.drawable.copy_all_value_item_unselected_background_selector);
-            txtDevice.setTextColor(ContextCompat.getColor(mContext, R.color.green_color));
+            txtDevice.setTextColor(ContextCompat.getColor(context, R.color.green_color));
 //            txtDevice.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_green_unfinish, 0, 0, 0);
             ibCopy.setImageResource(R.drawable.ic_green_unfinish);
         }

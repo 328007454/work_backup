@@ -3,7 +3,7 @@ package com.cnksi.sjjc.service;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.crash.AbstractCrashReportHandler;
 import com.cnksi.core.utils.crash.CrashLogUtil;
 import com.cnksi.sjjc.BuildConfig;
@@ -83,7 +83,7 @@ public class BaseService<T> {
 
 
     protected DbManager getDbManager() {
-        return CustomApplication.getDbManager();
+        return CustomApplication.getInstance().getDbManager();
     }
 
     public TableEntity<T> getTable() throws DbException {
@@ -179,7 +179,7 @@ public class BaseService<T> {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    CToast.showShort(CustomApplication.getAppContext(), "操作数据库出错，请确保数据库的完整性。");
+                    ToastUtils.showMessage("操作数据库出错，请确保数据库的完整性。");
                 }
             });
         executor.execute(new Runnable() {

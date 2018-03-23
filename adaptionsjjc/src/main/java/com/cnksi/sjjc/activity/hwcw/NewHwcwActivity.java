@@ -8,7 +8,8 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -66,28 +67,36 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
         mHwcwNewBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_hwcw_new, null, false);
         setChildView(mHwcwNewBinding.getRoot());
         getIntentValue();
-        initData();
+        loadData();
     }
 
-    private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mHwcwBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
-                if (!TextUtils.isEmpty(mHwcwBaseInfo.id)) {
-                    hotLocations = NewHwcwService.getInstance().getAllLocation(mHwcwBaseInfo.id);
-                    for (HwcwLocation location : hotLocations) {
-                        selecteDevices.add(location.deviceID);
-                    }
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
+            mHwcwBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
+            if (!TextUtils.isEmpty(mHwcwBaseInfo.id)) {
+                hotLocations = NewHwcwService.getInstance().getAllLocation(mHwcwBaseInfo.id);
+                for (HwcwLocation location : hotLocations) {
+                    selecteDevices.add(location.deviceID);
                 }
-                runOnUiThread(() -> initUI());
             }
+            runOnUiThread(() -> initView());
         });
-
     }
 
-    private void initUI() {
-        tvTitle.setText(currentBdzName + currentInspectionName + "记录");
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionName + "记录");
         mHotPartAdapter = new HwcwNewHotPartAdapter(mHwcwNewBinding.rlHotrecord, hotLocations, R.layout.item_hwcw_hot_part);
         mHwcwNewBinding.rlHotrecord.setLayoutManager(new LinearLayoutManager(_this));
         mHwcwNewBinding.rlHotrecord.setAdapter(mHotPartAdapter);
@@ -104,7 +113,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
         } else {
             mHwcwNewBinding.cbAllYes.setChecked(true);
         }
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        mTitleBinding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveData();
@@ -149,7 +158,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                     Intent intent = new Intent(_this, NewHwcwInforActivity.class);
                     startActivityForResult(intent, TO_NEWINFORACTIVITY);
                 } else {
-                    CToast.showShort(_this, "请完成所有的基本信息填写！");
+                    ToastUtils.showMessage("请完成所有的基本信息填写！");
                 }
                 break;
             case R.id.txt_hot_part:
@@ -212,7 +221,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
         String ratedCurrent = mHwcwNewBinding.etElectricity.getText().toString().trim();
         String loadCurrent = mHwcwNewBinding.etLoadElectricity.getText().toString().trim();
         if (TextUtils.isEmpty(deviceName)) {
-            CToast.showShort(_this, "请先选择设备");
+            ToastUtils.showMessage("请先选择设备");
             return;
         }
         for (int i = 0; i < mHwcwNewBinding.llHotPart.getChildCount(); i++) {
@@ -220,7 +229,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
             String hotPart = itemHotDeviceHwcwBinding.etHotPartName.getText().toString();
             String hotTemp = itemHotDeviceHwcwBinding.etHotPartTemp.getText().toString();
             if (TextUtils.isEmpty(hotPart) || TextUtils.isEmpty(hotTemp)) {
-                CToast.showShort(_this, "请填写发热部位和发热部位温度");
+                ToastUtils.showMessage("请填写发热部位和发热部位温度");
                 return;
             }
             if (!TextUtils.isEmpty(hotPart) || !TextUtils.isEmpty(hotTemp)) {
@@ -301,10 +310,11 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
     public void onAdapterItemClick(View view, Object data, int position) {
         int size = 0;
         if (position == hotRecordClickPositon) {
-            CToast.showShort(_this, "当前数据正在编辑中，请确认");
+            ToastUtils.showMessage("当前数据正在编辑中，请确认");
+
             return;
         } else if (hotRecordClickPositon != -1) {
-            CToast.showShort(_this, "正在保存上一条编辑的数据");
+            ToastUtils.showMessage("正在保存上一条编辑的数据");
             saveNewLocation();
         }
         hotRecordClickPositon = position;
@@ -359,9 +369,9 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
 
     public boolean saveData() {
         String isAllBdz = "", testType = "", temp = "", shidu = "", fengsu = "", testInstrument = "";
-        if (mHwcwNewBinding.cbAllYes.isChecked())
+        if (mHwcwNewBinding.cbAllYes.isChecked()) {
             isAllBdz = "是";
-        else {
+        } else {
             isAllBdz = "否";
         }
         if (mHwcwNewBinding.cbPuce.isChecked()) {
@@ -377,14 +387,14 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
             return false;
         }
         mHwcwBaseInfo.setData(isAllBdz, testType, temp, shidu, fengsu, testInstrument, currentReportId, currentBdzId, currentBdzName);
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTaskSerially(() -> {
             try {
-                CustomApplication.getDbManager().saveOrUpdate(mHwcwBaseInfo);
+                CustomApplication.getInstance().getDbManager().saveOrUpdate(mHwcwBaseInfo);
                 if (!hotLocations.isEmpty()) {
-                    CustomApplication.getDbManager().saveOrUpdate(hotLocations);
+                    CustomApplication.getInstance().getDbManager().saveOrUpdate(hotLocations);
                 }
                 if (!deleteLocations.isEmpty()) {
-                    CustomApplication.getDbManager().saveOrUpdate(deleteLocations);
+                    CustomApplication.getInstance().getDbManager().saveOrUpdate(deleteLocations);
                 }
             } catch (DbException e) {
                 e.printStackTrace();

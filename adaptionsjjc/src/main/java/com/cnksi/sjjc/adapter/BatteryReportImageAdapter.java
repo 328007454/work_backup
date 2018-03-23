@@ -1,14 +1,15 @@
 package com.cnksi.sjjc.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cnksi.core.adapter.BaseRecyclerAdapter;
-import com.cnksi.core.adapter.RecyclerHolder;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.adapter.holder.RecyclerHolder;
 import com.cnksi.sjjc.inter.ItemClickListener;
 
 import org.xutils.x;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class BatteryReportImageAdapter extends BaseRecyclerAdapter<String> {
 
     private ItemClickListener<List<String>> itemClickListener;
+
     public void setItemClickListener(ItemClickListener<List<String>> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
@@ -52,8 +54,8 @@ public class BatteryReportImageAdapter extends BaseRecyclerAdapter<String> {
                 holder.getView(R.id.image_num).setVisibility(View.VISIBLE);
             else
                 holder.getView(R.id.image_num).setVisibility(View.GONE);
-            x.image().bind((ImageView)holder.getView(R.id.img_battery),Config.RESULT_PICTURES_FOLDER+batteryImageList.get(0), CustomApplication.getLargeImageOptions());
-//            ((ImageView) holder.getView(R.id.img_battery)).setImageURI(Uri.fromFile(new File(Config.RESULT_PICTURES_FOLDER + batteryImageList.get(0))));
+            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + batteryImageList.get(0));
+            ((ImageView) holder.getView(R.id.img_battery)).setImageBitmap(bitmap);
             holder.getView(R.id.img_battery).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

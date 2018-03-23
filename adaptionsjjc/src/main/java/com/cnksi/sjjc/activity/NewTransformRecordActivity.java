@@ -6,18 +6,18 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
-import com.cnksi.core.adapter.ViewHolder;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.bean.Task;
+import com.cnksi.sjjc.databinding.ActivityDifferentialMotionRecordBinding;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportJzlbyqfjkgService;
 import com.cnksi.sjjc.service.ReportService;
@@ -27,8 +27,6 @@ import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +36,6 @@ import java.util.List;
  * 修改过后的交直流分接开关
  */
 public class NewTransformRecordActivity extends BaseActivity {
-
-    @ViewInject(R.id.ll_container)
-    private LinearLayout llContainer;
-    @ViewInject(R.id.ll_container1)
-    private LinearLayout llContainer1;
-    @ViewInject(R.id.lv_container)
-    private ListView lvContainer;
-
     private List<DbModel> listDbModel;
     //本次读数填写的EditText
     List<EditText> listBcds = new ArrayList<EditText>();
@@ -56,43 +46,56 @@ public class NewTransformRecordActivity extends BaseActivity {
     private ReportJzlbyqfjkg mReportJzlby;
     private Report mReport;
 
+    private ActivityDifferentialMotionRecordBinding binding;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_differential_motion_record);
+        binding = ActivityDifferentialMotionRecordBinding.inflate(getLayoutInflater());
         getIntentValue();
-        initUI();
-        initData();
+        setChildView(binding.getRoot());
+        initView();
+        loadData();
+        initOnClick();
 
     }
 
-    private void initUI() {
-        tvTitle.setText(R.string.jiaozhiliu_fenjie_kaiguan);
-        llContainer1.setVisibility(View.VISIBLE);
-        lvContainer.setVisibility(View.GONE);
+    @Override
+    public void initUI() {
 
     }
 
-    private void initData() {
-        bdzid = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_ID, "");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mReport = ReportService.getInstance().findById(currentReportId);
-                    mReport.starttime = DateUtils.getCurrentLongTime();
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                listDbModel = DeviceService.getInstance().searchDevicesByNameWays(bdzid, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
-                if (listDbModel != null && !listDbModel.isEmpty()) {
-                    for (DbModel model : listDbModel) {
-                        ReportJzlbyqfjkg mReport = ReportJzlbyqfjkgService.getInstance().getFirstReport(model.getString("bdzid"), model.getString("deviceid"), currentReportId);
-                        listReport.add(mReport);
-                    }
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText(R.string.jiaozhiliu_fenjie_kaiguan);
+        binding.llContainer1.setVisibility(View.VISIBLE);
+        binding.lvContainer.setVisibility(View.GONE);
+
+    }
+
+    public void loadData() {
+        bdzid = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                mReport = ReportService.getInstance().findById(currentReportId);
+                mReport.starttime = DateUtils.getCurrentLongTime();
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            listDbModel = DeviceService.getInstance().searchDevicesByNameWays(bdzid, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
+            if (listDbModel != null && !listDbModel.isEmpty()) {
+                for (DbModel model : listDbModel) {
+                    ReportJzlbyqfjkg mReport = ReportJzlbyqfjkgService.getInstance().getFirstReport(model.getString("bdzid"), model.getString("deviceid"), currentReportId);
+                    listReport.add(mReport);
+                }
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -104,7 +107,7 @@ public class NewTransformRecordActivity extends BaseActivity {
                     DbModel model = listDbModel.get(i);
                     String description = model.getString("description");
                     String key = model.getString("key");
-                    ArrayList<String> keys = StringUtils.string2List(key);
+                    ArrayList<String> keys = com.cnksi.core.utils.StringUtils.stringToList(key);
                     String bcds = listReport.get(i).bcds;
                     String dzcs = listReport.get(i).dzcs;
                     ViewHolder holder = new ViewHolder(this, null, R.layout.activity_jzl_add_titleview, false);
@@ -125,13 +128,13 @@ public class NewTransformRecordActivity extends BaseActivity {
                             holder.setText(R.id.et_put_dzcs, TextUtils.isEmpty(dzcs) ? "" : dzcs);
                         }
                     } else {
-                        ArrayList<String> descriptionList = StringUtils.string2List(description);
+                        ArrayList<String> descriptionList = com.cnksi.core.utils.StringUtils.stringToList(description);
                         holder.setText(R.id.copy_part_one, descriptionList.get(1));
                         holder.setText(R.id.copy_part_two, descriptionList.get(0));
                         holder.setText(R.id.et_put_dzcs, TextUtils.isEmpty(dzcs) ? "" : dzcs);
                         holder.setText(R.id.et_put_bcds, bcds == null ? "" : bcds);
                     }
-                    llContainer.addView(holder.getRootView());
+                    binding.llContainer.addView(holder.getRootView());
                 }
                 break;
             default:
@@ -139,60 +142,56 @@ public class NewTransformRecordActivity extends BaseActivity {
         }
     }
 
-    @Event({R.id.btn_back, R.id.btn_confirm_save})
-    private void onViewClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_back:
-                this.finish();
-                break;
-            case R.id.btn_confirm_save:
-                List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
-                if (listDbModel != null && listDbModel.size() > 0) {
-                    for (int i = 0; i < listDbModel.size(); i++) {
-                        DbModel dbModel = listDbModel.get(i);
-                        String bcds = StringUtils.getTransformTep(listBcds.get(i).getText().toString());
-                        String dzcs = StringUtils.getTransformTep(listDzcs.get(i).getText().toString());
-                        if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
-                            continue;
-                        }
-                        mReportJzlby = listReport.get(i);
-                        mReportJzlby.bdz_id = dbModel.getString("bdzid");
-                        mReportJzlby.bdz_name = PreferencesUtils.getString(_this, Config.CURRENT_BDZ_NAME, "");
-                        mReportJzlby.device_id = dbModel.getString("deviceid");
-                        mReportJzlby.device_name = dbModel.getString("name");
-                        mReportJzlby.report_id = currentReportId;
-                        mReportJzlby.bcds = bcds;
-                        mReportJzlby.dzcs = dzcs;
-                        mReportJzlby.last_modify_time = DateUtils.getCurrentLongTime();
-                        saveList.add(mReportJzlby);
-                    }
-                    try {
+    private void initOnClick() {
 
-                        ReportJzlbyqfjkgService.getInstance().saveOrUpdate(mReportJzlby);
-                    } catch (DbException e) {
-                        e.printStackTrace();
+        mTitleBinding.btnBack.setOnClickListener(view -> {
+            this.finish();
+        });
+
+        binding.btnConfirmSave.setOnClickListener(view -> {
+            List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
+            if (listDbModel != null && listDbModel.size() > 0) {
+                for (int i = 0; i < listDbModel.size(); i++) {
+                    DbModel dbModel = listDbModel.get(i);
+                    String bcds = StringUtils.getTransformTep(listBcds.get(i).getText().toString());
+                    String dzcs = StringUtils.getTransformTep(listDzcs.get(i).getText().toString());
+                    if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
+                        continue;
                     }
+                    mReportJzlby = listReport.get(i);
+                    mReportJzlby.bdz_id = dbModel.getString("bdzid");
+                    mReportJzlby.bdz_name = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");
+                    mReportJzlby.device_id = dbModel.getString("deviceid");
+                    mReportJzlby.device_name = dbModel.getString("name");
+                    mReportJzlby.report_id = currentReportId;
+                    mReportJzlby.bcds = bcds;
+                    mReportJzlby.dzcs = dzcs;
+                    mReportJzlby.last_modify_time = DateUtils.getCurrentLongTime();
+                    saveList.add(mReportJzlby);
                 }
                 try {
-                    TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
-                    setResult(RESULT_OK);
+
+                    ReportJzlbyqfjkgService.getInstance().saveOrUpdate(mReportJzlby);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
-                try {
-                    mReport.endtime = DateUtils.getCurrentLongTime();
-                    ReportService.getInstance().saveOrUpdate(mReport);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
-                startActivity(intent);
-                this.finish();
-                break;
-
-            default:
-                break;
-        }
+            }
+            try {
+                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                setResult(RESULT_OK);
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+            try {
+                mReport.endtime = DateUtils.getCurrentLongTime();
+                ReportService.getInstance().saveOrUpdate(mReport);
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
+            startActivity(intent);
+            this.finish();
+        });
     }
 
 

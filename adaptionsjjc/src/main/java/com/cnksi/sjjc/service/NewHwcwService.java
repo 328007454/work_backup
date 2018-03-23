@@ -30,7 +30,7 @@ public class NewHwcwService {
     public HwcwBaseInfo getBaseInfo(String reportID) {
         HwcwBaseInfo baseInfo = null;
         try {
-            baseInfo = CustomApplication.getDbManager().selector(HwcwBaseInfo.class).where(HwcwBaseInfo.REPORT_ID, "=", reportID).and(HwcwBaseInfo.DLT, "=", "0").findFirst();
+            baseInfo = CustomApplication.getInstance().getDbManager().selector(HwcwBaseInfo.class).where(HwcwBaseInfo.REPORT_ID, "=", reportID).and(HwcwBaseInfo.DLT, "=", "0").findFirst();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class NewHwcwService {
     public List<HwcwLocation> getAllLocation(String baseInfoID) {
         List<HwcwLocation> locations = null;
         try {
-            locations = CustomApplication.getDbManager().selector(HwcwLocation.class).where(HwcwLocation.BASEINFO_ID, "=", baseInfoID).and(HwcwLocation.DLT, "=", "0").findAll();
+            locations =CustomApplication.getInstance().getDbManager().selector(HwcwLocation.class).where(HwcwLocation.BASEINFO_ID, "=", baseInfoID).and(HwcwLocation.DLT, "=", "0").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }

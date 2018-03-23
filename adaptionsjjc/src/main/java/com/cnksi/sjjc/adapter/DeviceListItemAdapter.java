@@ -11,9 +11,6 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Device;
 
 import org.xutils.db.table.DbModel;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,11 +83,19 @@ public class DeviceListItemAdapter extends SimpleBaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.device_item, parent, false);
-            x.view().inject(holder, convertView);
             convertView.setTag(holder);
+            holder.mRlDeviceContainer = (RelativeLayout) convertView.findViewById(R.id.rl_device_container);
+            holder.mTvDeviceName = (TextView) convertView.findViewById(R.id.tv_device_name);
+            holder.mImageView = (ImageView) convertView.findViewById(R.id.ibt_copy_pen);
+            holder.mTvCopyValue = (TextView) convertView.findViewById(R.id.tv_copy_data);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        holder.mRlDeviceContainer.setOnClickListener(view -> {
+            if (mOnAdapterViewClickListener != null) {
+                mOnAdapterViewClickListener.OnAdapterViewClick(view, device);
+            }
+        });
         holder.mImageView.setVisibility(View.GONE);
         holder.setCurrentDefect(device);
 
@@ -102,31 +107,13 @@ public class DeviceListItemAdapter extends SimpleBaseAdapter {
     }
 
     class ViewHolder {
-
         private DbModel device;
-
         public void setCurrentDefect(DbModel device) {
             this.device = device;
         }
-
-        @ViewInject(R.id.rl_device_container)
         RelativeLayout mRlDeviceContainer;
-
-        @ViewInject(R.id.tv_device_name)
         TextView mTvDeviceName;
-
-        @ViewInject(R.id.ibt_copy_pen)
         ImageView mImageView;
-
-        @ViewInject(R.id.tv_copy_data)
         TextView mTvCopyValue;
-
-        @Event(value = {R.id.rl_device_container})
-        private void OnViewClick(View view) {
-            if (mOnAdapterViewClickListener != null) {
-                mOnAdapterViewClickListener.OnAdapterViewClick(view, device);
-            }
-        }
-
     }
 }

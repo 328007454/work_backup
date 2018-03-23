@@ -77,11 +77,11 @@ public class IndexService {
             String indexName = indexNameList[i];
             try {
                 SqlInfo sqlInfo = new SqlInfo("select count (*) indexCount from sqlite_master where type='index' and name = '" + indexName + "'");
-                DbModel indexModel = CustomApplication.getDbManager().findDbModelFirst(sqlInfo);
+                DbModel indexModel = CustomApplication.getInstance().getDbManager().findDbModelFirst(sqlInfo);
                 if (TextUtils.isEmpty(indexModel.getString("indexCount")) || indexModel.getInt("indexCount") <= 0) {
                     sqlInfo = new SqlInfo(
                             "create index " + indexName + " on " + tableNameList[i] + "(" + indexColumnList[i] + ")");
-                    CustomApplication.getDbManager().execNonQuery(sqlInfo);
+                    CustomApplication.getInstance().getDbManager().execNonQuery(sqlInfo);
                 }
             } catch (DbException e) {
                 e.printStackTrace();
@@ -116,9 +116,9 @@ public class IndexService {
      */
     public void generateUploadData(DbManager dbManager) {
         try {
-            CustomApplication.getDbManager().getTable(ModifyRecord.class).tableIsExist();
+            CustomApplication.getInstance().getDbManager().getTable(ModifyRecord.class).tableIsExist(dbManager);
             dbManager.dropDb();
-            createTableIfNotExist(CustomApplication.getDbManager(), CustomApplication.getDbManager().getTable(ModifyRecord.class));
+            createTableIfNotExist(CustomApplication.getInstance().getDbManager(),CustomApplication.getInstance().getDbManager().getTable(ModifyRecord.class));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -127,23 +127,23 @@ public class IndexService {
         for (Class<?> tableClass : TableArray) {
             try {
                 String selectionSql = "(select distinct(modify_id) from modify_record where table_name = '"
-                        + CustomApplication.getDbManager().getTable(tableClass).getName() + "')";
+                        + CustomApplication.getInstance().getDbManager().getTable(tableClass).getName() + "')";
                 Selector selector = null;
                 if (Device.class.equals(tableClass)) {
                     tableClass = UploadDevice.class;
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("deviceid in " + selectionSql);
+                    selector =CustomApplication.getInstance().getDbManager().selector(tableClass).expr("deviceid in " + selectionSql);
                 } else if (Spacing.class.equals(tableClass)) {
                     tableClass = UploadSpacing.class;
                     // selector =dbManager.selector(tableClass).expr("spid in " + selectionSql);
-                    selector = CustomApplication.getDbManager().selector(tableClass);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass);
                 } else if (DevicePart.class.equals(tableClass)) {
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("duid in " + selectionSql);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass).expr("duid in " + selectionSql);
                 } else if (DeviceStandards.class.equals(tableClass)) {
                     tableClass = UploadDeviceStandards.class;
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("staid in " + selectionSql);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass).expr("staid in " + selectionSql);
                 } else if (DefectDefine.class.equals(tableClass)) {
                     tableClass = UploadDefectDefine.class;
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("defectid in " + selectionSql);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass).expr("defectid in " + selectionSql);
                 } else if (Report.class.equals(tableClass)
                         || SwitchPic.class.equals(tableClass)
                         || PreventionRecord.class.equals(tableClass)
@@ -151,30 +151,30 @@ public class IndexService {
                         || StandardStepConfirm.class.equals(tableClass)
                         || Transceiver.class.equals(tableClass) || BatteryGroup.class.equals(tableClass) || CopyResult.class.equals(tableClass)
                         ) {
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql);
+                    selector =CustomApplication.getInstance().getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql);
                 } else if (HoleRecord.class.equals(tableClass)) {
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql + " or " + HoleRecord.CLEAR_REPORTID + " in " + uploadReportSql);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql + " or " + HoleRecord.CLEAR_REPORTID + " in " + uploadReportSql);
                 }
                 //同步defect record表
                 else if (DefectRecord.class.equals(tableClass)) {
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql + " or defectid in " + selectionSql);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass).expr("reportid in " + uploadReportSql + " or defectid in " + selectionSql);
                 } else if (Placed.class.equals(tableClass)) {
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("report_id in " + uploadReportSql);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass).expr("report_id in " + uploadReportSql);
                 } else if (ReportHwcw.class.equals(tableClass)
                         || ReportSignname.class.equals(tableClass) ||
                         ReportCdbhcl.class.equals(tableClass) || ReportJzlbyqfjkg.class.equals(tableClass) || ReportSnwsd.class.equals(tableClass)) {
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("report_id in " + uploadReportSql);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass).expr("report_id in " + uploadReportSql);
                 }
                 //新增错误日志
                 else if (ErrorLogBean.class.equals(tableClass)) {
-                    selector = CustomApplication.getDbManager().selector(tableClass).expr("id in " + selectionSql);
+                    selector = CustomApplication.getInstance().getDbManager().selector(tableClass).expr("id in " + selectionSql);
                 }
                 createTableIfNotExist(dbManager, dbManager.getTable(tableClass));
                 List<?> entities = null;
                 if (selector != null) {
                     entities = selector.findAll();
                 } else {
-                    entities = CustomApplication.getDbManager().findAll(tableClass);
+                    entities = CustomApplication.getInstance().getDbManager().findAll(tableClass);
                 }
                 if (entities != null && !entities.isEmpty())
                     if (tableClass.equals(ModifyRecord.class)) {
@@ -192,9 +192,9 @@ public class IndexService {
 
 
     protected void createTableIfNotExist(DbManager dbManager, TableEntity<?> table) throws DbException {
-        if (!table.tableIsExist()) {
+        if (!table.tableIsExist(dbManager)) {
             synchronized (table.getClass()) {
-                if (!table.tableIsExist()) {
+                if (!table.tableIsExist(dbManager)) {
                     SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo(table);
                     dbManager.execNonQuery(sqlInfo);
 //					String execAfterTableCreated = table.getOnCreated();

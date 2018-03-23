@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.sjjc.util.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
@@ -41,7 +41,17 @@ public class TZQKActivity extends BaseActivity {
         setTitleText("开关故障跳闸记录");
         getIntentValue();
         initView();
-        initData();
+        loadData();
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
 
@@ -55,18 +65,18 @@ public class TZQKActivity extends BaseActivity {
                 intentDevices.putExtra(AllDeviceListActivity.BIGID, bigIds);
                 intentDevices.putExtra(Config.TITLE_NAME, "选择断路器");
             } else {
-                CToast.showShort(this, "没有找到别名为DLQ的设备大类！");
+                ToastUtils.showMessage("没有找到别名为DLQ的设备大类！");
             }
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
         binding.gztysb.setSelectOnClickListener(v -> {
             KeyValue keyValue = binding.tyfw.getValue();
             if (keyValue == null) {
-                CToast.showShort(this, "请先选择停运范围！");
+                ToastUtils.showMessage("请先选择停运范围！");
                 return;
             }
             if ("全站".equals(keyValue.getValueStr())) {
-                CToast.showShort(this, "全站设备均停运，无需选择！");
+                ToastUtils.showMessage("全站设备均停运，无需选择！");
                 return;
             }
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
@@ -114,7 +124,7 @@ public class TZQKActivity extends BaseActivity {
         binding.gzxl.setDataProvider(() -> PmsXianluService.getInstance().findXianluByBdz(currentBdzId));
     }
 
-    private void initData() {
+    public void loadData() {
         sbgzjl = GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
         if (sbgzjl == null) sbgzjl = SbjcGztzjl.create(currentReportId, currentBdzId);
         binding.kgdlqbh.setKeyValue(new KeyValue(sbgzjl.dlqbh, sbgzjl.dlqmc));
@@ -172,11 +182,11 @@ public class TZQKActivity extends BaseActivity {
         String dlqjcqk = binding.dlqjcqk.getValueStr();
         if (isCheck) {
             if (dlqbh == null || sbxb == null || gzxl == null || StringUtils.isHasOneEmpty(dlqtzqk, yyjjcqk, sfdz, kgdzpj, sfzngz, gzfssj)) {
-                CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                 return false;
             }
             if (gzdydj == null || gzlx == null || gzsdtq == null || gzlb == null || StringUtils.isHasOneEmpty(gzsfyj, sfty, sftz, dlqjcqk)) {
-                CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                 return false;
             }
         } else {
@@ -195,7 +205,7 @@ public class TZQKActivity extends BaseActivity {
             gztysb = binding.gztysb.getValue();
             if (isCheck) {
                 if (tyfw == null || (!"全站".equals(tyfw.getValueStr()) && gztysb == null)) {
-                    CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                    ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                     return false;
                 }
             }

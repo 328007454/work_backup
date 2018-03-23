@@ -7,10 +7,10 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.core.adapter.ViewHolder;
-import com.cnksi.core.utils.DisplayUtil;
-import com.cnksi.core.utils.NumberUtil;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.adapter.ViewHolder;
+import com.cnksi.sjjc.util.NumberUtil;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -126,7 +126,7 @@ public class ChartDialog {
         data.setValueFormatter(new MyValueFormatter());
         chart.setData(data);
 
-        dialog.setContentView(holder.getRootView(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, NumberUtil.convertFloatToInt(DisplayUtil.getInstance().getScale() * 800)));
+        dialog.setContentView(holder.getRootView(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, NumberUtil.convertFloatToInt(DisplayUtils.getInstance().getScale() * 800)));
         dialog.show();
     }
 

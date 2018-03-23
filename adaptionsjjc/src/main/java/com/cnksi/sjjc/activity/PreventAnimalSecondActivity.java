@@ -5,21 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
-import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Task;
+import com.cnksi.sjjc.databinding.ActivityPreventSecondAnimalBinding;
+import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;
 import com.cnksi.sjjc.service.ReportService;
@@ -29,9 +33,6 @@ import com.cnksi.sjjc.util.DialogUtils;
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.List;
 
@@ -42,40 +43,6 @@ import java.util.List;
  */
 public class PreventAnimalSecondActivity extends BaseActivity {
 
-    /**
-     * 发现问题点
-     */
-    @ViewInject(R.id.tv_discover_position)
-    private TextView tvDiscover;
-    /**
-     * 清楚情况
-     */
-    @ViewInject(R.id.tv_clear_position)
-    private TextView tvClear;
-
-    @ViewInject(R.id.radio_switch)
-    private RadioGroup radioGroupSwitch;
-
-    @ViewInject(R.id.radio_indoor)
-    private RadioGroup radioGroupIndoor;
-
-    @ViewInject(R.id.radio_outdoor)
-    private RadioGroup radioGroupOutdoor;
-
-    @ViewInject(R.id.radio_window)
-    private RadioGroup radioGroupWindow;
-
-    @ViewInject(R.id.radio_ratsbane)
-    private RadioGroup radioGroupRatsbane;
-
-    @ViewInject(R.id.radio_mousetrap)
-    private RadioGroup radioGroupMousetrap;
-
-    /**
-     * 鼠药及捕鼠器具放置情况
-     */
-    @ViewInject(R.id.et_mouse_info)
-    private TextView etMouseInfo;
 
     private PreventionRecord preventionRecord;
     //
@@ -112,118 +79,101 @@ public class PreventAnimalSecondActivity extends BaseActivity {
         }
     };
 
+    ActivityPreventSecondAnimalBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_prevent_second_animal);
-        x.view().inject(_this);
+        binding = ActivityPreventSecondAnimalBinding.inflate(getLayoutInflater());
+        setChildView(binding.getRoot());
         getIntentValue();
-        initUI();
-        initDatata();
+        initView();
+        loadData();
+        initOnClick();
     }
 
-    private void initUI() {
-        tvTitle.setText("防小动物措施检查");
-        radioGroupSwitch.setOnCheckedChangeListener(checkedChangeListener);
-        radioGroupIndoor.setOnCheckedChangeListener(checkedChangeListener);
-        radioGroupMousetrap.setOnCheckedChangeListener(checkedChangeListener);
-        radioGroupOutdoor.setOnCheckedChangeListener(checkedChangeListener);
-        radioGroupWindow.setOnCheckedChangeListener(checkedChangeListener);
-        radioGroupRatsbane.setOnCheckedChangeListener(checkedChangeListener);
+    @Override
+    public void initUI() {
+
     }
 
-    private void initDatata() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    preventionRecord = PreventionService.getInstance().findPreventionRecordByReoprtId(currentReportId);
-                    report = ReportService.getInstance().findById(currentReportId);
-//                    preventionRecord = (PreventionRecord) getIntent().getSerializableExtra("PreventionRecord");
-                    mHoleList = HoleReportService.getInstance().getCurrentClearRecord(currentReportId, currentBdzId);
-                    if (null == preventionRecord) {
-                        preventionRecord = new PreventionRecord(currentReportId, currentBdzId, currentBdzName);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void initView() {
+        mTitleBinding.tvTitle.setText("防小动物措施检查");
+        binding.radioSwitch.setOnCheckedChangeListener(checkedChangeListener);
+        binding.radioIndoor.setOnCheckedChangeListener(checkedChangeListener);
+        binding.radioMousetrap.setOnCheckedChangeListener(checkedChangeListener);
+        binding.radioOutdoor.setOnCheckedChangeListener(checkedChangeListener);
+        binding.radioWindow.setOnCheckedChangeListener(checkedChangeListener);
+        binding.radioRatsbane.setOnCheckedChangeListener(checkedChangeListener);
+    }
+
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                preventionRecord = PreventionService.getInstance().findPreventionRecordByReoprtId(currentReportId);
+                report = ReportService.getInstance().findById(currentReportId);
+                mHoleList = HoleReportService.getInstance().getCurrentClearRecord(currentReportId, currentBdzId);
+                if (null == preventionRecord) {
+                    preventionRecord = new PreventionRecord(currentReportId, currentBdzId, currentBdzName);
                 }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
-    @Event({R.id.btn_next})
-    private void clickEvent(View view) {
-        switch (view.getId()) {
-            case R.id.btn_next:
-                if (TextUtils.isEmpty(etMouseInfo.getText().toString())) {
-                    CToast.showShort(_this, "请输入鼠药及捕鼠器具放置情况");
-                    return;
-                }
-                showSureDialog();
-                break;
+    private void initOnClick() {
+        binding.btnNext.setOnClickListener(view -> {
+            if (TextUtils.isEmpty(binding.etMouseInfo.getText().toString())) {
+                ToastUtils.showMessage("请输入鼠药及捕鼠器具放置情况");
+                return;
+            }
+            showSureDialog();
+        });
 
-        }
     }
 
-    private SureHolder mSureHolder;
     private Dialog mSureDialog;
+    private DialogTipsBinding mTipsBinding;
 
     private void showSureDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(mCurrentActivity) * 7 / 9;
-        if (mSureHolder == null) {
-            mSureHolder = new SureHolder();
-        }
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
         if (mSureDialog == null) {
-            mSureDialog = DialogUtils.createDialog(mCurrentActivity, null, R.layout.dialog_tips, mSureHolder, dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
-
+            mTipsBinding = DialogTipsBinding.inflate(LayoutInflater.from(getApplicationContext()));
+            mSureDialog = DialogUtils.creatDialog(mActivity, mTipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
-        mSureHolder.tvTitle.setText("提示");
-        mSureHolder.tvContent.setText("是否完成本次检查");
+        mTipsBinding.tvDialogTitle.setText("提示");
+        mTipsBinding.tvDialogContent.setText("是否完成本次检查");
         mSureDialog.show();
-        mSureHolder.btCancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSureDialog.dismiss();
+        mTipsBinding.btnCancel.setOnClickListener(view -> mSureDialog.dismiss());
+
+        mTipsBinding.btnSure.setOnClickListener(view -> {
+            try {
+                preventionRecord.mousetrapInfo = binding.etMouseInfo.getText().toString();
+                preventionRecord.clearInfo = binding.tvClearPosition.getText().toString().trim();
+                preventionRecord.last_modify_time = DateUtils.getCurrentLongTime();
+                PreventionService.getInstance().saveOrUpdate(preventionRecord);
+                report.endtime = DateUtils.getCurrentLongTime();
+                ReportService.getInstance().saveOrUpdate(report);
+                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            Intent intent = new Intent(_this, AnimalReportActivity.class);
+            isNeedUpdateTaskState = true;
+            startActivity(intent);
+            _this.finish();
+            mSureDialog.dismiss();
+            ScreenManager.getScreenManager().popActivity(PreventAnimalActivity.class);
+
         });
-
-        mSureHolder.btFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    preventionRecord.mousetrapInfo = etMouseInfo.getText().toString();
-                    preventionRecord.clearInfo = tvClear.getText().toString().trim();
-                    preventionRecord.last_modify_time = DateUtils.getCurrentLongTime();
-                    PreventionService.getInstance().saveOrUpdate(preventionRecord);
-                    report.endtime = DateUtils.getCurrentLongTime();
-                    ReportService.getInstance().saveOrUpdate(report);
-                    TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent(_this, AnimalReportActivity.class);
-                isNeedUpdateTaskState = true;
-                startActivity(intent);
-                _this.finish();
-                mSureDialog.dismiss();
-                ScreenManager.getInstance().popActivity(PreventAnimalActivity.class);
-
-            }
-        });
-
-    }
-
-    class SureHolder {
-        @ViewInject(R.id.tv_dialog_title)
-        private TextView tvTitle;
-        @ViewInject(R.id.tv_dialog_content)
-        private TextView tvContent;
-
-        @ViewInject(R.id.btn_cancel)
-        private Button btCancle;
-        @ViewInject(R.id.btn_sure)
-        private Button btFinish;
 
     }
 
@@ -242,23 +192,27 @@ public class PreventAnimalSecondActivity extends BaseActivity {
     }
 
     private void checkStatus() {
-        if (0 == preventionRecord.switchStatus) radioGroupSwitch.check(R.id.switch_yes);
-        else radioGroupSwitch.check(R.id.switch_no);
 
-        if (0 == preventionRecord.inroomStatus) radioGroupIndoor.check(R.id.indoor_yes);
-        else radioGroupIndoor.check(R.id.indoor_no);
+        if (0 == preventionRecord.switchStatus) binding.radioSwitch.check(R.id.switch_yes);
+        else binding.radioSwitch.check(R.id.switch_no);
 
-        if (0 == preventionRecord.outroomStatus) radioGroupOutdoor.check(R.id.outdoor_yes);
-        else radioGroupOutdoor.check(R.id.outdoor_no);
+        if (0 == preventionRecord.inroomStatus) binding.radioIndoor.check(R.id.indoor_yes);
+        else binding.radioIndoor.check(R.id.indoor_no);
 
-        if (0 == preventionRecord.doorWindowStatus) radioGroupWindow.check(R.id.window_yes);
-        else radioGroupWindow.check(R.id.window_no);
+        if (0 == preventionRecord.outroomStatus) binding.radioOutdoor.check(R.id.outdoor_yes);
+        else binding.radioOutdoor.check(R.id.outdoor_no);
 
-        if (0 == preventionRecord.ratsbaneStatus) radioGroupRatsbane.check(R.id.ratsbane_yes);
-        else radioGroupRatsbane.check(R.id.ratsbane_no);
+        if (0 == preventionRecord.doorWindowStatus) binding.radioWindow.check(R.id.window_yes);
+        else binding.radioWindow.check(R.id.window_no);
 
-        if (0 == preventionRecord.mousetrapStatus) radioGroupMousetrap.check(R.id.mousetrap_yes);
-        else radioGroupMousetrap.check(R.id.mousetrap_no);
+        if (0 == preventionRecord.ratsbaneStatus) binding.radioRatsbane.check(R.id.ratsbane_yes);
+        else binding.radioRatsbane.check(R.id.ratsbane_no);
+
+        if (0 == preventionRecord.mousetrapStatus) {
+            binding.radioMousetrap.check(R.id.mousetrap_yes);
+        } else {
+            binding.radioMousetrap.check(R.id.mousetrap_no);
+        }
 
     }
 
@@ -289,13 +243,15 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                 morePostion = morePostion.substring(0, morePostion.length() - 1);
             }
         }
+
         if (!TextUtils.isEmpty(problemPosition)) {
-            tvDiscover.setVisibility(View.VISIBLE);
-            tvDiscover.setText(problemPosition);
+            binding.tvDiscoverPosition.setVisibility(View.VISIBLE);
+            binding.tvDiscoverPosition.setText(problemPosition);
         }
+
         if (!TextUtils.isEmpty(morePostion)) {
-            tvClear.setVisibility(View.VISIBLE);
-            tvClear.setText(morePostion);
+            binding.tvClearPosition.setVisibility(View.VISIBLE);
+            binding.tvClearPosition.setText(morePostion);
         }
 
 

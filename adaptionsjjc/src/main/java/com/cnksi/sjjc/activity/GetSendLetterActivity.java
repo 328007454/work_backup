@@ -2,6 +2,7 @@ package com.cnksi.sjjc.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
@@ -18,14 +19,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.cnksi.core.adapter.ViewHolder;
-import com.cnksi.core.utils.CToast;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.core.utils.DisplayUtil;
-import com.cnksi.core.utils.KeyBoardUtils;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Spacing;
@@ -38,10 +40,10 @@ import com.cnksi.sjjc.service.SpacingService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.service.TransceiverService;
 import com.cnksi.sjjc.util.FunctionUtil;
+import com.cnksi.sjjc.util.KeyBoardUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
-import org.xutils.view.annotation.Event;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -82,33 +84,42 @@ public class GetSendLetterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityGetSendLetterBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
-        tvTitle.setText("收发信机测试");
         getIntentValue();
-        initData();
+        initView();
+        loadData();
+        mTitleBinding.tvTitle.setText("收发信机测试");
+        initOnclick();
+    }
+
+    @Override
+    public void initUI() {
 
     }
 
-    private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    report = ReportService.getInstance().getReportById(currentReportId);
-                    //查询收发信机设备的集合
-                    transceiverDeviceList = DeviceService.getInstance().findTransceiverDevice(currentBdzId);
-                    if (null != transceiverDeviceList && !transceiverDeviceList.isEmpty()) {
-                        mHandler.sendEmptyMessage(LOAD_DEVICE_SUCCESS);
-                    } else
-                        mHandler.sendEmptyMessage(LOAD_DEVICE_FAILURE);
+    @Override
+    public void initData() {
 
-                } catch (DbException e) {
-                    e.printStackTrace();
+    }
+
+
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                report = ReportService.getInstance().getReportById(currentReportId);
+                //查询收发信机设备的集合
+                transceiverDeviceList = DeviceService.getInstance().findTransceiverDevice(currentBdzId);
+                if (null != transceiverDeviceList && !transceiverDeviceList.isEmpty()) {
+                    mHandler.sendEmptyMessage(LOAD_DEVICE_SUCCESS);
+                } else {
+                    mHandler.sendEmptyMessage(LOAD_DEVICE_FAILURE);
                 }
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
     }
 
-    private void initUI() {
+    public void initView() {
         binding.radioChannel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -119,8 +130,9 @@ public class GetSendLetterActivity extends BaseActivity {
                 }
             }
         });
-        if (null == transceiverDeviceList || transceiverDeviceList.isEmpty())
+        if (null == transceiverDeviceList || transceiverDeviceList.isEmpty()) {
             return;
+        }
         int deviceCount = transceiverDeviceList.size();
         for (int i = 0; i < deviceCount; i++) {
             Device transceiverDevice = transceiverDeviceList.get(i);
@@ -155,10 +167,11 @@ public class GetSendLetterActivity extends BaseActivity {
                     binding.imageLocation.startAnimation(animation);
                     saveCurrentPage();
                     changeTab(v);
-                    if (v.getLeft() + v.getWidth() - binding.tabStrip.getScrollX() >= DisplayUtil.getInstance().getWidth())
-                        binding.tabStrip.smoothScrollBy(v.getLeft() + v.getWidth() - DisplayUtil.getInstance().getWidth() + 150, 0);
-                    else if (v.getLeft() <= binding.tabStrip.getScrollX())
+                    if (v.getLeft() + v.getWidth() - binding.tabStrip.getScrollX() >= DisplayUtils.getInstance().getWidth()) {
+                        binding.tabStrip.smoothScrollBy(v.getLeft() + v.getWidth() - DisplayUtils.getInstance().getWidth() + 150, 0);
+                    } else if (v.getLeft() <= binding.tabStrip.getScrollX()) {
                         binding.tabStrip.smoothScrollBy(v.getLeft() - 150 - binding.tabStrip.getScrollX(), 0);
+                    }
                 }
             });
         }
@@ -172,43 +185,35 @@ public class GetSendLetterActivity extends BaseActivity {
                 initUI();
                 break;
             case LOAD_DEVICE_FAILURE:
-                CToast.showShort(this, "未查询到收发信机设备");
+                ToastUtils.showMessage("未查询到收发信机设备");
                 break;
         }
     }
 
-    @Event({R.id.btn_back, R.id.btn_finish, R.id.take_pic, R.id.show_pic})
-    private void onViewClick(View view) {
-        switch (view.getId()) {
-            //返回
-            case R.id.btn_back:
-                KeyBoardUtils.closeKeybord(_this);
-                onBackPressed();
-                this.finish();
-                break;
-            //完成任务
-            case R.id.btn_finish:
-                if (saveCurrentPage()) {
-                    Dialog dialog = new Dialog(this, R.style.dialog);
-                    ViewHolder holder = new ViewHolder(this, null, R.layout.dialog_test_conclusion, false);
-                    AutoUtils.autoSize(holder.getRootView());
-                    dialog.setContentView(holder.getRootView());
-                    dialogEvent(dialog, holder);
-                    dialog.show();
-                }
-                break;
-            //拍照
-            case R.id.take_pic:
-                imageName = FunctionUtil.getCurrentImageName(this);
-                FunctionUtil.takePicture(this, imageName, Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
-                break;
-            //显示大图
-            case R.id.show_pic:
-                viewPic();
-                break;
-            default:
-                break;
-        }
+    private void initOnclick() {
+        mTitleBinding.btnBack.setOnClickListener(view -> {
+            KeyBoardUtils.closeKeybord(_this);
+            onBackPressed();
+            this.finish();
+        });
+
+        binding.btnFinish.setOnClickListener(view -> {
+            if (saveCurrentPage()) {
+                Dialog dialog = new Dialog(this, R.style.dialog);
+                ViewHolder holder = new ViewHolder(this, null, R.layout.dialog_test_conclusion, false);
+                AutoUtils.autoSize(holder.getRootView());
+                dialog.setContentView(holder.getRootView());
+                dialogEvent(dialog, holder);
+                dialog.show();
+            }
+        });
+        binding.takePic.setOnClickListener(view -> {
+            imageName = FunctionUtil.getCurrentImageName(this);
+            FunctionUtil.takePicture(this, imageName, Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
+        });
+        binding.showPic.setOnClickListener(view -> {
+            viewPic();
+        });
     }
 
     @Override
@@ -226,14 +231,14 @@ public class GetSendLetterActivity extends BaseActivity {
                 //删除后的图片
                 case Config.CANCEL_RESULT_LOAD_IMAGE:
                     ArrayList<String> deleteImages = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
-                    ArrayList<String> exitImages = StringUtils.string2List(currentTransceiver.images);
+                    ArrayList<String> exitImages = StringUtils.string2List(currentTransceiver.images, false);
                     for (String image : deleteImages) {
                         String realImage = image.replace(Config.RESULT_PICTURES_FOLDER, "");
                         if (exitImages.contains(realImage)) {
                             exitImages.remove(realImage);
                         }
                     }
-                    currentTransceiver.images = StringUtils.ArrayListToString(exitImages);
+                    currentTransceiver.images = StringUtils.arrayListToString(exitImages);
                     showThumbPic();
                     saveCurrentPage();
                     break;
@@ -249,16 +254,16 @@ public class GetSendLetterActivity extends BaseActivity {
     private boolean saveCurrentPage() {
         String sendLevelStr = binding.editSendLevel.getText().toString();
         String receiveLevelStr = binding.editReceiveLevel.getText().toString();
-        if ((!TextUtils.isEmpty(sendLevelStr) || !TextUtils.isEmpty(receiveLevelStr)) && (TextUtils.isEmpty(StringUtils.getTransformTep(sendLevelStr)) || TextUtils.isEmpty(StringUtils.getTransformTep(receiveLevelStr)))) {
-            CToast.showShort(_this, "请输入正确的发信电平或者收信电平");
+        if ((!TextUtils.isEmpty(sendLevelStr) || !TextUtils.isEmpty(receiveLevelStr)) && (TextUtils.isEmpty(com.cnksi.sjjc.util.StringUtils.getTransformTep(sendLevelStr)) || TextUtils.isEmpty(com.cnksi.sjjc.util.StringUtils.getTransformTep(receiveLevelStr)))) {
+            ToastUtils.showMessage("请输入正确的发信电平或者收信电平");
             return false;
         }
         if (null == currentDevice) {
-            CToast.showLong(mCurrentActivity, "当前页面没有设备，记录将不会保存。");
+            ToastUtils.showMessage("当前页面没有设备，记录将不会保存。");
             return true;
         }
-        currentTransceiver.sendLevel = StringUtils.getTransformTep(sendLevelStr);
-        currentTransceiver.receiveLevel = StringUtils.getTransformTep(receiveLevelStr);
+        currentTransceiver.sendLevel = com.cnksi.sjjc.util.StringUtils.getTransformTep(sendLevelStr);
+        currentTransceiver.receiveLevel = com.cnksi.sjjc.util.StringUtils.getTransformTep(receiveLevelStr);
         currentTransceiver.channelStatus = binding.radioChannel.getCheckedRadioButtonId() == R.id.radio_normal ? 0 : 1;
         currentTransceiver.remark = binding.editRemark.getText().toString();
         try {
@@ -308,11 +313,11 @@ public class GetSendLetterActivity extends BaseActivity {
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
-            } else
+            } else {
 //                childView.setSelected(false);
                 tvView.setSelected(false);
+            }
         }
-
         imageName = null;
         binding.tvSpacing.setText(transceiveSpacing.get(currentDevice.deviceid).name);
         if (null != currentTransceiver) {
@@ -338,7 +343,7 @@ public class GetSendLetterActivity extends BaseActivity {
      */
     private void showThumbPic() {
         if (null != currentTransceiver && !TextUtils.isEmpty(currentTransceiver.images)) {
-            List<String> images = StringUtils.string2List(currentTransceiver.images);
+            List<String> images = StringUtils.string2List(currentTransceiver.images, false);
             if (!images.isEmpty()) {
                 binding.showPic.setVisibility(View.VISIBLE);
                 if (images.size() > 1) {
@@ -347,8 +352,8 @@ public class GetSendLetterActivity extends BaseActivity {
                 } else {
                     binding.tvPics.setVisibility(View.GONE);
                 }
-                mBitmapUtils.bind(binding.showPic, Uri.fromFile(new File(Config.RESULT_PICTURES_FOLDER + images.get(0))).toString());
-
+                Bitmap bitmap = BitmapUtils.getImageThumbnailByHeight(new File(Config.RESULT_PICTURES_FOLDER + images.get(0)).toString(), 100);
+                binding.showPic.setImageBitmap(bitmap);
             }
         } else {
             binding.showPic.setVisibility(View.GONE);
@@ -365,7 +370,7 @@ public class GetSendLetterActivity extends BaseActivity {
         Intent intent = new Intent(this, ImageDetailsActivity.class);
         intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
         intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
-        ArrayList<String> images = StringUtils.string2List(currentTransceiver.images);
+        ArrayList<String> images = StringUtils.string2List(currentTransceiver.images, false);
         ArrayList<String> viewImages = new ArrayList<String>();
         for (String image : images) {
             viewImages.add(Config.RESULT_PICTURES_FOLDER + image);
@@ -393,8 +398,9 @@ public class GetSendLetterActivity extends BaseActivity {
                     sb.append(String.format("%1$s%2$s异常", transceiveSpacing.get(transceiver.deviceId).name + "----", transceiver.deviceName)).append("<br>");
                 }
             }
-            if (sb.length() > 4)
+            if (sb.length() > 4) {
                 sb.delete(sb.length() - 4, sb.length());
+            }
             report.remain_problems = Html.fromHtml(sb.toString()).toString();
             editRemainProblem.setText(report.remain_problems);
         } catch (DbException e) {

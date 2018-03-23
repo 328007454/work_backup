@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.activity;
 
 import android.app.Activity;
+import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -9,35 +10,32 @@ import android.widget.VideoView;
 
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.databinding.ActivityPlayVideoBinding;
 
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 public class PlayVideoActivity extends Activity {
-	
-	@ViewInject(R.id.vv_audio)
-	VideoView mVvAudio;
-	
-	private MediaController mController = null;
 
+	private MediaController mController = null;
+	private ActivityPlayVideoBinding binding;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_play_video);
-		x.view().inject(this);
-		initUI();
-		initData();
+		binding = DataBindingUtil.setContentView(this,R.layout.activity_play_video);
+		initView();
+		loadData();
 	}
 
 
 
-	protected void initUI() {
+	protected void initView() {
 		String videoPath = getIntent().getStringExtra(Config.VIDEO_PATH);
 		
 		initVideoView(videoPath);
 	}
 
-	protected void initData() {
+	protected void loadData() {
 		
 	}
 	
@@ -47,12 +45,12 @@ public class PlayVideoActivity extends Activity {
 	 */
 	private void initVideoView(String videoPath){
 		mController = new MediaController(this);
-		mVvAudio.setVideoPath(videoPath);
-		mVvAudio.setMediaController(mController);
-		mController.setMediaPlayer(mVvAudio);
-		mVvAudio.requestFocus();
-		mVvAudio.start();
-		mVvAudio.setOnCompletionListener(new OnCompletionListener() {
+		binding.vvAudio.setVideoPath(videoPath);
+		binding.vvAudio.setMediaController(mController);
+		mController.setMediaPlayer(binding.vvAudio);
+		binding.vvAudio.requestFocus();
+		binding.vvAudio.start();
+		binding.vvAudio.setOnCompletionListener(new OnCompletionListener() {
 			
 			@Override
 			public void onCompletion(MediaPlayer mp) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 是否合格-->
+<layout>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -40,3 +41,4 @@
         android:background="@color/gray_background_color"
         android:visibility="visible"/>
 </RelativeLayout>
+</layout>

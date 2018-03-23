@@ -3,27 +3,26 @@ package com.cnksi.sjjc;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.ImageView;
 
 import com.cnksi.bdloc.LLog;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.core.application.CoreApplication;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.CLog;
-import com.cnksi.core.utils.DisplayUtil;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.FileUtils;
+import com.cnksi.core.utils.NetWorkUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.utils.crash.CrashHandler;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
 import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
-import com.tendcloud.tenddata.TCAgent;
 
 import org.xutils.DbManager;
 import org.xutils.ex.DbException;
-import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.io.File;
@@ -156,37 +155,37 @@ public class CustomApplication extends CoreApplication {
      *
      * @return
      */
-    public static ImageOptions getLargeImageOptions() {
-        return new ImageOptions.Builder()
-                .setSize(0, 0).setUseMemCache(false).setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-                // .setRadius(DensityUtil.dip2px(5))
-                // 如果ImageView的大小不是定义为wrap_content, 不要crop.
-                //  .setCrop(true) // 很多时候设置了合适的scaleType也不需要它.
-                // 加载中或错误图片的ScaleType
-                //.setPlaceholderScaleType(ImageView.ScaleType.MATRIX)
-                // .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-                //    .setLoadingDrawableId(R.mipmap.ic_default_pic)
-                .setFailureDrawableId(R.mipmap.ic_default_pic)
-                .build();
-    }
+//    public static ImageOptions getLargeImageOptions() {
+//        return new ImageOptions.Builder()
+//                .setSize(0, 0).setUseMemCache(false).setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+//                // .setRadius(DensityUtil.dip2px(5))
+//                // 如果ImageView的大小不是定义为wrap_content, 不要crop.
+//                //  .setCrop(true) // 很多时候设置了合适的scaleType也不需要它.
+//                // 加载中或错误图片的ScaleType
+//                //.setPlaceholderScaleType(ImageView.ScaleType.MATRIX)
+//                // .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+//                //    .setLoadingDrawableId(R.mipmap.ic_default_pic)
+//                .setFailureDrawableId(R.mipmap.ic_default_pic)
+//                .build();
+//    }
 
-    public static ImageOptions getImageOPtions() {
-        return new ImageOptions.Builder()
-                .setSize(0, 0)
-                //               .setRadius(DensityUtil.dip2px(5))
-//                .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-                //设置加载过程中的图片
-                .setLoadingDrawableId(R.mipmap.ic_default_pic)
-                //设置加载失败后的图片
-                .setFailureDrawableId(R.mipmap.ic_default_pic)
-                //设置使用缓存
-                .setUseMemCache(false)
-                //设置支持gif
-                .setIgnoreGif(true)
-                //设置显示圆形图片
-//      .setCircular(false)
-                .build();
-    }
+//    public static ImageOptions getImageOPtions() {
+//        return new ImageOptions.Builder()
+//                .setSize(0, 0)
+//                //               .setRadius(DensityUtil.dip2px(5))
+////                .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+//                //设置加载过程中的图片
+//                .setLoadingDrawableId(R.mipmap.ic_default_pic)
+//                //设置加载失败后的图片
+//                .setFailureDrawableId(R.mipmap.ic_default_pic)
+//                //设置使用缓存
+//                .setUseMemCache(false)
+//                //设置支持gif
+//                .setIgnoreGif(true)
+//                //设置显示圆形图片
+////      .setCircular(false)
+//                .build();
+//    }
 
     /**
      * 递归拷贝assets文件到SD卡
@@ -222,13 +221,15 @@ public class CustomApplication extends CoreApplication {
                         continue;
                     }
                     File outFile = new File(mWorkingPath, fileName);
-                    if (outFile.exists())
+                    if (outFile.exists()) {
                         outFile.delete();
+                    }
                     InputStream in = null;
-                    if (0 != assetDir.length())
+                    if (0 != assetDir.length()) {
                         in = context.getAssets().open(assetDir + "/" + fileName);
-                    else
+                    } else {
                         in = context.getAssets().open(fileName);
+                    }
                     OutputStream out = new FileOutputStream(outFile);
                     byte[] buf = new byte[2048];
                     int len;
@@ -282,8 +283,9 @@ public class CustomApplication extends CoreApplication {
     }
 
     public HashMap<String, String> getCopyedMap() {
-        if (copyedMap == null)
+        if (copyedMap == null) {
             copyedMap = new HashMap<>();
+        }
         return copyedMap;
     }
 
@@ -292,15 +294,17 @@ public class CustomApplication extends CoreApplication {
         super.onCreate();
         mInstance = this;
 //        AutoLayoutConifg.getInstance().useDeviceSize().init(this);
-        TCAgent.LOG_ON = true;
-        TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
-        TCAgent.setReportUncaughtExceptions(true);
-        DisplayUtil.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
+//        TCAgent.LOG_ON = true;
+//        TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
+//        TCAgent.setReportUncaughtExceptions(true);
+        PreferencesUtils.init(getApplicationContext());
+        ToastUtils.init(getApplicationContext());
+        DisplayUtils.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
         CLog.init(true);
         PlaySound.initPlay(this);
         CrashReportUploadHandler.init(mInstance, Config.LOGFOLDER).start();
-        if (PreferencesUtils.getBoolean(this, Config.MASK_WIFI, true) && !BuildConfig.USE_NETWORK_SYNC) {
-            com.cnksi.core.utils.NetWorkUtil.disableNetWork(this);
+        if (PreferencesUtils.get(Config.MASK_WIFI, true) && !BuildConfig.USE_NETWORK_SYNC) {
+            NetWorkUtils.disableNetWork(this);
         }
         initRuntimeVar();
         TTSUtils.init(getAppContext());
@@ -309,13 +313,12 @@ public class CustomApplication extends CoreApplication {
     }
 
     public void initApp() {
-        FileUtils.initFile(filePathArray);
+        FileUtils.makeDirectory(filePathArray);
         copyAssetsToSDCard();
-        TCAgent.onError(mInstance, CrashHandler.getInstance().getUncaughtException());
     }
 
     public void restartApp() {
-        ScreenManager.getInstance().popAllActivityExceptOne(null);
+        ScreenManager.getScreenManager().popAllActivityExceptOne(null);
         Intent intent = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(getBaseContext().getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -337,11 +340,11 @@ public class CustomApplication extends CoreApplication {
     }
 
     private void copyAssetsToSDCard() {
-        if (PreferencesUtils.getInt(mInstance, "DataVersion", 0) < DataVersion)
-            mExcutorService.execute(() -> {
+        if (PreferencesUtils.get("DataVersion", 0) < DataVersion) {
+            ExecutorManager.executeTaskSerially(() -> {
                 if (BuildConfig.HAS_WEB_ASSETS) {
                     delAllFile(Config.WWWROOT_FOLDER);
-                    if (copyAssetsToSDCard(mInstance, "www", Config.WWWROOT_FOLDER)) {
+                    if (copyAssetsToSDCard(mInstance, "src/main/assets-web/www", Config.WWWROOT_FOLDER)) {
                         try {
                             XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
                         } catch (Exception e) {
@@ -350,8 +353,9 @@ public class CustomApplication extends CoreApplication {
                     }
                     copyAssetsToSDCard(mInstance, "database", Config.DATABASE_FOLDER);
                 }
-                PreferencesUtils.put(mInstance, "DataVersion", DataVersion);
+                PreferencesUtils.put("DataVersion", DataVersion);
             });
+        }
     }
 
     public boolean delAllFile(String path) {
@@ -396,8 +400,8 @@ public class CustomApplication extends CoreApplication {
     }
 
     private void initRuntimeVar() {
-        Config.SYNC_URL = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_URL, Config.SYNC_URL);
-        Config.SYNC_APP_ID = PreferencesUtils.getString(mInstance, Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
+        Config.SYNC_URL = PreferencesUtils.get(Config.KEY_SYNC_URL, Config.SYNC_URL);
+        Config.SYNC_APP_ID = PreferencesUtils.get(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
     }
 
 

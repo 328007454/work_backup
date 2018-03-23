@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.text.TextUtils;
@@ -19,25 +20,26 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cnksi.core.adapter.ViewHolder;
-import com.cnksi.core.utils.DisplayUtil;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.datepicker.NumericWheelAdapter;
 import com.cnksi.core.view.datepicker.WheelMain;
 import com.cnksi.core.view.datepicker.WheelView;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.adapter.ViewHolder;
+import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.zhy.autolayout.utils.AutoUtils;
-
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.Calendar;
 
+/**
+ * @author kkk
+ */
 public class DialogUtils {
 
     private static Dialog dialog = null;
     private static TipsViewHolder mTipsHolder;
+    private static ViewDataBinding dataBinding;
 
     /**
      * 创建dialog
@@ -95,9 +97,9 @@ public class DialogUtils {
     public static Dialog createDialog(Context context, ViewGroup parent, int resource, Object holder, int width, int height, boolean cancelable) {
         dialog = new Dialog(context, R.style.DialogStyle);
         dialog.setCanceledOnTouchOutside(cancelable);
-        View view = LayoutInflater.from(context).inflate(resource, parent, false);
-        x.view().inject(holder, view);
-        dialog.setContentView(view);
+        dataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), resource, null, false);
+//        View view = LayoutInflater.from(context).inflate(resource, parent, false);
+        dialog.setContentView(dataBinding.getRoot());
         Window mWindow = dialog.getWindow();
         if (width != 0 || height != 0) {
 
@@ -248,14 +250,27 @@ public class DialogUtils {
      * @param mOnclickListener
      */
     public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogTitle, String dialogContent, String sureText, String cancelText, OnViewClickListener mOnclickListener) {
-        int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
+        int dialogWidth = DisplayUtils.getInstance().getWidth() * 9 / 10;
         createDialog(mActivity, mRootContainer, R.layout.dialog_tips, mTipsHolder = new TipsViewHolder(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, false);
         mTipsHolder.mOnclickListener = mOnclickListener;
-        mTipsHolder.mTvDialogTile.setText(TextUtils.isEmpty(dialogTitle) ? mActivity.getString(R.string.dialog_tips_str) : dialogTitle);
-        mTipsHolder.mTvDialogContent.setText(dialogContent);
-        mTipsHolder.mBtnSure.setText(TextUtils.isEmpty(sureText) ? mActivity.getString(R.string.yes_str) : sureText);
-        mTipsHolder.mBtnCancel.setText(TextUtils.isEmpty(cancelText) ? mActivity.getString(R.string.no_str) : cancelText);
-        dialog.show();
+        if (dataBinding != null) {
+            DialogTipsBinding tipsBinding = (DialogTipsBinding) dataBinding;
+            tipsBinding.tvDialogTitle.setText(TextUtils.isEmpty(dialogTitle) ? mActivity.getString(R.string.dialog_tips_str) : dialogTitle);
+            tipsBinding.tvDialogContent.setText(dialogContent);
+            tipsBinding.btnSure.setText(TextUtils.isEmpty(sureText) ? mActivity.getString(R.string.yes_str) : sureText);
+            tipsBinding.btnCancel.setText(TextUtils.isEmpty(cancelText) ? mActivity.getString(R.string.no_str) : cancelText);
+            dialog.show();
+
+            ((DialogTipsBinding) dataBinding).btnCancel.setOnClickListener((v) -> {
+                dialog.dismiss();
+                dialog = null;
+            });
+            ((DialogTipsBinding) dataBinding).btnSure.setOnClickListener((v) -> {
+                if (mOnclickListener != null) {
+                    mOnclickListener.onClick(v);
+                }
+            });
+        }
     }
 
     public static Dialog showDatePickerDialog(Activity context, final DialogItemClickListener dialogClickListener) {
@@ -348,12 +363,13 @@ public class DialogUtils {
             Calendar calendar = Calendar.getInstance();
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int min = calendar.get(Calendar.MINUTE);
-            final WheelView wv_hours = (WheelView) view.findViewById(com.cnksi.core.R.id.hour);
-            final WheelView wv_mins = (WheelView) view.findViewById(com.cnksi.core.R.id.min);
-            final WheelView wv_second = (WheelView) view.findViewById(com.cnksi.core.R.id.second);
-            final EditText wm = (EditText) view.findViewById(com.cnksi.core.R.id.et_mills);
-            if (!hasMills)
-                view.findViewById(com.cnksi.core.R.id.ll_mills).setVisibility(View.GONE);
+            final WheelView wv_hours = (WheelView) view.findViewById(R.id.hour);
+            final WheelView wv_mins = (WheelView) view.findViewById(R.id.min);
+            final WheelView wv_second = (WheelView) view.findViewById(R.id.second);
+            final EditText wm = (EditText) view.findViewById(R.id.et_mills);
+            if (!hasMills) {
+                view.findViewById(R.id.ll_mills).setVisibility(View.GONE);
+            }
             wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
             wv_hours.setCyclic(true);// 可循环滚动
             wv_hours.setLabel("时");// 添加文字
@@ -378,7 +394,7 @@ public class DialogUtils {
 
             container.findViewById(R.id.confirm).setOnClickListener(v -> {
                 datePickerDialog.dismiss();
-                String mimls = com.cnksi.core.utils.StringUtils.BlankToDefault(wm.getText().toString(), "0");
+                String mimls = StringUtils.BlankToDefault(wm.getText().toString(), "0");
                 String rs = String.format("%02d", wv_hours.getCurrentItem()) + ":" + String.format("%02d", wv_mins.getCurrentItem()) + ":" + String.format("%02d", wv_second.getCurrentItem());
                 if (hasMills)
                     rs = rs + " " + String.format("%03d", Integer.parseInt(mimls));
@@ -431,32 +447,32 @@ public class DialogUtils {
 
         OnViewClickListener mOnclickListener;
 
-        @ViewInject(R.id.tv_dialog_title)
-        private TextView mTvDialogTile;
+//        @ViewInject(R.id.tv_dialog_title)
+//        private TextView mTvDialogTile;
+//
+//        @ViewInject(R.id.tv_dialog_content)
+//        private TextView mTvDialogContent;
+//
+//        @ViewInject(R.id.btn_sure)
+//        private Button mBtnSure;
+//        @ViewInject(R.id.btn_cancel)
+//        private Button mBtnCancel;
 
-        @ViewInject(R.id.tv_dialog_content)
-        private TextView mTvDialogContent;
-
-        @ViewInject(R.id.btn_sure)
-        private Button mBtnSure;
-        @ViewInject(R.id.btn_cancel)
-        private Button mBtnCancel;
-
-        @Event({R.id.btn_sure, R.id.btn_cancel})
-        private void OnViewClick(View view) {
-            switch (view.getId()) {
-                case R.id.btn_sure:
-                    if (mOnclickListener != null) {
-                        mOnclickListener.onClick(view);
-                    }
-                case R.id.btn_cancel:
-                    dialog.dismiss();
-                    dialog = null;
-                    break;
-                default:
-                    break;
-            }
-        }
+//        @Event({R.id.btn_sure, R.id.btn_cancel})
+//        private void OnViewClick(View view) {
+//            switch (view.getId()) {
+//                case R.id.btn_sure:
+//                    if (mOnclickListener != null) {
+//                        mOnclickListener.onClick(view);
+//                    }
+//                case R.id.btn_cancel:
+//                    dialog.dismiss();
+//                    dialog = null;
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
     }
 
 }

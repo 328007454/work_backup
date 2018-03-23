@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300px"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+<layout>
 
-    <RelativeLayout
-        app:layout_auto_baseheight="width"
-        android:layout_width="300px"
-        android:layout_height="300px">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="300px"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
 
-        <ImageView
-            tools:ignore="ContentDescription"
-            app:layout_auto_baseheight="width"
-            android:id="@+id/iv_exception_pic"
-            android:layout_width="270px"
-            android:layout_height="270px"
-            android:layout_alignParentBottom="true"
-            android:scaleType="centerCrop"
-            />
+        <RelativeLayout
+            android:layout_width="300px"
+            android:layout_height="300px"
+            app:layout_auto_baseheight="width">
+
+            <ImageView
+                android:id="@+id/iv_exception_pic"
+                android:layout_width="270px"
+                android:layout_height="270px"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                app:layout_auto_baseheight="width"
+                tools:ignore="ContentDescription"
+                />
+
+            <TextView
+                android:id="@+id/tv_exception_num"
+                android:layout_width="54px"
+                android:layout_height="54px"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/text_background_color"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="38px"
+                android:visibility="gone"
+                app:layout_auto_baseheight="width"/>
+        </RelativeLayout>
 
         <TextView
-            app:layout_auto_baseheight="width"
-            android:id="@+id/tv_exception_num"
-            android:layout_width="54px"
-            android:layout_height="54px"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/text_background_color"
-            android:gravity="center"
-            android:textSize="38px"
-            android:textColor="@android:color/white"
-            android:visibility="gone"/>
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_device_name"
-        android:layout_width="match_parent"
-        android:layout_height="200px"
-        android:textSize="33px"/>
-</LinearLayout>
+            android:id="@+id/tv_device_name"
+            android:layout_width="match_parent"
+            android:layout_height="200px"
+            android:textSize="33px"/>
+    </LinearLayout>
+</layout>

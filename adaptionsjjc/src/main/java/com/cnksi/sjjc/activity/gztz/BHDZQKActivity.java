@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.activity.gztz;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -8,10 +9,10 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cnksi.core.utils.BitmapUtil;
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.FunctionUtils;
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.sjjc.util.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
@@ -25,6 +26,7 @@ import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
+import com.iflytek.thirdparty.B;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
@@ -59,7 +61,17 @@ public class BHDZQKActivity extends BaseActivity {
         getIntentValue();
         setTitleText(currentBdzName + "保护动作情况");
         initView();
-        initData();
+        loadData();
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     private void initView() {
@@ -98,7 +110,7 @@ public class BHDZQKActivity extends BaseActivity {
         });
 
         binding.ivTakePic.setOnClickListener(v -> {
-            FunctionUtils.takePicture(this, imageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
+            FunctionUtil.takePicture(this, imageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
         });
         binding.ivShowPic.setOnClickListener(v -> showImageDetails(this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
         binding.bhsbmc.setSelectOnClickListener(v -> {
@@ -117,14 +129,15 @@ public class BHDZQKActivity extends BaseActivity {
                 intentDevices.putExtra(AllDeviceListActivity.BIGID, bigIds);
                 intentDevices.putExtra(Config.TITLE_NAME, "请选择故障录波器");
             } else {
-                CToast.showShort(this, "没有找到别名为GZLBQ的设备大类！");
+                ToastUtils.showMessage("没有找到别名为GZLBQ的设备大类！");
             }
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
         });
     }
 
-    private void initData() {
-        mFixedThreadPoolExecutor.execute(() -> {
+
+    public void loadData() {
+        ExecutorManager.executeTaskSerially(() -> {
             sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
             SbjcGztzjl last = GZTZSbgzjlService.getInstance().findLastByDeviceId(sbjcGztzjl.dlqbh, currentReportId);
             runOnUiThread(() -> {
@@ -183,7 +196,7 @@ public class BHDZQKActivity extends BaseActivity {
                 binding.gzlbqmc.setKeyValue(new KeyValue(sbjcGztzjl.gzGzlbqmcK, sbjcGztzjl.gzGzlbqmc));
                 binding.gzlbqfx.setValueStr(sbjcGztzjl.gzGzlbfx);
                 binding.gzlbqcj.setValueStr(sbjcGztzjl.gzGzlbcj);
-                if (null!=binding.gzlbqmc.getValue()&&!TextUtils.isEmpty(binding.gzlbqmc.getValue().getValueStr())) {
+                if (null != binding.gzlbqmc.getValue() && !TextUtils.isEmpty(binding.gzlbqmc.getValue().getValueStr())) {
                     binding.gzlbqfx.setMustInput(true);
                     binding.gzlbqcj.setMustInput(true);
                 }
@@ -203,7 +216,7 @@ public class BHDZQKActivity extends BaseActivity {
         String gxtzcs;
         if (!sbjcGztzjl.checkXbTzcs(a, b, c, o)) {
             if (isCheck) {
-                CToast.showShort(this, "请填写各项跳闸次数！");
+                ToastUtils.showMessage("请填写各项跳闸次数！");
                 return false;
             } else {
                 gxtzcs = null;
@@ -231,7 +244,7 @@ public class BHDZQKActivity extends BaseActivity {
         String ldkgql = binding.ldkgqk.getValueStr();
         if (isCheck) {
             if ((chtzql == null && sbjcGztzjl.isTz()) || bhmc == null || bhsbmc == null || StringUtils.isHasOneEmpty(gzdl, ljz, ecgzdl, dzsj, zdq, ldkgql)) {
-                CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                 return false;
             }
             chtzql = nullTo(chtzql);
@@ -251,7 +264,7 @@ public class BHDZQKActivity extends BaseActivity {
         if (isCheck) {
             if (gzlbq != null) {
                 if (StringUtils.isHasOneEmpty(gzlbqfx, gzlbqcj)) {
-                    CToast.showShort(this, "请检查带星号的项目是否均已填写！");
+                    ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                     return false;
                 }
             }
@@ -297,11 +310,15 @@ public class BHDZQKActivity extends BaseActivity {
             binding.tvPicNum.setVisibility(View.INVISIBLE);
         } else if (photos.size() == 1) {
             binding.ivShowPic.setVisibility(View.VISIBLE);
-            x.image().bind(binding.ivShowPic, Config.RESULT_PICTURES_FOLDER + photos.get(0));
+            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + photos.get(0));
+            if (bitmap != null)
+                binding.ivShowPic.setImageBitmap(bitmap);
             binding.tvPicNum.setVisibility(View.INVISIBLE);
         } else {
             binding.ivShowPic.setVisibility(View.VISIBLE);
-            x.image().bind(binding.ivShowPic, Config.RESULT_PICTURES_FOLDER + photos.get(0));
+            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + photos.get(0));
+            if (bitmap != null)
+                binding.ivShowPic.setImageBitmap(bitmap);
             binding.tvPicNum.setVisibility(View.VISIBLE);
             binding.tvPicNum.setText(photos.size() + "");
         }
@@ -317,9 +334,9 @@ public class BHDZQKActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case Config.ACTION_IMAGE:
-                    CustomerDialog.showProgress(mCurrentActivity, "压缩中...");
-                    mFixedThreadPoolExecutor.execute(() -> {
-                        BitmapUtil.compressImage(Config.RESULT_PICTURES_FOLDER + imageName, 4);
+                    CustomerDialog.showProgress(mActivity, "压缩中...");
+                    ExecutorManager.executeTaskSerially(() -> {
+                        BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + imageName, 4);
                         mHandler.post(() -> {
                             CustomerDialog.dismissProgress();
                             photos.add(imageName);

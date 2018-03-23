@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_root_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-  <com.cnksi.sjjc.view.MyListView
-        android:id="@+id/lv_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@color/line_color"
-        android:dividerHeight="@dimen/line_half_width"
-        android:listSelector="@android:color/transparent" />
+<layout>
 
-</LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.cnksi.sjjc.view.MyListView
+            android:id="@+id/lv_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/line_color"
+            android:dividerHeight="@dimen/line_half_width"
+            android:listSelector="@android:color/transparent"/>
+
+    </LinearLayout>
+</layout>

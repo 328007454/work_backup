@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="102px"
-    android:padding="10px">
+<layout>
 
-    <LinearLayout
-        android:id="@+id/btn_more"
-        android:layout_width="340px"
-        android:layout_height="82px"
-        android:layout_centerInParent="true"
-        android:background="@drawable/green_button_background_selector"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="102px"
+                    android:padding="10px">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="67px"
-            android:text="查看全部"
-            android:textColor="@color/white"
-            android:textSize="38px" />
+        <LinearLayout
+            android:id="@+id/btn_more"
+            android:layout_width="340px"
+            android:layout_height="82px"
+            android:layout_centerInParent="true"
+            android:background="@drawable/green_button_background_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10px"
-            app:srcCompat="@drawable/ic_icon_more" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="67px"
+                android:text="查看全部"
+                android:textColor="@color/white"
+                android:textSize="38px"/>
 
-</RelativeLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                app:srcCompat="@drawable/ic_icon_more"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

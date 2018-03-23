@@ -154,7 +154,7 @@ public class TaskService extends BaseService<Task> {
 
 
     private String getUserExpr() {
-        String currentAcounts = PreferencesUtils.getString(Config.CURRENT_LOGIN_ACCOUNT, "");
+        String currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         String[] accoutArray = currentAcounts.split(",");
         String accountExpr;
         if (accoutArray.length > 1)

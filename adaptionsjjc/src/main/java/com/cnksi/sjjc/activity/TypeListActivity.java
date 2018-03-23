@@ -4,21 +4,18 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 
-import com.cnksi.core.utils.CToast;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.TypeAdapter;
 import com.cnksi.sjjc.bean.TJWT;
+import com.cnksi.sjjc.databinding.ActivityTypeListBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.TJWTService;
-
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,14 +26,12 @@ import static com.cnksi.sjjc.Config.CURRENT_DEPARTMENT_ID;
 
 /**
  * 每种类型列表
+ *
+ * @author kkk
  */
 public class TypeListActivity extends BaseActivity {
 
     private InspectionType mInspectionType;
-
-    @ViewInject(R.id.type_list)
-    private ListView typeListView;
-
     private List<String> data;
     private TypeAdapter adapter;
 
@@ -49,22 +44,32 @@ public class TypeListActivity extends BaseActivity {
      */
     private List<TJWT> tjwtList;
 
+    ActivityTypeListBinding mTypeListBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setChildView(R.layout.activity_type_list);
-        x.view().inject(_this);
+        mTypeListBinding = ActivityTypeListBinding.inflate(getLayoutInflater(), null, false);
+        setChildView(mTypeListBinding.getRoot());
         String mInspectionValue = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE_NAME);
         mInspectionType = InspectionType.get(mInspectionValue);
+        inUI();
+        inData();
+    }
 
-        initUI();
-        initData();
+    @Override
+    public void initUI() {
 
     }
 
-    private void initUI() {
-        tvTitle.setText(mInspectionType.value);
+    @Override
+    public void initData() {
+
+    }
+
+
+    public void inUI() {
+        mTitleBinding.tvTitle.setText(mInspectionType.value);
     }
 
     /**
@@ -72,10 +77,11 @@ public class TypeListActivity extends BaseActivity {
      */
     LinkedHashMap<String, String> SBJCInspectionMap = new LinkedHashMap<>();
 
-    private void initData() {
+
+    public void inData() {
         data = new ArrayList<String>();
         adapter = new TypeAdapter(this, data, R.layout.item_type, mInspectionType);
-        typeListView.setAdapter(adapter);
+        mTypeListBinding.typeList.setAdapter(adapter);
         List<String> typeList = null;
         switch (mInspectionType) {
             case SBXS:
@@ -136,15 +142,15 @@ public class TypeListActivity extends BaseActivity {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            CToast.showShort(_this, "该功能暂未激活");
+                            ToastUtils.showMessage("该功能暂未激活");
                         }
                     });
                     return;
                 }
                 Intent intent = new Intent();
-                intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
-                intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
-                intent.putExtra(CURRENT_DEPARTMENT_ID,PreferencesUtils.get(_this,CURRENT_DEPARTMENT_ID,""));
+                intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
+                intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
+                intent.putExtra(CURRENT_DEPARTMENT_ID, PreferencesUtils.get(CURRENT_DEPARTMENT_ID, ""));
                 ComponentName componentName;
                 switch (mInspectionType) {
                     case SBXS:
@@ -226,15 +232,15 @@ public class TypeListActivity extends BaseActivity {
                     case exclusive:
                         return;
                     case JYHYS:
-                        if (position == 0) {
-                            intent.setClass(_this, QinYouShiByqYanShouActivity.class);
-                            startActivity(intent);
-                        }
+//                        if (position == 0) {
+//                            intent.setClass(_this, QinYouShiByqYanShouActivity.class);
+//                            startActivity(intent);
+//                        }
                         return;
                     case JYHPJ:
-                        if (position == 0) intent.setClass(_this, JYHPJActivity.class);
-                        else return;
-                        break;
+//                        if (position == 0) intent.setClass(_this, JYHPJActivity.class);
+//                        else return;
+//                        break;
                     case GZP:
                         if (position == 0)
                             intent.setClass(_this, WorkPlanInformationActivity.class);

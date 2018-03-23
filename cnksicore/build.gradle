@@ -44,6 +44,6 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.8'
     compile 'org.xutils:xutils:3.3.22'
     testCompile 'junit:junit:4.12'
-    compile project(':autolayout')
+    compile project(':autolayoutsjjc')
 
 }

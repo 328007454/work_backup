@@ -44,28 +44,28 @@ public class ModifyRecordService extends BaseService<ModifyRecord> {
      * @param tableName
      * @param operation
      */
-    public void saveOrUpdateModifyRecord(String modifyId, String modifyIdName, String tableName, String operation) {
-        try {
-            ModifyRecord modifyRecord = null;
-            if (getTable().tableIsExist()) {
-                Selector<ModifyRecord> selector = getDbManager().selector(ModifyRecord.class).where(ModifyRecord.MODIFY_ID, "=", modifyId).and(ModifyRecord.TABLE_NAME, "=", tableName).and(ModifyRecord.OPERATION, "=", operation);
-                modifyRecord = selector.findFirst();
-            }
-            if (modifyRecord == null) {
-                modifyRecord = new ModifyRecord();
-            }
-            modifyRecord.modify_id = modifyId;
-            modifyRecord.modify_id_name = modifyIdName;
-            modifyRecord.table_name = tableName;
-            modifyRecord.operation = operation;
-            modifyRecord.create_time = DateUtils.getCurrentLongTime();
-
-            saveOrUpdate(modifyRecord);
-
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void saveOrUpdateModifyRecord(String modifyId, String modifyIdName, String tableName, String operation) {
+//        try {
+//            ModifyRecord modifyRecord = null;
+//            if (getTable().tableIsExist()) {
+//                Selector<ModifyRecord> selector = getDbManager().selector(ModifyRecord.class).where(ModifyRecord.MODIFY_ID, "=", modifyId).and(ModifyRecord.TABLE_NAME, "=", tableName).and(ModifyRecord.OPERATION, "=", operation);
+//                modifyRecord = selector.findFirst();
+//            }
+//            if (modifyRecord == null) {
+//                modifyRecord = new ModifyRecord();
+//            }
+//            modifyRecord.modify_id = modifyId;
+//            modifyRecord.modify_id_name = modifyIdName;
+//            modifyRecord.table_name = tableName;
+//            modifyRecord.operation = operation;
+//            modifyRecord.create_time = DateUtils.getCurrentLongTime();
+//
+//            saveOrUpdate(modifyRecord);
+//
+//        } catch (DbException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 查询所有的操作日志 按日期分类

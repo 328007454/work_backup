@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.SparseIntArray;
 
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 
@@ -25,7 +26,7 @@ public class PlaySound {
 	private PlaySound(final Context context) {
 		this.context = context;
 		mSoundPool = new SoundPool(100, AudioManager.STREAM_MUSIC, 100);
-		CustomApplication.getExcutorService().execute(new Runnable() {
+		ExecutorManager.executeTaskSerially(new Runnable() {
 
 			@Override
 			public void run() {

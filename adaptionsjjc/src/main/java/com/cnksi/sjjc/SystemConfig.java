@@ -46,7 +46,7 @@ public class SystemConfig {
     static {
         SqlInfo sqlInfo = new SqlInfo("select * from system_config");
         try {
-            List<DbModel> models = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
+            List<DbModel> models = CustomApplication.getInstance().getDbManager().findDbModelAll(sqlInfo);
             if (models != null) {
                 for (DbModel model : models) {
                     SYSTEM_CONFIG.put(model.getString("k"), model.getString("v"));

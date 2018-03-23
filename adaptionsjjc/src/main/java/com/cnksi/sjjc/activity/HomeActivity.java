@@ -19,14 +19,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.cnksi.core.adapter.ViewHolder;
-import com.cnksi.core.utils.AppUtils;
-import com.cnksi.core.utils.CToast;
-import com.cnksi.core.utils.DisplayUtil;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.adapter.ViewHolder;
+import com.cnksi.sjjc.util.AppUtils;
 import com.cnksi.sjjc.view.Banner;
 import com.cnksi.sjjc.adapter.BdzAdapter;
 import com.cnksi.sjjc.adapter.DefectAdapter;
@@ -102,92 +103,89 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isDefaultTitle = false;
         super.onCreate(savedInstanceState);
-        changedStatusColor();
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+        changedStatusColor();
         checkIsNeedSync();
-        initUI();
         initUpdateSystem();
+        inUI();
         initTabs();
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                DeviceService.getInstance().refreshDeviceHasCopy();
-                try {
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
-                    CustomApplication.getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");
-                    CustomApplication.getDbManager().execNonQuery("create index if not exists  'report_deviceid' on defect_record (`reportid`, `deviceid`)");
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_spic_deviceid_type on device(bdzid,spid,device_type)");
-                    CustomApplication.getDbManager().execNonQuery("create  index  if not exists  index_kind on standard_special(kind)");
-              } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        ExecutorManager.executeTaskSerially(() -> {
+            DeviceService.getInstance().refreshDeviceHasCopy();
+            try {
+                CustomApplication.getInstance().getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
+                CustomApplication.getInstance().getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
+                CustomApplication.getInstance().getDbManager().execNonQuery("create index if not exists 'index_bdzid' on copy_item(bdzid)");
+                CustomApplication.getInstance().getDbManager().execNonQuery("create index if not exists  'report_deviceid' on defect_record (`reportid`, `deviceid`)");
+                CustomApplication.getInstance().getDbManager().execNonQuery("create  index  if not exists spacing_index on spacing(bdzid)");
+                CustomApplication.getInstance().getDbManager().execNonQuery("create  index  if not exists  index_spic_deviceid_type on device(bdzid,spid,device_type)");
+                CustomApplication.getInstance().getDbManager().execNonQuery("create  index  if not exists  index_kind on standard_special(kind)");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
     }
 
+    @Override
+    public void initUI() {
+
+    }
+
     private void initUpdateSystem() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                String apkPath = "";
-                //增加下载APK文件夹
-                SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
-                try {
-                    PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
-                    int version = info.versionCode;
-                    PackageManager manager = _this.getPackageManager();
-                    PackageInfo infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
-                    remoteSjjcAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-                    remoteXunshiAppVersion = CustomApplication.getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + infoXunshi.versionCode + "'").expr("and file_name like '%xunshi%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-                    DbModel model = CustomApplication.getDbManager().findDbModelFirst(info1);
-                    if (model != null) {
-                        apkPath = Config.BDZ_INSPECTION_FOLDER + "admin/" + model.getString("short_name_pinyin") + "/apk";
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    apkPath = Config.DOWNLOAD_APP_FOLDER;
+        ExecutorManager.executeTaskSerially(() -> {
+            String apkPath = "";
+            //增加下载APK文件夹
+            SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
+            try {
+                PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
+                int version = info.versionCode;
+                PackageManager manager = _this.getPackageManager();
+                PackageInfo infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
+                remoteSjjcAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                remoteXunshiAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + infoXunshi.versionCode + "'").expr("and file_name like '%xunshi%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                DbModel model = CustomApplication.getInstance().getDbManager().findDbModelFirst(info1);
+                if (model != null) {
+                    apkPath = Config.BDZ_INSPECTION_FOLDER + "admin/" + model.getString("short_name_pinyin") + "/apk";
                 }
-                if (remoteSjjcAppVersion != null && remoteXunshiAppVersion != null && !PreferencesUtils.get(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+            } catch (Exception e) {
+                e.printStackTrace();
+                apkPath = Config.DOWNLOAD_APP_FOLDER;
+            }
+            if (remoteSjjcAppVersion != null && remoteXunshiAppVersion != null && !PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
 //TODO:
-                } else if (remoteXunshiAppVersion != null && remoteSjjcAppVersion == null && PreferencesUtils.get(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
-                    checkUpdateVersion(apkPath, Config.PCODE, true, "");
-                } else if (remoteXunshiAppVersion == null || remoteSjjcAppVersion == null) {
-                    PreferencesUtils.put(_this, AppUtils.IS_SJJC_AREADY_UPDATE, false);
-                    checkUpdateVersion(apkPath, Config.PCODE, true, "");
-                }
+            } else if (remoteXunshiAppVersion != null && remoteSjjcAppVersion == null && PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+                checkUpdateVersion(apkPath, Config.PCODE, true, "");
+            } else if (remoteXunshiAppVersion == null || remoteSjjcAppVersion == null) {
+                PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, false);
+                checkUpdateVersion(apkPath, Config.PCODE, true, "");
             }
         });
 
     }
 
     private void loadData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    transformDefectType();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initBDZDialog();
-                            if (bdzAdapter == null) {
-                                bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
-                                bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
-                            } else
-                                bdzAdapter.setList(bdzList);
-                            if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(_this, Config.LOCATION_BDZID, "")))
-                                homePageBinding.bdzName.setText(bdzList.get(0).name);
-                            loadDefect();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                transformDefectType();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initBDZDialog();
+                        if (bdzAdapter == null) {
+                            bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
+                            bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
+                        } else
+                            bdzAdapter.setList(bdzList);
+                        if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, "")))
+                            homePageBinding.bdzName.setText(bdzList.get(0).name);
+                        loadDefect();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -198,7 +196,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             mCommonMap.clear();
             mSerioutMap.clear();
             bdzList.clear();
-            bdzList = CustomApplication.getDbManager().findAll(Bdz.class);
+            bdzList = CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
             final List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList();
             for (DefectRecord mDefectRecord : defectList) {
                 ArrayList<DefectRecord> temp;
@@ -227,7 +225,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    private void initUI() {
+    public void inUI() {
         bannerMapUrl.add(R.mipmap.banner1);
         bannerMapUrl.add(R.mipmap.banner2);
         bannerMapUrl.add(R.mipmap.banner3);
@@ -253,7 +251,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         bdzPopwindowBinding.llContainer.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         mPop.setOutsideTouchable(true);
         homePageBinding.setTypeClick(this);
-        taskItemAdapter = new HomeTaskItemAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
+        taskItemAdapter = new HomeTaskItemAdapter(mActivity, null, homePageBinding.dataContainer);
         taskItemAdapter.setItemClickListener(new ItemClickListener<Task>() {
             @Override
             public void itemClick(View v, Task task, int position) {
@@ -265,15 +263,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
             }
         });
-        safetyToolAdapter = new HomeSafetyToolAdapter(mCurrentActivity, null, homePageBinding.dataContainer);
+        safetyToolAdapter = new HomeSafetyToolAdapter(mActivity, null, homePageBinding.dataContainer);
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(PreferencesUtils.get(_this, Config.LOCATION_BDZID, ""))) {
-            currentSelectBdzId = PreferencesUtils.get(_this, Config.LOCATION_BDZID, "");
-            String locationBdzName = PreferencesUtils.get(_this, Config.LOCATION_BDZNAME, "");
+        if (!TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, ""))) {
+            currentSelectBdzId = PreferencesUtils.get(Config.LOCATION_BDZID, "");
+            String locationBdzName = PreferencesUtils.get(Config.LOCATION_BDZNAME, "");
             homePageBinding.bdzName.setText(TextUtils.isEmpty(locationBdzName) ? "" : locationBdzName);
         }
         loadData();
@@ -312,7 +315,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             //跳转到数据同步
             case R.id.device_sycn:
-                ActivityUtil.startSync(mCurrentActivity);
+                ActivityUtil.startSync(mActivity);
                 break;
             //显示变电站列表对话框
             case R.id.bdz_all_name:
@@ -358,8 +361,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initBDZDialog() {
-        int dialogWidth = DisplayUtil.getInstance().getWidth() * 9 / 10;
-        int dialogHeight = bdzList.size() > 8 ? DisplayUtil.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
+        int dialogWidth = DisplayUtils.getInstance().getWidth() * 9 / 10;
+        int dialogHeight = bdzList.size() > 8 ? DisplayUtils.getInstance().getHeight() * 3 / 5 : LinearLayout.LayoutParams.WRAP_CONTENT;
         final ViewHolder holder = new ViewHolder(this, null, R.layout.content_list_dialog, false);
         AutoUtils.autoSize(holder.getRootView());
         mPowerStationListView = holder.getView(R.id.lv_container);
@@ -377,7 +380,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     homePageBinding.crisis.setSelected(false);
                     loadDefect();
                 } else
-                    CToast.showShort(_this, "该变电站未激活");
+                    ToastUtils.showMessage("该变电站未激活");
             }
 
             @Override
@@ -393,7 +396,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         if (defectAdapter == null) {
             homePageBinding.common.setSelected(true);
             if (!bdzList.isEmpty()) {
-                if (TextUtils.isEmpty(PreferencesUtils.get(_this, Config.LOCATION_BDZID, "")))
+                if (TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, "")))
                     currentSelectBdzId = bdzList.get(0).bdzid;
             }
             defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
@@ -412,7 +415,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     public void itemClick(View v, Object o, int position) {
         DefectRecord defectRecord = (DefectRecord) o;
         if (!TextUtils.isEmpty(defectRecord.pics)) {
-            ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.string2List(defectRecord.pics);
+            ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.stringToList(defectRecord.pics, ",");
             showImageDetails(_this, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
         }
     }
@@ -441,70 +444,67 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         }
 
         public void init() {
-            mExcutorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    List<Task> taskList = null;
-                    switch (type) {
-                        case inspection:
-                            long time0 = System.currentTimeMillis();
-                            taskList = TaskService.getInstance().
-                                    findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name(), InspectionType.professional.name());
-                            Log.d("TAG", System.currentTimeMillis() - time0 + "time1");
-                            if (taskList != null && taskList.size() > 0)
-                                for (Task task : taskList) {
-                                    try {
-                                        Report report = ReportService.getInstance().getReportByTask(task.taskid);
-                                        String str = "";
-                                        if (report != null) {
+            ExecutorManager.executeTaskSerially(() -> {
+                List<Task> taskList = null;
+                switch (type) {
+                    case inspection:
+                        long time0 = System.currentTimeMillis();
+                        taskList = TaskService.getInstance().
+                                findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name(), InspectionType.professional.name());
+                        Log.d("TAG", System.currentTimeMillis() - time0 + "time1");
+                        if (taskList != null && taskList.size() > 0)
+                            for (Task task : taskList) {
+                                try {
+                                    Report report = ReportService.getInstance().getReportByTask(task.taskid);
+                                    String str = "";
+                                    if (report != null) {
 
-                                            if (InspectionType.full.name().equals(task.inspection)) {
-                                                long copyTotal = CopyItemService.getInstance().getCopyTotalCount(task.bdzid, task.inspection);
-                                                long copyCount = CopyResultService.getInstance().getReportCopyCount(report.reportid);
-                                                str = String.format("抄录：%d/%d", copyCount, copyTotal);
-                                            }
+                                        if (InspectionType.full.name().equals(task.inspection)) {
+                                            long copyTotal = CopyItemService.getInstance().getCopyTotalCount(task.bdzid, task.inspection);
+                                            long copyCount = CopyResultService.getInstance().getReportCopyCount(report.reportid);
+                                            str = String.format("抄录：%d/%d", copyCount, copyTotal);
                                         }
-                                        String arrivedStr = PlacedService.getInstance().findPlacedSpace(report == null ? "" : report.reportid, task.bdzid);
-                                        if (!TextUtils.isEmpty(arrivedStr) && !task.inspection.contains("special"))
-                                            str = str + "   " + "到位  ：" + arrivedStr;
-                                        task.remark = str;
-                                    } catch (DbException e) {
-                                        e.printStackTrace();
                                     }
+                                    String arrivedStr = PlacedService.getInstance().findPlacedSpace(report == null ? "" : report.reportid, task.bdzid);
+                                    if (!TextUtils.isEmpty(arrivedStr) && !task.inspection.contains("special"))
+                                        str = str + "   " + "到位  ：" + arrivedStr;
+                                    task.remark = str;
+                                } catch (DbException e) {
+                                    e.printStackTrace();
                                 }
-                            Log.d("TAG", System.currentTimeMillis() - time0 + "");
-                            break;
-                        case maintenance:
-                            taskList = TaskService.getInstance().
-                                    findTaskListByLimit(3, InspectionType.maintenance.name(), InspectionType.switchover.name());
-                            break;
-                        case safetytool:
-                            String sql = "SELECT id,num,name,short_name,name_pinyin,status,bdz_id,bdz_name,next_check_time FROM gqj_info where dept_id=? and dlt=0 " +
-                                    "and status not in('inTest','stop') and  datetime(next_check_time, '-1 month') <= datetime('now', 'localtime', 'start of day') " +
-                                    " ORDER BY next_check_time limit 3;";
-                            SqlInfo sqlInfo = new SqlInfo(sql);
-                            sqlInfo.addBindArg(new KeyValue("dept_id", PreferencesUtils.get(mCurrentActivity, Config.CURRENT_DEPARTMENT_ID, "")));
-                            try {
-                                safetyTools = CustomApplication.getDbManager().findDbModelAll(sqlInfo);
-                            } catch (DbException e) {
-                                e.printStackTrace();
                             }
-                            return;
-                        case switching:
-                            taskList = TaskService.getInstance().findWorkTicketTask();
-                            break;
-                    }
-                    final List<Task> temp = taskList;
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            tasks.clear();
-                            if (temp != null && temp.size() > 0) tasks.addAll(temp);
-                            if (currentDataType == TaskType.this)
-                                taskItemAdapter.setList(tasks);
+                        Log.d("TAG", System.currentTimeMillis() - time0 + "");
+                        break;
+                    case maintenance:
+                        taskList = TaskService.getInstance().
+                                findTaskListByLimit(3, InspectionType.maintenance.name(), InspectionType.switchover.name());
+                        break;
+                    case safetytool:
+                        String sql = "SELECT id,num,name,short_name,name_pinyin,status,bdz_id,bdz_name,next_check_time FROM gqj_info where dept_id=? and dlt=0 " +
+                                "and status not in('inTest','stop') and  datetime(next_check_time, '-1 month') <= datetime('now', 'localtime', 'start of day') " +
+                                " ORDER BY next_check_time limit 3;";
+                        SqlInfo sqlInfo = new SqlInfo(sql);
+                        sqlInfo.addBindArg(new KeyValue("dept_id", PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "")));
+                        try {
+                            safetyTools = CustomApplication.getInstance().getDbManager().findDbModelAll(sqlInfo);
+                        } catch (DbException e) {
+                            e.printStackTrace();
                         }
-                    });
+                        return;
+                    case switching:
+                        taskList = TaskService.getInstance().findWorkTicketTask();
+                        break;
                 }
+                final List<Task> temp = taskList;
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tasks.clear();
+                        if (temp != null && temp.size() > 0) tasks.addAll(temp);
+                        if (currentDataType == TaskType.this)
+                            taskItemAdapter.setList(tasks);
+                    }
+                });
             });
         }
 
@@ -568,8 +568,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private void startTask(Task task) {
         CustomApplication.closeDbConnection();
         Intent intent = new Intent();
-        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_USER, ""));
-        intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(_this, Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
         ComponentName componentName;
         if ("workticket".equals(task.inspection))
             componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
@@ -590,10 +590,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private void checkIsNeedSync() {
         try {
             if (DeviceService.getInstance().selector().count() == 0) {
-                DialogUtils.createTipsDialog(mCurrentActivity, "检测到本地设备数据为空，是否需要同步数据？", new View.OnClickListener() {
+                DialogUtils.createTipsDialog(mActivity, "检测到本地设备数据为空，是否需要同步数据？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ActivityUtil.startSync(mCurrentActivity);
+                        ActivityUtil.startSync(mActivity);
                     }
                 }, false).show();
             }
