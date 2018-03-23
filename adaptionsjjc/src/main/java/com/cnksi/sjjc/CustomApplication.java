@@ -80,8 +80,9 @@ public class CustomApplication extends CoreApplication {
      *
      * @return
      */
-    public static DbManager getDbManager() {
-        if (mDbManager == null||!mDbManager.getDatabase().isOpen()) {
+    public  DbManager getDbManager() {
+//        ||!mDbManager.getDatabase().isOpen()
+        if (mDbManager == null) {
             mDbManager = x.getDb(getDaoConfig());
         }
         return mDbManager;
@@ -133,7 +134,7 @@ public class CustomApplication extends CoreApplication {
      * @return
      */
 
-    protected static DbManager.DaoConfig getDaoConfig() {
+    protected  DbManager.DaoConfig getDaoConfig() {
         int dbVersion = getDbVersion();
         DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
                 .setDbOpenListener(db -> {

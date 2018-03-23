@@ -198,7 +198,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                 ksync.download("city", "users", "department", "pad_apk_version");
                 DbModel model = null;
                 try {
-                    model = CustomApplication.getDbManager().findDbModelFirst(new SqlInfo("select short_name_pinyin from city"));
+                    model = CustomApplication.getInstance().getDbManager().findDbModelFirst(new SqlInfo("select short_name_pinyin from city"));
                     String firstDownApk = "admin/" + model.getString("short_name_pinyin") + "/apk";
                     ksync.downFile(firstDownApk);
                 } catch (DbException e) {
