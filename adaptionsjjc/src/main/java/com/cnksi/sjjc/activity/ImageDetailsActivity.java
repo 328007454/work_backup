@@ -67,10 +67,7 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
         super.onCreate(savedInstanceState);
         mImageDetailsBinding = ActivityImageDetailsBinding.inflate(getLayoutInflater());
         setChildView(mImageDetailsBinding.getRoot());
-        initView();
-        loadData();
         imageList = getIntent().getStringArrayListExtra(Config.IMAGEURL_LIST);
-        imageList.remove(Config.CURRENT_IMAGE_NAME);
         currentPosition = position = getIntent().getIntExtra(Config.CURRENT_IMAGE_POSITION, 0);
         isShowSelectFlag = getIntent().getBooleanExtra(Config.IS_SHOW_PHOTO_FLAG, true);
         isDeleteFile = getIntent().getBooleanExtra(Config.IS_DELETE_FILE, true);
@@ -81,6 +78,9 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
         } else {
             mImageDetailsBinding.ibtnDelete.setVisibility(View.GONE);
         }
+        initView();
+        loadData();
+
 
     }
 

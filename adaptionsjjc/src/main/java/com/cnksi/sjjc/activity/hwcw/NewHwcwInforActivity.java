@@ -64,7 +64,6 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
         mInforBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_newhwcw_infor, null, false);
         setChildView(mInforBinding.getRoot());
         getIntentValue();
-        initView();
         loadData();
     }
 
@@ -92,12 +91,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
                 for (DbModel model : dbModelList) {
                     peopleList.add(model.getString("username"));
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initUI();
-                    }
-                });
+                runOnUiThread(() -> initView());
             }
         });
     }
@@ -105,7 +99,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
     public void initView() {
         mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionName + "记录");
         resolveHotPart();
-        String[] users = new String[]{""};
+        String[] users;
         if (TextUtils.isEmpty(mHwcwBaseInfo.testPerson)) {
             users = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "").split(",");
         } else {

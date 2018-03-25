@@ -61,6 +61,7 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         ImageView defectImage = holder.getView(R.id.iv_defect_image);
         final DefectRecord defectRecord = data.get(position);
         String[] defectPicArray = StringUtils.cleanString(defectRecord.pics).split(CoreConfig.COMMA_SEPARATOR);
+
         if (defectPicArray != null && defectPicArray.length > 0
                 && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
             Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]));
@@ -72,12 +73,9 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         }
         ((TextView) holder.getView(R.id.tv_device_name)).setText(defectRecord.devcie);
         ((TextView) holder.getView(R.id.tv_defect_discover_time)).setText(DateUtils.getFormatterTime(defectRecord.discovered_date));
-        defectImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (clickListener != null)
-                    clickListener.itemClick(view, defectRecord, position);
-            }
+        defectImage.setOnClickListener(view -> {
+            if (clickListener != null)
+                clickListener.itemClick(view, defectRecord, position);
         });
     }
 

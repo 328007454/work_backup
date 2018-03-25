@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
@@ -415,8 +416,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     public void itemClick(View v, Object o, int position) {
         DefectRecord defectRecord = (DefectRecord) o;
         if (!TextUtils.isEmpty(defectRecord.pics)) {
-            ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.stringToList(defectRecord.pics, ",");
-            showImageDetails(_this, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
+            ArrayList<String> listPicDis = StringUtils.stringToList(defectRecord.pics, ",");
+            showImageDetails(_this, StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
         }
     }
 

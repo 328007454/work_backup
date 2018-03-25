@@ -119,7 +119,6 @@ public class TaskRemindFragment extends BaseCoreFragment {
     protected void initUI() {
         listBinding = (FragmentListBinding) fragmentDataBinding;
         initData();
-
     }
 
     public void setIsFirstLoad(boolean isFirstLoad) {

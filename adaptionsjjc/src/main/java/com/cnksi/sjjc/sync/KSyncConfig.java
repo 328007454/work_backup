@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.cnksi.core.utils.DeviceUtils;
+import com.cnksi.core.utils.IOUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.sjjc.BuildConfig;
