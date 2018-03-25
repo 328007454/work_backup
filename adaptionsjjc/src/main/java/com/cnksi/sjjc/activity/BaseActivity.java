@@ -33,6 +33,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.NetWorkUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.util.UpdateUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.cnksi.sjjc.Config;
@@ -64,7 +65,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static boolean isNeedUpdateTaskState = false;
     public boolean isDefaultTitle = true;
-    public static final int MY_PERMISSIONS_REQUEST_PACKAGE_USAGE_STATS = 1101;
     /**
      * 退出时间
      */
@@ -125,10 +125,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
 
     protected boolean isShowPicName;
-    /**
-     * 默认发音人
-     */
-    protected String voicer = "xiaoyan";
+
 
     protected static HashMap<String, Object> dataMap = new HashMap<>();
     public Vibrator mVibrator;
@@ -140,16 +137,16 @@ public abstract class BaseActivity extends BaseCoreActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    protected  IncludeTitleBinding mTitleBinding;
+    protected IncludeTitleBinding mTitleBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _this = this;
+        if (!BuildConfig.DEBUG) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        }
         mVibrator = (Vibrator) _this.getSystemService(Context.VIBRATOR_SERVICE);
-//        if (isDefaultTitle) {
-//            setContentView(R.layout.include_title);
-//        }
     }
 
 
@@ -363,47 +360,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
         return res;
     }
 
-//    /**
-//     * 初始化语音引擎
-//     */
-//    protected void initSpeech(Context context) {
-//        // 初始化合成对象
-//        mTts = SpeechSynthesizer.createSynthesizer(context, new InitListener() {
-//            @Override
-//            public void onInit(int code) {
-//                if (code == ErrorCode.SUCCESS) {
-//                    // 清空参数
-//                    mTts.setParameter(SpeechConstant.PARAMS, null);
-//                    // 设置本地合成
-//                    mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL);
-//                    // 设置发音人资源路径
-//                    mTts.setParameter(ResourceUtil.TTS_RES_PATH, getResourcePath());
-//                    // 设置发音人 voicer为空默认通过语音+界面指定发音人。
-//                    mTts.setParameter(SpeechConstant.VOICE_NAME, voicer);
-//                    // 设置语速
-//                    mTts.setParameter(SpeechConstant.SPEED, "50");
-//                    // 设置音调
-//                    mTts.setParameter(SpeechConstant.PITCH, "50");
-//                    // 设置音量
-//                    mTts.setParameter(SpeechConstant.VOLUME, "100");
-//                    // 设置播放器音频流类型
-//                    mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");
-//                    mHandler.sendEmptyMessage(INIT_SPEECH);
-//                }
-//            }
-//        });
-//    }
-
-    // 获取发音人资源路径
-    private String getResourcePath() {
-        StringBuffer tempBuffer = new StringBuffer();
-        //合成通用资源
-        tempBuffer.append(ResourceUtil.generateResourcePath(this, ResourceUtil.RESOURCE_TYPE.assets, "tts/common.jet"));
-        tempBuffer.append(";");
-        //发音人资源
-        tempBuffer.append(ResourceUtil.generateResourcePath(this, ResourceUtil.RESOURCE_TYPE.assets, "tts/" + voicer + ".jet"));
-        return tempBuffer.toString();
-    }
 
     @Override
     protected void compeletlyExitSystem() {
@@ -413,15 +369,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
         // PreferencesUtils.clear(_this);
         System.exit(0);
     }
-
-//    /**
-//     * 停止说话
-//     */
-//    protected void stopSpeaking() {
-//        if (mTts != null) {
-//            mTts.stopSpeaking();
-//        }
-//    }
 
     /**
      * 可以标记图片
@@ -482,12 +429,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
             }
         });
         anim.start();
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float cVal = (Float) animation.getAnimatedValue();
-                view.setTranslationY(cVal);
-            }
+        anim.addUpdateListener(animation -> {
+            float cVal = (Float) animation.getAnimatedValue();
+            view.setTranslationY(cVal);
         });
 
     }
@@ -501,13 +445,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
 
     }
 
-    /**
-     * 显示输入法键盘
-     */
-    protected void showKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-    }
+
 
 
     protected void changedStatusColor() {
@@ -528,13 +466,11 @@ public abstract class BaseActivity extends BaseCoreActivity {
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
-    
+
     private boolean isPms = false;
-    private String updateContent;
-    private String mDownloadFolder;
-    private String mDownloadFile;
+
+
     protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, boolean isPms, String updateContent) {
-        this.updateContent = updateContent;
         this.isPms = isPms;
         checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mActivity, CoreConfig.PROGRAM_APP_CODE));
     }
@@ -543,11 +479,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * 检测更新
      */
     protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, final String appCode) {
-        mDownloadFolder = downloadFolder;
-        mDownloadFile = downloadFileName;
         ExecutorManager.executeTaskSerially(() -> {
             if (mUpdateFile == null) {
-                mUpdateFile = UpdateUtils.hasUpdateApk(mActivity, downloadFolder,isPms);
+                mUpdateFile = UpdateUtils.hasUpdateApk(mActivity, downloadFolder, isPms);
                 if (mUpdateFile != null) {
                     mHandler.sendEmptyMessage(CoreConfig.INSTALL_APP_CODE);
                 } else if (null == mUpdateFile) {

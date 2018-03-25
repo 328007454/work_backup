@@ -59,11 +59,11 @@
 }
 -keep class com.cnksi.sjjc.inter.**
 -keep class com.cnksi.sjjc.inter.**{*;}
--keep class com.cnksi.sjjc.View.**{*;}
+-keep class com.cnksi.sjjc.view.**{*;}
+-keep class com.cnksi.sjjc.bean.**{*;}
 #Fragment不需要在AndroidManifest.xml中注册，需要额外保护下
--keep public class * extends android.support.v4.app.Fragment
+
 -keep public class * extends android.app.Fragment
--keep public class * extends android.support.v7.app.AppCompatActivity
 # 保持哪些类不被混淆
 -keep public class * extends android.app.Activity
 # 保持哪些类不被混淆
@@ -73,9 +73,9 @@
  # 保持哪些类不被混淆
 -keep public class * extends android.content.BroadcastReceiver
 #去掉混淆打包警告
--dontwarn com.alibaba.fastjson.**
--dontwarn com.github.mikephil.charting.data.realm.**
--dontwarn okio.**
--dontwarn android.databinding.BindingBuildInfo
--dontwarn com.iflytek.**
+-keep class com.alibaba.fastjson.**{*;}
+-keep class com.github.mikephil.charting.data.realm.**{*;}
+-keep class okio.**{*;}
+-keep class android.databinding.BindingBuildInfo{*;}
 -keep class com.iflytek.**{*;}
+-keep class com.cnksi.core.**{*;}

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.tendcloud.tenddata.ab.mContext;
 
 /**
  * Created by lyndon on 2016/9/5.
