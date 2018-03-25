@@ -101,6 +101,13 @@ public abstract class BaseReportActivity extends BaseActivity {
         super.onDestroy();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+        super.onBackPressed();
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {

@@ -66,7 +66,7 @@ public class NewHwcwReportActivity extends BaseReportActivity {
 
 
     public void initView() {
-        mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionName + "报告");
+        mTvTitle.setText(currentBdzName + currentInspectionName + "报告");
         mBtnRight.setVisibility(View.VISIBLE);
     }
 
@@ -115,7 +115,7 @@ public class NewHwcwReportActivity extends BaseReportActivity {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         spannableStringBuilder.append("温度：").append(mBaseInfo.temp).append("℃");
         AbsoluteSizeSpan grayRelativeSizeSpan = new AbsoluteSizeSpan((int) DensityUtils.sp2px(getApplicationContext(), 14));
-        AbsoluteSizeSpan greenRelativeSizeSpan = new AbsoluteSizeSpan((int)  DensityUtils.sp2px(getApplicationContext(), 18));
+        AbsoluteSizeSpan greenRelativeSizeSpan = new AbsoluteSizeSpan((int) DensityUtils.sp2px(getApplicationContext(), 18));
         ForegroundColorSpan grayForegroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.global_gray_text_color));
         ForegroundColorSpan greenForegroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.green_color));
         spannableStringBuilder.setSpan(grayRelativeSizeSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
