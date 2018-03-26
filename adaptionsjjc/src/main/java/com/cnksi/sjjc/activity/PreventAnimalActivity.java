@@ -152,6 +152,7 @@ public class PreventAnimalActivity extends BaseActivity {
 
     private void initOnClick() {
         binding.btnNext.setOnClickListener(view -> {
+            saveData();
             Intent intent = new Intent(_this, PreventAnimalSecondActivity.class);
             intent.putExtra("PreventionRecord", preventionRecord);
             startActivity(intent);

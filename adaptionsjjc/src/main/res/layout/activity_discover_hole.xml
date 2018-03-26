@@ -100,7 +100,7 @@
                     android:minHeight="@dimen/et_user_edit_minheight_px"
                     android:textColor="@color/green_color"
                     android:textColorHint="@color/et_hint_color"
-                    android:textSize="@dimen/et_hint_text_size_px"/>
+                    android:textSize="@dimen/tv_text_size"/>
             </LinearLayout>
 
             <LinearLayout
@@ -193,7 +193,7 @@
                     android:minHeight="@dimen/et_user_edit_minheight_px"
                     android:textColor="@color/green_color"
                     android:textColorHint="@color/et_hint_color"
-                    android:textSize="@dimen/et_hint_text_size_px"/>
+                    android:textSize="@dimen/tv_text_size"/>
             </LinearLayout>
 
 

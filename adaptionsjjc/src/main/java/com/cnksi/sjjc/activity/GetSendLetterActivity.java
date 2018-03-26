@@ -182,7 +182,7 @@ public class GetSendLetterActivity extends BaseActivity {
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case LOAD_DEVICE_SUCCESS:
-                initUI();
+                initView();
                 break;
             case LOAD_DEVICE_FAILURE:
                 ToastUtils.showMessage("未查询到收发信机设备");

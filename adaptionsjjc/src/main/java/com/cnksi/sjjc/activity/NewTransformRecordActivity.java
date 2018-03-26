@@ -168,12 +168,12 @@ public class NewTransformRecordActivity extends BaseActivity {
                     mReportJzlby.dzcs = dzcs;
                     mReportJzlby.last_modify_time = DateUtils.getCurrentLongTime();
                     saveList.add(mReportJzlby);
-                }
-                try {
+                    try {
 
-                    ReportJzlbyqfjkgService.getInstance().saveOrUpdate(mReportJzlby);
-                } catch (DbException e) {
-                    e.printStackTrace();
+                        ReportJzlbyqfjkgService.getInstance().saveOrUpdate(mReportJzlby);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             try {
