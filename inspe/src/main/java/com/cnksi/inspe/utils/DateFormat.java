@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/21 21:44
+ * @Deprecated sjjc拷贝，解决依赖问题，后可以根据需要删除
  */
+@Deprecated
 
 public final class DateFormat {
     final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");

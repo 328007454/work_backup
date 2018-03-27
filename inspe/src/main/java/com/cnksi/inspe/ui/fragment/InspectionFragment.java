@@ -50,7 +50,6 @@ public class InspectionFragment extends AppBaseFragment {
         dataBinding = (FragmentInspeInspectionBinding) fragmentDataBinding;
 
 
-
         //模拟数据
         list.add(new InspecteTaskEntity("0", "0", "曹溪运维班", 0, "班组建设检查", System.currentTimeMillis(), new String[]{"责任人A", "责任人B"}));
         list.add(new InspecteTaskEntity("1", "1", "220Kv三班", 1, "精益化检查", System.currentTimeMillis(), new String[]{"责任人A", "责任人B"}));
@@ -71,10 +70,11 @@ public class InspectionFragment extends AppBaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
-                if (list.get(position).taskType == 0) {
-                    intent.setClass(getContext(), InspeTeamActivity.class);
+                InspecteTaskEntity task = list.get(position);
+                if (task.taskType == 0) {
+                    intent.setClass(getContext(), InspeTeamActivity.class).putExtra("task", task);
                 } else {
-                    intent.setClass(getContext(), InspePlustekActivity.class);
+                    intent.setClass(getContext(), InspePlustekActivity.class).putExtra("task", task);
                 }
                 startActivity(intent);
             }

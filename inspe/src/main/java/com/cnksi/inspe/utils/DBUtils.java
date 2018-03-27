@@ -1,6 +1,7 @@
 package com.cnksi.inspe.utils;
 
 import android.os.Environment;
+import android.util.Log;
 
 import org.xutils.DbManager;
 import org.xutils.x;
@@ -22,10 +23,15 @@ public final class DBUtils {
     private DbManager dbManager;
 
     private DBUtils() {
+        if (new File(Environment.getExternalStorageDirectory(), "/BdzInspection/database/bdzinspection.db").exists()) {
+            Log.e("DBUtils", "数据库存在🙂");
+        } else {
+            Log.e("DBUtils", "数据库不存在！😂");
+        }
         DbManager.DaoConfig daoConfig = new DbManager.DaoConfig()
-                .setDbName("inspection.db")
+                .setDbName("bdzinspection.db")
                 // 不设置dbDir时, 默认存储在app的私有目录.
-                .setDbDir(Environment.getExternalStorageDirectory()) // "sdcard"的写法并非最佳实践, 这里为了简单, 先这样写了.
+                .setDbDir(new File(Environment.getExternalStorageDirectory(), "/BdzInspection/database/")) // "sdcard"的写法并非最佳实践, 这里为了简单, 先这样写了.
                 .setDbVersion(2)
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override

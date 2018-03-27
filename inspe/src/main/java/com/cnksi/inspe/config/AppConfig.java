@@ -1,6 +1,7 @@
 package com.cnksi.inspe.config;
 
 import com.cnksi.core.application.CoreApplication;
+import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.inspe.BuildConfig;
 
 import org.xutils.x;
@@ -18,6 +19,7 @@ public class AppConfig extends CoreApplication {
         super.onCreate();
 
         x.Ext.init(this);
+        PreferencesUtils.init(this);
 
         if (BuildConfig.DEBUG) {
             x.Ext.setDebug(BuildConfig.DEBUG); // 开启debug会影响性能

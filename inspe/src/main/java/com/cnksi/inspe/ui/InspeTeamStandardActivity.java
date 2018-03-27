@@ -38,6 +38,8 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
 
     private TeamService teamService = new TeamService();
 
+    private InspecteTaskEntity task;
+
     @Override
     public int getLayoutResId() {
         return R.layout.activity_inspe_teamstandard;
@@ -54,8 +56,9 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
     @Override
     public void initData() {
         String id = getIntent().getStringExtra("role_id");
-        if (TextUtils.isEmpty(id)) {
-            Toast.makeText(this, "参数传递错误!", Toast.LENGTH_SHORT).show();
+        task = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
+        if (TextUtils.isEmpty(id) || task == null) {
+            Toast.makeText(this, "参数错误!", Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -79,8 +82,9 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(InspeTeamStandardActivity.this, InspeTeamIssueActivity.class);
                 intent.putExtra("data", itemList.get(position));
+                intent.putExtra("task", task);
                 //计算出可以被扣得分值
-                intent.putExtra("max_minus", 5);
+                intent.putExtra("max_minus", 5.0f);
                 startActivity(intent);
             }
         });

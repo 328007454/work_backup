@@ -83,7 +83,7 @@ android {
             zipAlignEnabled true
             shrinkResources false//需要同minifyEnabled 共同使用
             signingConfig signingConfigs.release
-//            applicationVariants.all { variant ->
+            applicationVariants.all { variant ->
 //                //修改apk输出路径
 //                variant.getPackageApplication().outputDirectory = new File("E:\\CompanyProjectNew\\SJJCAPK")
 //                variant.outputs.all { output ->
@@ -95,7 +95,7 @@ android {
 //                        outputFileName = fileName
 //                    }
 //                }
-//            }
+            }
         }
         debug {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"

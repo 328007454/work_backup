@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -22,7 +20,8 @@
                     style="@style/View.LinearLayout"
                     android:background="#FFFFFF">
 
-                    <TextView android:id="@+id/contextTxt"
+                    <TextView
+                        android:id="@+id/contextTxt"
                         style="@style/View.TextView"
                         android:layout_marginLeft="8dp"
                         android:drawableLeft="@mipmap/inspe_issue_point"
@@ -45,25 +44,23 @@
                         android:textColor="#333333"
                         android:textSize="12dp" />
 
+
                     <LinearLayout
                         style="@style/View.LinearLayout.Horizontal"
                         android:gravity="center_vertical">
 
-                        <TextView android:id="@+id/issueInfoTxt"
+                        <TextView
+                            android:id="@+id/issueInfoTxt"
                             style="@style/View.TextView"
                             android:layout_weight="1"
+                            android:drawableRight="@mipmap/inspe_arrow_down"
+                            android:hint="请选择扣分项"
                             android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
                             android:paddingTop="10dp"
-                            android:text="1.班组设置不符合规定，扣0.1分"
+                            android:text=""
                             android:textColor="#3C4950"
                             android:textSize="14dp" />
-
-                        <ImageButton
-                            android:id="@+id/issueInfoBtn"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@null"
-                            android:src="@mipmap/inspe_arrow_down" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -83,7 +80,8 @@
                         android:textColor="#333333"
                         android:textSize="12dp" />
 
-                    <EditText android:id="@+id/issueEdit"
+                    <EditText
+                        android:id="@+id/issueEdit"
                         style="@style/View.EditText"
                         android:background="@drawable/inspe_edittext_nullbg_shape"
                         android:hint="请输入问题描述"
@@ -113,7 +111,8 @@
                         android:background="#FFFFFF"
                         android:orientation="horizontal">
 
-                        <ImageButton android:id="@+id/minuxBtn"
+                        <ImageButton
+                            android:id="@+id/minuxBtn"
                             style="@style/View.Button"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -121,17 +120,21 @@
                             android:enabled="false"
                             android:src="@drawable/inspe_btn_minus_selector" />
 
-                        <EditText android:id="@+id/minusScoreEdit"
+                        <EditText
+                            android:id="@+id/minusScoreEdit"
                             style="@style/View.EditText.Number"
                             android:layout_width="80dp"
                             android:layout_height="48dp"
                             android:background="@drawable/inspe_squar_dark_shape"
+                            android:enabled="false"
                             android:gravity="center"
                             android:inputType="numberDecimal"
                             android:text="0.0"
+                            android:textColor="#242827"
                             android:textSize="14dp" />
 
-                        <ImageButton android:id="@+id/addBtn"
+                        <ImageButton
+                            android:id="@+id/addBtn"
                             style="@style/View.Button"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -159,25 +162,15 @@
                         style="@style/View.LinearLayout.Horizontal"
                         android:layout_marginTop="11dp">
 
-                        <LinearLayout
-                            style="@style/View.LinearLayout.Horizontal"
-                            android:layout_weight="1">
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/galleryView"
+                            style="@style/View.RecyclerView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
-                            <ImageView
-                                style="@style/View.ImageView.Thumbnail"
-                                android:layout_width="73dp"
-                                android:layout_height="49dp"
-                                android:scaleType="fitXY" />
-
-                            <ImageView
-                                style="@style/View.ImageView.Thumbnail"
-                                android:layout_width="73dp"
-                                android:layout_height="49dp"
-                                android:layout_marginLeft="14dip"
-                                android:scaleType="fitXY" />
-                        </LinearLayout>
-
-                        <ImageButton android:id="@+id/cameraBtn"
+                        <ImageButton
+                            android:id="@+id/cameraBtn"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center_vertical"
@@ -210,7 +203,8 @@
                             android:textColor="#333333"
                             android:textSize="12dp" />
 
-                        <EditText android:id="@+id/dateEdit"
+                        <EditText
+                            android:id="@+id/dateEdit"
                             style="@style/View.TextView.Content.Value"
                             android:layout_width="match_parent"
                             android:background="@drawable/inspe_edittext_nullbg_shape"
@@ -219,7 +213,8 @@
                             android:textSize="14dp" />
                     </LinearLayout>
 
-                    <ImageButton android:id="@+id/dateBtn"
+                    <ImageButton
+                        android:id="@+id/dateBtn"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
@@ -228,7 +223,8 @@
                         android:src="@mipmap/inspe_date_normal" />
                 </LinearLayout>
 
-                <Button android:id="@+id/okBtn"
+                <Button
+                    android:id="@+id/okBtn"
                     style="@style/View.Button"
                     android:layout_marginBottom="13dp"
                     android:layout_marginLeft="5dp"

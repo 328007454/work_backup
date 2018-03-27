@@ -17,4 +17,11 @@ public class InspeScoreEntity {
      * 扣分值
      */
     public float score;
+
+    public InspeScoreEntity() {
+    }
+
+    public InspeScoreEntity(String content) {
+        this.content = content;
+    }
 }

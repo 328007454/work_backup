@@ -72,8 +72,8 @@ dependencies {
     compile "com.android.support:support-vector-drawable:$support_vector_drawable_version"
     compile "com.android.support:support-v4:$support_v4_version"
     testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "com.android.support.test:runner:$runner_version"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_core_version"
+    androidTestCompile "com.android.support.test:runner:$runner_version"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espresso_core_version"
 
     //开源引用资源
     // compile "com.alibaba:arouter-api:$arouter_version"

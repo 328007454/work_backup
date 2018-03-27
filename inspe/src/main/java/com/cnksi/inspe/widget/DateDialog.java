@@ -71,7 +71,7 @@ public class DateDialog extends AlertDialog implements View.OnClickListener {
         } else if (i == R.id.okBtn) {
             dismiss();
             if (onDialogListener != null) {
-                onDialogListener.onDateChanged(0, dataBinding.datePicker.getYear(), dataBinding.datePicker.getMonth() + 1, dataBinding.datePicker.getDayOfMonth());
+                onDialogListener.onDateChanged(dataBinding.datePicker.getDrawingTime(), dataBinding.datePicker.getYear(), dataBinding.datePicker.getMonth() + 1, dataBinding.datePicker.getDayOfMonth());
             }
 
         }

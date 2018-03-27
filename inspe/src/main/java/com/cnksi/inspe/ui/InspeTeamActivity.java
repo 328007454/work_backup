@@ -17,6 +17,7 @@ import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamBinding;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
+import com.cnksi.inspe.entity.InspecteTaskEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,17 @@ public class InspeTeamActivity extends AppBaseActivity {
     }
 
     private List<MultiItemEntity> list = new ArrayList<>();
+    private InspecteTaskEntity task;
 
     @Override
     public void initUI() {
+
         dataBinding = (ActivityInspeTeamBinding) rootDataBinding;
+        task = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
+        if (task == null) {
+            showToast("参数错误！");
+            finish();
+        }
 //        dataBinding.recyclerView.setAdapter(null);
 //        databinding
 //        databinding.setAdapter(null);
@@ -65,20 +73,13 @@ public class InspeTeamActivity extends AppBaseActivity {
             }
         });
 
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
-            }
-        });
-
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //启动Item点击事件
                 TeamRoleEntity data = (TeamRoleEntity) adapter.getData().get(position);
 //                Toast.makeText(InspeTeamActivity.this, data.rule.getName(), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(InspeTeamActivity.this, InspeTeamStandardActivity.class).putExtra("role_id", data.rule.getId()));
+                startActivity(new Intent(InspeTeamActivity.this, InspeTeamStandardActivity.class).putExtra("role_id", data.rule.getId()).putExtra("task", task));
             }
         });
 
