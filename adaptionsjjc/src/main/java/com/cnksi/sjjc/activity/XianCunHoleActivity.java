@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -147,7 +148,6 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
                     String pictureContent = DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) + "\n" + currentHole + "\n" + PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                 }
-
             } else if (requestCode == CANCEL_RESULT_LOAD_IMAGE) {//删除照片请求
                 ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
                 ArrayList<String> allPicList = StringUtils.stringToList(item.clear_images);
@@ -169,7 +169,6 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
             }
         }
     }
-
     /**
      * 现存孔洞清除孔洞时候的拍照
      */

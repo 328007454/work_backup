@@ -4,10 +4,12 @@ import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.core.view.CustomerDialog.DialogClickListener;
@@ -132,6 +134,7 @@ public class DrawCircleImageActivity extends BaseActivity {
                 break;
         }
     }
+
 
     /**
      * 保存标记
