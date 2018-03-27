@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFFFF"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/firstNameTxt"
+        style="@style/View.TextView"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="11dp"
+        android:background="@drawable/inspe_circle_blue_shape"
+        android:gravity="center"
+        android:text="曹"
+        android:textColor="#FFFFFF"
+        android:textSize="14dp" />
+
+
+    <LinearLayout
+        style="@style/View.LinearLayout"
+        android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            style="@style/View.LinearLayout.Item"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:paddingBottom="3dp">
+
+            <TextView
+                android:id="@+id/teamTxt"
+                style="@style/View.TextView"
+                android:text="班组"
+                android:textColor="#626262"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/typeTxt"
+                style="@style/View.TextView"
+                android:layout_marginLeft="16dp"
+                android:text="班组建设检查"
+                android:textColor="#626262"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/View.LinearLayout.Item"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:paddingTop="3dp">
+
+            <TextView
+                android:id="@+id/dateTxt"
+                style="@style/View.TextView"
+                android:paddingLeft="0dip"
+                android:text="2018年1月1日"
+                android:textColor="#C0BAB9"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/persionsTxt"
+                style="@style/View.TextView"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="责任人A"
+                android:textColor="#C0BAB9"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0F0F0" />
+    </LinearLayout>
+</LinearLayout>

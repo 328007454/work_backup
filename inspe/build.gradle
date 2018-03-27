@@ -1,0 +1,90 @@
+if (InspeIsLibrary.toBoolean()) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion rootProject.build_tools_version
+
+    sourceSets {
+        main {
+            if (InspeIsLibrary.toBoolean()) {
+                java {
+                    exclude '**/develop/**'
+                }
+            } else {
+                manifest.srcFile 'src/main/java/develop/AndroidManifest.xml'
+            }
+        }
+    }
+
+
+    defaultConfig {
+        if (!InspeIsLibrary.toBoolean()) {
+            applicationId "com.cnksi.inspe"
+        } else {
+
+        }
+        minSdkVersion rootProject.min_sdk_version
+        targetSdkVersion rootProject.target_sdk_version
+        versionCode rootProject.version_code
+        versionName rootProject.version_name
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+        //Arouter
+        //javaCompileOptions {
+        //    annotationProcessorOptions {
+        //        arguments = [moduleName: project.getName()]
+        //    }
+        //}
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    //android引用资源
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //noinspection GradleCompatible
+    compile "com.android.support:appcompat-v7:$appcompat_v7_version"
+    compile "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+    compile "com.android.support:design:$design_version"
+
+    //noinspection GradleCompatible
+    compile "com.android.support:support-vector-drawable:$support_vector_drawable_version"
+    compile "com.android.support:support-v4:$support_v4_version"
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "com.android.support.test:runner:$runner_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_core_version"
+
+    //开源引用资源
+    // compile "com.alibaba:arouter-api:$arouter_version"
+    //annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
+    compile "com.github.CymChad:BaseRecyclerViewAdapterHelper:${BaseRecyclerViewAdapterHelper_version}"
+
+    //ksi引用资源
+
+    //ksi base lib
+    compile "com.cnksi:core:$ksi_core_version"
+
+    //ksi sync lib
+//    compile "com.cnksi:ksynclib:$ksi_ksynclib_version"
+}

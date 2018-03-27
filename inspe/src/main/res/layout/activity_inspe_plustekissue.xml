@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+    </data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        style="@style/View.ScrollView"
+        android:layout_weight="1">
+
+        <LinearLayout style="@style/View.LinearLayout">
+
+            <TextView
+                style="@style/View.TextView"
+                android:text="标准描述" />
+
+            <LinearLayout style="@style/View.LinearLayout.Item">
+
+                <TextView
+                    style="@style/View.TextView.Content.Name"
+                    android:text="扣分原因:" />
+
+                <TextView
+                    style="@style/View.TextView.Content.Value"
+                    android:text="1.班组设置不符合规定，扣0.1分" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/View.LinearLayout.Item">
+
+                <TextView
+                    style="@style/View.TextView.Content.Name"
+                    android:text="问题描述:" />
+
+                <TextView
+                    style="@style/View.TextView.Content.Value"
+                    android:text="班组设置不符合规定" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/View.LinearLayout.Item">
+
+                <TextView
+                    style="@style/View.TextView.Content.Name"
+                    android:text="扣分分值:" />
+
+                <TextView
+                    style="@style/View.TextView.Content.Value"
+                    android:text="-" />
+
+                <EditText
+                    style="@style/View.EditText.Number"
+                    android:layout_width="80dp"
+                    android:gravity="center"
+                    android:text="0.1" />
+
+                <TextView
+                    style="@style/View.TextView.Content.Value"
+                    android:text="+" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/View.LinearLayout.Item">
+
+                <TextView
+                    style="@style/View.TextView.Content.Name"
+                    android:text="照片:" />
+
+                <ImageView
+                    style="@style/View.ImageView.Thumbnail"
+                    android:layout_marginLeft="8dip" />
+
+                <ImageView
+                    style="@style/View.ImageView.Thumbnail"
+                    android:layout_marginLeft="8dip" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/View.LinearLayout.Item">
+
+                <TextView
+                    style="@style/View.TextView.Content.Name"
+                    android:text="整改日期:" />
+
+                <TextView
+                    style="@style/View.TextView.Content.Value"
+                    android:text="2018年1月1日" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        style="@style/View.Button"
+        android:text="确定" />
+</LinearLayout>
+</layout>

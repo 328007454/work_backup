@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DisplayUtils;
@@ -27,14 +28,12 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.sjjc.util.AppUtils;
-import com.cnksi.sjjc.view.Banner;
 import com.cnksi.sjjc.adapter.BdzAdapter;
 import com.cnksi.sjjc.adapter.DefectAdapter;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.HomeSafetyToolAdapter;
 import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
+import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.AppVersion;
 import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
@@ -52,8 +51,10 @@ import com.cnksi.sjjc.service.PlacedService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
+import com.cnksi.sjjc.util.AppUtils;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.TTSUtils;
+import com.cnksi.sjjc.view.Banner;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -296,7 +297,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             //跳转到操作篇
             case R.id.device_operate:
-                ActivityUtil.startOperateActivity(_this);
+                try {
+                    Intent intent = new Intent();
+//                    intent.setClass(HomeActivity.this,InspeMainActivity.class);
+                    ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.inspe.ui.InspeMainActivity");
+                    intent.setComponent(componentName);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(HomeActivity.this, "模块暂未开放!", Toast.LENGTH_SHORT).show();
+                }
+
+                //ActivityUtil.startOperateActivity(_this);
                 break;
             //跳转到安全工器具
             case R.id.safety_tool:
