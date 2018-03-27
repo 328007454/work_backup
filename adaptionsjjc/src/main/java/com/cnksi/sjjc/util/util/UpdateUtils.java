@@ -18,12 +18,10 @@ import com.cnksi.core.common.DeviceInfor;
 import com.cnksi.core.common.UpdateInfor;
 import com.cnksi.core.utils.DeviceUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.view.CustomerDialog;
-import com.cnksi.core.view.CustomerDialog.DialogClickListener;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.FunctionUtils;
+import com.cnksi.sjjc.view.CustomerDialog;
 
 
 import java.io.File;
@@ -223,7 +221,7 @@ public class UpdateUtils {
      * @param file
      */
     public static Dialog showInstallNewApkDialog(final Activity mContext, final File file) {
-        Dialog mDialog = CustomerDialog.showSelectDialog(mContext, R.string.find_newversion_str, new DialogClickListener() {
+        Dialog mDialog = CustomerDialog.showSelectDialog(mContext, R.string.find_newversion_str, new CustomerDialog.DialogClickListener() {
             @Override
             public void confirm() {
                 UpdateUtils.installNewApk(mContext, file);
@@ -243,27 +241,32 @@ public class UpdateUtils {
      * @param file
      */
 
-//    public static Dialog showInstallNewApkDialog(final Activity mContext, final File file, final boolean isPms, String updateContent) {
-//        mDialog = CustomerDialog.showSelectDialog(mContext, "版本更新", isPms ? mContext.getResources().getString(R.string.install_now_str_pms) : updateContent, new DialogClickListener() {
-//            @Override
-//            public void confirm() {
-//                UpdateUtils.installNewApk(mContext, file);
-//                PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, true);
-//            }
-//
-//            @Override
-//            public void cancel() {
-//                if (!isPms)
-//                    PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, false);
-//                if (isPms && PreferencesUtils.get(, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
-//                    System.exit(0);
-//                }
-//
-//            }
-//        }, R.string.install_now_str, R.string.cancel_install_str, isPms);
-//        return mDialog;
-//    }
+    /**
+     * 新版本已下载 提示安装dialog
+     *
+     * @param file
+     */
 
+    public static Dialog showInstallNewApkDialog(final Activity mContext, final File file, final boolean isPms, String updateContent) {
+        mDialog = CustomerDialog.showSelectDialog(mContext, "版本更新", isPms ? mContext.getResources().getString(R.string.install_now_str_pms) : updateContent, new CustomerDialog.DialogClickListener() {
+            @Override
+            public void confirm() {
+                UpdateUtils.installNewApk(mContext, file);
+                PreferencesUtils.put( AppUtils.IS_SJJC_AREADY_UPDATE, true);
+            }
+
+            @Override
+            public void cancel() {
+                if (!isPms)
+                    PreferencesUtils.put( AppUtils.IS_SJJC_AREADY_UPDATE, false);
+                if (isPms && PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+                    System.exit(0);
+                }
+
+            }
+        }, R.string.install_now_str, R.string.cancel_install_str, isPms);
+        return mDialog;
+    }
     /**
      * 解析升级数据
      *
