@@ -20,9 +20,9 @@ import com.cnksi.tts.ISpeakInterface;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
+
 /**
- *使用AIDL的方式进行远程调用TTS服务完成操作说话
- *
+ * 使用AIDL的方式进行远程调用TTS服务完成操作说话
  */
 public class TTSUtils {
     private final static String TAG = "TTSUtils";
@@ -38,7 +38,7 @@ public class TTSUtils {
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            instance.speakInterface = ISpeakInterface.Stub.asInterface(service);
+           instance.speakInterface = ISpeakInterface.Stub.asInterface(service);
             instance.isConnect = true;
             Log.i(TAG, "Connect to TTServer successful");
         }
@@ -91,7 +91,7 @@ public class TTSUtils {
 
 
     public boolean isConnect() {
-        if (!isConnect) ToastUtils.showMessage( "没有连接到TTS服务。");
+        if (!isConnect) ToastUtils.showMessage("没有连接到TTS服务。");
         return isConnect;
     }
 }

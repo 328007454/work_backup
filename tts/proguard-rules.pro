@@ -23,3 +23,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-libraryjars libs/armeabi/libmsc.so
+-libraryjars libs/arm64-v8a/libmsc.so
+-libraryjars libs/armeabi-v7a/libmsc.so
+-libraryjars libs/x86/libmsc.so
+-libraryjars libs/x86_64/libmsc.so

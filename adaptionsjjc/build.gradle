@@ -78,10 +78,10 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "SYNC_APP_ID", "\"${SYNC_APP_ID}\""
             buildConfigField "String", "SYNC_URL", "\"${SYNC_URL}\""
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
-            shrinkResources false//需要同minifyEnabled 共同使用
+            shrinkResources true//需要同minifyEnabled 共同使用
             signingConfig signingConfigs.release
             applicationVariants.all { variant ->
                 //修改apk输出路径
@@ -149,10 +149,9 @@ dependencies {
     compile('com.cnksi:ksynclib:3.1.8.2-xj') {
         exclude module: 'fastjson'
     }
-
     compile 'com.android.support:cardview-v7:25.3.1'
     compile project(':tts')
-    compile 'com.cnksi:bdloc:1.1.7-1'
+    compile 'com.cnksi:bdloc:1.1.7-3'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:25.3.1'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'

@@ -1,37 +1,63 @@
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in /Library/android/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# 保持native方法不被混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+# 保持Parcelable不被混淆
+-keep class * implements Android.os.Parcelable {
+    public static final Android.os.Parcelable$Creator *;
+}
 
-# Add any project specific keep options here:
+#枚举类不混淆
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-#指定压缩级别
 -optimizationpasses 5
-#不跳过非公共的库的类成员
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
 -dontskipnonpubliclibraryclassmembers
-#混淆时采用的算法
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
-#把混淆类中的方法名也混淆了
--useuniqueclassmembernames
-#优化时允许访问并修改有修饰符的类和类的成员
--allowaccessmodification
-#将文件来源重命名为“SourceFile”字符串
--renamesourcefileattribute SourceFile
-#保留行号
--keepattributes SourceFile,LineNumberTable
-#保持泛型
+-dontpreverify
+-verbose
+-printmapping proguardMapping.txt
+-optimizations !code/simplification/cast,!field/*,!class/merging/*
+-keepattributes *Annotation*,InnerClasses
 -keepattributes Signature
-#保持所有实现 Serializable 接口的类成员
+-keepattributes SourceFile,LineNumberTable
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.view.View
+-keep public class com.android.vending.licensing.ILicensingService
+-keep class android.support.** {*;}
+
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+-keepclassmembers class * extends android.app.Activity{
+    public void *(android.view.View);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep public class * extends android.view.View{
+    *** get*();
+    void set*(***);
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
@@ -40,42 +66,51 @@
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
 }
-# 保持 native 方法不被混淆
--keepclasseswithmembernames class * {
-    native <methods>;
-}
-# 保持自定义控件类不被混淆
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet);
-}
-# 保持枚举 enum 类不被混淆
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
-# 保持 Parcelable 不被混淆
--keep class * implements android.os.Parcelable {
-    public static final android.os.Parcelable$Creator *;
-}
--keep class com.cnksi.sjjc.inter.**
--keep class com.cnksi.sjjc.inter.**{*;}
--keep class com.cnksi.sjjc.view.**{*;}
--keep class com.cnksi.sjjc.bean.**{*;}
-#Fragment不需要在AndroidManifest.xml中注册，需要额外保护下
 
--keep public class * extends android.app.Fragment
-# 保持哪些类不被混淆
--keep public class * extends android.app.Activity
-# 保持哪些类不被混淆
--keep public class * extends android.app.Application
- # 保持哪些类不被混淆
--keep public class * extends android.app.Service
- # 保持哪些类不被混淆
--keep public class * extends android.content.BroadcastReceiver
-#去掉混淆打包警告
+-keep class com.cnksi.sjjc.bean.**{*;}
+
+-dontwarn com.cnksi.tts.**
+-keep class com.cnksi.tts.**{*;}
+-keep class com.cnksi.tts.ISpeakCallback{*;}
+-keep class com.cnksi.tts.ISpeakInterface{*;}
+
+
+-dontwarn com.cnksi.bdloc.**
+-keep class com.cnksi.bdloc.**{*;}
+
+-dontwarn com.cnksi.ksynclib.**
+-keep class com.cnksi.ksynclib.**{*;}
 -keep class com.alibaba.fastjson.**{*;}
--keep class com.github.mikephil.charting.data.realm.**{*;}
+
+-dontwarn okhttp3.**
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+
+-dontwarn okio.**
 -keep class okio.**{*;}
--keep class android.databinding.BindingBuildInfo{*;}
+
+-keep class com.github.mikephil.charting.**{*;}
+-dontwarn io.realm.**
+
+-dontwarn junit.**
+
+-dontwarn org.xutils.**
+-keep class org.xutils.**{*;}
+-keep class net.sqlcipher.**{*;}
+
+-dontwarn java.lang.management.**
+
+-dontwarn com.iflytek.**
+-keepattributes Signature
 -keep class com.iflytek.**{*;}
--keep class com.cnksi.core.**{*;}
+
+
+
+
+
+
+
+
+
+
+
