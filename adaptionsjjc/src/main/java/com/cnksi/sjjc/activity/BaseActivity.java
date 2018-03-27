@@ -472,8 +472,12 @@ public abstract class BaseActivity extends BaseCoreActivity {
 
     private boolean isPms = false;
 
-
+    /**
+     * 更新日志
+     */
+    protected String updateContent;
     protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, boolean isPms, String updateContent) {
+        this.updateContent = updateContent;
         this.isPms = isPms;
         checkUpdateVersion(downloadFolder, downloadFileName, FunctionUtils.getMetaValue(mActivity, CoreConfig.PROGRAM_APP_CODE));
     }
@@ -522,7 +526,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
             case CoreConfig.INSTALL_APP_CODE:
                 // TODO:显示安装对话框
 //                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile);
-//                UpdateUtils.showInstallNewApkDialog(_this, mUpdateFile, isPms, updateContent);
+                UpdateUtils.showInstallNewApkDialog(_this, mUpdateFile, isPms, updateContent);
                 break;
         }
     }

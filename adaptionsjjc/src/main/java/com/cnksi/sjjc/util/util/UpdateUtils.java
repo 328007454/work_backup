@@ -14,14 +14,13 @@ import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.cnksi.core.R;
 import com.cnksi.core.common.DeviceInfor;
 import com.cnksi.core.common.UpdateInfor;
-import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.DeviceUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.core.view.CustomerDialog.DialogClickListener;
+import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Task;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.FunctionUtils;
@@ -244,26 +243,26 @@ public class UpdateUtils {
      * @param file
      */
 
-    public static Dialog showInstallNewApkDialog(final Activity mContext, final File file, final boolean isPms, String updateContent) {
+//    public static Dialog showInstallNewApkDialog(final Activity mContext, final File file, final boolean isPms, String updateContent) {
 //        mDialog = CustomerDialog.showSelectDialog(mContext, "版本更新", isPms ? mContext.getResources().getString(R.string.install_now_str_pms) : updateContent, new DialogClickListener() {
 //            @Override
 //            public void confirm() {
 //                UpdateUtils.installNewApk(mContext, file);
-//                PreferencesUtils.put(mContext, AppUtils.IS_SJJC_AREADY_UPDATE, true);
+//                PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, true);
 //            }
 //
 //            @Override
 //            public void cancel() {
 //                if (!isPms)
-//                    PreferencesUtils.put(mContext, AppUtils.IS_SJJC_AREADY_UPDATE, false);
-//                if (isPms && PreferencesUtils.get(mContext, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
+//                    PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, false);
+//                if (isPms && PreferencesUtils.get(, AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
 //                    System.exit(0);
 //                }
 //
 //            }
 //        }, R.string.install_now_str, R.string.cancel_install_str, isPms);
-        return mDialog;
-    }
+//        return mDialog;
+//    }
 
     /**
      * 解析升级数据
