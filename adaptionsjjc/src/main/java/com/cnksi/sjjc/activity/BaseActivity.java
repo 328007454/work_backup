@@ -31,10 +31,11 @@ import android.widget.Toast;
 import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
+import com.cnksi.core.common.UpdateInfor;
 import com.cnksi.core.utils.NetWorkUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.BuildConfig;
-import com.cnksi.sjjc.util.UpdateUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
@@ -42,6 +43,7 @@ import com.cnksi.sjjc.databinding.IncludeTitleBinding;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.FunctionUtils;
 import com.cnksi.sjjc.util.KeyBoardUtils;
+import com.cnksi.sjjc.util.util.UpdateUtils;
 import com.iflytek.cloud.util.ResourceUtil;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -49,6 +51,7 @@ import com.zhy.autolayout.AutoRelativeLayout;
 
 import org.xutils.x;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -498,5 +501,30 @@ public abstract class BaseActivity extends BaseCoreActivity {
         });
     }
 
+
+    /**
+     * 刷新数据
+     *
+     * @param msg
+     */
+    protected void onRefresh(android.os.Message msg) {
+        switch (msg.what) {
+            case CoreConfig.NETWORK_UNVISIBLE:
+                CustomerDialog.dismissProgress();
+//                CToast.showLong(mCurrentActivity, R.string.network_unvisible_str);
+                break;
+            case CoreConfig.UPDATE_APP_CODE:
+
+                if (msg.obj != null && msg.obj instanceof UpdateInfor) {
+//                    UpdateUtils.showUpdateDialog(_this, CoreConfig.SERVER_URL + File.separator + ((UpdateInfor) msg.obj).file, ((UpdateInfor) msg.obj).remark, mDownloadFolder, mDownloadFile);
+                }
+                break;
+            case CoreConfig.INSTALL_APP_CODE:
+                // TODO:显示安装对话框
+//                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile);
+//                UpdateUtils.showInstallNewApkDialog(_this, mUpdateFile, isPms, updateContent);
+                break;
+        }
+    }
 
 }
