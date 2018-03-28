@@ -2,10 +2,7 @@ package com.cnksi.inspe.ui;
 
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
@@ -17,7 +14,7 @@ import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamBinding;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
-import com.cnksi.inspe.entity.InspecteTaskEntity;
+import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +45,8 @@ public class InspeTeamActivity extends AppBaseActivity {
 
     @Override
     public void initUI() {
+
+        setTitle("班组建设检查",R.drawable.inspe_left_black_24dp);
 
         dataBinding = (ActivityInspeTeamBinding) rootDataBinding;
         task = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
@@ -100,6 +99,10 @@ public class InspeTeamActivity extends AppBaseActivity {
 
     private void initAdapterData() {
         List<TeamRuleEntity> ruleList = teamService.getRoleList();
+        if (ruleList == null) {
+            return;
+        }
+
         for (TeamRuleEntity entity : ruleList) {
             TeamRole0Entity rule0 = new TeamRole0Entity(entity);
 
@@ -111,7 +114,6 @@ public class InspeTeamActivity extends AppBaseActivity {
 
             list.add(rule0);
         }
-
 
     }
 

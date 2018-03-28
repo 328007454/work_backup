@@ -1,4 +1,4 @@
-package com.cnksi.inspe.entity;
+package com.cnksi.inspe.db.entity;
 
 /**
  * 扣分标准实体类

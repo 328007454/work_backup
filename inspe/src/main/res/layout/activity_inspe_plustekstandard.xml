@@ -1,106 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <View
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="143dp"
-            android:background="#03B9A0" />
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/InspceAppTheme.PopupOverlay">
 
-        <LinearLayout
-            style="@style/View.LinearLayout"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="13dp">
+            <include layout="@layout/include_inspe_title" />
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="143dp"
+                android:background="#03B9A0" />
 
             <LinearLayout
                 style="@style/View.LinearLayout"
-                android:layout_height="161dp"
-                android:background="@drawable/inspe_white_shape">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="13dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="109dp"
-                    android:layout_marginLeft="170dp"
-                    android:orientation="vertical"
-                    android:paddingLeft="8dp">
+                    style="@style/View.LinearLayout"
+                    android:layout_height="161dp"
+                    android:background="@drawable/inspe_white_shape">
 
-                    <TextView
-                        style="@style/View.TextView"
-                        android:layout_marginTop="13dp"
-                        android:lines="1"
-                        android:text="生产厂家：四川蜀越电气"
-                        android:textColor="#626262"
-                        android:textSize="12dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="109dp"
+                        android:layout_marginLeft="170dp"
+                        android:orientation="vertical"
+                        android:paddingLeft="8dp">
 
-                    <TextView
-                        style="@style/View.TextView"
-                        android:layout_marginTop="13dp"
-                        android:lines="1"
-                        android:text="产品型号：HY10WX"
-                        android:textColor="#626262"
-                        android:textSize="12dp" />
+                        <TextView
+                            style="@style/View.TextView"
+                            android:layout_marginTop="13dp"
+                            android:lines="1"
+                            android:text="生产厂家：四川蜀越电气"
+                            android:textColor="#626262"
+                            android:textSize="12dp" />
 
-                    <TextView
-                        style="@style/View.TextView"
-                        android:layout_marginTop="13dp"
-                        android:lines="1"
-                        android:text="投产日期：2008年6月"
-                        android:textColor="#626262"
-                        android:textSize="12dp" />
+                        <TextView
+                            style="@style/View.TextView"
+                            android:layout_marginTop="13dp"
+                            android:lines="1"
+                            android:text="产品型号：HY10WX"
+                            android:textColor="#626262"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            style="@style/View.TextView"
+                            android:layout_marginTop="13dp"
+                            android:lines="1"
+                            android:text="投产日期：2008年6月"
+                            android:textColor="#626262"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:button="@null"
+                            android:text="技术资料" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:button="@null"
+                            android:text="本体" />
+
+                    </RadioGroup>
                 </LinearLayout>
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="horizontal">
+                <!--其他部门-->
+                <TextView
+                    style="@style/View.TextView"
+                    android:layout_marginTop="20dp"
+                    android:text="评判项目"
+                    android:textColor="#B3AFAF"
+                    android:textSize="14dp" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:button="@null"
-                        android:text="技术资料" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:button="@null"
-                        android:text="本体" />
-
-                </RadioGroup>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    style="@style/View.RecyclerView"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/inspe_white_shape" />
             </LinearLayout>
 
-            <!--其他部门-->
-            <TextView
-                style="@style/View.TextView"
-                android:layout_marginTop="20dp"
-                android:text="评判项目"
-                android:textColor="#B3AFAF"
-                android:textSize="14dp" />
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="109dp"
+                android:layout_marginLeft="20dp"
+                android:background="#abcdef" />
 
-            <android.support.v7.widget.RecyclerView
-                android:background="@drawable/inspe_white_shape"
-                android:id="@+id/recyclerView"
-                style="@style/View.RecyclerView"
-                android:layout_marginTop="10dp" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="160dp"
-            android:layout_height="109dp"
-            android:layout_marginLeft="20dp"
-            android:background="#abcdef" />
-
-    </FrameLayout>
+        </FrameLayout>
+    </LinearLayout>
 </layout>

@@ -18,65 +18,123 @@ import org.xutils.ex.DbException;
 public class TeamRuleResultEntity extends BaseDBEntity {
 
     /***/
-    @Column(name = "id", isId = true)
-    private String id;
+    @Column(name = "id",isId = true)
+    public String id;
 
-    /***/ @Column(name = "task_id") public String task_id;
+    /***/
+    @Column(name = "task_id")
+    public String task_id;
 
-    /***/ @Column(name = "record_type") public String record_type;
+    /***/
+    @Column(name = "record_type")
+    public String record_type;
 
-    /***/ @Column(name = "rule_id") public String rule_id;
+    /***/
+    @Column(name = "rule_id")
+    public String rule_id;
 
-    /***/ @Column(name = "rule_name") public String rule_name;
+    /***/
+    @Column(name = "rule_name")
+    public String rule_name;
 
-    /***/ @Column(name = "bdz_name") public String bdz_name;
+    /***/
+    @Column(name = "bdz_name")
+    public String bdz_name;
 
-    /***/ @Column(name = "bdz_id") public String bdz_id;
+    /***/
+    @Column(name = "bdz_id")
+    public String bdz_id;
 
-    /***/ @Column(name = "device_id") public String device_id;
+    /***/
+    @Column(name = "device_id")
+    public String device_id;
 
-    /***/ @Column(name = "device_name") public String device_name;
+    /***/
+    @Column(name = "device_name")
+    public String device_name;
 
-    /***/ @Column(name = "dept_id") public String dept_id;
+    /***/
+    @Column(name = "dept_id")
+    public String dept_id;
 
-    /***/ @Column(name = "dept_name") public String dept_name;
+    /***/
+    @Column(name = "dept_name")
+    public String dept_name;
 
-    /***/ @Column(name = "check_person_id") public String check_person_id;
+    /***/
+    @Column(name = "check_person_id")
+    public String check_person_id;
 
-    /***/ @Column(name = "check_person_name") public String check_person_name;
+    /***/
+    @Column(name = "check_person_name")
+    public String check_person_name;
 
-    /***/ @Column(name = "deduct_score") public float deduct_score;
+    /***/
+    @Column(name = "deduct_score")
+    public float deduct_score;
 
-    /***/ @Column(name = "description") public String description;
+    /***/
+    @Column(name = "description")
+    public String description;
 
-    /***/ @Column(name = "reason") public String reason;
+    /***/
+    @Column(name = "reason")
+    public String reason;
 
-    /***/ @Column(name = "img") public String img;
+    /***/
+    @Column(name = "img")
+    public String img;
 
-    /***/ @Column(name = "progress") public String progress;
+    /***/
+    @Column(name = "progress")
+    public String progress;
 
-    /***/ @Column(name = "improve_person_id") public String improve_person_id;
+    /***/
+    @Column(name = "improve_person_id")
+    public String improve_person_id;
 
-    /***/ @Column(name = "improve_person_name") public String improve_person_name;
+    /***/
+    @Column(name = "improve_person_name")
+    public String improve_person_name;
 
-    /***/ @Column(name = "plan_improve_time") public long plan_improve_time;
+    /***/
+    @Column(name = "plan_improve_time")
+    public String plan_improve_time;
 
-    /***/ @Column(name = "improve_description") public String improve_description;
+    /***/
+    @Column(name = "improve_description")
+    public String improve_description;
 
-    /***/ @Column(name = "improve_img") public String improve_img;
+    /***/
+    @Column(name = "improve_img")
+    public String improve_img;
 
-    /***/ @Column(name = "improve_time") public long improve_time;
+    /***/
+    @Column(name = "improve_time")
+    public String improve_time;
 
-    /***/ @Column(name = "dlt") public int dlt;
+    /***/
+    @Column(name = "dlt")
+    public int dlt;
 
-    /***/ @Column(name = "last_modify_time") public long last_modify_time;
+    /***/
+    @Column(name = "last_modify_time")
+    public String last_modify_time;
 
-    /***/ @Column(name = "create_time") public long create_time;
+    /***/
+    @Column(name = "create_time")
+    public String create_time;
 
-    /***/ @Column(name = "update_time") public long update_time;
+    /***/
+    @Column(name = "update_time")
+    public String update_time;
 
-    /***/ @Column(name = "insert_time") public long insert_time;
+    /***/
+    @Column(name = "insert_time")
+    public String insert_time;
 
+    public TeamRuleResultEntity() {
+    }
 
     public String getId() {
         return id;
@@ -238,11 +296,11 @@ public class TeamRuleResultEntity extends BaseDBEntity {
         this.improve_person_name = improve_person_name;
     }
 
-    public long getPlan_improve_time() {
+    public String getPlan_improve_time() {
         return plan_improve_time;
     }
 
-    public void setPlan_improve_time(long plan_improve_time) {
+    public void setPlan_improve_time(String plan_improve_time) {
         this.plan_improve_time = plan_improve_time;
     }
 
@@ -262,11 +320,11 @@ public class TeamRuleResultEntity extends BaseDBEntity {
         this.improve_img = improve_img;
     }
 
-    public long getImprove_time() {
+    public String getImprove_time() {
         return improve_time;
     }
 
-    public void setImprove_time(long improve_time) {
+    public void setImprove_time(String improve_time) {
         this.improve_time = improve_time;
     }
 
@@ -278,40 +336,35 @@ public class TeamRuleResultEntity extends BaseDBEntity {
         this.dlt = dlt;
     }
 
-    public long getLast_modify_time() {
+    public String getLast_modify_time() {
         return last_modify_time;
     }
 
-    public void setLast_modify_time(long last_modify_time) {
+    public void setLast_modify_time(String last_modify_time) {
         this.last_modify_time = last_modify_time;
     }
 
-    public long getCreate_time() {
+    public String getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(long create_time) {
+    public void setCreate_time(String create_time) {
         this.create_time = create_time;
     }
 
-    public long getUpdate_time() {
+    public String getUpdate_time() {
         return update_time;
     }
 
-    public void setUpdate_time(long update_time) {
+    public void setUpdate_time(String update_time) {
         this.update_time = update_time;
     }
 
-    public long getInsert_time() {
+    public String getInsert_time() {
         return insert_time;
     }
 
-    public void setInsert_time(long insert_time) {
+    public void setInsert_time(String insert_time) {
         this.insert_time = insert_time;
     }
-
-    public TeamRuleResultEntity getParent(DbManager db) throws DbException {
-        return db.findById(TeamRuleResultEntity.class, id);
-    }
-
 }

@@ -19,116 +19,128 @@ import java.util.Map;
  */
 @Table(name = "xj_group_con_rule")
 public class TeamRuleEntity extends BaseDBEntity {
-
     /***/
     @Column(name = "id", isId = true)
-    private String id;
+    public String id;
 
     /***/
     @Column(name = "name")
-    private String name;
+    public String name;
+
+    /***/
+    @Column(name = "row_num")
+    public int row_num;
 
     /***/
     @Column(name = "level")
-    private String level;
+    public String level;
 
     /***/
     @Column(name = "type")
-    private String type;
+    public String type;
 
     /***/
     @Column(name = "score_group_id")
-    private String score_group_id;
+    public String score_group_id;
 
     /***/
     @Column(name = "pid")
-    private String pid;
+    public String pid;
 
     /***/
     @Column(name = "dependence")
-    private String dependence;
+    public String dependence;
 
     /***/
     @Column(name = "dept_name")
-    private String dept_name;
+    public String dept_name;
 
     /***/
     @Column(name = "workshop")
-    private String workshop;
+    public String workshop;
 
     /***/
     @Column(name = "team")
-    private String team;
+    public String team;
 
     /***/
     @Column(name = "stand_score")
-    private float stand_score;
+    public float stand_score;
 
     /***/
     @Column(name = "stand_content")
-    private String stand_content;
+    public String stand_content;
 
     /***/
     @Column(name = "create_time")
-    private long create_time;
+    public String create_time;
 
     /***/
     @Column(name = "update_time")
-    private long update_time;
+    public String update_time;
 
     /***/
     @Column(name = "last_modify_time")
-    private long last_modify_time;
+    public String last_modify_time;
 
     /***/
     @Column(name = "gzrwid")
-    private String gzrwid;
+    public String gzrwid;
 
     /***/
     @Column(name = "sort")
-    private String sort;
+    public int sort;
 
     /***/
-    @Column(name = "level_namel")
-    private String level_namel;
+    @Column(name = "dlt")
+    public int dlt;
+
+    /***/
+    @Column(name = "level_name")
+    public String level_name;
 
     /***/
     @Column(name = "city_id")
-    private String city_id;
+    public String city_id;
 
     /***/
     @Column(name = "insert_time")
-    private long insert_time;
+    public String insert_time;
 
-    /**
-     * 总分
-     */
-    private float scoreCount;
+    //**当前项总分*/
+    public float scoreCount;
+
+    //**当前标准状态(not null为已检查)*/
+    public String record_type;
+
+    //**扣分当前项扣分数*/
+    public float deduct_score;
 
     public TeamRuleEntity() {
     }
 
-    public TeamRuleEntity(String id, String name, String level, String type, String score_group_id, String pid, String dependence, String dept_name, String workshop, String team, float stand_score, String stand_content, long create_time, long update_time, long last_modify_time, String gzrwid, String sort, String level_namel, String city_id, long insert_time) {
-        this.id = id;
-        this.name = name;
-        this.level = level;
-        this.type = type;
-        this.score_group_id = score_group_id;
-        this.pid = pid;
-        this.dependence = dependence;
-        this.dept_name = dept_name;
-        this.workshop = workshop;
-        this.team = team;
-        this.stand_score = stand_score;
-        this.stand_content = stand_content;
-        this.create_time = create_time;
-        this.update_time = update_time;
-        this.last_modify_time = last_modify_time;
-        this.gzrwid = gzrwid;
-        this.sort = sort;
-        this.level_namel = level_namel;
-        this.city_id = city_id;
-        this.insert_time = insert_time;
+    public String getRecord_type() {
+        return record_type;
+    }
+
+    public void setRecord_type(String record_type) {
+        this.record_type = record_type;
+    }
+
+    public float getDeduct_score() {
+        return deduct_score;
+    }
+
+    public void setDeduct_score(float deduct_score) {
+        this.deduct_score = deduct_score;
+    }
+
+    public float getScoreCount() {
+        return scoreCount;
+    }
+
+    public void setScoreCount(float scoreCount) {
+        this.scoreCount = scoreCount;
     }
 
     public String getId() {
@@ -145,6 +157,14 @@ public class TeamRuleEntity extends BaseDBEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getRow_num() {
+        return row_num;
+    }
+
+    public void setRow_num(int row_num) {
+        this.row_num = row_num;
     }
 
     public String getLevel() {
@@ -227,27 +247,27 @@ public class TeamRuleEntity extends BaseDBEntity {
         this.stand_content = stand_content;
     }
 
-    public long getCreate_time() {
+    public String getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(long create_time) {
+    public void setCreate_time(String create_time) {
         this.create_time = create_time;
     }
 
-    public long getUpdate_time() {
+    public String getUpdate_time() {
         return update_time;
     }
 
-    public void setUpdate_time(long update_time) {
+    public void setUpdate_time(String update_time) {
         this.update_time = update_time;
     }
 
-    public long getLast_modify_time() {
+    public String getLast_modify_time() {
         return last_modify_time;
     }
 
-    public void setLast_modify_time(long last_modify_time) {
+    public void setLast_modify_time(String last_modify_time) {
         this.last_modify_time = last_modify_time;
     }
 
@@ -259,20 +279,28 @@ public class TeamRuleEntity extends BaseDBEntity {
         this.gzrwid = gzrwid;
     }
 
-    public String getSort() {
+    public int getSort() {
         return sort;
     }
 
-    public void setSort(String sort) {
+    public void setSort(int sort) {
         this.sort = sort;
     }
 
-    public String getLevel_namel() {
-        return level_namel;
+    public int getDlt() {
+        return dlt;
     }
 
-    public void setLevel_namel(String level_namel) {
-        this.level_namel = level_namel;
+    public void setDlt(int dlt) {
+        this.dlt = dlt;
+    }
+
+    public String getLevel_name() {
+        return level_name;
+    }
+
+    public void setLevel_name(String level_name) {
+        this.level_name = level_name;
     }
 
     public String getCity_id() {
@@ -283,24 +311,11 @@ public class TeamRuleEntity extends BaseDBEntity {
         this.city_id = city_id;
     }
 
-    public long getInsert_time() {
+    public String getInsert_time() {
         return insert_time;
     }
 
-    public void setInsert_time(long insert_time) {
+    public void setInsert_time(String insert_time) {
         this.insert_time = insert_time;
     }
-
-    public float getScoreCount() {
-        return scoreCount;
-    }
-
-    public void setScoreCount(float scoreCount) {
-        this.scoreCount = scoreCount;
-    }
-
-    public TeamRuleEntity getParent(DbManager db) throws DbException {
-        return db.findById(TeamRuleEntity.class, id);
-    }
-
 }

@@ -20,7 +20,7 @@ public class InspeIssueDetailActivity extends AppBaseActivity {
 
     @Override
     public void initUI() {
-
+        setTitle("问题详情", R.drawable.inspe_left_black_24dp);
     }
 
     @Override

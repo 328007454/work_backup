@@ -8,6 +8,8 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.entity.TeamRole0Entity;
 import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
+import com.cnksi.inspe.type.RecordType;
+import com.cnksi.inspe.type.RoleType;
 
 import java.util.List;
 
@@ -54,8 +56,27 @@ public class TeamRoleAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, 
                 break;
             case TYPE_1:
                 TeamRoleEntity rule = (TeamRoleEntity) item;
+                RecordType recordType = RecordType.valueOf(rule.rule.getRecord_type() != null ? rule.rule.getRecord_type() : RecordType.def.name());
+                if (recordType != null) {
+                    switch (recordType) {
+                        case answer://有问题
+                            holder.setBackgroundRes(R.id.itemView, R.drawable.inspe_itembg_orange_shape);
+                            break;
+                        case normal://无问题
+                            holder.setBackgroundRes(R.id.itemView, R.drawable.inspe_itembg_green_shape);
+                            break;
+                        case ing://进行中
+                        case def://默认(未开始)
+                        default:
+                            holder.setBackgroundRes(R.id.itemView, R.drawable.inspe_itembg_dark_shape);
+                            break;
+                    }
+                } else {//未开始
+                    holder.setBackgroundRes(R.id.itemView, R.drawable.inspe_itembg_dark_shape);
+                }
+
                 holder.setText(R.id.nameTxt, rule.rule.getName());
-                holder.setText(R.id.scoreTxt, "(" + rule.rule.getScoreCount() + "/" + rule.rule.getScoreCount() + ")");
+                holder.setText(R.id.scoreTxt, "(" + String.format("%.1f", (rule.rule.getScoreCount() - rule.rule.getDeduct_score())) + "/" + String.format("%.1f", rule.rule.getScoreCount()) + ")");
                 break;
         }
     }

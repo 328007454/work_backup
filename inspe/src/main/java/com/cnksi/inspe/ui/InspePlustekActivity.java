@@ -2,7 +2,6 @@ package com.cnksi.inspe.ui;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,10 +10,6 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspePlustekBinding;
 import com.cnksi.inspe.entity.InspectePlustekEntity;
-import com.cnksi.inspe.entity.InspecteTaskEntity;
-import com.cnksi.inspe.ui.fragment.InspectionFragment;
-import com.cnksi.inspe.utils.DateFormat;
-import com.cnksi.inspe.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +40,7 @@ public class InspePlustekActivity extends AppBaseActivity {
 
     @Override
     public void initUI() {
+        setTitle("精益化检查", R.drawable.inspe_left_black_24dp);
         dataBinding = (ActivityInspePlustekBinding) rootDataBinding;
 
         list.add(new InspectePlustekEntity(0, R.mipmap.inspe_plustek_1, "查阅资料"));
@@ -68,10 +64,10 @@ public class InspePlustekActivity extends AppBaseActivity {
                         intent.putExtra("type", 1);
                         break;
                     case 2:
-                        intent.putExtra("type", 2);
-                        break;
+                intent.putExtra("type", 2);
+                break;
 
-                }
+            }
 
                 startActivity(intent);
             }

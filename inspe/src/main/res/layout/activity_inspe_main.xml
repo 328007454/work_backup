@@ -17,27 +17,26 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:background="#00FFFFFF"
+            android:layout_height="wrap_content"
             app:elevation="0dp">
 
-            <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="?attr/colorPrimary"-->
-            <!--app:layout_scrollFlags="scroll|enterAlways"-->
-            <!--app:popupTheme="@style/InspceAppTheme.PopupOverlay"-->
-            <!--app:title="@string/app_name">-->
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:contentInsetEnd="0dp"
+                app:contentInsetStart="0dp"
+                app:popupTheme="@style/InspceAppTheme.PopupOverlay">
 
-            <!--</android.support.v7.widget.Toolbar>-->
+                <include layout="@layout/include_inspe_title" />
+            </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="#FFFFFF"
                 android:textSize="14dp"
                 app:layout_scrollFlags="scroll"
@@ -65,13 +64,16 @@
                     android:text="@string/inspe_title_allquestion" />
 
             </android.support.design.widget.TabLayout>
+
+
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:paddingTop="9dp" />
 
     </LinearLayout>
 </layout>

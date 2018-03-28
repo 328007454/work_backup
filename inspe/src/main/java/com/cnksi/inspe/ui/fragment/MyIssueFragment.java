@@ -10,7 +10,8 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseFragment;
 import com.cnksi.inspe.databinding.FragmentInspeIssueBinding;
 import com.cnksi.inspe.databinding.FragmentInspeMyissueBinding;
-import com.cnksi.inspe.entity.InspecteIssueEntity;
+import com.cnksi.inspe.db.TeamService;
+import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.ui.InspeIssueDetailActivity;
 import com.cnksi.inspe.utils.DateFormat;
 
@@ -31,8 +32,9 @@ public class MyIssueFragment extends AppBaseFragment {
         return R.layout.fragment_inspe_myissue;
     }
 
-    FragmentInspeMyissueBinding dataDinding;
-    List<InspecteIssueEntity> list = new ArrayList<>();
+    private FragmentInspeMyissueBinding dataDinding;
+    private List<TeamRuleResultEntity> list = new ArrayList<>();
+    private TeamService teamService = new TeamService();
 
     @Override
     protected void lazyLoad() {
@@ -40,10 +42,10 @@ public class MyIssueFragment extends AppBaseFragment {
         dataDinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //模拟数据
-        list.add(new InspecteIssueEntity("1", "", "未按照发布单位有效技术b标准、规章制度清册的。", 0, "未整改", System.currentTimeMillis()));
-        list.add(new InspecteIssueEntity("1", "", "未按照发布单位有效技术b标准、规章制度清册的。", 0, "未整改", System.currentTimeMillis()));
-        list.add(new InspecteIssueEntity("1", "", "未按照发布单位有效技术b标准、规章制度清册的。", 0, "未整改", System.currentTimeMillis()));
-        list.add(new InspecteIssueEntity("1", "", "未按照发布单位有效技术b标准、规章制度清册的。", 0, "未整改", System.currentTimeMillis()));
+        List<TeamRuleResultEntity> listTemp = teamService.getIssueList();
+        if (listTemp != null && listTemp.size() > 0) {
+            list.addAll(listTemp);
+        }
 
 
         BaseQuickAdapter adapter = new InspeIssueAdapter(R.layout.inspeissue_item, list);
@@ -62,18 +64,16 @@ public class MyIssueFragment extends AppBaseFragment {
     }
 
 
-    public class InspeIssueAdapter extends BaseQuickAdapter<InspecteIssueEntity, BaseViewHolder> {
+    public class InspeIssueAdapter extends BaseQuickAdapter<TeamRuleResultEntity, BaseViewHolder> {
         public InspeIssueAdapter(int layoutResId, List data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, InspecteIssueEntity item) {
-
-
-            helper.setText(R.id.contextTxt, item.context);
-            helper.setText(R.id.dateTxt, DateFormat.formatYMD(item.date));
-            helper.setText(R.id.stateTxt, item.stateName);
+        protected void convert(BaseViewHolder helper, TeamRuleResultEntity item) {
+            helper.setText(R.id.contextTxt, item.getReason());
+            helper.setText(R.id.dateTxt, DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_improve_time())));
+            helper.setText(R.id.stateTxt, item.getProgress());
         }
     }
 }

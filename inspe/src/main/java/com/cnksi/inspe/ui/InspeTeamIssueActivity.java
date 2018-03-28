@@ -5,11 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.TypeReference;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnksi.inspe.R;
@@ -19,20 +16,22 @@ import com.cnksi.inspe.databinding.ActivityInspeTeamissueBinding;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
-import com.cnksi.inspe.entity.InspeScoreEntity;
-import com.cnksi.inspe.entity.InspecteTaskEntity;
+import com.cnksi.inspe.db.entity.InspeScoreEntity;
+import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.type.RecordType;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.utils.Config;
+import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.utils.FunctionUtil;
 import com.cnksi.inspe.utils.FunctionUtils;
 import com.cnksi.inspe.widget.DateDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 班组建设检查-根据标准检查相关事项，并填写相关检查结果或扣分等
@@ -73,6 +72,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
 
     @Override
     public void initUI() {
+        setTitle("问题记录", R.drawable.inspe_left_black_24dp);
         dataBinding = (ActivityInspeTeamissueBinding) rootDataBinding;
         dataBinding.addBtn.setOnClickListener(this);
         dataBinding.minuxBtn.setOnClickListener(this);
@@ -209,44 +209,45 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
                     return;
                 }
             }
-
+            //创建ID
+            teamRuleResult.setId(UUID.randomUUID().toString());
             //任务ID
-            teamRuleResult.setBdz_id(task.id);
+            teamRuleResult.setTask_id(task.id);
             //标准ID
             teamRuleResult.setRule_id(teamRule.getId());
             teamRuleResult.setRule_name(teamRule.getName());
-            //班组ID
-            teamRuleResult.setDept_id("");
-            teamRuleResult.setDept_id("");
+            //被检查班组ID
+            teamRuleResult.setDept_id(task.getDept_id());
+            teamRuleResult.setDept_name(task.getDept_name());
             //检查人ID
             teamRuleResult.setCheck_person_id("");
-            teamRuleResult.setCheck_person_id("");
+            teamRuleResult.setCheck_person_name("");
 
 
             //问题类型(记录类型：问题（answer）、普通记录（normal）)
             if (TextUtils.isEmpty(dataBinding.issueInfoTxt.getText().toString().trim())) {
-                teamRuleResult.setRecord_type("normal");
+                teamRuleResult.setRecord_type(RecordType.normal.name());
             } else {
-                teamRuleResult.setRecord_type("answer");
+                teamRuleResult.setRecord_type(RecordType.answer.name());
                 //扣分情况
                 teamRuleResult.setDeduct_score(minusScore / 10f);//放大数据后对数据进行缩小
                 //问题描述
                 teamRuleResult.setDescription(dataBinding.issueEdit.getText().toString().trim());
-                //扣分原因json
-                teamRuleResult.setReason(JSON.toJSONString(scoreBean));
+                //扣分原因jsonArray
+                teamRuleResult.setReason(JSON.toJSONString(new InspeScoreEntity[]{scoreBean}));
                 //状态（问题进度：未分配、未整改、未审核、未审核通过、已闭环）
                 teamRuleResult.setProgress("未分配");
                 //整改期限
-                teamRuleResult.setPlan_improve_time(dateTime);
+                teamRuleResult.setPlan_improve_time(DateFormat.dateToDbString(dateTime));
             }
 
             //图片(疑问？是否需要上传)
             teamRuleResult.setImg(ArrayInspeUtils.toListString(picList));
             //检查时间
-            long time = System.currentTimeMillis();
-            teamRuleResult.setCreate_time(time);
-            teamRuleResult.setInsert_time(time);
-            teamRuleResult.setLast_modify_time(time);
+            String datetime = DateFormat.dateToDbString(System.currentTimeMillis());
+            teamRuleResult.setCreate_time(datetime);
+            teamRuleResult.setInsert_time(datetime);
+            teamRuleResult.setLast_modify_time(datetime);
 
 
             if (teamService.saveRuleResult(teamRuleResult)) {

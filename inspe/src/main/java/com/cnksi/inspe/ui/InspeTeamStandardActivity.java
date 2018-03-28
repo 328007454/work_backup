@@ -3,22 +3,19 @@ package com.cnksi.inspe.ui;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.inspe.R;
+import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamstandardBinding;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
-import com.cnksi.inspe.entity.InspecteTaskEntity;
-import com.cnksi.inspe.ui.fragment.InspectionFragment;
-import com.cnksi.inspe.utils.DateFormat;
-import com.cnksi.inspe.utils.StringUtils;
-import com.cnksi.inspe.widget.DateDialog;
+import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.type.RecordType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +52,8 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
 
     @Override
     public void initData() {
+        setTitle("班组建设检查", R.drawable.inspe_left_black_24dp);
+
         String id = getIntent().getStringExtra("role_id");
         task = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
         if (TextUtils.isEmpty(id) || task == null) {
@@ -64,11 +63,8 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
 
         //文档标准
         doclist = teamService.getRoleDoc(id);
-        String[] ids = new String[doclist.size()];
-        for (int i = 0; i < ids.length; i++) {
-            ids[i] = doclist.get(i).getId();
-        }
-        itemList = teamService.getRoleStandard(ids);
+
+        itemList = teamService.getRoleStandard(id);
         list.addAll(itemList);
 
         dataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -105,10 +101,35 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
         @Override
         protected void convert(BaseViewHolder helper, TeamRuleEntity item) {
 
+            RecordType recordType = RecordType.valueOf(item.getRecord_type() != null ? item.getRecord_type() : RecordType.def.name());
+            if (recordType != null) {
+                switch (recordType) {
+                    case answer://有问题
+                        helper.setBackgroundRes(R.id.positonIdTxt, R.drawable.inspe_numcircle_red_shape);
+                        helper.setBackgroundColor(R.id.scoreTxt, 0x00000000);
+                        helper.setText(R.id.scoreTxt, String.format("-%.1f", item.getDeduct_score()));
+                        break;
+                    case normal://无问题
+                        helper.setBackgroundRes(R.id.positonIdTxt, R.drawable.inspe_numcircle_green_shape);
+                        helper.setBackgroundRes(R.id.scoreTxt, R.mipmap.inspe_standard_checked);
+                        helper.setText(R.id.scoreTxt, "");
+                        break;
+                    case ing://进行中
+                    case def://默认(未开始)
+                    default:
+                        helper.setBackgroundRes(R.id.positonIdTxt, R.drawable.inspe_numcircle_dark_shape);
+                        helper.setBackgroundRes(R.id.scoreTxt, R.mipmap.inspe_standard_normal);
+                        helper.setText(R.id.scoreTxt, "");
+                        break;
+                }
+            } else {//未开始
+                helper.setBackgroundRes(R.id.positonIdTxt, R.drawable.inspe_numcircle_dark_shape);
+                helper.setBackgroundRes(R.id.scoreTxt, R.mipmap.inspe_standard_normal);
+                helper.setText(R.id.scoreTxt, "");
+            }
 
             helper.setText(R.id.positonIdTxt, Integer.toString(helper.getAdapterPosition() + 1));
             helper.setText(R.id.contentTxt, item.getName());
-            helper.setText(R.id.scoreTxt, "");
             //
 
         }

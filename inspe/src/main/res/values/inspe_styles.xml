@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme.正式环境样式：Theme.AppCompat.Light.NoActionBar -->
-    <style name="InspceAppTheme" parent="Theme.AppCompat.Light">
+    <style name="InspceAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

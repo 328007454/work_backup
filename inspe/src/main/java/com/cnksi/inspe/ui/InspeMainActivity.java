@@ -6,6 +6,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.cnksi.inspe.R;
@@ -28,31 +30,31 @@ import com.cnksi.inspe.ui.fragment.MyIssueFragment;
 public class InspeMainActivity extends AppBaseActivity {
 
     ActivityInspeMainBinding dataBinding;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            int i = item.getItemId();
-            if (i == R.id.navigation_home) {
-                if (dataBinding.viewpager.getCurrentItem() != 0)
-                    dataBinding.viewpager.setCurrentItem(0);
-//                    mTextMessage.setText(R.string.title_home);
-                return true;
-            } else if (i == R.id.navigation_dashboard) {
-                if (dataBinding.viewpager.getCurrentItem() != 1)
-                    dataBinding.viewpager.setCurrentItem(1);
-//                    mTextMessage.setText(R.string.title_dashboard);
-                return true;
-            } else if (i == R.id.navigation_notifications) {
-                if (dataBinding.viewpager.getCurrentItem() != 2)
-                    dataBinding.viewpager.setCurrentItem(2);
-//                    mTextMessage.setText(R.string.title_notifications);
-                return true;
-            }
-            return false;
-        }
-    };
+    //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            int i = item.getItemId();
+//            if (i == R.id.navigation_home) {
+//                if (dataBinding.viewpager.getCurrentItem() != 0)
+////                    dataBinding.viewpager.setCurrentItem(0);
+////                    mTextMessage.setText(R.string.title_home);
+//                    return true;
+//            } else if (i == R.id.navigation_dashboard) {
+//                if (dataBinding.viewpager.getCurrentItem() != 1)
+////                    dataBinding.viewpager.setCurrentItem(1);
+////                    mTextMessage.setText(R.string.title_dashboard);
+//                    return true;
+//            } else if (i == R.id.navigation_notifications) {
+//                if (dataBinding.viewpager.getCurrentItem() != 2)
+////                    dataBinding.viewpager.setCurrentItem(2);
+////                    mTextMessage.setText(R.string.title_notifications);
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
     private FragmentPagerAdapter mSectionsPagerAdapter;
     private AppBaseFragment[] fragments;
 
@@ -63,6 +65,8 @@ public class InspeMainActivity extends AppBaseActivity {
 
     @Override
     public void initUI() {
+        setTitle("精益化检查");
+
         dataBinding = (ActivityInspeMainBinding) rootDataBinding;
         fragments = new AppBaseFragment[3];
 
@@ -71,6 +75,7 @@ public class InspeMainActivity extends AppBaseActivity {
 
         dataBinding.viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(dataBinding.tabs));
         dataBinding.tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(dataBinding.viewpager));
+        dataBinding.viewpager.setOffscreenPageLimit(3);//将缓存设置最大，否则在快速滑动时会导致卡顿(Skipped 98 frames!  The application may be doing too much work on its main thread.)
 
         mSectionsPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -145,6 +150,7 @@ public class InspeMainActivity extends AppBaseActivity {
      */
     private AppBaseFragment createMainFragment(int postion) {
         if (null == fragments[postion]) {
+            Log.e(tag, "createMainFragment(int " + postion + ")");
             switch (postion) {
                 case 0:
                     fragments[postion] = new InspectionFragment();
