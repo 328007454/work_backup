@@ -115,7 +115,7 @@ public class BHDZQKActivity extends BaseActivity {
         binding.ivShowPic.setOnClickListener(v -> showImageDetails(this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
         binding.bhsbmc.setSelectOnClickListener(v -> {
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
-            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
+            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.second);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
             intentDevices.putExtra(Config.TITLE_NAME, "请选择二次设备");
             startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
