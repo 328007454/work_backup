@@ -20,17 +20,15 @@
 
     <LinearLayout
         style="@style/View.LinearLayout"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
         android:gravity="center_vertical">
 
         <LinearLayout
-            style="@style/View.LinearLayout.Item"
+            style="@style/View.LinearLayout.Horizontal"
             android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:paddingBottom="3dp">
+            android:layout_marginRight="8dp">
 
             <TextView
                 android:id="@+id/teamTxt"
@@ -43,18 +41,18 @@
                 android:id="@+id/typeTxt"
                 style="@style/View.TextView"
                 android:layout_marginLeft="16dp"
+                android:lines="1"
                 android:text="班组建设检查"
                 android:textColor="#626262"
                 android:textSize="14dp" />
         </LinearLayout>
 
         <LinearLayout
-            style="@style/View.LinearLayout.Item"
+            style="@style/View.LinearLayout.Horizontal"
             android:layout_height="match_parent"
+            android:layout_marginBottom="12dp"
             android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:gravity="top"
-            android:paddingTop="3dp">
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/dateTxt"
@@ -77,6 +75,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#F0F0F0" />
+            android:background="@color/colorBackgound" />
     </LinearLayout>
 </LinearLayout>

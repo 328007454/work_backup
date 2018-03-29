@@ -9,4 +9,8 @@
     <color name="btn_disable">#C0BAB9</color>
     <!--透明背景-->
     <color name="colorTranslucent">#00000000</color>
+    <!--状态文本颜色-->
+    <color name="color_statetxe_red">#FF7356</color>
+    <color name="color_statetxe_green">#89D300</color>
+    <color name="color_statetxe_dark">#9D9494</color>
 </resources>

@@ -34,6 +34,7 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
 
     }
 
+
     @Override
     public void initData() {
 
@@ -77,6 +78,8 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
     public void allPermissionsGranted() {
         try {
             Intent intent = new Intent();
+            //intent.putExtra("userid_array", new String[]{"2c9082925f6aeda2015f6aeea9020002", "2c9082925f6aeda2015f6aeea9140005"});//①传递登录用户ID
+            intent.putExtra("username_array", new String[]{"test2", "test3"});//②传递登录用户用户名,①②任选一种即可
             ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.inspe.ui.InspeMainActivity");
             intent.setComponent(componentName);
             startActivity(intent);
