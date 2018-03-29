@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.inspe.R;
+import com.cnksi.inspe.db.UserService;
 
 /**
  * @version v1.0
@@ -26,7 +27,7 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
     protected final String tag = this.getClass().getSimpleName();
     protected ViewDataBinding rootDataBinding;
-
+    protected UserService userService=UserService.getInstance();
     //    @Override
 //    protected final void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);

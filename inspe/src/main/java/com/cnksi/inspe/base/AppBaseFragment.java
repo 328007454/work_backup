@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cnksi.core.fragment.BaseCoreFragment;
+import com.cnksi.inspe.db.UserService;
 
 /**
  * @version v1.0
@@ -22,6 +23,7 @@ public abstract class AppBaseFragment extends Fragment {
     protected final String tag = getClass().getSimpleName();
 
     protected ViewDataBinding fragmentDataBinding;
+    protected UserService userService = UserService.getInstance();
 
 //    @Override
 //    public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

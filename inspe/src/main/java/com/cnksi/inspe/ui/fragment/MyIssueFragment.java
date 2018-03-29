@@ -71,7 +71,7 @@ public class MyIssueFragment extends AppBaseFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, TeamRuleResultEntity item) {
-            helper.setText(R.id.contextTxt, item.getReason());
+            helper.setText(R.id.contextTxt, item.getDescription());
             helper.setText(R.id.dateTxt, DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_improve_time())));
             helper.setText(R.id.stateTxt, item.getProgress());
         }

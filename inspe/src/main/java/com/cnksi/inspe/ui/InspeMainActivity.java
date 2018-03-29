@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.cnksi.inspe.BuildConfig;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.base.AppBaseFragment;
@@ -65,14 +66,38 @@ public class InspeMainActivity extends AppBaseActivity {
 
     @Override
     public void initUI() {
-        setTitle("精益化检查");
+        setTitle("精益化检查", R.drawable.inspe_left_black_24dp);
 
         dataBinding = (ActivityInspeMainBinding) rootDataBinding;
         fragments = new AppBaseFragment[3];
 
+        //用户ID
+        String[] userIds = getIntent().getStringArrayExtra("userid_array");
+        //用户名(pms系统账号是唯一的)
+        String[] userNames = getIntent().getStringArrayExtra("username_array");
+
+        if ((userIds == null || userIds.length == 0) && (userNames == null || userNames.length == 0)) {
+            showToast("参数错误！");
+            finish();
+        } else {
+            if (userIds != null) {
+                userService.initIds(userIds);
+            } else {
+                userService.initNames(userNames);
+            }
+
+        }
+
+        //测试输出
+        if (BuildConfig.DEBUG) {
+            showToast("我是:" + userService.getUser1().getAccount() + ",权限:" + userService.getUser1().getRoleType().name());
+        }
+
+
 //        dataBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
+        dataBinding.viewpager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.inspe_line_size1));
         dataBinding.viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(dataBinding.tabs));
         dataBinding.tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(dataBinding.viewpager));
         dataBinding.viewpager.setOffscreenPageLimit(3);//将缓存设置最大，否则在快速滑动时会导致卡顿(Skipped 98 frames!  The application may be doing too much work on its main thread.)
