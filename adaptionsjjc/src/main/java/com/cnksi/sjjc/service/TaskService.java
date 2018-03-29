@@ -158,9 +158,9 @@ public class TaskService extends BaseService<Task> {
         String[] accoutArray = currentAcounts.split(",");
         String accountExpr;
         if (accoutArray.length > 1)
-            accountExpr = "and (create_account like ('%" + accoutArray[0] + "%') or create_account like ('%" + accoutArray[1] + "%')or members_account like('%" + accoutArray[0] + "%')  or members_account like('%" + accoutArray[1] + "%') or create_account is NULL or create_account = '')";
+            accountExpr = "and (pms_jh_source ='pms_pc' or  create_account like ('%" + accoutArray[0] + "%') or create_account like ('%" + accoutArray[1] + "%')or members_account like('%" + accoutArray[0] + "%')  or members_account like('%" + accoutArray[1] + "%') or create_account is NULL or create_account = '')";
         else
-            accountExpr = "and (create_account like ('%" + currentAcounts + "%') or members_account like('%" + currentAcounts + "%') or create_account is NULL or create_account = '')";
+            accountExpr = "and ( pms_jh_source ='pms_pc'  or  create_account like ('%" + currentAcounts + "%') or members_account like('%" + currentAcounts + "%') or create_account is NULL or create_account = '')";
         return accountExpr;
     }
 
@@ -205,7 +205,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks = selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").expr(getUserExpr()).findAll();
+            tasks = selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").expr("and (pms_jh_source ='pms_pc' or "+buildWhereTaskContainMe()+" or create_account is NULL or create_account = '')").findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {
@@ -216,10 +216,23 @@ public class TaskService extends BaseService<Task> {
         return tasks;
     }
 
+    public static String buildWhereTaskContainMe(){
+        String currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
+        String[] accounts = currentAcounts.split(",");
+        if (accounts.length > 1) {
+            return " ((','||create_account ||',') like ('%," + accounts[0]
+                    + ",%') or (','||create_account ||',') like ('%," + accounts[1] + ",%')or (','||members_account ||',') like('%," + accounts[0]
+                    + ",%')  or (','||members_account ||',') like ('%," + accounts[1] + ",%')) ";
+        }
+        if (accounts.length==1) {
+            return " ((','||create_account ||',') like ( '%," + accounts[0] + ",%') or (','||members_account ||',') like (',%" + accounts[0] + ",%')) ";
+        }else return " ";
+    }
+
     public List<Task> getUnDoSpecialTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").expr(getUserExpr()).findAll();
+            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").expr("and (pms_jh_source ='pms_pc' or "+buildWhereTaskContainMe()+" or create_account is NULL or create_account = '')").findAll();
             if (null == tasks)
                 tasks = new ArrayList<>();
         } catch (DbException e) {

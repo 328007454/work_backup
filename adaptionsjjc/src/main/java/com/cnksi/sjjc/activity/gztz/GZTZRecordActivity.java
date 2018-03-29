@@ -217,7 +217,7 @@ public class GZTZRecordActivity extends BaseActivity {
                 peopleBinding.lvPeople.setSelection(peopleAdapter.getCount());
                 DbModel model = new DbModel();
                 model.add("account", UUID.randomUUID().toString());
-                model.add("name", peopleBinding.etName.getText().toString());
+                model.add("username", peopleBinding.etName.getText().toString());
                 model.add("dept_id", deptID);
                 dbModelList.add(model);
                 peopleBinding.etName.setText("");

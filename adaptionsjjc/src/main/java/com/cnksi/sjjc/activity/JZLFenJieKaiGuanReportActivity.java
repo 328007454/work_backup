@@ -209,7 +209,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                         mJzlfenjieLayoutBinding.tvContinueInspection.setText("继续记录");
                     }
                     if (fenJieKaiGuanContentAdapter == null) {
-                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, listDbModel, currentInspectionType,R.layout.jzlfenjiekaiguan_adapter);
+                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, listDbModel, currentInspectionType, R.layout.jzlfenjiekaiguan_adapter);
                         mJzlfenjieLayoutBinding.lvReportContent.setAdapter(fenJieKaiGuanContentAdapter);
                     } else {
                         fenJieKaiGuanContentAdapter.setListModel(listDbModel);
@@ -242,7 +242,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                         mJzlfenjieLayoutBinding.tvContinueInspection.setText("继续记录");
                     }
                     if (fenJieKaiGuanContentAdapter == null) {
-                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, cdbhclValueList, currentInspectionType,R.layout.jzlfenjiekaiguan_adapter);
+                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, cdbhclValueList, currentInspectionType, R.layout.jzlfenjiekaiguan_adapter);
                         mJzlfenjieLayoutBinding.lvReportContent.setAdapter(fenJieKaiGuanContentAdapter);
                     } else {
                         fenJieKaiGuanContentAdapter.setListBean(cdbhclValueList);
@@ -257,15 +257,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
     private Intent intentDiff;
 
 
-
     private void initOnclick() {
-        mBtnBack.setOnClickListener((v) -> {
-            Intent intent = new Intent(_this, TaskRemindActivity.class);
-            startActivity(intent);
-            this.finish();
-
-        });
-
         mJzlfenjieLayoutBinding.tvContinueInspection.setOnClickListener((v) -> {
             if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
                 intentDiff = new Intent(_this, DifferentialMotionRecordActivity2.class);

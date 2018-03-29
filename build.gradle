@@ -18,6 +18,7 @@ buildscript {
 allprojects {
     repositories {
         maven { url 'http://mvn.cnksi.com/content/groups/public/' }
+        maven { url "https://jitpack.io" }
         jcenter()
         google()
     }
@@ -26,6 +27,53 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+//相关版本说明
+ext {
+    //构建环境
+    complile_sdk_version = 25
+    build_tools_version = "26.0.2"//26.0.2/25.0.0
+    min_sdk_version = 19
+    target_sdk_version = 23
+    version_code = 1
+    version_name = "1.0.0.1"
+
+    //android引用资源
+
+    //'com.android.support:appcompat-v7:26.1.0'
+    appcompat_v7_version = "25.3.0"
+    //'com.android.support.constraint:constraint-layout:1.0.2'
+    constraint_layout_version = "1.0.2"
+    //'junit:junit:4.12'
+    junit_version = "4.12"
+    //'com.android.support.test:runner:1.0.1'
+    runner_version = "1.0.1"
+    //'com.android.support.test.espresso:espresso-core:3.0.1'
+    espresso_core_version = "3.0.1"
+    //'com.android.support:design:26.1.0'
+    design_version = "25.3.0"
+    //'com.android.support.constraint:constraint-layout:1.0.2'
+    constraint_layout_version = "1.0.2"
+    //'com.android.support:support-vector-drawable:26.1.0'
+    support_vector_drawable_version = "25.3.0"
+    //'com.android.support:support-v4:26.1.0'
+    support_v4_version = "25.3.0"
+    //com.android.support:cardview-v7:25.3.1
+    cardview_v7_version = "25.3.0"
+
+    //开源项目引用资源
+    //'com.alibaba:arouter-api:x.x.x'
+    arouter_version = "1.3.1"
+    //'com.alibaba:arouter-compiler:x.x.x'
+    arouter_compiler_version = "1.1.4"
+    //
+    BaseRecyclerViewAdapterHelper_version = "2.9.35"
+
+    //ksi引用资源
+    //com.cnksi:core:1.2.4
+    ksi_core_version = "1.2.6"
+    //com.cnksi:ksynclib:3.3.6-SNAPSHOT
+    ksi_ksynclib_version = "3.3.6-SNAPSHOT"
 }
 
 

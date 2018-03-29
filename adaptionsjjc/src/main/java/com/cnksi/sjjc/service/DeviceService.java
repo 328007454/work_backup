@@ -299,7 +299,7 @@ public class DeviceService extends BaseService<Device> {
     public List<DbModel> getDevicesByNameWays(String bdzid, String kaiGuanKey, String dangWeiKey) {
 
         List<DbModel> dbModelList = null;
-        String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid from copy_item d where d.bdzid = '" + bdzid + "' and (d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "')";
+        String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid from copy_item d where d.bdzid = '" + bdzid + "'  and  d.dlt = '0'  and (d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "')";
         try {
             dbModelList = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
