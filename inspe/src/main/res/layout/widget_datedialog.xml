@@ -1,0 +1,38 @@
+<layout>
+
+    <data></data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/inspe_white_shape"
+        android:orientation="vertical">
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancleBtn"
+                style="@style/View.Button"
+                android:layout_weight="1"
+                android:background="@drawable/inspe_btn_red_selector"
+                android:text="取消" />
+
+            <Button
+                android:id="@+id/okBtn"
+                style="@style/View.Button"
+                android:layout_weight="1"
+                android:background="@drawable/inspe_btn_green_selector"
+                android:text="确定" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

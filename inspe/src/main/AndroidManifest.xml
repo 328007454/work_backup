@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cnksi.inspe">
+
+
+    <application>
+        <activity android:name=".ui.InspeCreateActivity" />
+        <activity android:name=".ui.InspeHtmlActivity" />
+        <activity android:name=".ui.InspeIssueDetailActivity" />
+        <activity android:name=".ui.InspeMainActivity" />
+        <activity android:name=".ui.InspePlustekActivity" />
+        <activity android:name=".ui.InspePlustekDevicesActivity" />
+        <activity android:name=".ui.InspePlustekIssueActivity" />
+        <activity android:name=".ui.InspePlustekStandardActivity" />
+        <activity android:name=".ui.InspeTeamActivity" />
+        <activity android:name=".ui.InspeTeamIssueActivity" />
+        <activity android:name=".ui.InspeTeamStandardActivity" />
+        <activity android:name=".ui.MainActivity" />
+    </application>
+
+</manifest>

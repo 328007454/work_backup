@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/InspceAppTheme.PopupOverlay">
+
+            <include layout="@layout/include_inspe_title" />
+        </android.support.v7.widget.Toolbar>
+
+        <ScrollView
+            style="@style/View.ScrollView"
+            android:layout_weight="1">
+
+            <LinearLayout style="@style/View.LinearLayout">
+
+                <LinearLayout
+                    style="@style/View.LinearLayout"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        android:id="@+id/contextTxt"
+                        style="@style/View.TextView"
+                        android:layout_marginLeft="8dp"
+                        android:drawableLeft="@mipmap/inspe_issue_point"
+                        android:drawablePadding="8dp"
+                        android:paddingBottom="16dp"
+                        android:paddingTop="16dp"
+                        android:text="标准描述"
+                        android:textColor="#05C8B8" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:layout_marginTop="1dp"
+                    android:background="#FFFFFF"
+                    android:paddingBottom="0dp">
+
+                    <TextView
+                        style="@style/View.TextView"
+                        android:text="扣分原因:"
+                        android:textColor="#333333"
+                        android:textSize="12dp" />
+
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/issueInfoTxt"
+                            style="@style/View.TextView"
+                            android:layout_weight="1"
+                            android:drawableRight="@mipmap/inspe_arrow_down"
+                            android:hint="请选择扣分项"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp"
+                            android:text=""
+                            android:textColor="#3C4950"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF"
+                    android:paddingBottom="0dp">
+
+                    <TextView
+                        style="@style/View.TextView"
+                        android:text="问题描述:"
+                        android:textColor="#333333"
+                        android:textSize="12dp" />
+
+                    <EditText
+                        android:id="@+id/issueEdit"
+                        style="@style/View.EditText"
+                        android:background="@drawable/inspe_edittext_nullbg_shape"
+                        android:hint="请输入问题描述"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF"
+                    android:paddingBottom="0dp">
+
+                    <TextView
+                        style="@style/View.TextView"
+                        android:text="扣分分值:"
+                        android:textColor="#333333"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Horizontal"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:background="#FFFFFF"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/minuxBtn"
+                            style="@style/View.Button"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/inspe_squar_dark_shape"
+                            android:enabled="false"
+                            android:src="@drawable/inspe_btn_minus_selector" />
+
+                        <EditText
+                            android:id="@+id/minusScoreEdit"
+                            style="@style/View.EditText.Number"
+                            android:layout_width="80dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/inspe_squar_dark_shape"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:text="0.0"
+                            android:textColor="#242827"
+                            android:textSize="14dp" />
+
+                        <ImageButton
+                            android:id="@+id/addBtn"
+                            style="@style/View.Button"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/inspe_squar_dark_shape"
+                            android:src="@drawable/inspe_btn_add_selector" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        style="@style/View.TextView"
+                        android:text="照片:"
+                        android:textColor="#333333"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Horizontal"
+                        android:layout_marginTop="11dp">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/galleryView"
+                            style="@style/View.RecyclerView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <ImageButton
+                            android:id="@+id/cameraBtn"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="8dp"
+                            android:background="@drawable/inspe_ondine_shape"
+                            android:src="@mipmap/inspe_camera_normal" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:paddingBottom="0dp">
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout"
+                        android:layout_weight="1">
+
+                        <TextView
+                            style="@style/View.TextView"
+                            android:text="整改日期:"
+                            android:textColor="#333333"
+                            android:textSize="12dp" />
+
+                        <EditText
+                            android:id="@+id/dateEdit"
+                            style="@style/View.TextView.Content.Value"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/inspe_edittext_nullbg_shape"
+                            android:enabled="false"
+                            android:hint="请选择整改期限"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/dateBtn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:background="@drawable/inspe_ondine_shape"
+                        android:src="@mipmap/inspe_date_normal" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/okBtn"
+                    style="@style/View.Button"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="80dp"
+                    android:background="@drawable/inspe_btn_green_selector"
+                    android:text="确定" />
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/InspceAppTheme.PopupOverlay">
+
+            <include layout="@layout/include_inspe_title" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <ScrollView style="@style/View.ScrollView">
+
+            <LinearLayout style="@style/View.LinearLayout">
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Horizontal"
+                    android:background="#FFFFFF">
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:layout_weight="1">
+
+                        <TextView
+                            style="@style/View.TextView.Content.Name"
+                            android:text="检查类型:" />
+
+                        <TextView
+                            style="@style/View.TextView.Content.Value"
+                            android:text="精益化检查" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="13dp"
+                        android:layout_marginTop="13dp"
+                        android:background="#F0F0F0" />
+
+                    <LinearLayout style="@style/View.LinearLayout.Item.IssueDetail">
+
+                        <TextView
+                            style="@style/View.TextView.Content.Name"
+                            android:text="问题班组:" />
+
+                        <TextView
+                            style="@style/View.TextView.Content.Value"
+
+                            android:text="曹溪运维组" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Horizontal"
+                    android:background="#FFFFFF">
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:layout_weight="1">
+
+                        <TextView
+                            style="@style/View.TextView.Content.Name"
+                            android:text="变电站:" />
+
+                        <TextView
+                            style="@style/View.TextView.Content.Value"
+
+                            android:text="220kv曹溪变" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="13dp"
+                        android:layout_marginTop="13dp"
+                        android:background="#F0F0F0" />
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:layout_weight="1">
+
+                        <TextView
+                            style="@style/View.TextView.Content.Name"
+                            android:text="设备双编码/名称:" />
+
+                        <TextView
+                            style="@style/View.TextView.Content.Value"
+
+                            android:text="曹洪线2218避雷器" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        style="@style/View.TextView.Content.Name"
+                        android:text="检查问题:" />
+
+                    <TextView
+                        style="@style/View.TextView.Content.Value"
+
+                        android:text="未按要求发布本单位现行有效技术标准、规章制度清册的" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        style="@style/View.TextView.Content.Name"
+                        android:text="检查标准:" />
+
+                    <TextView
+                        style="@style/View.TextView.Content.Value"
+
+                        android:text="1.1.1按照公司有关的要求，设立班组，配齐班组人员。" />
+
+                    <TextView
+                        style="@style/View.TextView.Content.Value"
+                        android:layout_marginTop="0dp"
+                        android:text="--《国家电网公司班组建设管理标准(国家电网企业协[2010]861号)》"
+                        android:textColor="#626262" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Horizontal"
+                    android:background="#FFFFFF">
+
+                    <LinearLayout style="@style/View.LinearLayout.Item.IssueDetail">
+
+                        <TextView
+                            style="@style/View.TextView.Content.Name"
+                            android:text="稽查人:" />
+
+                        <TextView
+                            style="@style/View.TextView.Content.Value"
+
+                            android:text="小熊猫" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="13dp"
+                        android:layout_marginTop="13dp"
+                        android:background="#F0F0F0" />
+
+                    <LinearLayout style="@style/View.LinearLayout.Item.IssueDetail">
+
+                        <TextView
+                            style="@style/View.TextView.Content.Name"
+                            android:text="检查时间:" />
+
+                        <TextView
+                            style="@style/View.TextView.Content.Value"
+
+                            android:text="2018年1月1日" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF">
+
+
+                    <TextView
+                        style="@style/View.TextView.Content.Name"
+                        android:text="整改期限:" />
+
+                    <TextView
+                        style="@style/View.TextView.Content.Value"
+
+                        android:text="2018年1月1日" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        style="@style/View.TextView.Content.Name"
+                        android:text="问题照片:" />
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <ImageView
+                            style="@style/View.ImageView.Thumbnail"
+                            android:layout_width="71dp"
+                            android:layout_height="48dp"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            style="@style/View.ImageView.Thumbnail"
+                            android:layout_width="71dp"
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="16dp"
+                            android:scaleType="fitXY" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Horizontal"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="20dp">
+
+                    <Button
+                        style="@style/View.Button"
+                        android:layout_weight="1"
+                        android:background="@drawable/inspe_btn_red_selector"
+                        android:text="整改" />
+
+                    <Button
+                        style="@style/View.Button"
+                        android:layout_weight="1"
+                        android:background="@drawable/inspe_btn_ondine_selector"
+                        android:text="下一个" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/View.LinearLayout.Horizontal"
+        android:layout_height="match_parent"
+        android:background="#FFFFFFFF"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/positonIdTxt"
+            style="@style/View.TextView"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/inspe_numcircle_green_shape"
+            android:gravity="center"
+
+            android:text="99"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp" />
+
+
+        <TextView
+            android:id="@+id/contentTxt"
+            style="@style/View.TextView"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:text="本单位班组设置、定员定编清单（单位文件）
+及人员配置花名册（从相关系统查询）"
+            android:textColor="#3C4950"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/scoreTxt"
+            style="@style/View.TextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="12dp"
+            android:background="@mipmap/inspe_standard_checked"
+            android:gravity="center"
+            android:textColor="#FD6067"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="35dp"
+        android:layout_height="1dp"
+        android:background="#FFFFFF" />
+</LinearLayout>
