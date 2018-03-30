@@ -33,6 +33,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.NetWorkUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.util.UpdateUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
@@ -142,6 +143,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         _this = this;
         if (!BuildConfig.DEBUG) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
@@ -155,6 +157,22 @@ public abstract class BaseActivity extends BaseCoreActivity {
         if (isDefaultTitle) {
             mTitleBinding = DataBindingUtil.setContentView(mActivity, R.layout.include_title);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -444,8 +462,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
     }
-
-
 
 
     protected void changedStatusColor() {

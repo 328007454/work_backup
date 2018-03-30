@@ -3,16 +3,24 @@ package com.cnksi.sjjc.util;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.cnksi.core.utils.FileUtils;
+import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
+
+import org.xutils.ex.DbException;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -617,5 +625,31 @@ public class FileUtil {
                 }
             }
         }
+    }
+
+    /**
+     * 移动数据库
+     */
+
+    public static void copyDbtoInnerStorage(Context context) {
+
+        try {
+            Cursor cursor = CustomApplication.getInstance().getDbManager().execQuery("select name from sqlite_master where type='table' order by name;");
+            while (cursor.moveToNext()) {
+                Log.d("DB", cursor.getString(0));
+            }
+            try {
+                File textsDir = new File(context.getFilesDir().getAbsolutePath() + File.separator + "BdzInspection/database/");
+                if(!textsDir.exists()){
+                    textsDir.mkdir();
+                }
+                File file = new File(context.getFilesDir(), "1.txt");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -17,6 +17,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
 import com.cnksi.sjjc.bean.TaskExtend;
+import com.cnksi.sjjc.util.EssSafeUtil;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
@@ -307,6 +308,7 @@ public class CustomApplication extends CoreApplication {
         if (PreferencesUtils.get(Config.MASK_WIFI, true) && !BuildConfig.USE_NETWORK_SYNC) {
             NetWorkUtils.disableNetWork(this);
         }
+        EssSafeUtil.checkInEmualtorOrDebuggable(getApplicationContext());
         initRuntimeVar();
         TTSUtils.init(getAppContext());
         LocationUtil.init(getAppContext());
