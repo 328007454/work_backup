@@ -639,17 +639,30 @@ public class FileUtil {
                 Log.d("DB", cursor.getString(0));
             }
             try {
-                File textsDir = new File(context.getFilesDir().getAbsolutePath() + File.separator + "BdzInspection/database/");
-                if(!textsDir.exists()){
-                    textsDir.mkdir();
+                File file = new File(context.getFilesDir(), "BdzInspection/database/");
+                if (!file.exists()) {
+                    file.mkdirs();
                 }
-                File file = new File(context.getFilesDir(), "1.txt");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (DbException e) {
             e.printStackTrace();
         }
-
     }
+
+    /**
+     * @param path 路径
+     * @return 返回文件大小
+     */
+    public static long getFileSize(String path) {
+
+        if (TextUtils.isEmpty(path)) {
+            return -1;
+        }
+
+        File file = new File(path);
+        return (file.exists() && file.isFile() ? file.length() : -1);
+    }
+
 }
