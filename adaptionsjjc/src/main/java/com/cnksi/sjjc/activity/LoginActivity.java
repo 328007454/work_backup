@@ -217,7 +217,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             mHandler.sendEmptyMessage(SHOW_UPDATE_LOG_DIALOG);
         });
         binding.bAddPeopleButton.setOnClickListener(view -> {
-            FileUtil.copyDbtoInnerStorage(this);
+            ExecutorManager.executeTaskSerially( () ->{
+                FileUtil.copyDbtoInnerStorage(this);
+            });
 //            loginUser(false);
         });
         binding.maskWifi.setOnClickListener(view -> {

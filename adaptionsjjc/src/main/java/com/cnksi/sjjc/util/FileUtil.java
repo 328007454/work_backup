@@ -13,6 +13,9 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 
+import org.xutils.common.util.DatabaseUtils;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.io.BufferedInputStream;
@@ -25,10 +28,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -634,19 +639,17 @@ public class FileUtil {
     public static void copyDbtoInnerStorage(Context context) {
 
         try {
-            Cursor cursor = CustomApplication.getInstance().getDbManager().execQuery("select name from sqlite_master where type='table' order by name;");
-            while (cursor.moveToNext()) {
-                Log.d("DB", cursor.getString(0));
+            File file = new File(context.getFilesDir(), "BdzInspection/database/");
+            if (!file.exists()) {
+                file.mkdirs();
             }
-            try {
-                File file = new File(context.getFilesDir(), "BdzInspection/database/");
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            File fileDb = new File(context.getFilesDir() + "/BdzInspection/database/bdzinspection.db");
+            if (!fileDb.exists()) {
+                fileDb.createNewFile();
             }
-        } catch (DbException e) {
+            DatabaseUtils.copyDatabase(CustomApplication.getInstance().getDaoConfig(),CustomApplication.getInstance().getDaoConfigInner(),new String[]{});
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

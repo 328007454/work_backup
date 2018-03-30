@@ -82,7 +82,18 @@ public class CustomApplication extends CoreApplication {
      * @return
      */
     public  DbManager getDbManager() {
-//        ||!mDbManager.getDatabase().isOpen()
+        if (mDbManager == null) {
+            mDbManager = x.getDb(getDaoConfig());
+        }
+        return mDbManager;
+    }
+
+    /**
+     * 得到数据库管理者
+     *
+     * @return
+     */
+    public  DbManager getDbManagerInner() {
         if (mDbManager == null) {
             mDbManager = x.getDb(getDaoConfig());
         }
@@ -135,7 +146,7 @@ public class CustomApplication extends CoreApplication {
      * @return
      */
 
-    protected  DbManager.DaoConfig getDaoConfig() {
+    public  DbManager.DaoConfig getDaoConfig() {
         int dbVersion = getDbVersion();
         DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
                 .setDbOpenListener(db -> {
@@ -151,6 +162,26 @@ public class CustomApplication extends CoreApplication {
                 .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
         return config;
     }
+
+    public  DbManager.DaoConfig getDaoConfigInner() {
+        int dbVersion = getDbVersion();
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(mInstance.getFilesDir() + "/BdzInspection/database")).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
+                .setDbOpenListener(db -> {
+                    // 开启WAL, 对写入加速提升巨大
+                    //db.getDatabase().enableWriteAheadLogging();
+                    //此处不处理数据库版本更新  全权交给同步框架处理。
+                    try {
+                        db.addColumn(TaskExtend.class, "dlt");
+                    } catch (DbException e) {
+
+                    }
+                })
+                .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
+        return config;
+    }
+
+
+
 
     /**
      * 获得显示大图的图像配置，大图不适合内存缓存
