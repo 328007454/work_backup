@@ -3,7 +3,9 @@ package com.cnksi.sjjc;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 
+import com.cnksi.DebugDB;
 import com.cnksi.bdloc.LLog;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.core.application.CoreApplication;
@@ -80,7 +82,7 @@ public class CustomApplication extends CoreApplication {
      *
      * @return
      */
-    public  DbManager getDbManager() {
+    public DbManager getDbManager() {
 //        ||!mDbManager.getDatabase().isOpen()
         if (mDbManager == null) {
             mDbManager = x.getDb(getDaoConfig());
@@ -134,7 +136,7 @@ public class CustomApplication extends CoreApplication {
      * @return
      */
 
-    protected  DbManager.DaoConfig getDaoConfig() {
+    protected DbManager.DaoConfig getDaoConfig() {
         int dbVersion = getDbVersion();
         DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
                 .setDbOpenListener(db -> {
@@ -311,6 +313,16 @@ public class CustomApplication extends CoreApplication {
         TTSUtils.init(getAppContext());
         LocationUtil.init(getAppContext());
         LLog.isLog = BuildConfig.LOG_DEBUG;
+        initDebugDb();
+    }
+
+
+    private void initDebugDb() {
+        if (BuildConfig.DEBUG) {
+            HashMap<String, Pair<File, String>> stringPairHashMap = new HashMap<>();
+            stringPairHashMap.put("bdzinspection", new Pair<>(new File(Config.DATABASE_FOLDER, Config.DATABASE_NAME), ""));
+            DebugDB.setCustomDatabaseFiles(stringPairHashMap);
+        }
     }
 
     public void initApp() {

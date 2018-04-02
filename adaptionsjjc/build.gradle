@@ -102,7 +102,9 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "SYNC_APP_ID", "\"pms_nxszs\""
             buildConfigField "String", "SYNC_URL", "\"http://127.0.0.1:58888\""
+            resValue("string", "PORT_NUMBER", "8081")
         }
+
     }
 
 //需要编译的源码
@@ -141,6 +143,7 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
 
+
 }
 
 repositories { flatDir { dirs 'libs' } }
@@ -161,6 +164,7 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //  implementation files('libs/commons-codec-1.10.jar')
-    implementation 'com.cnksi:core:1.2.6'
-
+    api 'com.cnksi:core:1.2.6'
+    debugCompile 'com.cnksi:debug-db:1.0.5'
+    releaseCompile 'com.cnksi:debug-db-release:1.0.0'
 }
