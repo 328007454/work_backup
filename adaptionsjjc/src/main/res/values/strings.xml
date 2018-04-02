@@ -39,6 +39,7 @@
     <string name="add_mark_str">添加标记</string>
     <string name="task_function_title_str">任务选项</string>
     <string name="see_inspection_details_str">查看详情</string>
+    <string name="install_now_str_pms">新版本已下载是否更新</string>
 
     <!-- speakcontent -->
     <string name="dialog_tips_finish_str">抄录完成情况:%1$s</string>
