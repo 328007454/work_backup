@@ -1,0 +1,148 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/InspceAppTheme.PopupOverlay">
+
+            <include layout="@layout/include_inspe_title" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <ScrollView style="@style/View.ScrollView">
+
+            <LinearLayout style="@style/View.LinearLayout">
+
+
+                <LinearLayout style="@style/View.LinearLayout.Horizontal">
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF">
+
+                        <TextView
+                            style="@style/View.TextView.Content.Name"
+                            android:text="整改人:" />
+
+                        <TextView
+                            android:id="@+id/recfityNameTxt"
+                            android:layout_width="wrap_content"
+                            style="@style/View.TextView.Content.Value"
+                            android:text="小明" />
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="13dp"
+                        android:layout_marginTop="13dp"
+                        android:background="#F0F0F0" />
+
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF">
+
+                        <TextView
+                            style="@style/View.TextView.Content.Name"
+                            android:text="整改日期：" />
+
+                        <TextView
+                            android:id="@+id/convertDataTxt"
+                            style="@style/View.TextView.Content.Value"
+
+                            android:text="2018年01月01日" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        style="@style/View.TextView.Content.Name"
+                        android:text="整改情况：" />
+
+                    <EditText
+                        android:id="@+id/descriptionTxt"
+                        style="@style/View.EditText"
+                        android:gravity="top"
+                        android:hint="整改情况描述"
+                        android:minHeight="80dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        style="@style/View.TextView.Content.Name"
+                        android:text="整改照片:" />
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Horizontal"
+                        android:layout_marginTop="8dp">
+
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/galleryView"
+                            style="@style/View.RecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <ImageButton
+                            android:id="@+id/cameraBtn"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="8dp"
+                            android:background="@drawable/inspe_ondine_shape"
+                            android:src="@mipmap/inspe_camera_normal" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/rectifyBtn"
+                    style="@style/View.Button"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/inspe_btn_green_selector"
+                    android:text="提交审核" />
+
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/InspceAppTheme.PopupOverlay">
+
+            <include layout="@layout/include_inspe_title" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/contextTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="标准标准标准标准标准标准标准标准标准标准标准标准标准标准标准标准标准标准标准标准标准"
+            android:lineSpacingExtra="2dp"
+            android:text=""
+            android:textColor="#333333"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/docTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="文档"
+            android:textColor="#C0BAB9"
+            android:textSize="14dp" />
+
+        <!--解决WebView第一次使用初始化较慢的问题-->
+
+
+    </LinearLayout>
+</layout>
