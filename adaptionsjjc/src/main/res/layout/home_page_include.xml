@@ -90,7 +90,7 @@
                     android:layout_marginTop="30px"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
-                    app:srcCompat="@mipmap/icon_operate" />
+                    app:srcCompat="@mipmap/icon_inspection" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="bottom"
-                    android:text="倒闸操作"
+                    android:text="精益化检查"
                     android:textColor="@color/color_626262"
                     android:textSize="34px" />
             </RelativeLayout>

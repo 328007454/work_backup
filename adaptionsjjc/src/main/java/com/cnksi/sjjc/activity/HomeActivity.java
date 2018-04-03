@@ -4,6 +4,7 @@ package com.cnksi.sjjc.activity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
@@ -25,6 +26,7 @@ import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.inspe.ui.InspeMainActivity;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -39,6 +41,7 @@ import com.cnksi.sjjc.bean.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Task;
+import com.cnksi.sjjc.bean.Users;
 import com.cnksi.sjjc.databinding.ActivityHomePageBinding;
 import com.cnksi.sjjc.databinding.BdzPopwindowBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
@@ -299,11 +302,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.device_operate:
                 try {
                     Intent intent = new Intent();
-//                    intent.setClass(HomeActivity.this,InspeMainActivity.class);
                     ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.inspe.ui.InspeMainActivity");
                     intent.setComponent(componentName);
+                    //参数设置
+                    String userAccount = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, (String) null);
+                    //intent.putExtra("userid_array", );//①传递登录用户ID
+                    intent.putExtra("username_array", userAccount.split(","));//②传递登录用户用户名,①②任选一种即可
+
                     startActivity(intent);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     Toast.makeText(HomeActivity.this, "模块暂未开放!", Toast.LENGTH_SHORT).show();
                 }
 
