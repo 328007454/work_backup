@@ -86,6 +86,8 @@
                 <LinearLayout
                     style="@style/View.LinearLayout.Item.IssueDetail"
                     android:background="#FFFFFF"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:paddingBottom="0dp">
 
                     <TextView
@@ -217,13 +219,13 @@
                             android:textColor="#333333"
                             android:textSize="12dp" />
 
-                        <EditText
-                            android:id="@+id/dateEdit"
-                            style="@style/View.TextView.Content.Value"
+                        <TextView
+                            android:id="@+id/dateTxt"
+                            style="@style/View.TextView"
                             android:layout_width="match_parent"
-                            android:background="@drawable/inspe_edittext_nullbg_shape"
-                            android:enabled="false"
                             android:hint="请选择整改期限"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
                             android:textSize="14dp" />
                     </LinearLayout>
 

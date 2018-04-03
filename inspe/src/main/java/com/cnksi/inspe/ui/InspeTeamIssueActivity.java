@@ -18,7 +18,9 @@ import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.db.entity.InspeScoreEntity;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.type.ProgressType;
 import com.cnksi.inspe.type.RecordType;
+import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.utils.Config;
 import com.cnksi.inspe.utils.DateFormat;
@@ -54,7 +56,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
     //扣分详情
     private List<InspeScoreEntity> list;
     //检查记录
-    private TeamRuleResultEntity teamRuleResult = new TeamRuleResultEntity();
+    private TeamRuleResultEntity teamRuleResult;
 
     private TeamService teamService = new TeamService();
     private InspeScoreEntity scoreBean;
@@ -77,7 +79,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
         dataBinding.addBtn.setOnClickListener(this);
         dataBinding.minuxBtn.setOnClickListener(this);
         dataBinding.dateBtn.setOnClickListener(this);
-        dataBinding.dateEdit.setOnClickListener(this);
+        dataBinding.dateTxt.setOnClickListener(this);
         dataBinding.cameraBtn.setOnClickListener(this);
         dataBinding.issueInfoTxt.setOnClickListener(this);
         dataBinding.okBtn.setOnClickListener(this);
@@ -98,6 +100,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         dataBinding.galleryView.setLayoutManager(linearLayoutManager);
         dataBinding.galleryView.setAdapter(galleryAdapte);
+
     }
 
     @Override
@@ -123,6 +126,11 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
         dataBinding.minuxBtn.setEnabled(false);
         dataBinding.contextTxt.setText(teamRule.getName());
 
+        //
+        teamRuleResult = teamService.getRuleResult(teamRule.getId(), task.getId());
+        if (teamRuleResult == null) {
+            teamRuleResult = new TeamRuleResultEntity();
+        }
     }
 
     /**
@@ -131,6 +139,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
      *
      * @param value
      */
+
     private void setScoreTxt(int value) {
         boolean isAdd = true;
         int nextValue = minusScore + value;
@@ -167,12 +176,12 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.dateBtn || i == R.id.dateEdit) {
+        if (i == R.id.dateBtn || i == R.id.dateTxt) {
             DateDialog dateDialog = new DateDialog(this);
             dateDialog.setOnDialogListener(new DateDialog.OnDialogListener() {
                 @Override
                 public void onDateChanged(long date, int year, int month, int day) {
-                    dataBinding.dateEdit.setText(year + "年" + month + "月" + day + "日");
+                    dataBinding.dateTxt.setText(year + "年" + month + "月" + day + "日");
                     dateTime = date;
                     Log.e(tag, "选择日期:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
                 }
@@ -188,13 +197,16 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
 
                     if (position == 0) {
                         dataBinding.issueInfoTxt.setText(null);
+                        dataBinding.issueEdit.setText(null);
                     } else {
                         dataBinding.issueInfoTxt.setText(scoreBean.content);
+                        dataBinding.issueEdit.setText(scoreBean.content.replaceAll(",{0,}，{0,}[扣].*分.*", "").replaceAll("[0-9].]{0,}[a-z)]{0,}[a-z]{0,}", ""));
                     }
 
                     minusScore = 0;
                     scoreEntity = (int) (scoreBean.score * 10);
                     setScoreTxt(scoreEntity);
+
                 }
 
             }).showAsDropDown(v);
@@ -202,15 +214,19 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
         } else if (i == R.id.okBtn) {
             if (!TextUtils.isEmpty(dataBinding.issueInfoTxt.getText().toString().trim())) {
                 if (TextUtils.isEmpty(dataBinding.issueEdit.getText().toString().trim())) {
+                    dataBinding.issueEdit.requestFocus();
                     showToast("请输入问题描述");
                     return;
-                } else if (TextUtils.isEmpty(dataBinding.dateEdit.getText().toString().trim())) {
-                    showToast("请选择整改日期");
+                } else if (TextUtils.isEmpty(dataBinding.dateTxt.getText().toString().trim())) {
+                    showToast("请输入整改日期");
+                    dataBinding.dateBtn.performClick();
                     return;
                 }
             }
             //创建ID
-            teamRuleResult.setId(UUID.randomUUID().toString());
+            if (teamRuleResult.getId() == null) {//创建或覆盖
+                teamRuleResult.setId(UUID.randomUUID().toString());
+            }
             //任务ID
             teamRuleResult.setTask_id(task.id);
             //标准ID
@@ -220,13 +236,25 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
             teamRuleResult.setDept_id(task.getDept_id());
             teamRuleResult.setDept_name(task.getDept_name());
             //检查人ID
-            teamRuleResult.setCheck_person_id("");
-            teamRuleResult.setCheck_person_name("");
+            teamRuleResult.setCheck_person_id(getUserService().getUser1().getId());
+            teamRuleResult.setCheck_person_name(getUserService().getUser1().getUsername());
+            teamRuleResult.setCheck_type(task.getType());
 
 
             //问题类型(记录类型：问题（answer）、普通记录（normal）)
             if (TextUtils.isEmpty(dataBinding.issueInfoTxt.getText().toString().trim())) {
                 teamRuleResult.setRecord_type(RecordType.normal.name());
+                //扣分情况
+                teamRuleResult.setDeduct_score(0);//放大数据后对数据进行缩小
+                //问题描述
+                teamRuleResult.setDescription(null);
+                //扣分原因jsonArray
+                teamRuleResult.setReason(null);
+                //状态（问题进度：未分配、未整改、未审核、未审核通过、已闭环）
+                teamRuleResult.setProgress(null);
+                //整改期限
+                teamRuleResult.setPlan_improve_time(null);
+
             } else {
                 teamRuleResult.setRecord_type(RecordType.answer.name());
                 //扣分情况
@@ -236,7 +264,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
                 //扣分原因jsonArray
                 teamRuleResult.setReason(JSON.toJSONString(new InspeScoreEntity[]{scoreBean}));
                 //状态（问题进度：未分配、未整改、未审核、未审核通过、已闭环）
-                teamRuleResult.setProgress("未分配");
+                teamRuleResult.setProgress(ProgressType.wfp.name());
                 //整改期限
                 teamRuleResult.setPlan_improve_time(DateFormat.dateToDbString(dateTime));
             }
@@ -249,6 +277,11 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
             teamRuleResult.setInsert_time(datetime);
             teamRuleResult.setLast_modify_time(datetime);
 
+            //更新任务状态
+            if (task.getProgress() == null || TaskProgressType.valueOf(task.getProgress()) == TaskProgressType.todo) {
+                task.setProgress(TaskProgressType.doing.name());
+                teamService.saveTask(task);
+            }
 
             if (teamService.saveRuleResult(teamRuleResult)) {
                 showToast("操作成功");

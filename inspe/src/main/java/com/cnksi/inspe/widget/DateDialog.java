@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.databinding.WidgetDatedialogBinding;
+import com.cnksi.inspe.utils.DateFormat;
 
 /**
  * 日期选择对话框
@@ -71,7 +72,7 @@ public class DateDialog extends AlertDialog implements View.OnClickListener {
         } else if (i == R.id.okBtn) {
             dismiss();
             if (onDialogListener != null) {
-                onDialogListener.onDateChanged(dataBinding.datePicker.getDrawingTime(), dataBinding.datePicker.getYear(), dataBinding.datePicker.getMonth() + 1, dataBinding.datePicker.getDayOfMonth());
+                onDialogListener.onDateChanged(DateFormat.dbdateToLong(String.format("%04d-%02d-%02d %02d:%02d:%02d", dataBinding.datePicker.getYear(), dataBinding.datePicker.getMonth() + 1, dataBinding.datePicker.getDayOfMonth(), 0, 0, 0)), dataBinding.datePicker.getYear(), dataBinding.datePicker.getMonth() + 1, dataBinding.datePicker.getDayOfMonth());
             }
 
         }

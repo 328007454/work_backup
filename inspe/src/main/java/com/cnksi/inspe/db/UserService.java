@@ -1,10 +1,16 @@
 package com.cnksi.inspe.db;
 
 import com.cnksi.inspe.base.BaseDbService;
+import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.db.entity.UserEntity;
+import com.cnksi.inspe.db.entity.UserGroupEntity;
 import com.cnksi.inspe.type.RoleType;
 
+import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @version v1.0
@@ -72,6 +78,33 @@ public final class UserService extends BaseDbService {
         sort(userEntity1, userEntity2);
     }
 
+    public UserEntity[] getUsers() {
+        if (userEntity1 == null && userEntity2 == null) {
+            return new UserEntity[]{};
+        }
+
+        if (userEntity1 != null && userEntity2 != null) {
+            return new UserEntity[]{userEntity1, userEntity2};
+        }
+
+        if (userEntity1 != null) {
+            return new UserEntity[]{userEntity1};
+        } else {
+            return new UserEntity[]{userEntity2};
+        }
+
+    }
+
+    public String[] getUserIds() {
+        UserEntity[] array = getUsers();
+        String[] values = new String[array.length];
+        for (int i = 0, length = array.length; i < length; i++) {
+            values[i] = array[i].getId();
+        }
+
+        return values;
+    }
+
     /**
      * 根据权限排序，权限大的拍第一位
      *
@@ -79,20 +112,26 @@ public final class UserService extends BaseDbService {
      * @param user2
      */
     private void sort(UserEntity user1, UserEntity user2) {
-        if (user1 != null && user2 != null) {
-            RoleType roleType1 = RoleType.getMaxRole(user1.getType());
+        RoleType roleType1 = null;
+        RoleType roleType2 = null;
+        if (user1 != null) {
+            roleType1 = RoleType.getMaxRole(user1.getType());
             user1.setRoleType(roleType1);
-            RoleType roleType2 = RoleType.getMaxRole(user2.getType());
-            user2.setRoleType(roleType2);
+        }
 
-            //比较
+        if (user2 != null) {
+            roleType2 = RoleType.getMaxRole(user2.getType());
+            user2.setRoleType(roleType2);
+        }
+
+        //比较
+        if (roleType1 != null && roleType2 != null) {
             RoleType maxRole = RoleType.getMaxRole(roleType1, roleType2);
             if (maxRole != roleType1) {
                 UserEntity maxUserEntity = userEntity1;
                 userEntity1 = userEntity2;
                 userEntity2 = maxUserEntity;
             }
-
         }
     }
 
@@ -128,6 +167,63 @@ public final class UserService extends BaseDbService {
         }
 
         return null;
+    }
+
+    /**
+     * 获取用户分组
+     *
+     * @return
+     */
+    public List<UserGroupEntity> getUserGroup() {
+        try {
+            return dbManager.selector(UserGroupEntity.class).where("dlt", "=", "0").findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<UserGroupEntity>();
+    }
+
+    /**
+     * 获取用户组<p/>
+     *
+     * @param groupId  组ID
+     * @param userId   用户ID
+     * @param roleType 角色
+     * @return
+     */
+    public List<UserEntity> getUsers(String groupId, String userId, RoleType roleType) {
+        try {
+            Selector selector = dbManager.selector(UserEntity.class).where("dlt", "=", "0");
+            if (groupId != null) {
+                selector.and("dept_id", "=", groupId);
+            }
+
+            if (roleType != null) {
+                selector.and("type", "=", roleType.name());
+            }
+
+            if (userId != null) {
+                selector.or("id", "=", userId);
+            }
+
+            return selector.findAll();
+
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<UserEntity>();
+    }
+
+    public boolean isUserContains(String userId) {
+        if (userEntity1 != null && userEntity1.getId().equals(userId)) {
+            return true;
+        }
+        if (userEntity2 != null && userEntity2.getId().equals(userId)) {
+            return true;
+        }
+        return false;
     }
 
 

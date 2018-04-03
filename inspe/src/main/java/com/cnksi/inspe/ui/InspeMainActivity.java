@@ -1,14 +1,10 @@
 package com.cnksi.inspe.ui;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 
 import com.cnksi.inspe.BuildConfig;
 import com.cnksi.inspe.R;
@@ -79,18 +75,25 @@ public class InspeMainActivity extends AppBaseActivity {
         if ((userIds == null || userIds.length == 0) && (userNames == null || userNames.length == 0)) {
             showToast("参数错误！");
             finish();
+            return;
         } else {
             if (userIds != null) {
-                userService.initIds(userIds);
+                getUserService().initIds(userIds);
             } else {
-                userService.initNames(userNames);
+                getUserService().initNames(userNames);
             }
 
         }
 
         //测试输出
         if (BuildConfig.DEBUG) {
-            showToast("我是:" + userService.getUser1().getAccount() + ",权限:" + userService.getUser1().getRoleType().name());
+            try {
+                showToast("我是:" + getUserService().getUser1().getAccount() + ",权限:" + getUserService().getUser1().getRoleType().name());
+            } catch (Exception e) {
+                showToast("角色错误！");
+                finish();
+                return;
+            }
         }
 
 

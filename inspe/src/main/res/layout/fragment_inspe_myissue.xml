@@ -4,14 +4,69 @@
 
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- TODO: Update blank fragment layout -->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/search_group"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginTop="1dp"-->
+            <!--android:background="#FFFFFF"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:visibility="gone">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="12dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="检查类型："-->
+                <!--android:textColor="#1BBC9B"-->
+                <!--android:textSize="14dp" />-->
+
+            <!--<EditText-->
+                <!--style="@style/View.EditText"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@null"-->
+                <!--android:drawableRight="@mipmap/inspe_arrow_down"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:hint="检查类型"-->
+                <!--android:textColor="#626262"-->
+                <!--android:textSize="14dp" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="16dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="变电站："-->
+                <!--android:textColor="#1BBC9B"-->
+                <!--android:textSize="14dp" />-->
+
+            <!--<EditText-->
+                <!--style="@style/View.EditText"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@null"-->
+                <!--android:drawableRight="@mipmap/inspe_arrow_down"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:hint="变电站"-->
+                <!--android:paddingRight="12dp"-->
+                <!--android:textColor="#626262"-->
+                <!--android:textSize="14dp" />-->
+
+        <!--</LinearLayout>-->
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
-            style="@style/View.RecyclerView" />
+            style="@style/View.RecyclerView"
+            android:paddingTop="9dp" />
 
-    </FrameLayout>
+    </LinearLayout>
 </layout>

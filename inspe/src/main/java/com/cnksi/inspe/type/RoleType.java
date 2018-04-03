@@ -1,5 +1,7 @@
 package com.cnksi.inspe.type;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,24 +19,46 @@ public enum RoleType {
     /**
      * 部长
      */
-    director,
+    director("主任", 4),
     /**
      * 专责
      */
-    specialty,
+    specialty("专责", 3),
     /**
      * 班长
      */
-    team_leader,
+    team_leader("班组长", 2),
     /**
      * 组员
      */
-    tracker,
+    tracker("维护员", 1),
     /**
      * 来宾
      */
     @Deprecated
-    guest,;
+    guest("来宾", 0),;
+
+    /**
+     * 描述
+     */
+    String desc;
+    /**
+     * 等级
+     */
+    int level;
+
+    private RoleType(String desc, int level) {
+        this.desc = desc;
+        this.level = level;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public int getLevel() {
+        return level;
+    }
 
     /**
      * 获取用户最大权限
@@ -43,33 +67,26 @@ public enum RoleType {
      * @return
      */
     public static RoleType getMaxRole(String userType) {
+
+        RoleType roleType = RoleType.guest;
         if (userType != null) {
             String[] rolesStr = userType.split(",");
-            List<RoleType> roles = new ArrayList<RoleType>();
-            for (String role : rolesStr) {
-                roles.add(RoleType.valueOf(role));
-            }
 
-            if (roles.remove(RoleType.director)) {
+            for (String roleKey : rolesStr) {
+                try {
+                    RoleType role = RoleType.valueOf(roleKey);
+                    if (roleType.getLevel() < role.getLevel()) {
+                        roleType = role;
+                    }
+                } catch (Exception e) {
+                    Log.e("RoleType", "未找到角色:" + roleKey);
+                }
 
-                return director;//主任
-            } else if (roles.remove(RoleType.specialty)) {
-
-                return specialty;//专责
-            } else if (roles.remove(team_leader)) {
-
-                return team_leader;//组长
-            } else if (roles.remove(tracker)) {
-
-                return tracker;//维护人员
-            } else {
-
-                return guest;//来宾
             }
 
         }
 
-        return guest;
+        return roleType;
     }
 
     /**
@@ -81,14 +98,7 @@ public enum RoleType {
      */
     public static RoleType getMaxRole(RoleType roleType1, RoleType roleType2) {
 
-        Map<RoleType, Integer> roles = new HashMap<>();
-        roles.put(director, 4);
-        roles.put(specialty, 3);
-        roles.put(team_leader, 2);
-        roles.put(tracker, 1);
-        roles.put(guest, 0);
-
-        if (roles.get(roleType2) > roles.get(roleType1)) {
+        if (roleType2.getLevel() > roleType1.getLevel()) {
             return roleType2;
         }
 

@@ -14,7 +14,6 @@ import org.xutils.db.annotation.Table;
  */
 @Table(name = "xj_jyh_task")
 public class InspecteTaskEntity extends BaseEntity {
-
     /***/
     @Column(name = "id", isId = true)
     public String id;
@@ -24,8 +23,16 @@ public class InspecteTaskEntity extends BaseEntity {
     public String city_id;
 
     /***/
+    @Column(name = "template_id")
+    public String template_id;
+
+    /***/
     @Column(name = "type")
     public String type;
+
+    /***/
+    @Column(name = "progress")
+    public String progress;
 
     /***/
     @Column(name = "check_type")
@@ -83,7 +90,6 @@ public class InspecteTaskEntity extends BaseEntity {
     @Column(name = "update_time")
     public String update_time;
 
-
     public InspecteTaskEntity() {
     }
 
@@ -103,12 +109,28 @@ public class InspecteTaskEntity extends BaseEntity {
         this.city_id = city_id;
     }
 
+    public String getTemplate_id() {
+        return template_id;
+    }
+
+    public void setTemplate_id(String template_id) {
+        this.template_id = template_id;
+    }
+
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
     }
 
     public String getCheck_type() {

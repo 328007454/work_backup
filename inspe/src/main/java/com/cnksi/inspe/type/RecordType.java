@@ -12,18 +12,33 @@ public enum RecordType {
     /**
      * 正常
      */
-    normal,
+    normal("正常"),
     /**
      * 问题
      */
-    answer,
+    answer("问题"),
     /**
      * 检查中(仅针对大项)
      */
-    ing,
+    ing("检查中"),
     /**
      * 未检查
      */
-    def,
+    def("未检查"),;
+
+    String desc;
+
+    private RecordType(String desc) {
+        this.desc = desc;
+    }
+
+
+    RecordType() {
+
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 
 }

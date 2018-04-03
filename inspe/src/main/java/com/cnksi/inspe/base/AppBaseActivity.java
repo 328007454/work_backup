@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,20 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
     protected final String tag = this.getClass().getSimpleName();
     protected ViewDataBinding rootDataBinding;
-    protected UserService userService=UserService.getInstance();
+    private UserService userService;// = UserService.getInstance();
+
+    protected UserService getUserService() {
+        if (userService == null) {
+            synchronized (this) {
+                if (userService == null) {
+                    userService = UserService.getInstance();
+                }
+            }
+        }
+
+        return userService;
+    }
+
     //    @Override
 //    protected final void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
@@ -71,17 +85,23 @@ public abstract class AppBaseActivity extends AppCompatActivity {
         setTitleBackBtn(resBackId);
     }
 
+    public void setTitle(CharSequence title, int resBackId, int menuResId) {
+        setTitle(title);
+        setTitleBackBtn(resBackId);
+        setTitleMenuBtn(menuResId);
+    }
+
     public void setTitleBackBtn(int resBackId) {
         if (toolbar != null) {
             toolbar.findViewById(R.id.toolbar_back_btn).setVisibility(View.VISIBLE);
-            toolbar.findViewById(R.id.toolbar_back_btn).setBackgroundResource(resBackId);
+            ((ImageButton) toolbar.findViewById(R.id.toolbar_back_btn)).setImageResource(resBackId);
         }
     }
 
     public void setTitleMenuBtn(int resMenuId) {
         if (toolbar != null) {
             toolbar.findViewById(R.id.toolbar_menu_btn).setVisibility(View.VISIBLE);
-            toolbar.findViewById(R.id.toolbar_menu_btn).setBackgroundResource(resMenuId);
+            ((ImageButton) toolbar.findViewById(R.id.toolbar_menu_btn)).setImageResource(resMenuId);
         }
     }
 

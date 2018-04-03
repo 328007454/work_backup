@@ -3,6 +3,8 @@ package com.cnksi.inspe.ui;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
@@ -15,6 +17,8 @@ import com.cnksi.inspe.databinding.ActivityInspeTeamBinding;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.type.TaskProgressType;
+import com.cnksi.inspe.utils.DateFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ import java.util.List;
  * @auther Today(张军)
  * @date 2018/3/21 09:31
  */
-public class InspeTeamActivity extends AppBaseActivity {
+public class InspeTeamActivity extends AppBaseActivity implements View.OnClickListener {
 
     private ActivityInspeTeamBinding dataBinding;
 
@@ -42,28 +46,23 @@ public class InspeTeamActivity extends AppBaseActivity {
 
     private List<MultiItemEntity> list = new ArrayList<>();
     private InspecteTaskEntity task;
+    private TeamRoleAdapter adapter;
+    private Button bottomBtn;
 
     @Override
     public void initUI() {
-
-        setTitle("班组建设检查",R.drawable.inspe_left_black_24dp);
-
         dataBinding = (ActivityInspeTeamBinding) rootDataBinding;
+        setTitle("班组建设检查", R.drawable.inspe_left_black_24dp);
+
+
         task = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
         if (task == null) {
             showToast("参数错误！");
             finish();
+            return;
         }
-//        dataBinding.recyclerView.setAdapter(null);
-//        databinding
-//        databinding.setAdapter(null);
-        //测试
-//        list.add(new TeamRuleEntity());
-//        list.add(new TeamRuleEntity());
-        initAdapterData();
 
-
-        TeamRoleAdapter adapter = new TeamRoleAdapter(list);
+        adapter = new TeamRoleAdapter(list);
         final GridLayoutManager manager = new GridLayoutManager(this, 2);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -71,24 +70,18 @@ public class InspeTeamActivity extends AppBaseActivity {
                 return adapter.getItemViewType(position) == TeamRoleAdapter.TYPE_1 ? 1 : manager.getSpanCount();
             }
         });
-
+        dataBinding.recyclerView.setAdapter(adapter);
+        dataBinding.recyclerView.setLayoutManager(manager);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //启动Item点击事件
                 TeamRoleEntity data = (TeamRoleEntity) adapter.getData().get(position);
-//                Toast.makeText(InspeTeamActivity.this, data.rule.getName(), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(InspeTeamActivity.this, InspeTeamStandardActivity.class).putExtra("role_id", data.rule.getId()).putExtra("task", task));
             }
         });
-
-        dataBinding.recyclerView.setAdapter(adapter);
-
-        dataBinding.recyclerView.setAdapter(adapter);
-        dataBinding.recyclerView.setLayoutManager(manager);
-//        adapter.expandAll();
-        adapter.expand(0);
-
+        bottomBtn = (Button) getLayoutInflater().inflate(R.layout.inspe_recycle_buttom_btn, (ViewGroup) dataBinding.recyclerView.getParent(), false);
+        bottomBtn.setOnClickListener(this);
+        adapter.addFooterView(bottomBtn);
 
     }
 
@@ -97,17 +90,45 @@ public class InspeTeamActivity extends AppBaseActivity {
 
     }
 
-    private void initAdapterData() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        list.clear();
+        adapter.notifyDataSetChanged();
+        searchData();
+
+    }
+
+    //查询当前首个未检查的项位置
+    private int doPosition = 0;
+    //判断任务是否检查完毕，true检查完毕，false未检查完毕
+    private boolean isOk = true;
+
+    private void searchData() {
         List<TeamRuleEntity> ruleList = teamService.getRoleList();
         if (ruleList == null) {
             return;
         }
+        //设置不可用状态
+        isOk = true;
+        doPosition = -1;
 
-        for (TeamRuleEntity entity : ruleList) {
+        for (int i = 0; i < ruleList.size(); i++) {
+            TeamRuleEntity entity = ruleList.get(i);
             TeamRole0Entity rule0 = new TeamRole0Entity(entity);
 
-            List<TeamRuleEntity> ruleItemList = teamService.getRoleList(entity.getId());
+            List<TeamRuleEntity> ruleItemList = teamService.getRoleList(entity.getId(), task.getId());
             for (TeamRuleEntity e : ruleItemList) {
+                //如果状态不为不可用用状态则不处理(第一次有效，展开用户正在操作的项)
+                if (doPosition == -1 && e.getRecord_type() == null) {
+                    doPosition = i;
+                }
+
+                //检查是否已经检查完成
+                if (isOk && e.getRecord_type() == null) {
+                    isOk = false;
+                }
+
                 TeamRoleEntity rule = new TeamRoleEntity(e);
                 rule0.addSubItem(rule);
             }
@@ -115,6 +136,29 @@ public class InspeTeamActivity extends AppBaseActivity {
             list.add(rule0);
         }
 
+        //设置默认状态
+        if (doPosition == -1) {
+            doPosition = 0;
+        }
+
+        //防止无数据处理异常
+        if (ruleList.size() == 0) {
+            isOk = false;
+        }
+        adapter.expand(doPosition);
+        bottomBtn.setEnabled(isOk);
+
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.bottomBtn) {
+            //修改任务状态；
+            task.setProgress(TaskProgressType.done.name());
+            task.setDo_check_time(DateFormat.dateToDbString(System.currentTimeMillis()));
+            teamService.saveTask(task);
+
+            finish();
+        }
+    }
 }

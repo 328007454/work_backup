@@ -11,10 +11,15 @@ import com.cnksi.inspe.base.AppBaseFragment;
 import com.cnksi.inspe.databinding.FragmentInspeIssueBinding;
 import com.cnksi.inspe.databinding.FragmentInspeMyissueBinding;
 import com.cnksi.inspe.db.TeamService;
+import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
+import com.cnksi.inspe.type.ProgressType;
+import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.ui.InspeIssueDetailActivity;
 import com.cnksi.inspe.utils.DateFormat;
 
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,34 +40,68 @@ public class MyIssueFragment extends AppBaseFragment {
     private FragmentInspeMyissueBinding dataDinding;
     private List<TeamRuleResultEntity> list = new ArrayList<>();
     private TeamService teamService = new TeamService();
+    private BaseQuickAdapter adapter;
+    private PageLister pageLister;
+
+    private static SoftReference<List<TeamRuleResultEntity>> weakRef;
+
+    public static List<TeamRuleResultEntity> getList() {
+        if (weakRef != null) {
+            return weakRef.get();
+        }
+        return null;
+    }
 
     @Override
     protected void lazyLoad() {
         dataDinding = (FragmentInspeMyissueBinding) fragmentDataBinding;
         dataDinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //模拟数据
-        List<TeamRuleResultEntity> listTemp = teamService.getIssueList();
-        if (listTemp != null && listTemp.size() > 0) {
-            list.addAll(listTemp);
-        }
 
-
-        BaseQuickAdapter adapter = new InspeIssueAdapter(R.layout.inspeissue_item, list);
+        adapter = new InspeIssueAdapter(R.layout.inspeissue_item, list);
         adapter.openLoadAnimation();
-//        View top = getLayoutInflater().inflate(R.layout.top_view, (ViewGroup) mRecyclerView.getParent(), false);
-//        homeAdapter.addHeaderView(top);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getContext(), InspeIssueDetailActivity.class);
+                intent.putExtra("data", list.get(position));
+                intent.putExtra("positon", position);
+                intent.putExtra("start_type", "my_issue");
                 getContext().startActivity(intent);
             }
         });
         dataDinding.recyclerView.setAdapter(adapter);
 
+        switch (userService.getUser1().getRoleType()) {
+            case director:
+            case specialty:
+                pageLister = new DirectorPage();
+                break;
+            case team_leader:
+                pageLister = new TeamLeaderPage();
+                break;
+            case tracker:
+            case guest:
+                pageLister = new TrackerPage();
+                break;
+        }
+
+        weakRef = new SoftReference<List<TeamRuleResultEntity>>(list);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        pageLister.onSearch(null, null);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (weakRef.get() == null) {
+            weakRef = null;
+        }
+    }
 
     public class InspeIssueAdapter extends BaseQuickAdapter<TeamRuleResultEntity, BaseViewHolder> {
         public InspeIssueAdapter(int layoutResId, List data) {
@@ -73,7 +112,59 @@ public class MyIssueFragment extends AppBaseFragment {
         protected void convert(BaseViewHolder helper, TeamRuleResultEntity item) {
             helper.setText(R.id.contextTxt, item.getDescription());
             helper.setText(R.id.dateTxt, DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_improve_time())));
-            helper.setText(R.id.stateTxt, item.getProgress());
+
+            try {
+                helper.setText(R.id.stateTxt, ProgressType.valueOf(item.getProgress()).getDesc());
+            } catch (Exception e) {
+            }
         }
+    }
+
+    class TrackerPage implements PageLister {
+
+        @Override
+        public void onSearch(String taskType, String bzdId) {
+            List<TeamRuleResultEntity> listTemp = teamService.getIssueListForUserIds(userService.getUserIds(), taskType, bzdId, ProgressType.wzg.name());
+            //维护人员
+            list.clear();
+            if (listTemp != null && listTemp.size() > 0) {
+                list.addAll(listTemp);
+            }
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private class TeamLeaderPage implements PageLister {
+
+        @Override
+        public void onSearch(String taskType, String bzdId) {
+            List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(new String[]{userService.getUser1().getDept_id()}, taskType, bzdId, ProgressType.wfp.name(), ProgressType.shwtg.name(), ProgressType.wzg.name(), ProgressType.bzzwsh.name());
+            list.clear();
+            if (listTemp != null && listTemp.size() > 0) {
+                list.addAll(listTemp);
+            }
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private class DirectorPage implements PageLister {
+
+        @Override
+        public void onSearch(String taskType, String bzdId) {
+            List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(null, taskType, bzdId, ProgressType.zzwsh.name());
+            //维护人员
+            list.clear();
+            if (listTemp != null && listTemp.size() > 0) {
+                list.addAll(listTemp);
+            }
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private interface PageLister {
+        void onSearch(String taskType, String bzdId);
     }
 }

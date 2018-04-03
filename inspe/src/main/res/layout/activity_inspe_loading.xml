@@ -28,7 +28,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="aaa" />
+            android:hint="注：页面仅为了模块开发用"
+            android:padding="8dp"
+            android:textSize="14dp" />
 
         <!--解决WebView第一次使用初始化较慢的问题-->
 
@@ -37,5 +39,51 @@
             android:layout_width="1dp"
             android:layout_height="1dp"
             android:alpha="0" />
+
+        <Button
+            android:id="@+id/directorBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inspe_btn_green_selector"
+            android:text="主任/专责"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/teamleaderBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inspe_btn_green_selector"
+            android:text="班组长"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/trackerBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inspe_btn_green_selector"
+            android:text="维护员"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/checkUserBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/inspe_btn_green_selector"
+            android:text="角色选择"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/clearIssueBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/inspe_btn_red_selector"
+            android:text="清除问题表"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </layout>

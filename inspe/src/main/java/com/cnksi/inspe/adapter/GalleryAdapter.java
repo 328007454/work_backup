@@ -26,14 +26,30 @@ public class GalleryAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 //        helper.setText(R.id.imgImg, item);
         Bitmap bitmap = BitmapUtils.getImageThumbnail(item, 73 * 2, 49 * 2);
         helper.setImageBitmap(R.id.imgImg, bitmap);
-        helper.getView(R.id.delBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onDeleteListener != null) {
-                    onDeleteListener.onDelete(item, helper.getAdapterPosition());
+        if (isRead) {
+            helper.setVisible(R.id.delBtn, false);
+        } else {
+            helper.setVisible(R.id.delBtn, true);
+            helper.getView(R.id.delBtn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onDeleteListener != null) {
+                        onDeleteListener.onDelete(item, helper.getAdapterPosition());
+                    }
                 }
-            }
-        });
+            });
+        }
+    }
+
+    private boolean isRead = false;
+
+    /**
+     * 是否不可编辑
+     *
+     * @param isRead true不可删除，false可以删除
+     */
+    public void setMode(boolean isRead) {
+        this.isRead = isRead;
     }
 
     private OnDeleteListener onDeleteListener;

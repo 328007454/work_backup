@@ -37,10 +37,8 @@
         <activity android:name=".ui.InspeTeamActivity" />
         <activity android:name=".ui.InspeTeamIssueActivity" />
         <activity android:name=".ui.InspeTeamStandardActivity" />
-        <activity
-            android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/InspceAppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.InspeRecfityActivity" />
+        <activity android:name=".ui.InspeDocActivity" />
     </application>
 
 </manifest>

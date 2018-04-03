@@ -16,14 +16,21 @@ import org.xutils.ex.DbException;
  */
 @Table(name = "xj_group_con_rule_result")
 public class TeamRuleResultEntity extends BaseDBEntity {
-
-    /***/
+ /***/
     @Column(name = "id",isId = true)
     public String id;
 
     /***/
     @Column(name = "task_id")
     public String task_id;
+
+    /***/
+    @Column(name = "check_type")
+    public String check_type;
+
+    /***/
+    @Column(name = "rule_result_id")
+    public String rule_result_id;
 
     /***/
     @Column(name = "record_type")
@@ -150,6 +157,22 @@ public class TeamRuleResultEntity extends BaseDBEntity {
 
     public void setTask_id(String task_id) {
         this.task_id = task_id;
+    }
+
+    public String getCheck_type() {
+        return check_type;
+    }
+
+    public void setCheck_type(String check_type) {
+        this.check_type = check_type;
+    }
+
+    public String getRule_result_id() {
+        return rule_result_id;
+    }
+
+    public void setRule_result_id(String rule_result_id) {
+        this.rule_result_id = rule_result_id;
     }
 
     public String getRecord_type() {

@@ -9,16 +9,25 @@ package com.cnksi.inspe.type;
  */
 
 public enum TaskType {
-    /**
-     * 精细化检查
-     */
-    jxh,
-    /**
-     * 班组建设检查
-     */
-    bzjs,
-    /**
-     * 设备排查
-     */
-    sbpc
+    /***/
+    bzjs("班组建设检查"),
+    /***/
+    @Deprecated
+    sbpc("设备排查"),
+    /***/
+    @Deprecated
+    sbjc("设备检查"),
+    /***/
+    jyhjc("精益化检查");
+
+    String desc;
+
+    private TaskType(String desc) {
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
 }

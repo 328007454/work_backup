@@ -4,13 +4,81 @@
 
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/search_group"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="1dp"
+            android:background="#FFFFFF"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:gravity="center_vertical"
+                android:text="检查类型："
+                android:textColor="#1BBC9B"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/searchInspeTypeTxt"
+                style="@style/View.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableRight="@mipmap/inspe_arrow_down"
+                android:gravity="center_vertical"
+                android:hint="全部"
+                android:textColor="#626262"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:text="变电站："
+                android:textColor="#1BBC9B"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/searchConvertTxt"
+                style="@style/View.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableRight="@mipmap/inspe_arrow_down"
+                android:enabled="false"
+                android:gravity="center_vertical"
+                android:hint=""
+                android:paddingRight="12dp"
+                android:textColor="#626262"
+                android:textSize="14dp" />
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
-            style="@style/View.RecyclerView" />
+            style="@style/View.RecyclerView"
+            android:layout_weight="1"
+            android:paddingTop="9dp" />
 
-    </FrameLayout>
+        <Button
+            android:id="@+id/batRunBtn"
+            style="@style/View.Button"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/inspe_btn_green_selector"
+            android:text="批量操作" />
+
+    </LinearLayout>
 </layout>

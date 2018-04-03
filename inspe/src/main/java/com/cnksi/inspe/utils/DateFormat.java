@@ -54,6 +54,9 @@ public final class DateFormat {
      * @return
      */
     public static long dbdateToLong(String datetime) {
+        if (datetime == null) {
+            return 0;
+        }
         synchronized (sdfymdhms) {
             try {
                 return sdfymdhms.parse(datetime).getTime();

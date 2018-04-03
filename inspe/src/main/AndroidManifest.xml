@@ -15,7 +15,8 @@
         <activity android:name=".ui.InspeTeamActivity" />
         <activity android:name=".ui.InspeTeamIssueActivity" />
         <activity android:name=".ui.InspeTeamStandardActivity" />
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.InspeRecfityActivity" />
+        <activity android:name=".ui.InspeDocActivity" />
     </application>
 
 </manifest>

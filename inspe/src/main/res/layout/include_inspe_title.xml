@@ -15,13 +15,14 @@
         android:layout_height="48dp"
         android:background="#03B9A0">
 
-        <Button
+        <ImageButton
             android:id="@+id/toolbar_back_btn"
             android:layout_width="48dp"
             android:layout_height="match_parent"
-            android:background="@drawable/inspe_left_black_24dp"
+            android:background="@null"
             android:textColor="#FFFFFF"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            app:srcCompat="@drawable/inspe_left_black_24dp" />
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -41,6 +42,7 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:background="@null"
+            android:src="@mipmap/inspe_file_normal"
             android:visibility="invisible" />
 
     </LinearLayout>
