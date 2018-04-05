@@ -1,8 +1,3 @@
-//
-//include ':cnksicore', ':adaptionsjjc'
-//include ':autolayout'
-////include ":myapplication"
-//=======
-include ':adaptionsjjc', ':tts', ':bdloc'
+include ':adaptionsjjc', ':tts', ':bdloc', ':pickerview',':core2.0', ':bdzinspection'
 
 

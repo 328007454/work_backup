@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/xs_dialog_content_margin"
+    android:background="@drawable/core_dialog_background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="@dimen/xs_dialog_title_minheight"
+        android:text="@string/xs_tips_str"
+        android:textColor="@color/xs_dialog_title_text_color"
+        android:textSize="@dimen/xs_dialog_title_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_toast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/xs_dialog_content_margin"
+        android:layout_marginRight="@dimen/xs_dialog_content_margin"
+        android:gravity="center"
+        android:minHeight="@dimen/xs_dialog_content_minheight"
+        android:textColor="@color/xs_dialog_content_text_color"
+        android:textSize="@dimen/xs_dialog_content_text_size" />
+
+    <TextView
+        android:id="@+id/divider_line"
+        style="@style/XS_Divider_horizontal"
+        android:layout_marginTop="@dimen/xs_dialog_divider_margin_top" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_confirm_background_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_dialog_button_minheight"
+            android:text="@string/xs_dialog_confirm_text_str"
+            android:visibility="visible"
+            android:textColor="@color/xs_dialog_confirm_button_text_color"
+            android:textSize="@dimen/xs_dialog_button_text_size" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_left_button_background_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_dialog_button_minheight"
+            android:text="@string/xs_dialog_cancel_text_str"
+            android:textColor="@color/xs_dialog_cancel_button_text_color"
+            android:textSize="@dimen/xs_dialog_button_text_size" />
+
+        <TextView
+            android:id="@+id/divider"
+            style="@style/XS_Divider_vertical"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_multiple_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_right_button_background_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_dialog_button_minheight"
+            android:text="@string/xs_dialog_confirm_text_str"
+            android:textColor="@color/xs_dialog_confirm_button_text_color"
+            android:textSize="@dimen/xs_dialog_button_text_size" />
+    </LinearLayout>
+
+</LinearLayout>

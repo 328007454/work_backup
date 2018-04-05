@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    defaultConfig {
+//        applicationId "com.cnksi.bdzinspection"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 53
+        versionName "2.5.5"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        ndk {
+            abiFilters 'armeabi'
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(include: '*.jar', dir: 'libs')
+    compile project(':core2.0')
+    compile project(':pickerview')
+    compile 'com.cnksi:bdloc:1.1.7-3'
+    compile 'me.grantland:autofittextview:0.2.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    compile files('libs/dom4j-2.0.0.jar')
+    compile files('libs/httpmime-4.1.3.jar')
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.baoyz.pullrefreshlayout:library:1.2.0'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    implementation files('libs/M100_RFID_API.jar')
+}

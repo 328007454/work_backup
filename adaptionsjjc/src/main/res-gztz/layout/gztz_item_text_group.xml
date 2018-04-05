@@ -16,13 +16,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20px"
-            android:layout_marginRight="@dimen/_30px"
+            android:layout_marginRight="@dimen/sjjc_30px"
             android:background="@drawable/add_copy_item_select_background"
             android:cursorVisible="true"
             android:gravity="left"
             android:hint="请输入"
             android:minHeight="120px"
-            android:padding="@dimen/_10px"
+            android:padding="10px"
             android:textColor="@color/global_text_color"
             android:textSize="@dimen/tv_text_size"/>
     </merge>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="global_text_color">#333333</color>
     <color name="dark_text">#000000</color>
     <color name="white_text">#FFFFFF</color>
     <color name="white">#FFFFFF</color>

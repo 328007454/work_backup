@@ -25,7 +25,7 @@
             android:background="@drawable/add_copy_item_select_background"
             android:gravity="left|center_vertical"
             android:hint="请输入发热部位名称"
-            android:paddingStart="@dimen/_30px"
+            android:paddingStart="@dimen/sjjc_30px"
             app:layout_constraintEnd_toStartOf="@id/center_guideline"
             app:layout_constraintStart_toStartOf="parent"/>
 

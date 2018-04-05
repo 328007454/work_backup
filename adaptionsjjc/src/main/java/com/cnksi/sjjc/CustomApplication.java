@@ -88,17 +88,6 @@ public class CustomApplication extends CoreApplication {
         return mDbManager;
     }
 
-    /**
-     * 得到数据库管理者
-     *
-     * @return
-     */
-    public  DbManager getDbManagerInner() {
-        if (mDbManager == null) {
-            mDbManager = x.getDb(getDaoConfig());
-        }
-        return mDbManager;
-    }
 
     public static void closeDbConnection() {
         if (mDbManager != null) {
@@ -326,10 +315,6 @@ public class CustomApplication extends CoreApplication {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-//        AutoLayoutConifg.getInstance().useDeviceSize().init(this);
-//        TCAgent.LOG_ON = true;
-//        TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
-//        TCAgent.setReportUncaughtExceptions(true);
         PreferencesUtils.init(getApplicationContext());
         ToastUtils.init(getApplicationContext());
         DisplayUtils.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
@@ -370,7 +355,6 @@ public class CustomApplication extends CoreApplication {
             }
         }
         android.os.Process.killProcess(android.os.Process.myPid());  //结束进程之前可以把你程序的注销或者退出代码放在这段代码之前
-
     }
 
     private void copyAssetsToSDCard() {

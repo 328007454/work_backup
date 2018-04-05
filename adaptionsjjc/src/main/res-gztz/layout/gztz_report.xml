@@ -136,11 +136,11 @@
                 android:id="@+id/xs_jg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_30px"
+                android:layout_margin="@dimen/sjjc_30px"
                 android:background="@color/gray_background_color"
                 android:maxLines="10000"
                 android:minHeight="780px"
-                android:padding="@dimen/_30px"
+                android:padding="@dimen/sjjc_30px"
                 android:scrollbars="vertical"
                 android:textSize="@dimen/txt_size38px"/>
         </ScrollView>

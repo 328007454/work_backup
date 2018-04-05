@@ -7,7 +7,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/_30px"
+            android:layout_marginLeft="@dimen/sjjc_30px"
             android:gravity="center_vertical"
             android:textColor="@color/global_text_color"
             android:textSize="@dimen/tv_text_size"/>
@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:checked="true"
-                android:drawablePadding="@dimen/_30px"
+                android:drawablePadding="@dimen/sjjc_30px"
                 android:drawableStart="@drawable/radio_button_selector"
                 android:textColor="@color/radio_button_text_selector"
                 android:textSize="@dimen/tv_text_size"/>
@@ -35,11 +35,11 @@
                 android:id="@+id/bt_b"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_30px"
+                android:layout_marginLeft="@dimen/sjjc_30px"
                 android:layout_weight="1"
                 android:button="@null"
                 android:checked="true"
-                android:drawablePadding="@dimen/_30px"
+                android:drawablePadding="@dimen/sjjc_30px"
                 android:drawableStart="@drawable/radio_button_selector"
                 android:textColor="@color/radio_button_text_selector"
                 android:textSize="@dimen/tv_text_size"/>

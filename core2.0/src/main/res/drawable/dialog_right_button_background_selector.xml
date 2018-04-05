@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+	 <item android:state_pressed="true">
+	     <shape>
+            <solid android:color="@color/xs_radio_item_pressed_color" /> <!-- 填充色 -->
+            <corners
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="5dp" />
+        </shape>
+	 </item>
+	 <item android:state_pressed="false" android:drawable="@android:color/transparent"></item>
+</selector>

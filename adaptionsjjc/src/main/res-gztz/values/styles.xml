@@ -17,7 +17,7 @@
         <item name="android:background">@color/white</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">@color/global_text_color</item>
-        <item name="android:layout_marginLeft">@dimen/_30px</item>
+        <item name="android:layout_marginLeft">@dimen/sjjc_30px</item>
         <item name="android:textSize">@dimen/tv_text_size</item>
     </style>
 
@@ -34,7 +34,7 @@
         <item name="android:layout_height">138px</item>
         <item name="android:background">@color/white</item>
         <item name="android:drawablePadding">30px</item>
-        <item name="android:paddingEnd">@dimen/_30px</item>
+        <item name="android:paddingEnd">@dimen/sjjc_30px</item>
         <item name="android:textColor">@color/green_color</item>
         <item name="android:textSize">@dimen/tv_text_size</item>
         <item name="android:gravity">center_vertical|right</item>
@@ -72,7 +72,7 @@
         <item name="android:layout_height">95px</item>
         <item name="android:background">@drawable/linearlayout_stroke</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingStart">@dimen/_30px</item>
+        <item name="android:paddingStart">@dimen/sjjc_30px</item>
         <item name="android:textColor">@color/wt_green_color</item>
         <item name="android:textSize">@dimen/new_global_text_size</item>
     </style>

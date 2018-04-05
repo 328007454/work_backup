@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="xs_colorPrimary">#005248</color>
+    <color name="xs_colorPrimaryDark">@color/xs_colorPrimary</color>
+    <color name="colorAccent">#FF4081</color>
+    <!-- 注册界面 -->
+    <color name="xs_register_content_text_color">#434A54</color>
+    <color name="xs_register_line_color">#A0A5AC</color>
+    <color name="xs_register_background_color">#F5F5F5</color>
+    <color name="xs_register_button_pressed_color">#3C424A</color>
+    <color name="xs_register_button_unpressed_color">#434A54</color>
+    <color name="xs_register_way_unpressed_color">#A0A5AC</color>
+    <color name="xs_register_way_pressed_color">#8A9199</color>
+
+    <!-- 下拉刷新 -->
+    <color name="xs_refresh_text_color">#FFFFFF</color>
+    <color name="xs_refresh_background_color">#43C7F4</color>
+    <color name="xs_progress_horizontal_background_color">#7A7A7A</color>
+    <color name="xs_progress_horizontal_color">#31BDD8</color>
+
+    <!-- 下拉刷新 -->
+    <!-- New CustomerDialog -->
+    <color name="xs_dialog_cancel_button_text_color">#333333</color>
+    <color name="xs_dialog_confirm_button_text_color">#333333</color>
+    <color name="xs_dialog_content_text_color">#333333</color>
+    <color name="xs_dialog_title_text_color">#333333</color>
+    <color name="xs_radio_item_unpressed_color">#ffffff</color>
+    <color name="xs_radio_item_pressed_color">#e6e6e6</color>
+    <color name="xs_dialog_loading_background_color">#5A5A5A</color>
+    <color name="xs_tab_strip_text_color">#D9534F</color>
+    <color name="xs_tab_strip_background_color">#DDE9E7</color>
+    <color name="xs_global_text_color">#333333</color>
+    <color name="xs__333333_global_text_color">#333333</color>
+    <color name="xs_background_tab_pressed">#000000</color>
+
+    <!-- sidebar 颜色 -->
+    <color name="xs_app_head_background">#03B9A0</color>
+    <color name="xs_app_head_background_hover_color">#029B88</color>
+    <color name="xs__d0eeee9_color">#d0eee9</color>
+    <color name="xs__e8edec_color">#e8edec</color>
+    <color name="xs__5dbf19_color">#5dbf19</color>
+    <color name="xs__e9f2f0_color">#e9f2f0</color>
+    <color name="xs__c1d2cf_color">#c1d2cf</color>
+    <color name="xs__e1e1e4_color">#e1e1e4</color>
+    <color name="xs__ff7575_color">#ff7575</color>
+    <color name="xs__889fff_color">#889fff</color>
+    <color name="xs__01ce7f_color">#01ce7f</color>
+    <color name="xs__888888_color">#888888</color>
+    <color name="xs__fd6067_color">#fd6067</color>
+    <color name="xs__ff9912_color">#FF9912</color>
+
+</resources>

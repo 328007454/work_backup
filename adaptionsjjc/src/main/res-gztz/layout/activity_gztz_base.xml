@@ -64,7 +64,7 @@
                 android:layout_height="138px"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingEnd="@dimen/_30px"
+                android:paddingEnd="@dimen/sjjc_30px"
                 app:drawUnderLine="true"
                 app:title_str="*故障线路"/>
 
