@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="48dp"
+    android:layout_margin="0dp"
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
+    android:padding="0dp"
     app:contentInsetEnd="0dp"
     app:contentInsetStart="0dp"
     app:popupTheme="@style/InspceAppTheme.PopupOverlay">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#03B9A0">
+        android:background="#03B9A0"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/toolbar_back_btn"

@@ -30,20 +30,31 @@
             android:layout_weight="1"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:text="本单位班组设置、定员定编清单（单位文件）
-及人员配置花名册（从相关系统查询）"
+            android:text="本单位班组设置、定员定编清单"
             android:textColor="#3C4950"
             android:textSize="14dp" />
 
-        <TextView
-            android:id="@+id/scoreTxt"
-            style="@style/View.TextView"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="12dp"
-            android:background="@mipmap/inspe_standard_checked"
-            android:gravity="center"
-            android:textColor="#FD6067"
-            android:textSize="14dp" />
+        <RelativeLayout
+            android:layout_width="44dp"
+            android:layout_height="44dp">
+
+            <ImageButton
+                android:id="@+id/scoreImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@null"
+                android:src="@mipmap/inspe_standard_checked" />
+
+            <TextView
+                android:id="@+id/scoreTxt"
+                style="@style/View.TextView"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#FD6067"
+                android:textSize="14dp" />
+        </RelativeLayout>
     </LinearLayout>
 
 

@@ -10,19 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:contentInsetEnd="0dp"
-            app:contentInsetStart="0dp"
-            app:popupTheme="@style/InspceAppTheme.PopupOverlay">
-
-            <include layout="@layout/include_inspe_title" />
-
-        </android.support.v7.widget.Toolbar>
+        <include layout="@layout/include_inspe_title" />
 
         <ScrollView style="@style/View.ScrollView">
 
@@ -42,8 +30,8 @@
 
                         <TextView
                             android:id="@+id/recfityNameTxt"
-                            android:layout_width="wrap_content"
                             style="@style/View.TextView.Content.Value"
+                            android:layout_width="wrap_content"
                             android:text="小明" />
                     </LinearLayout>
 

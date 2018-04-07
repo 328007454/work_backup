@@ -221,32 +221,32 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
         @Override
         protected void convert(BaseViewHolder helper, TeamRuleEntity item) {
 
-            helper.addOnClickListener(R.id.scoreTxt);//点击事件
+            helper.addOnClickListener(R.id.scoreImg);//点击事件
 
             RecordType recordType = RecordType.valueOf(item.getRecord_type() != null ? item.getRecord_type() : RecordType.def.name());
             if (recordType != null) {
                 switch (recordType) {
                     case answer://有问题
                         helper.setBackgroundRes(R.id.positonIdTxt, R.drawable.inspe_numcircle_red_shape);
-                        helper.setBackgroundColor(R.id.scoreTxt, 0x00000000);
+                        helper.setImageResource(R.id.scoreImg, 0x00000000);
                         helper.setText(R.id.scoreTxt, String.format("-%.1f", item.getDeduct_score()));
                         break;
                     case normal://无问题
                         helper.setBackgroundRes(R.id.positonIdTxt, R.drawable.inspe_numcircle_green_shape);
-                        helper.setBackgroundRes(R.id.scoreTxt, R.mipmap.inspe_standard_checked);
+                        helper.setImageResource(R.id.scoreImg, R.mipmap.inspe_standard_checked);
                         helper.setText(R.id.scoreTxt, "");
                         break;
                     case ing://进行中
                     case def://默认(未开始)
                     default:
                         helper.setBackgroundRes(R.id.positonIdTxt, R.drawable.inspe_numcircle_dark_shape);
-                        helper.setBackgroundRes(R.id.scoreTxt, R.mipmap.inspe_standard_normal);
+                        helper.setImageResource(R.id.scoreImg, R.mipmap.inspe_standard_normal);
                         helper.setText(R.id.scoreTxt, "");
                         break;
                 }
             } else {//未开始
                 helper.setBackgroundRes(R.id.positonIdTxt, R.drawable.inspe_numcircle_dark_shape);
-                helper.setBackgroundRes(R.id.scoreTxt, R.mipmap.inspe_standard_normal);
+                helper.setImageResource(R.id.scoreImg, R.mipmap.inspe_standard_normal);
                 helper.setText(R.id.scoreTxt, "");
             }
 

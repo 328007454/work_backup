@@ -121,7 +121,7 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
     public void onDestroy() {
         super.onDestroy();
         if (weakRef.get() == null) {
-            weakRef=null;
+            weakRef = null;
         }
     }
 
@@ -169,7 +169,7 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
                 }
             }).showAsDropDown(v);
 
-        } else if (v.getId() == R.id.searchConvertTxt) {
+        } else if (v.getId() == R.id.searchConvertTxt) {//变电站查询
             new PopItemWindow(getContext()).setListAdapter(convertList).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -182,6 +182,8 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
                     }
                 }
             }).showAsDropDown(v);
+        } else if (v.getId() == R.id.batRunBtn) {//批处理
+            pageLister.onBat(taskType, null);
         }
     }
 
@@ -198,6 +200,7 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
             try {
                 helper.setText(R.id.stateTxt, ProgressType.valueOf(item.getProgress()).getDesc());
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
         }
@@ -216,13 +219,18 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
 
             adapter.notifyDataSetChanged();
         }
+
+        @Override
+        public void onBat(TaskType askType, String bbzdId) {
+            //无
+        }
     }
 
     private class TeamLeaderPage implements PageLister {
 
         @Override
         public void onSearch(String taskType, String bzdId) {
-//初始数据
+            //初始数据
             List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(new String[]{userService.getUser1().getDept_id()}, taskType, bzdId);
             list.clear();
             if (listTemp != null && listTemp.size() > 0) {
@@ -231,14 +239,19 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
 
             adapter.notifyDataSetChanged();
         }
+
+        @Override
+        public void onBat(TaskType askType, String bbzdId) {
+            //弹出对话框，选择分配、审核
+            //根据用户选择查询数据
+        }
     }
 
     private class DirectorPage implements PageLister {
 
         @Override
         public void onSearch(String taskType, String bzdId) {
-//初始数据
-//            List<TeamRuleResultEntity> listTemp = teamService.getIssueList();
+            //初始数据
             List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(null, taskType, bzdId);
             list.clear();
             if (listTemp != null && listTemp.size() > 0) {
@@ -247,9 +260,26 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
 
             adapter.notifyDataSetChanged();
         }
+
+        @Override
+        public void onBat(TaskType askType, String bbzdId) {
+            //弹出对话框选择分享、审核
+        }
     }
 
     private interface PageLister {
+        /**
+         * 根据角色查询数据
+         *
+         * @param taskType
+         * @param bzdId
+         */
         void onSearch(String taskType, String bzdId);
+
+        /**
+         * 批量处理
+         */
+        void onBat(TaskType taskType, String bbzdId);
+
     }
 }

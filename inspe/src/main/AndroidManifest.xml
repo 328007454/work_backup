@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cnksi.inspe">
 
-
     <application>
         <activity android:name=".ui.InspeCreateActivity" />
         <activity android:name=".ui.InspeHtmlActivity" />
@@ -17,6 +16,9 @@
         <activity android:name=".ui.InspeTeamStandardActivity" />
         <activity android:name=".ui.InspeRecfityActivity" />
         <activity android:name=".ui.InspeDocActivity" />
+        <activity
+            android:name=".ui.InspeLoadingActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

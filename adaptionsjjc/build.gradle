@@ -85,16 +85,16 @@ android {
             signingConfig signingConfigs.release
             applicationVariants.all { variant ->
 //                //修改apk输出路径
-//                variant.getPackageApplication().outputDirectory = new File("E:\\CompanyProjectNew\\SJJCAPK")
-//                variant.outputs.all { output ->
-//                    if (variant.buildType.name == "release") {
-//                        def fileName = "sjjc_${defaultConfig.versionCode}_${defaultConfig.versionName}_${releaseTime()}_release.apk"
-//                        outputFileName = fileName
-//                    } else {
-//                        def fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
-//                        outputFileName = fileName
-//                    }
-//                }
+                variant.getPackageApplication().outputDirectory = new File("${project.rootDir}/out/")
+                variant.outputs.all { output ->
+                    if (variant.buildType.name == "release") {
+                        def fileName = "sjjc_${defaultConfig.versionCode}_${defaultConfig.versionName}_${releaseTime()}_release.apk"
+                        outputFileName = fileName
+                    } else {
+                        def fileName = "sjjc_${defaultConfig.versionName}_debug.apk"
+                        outputFileName = fileName
+                    }
+                }
             }
         }
         debug {

@@ -4,12 +4,7 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
-import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.cnksi.inspe.R;
@@ -19,7 +14,6 @@ import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.db.entity.UserEntity;
-import com.cnksi.inspe.type.ProgressType;
 import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.utils.PermissionUtil;
@@ -59,40 +53,20 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
 
     @Override
     public void initData() {
-
-//        new TeamService().saveRuleResult(new TeamRuleEntity("id", "name", "level", "type", "score_group_id", "pid", "dependence", "dept_name", "workshop", "team", 1, "stand_content", System.currentTimeMillis(), System.currentTimeMillis(), System.currentTimeMillis(), "gzrwid", "sort", "level_namel", "chengdu", System.currentTimeMillis()));
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, permissions);
+//        SQLiteStudioService.instance().start(this);
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-//        if (!checkPermission(permissions)) {
-//            startAppSettings();
-//        } else {
-//
-//        }
     }
 
-    // 启动应用的设置
-    private void startAppSettings() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivity(intent);
-    }
-
-    private boolean checkPermission(String[] permissions) {
-        for (String permission : permissions) {
-            boolean isPer = ContextCompat.checkSelfPermission(InspeLoadingActivity.this, permission) == PackageManager.PERMISSION_DENIED;
-            if (isPer) {
-                return false;
-            }
-
-        }
-
-
-        return true;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        SQLiteStudioService.instance().stop();
     }
 
     private Handler handler = new Handler();
@@ -141,23 +115,15 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
 
     @Override
     public void allPermissionsGranted() {
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 startMain(RoleType.director);
             }
         }, 3000);
-
-        //Arouter
-//            ARouter.getInstance().build("/inspe/main").navigation(this, new NavCallback() {
-//                @Override
-//                public void onArrival(Postcard postcard) {
-//                    finish();
-//                }
-//            });
     }
 
-    private TeamService teamService = new TeamService();
 
     @Override
     public void onClick(View v) {
@@ -169,12 +135,17 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
             startMain(RoleType.tracker);
         } else if (v.getId() == R.id.clearIssueBtn) {
             //清除任务
+            TeamService teamService = new TeamService();
             teamService.clear(TeamRuleResultEntity.class);
             //恢复任务为未开始状态
             List<InspecteTaskEntity> list = teamService.getTaskList();
-            for (InspecteTaskEntity task : list) {
-                task.setProgress(TaskProgressType.doing.name());
-                teamService.saveTask(task);
+            if (list != null) {
+                for (InspecteTaskEntity task : list) {
+                    task.setProgress(TaskProgressType.doing.name());
+                    teamService.saveTask(task);
+                }
+            } else {
+                showToast("数据不存在");
             }
         } else if (v.getId() == R.id.checkUserBtn) {
             checkUserLogin();
@@ -184,6 +155,10 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
     private void checkUserLogin() {
 
         final List<UserEntity> userList = getUserService().getUsers(null, null, null);
+        if (userList == null) {
+            showToast("无任何用户");
+            return;
+        }
         String[] userArray = new String[userList.size()];
 
         for (int i = 0, length = userArray.length; i < length; i++) {
