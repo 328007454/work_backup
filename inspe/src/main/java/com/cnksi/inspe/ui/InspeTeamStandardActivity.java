@@ -15,6 +15,7 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamstandardBinding;
+import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.InspeScoreEntity;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
@@ -45,6 +46,7 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
     private List<TeamRuleEntity> list = new ArrayList<>();
 
     private TeamService teamService = new TeamService();
+    private TaskService taskService = new TaskService();
 
     private InspecteTaskEntity task;
     private Button bottomBtn;
@@ -178,7 +180,7 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
         //更新任务状态
         if (task.getProgress() == null || TaskProgressType.valueOf(task.getProgress()) == TaskProgressType.todo) {
             task.setProgress(TaskProgressType.doing.name());
-            teamService.saveTask(task);
+            taskService.saveTask(task);
         }
     }
 

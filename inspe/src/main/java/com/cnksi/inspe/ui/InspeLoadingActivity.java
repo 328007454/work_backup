@@ -10,6 +10,7 @@ import android.view.View;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeLoadingBinding;
+import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
@@ -43,6 +44,7 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
         setTitle("启动页面");
         dataBinding = (ActivityInspeLoadingBinding) rootDataBinding;
         dataBinding.directorBtn.setOnClickListener(this);
+        dataBinding.expertBtn.setOnClickListener(this);
         dataBinding.teamleaderBtn.setOnClickListener(this);
         dataBinding.trackerBtn.setOnClickListener(this);
         dataBinding.clearIssueBtn.setOnClickListener(this);
@@ -103,6 +105,18 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
             case specialty:
                 startMain(null, new String[]{"test2"});
                 break;
+            case expert:
+                UserEntity userEntity = getUserService().getUserOnName("test6");
+                if (userEntity != null) {
+                    if (!RoleType.getRoles(userEntity.getType()).contains(RoleType.expert)) {
+                        userEntity.setType(userEntity.getType() + "," + RoleType.expert);
+                        getUserService().update(userEntity);
+                    }
+                    startMain(null, new String[]{"test6"});
+                } else {
+                    showToast("未查询到用户:test6");
+                }
+                break;
             case team_leader:
                 startMain(null, new String[]{"test3"});
                 break;
@@ -129,20 +143,23 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
     public void onClick(View v) {
         if (v.getId() == R.id.directorBtn) {
             startMain(RoleType.director);
+        } else if (v.getId() == R.id.expertBtn) {
+            startMain(RoleType.expert);
         } else if (v.getId() == R.id.teamleaderBtn) {
             startMain(RoleType.team_leader);
         } else if (v.getId() == R.id.trackerBtn) {
             startMain(RoleType.tracker);
         } else if (v.getId() == R.id.clearIssueBtn) {
             //清除任务
+            TaskService taskService = new TaskService();
             TeamService teamService = new TeamService();
             teamService.clear(TeamRuleResultEntity.class);
             //恢复任务为未开始状态
-            List<InspecteTaskEntity> list = teamService.getTaskList();
+            List<InspecteTaskEntity> list = taskService.getTaskList();
             if (list != null) {
                 for (InspecteTaskEntity task : list) {
                     task.setProgress(TaskProgressType.doing.name());
-                    teamService.saveTask(task);
+                    taskService.saveTask(task);
                 }
             } else {
                 showToast("数据不存在");

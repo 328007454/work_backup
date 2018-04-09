@@ -1,16 +1,22 @@
 package com.cnksi.inspe.ui;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
 
+import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.inspe.BuildConfig;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.base.AppBaseFragment;
 import com.cnksi.inspe.databinding.ActivityInspeMainBinding;
+import com.cnksi.inspe.db.entity.UserEntity;
+import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.ui.fragment.AllIssueFragment;
 import com.cnksi.inspe.ui.fragment.InspectionFragment;
 import com.cnksi.inspe.ui.fragment.MyIssueFragment;
@@ -27,6 +33,10 @@ import com.cnksi.inspe.ui.fragment.MyIssueFragment;
 public class InspeMainActivity extends AppBaseActivity {
 
     ActivityInspeMainBinding dataBinding;
+    /**
+     * 是否为专家
+     */
+    private UserEntity expertUser = getUserService().getUserExpert(RoleType.expert);
     //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 //            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 //
@@ -62,9 +72,14 @@ public class InspeMainActivity extends AppBaseActivity {
 
     @Override
     public void initUI() {
-        setTitle("精益化检查", R.drawable.inspe_left_black_24dp);
-
         dataBinding = (ActivityInspeMainBinding) rootDataBinding;
+        if (expertUser != null) {
+            setTitle("精益化检查", R.drawable.inspe_left_black_24dp, R.drawable.inspe_left_black_24dp);
+        } else {
+            setTitle("精益化检查", R.drawable.inspe_left_black_24dp);
+        }
+
+
         fragments = new AppBaseFragment[3];
 
         //用户ID
@@ -129,18 +144,13 @@ public class InspeMainActivity extends AppBaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-//                switch (position) {
-//                    case 0:
-//                        dataBinding.navigation.setSelectedItemId(R.id.navigation_home);
-//                        break;
-//                    case 1:
-//                        dataBinding.navigation.setSelectedItemId(R.id.navigation_dashboard);
-//                        break;
-//                    case 2:
-//                        dataBinding.navigation.setSelectedItemId(R.id.navigation_notifications);
-//                        break;
-//                }
-
+                if (expertUser != null) {
+                    if (position == 0) {
+                        dataBinding.actionBar.toolbarMenuBtn.setVisibility(View.VISIBLE);
+                    } else {
+                        dataBinding.actionBar.toolbarMenuBtn.setVisibility(View.INVISIBLE);
+                    }
+                }
             }
 
             @Override
@@ -176,6 +186,7 @@ public class InspeMainActivity extends AppBaseActivity {
      * @return
      * @throws NullPointerException postion 超过2会抛异常
      */
+
     private AppBaseFragment createMainFragment(int postion) {
         if (null == fragments[postion]) {
             Log.e(tag, "createMainFragment(int " + postion + ")");
@@ -197,4 +208,24 @@ public class InspeMainActivity extends AppBaseActivity {
         return fragments[postion];
     }
 
+    @Override
+    protected void onMenu(View view) {
+        super.onMenu(view);
+        //启动同步，仅专家可用
+        Intent intent = new Intent();
+        if (PreferencesUtils.get("SYNC_WAY", true)) {//默认网络，配置变量为sjjc私有，BuildConfig.USE_NETWORK_SYNC
+            //网络同步
+            PreferencesUtils.put("SYNC_WAY", true);
+            intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
+            ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.NetWorkSyncActivity");
+            intent.setComponent(componentName);
+        } else {
+            //USB同步
+            PreferencesUtils.put("SYNC_WAY", false);
+            intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
+            ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.UsbSyncActivity");
+            intent.setComponent(componentName);
+        }
+        startActivity(intent);
+    }
 }

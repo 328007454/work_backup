@@ -2,6 +2,7 @@ package com.cnksi.inspe.ui;
 
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
+import com.cnksi.inspe.databinding.ActivityInspeCreateBinding;
 
 /**
  * 创建检查任务
@@ -20,6 +21,7 @@ import com.cnksi.inspe.base.AppBaseActivity;
  */
 public class InspeCreateActivity extends AppBaseActivity {
 
+    private ActivityInspeCreateBinding dataBinding;
 
     @Override
     public int getLayoutResId() {
@@ -28,7 +30,8 @@ public class InspeCreateActivity extends AppBaseActivity {
 
     @Override
     public void initUI() {
-
+        dataBinding = (ActivityInspeCreateBinding) rootDataBinding;
+        setTitle("添加任务", R.drawable.inspe_left_black_24dp);
     }
 
     @Override

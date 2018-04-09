@@ -145,10 +145,13 @@ public class InspeIssueDetailActivity extends AppBaseActivity implements View.On
                 break;
             case sbpc://设备排查
                 //暂不实现
-                break;
+//                break;
             case sbjc://设备检查
                 //暂不实现
-                break;
+//                break;
+            default:
+                showToast("你没有权限查看!");
+                return;
         }
 
         pageDeal.init(progressType);

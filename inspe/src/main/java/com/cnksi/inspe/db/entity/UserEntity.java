@@ -6,6 +6,8 @@ import com.cnksi.inspe.type.RoleType;
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
+import java.util.List;
+
 /**
  * 用户实体类
  *
@@ -209,17 +211,21 @@ public class UserEntity extends BaseEntity {
     @Column(name = "role_name")
     public String role_name;
 
-    public RoleType roleType;
+    public List<RoleType> roleTypes;
 
     public UserEntity() {
     }
 
-    public RoleType getRoleType() {
-        return roleType;
+    public List<RoleType> getRoleTypes() {
+        return roleTypes;
     }
 
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
+    public void setRoleTypes(List<RoleType> roleTypes) {
+        this.roleTypes = roleTypes;
+    }
+
+    public RoleType getRoleType() {
+        return roleTypes.get(0);
     }
 
     public String getId() {

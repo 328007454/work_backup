@@ -1,32 +1,27 @@
 package com.cnksi.inspe.ui.fragment;
 
 import android.content.Intent;
-import android.os.Build;
-import android.os.PowerManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.cnksi.inspe.BuildConfig;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseFragment;
 import com.cnksi.inspe.databinding.FragmentInspeInspectionBinding;
-import com.cnksi.inspe.db.TeamService;
+import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.db.entity.UserEntity;
 import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskType;
+import com.cnksi.inspe.ui.InspeCreateActivity;
 import com.cnksi.inspe.ui.InspePlustekActivity;
 import com.cnksi.inspe.ui.InspeTeamActivity;
 import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.utils.StringUtils;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.cnksi.inspe.type.TaskType.*;
 
 /**
  * 检查任务模块首页-检查任务列表
@@ -35,10 +30,12 @@ import static com.cnksi.inspe.type.TaskType.*;
  * @auther Today(张军)
  * @date 2018/3/20 16:13
  */
-public class InspectionFragment extends AppBaseFragment {
+public class InspectionFragment extends AppBaseFragment implements View.OnClickListener {
 
 
     private List<InspecteTaskEntity> list = new ArrayList<>();
+    //专家用户
+    private UserEntity expertUser = userService.getUserExpert(RoleType.expert);
 
     @Override
     public int getFragmentLayout() {
@@ -46,9 +43,10 @@ public class InspectionFragment extends AppBaseFragment {
     }
 
     private FragmentInspeInspectionBinding dataBinding;
-    private TeamService teamService = new TeamService();
+    private TaskService taskService = new TaskService();
     private BaseQuickAdapter adapter;
     private PageInterface pageInterface;
+    private String[] taskTypes;
 
     @Override
     protected void lazyLoad() {
@@ -117,12 +115,28 @@ public class InspectionFragment extends AppBaseFragment {
             showToast("角色类型错误！");
         }
 
+        if (expertUser == null) {
+            dataBinding.createTaskBtn.setVisibility(View.GONE);
+            taskTypes = new String[]{TaskType.bzjs.name()};
+        } else {
+            dataBinding.createTaskBtn.setOnClickListener(this);
+            dataBinding.createTaskBtn.setVisibility(View.VISIBLE);
+            taskTypes = new String[]{TaskType.bzjs.name(), TaskType.jyhjc.name()};
+        }
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
         pageInterface.onSearchData();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.createTaskBtn) {
+            startActivity(new Intent(getActivity(), InspeCreateActivity.class));
+        }
     }
 
     public class InspecteTaskAdapter extends BaseQuickAdapter<InspecteTaskEntity, BaseViewHolder> {
@@ -183,7 +197,7 @@ public class InspectionFragment extends AppBaseFragment {
 
         @Override
         public void onSearchData() {
-            List<InspecteTaskEntity> listTemp = teamService.getTaskList(null, null);
+            List<InspecteTaskEntity> listTemp = taskService.getTaskList(null, null, taskTypes);
             list.clear();
             if (listTemp != null && listTemp.size() > 0) {
                 list.addAll(listTemp);
@@ -196,7 +210,7 @@ public class InspectionFragment extends AppBaseFragment {
 
         @Override
         public void onSearchData() {
-            List<InspecteTaskEntity> listTemp = teamService.getTaskList(null, userService.getUser1().getDept_id());
+            List<InspecteTaskEntity> listTemp = taskService.getTaskList(null, userService.getUser1().getDept_id(), taskTypes);
             list.clear();
             if (listTemp != null && listTemp.size() > 0) {
                 list.addAll(listTemp);
@@ -209,7 +223,7 @@ public class InspectionFragment extends AppBaseFragment {
 
         @Override
         public void onSearchData() {
-            List<InspecteTaskEntity> listTemp = teamService.getTaskList(userService.getUserIds(), null);
+            List<InspecteTaskEntity> listTemp = taskService.getTaskList(userService.getUserIds(), null, taskTypes);
             list.clear();
             if (listTemp != null && listTemp.size() > 0) {
                 list.addAll(listTemp);

@@ -84,6 +84,14 @@ public class MyIssueFragment extends AppBaseFragment {
             case guest:
                 pageLister = new TrackerPage();
                 break;
+            default:
+                pageLister = new PageLister(){
+                    @Override
+                    public void onSearch(String taskType, String bzdId) {
+
+                    }
+                };
+                return;
         }
 
         weakRef = new SoftReference<List<TeamRuleResultEntity>>(list);

@@ -24,6 +24,10 @@
             <include layout="@layout/include_inspe_title" />
 
         </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            style="@style/View.RecyclerView" />
     </LinearLayout>
 </layout>
 

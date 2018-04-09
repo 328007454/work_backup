@@ -106,10 +106,22 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
             case guest:
                 pageLister = new TrackerPage();
                 break;
+            default:
+                pageLister = new PageLister() {
+
+                    @Override
+                    public void onSearch(String taskType, String bzdId) {
+                    }
+
+                    @Override
+                    public void onBat(TaskType taskType, String bbzdId) {
+                    }
+                };
+                break;
         }
 
-        weakRef = new SoftReference<List<TeamRuleResultEntity>>(list);
-    }
+    weakRef =new SoftReference<List<TeamRuleResultEntity>>(list);
+}
 
     @Override
     public void onStart() {
@@ -188,98 +200,98 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
     }
 
 
-    public class InspeIssueAdapter extends BaseQuickAdapter<TeamRuleResultEntity, BaseViewHolder> {
-        public InspeIssueAdapter(int layoutResId, List data) {
-            super(layoutResId, data);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, TeamRuleResultEntity item) {
-            helper.setText(R.id.contextTxt, item.getDescription());
-            helper.setText(R.id.dateTxt, DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_improve_time())));
-            try {
-                helper.setText(R.id.stateTxt, ProgressType.valueOf(item.getProgress()).getDesc());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
+public class InspeIssueAdapter extends BaseQuickAdapter<TeamRuleResultEntity, BaseViewHolder> {
+    public InspeIssueAdapter(int layoutResId, List data) {
+        super(layoutResId, data);
     }
 
-    class TrackerPage implements PageLister {
-
-        @Override
-        public void onSearch(String taskType, String bzdId) {
-            //初始数据
-            List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(new String[]{userService.getUser1().getDept_id()}, taskType, bzdId);
-            list.clear();
-            if (listTemp != null && listTemp.size() > 0) {
-                list.addAll(listTemp);
-            }
-
-            adapter.notifyDataSetChanged();
+    @Override
+    protected void convert(BaseViewHolder helper, TeamRuleResultEntity item) {
+        helper.setText(R.id.contextTxt, item.getDescription());
+        helper.setText(R.id.dateTxt, DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_improve_time())));
+        try {
+            helper.setText(R.id.stateTxt, ProgressType.valueOf(item.getProgress()).getDesc());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        @Override
-        public void onBat(TaskType askType, String bbzdId) {
-            //无
-        }
-    }
-
-    private class TeamLeaderPage implements PageLister {
-
-        @Override
-        public void onSearch(String taskType, String bzdId) {
-            //初始数据
-            List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(new String[]{userService.getUser1().getDept_id()}, taskType, bzdId);
-            list.clear();
-            if (listTemp != null && listTemp.size() > 0) {
-                list.addAll(listTemp);
-            }
-
-            adapter.notifyDataSetChanged();
-        }
-
-        @Override
-        public void onBat(TaskType askType, String bbzdId) {
-            //弹出对话框，选择分配、审核
-            //根据用户选择查询数据
-        }
-    }
-
-    private class DirectorPage implements PageLister {
-
-        @Override
-        public void onSearch(String taskType, String bzdId) {
-            //初始数据
-            List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(null, taskType, bzdId);
-            list.clear();
-            if (listTemp != null && listTemp.size() > 0) {
-                list.addAll(listTemp);
-            }
-
-            adapter.notifyDataSetChanged();
-        }
-
-        @Override
-        public void onBat(TaskType askType, String bbzdId) {
-            //弹出对话框选择分享、审核
-        }
-    }
-
-    private interface PageLister {
-        /**
-         * 根据角色查询数据
-         *
-         * @param taskType
-         * @param bzdId
-         */
-        void onSearch(String taskType, String bzdId);
-
-        /**
-         * 批量处理
-         */
-        void onBat(TaskType taskType, String bbzdId);
 
     }
+}
+
+class TrackerPage implements PageLister {
+
+    @Override
+    public void onSearch(String taskType, String bzdId) {
+        //初始数据
+        List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(new String[]{userService.getUser1().getDept_id()}, taskType, bzdId);
+        list.clear();
+        if (listTemp != null && listTemp.size() > 0) {
+            list.addAll(listTemp);
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBat(TaskType askType, String bbzdId) {
+        //无
+    }
+}
+
+private class TeamLeaderPage implements PageLister {
+
+    @Override
+    public void onSearch(String taskType, String bzdId) {
+        //初始数据
+        List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(new String[]{userService.getUser1().getDept_id()}, taskType, bzdId);
+        list.clear();
+        if (listTemp != null && listTemp.size() > 0) {
+            list.addAll(listTemp);
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBat(TaskType askType, String bbzdId) {
+        //弹出对话框，选择分配、审核
+        //根据用户选择查询数据
+    }
+}
+
+private class DirectorPage implements PageLister {
+
+    @Override
+    public void onSearch(String taskType, String bzdId) {
+        //初始数据
+        List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(null, taskType, bzdId);
+        list.clear();
+        if (listTemp != null && listTemp.size() > 0) {
+            list.addAll(listTemp);
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBat(TaskType askType, String bbzdId) {
+        //弹出对话框选择分享、审核
+    }
+}
+
+private interface PageLister {
+    /**
+     * 根据角色查询数据
+     *
+     * @param taskType
+     * @param bzdId
+     */
+    void onSearch(String taskType, String bzdId);
+
+    /**
+     * 批量处理
+     */
+    void onBat(TaskType taskType, String bbzdId);
+
+}
 }

@@ -4,14 +4,22 @@
 
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             style="@style/View.RecyclerView"
+            android:layout_weight="1"
             android:paddingTop="9dp" />
 
-    </FrameLayout>
+        <Button
+            android:id="@+id/createTaskBtn"
+            style="@style/View.Button"
+            android:layout_margin="8dp"
+            android:background="@drawable/inspe_btn_green_selector"
+            android:text="创建检查任务" />
+    </LinearLayout>
 </layout>

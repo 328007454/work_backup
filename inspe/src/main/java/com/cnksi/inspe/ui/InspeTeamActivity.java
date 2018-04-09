@@ -14,11 +14,14 @@ import com.cnksi.inspe.adapter.entity.TeamRole0Entity;
 import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamBinding;
+import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.utils.DateFormat;
+
+import org.xutils.common.util.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,7 @@ public class InspeTeamActivity extends AppBaseActivity implements View.OnClickLi
 
 
     private TeamService teamService = new TeamService();
+    private TaskService taskService = new TaskService();
 
     @Override
     public int getLayoutResId() {
@@ -156,7 +160,7 @@ public class InspeTeamActivity extends AppBaseActivity implements View.OnClickLi
             //修改任务状态；
             task.setProgress(TaskProgressType.done.name());
             task.setDo_check_time(DateFormat.dateToDbString(System.currentTimeMillis()));
-            teamService.saveTask(task);
+            taskService.saveTask(task);
 
             finish();
         }

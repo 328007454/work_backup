@@ -112,20 +112,22 @@ public final class UserService extends BaseDbService {
      * @param user2
      */
     private void sort(UserEntity user1, UserEntity user2) {
-        RoleType roleType1 = null;
-        RoleType roleType2 = null;
+        List<RoleType> roleTypes1 = null;
+        List<RoleType> roleTypes2 = null;
         if (user1 != null) {
-            roleType1 = RoleType.getMaxRole(user1.getType());
-            user1.setRoleType(roleType1);
+            roleTypes1 = RoleType.getRoles(user1.getType());
+            user1.setRoleTypes(roleTypes1);
         }
 
         if (user2 != null) {
-            roleType2 = RoleType.getMaxRole(user2.getType());
-            user2.setRoleType(roleType2);
+            roleTypes2 = RoleType.getRoles(user2.getType());
+            user2.setRoleTypes(roleTypes2);
         }
 
         //比较
-        if (roleType1 != null && roleType2 != null) {
+        if (roleTypes1 != null && roleTypes2 != null) {
+            RoleType roleType1 = user1.getRoleType();
+            RoleType roleType2 = user2.getRoleType();
             RoleType maxRole = RoleType.getMaxRole(roleType1, roleType2);
             if (maxRole != roleType1) {
                 UserEntity maxUserEntity = userEntity1;
@@ -159,6 +161,12 @@ public final class UserService extends BaseDbService {
         return null;
     }
 
+    /**
+     * 根据account获取用户
+     *
+     * @param name
+     * @return
+     */
     public UserEntity getUserOnName(String name) {
         try {
             return dbManager.selector(UserEntity.class).where("account", "=", name).findFirst();
@@ -185,7 +193,7 @@ public final class UserService extends BaseDbService {
     }
 
     /**
-     * 获取用户组<p/>
+     * 获取指定角色用户组<p/>
      *
      * @param groupId  组ID
      * @param userId   用户ID
@@ -194,7 +202,8 @@ public final class UserService extends BaseDbService {
      */
     public List<UserEntity> getUsers(String groupId, String userId, RoleType roleType) {
         try {
-            Selector selector = dbManager.selector(UserEntity.class).where("dlt", "=", "0");
+            Selector selector = dbManager.selector(UserEntity.class)
+                    .where("dlt", "=", "0");
             if (groupId != null) {
                 selector.and("dept_id", "=", groupId);
             }
@@ -216,6 +225,30 @@ public final class UserService extends BaseDbService {
         return new ArrayList<UserEntity>();
     }
 
+    /**
+     * 获取专家用户
+     *
+     * @param roleType
+     * @return 没有专家则返回null
+     */
+    public UserEntity getUserExpert(RoleType roleType) {
+        if (userEntity1 != null && userEntity1.getRoleTypes().contains(RoleType.director)) {
+            return userEntity1;
+        }
+
+        if (userEntity2 != null && userEntity2.getRoleTypes().contains(RoleType.director)) {
+            return userEntity2;
+        }
+
+        return null;
+    }
+
+    /**
+     * 当前用户是否包含了指定账户
+     *
+     * @param userId
+     * @return
+     */
     public boolean isUserContains(String userId) {
         if (userEntity1 != null && userEntity1.getId().equals(userId)) {
             return true;
@@ -243,5 +276,17 @@ public final class UserService extends BaseDbService {
      */
     public UserEntity getUser2() {
         return userEntity2;
+    }
+
+    @Override
+    public boolean update(Object object) {
+        //return super.update(object);
+        try {
+            dbManager.update(object, "type");
+        } catch (DbException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

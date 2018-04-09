@@ -13,6 +13,7 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.GalleryAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamissueBinding;
+import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
@@ -59,6 +60,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
     private TeamRuleResultEntity teamRuleResult;
 
     private TeamService teamService = new TeamService();
+    private TaskService taskService = new TaskService();
     private InspeScoreEntity scoreBean;
     //当前扣分项(单位扣分)(将扣分的float转为int后处理，避免float计算误差导致不正确的数引入)
     private int scoreEntity;
@@ -280,7 +282,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
             //更新任务状态
             if (task.getProgress() == null || TaskProgressType.valueOf(task.getProgress()) == TaskProgressType.todo) {
                 task.setProgress(TaskProgressType.doing.name());
-                teamService.saveTask(task);
+                taskService.saveTask(task);
             }
 
             if (teamService.saveRuleResult(teamRuleResult)) {

@@ -21,7 +21,7 @@
             app:elevation="0dp">
 
 
-            <include layout="@layout/include_inspe_title" />
+            <include android:id="@+id/actionBar" layout="@layout/include_inspe_title" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"

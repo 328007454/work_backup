@@ -36,7 +36,14 @@
             android:text="主任/专责"
             android:textAllCaps="false"
             android:textColor="#FFFFFF" />
-
+        <Button
+            android:id="@+id/expertBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inspe_btn_green_selector"
+            android:text="专家"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
         <Button
             android:id="@+id/teamleaderBtn"
             android:layout_width="match_parent"
