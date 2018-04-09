@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_inspe_title"
+            layout="@layout/include_inspe_title" />
+
+        <TextView
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginLeft="10px"
+            android:background="@drawable/inspe_keyboard_bt_selector"
+            android:id="@+id/txt_big_device"
+            style="@style/View.TextView"
+            android:layout_width="match_parent"
+            android:drawableRight="@mipmap/inspe_arrow_down"
+            android:hint="请选择设备大类"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text=""
+            android:textColor="#3C4950"
+            android:textSize="14dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/keyboard_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/inspe_rec_device"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fadeScrollbars="true"
+            android:fadingEdge="vertical"
+            android:fastScrollEnabled="true" />
+
+    </LinearLayout>
+</layout>

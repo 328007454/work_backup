@@ -299,7 +299,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.device_operate:
                 try {
                     Intent intent = new Intent();
-                    ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.inspe.ui.InspeMainActivity");
+//                    ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.inspe.ui.InspeMainActivity");
+                    ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.inspe.ui.InspeDeviceActivity");
                     intent.setComponent(componentName);
                     //参数设置
                     String userAccount = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, (String) null);

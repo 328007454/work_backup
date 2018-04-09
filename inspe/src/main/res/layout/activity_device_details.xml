@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:autofit="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_03b9a0"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_inspe_title"
+            layout="@layout/include_inspe_title" />
+
+        <ScrollView
+            android:id="@+id/scrooller_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f0f0f0">
+
+            <LinearLayout
+                android:id="@+id/ll_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#03b9a0"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="432px"
+                        android:background="#f0f0f0"
+                        android:orientation="vertical"
+                        android:paddingTop="260px">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30px"
+                            android:layout_marginRight="30px"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/tv_defect_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="30px"
+                                android:gravity="center_vertical"
+                                android:onClick="onClickEvent"
+                                android:text="评判项目"
+                                android:textSize="44px" />
+
+                            <TextView
+                                android:id="@+id/tv_add_new_defect"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="30px"
+                                android:clickable="true"
+                                android:drawablePadding="@dimen/inspe_9px"
+                                android:gravity="center"
+                                android:text="已记录问题：0个"
+                                android:textSize="44px" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="590px"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginRight="30px"
+                        android:layout_marginTop="42px"
+                        android:background="@drawable/inspe_d_details_shape">
+
+                        <LinearLayout
+                            android:id="@+id/device_info_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="200px"
+                            android:layout_marginLeft="537px"
+                            android:layout_marginTop="60px"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_manufacturers"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:singleLine="true"
+
+                                android:text="生产厂家"
+                                android:textColor="@color/color_626262"
+                                android:textSize="@dimen/inspe_38px" />
+
+                            <TextView
+                                android:id="@+id/tv_product_model"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:singleLine="true"
+                                android:text="产品型号："
+                                android:textColor="@color/color_626262"
+                                android:textSize="@dimen/inspe_38px" />
+
+                            <TextView
+                                android:id="@+id/tv_product_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@id/tv_manufacturers"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:singleLine="true"
+                                android:text="投产日期："
+                                android:textColor="@color/color_626262"
+                                android:textSize="@dimen/inspe_38px" />
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/device_part_recy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_below="@+id/device_info_container"
+                            android:layout_marginBottom="30px"
+                            android:background="@color/core_bg_white_ffffff" />
+                    </RelativeLayout>
+
+                    <FrameLayout
+                        android:layout_width="480px"
+                        android:layout_height="330px"
+                        android:layout_marginLeft="60px"
+                        android:background="@drawable/inspe_d_details_shape">
+                        <com.cnksi.inspe.widget.RoundRectImageView
+                            android:id="@+id/iv_device_image"
+                            android:layout_width="480px"
+                            android:layout_height="330px" />
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#f0f0f0"
+                    android:orientation="vertical">
+
+                    <com.cnksi.inspe.widget.MyScrollVListView
+                        android:id="@+id/device_standard_lv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30px"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginRight="30px"
+                        android:layout_marginTop="20px"
+                        android:background="@drawable/inspe_d_details_shape"
+                        android:divider="#e0e0e0"
+                        android:dividerHeight="3px"
+                        android:paddingBottom="15px"
+                        android:paddingLeft="28px"
+                        android:paddingRight="28px" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>
