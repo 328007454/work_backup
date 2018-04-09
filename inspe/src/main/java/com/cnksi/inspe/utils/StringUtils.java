@@ -53,4 +53,18 @@ public class StringUtils {
             return "";
         }
     }
+
+    /**
+     * 判断是否字段的值是否为空或null
+     *
+     * @param str
+     * @return
+     */
+    public static String cleanString(String str) {
+        if (TextUtils.isEmpty(str) || "null".equalsIgnoreCase(str)) {
+            return "";
+        } else {
+            return str.trim();
+        }
+    }
 }

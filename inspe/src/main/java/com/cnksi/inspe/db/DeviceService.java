@@ -94,4 +94,11 @@ public class DeviceService extends BaseDbService {
         deviceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return deviceModels;
     }
+
+    public DbModel getDeviceById(String deviceId) throws DbException {
+        DbModel dbModel = null;
+        String sql = "select * from device where deviceid = '"+deviceId+"' and dlt = '0'";
+        dbModel = dbManager.findDbModelFirst(new SqlInfo(sql));
+        return  dbModel;
+    }
 }

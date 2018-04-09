@@ -63,7 +63,7 @@ public class Config extends CoreConfig {
 
     public static final String DATABASE_NAME = "bdzinspection.db";
     public static final String YANSHOUEDATABASE_NAME = "accept.db";
-
+    public static final String DEFALUTFOLDER = BDZ_INSPECTION_FOLDER + "default/";
     /**
      * 名称
      */
