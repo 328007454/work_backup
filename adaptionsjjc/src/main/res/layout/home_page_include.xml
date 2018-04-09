@@ -98,7 +98,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="bottom"
-                    android:text="精益化检查"
+                    android:text="精益化评价"
                     android:textColor="@color/color_626262"
                     android:textSize="34px" />
             </RelativeLayout>

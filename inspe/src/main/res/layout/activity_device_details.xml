@@ -132,9 +132,8 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/device_part_recy"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="130px"
                             android:layout_alignParentBottom="true"
-                            android:layout_below="@+id/device_info_container"
                             android:layout_marginBottom="30px"
                             android:background="@color/core_bg_white_ffffff" />
                     </RelativeLayout>

@@ -6,3 +6,4 @@ build/
 .idea
 automodel/
 adaptionsjjc/release
+out/

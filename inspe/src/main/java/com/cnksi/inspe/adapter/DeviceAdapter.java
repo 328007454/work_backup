@@ -23,13 +23,13 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
 
     public final static int SPACE_ITEM = 1;
     public final static int DEVICE_ITEM = 2;
-    private OnItemClickListerner onItemClickListerner;
+    private OnDeviceItemClickListerner onItemClickListerner;
 
-    public interface OnItemClickListerner {
+    public interface OnDeviceItemClickListerner {
         void OnItemClickListen(View v, Object item, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListerner onItemClickListener) {
+    public void setOnDeviceItemClickListener(OnDeviceItemClickListerner onItemClickListener) {
         this.onItemClickListerner = onItemClickListener;
     }
 

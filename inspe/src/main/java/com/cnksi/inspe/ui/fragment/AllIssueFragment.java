@@ -89,7 +89,7 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
 
         inspeTypeList.add("全部");
         inspeTypeList.add("班组建设检查");
-        inspeTypeList.add("精益化检查");
+        inspeTypeList.add("精益化评价");
 //        inspeTypeList.add("设备排查");
 
         convertList.add("全部");
@@ -170,7 +170,7 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
                             break;
                         case 2:
                             pageLister.onSearch(TaskType.jyhjc.name(), null);
-                            dataDinding.searchInspeTypeTxt.setText("精益化检查");
+                            dataDinding.searchInspeTypeTxt.setText("精益化评价");
                             dataDinding.searchConvertTxt.setEnabled(true);
                             dataDinding.searchConvertTxt.setText("全部");
                             dataDinding.batRunBtn.setVisibility(View.GONE);

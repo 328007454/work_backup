@@ -160,7 +160,7 @@ public class InspeTeamActivity extends AppBaseActivity implements View.OnClickLi
             //修改任务状态；
             task.setProgress(TaskProgressType.done.name());
             task.setDo_check_time(DateFormat.dateToDbString(System.currentTimeMillis()));
-            taskService.saveTask(task);
+            taskService.updateTask(task);
 
             finish();
         }

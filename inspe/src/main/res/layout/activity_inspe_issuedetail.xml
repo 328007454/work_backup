@@ -44,7 +44,7 @@
                         <TextView
                             android:id="@+id/inspeTypeTxt"
                             style="@style/View.TextView.Content.Value"
-                            android:text="精益化检查" />
+                            android:text="精益化评价" />
                     </LinearLayout>
 
                     <View

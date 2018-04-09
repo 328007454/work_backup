@@ -108,7 +108,8 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
             case expert:
                 UserEntity userEntity = getUserService().getUserOnName("test6");
                 if (userEntity != null) {
-                    if (!RoleType.getRoles(userEntity.getType()).contains(RoleType.expert)) {
+                    userEntity.setRoleTypes(RoleType.getRoles(userEntity.getType()));
+                    if (!(userEntity.getRoleTypes()).contains(RoleType.expert)) {
                         userEntity.setType(userEntity.getType() + "," + RoleType.expert);
                         getUserService().update(userEntity);
                     }
@@ -133,9 +134,9 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startMain(RoleType.director);
+                startMain(RoleType.expert);
             }
-        }, 3000);
+        }, 2000);
     }
 
 
@@ -159,7 +160,7 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
             if (list != null) {
                 for (InspecteTaskEntity task : list) {
                     task.setProgress(TaskProgressType.doing.name());
-                    taskService.saveTask(task);
+                    taskService.updateTask(task);
                 }
             } else {
                 showToast("数据不存在");

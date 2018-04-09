@@ -74,9 +74,9 @@ public class InspeMainActivity extends AppBaseActivity {
     public void initUI() {
         dataBinding = (ActivityInspeMainBinding) rootDataBinding;
         if (expertUser != null) {
-            setTitle("精益化检查", R.drawable.inspe_left_black_24dp, R.drawable.inspe_left_black_24dp);
+            setTitle("精益化评价", R.drawable.inspe_left_black_24dp, R.drawable.inspe_left_black_24dp);
         } else {
-            setTitle("精益化检查", R.drawable.inspe_left_black_24dp);
+            setTitle("精益化评价", R.drawable.inspe_left_black_24dp);
         }
 
 

@@ -12,7 +12,7 @@ import org.xutils.db.table.DbModel;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class DeviceItem implements MultiItemEntity {
+public class DeviceItem implements MultiItemEntity  {
     SpaceItem parent = null;
     public DbModel dbModel;
 

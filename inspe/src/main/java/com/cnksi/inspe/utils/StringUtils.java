@@ -2,6 +2,8 @@ package com.cnksi.inspe.utils;
 
 import android.text.TextUtils;
 
+import java.util.List;
+
 /**
  * @version v1.0
  * @auther Today(张军)
@@ -33,5 +35,22 @@ public class StringUtils {
         }
 
         return sb.substring(0, sb.length() - 1);
+    }
+
+    public static String getDeviceStandardsType(String bigId) {
+        if (!TextUtils.isEmpty(bigId)) {
+            List<String> bigIdList = com.cnksi.core.utils.StringUtils.stringToList(bigId, ",");
+            if (bigIdList.size() == 1)
+                return "(" + bigIdList.get(0) + ")";
+            else {
+                StringBuilder builder = new StringBuilder();
+                for (String id : bigIdList) {
+                    builder.append(id + ",");
+                }
+                return "(" + builder.toString().substring(0, builder.toString().length() - 1) + ")";
+            }
+        } else {
+            return "";
+        }
     }
 }

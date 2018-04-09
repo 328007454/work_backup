@@ -139,7 +139,7 @@ public class InspeIssueDetailActivity extends AppBaseActivity implements View.On
                 dataBinding.jxhItemView.setVisibility(View.GONE);
                 dataBinding.jxhItemLineView.setVisibility(View.GONE);
                 break;
-            case jyhjc://精益化检查
+            case jyhjc://精益化评价
                 dataBinding.convertTxt.setText(issueEntity.getBdz_name());
                 dataBinding.deviceNameTxt.setText(issueEntity.device_name);
                 break;

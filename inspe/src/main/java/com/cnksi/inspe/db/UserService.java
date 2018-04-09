@@ -209,7 +209,7 @@ public final class UserService extends BaseDbService {
             }
 
             if (roleType != null) {
-                selector.and("type", "=", roleType.name());
+                selector.and("type", "LIKE", "%" + roleType.name() + "%");
             }
 
             if (userId != null) {
@@ -232,11 +232,11 @@ public final class UserService extends BaseDbService {
      * @return 没有专家则返回null
      */
     public UserEntity getUserExpert(RoleType roleType) {
-        if (userEntity1 != null && userEntity1.getRoleTypes().contains(RoleType.director)) {
+        if (userEntity1 != null && userEntity1.getRoleTypes().contains(roleType)) {
             return userEntity1;
         }
 
-        if (userEntity2 != null && userEntity2.getRoleTypes().contains(RoleType.director)) {
+        if (userEntity2 != null && userEntity2.getRoleTypes().contains(roleType)) {
             return userEntity2;
         }
 

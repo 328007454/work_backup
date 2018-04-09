@@ -180,7 +180,7 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
         //更新任务状态
         if (task.getProgress() == null || TaskProgressType.valueOf(task.getProgress()) == TaskProgressType.todo) {
             task.setProgress(TaskProgressType.doing.name());
-            taskService.saveTask(task);
+            taskService.updateTask(task);
         }
     }
 

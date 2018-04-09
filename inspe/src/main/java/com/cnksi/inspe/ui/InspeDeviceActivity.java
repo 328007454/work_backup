@@ -1,5 +1,6 @@
 package com.cnksi.inspe.ui;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v4.util.ArraySet;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +12,14 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.DeviceAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeDeviceBinding;
 import com.cnksi.inspe.db.DeviceService;
+import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.entity.device.DeviceItem;
 import com.cnksi.inspe.entity.device.SpaceItem;
 import com.cnksi.inspe.widget.PopItemWindow;
 import com.cnksi.inspe.widget.keyboard.QWERKeyBoardUtils;
@@ -32,7 +36,7 @@ import java.util.Set;
  * @decription 精益化评价设备列表
  * @Date 2018-4-9
  */
-public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoardUtils.keyWordChangeListener, BaseQuickAdapter.OnItemClickListener, DeviceAdapter.OnItemClickListerner {
+public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoardUtils.keyWordChangeListener, BaseQuickAdapter.OnItemClickListener, DeviceAdapter.OnDeviceItemClickListerner {
     ActivityInspeDeviceBinding deviceBinding;
     /**
      * 键盘控件
@@ -43,7 +47,8 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private List<DbModel> dbModelList = null;
     private List<DbModel> bigTypeModels = new ArrayList<>();
     private PopItemWindow popItemWindow;
-
+    private String taskId;
+    private String bigIds = "";
 
     @Override
     public int getLayoutResId() {
@@ -53,14 +58,16 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     @Override
     public void initUI() {
         deviceBinding = (ActivityInspeDeviceBinding) rootDataBinding;
-        deviceBinding.includeInspeTitle.toolbarTitle.setText("精益化设备");
-
+        deviceBinding.includeInspeTitle.toolbarTitle.setText(getIntent().getStringExtra("type"));
+        deviceBinding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
 
         qwerKeyBoardUtils = new QWERKeyBoardUtils(this);
         qwerKeyBoardUtils.init(deviceBinding.keyboardContainer, this);
 
         deviceAdapter = new DeviceAdapter(this, devicesList);
         deviceBinding.inspeRecDevice.setAdapter(deviceAdapter);
+        deviceAdapter.setOnDeviceItemClickListener(this);
+
         GridLayoutManager manager = new GridLayoutManager(this, 3);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -76,13 +83,16 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     }
 
     @Override
-    public  void initData() {
+    public void initData() {
+        InspecteTaskEntity taskEntity = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
+        taskId = taskEntity.id;
+        String bdzId = taskEntity.bdz_id;
+        String bigId = taskEntity.checked_device_bigid;
+        bigIds = com.cnksi.inspe.utils.StringUtils.getDeviceStandardsType(bigId);
         ExecutorManager.executeTaskSerially(() -> {
-            String bdzId = "2c9082925f6aeda2015f6aeeaa91001e";
-            String bigId = "('14','16')";
             try {
-                bigTypeModels = new DeviceService().getBigTypeModels(bigId);
-                dbModelList = new DeviceService().getAllDeviceByBigID(bdzId, bigId);
+                bigTypeModels = new DeviceService().getBigTypeModels(bigIds);
+                dbModelList = new DeviceService().getAllDeviceByBigID(bdzId, bigIds);
             } catch (DbException e) {
                 e.printStackTrace();
                 dbModelList = new ArrayList<>();
@@ -201,6 +211,11 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
      */
     @Override
     public void OnItemClickListen(View v, Object item, int position) {
-
+        Intent intent = new Intent(this, InspeDeviceDetailsActivity.class);
+        intent.putExtra("deviceBigId", ((DeviceItem) item).dbModel.getString("bigid"));
+        intent.putExtra("deviceId", ((DeviceItem) item).dbModel.getString("deviceid"));
+        intent.putExtra("taskId", taskId);
+        intent.putExtra("deviceName",((DeviceItem) item).dbModel.getString("dname"));
+        startActivity(intent);
     }
 }

@@ -39,6 +39,10 @@
         <activity android:name=".ui.InspeTeamStandardActivity" />
         <activity android:name=".ui.InspeRecfityActivity" />
         <activity android:name=".ui.InspeDocActivity" />
+        <activity android:name=".ui.InspeDeviceActivity"
+            android:exported="true"
+            />
+        <activity android:name=".ui.InspeDeviceDetailsActivity" />
     </application>
 
 </manifest>
