@@ -4,6 +4,7 @@ import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskProgressType;
+import com.cnksi.inspe.utils.DateFormat;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
@@ -12,14 +13,28 @@ import java.util.List;
 
 /**
  * 任务服务
+ *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/04/08 16:42
  */
 public class TaskService extends BaseDbService {
-    public boolean saveTask(InspecteTaskEntity entity) {
+    public boolean updateTask(InspecteTaskEntity entity) {
         try {
-            dbManager.update(entity, "progress");
+            //修改时间为判断条件
+            entity.setUpdate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
+            dbManager.update(entity, "progress", "update_time");
+        } catch (DbException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean insert(InspecteTaskEntity entity) {
+        try {
+            entity.setUpdate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
+            dbManager.save(entity);
         } catch (DbException e) {
             e.printStackTrace();
             return false;
@@ -52,6 +67,7 @@ public class TaskService extends BaseDbService {
     /**
      * 获取-巡检任务<p/>
      * 完成的任务则不显示
+     *
      * @version v1.0
      * @auther Today(张军)
      * @date 2018/04/08 21:25
@@ -64,17 +80,23 @@ public class TaskService extends BaseDbService {
             Selector selector = dbManager.selector(InspecteTaskEntity.class)
                     .where("dlt", "=", "0")
                     .and("progress", "!=", TaskProgressType.done.name());
-            if (userIds != null && userIds.length > 0) {
-                //查询所有任务
-                selector.and("checkuser_id", "IN", userIds);
-            }
+
             if (deptId != null) {
                 //查询本班任务
                 selector.and("dept_id", "=", deptId);
             }
 
-            if(taskTypes!=null&&taskTypes.length>0){
+            if (taskTypes != null && taskTypes.length > 0) {
                 selector.and("type", "in", taskTypes);
+            }
+
+            if (userIds != null && userIds.length > 0) {
+                //查询所有任务
+                selector.and("checkuser_id", "LIKE", "%" + userIds[0] + "%");
+                for (int i = 1, length = userIds.length; i < length; i++) {
+                    selector.or("checkuser_id", "LIKE", "%" + userIds[i] + "%");
+                }
+
             }
 
             list = selector.findAll();

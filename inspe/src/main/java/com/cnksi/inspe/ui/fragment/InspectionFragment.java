@@ -106,8 +106,15 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
                     pageInterface = new TeamLeaderPage();
                     break;
                 case tracker:
-                default:
                     pageInterface = new TrackerPage();
+                    break;
+                default:
+                    pageInterface = new PageInterface() {
+                        @Override
+                        public void onSearchData() {
+
+                        }
+                    };
                     break;
 
             }
@@ -153,7 +160,7 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
         protected void convert(BaseViewHolder helper, InspecteTaskEntity item) {
 
 
-            //精益化检查(显示变电站)
+            //精益化评价(显示变电站)
             //班组建设(显示班组)
             //设备排查(显示变电站)
 

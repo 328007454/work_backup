@@ -17,6 +17,7 @@ public final class DateFormat {
     final static SimpleDateFormat sdfymd = new SimpleDateFormat("yyyy年MM月dd日");
 
     final static SimpleDateFormat sdfymdhms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    final static SimpleDateFormat sdfymd000 = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
     private DateFormat() {
     }
@@ -44,6 +45,18 @@ public final class DateFormat {
     public static String dateToDbString(long datetime) {
         synchronized (sdfymdhms) {
             return sdfymdhms.format(datetime);
+        }
+    }
+
+    /**
+     * 仅保存日期
+     *
+     * @param datetime
+     * @return
+     */
+    public static String dateToDbString000(long datetime) {
+        synchronized (sdfymdhms) {
+            return sdfymd000.format(datetime);
         }
     }
 

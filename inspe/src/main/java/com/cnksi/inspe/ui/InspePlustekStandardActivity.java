@@ -4,7 +4,7 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 
 /**
- * 精益化检查-显示设备基本信息，及相关评判标准
+ * 精益化评价-显示设备基本信息，及相关评判标准
  *
  * @version v1.0
  * @auther Today(张军)

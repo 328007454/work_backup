@@ -16,6 +16,7 @@ import com.cnksi.inspe.type.RecordType;
 import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.ui.InspePlustekActivity;
 import com.cnksi.inspe.utils.DBUtils;
+import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.utils.StringUtils;
 
 import org.xutils.db.Selector;
@@ -327,6 +328,7 @@ public class TeamService extends BaseDbService {
      */
     public boolean saveRuleResult(TeamRuleResultEntity data) {
         try {
+            data.setUpdate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
             dbManager.saveOrUpdate(data);
         } catch (DbException e) {
             e.printStackTrace();

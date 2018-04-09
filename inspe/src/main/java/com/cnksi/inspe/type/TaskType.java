@@ -18,7 +18,7 @@ public enum TaskType {
     @Deprecated
     sbjc("设备检查"),
     /***/
-    jyhjc("精益化检查");
+    jyhjc("精益化评价");
 
     String desc;
 

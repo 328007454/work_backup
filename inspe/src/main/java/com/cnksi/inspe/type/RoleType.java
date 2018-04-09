@@ -32,7 +32,7 @@ public enum RoleType {
     /**
      * 专家
      */
-    //专家不存在特殊要求，仅在任务创建，精益化检查有效
+    //专家不存在特殊要求，仅在任务创建，精益化评价有效
     expert("专家", -1),
     /**
      * 班长
@@ -70,9 +70,8 @@ public enum RoleType {
         return level;
     }
 
-    @SuppressLint("NewApi")
     public static List<RoleType> getRoles(String userType) {
-        List<RoleType> list = new ArrayList<>(3);
+        ArrayList<RoleType> list = new ArrayList<>(3);
         if (userType != null) {
             list.add(guest);
             String[] rolesStr = userType.split(",");
@@ -88,7 +87,7 @@ public enum RoleType {
             }
 
             //排序
-            list.sort(new Comparator<RoleType>() {
+            Collections.sort(list, new Comparator<RoleType>() {
                 @Override
                 public int compare(RoleType t0, RoleType t1) {
                     if (t1.getLevel() > t0.getLevel()) {

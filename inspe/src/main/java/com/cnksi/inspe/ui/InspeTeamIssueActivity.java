@@ -282,7 +282,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
             //更新任务状态
             if (task.getProgress() == null || TaskProgressType.valueOf(task.getProgress()) == TaskProgressType.todo) {
                 task.setProgress(TaskProgressType.doing.name());
-                taskService.saveTask(task);
+                taskService.updateTask(task);
             }
 
             if (teamService.saveRuleResult(teamRuleResult)) {

@@ -1,9 +1,10 @@
 package com.cnksi.inspe.entity;
 
 import com.cnksi.inspe.base.BaseEntity;
+import com.cnksi.inspe.type.PlustekType;
 
 /**
- * 精益化检查实体类
+ * 精益化评价实体类
  *
  * @version v1.0
  * @auther Today(张军)
@@ -14,7 +15,7 @@ public class InspectePlustekEntity extends BaseEntity {
     /**
      * 类型ID
      */
-    public int id;
+    public PlustekType type;
     /**
      * ico资源ID
      */
@@ -24,8 +25,8 @@ public class InspectePlustekEntity extends BaseEntity {
      */
     public String title;
 
-    public InspectePlustekEntity(int id, int resId, String desc) {
-        this.id = id;
+    public InspectePlustekEntity(PlustekType type, int resId, String desc) {
+        this.type = type;
         this.resId = resId;
         this.title = desc;
     }

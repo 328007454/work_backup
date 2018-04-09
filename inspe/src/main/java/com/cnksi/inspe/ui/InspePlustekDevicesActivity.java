@@ -6,7 +6,7 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 
 /**
- * 精益化检查-检查的设备展示
+ * 精益化评价-检查的设备展示
  *
  * @version v1.0
  * @auther Today(张军)
