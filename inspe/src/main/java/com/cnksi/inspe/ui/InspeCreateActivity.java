@@ -98,6 +98,8 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
         task.setCheckuser_id(expertUser.getId());//检查人ID
         task.setCheckuser_name(expertUser.getUsername());//检查人
         task.setProgress(TaskProgressType.todo.name());//任务状态
+        task.setCreate_person_id(expertUser.getUsername());//创建人ID
+        task.setCreate_person_name(expertUser.getUsername());//创建人Name
         task.setDlt(0);//未被删除状态
         task.setInsert_time(DateFormat.dateToDbString(System.currentTimeMillis()));//创建时间
         task.setLast_modify_time(DateFormat.dateToDbString(System.currentTimeMillis()));//修改时间
@@ -173,8 +175,8 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     dataBinding.teamLeaderTxt.setText(users.get(position).getUsername());
-                    task.setCreate_person_id(users.get(position).getId()); //设置任务创建人
-                    task.setCreate_person_id(users.get(position).getUsername());
+                    task.setGroup_person_id(users.get(position).getId()); //设置任务创建人
+                    task.setGroup_person_name(users.get(position).getUsername());
                 }
             }).showAsDropDown(v);
         } else if (v.getId() == R.id.okBtn) {//创建任务
