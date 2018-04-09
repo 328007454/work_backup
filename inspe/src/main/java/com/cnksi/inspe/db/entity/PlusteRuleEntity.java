@@ -1,5 +1,8 @@
 package com.cnksi.inspe.db.entity;
 
+import com.cnksi.inspe.base.BaseDBEntity;
+import com.cnksi.inspe.base.BaseDbService;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -11,7 +14,7 @@ import org.xutils.db.annotation.Table;
  * @date 2018/3/27 21:40
  */
 @Table(name = "xj_jyhpj_rule")
-public class PlusteRuleEntity {
+public class PlusteRuleEntity extends BaseDBEntity {
 
     public PlusteRuleEntity() {
     }

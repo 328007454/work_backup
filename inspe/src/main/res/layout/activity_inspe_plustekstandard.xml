@@ -98,8 +98,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     style="@style/View.RecyclerView"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/inspe_white_shape" />
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
 
             <ImageView

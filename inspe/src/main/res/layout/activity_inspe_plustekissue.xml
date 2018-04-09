@@ -48,23 +48,18 @@
                         android:textSize="12dp" />
 
 
-                    <LinearLayout
-                        style="@style/View.LinearLayout.Horizontal"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/issueInfoTxt"
-                            style="@style/View.TextView"
-                            android:layout_weight="1"
-                            android:drawableRight="@mipmap/inspe_arrow_down"
-                            android:hint="请选择扣分项"
-                            android:paddingBottom="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="10dp"
-                            android:text=""
-                            android:textColor="#3C4950"
-                            android:textSize="14dp" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/issueInfoTxt"
+                        style="@style/View.TextView"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:drawableRight="@mipmap/inspe_arrow_down"
+                        android:hint="请选择扣分项"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="#3C4950"
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <View
@@ -86,7 +81,6 @@
                         android:textSize="12dp" />
 
                     <EditText
-                        android:id="@+id/issueEdit"
                         style="@style/View.EditText"
                         android:background="@drawable/inspe_edittext_nullbg_shape"
                         android:hint="请输入问题描述"
@@ -99,52 +93,90 @@
                     android:background="#FFFFFF" />
 
                 <LinearLayout
-                    style="@style/View.LinearLayout.Item.IssueDetail"
-                    android:background="#FFFFFF"
-                    android:paddingBottom="0dp">
-
-                    <TextView
-                        style="@style/View.TextView"
-                        android:text="扣分分值:"
-                        android:textColor="#333333"
-                        android:textSize="12dp" />
+                    style="@style/View.LinearLayout.Horizontal"
+                    android:background="#FFFFFF">
 
                     <LinearLayout
-                        style="@style/View.LinearLayout.Horizontal"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:background="#FFFFFF"
-                        android:orientation="horizontal">
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:paddingBottom="0dp">
 
-                        <ImageButton
-                            android:id="@+id/minuxBtn"
-                            style="@style/View.Button"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/inspe_squar_dark_shape"
-                            android:enabled="false"
-                            android:src="@drawable/inspe_btn_minus_selector" />
+                        <TextView
+                            style="@style/View.TextView"
+                            android:text="扣分分值:"
+                            android:textColor="#333333"
+                            android:textSize="12dp" />
 
-                        <EditText
-                            android:id="@+id/minusScoreEdit"
-                            style="@style/View.EditText.Number"
-                            android:layout_width="80dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/inspe_squar_dark_shape"
-                            android:enabled="false"
-                            android:gravity="center"
-                            android:inputType="numberDecimal"
-                            android:text="0.0"
-                            android:textColor="#242827"
+                        <LinearLayout
+                            style="@style/View.LinearLayout.Horizontal"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            android:background="#FFFFFF"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/minuxBtn"
+                                style="@style/View.Button"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@drawable/inspe_squar_dark_shape"
+                                android:enabled="false"
+                                android:src="@drawable/inspe_btn_minus_selector" />
+
+                            <EditText
+                                android:id="@+id/minusScoreEdit"
+                                style="@style/View.EditText.Number"
+                                android:layout_width="80dp"
+                                android:layout_height="48dp"
+                                android:background="@drawable/inspe_squar_dark_shape"
+                                android:enabled="false"
+                                android:gravity="center"
+                                android:inputType="numberDecimal"
+                                android:text="0.0"
+                                android:textColor="#242827"
+                                android:textSize="14dp" />
+
+                            <ImageButton
+                                android:id="@+id/addBtn"
+                                style="@style/View.Button"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@drawable/inspe_squar_dark_shape"
+                                android:src="@drawable/inspe_btn_add_selector" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/colorBackgound" />
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:layout_weight="1"
+                        android:paddingBottom="0dp">
+
+                        <TextView
+                            style="@style/View.TextView"
+                            android:text="问题性质"
+                            android:textColor="#333333"
+                            android:textSize="12dp" />
+
+
+                        <TextView
+                            android:id="@+id/issueNatureTxt"
+                            style="@style/View.TextView"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:drawableRight="@mipmap/inspe_arrow_down"
+                            android:hint="一般"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp"
+                            android:textColor="#3C4950"
                             android:textSize="14dp" />
 
-                        <ImageButton
-                            android:id="@+id/addBtn"
-                            style="@style/View.Button"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/inspe_squar_dark_shape"
-                            android:src="@drawable/inspe_btn_add_selector" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -196,7 +228,8 @@
                     style="@style/View.LinearLayout.Item.IssueDetail"
                     android:background="#FFFFFF"
                     android:orientation="horizontal"
-                    android:paddingBottom="0dp">
+                    android:paddingBottom="0dp"
+                    android:visibility="gone">
 
                     <LinearLayout
                         style="@style/View.LinearLayout"
@@ -228,13 +261,139 @@
                         android:src="@mipmap/inspe_date_normal" />
                 </LinearLayout>
 
+                <LinearLayout
+                    style="@style/View.LinearLayout.Horizontal"
+                    android:background="#FFFFFF">
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:layout_weight="1"
+                        android:paddingBottom="0dp">
+
+                        <TextView
+                            style="@style/View.TextView"
+                            android:text="责任班组"
+                            android:textColor="#333333"
+                            android:textSize="12dp" />
+
+
+                        <TextView
+                            android:id="@+id/blameTeamTxt"
+                            style="@style/View.TextView"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:drawableRight="@mipmap/inspe_arrow_down"
+                            android:hint="请选择责任班组"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp"
+                            android:textColor="#3C4950"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/colorBackgound" />
+
+                    <LinearLayout
+                        style="@style/View.LinearLayout.Item.IssueDetail"
+                        android:layout_weight="1"
+                        android:paddingBottom="0dp">
+
+                        <TextView
+                            style="@style/View.TextView"
+                            android:text="责任单位"
+                            android:textColor="#333333"
+                            android:textSize="12dp" />
+
+
+                        <TextView
+                            android:id="@+id/blameBranchTxt"
+                            style="@style/View.TextView"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:drawableRight="@mipmap/inspe_arrow_down"
+                            android:hint="请选择责任单位"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp"
+                            android:textColor="#3C4950"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:paddingBottom="0dp">
+
+                    <TextView
+                        style="@style/View.TextView"
+                        android:text="产生原因"
+                        android:textColor="#333333"
+                        android:textSize="12dp" />
+
+
+                    <TextView
+                        android:id="@+id/issueReasonTxt"
+                        style="@style/View.TextView"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:drawableRight="@mipmap/inspe_arrow_down"
+                        android:hint="请选择产生原因"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="#3C4950"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="1dp"
+                    android:background="#FFFFFF" />
+
+                <LinearLayout
+                    style="@style/View.LinearLayout.Item.IssueDetail"
+                    android:background="#FFFFFF"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:paddingBottom="0dp">
+
+                    <TextView
+                        style="@style/View.TextView"
+                        android:text="建议处理措施:"
+                        android:textColor="#333333"
+                        android:textSize="12dp" />
+
+                    <EditText
+                        android:id="@+id/issueEdit"
+                        style="@style/View.EditText"
+                        android:background="@drawable/inspe_edittext_nullbg_shape"
+                        android:hint="请简要说明"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/okBtn"
                     style="@style/View.Button"
                     android:layout_marginBottom="13dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/inspe_btn_green_selector"
                     android:text="确定" />
             </LinearLayout>
