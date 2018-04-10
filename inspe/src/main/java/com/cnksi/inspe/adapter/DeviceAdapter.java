@@ -1,6 +1,12 @@
 package com.cnksi.inspe.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.speech.tts.TextToSpeech;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,7 +29,12 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
 
     public final static int SPACE_ITEM = 1;
     public final static int DEVICE_ITEM = 2;
+    private String keyWord;
     private OnDeviceItemClickListerner onItemClickListerner;
+
+    public void setKeyWord(String newKey) {
+        this.keyWord = newKey;
+    }
 
     public interface OnDeviceItemClickListerner {
         void OnItemClickListen(View v, Object item, int position);
@@ -51,7 +62,8 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             case SPACE_ITEM:
                 SpaceItem spaceItem = (SpaceItem) item;
                 DbModel spModel = spaceItem.spacing;
-                helper.setText(R.id.tv_group_item, spModel.getString("sname"));
+                String spaceName = spModel.getString("sname");
+                helper.setText(R.id.tv_group_item, spaceName);
                 ImageView imgOpen = helper.getView(R.id.img_open);
                 // 间隔展开
                 imgOpen.setImageResource(spaceItem.isExpanded() ? R.drawable.inspe_device_shrink : R.drawable.inspe_device_open);
@@ -62,20 +74,72 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                         expand(helper.getAdapterPosition(), true);
                     }
                 });
-
-
+                formatKeyWord(helper, spaceName, spModel.getString("snamepy"));
 
                 break;
             case DEVICE_ITEM:
                 DeviceItem deviceItem = (DeviceItem) item;
                 DbModel dvModle = deviceItem.dbModel;
-                helper.setText(R.id.tv_device_name, dvModle.getString("dnameshort"));
+                String deviceName = dvModle.getString("dnameshort");
+                helper.setText(R.id.tv_device_name, deviceName);
                 helper.itemView.setOnClickListener(view -> {
                     if (null != onItemClickListerner) {
                         onItemClickListerner.OnItemClickListen(view, deviceItem, helper.getAdapterPosition());
                     }
                 });
+                formatKeyWord(helper, deviceName, dvModle.getString("dshortpinyin"));
                 break;
+        }
+    }
+
+    private MultiItemEntity lastExpandIndex = null;
+
+    @Override
+    public int expand(int position, boolean animate) {
+        MultiItemEntity entity = getData().get(position);
+        int index = super.expand(position);
+        if (entity !=lastExpandIndex){
+            if(lastExpandIndex ==null){
+                lastExpandIndex = getData().get(0);
+            }
+            if (lastExpandIndex!=null &&((SpaceItem)lastExpandIndex).isExpanded()){
+                int p= getData().indexOf(lastExpandIndex);
+                if (p>=0){
+                    collapse(p);
+                }
+            }
+        }
+        lastExpandIndex = entity;
+
+            return index;
+    }
+
+    @Override
+    public int collapse(int position, boolean animate) {
+        if (getData().get(position) == lastExpandIndex) lastExpandIndex =null;
+        return super.collapse(position, animate);
+    }
+
+    /**
+     * 搜索的内容标红色
+     *
+     * @param helper
+     * @param name
+     */
+    private void formatKeyWord(BaseViewHolder helper, String name, String shortName) {
+        if (!TextUtils.isEmpty(keyWord)) {
+            SpannableStringBuilder builder = new SpannableStringBuilder(name);
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.RED);
+            if (shortName.toUpperCase().contains(keyWord)) {
+                int index = shortName.toUpperCase().indexOf(keyWord);
+                if (index != -1 && name.length() >= (index + keyWord.length())) {
+                    builder.setSpan(colorSpan, index, index + keyWord.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    if (helper.getItemViewType() == SPACE_ITEM)
+                        helper.setText(R.id.tv_group_item, builder);
+                    else if (helper.getItemViewType() == DEVICE_ITEM)
+                        helper.setText(R.id.tv_device_name, builder);
+                }
+            }
         }
     }
 

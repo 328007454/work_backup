@@ -7,12 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.DeviceAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
@@ -155,6 +158,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
      */
     @Override
     public void onChange(View v, String oldKey, String newKey) {
+        deviceAdapter.setKeyWord(newKey);
         if (!TextUtils.isEmpty(newKey)) {
             localSearchData(newKey);
         } else {
@@ -168,15 +172,18 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
      * @param newKey
      */
     private void localSearchData(String newKey) {
+        devicesList.clear();
         List<DbModel> locaList = new ArrayList<>();
         for (DbModel model : dbModelList) {
-            if (model.getString("snamepy").contains(newKey) || model.getString("dnamepy").contains(newKey)) {
+            if (model.getString("snamepy").toUpperCase().contains(newKey) || model.getString("dshortpinyin").toUpperCase().contains(newKey)) {
                 locaList.add(model);
             }
         }
+
         if (!locaList.isEmpty()) {
-            devicesList.clear();
             loadAdapterData(locaList);
+        } else {
+            loadAdapterData(new ArrayList<DbModel>());
         }
     }
 
@@ -215,7 +222,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         intent.putExtra("deviceBigId", ((DeviceItem) item).dbModel.getString("bigid"));
         intent.putExtra("deviceId", ((DeviceItem) item).dbModel.getString("deviceid"));
         intent.putExtra("taskId", taskId);
-        intent.putExtra("deviceName",((DeviceItem) item).dbModel.getString("dname"));
+        intent.putExtra("deviceName", ((DeviceItem) item).dbModel.getString("dname"));
         startActivity(intent);
     }
 }

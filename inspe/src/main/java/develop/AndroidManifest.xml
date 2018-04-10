@@ -20,7 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/InspceAppTheme">
         <activity android:name=".ui.InspeLoadingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.InspeCreateActivity" />
         <activity android:name=".ui.InspeHtmlActivity" />
@@ -29,13 +33,7 @@
         <activity android:name=".ui.InspePlustekActivity" />
         <activity android:name=".ui.InspePlustekDevicesActivity" />
         <activity android:name=".ui.InspePlustekIssueActivity"/>
-        <activity android:name=".ui.InspePlustekStandardActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.InspePlustekStandardActivity" />
         <activity android:name=".ui.InspeTeamActivity" />
         <activity android:name=".ui.InspeTeamIssueActivity" />
         <activity android:name=".ui.InspeTeamStandardActivity" />
