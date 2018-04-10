@@ -6,6 +6,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.cnksi.inspe.ui.InspeIssueDetailActivity;
+import com.cnksi.inspe.ui.InspePlustekIssueActivity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,8 +25,8 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.cnksi.inspe", appContext.getPackageName());
-        appContext.startActivity(new Intent(appContext, InspeIssueDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+//        assertEquals("com.cnksi.inspe", appContext.getPackageName());
+        appContext.startActivity(new Intent(appContext, InspePlustekIssueActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
         ));
     }
 }

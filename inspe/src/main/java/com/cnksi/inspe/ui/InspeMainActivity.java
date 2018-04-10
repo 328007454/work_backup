@@ -36,7 +36,7 @@ public class InspeMainActivity extends AppBaseActivity {
     /**
      * 是否为专家
      */
-    private UserEntity expertUser = getUserService().getUserExpert(RoleType.expert);
+    private UserEntity expertUser;
     //    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 //            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 //
@@ -74,7 +74,7 @@ public class InspeMainActivity extends AppBaseActivity {
     public void initUI() {
         dataBinding = (ActivityInspeMainBinding) rootDataBinding;
         if (expertUser != null) {
-            setTitle("精益化评价", R.drawable.inspe_left_black_24dp, R.drawable.inspe_left_black_24dp);
+            setTitle("精益化评价", R.drawable.inspe_left_black_24dp, R.drawable.ic_sync_black_24dp);
         } else {
             setTitle("精益化评价", R.drawable.inspe_left_black_24dp);
         }
@@ -99,7 +99,7 @@ public class InspeMainActivity extends AppBaseActivity {
             }
 
         }
-
+        expertUser = getUserService().getUserExpert(RoleType.expert);//首页不能直接初始化,会导致第一次不能有效判断专家。
         //测试输出
         if (BuildConfig.DEBUG) {
             try {
@@ -175,7 +175,7 @@ public class InspeMainActivity extends AppBaseActivity {
 //        });
 //        dateDialog.show();
 
-
+        dataBinding.actionBar.toolbarMenuBtn.setVisibility(expertUser != null ? View.VISIBLE : View.INVISIBLE);
     }
 
 

@@ -81,6 +81,7 @@
                         android:textSize="12dp" />
 
                     <EditText
+                        android:id="@+id/issueEdit"
                         style="@style/View.EditText"
                         android:background="@drawable/inspe_edittext_nullbg_shape"
                         android:hint="请输入问题描述"
@@ -170,7 +171,7 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:drawableRight="@mipmap/inspe_arrow_down"
-                            android:hint="一般"
+                            android:hint="请选择问题性质"
                             android:paddingBottom="10dp"
                             android:paddingRight="10dp"
                             android:paddingTop="10dp"
@@ -202,8 +203,8 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/galleryView"
                             style="@style/View.RecyclerView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1" />
 
                         <ImageButton
@@ -380,7 +381,7 @@
                         android:textSize="12dp" />
 
                     <EditText
-                        android:id="@+id/issueEdit"
+                        android:id="@+id/suggestEdit"
                         style="@style/View.EditText"
                         android:background="@drawable/inspe_edittext_nullbg_shape"
                         android:hint="请简要说明"

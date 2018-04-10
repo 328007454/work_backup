@@ -20,6 +20,7 @@ import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
+import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.type.RecordType;
 
 import java.util.ArrayList;
@@ -32,11 +33,13 @@ import java.util.List;
  * @auther Today(张军)
  * @date 2018/3/21 09:31
  */
+@Deprecated
 public class InspePlustekStandardActivity extends AppBaseActivity {
     private ActivityInspePlustekstandardBinding dataBinding;
     private PlustekService plustekService = new PlustekService();
     private List<MultiItemEntity> list = new ArrayList<>();
     private PlustekStandardAdapter adapter;
+    private PlustekType plustekType;
 
     @Override
     public int getLayoutResId() {
@@ -48,6 +51,21 @@ public class InspePlustekStandardActivity extends AppBaseActivity {
         dataBinding = (ActivityInspePlustekstandardBinding) rootDataBinding;
         setTitle("变压器名称", R.drawable.inspe_left_black_24dp);
 
+        initStandardModule();
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        searchData();
+    }
+
+    private void initStandardModule() {
         adapter = new PlustekStandardAdapter(list);
         final GridLayoutManager manager = new GridLayoutManager(this, 1);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -76,19 +94,8 @@ public class InspePlustekStandardActivity extends AppBaseActivity {
         });
     }
 
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        searchData();
-    }
-
     private void searchData() {
-        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule();
+        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(null, null);
 
         if (ruleList == null) {
             return;
@@ -98,7 +105,7 @@ public class InspePlustekStandardActivity extends AppBaseActivity {
             PlusteRuleEntity entity = ruleList.get(i);
             PlustekRule0Entity rule0 = new PlustekRule0Entity(entity);
 
-            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule();
+            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(null, null, entity.getPid());
             for (PlusteRuleEntity e : ruleItemList) {
                 PlustekRule1Entity rule = new PlustekRule1Entity(e);
                 rule0.addSubItem(rule);

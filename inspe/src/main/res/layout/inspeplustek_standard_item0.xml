@@ -12,7 +12,7 @@
         android:id="@+id/titleTxt"
         style="@style/View.TextView"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="0dp"
         android:layout_weight="1"
         android:lines="1"
         android:text="1.安装投运技术文件"
@@ -23,7 +23,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="0dp"
         app:srcCompat="@mipmap/inspe_arrow_down" />
 
 </LinearLayout>

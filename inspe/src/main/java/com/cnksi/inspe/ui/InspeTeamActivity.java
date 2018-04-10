@@ -1,5 +1,7 @@
 package com.cnksi.inspe.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
@@ -158,11 +160,36 @@ public class InspeTeamActivity extends AppBaseActivity implements View.OnClickLi
     public void onClick(View v) {
         if (v.getId() == R.id.bottomBtn) {
             //修改任务状态；
-            task.setProgress(TaskProgressType.done.name());
-            task.setDo_check_time(DateFormat.dateToDbString(System.currentTimeMillis()));
-            taskService.updateTask(task);
+            new AlertDialog.Builder(context)
+                    .setTitle("任务完成确认").setMessage("您确定该任务你已经完成?\n")
+                    .setPositiveButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    updateTask();
+                                }
+                            })
+                    .setNegativeButton("取消",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                    .show();
 
+        }
+    }
+
+    /**
+     * 更新任务状态
+     */
+    private void updateTask() {
+        task.setProgress(TaskProgressType.done.name());
+        if (taskService.updateTask(task)) {
+            showToast("保存完成");
             finish();
+        } else {
+            showToast("保存失败");
         }
     }
 }

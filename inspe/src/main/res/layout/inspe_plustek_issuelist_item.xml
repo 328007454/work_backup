@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/View.LinearLayout.Horizontal"
+        android:background="#FFFFFF"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/issueInfoTxt"
+            style="@style/View.TextView"
+            android:layout_weight="1"
+            android:text="室外" />
+
+        <TextView
+            android:id="@+id/issueScoreTxt"
+            style="@style/View.TextView"
+            android:layout_marginLeft="8dp"
+            android:text="-0.01"
+            android:textColor="#FD5F54" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/View.LinearLayout.Horizontal"
+        android:background="#FFFFFF"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="3dp">
+
+        <TextView
+            android:id="@+id/issueReasonTxt"
+            style="@style/View.TextView"
+            android:layout_weight="1"
+            android:text="室外" />
+
+        <TextView
+            android:id="@+id/issueNatureTxt"
+            style="@style/View.TextView"
+            android:layout_marginLeft="8dp"
+            android:text="危急" />
+    </LinearLayout>
+</LinearLayout>

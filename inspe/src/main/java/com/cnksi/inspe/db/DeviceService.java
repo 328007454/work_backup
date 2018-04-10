@@ -1,6 +1,7 @@
 package com.cnksi.inspe.db;
 
 import com.cnksi.inspe.base.BaseDbService;
+import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.SubStationEntity;
 import com.cnksi.inspe.db.entity.UserGroupEntity;
@@ -30,6 +31,24 @@ public class DeviceService extends BaseDbService {
                     .where("dlt", "=", "0")
                     .and("iswt", "=", "Y")
                     .findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 根据班组ID查询变电站
+     *
+     * @param bzdId
+     * @return
+     */
+    public SubStationEntity getSubStation(String bzdId) {
+        try {
+            return dbManager.selector(SubStationEntity.class)
+                    .where("dlt", "=", "0")
+                    .and("bdzid", "=", bzdId)
+                    .findFirst();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -82,23 +101,23 @@ public class DeviceService extends BaseDbService {
     }
 
     /**
-     * 根根设备大类查询设备当前精益化检查的大类
-     * @param bigId
+     * 根据设备ID查询设备
+     *
+     * @param deviceId
      * @return
-     * @throws DbException
      */
-    public List<DbModel> getAllDeviceStandardTypeByBigId(String bigId) throws DbException {
+    public DeviceEntity getDeviceById(String deviceId) {
+//        DbModel dbModel = null;
+//        String sql = "select * from device where deviceid = '" + deviceId + "' and dlt = '0'";
+        try {
+            return dbManager.selector(DeviceEntity.class)
+                    .where("dlt", "=", "0")
+                    .and("deviceid", "=", deviceId)
+                    .findFirst();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
 
-        List<DbModel> deviceModels = new ArrayList<>();
-        String bigTypesSql = "select * from xj_jyhpj_rule where bigid = '"+bigId+"' and level = '1' and dlt = '0' ";
-        deviceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
-        return deviceModels;
-    }
-
-    public DbModel getDeviceById(String deviceId) throws DbException {
-        DbModel dbModel = null;
-        String sql = "select * from device where deviceid = '"+deviceId+"' and dlt = '0'";
-        dbModel = dbManager.findDbModelFirst(new SqlInfo(sql));
-        return  dbModel;
+        return null;
     }
 }

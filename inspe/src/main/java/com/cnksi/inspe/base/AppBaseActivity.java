@@ -1,6 +1,7 @@
 package com.cnksi.inspe.base;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -51,32 +52,36 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 //    public final void getRootDataBinding() {
 //        super.getRootDataBinding();
 //    }
-    private Toolbar toolbar;
+    protected TextView titleTxt;
+    protected ImageButton toolbar_back_btn, toolbar_menu_btn;
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏
         context = this;
         getRootDataBinding();
 
-//        toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.include_inspe_title, null, false);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.findViewById(R.id.toolbar_title);
-
-            toolbar.findViewById(R.id.toolbar_back_btn).setOnClickListener(toolBarOnClickListener);
-            toolbar.findViewById(R.id.toolbar_menu_btn).setOnClickListener(toolBarOnClickListener);
+        titleTxt = (TextView) findViewById(R.id.toolbar_title);
+        toolbar_back_btn = (ImageButton) findViewById(R.id.toolbar_back_btn);
+        toolbar_menu_btn = (ImageButton) findViewById(R.id.toolbar_menu_btn);
+        if (toolbar_back_btn != null) {
+            toolbar_back_btn.setOnClickListener(toolBarOnClickListener);
+        }
+        if (toolbar_menu_btn != null) {
+            toolbar_menu_btn.setOnClickListener(toolBarOnClickListener);
         }
 
         initUI();
+
         initData();
+
     }
 
     @Override
     public void setTitle(CharSequence title) {
-        if (toolbar != null) {
-            ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(title);
+        if (titleTxt != null) {
+            titleTxt.setText(title);
         }
     }
 
@@ -92,16 +97,16 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     }
 
     public void setTitleBackBtn(int resBackId) {
-        if (toolbar != null) {
-            toolbar.findViewById(R.id.toolbar_back_btn).setVisibility(View.VISIBLE);
-            ((ImageButton) toolbar.findViewById(R.id.toolbar_back_btn)).setImageResource(resBackId);
+        if (toolbar_back_btn != null) {
+            toolbar_back_btn.setVisibility(View.VISIBLE);
+            toolbar_back_btn.setImageResource(resBackId);
         }
     }
 
     public void setTitleMenuBtn(int resMenuId) {
-        if (toolbar != null) {
-            toolbar.findViewById(R.id.toolbar_menu_btn).setVisibility(View.VISIBLE);
-            ((ImageButton) toolbar.findViewById(R.id.toolbar_menu_btn)).setImageResource(resMenuId);
+        if (toolbar_menu_btn != null) {
+            toolbar_menu_btn.setVisibility(View.VISIBLE);
+            toolbar_menu_btn.setImageResource(resMenuId);
         }
     }
 

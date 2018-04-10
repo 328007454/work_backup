@@ -1,18 +1,27 @@
 package com.cnksi.inspe.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspePlustekBinding;
+import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.entity.InspectePlustekEntity;
 import com.cnksi.inspe.type.PlustekType;
+import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.type.TaskType;
+import com.cnksi.inspe.utils.DateFormat;
+
+import org.xutils.common.util.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +40,12 @@ import java.util.List;
  * @auther Today(张军)
  * @date 2018/3/21 09:04
  */
-public class InspePlustekActivity extends AppBaseActivity {
+public class InspePlustekActivity extends AppBaseActivity implements View.OnClickListener {
 
     private ActivityInspePlustekBinding dataBinding;
     private List<InspectePlustekEntity> list = new ArrayList<>();
     private InspecteTaskEntity task;
+    private Button bottomBtn;
 
     @Override
     public int getLayoutResId() {
@@ -58,11 +68,15 @@ public class InspePlustekActivity extends AppBaseActivity {
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             Intent intent = new Intent(InspePlustekActivity.this, InspeDeviceActivity.class);
             intent.putExtra("task", task);
-            intent.putExtra("type", list.get(position).title);
+            intent.putExtra("plustek_type", list.get(position).type);
             startActivity(intent);
         });
 
         dataBinding.recyclerView.setAdapter(adapter);
+
+        bottomBtn = (Button) getLayoutInflater().inflate(R.layout.inspe_recycle_buttom_btn, (ViewGroup) dataBinding.recyclerView.getParent(), false);
+        bottomBtn.setOnClickListener(this);
+        adapter.addFooterView(bottomBtn);
     }
 
     @Override
@@ -76,6 +90,31 @@ public class InspePlustekActivity extends AppBaseActivity {
 
     }
 
+    @Override
+    public void onClick(View view) {
+        int i = view.getId();
+        if (i == R.id.bottomBtn) {
+            //修改任务状态；
+            new AlertDialog.Builder(context)
+                    .setTitle("任务完成确认").setMessage("您确定该任务你已经完成?\n")
+                    .setPositiveButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    updateTask();
+                                }
+                            })
+                    .setNegativeButton("取消",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                    .show();
+
+        }
+    }
+
     public class InspecteTaskAdapter extends BaseQuickAdapter<InspectePlustekEntity, BaseViewHolder> {
         public InspecteTaskAdapter(int layoutResId, List data) {
             super(layoutResId, data);
@@ -86,6 +125,19 @@ public class InspePlustekActivity extends AppBaseActivity {
             helper.setImageResource(R.id.icoImg, item.resId);
             helper.setText(R.id.titleTxt, item.title);
 
+        }
+    }
+
+    /**
+     * 更新任务状态
+     */
+    private void updateTask() {
+        task.setProgress(TaskProgressType.done.name());
+        if (new TaskService().updateTask(task)) {
+            showToast("保存完成");
+            finish();
+        } else {
+            showToast("保存失败");
         }
     }
 }

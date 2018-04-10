@@ -6,55 +6,42 @@
 
     </data>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_margin="0dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:padding="0dp"
-        app:contentInsetEnd="0dp"
-        app:contentInsetStart="0dp"
-        app:popupTheme="@style/InspceAppTheme.PopupOverlay">
+        android:background="#03B9A0"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/toolbar_back_btn"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:textColor="#FFFFFF"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/inspe_left_black_24dp" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#03B9A0"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:lines="1"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="标题"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
 
-            <ImageButton
-                android:id="@+id/toolbar_back_btn"
-                android:layout_width="48dp"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:textColor="#FFFFFF"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/inspe_left_black_24dp" />
+        <ImageButton
+            android:id="@+id/toolbar_menu_btn"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            app:srcCompat="@drawable/ic_sync_black_24dp"
+            android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:lines="1"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:text="标题"
-                android:textColor="#FFFFFF"
-                android:textSize="18dp" />
-
-            <ImageButton
-                android:id="@+id/toolbar_menu_btn"
-                android:layout_width="48dp"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:src="@mipmap/inspe_file_normal"
-                android:visibility="invisible" />
-
-        </LinearLayout>
-
-    </android.support.v7.widget.Toolbar>
+    </LinearLayout>
 </layout>

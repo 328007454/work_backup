@@ -24,6 +24,7 @@ import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.entity.device.DeviceItem;
 import com.cnksi.inspe.entity.device.SpaceItem;
+import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.widget.PopItemWindow;
 import com.cnksi.inspe.widget.keyboard.QWERKeyBoardUtils;
 
@@ -52,6 +53,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private PopItemWindow popItemWindow;
     private String taskId;
     private String bigIds = "";
+    private PlustekType plustekType;
 
     @Override
     public int getLayoutResId() {
@@ -61,9 +63,10 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     @Override
     public void initUI() {
         deviceBinding = (ActivityInspeDeviceBinding) rootDataBinding;
-        deviceBinding.includeInspeTitle.toolbarTitle.setText(getIntent().getStringExtra("type"));
-        deviceBinding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
 
+        deviceBinding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
+        plustekType = (PlustekType) getIntent().getSerializableExtra("plustek_type");
+        deviceBinding.includeInspeTitle.toolbarTitle.setText(plustekType.getDesc());
         qwerKeyBoardUtils = new QWERKeyBoardUtils(this);
         qwerKeyBoardUtils.init(deviceBinding.keyboardContainer, this);
 
@@ -223,6 +226,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         intent.putExtra("deviceId", ((DeviceItem) item).dbModel.getString("deviceid"));
         intent.putExtra("taskId", taskId);
         intent.putExtra("deviceName", ((DeviceItem) item).dbModel.getString("dname"));
+        intent.putExtra("plustek_type", plustekType);//检查类型
         startActivity(intent);
     }
 }

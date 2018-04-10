@@ -16,7 +16,12 @@ import com.cnksi.inspe.db.entity.TeamRuleEntity;
 public class PlustekRule0Entity extends AbstractExpandableItem<PlustekRule1Entity> implements MultiItemEntity {
 
     public PlusteRuleEntity rule;
+    public int index;
 
+    public PlustekRule0Entity(PlusteRuleEntity rule, int index) {
+        this.rule = rule;
+        this.index = index;
+    }
     public PlustekRule0Entity(PlusteRuleEntity rule) {
         this.rule = rule;
     }

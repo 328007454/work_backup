@@ -14,6 +14,12 @@ import com.cnksi.inspe.db.entity.TeamRuleEntity;
 
 public class PlustekRule1Entity implements MultiItemEntity {
     public PlusteRuleEntity rule;
+    public int index;
+
+    public PlustekRule1Entity(PlusteRuleEntity rule, int index) {
+        this.rule = rule;
+        this.index = index;
+    }
 
     public PlustekRule1Entity(PlusteRuleEntity rule) {
         this.rule = rule;

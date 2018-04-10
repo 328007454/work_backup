@@ -68,9 +68,10 @@ public class PopItemWindow extends PopupWindow implements BaseQuickAdapter.OnIte
         return this;
     }
 
-    public void setPopWindowWidth(int width) {
+    public PopItemWindow setPopWindowWidth(int width) {
         this.setWidth(width);
         this.update();
+        return this;
     }
 
     public PopItemWindow setAdapter(RecyclerView.Adapter adapter) {

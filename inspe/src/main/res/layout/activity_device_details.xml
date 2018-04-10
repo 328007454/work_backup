@@ -44,20 +44,20 @@
                         android:orientation="vertical"
                         android:paddingTop="260px">
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="30px"
-                            android:layout_marginRight="30px"
-                            android:gravity="center_vertical">
+                            android:layout_height="44dp"
+                            android:layout_marginLeft="9dp"
+                            android:layout_marginRight="9dp"
+                            android:background="#FFFFFF"
+                            android:gravity="center_vertical"
+                            android:padding="8dp">
 
                             <TextView
                                 android:id="@+id/tv_defect_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_marginLeft="30px"
                                 android:gravity="center_vertical"
-                                android:onClick="onClickEvent"
                                 android:text="评判项目"
                                 android:textSize="44px" />
 
@@ -65,15 +65,14 @@
                                 android:id="@+id/tv_add_new_defect"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="30px"
+                                android:layout_weight="1"
                                 android:clickable="true"
                                 android:drawablePadding="@dimen/inspe_9px"
-                                android:gravity="center"
+                                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                                android:gravity="center_vertical|right"
                                 android:text="已记录问题：0个"
                                 android:textSize="44px" />
-                        </RelativeLayout>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <RelativeLayout
@@ -142,6 +141,7 @@
                         android:layout_height="330px"
                         android:layout_marginLeft="60px"
                         android:background="@drawable/inspe_d_details_shape">
+
                         <com.cnksi.inspe.widget.RoundRectImageView
                             android:id="@+id/iv_device_image"
                             android:layout_width="480px"
@@ -156,20 +156,20 @@
                     android:background="#f0f0f0"
                     android:orientation="vertical">
 
+                    <!--android:background="@drawable/inspe_d_details_shape"-->
                     <com.cnksi.inspe.widget.MyScrollVListView
                         android:id="@+id/device_standard_lv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="30px"
-                        android:layout_marginLeft="30px"
-                        android:layout_marginRight="30px"
-                        android:layout_marginTop="20px"
-                        android:background="@drawable/inspe_d_details_shape"
+                        android:layout_marginLeft="16px"
+                        android:layout_marginRight="16px"
+                        android:layout_marginTop="0px"
                         android:divider="#e0e0e0"
                         android:dividerHeight="3px"
                         android:paddingBottom="15px"
-                        android:paddingLeft="28px"
-                        android:paddingRight="28px" />
+                        android:paddingLeft="8px"
+                        android:paddingRight="8px" />
                 </LinearLayout>
 
 

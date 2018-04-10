@@ -43,6 +43,25 @@ public class TaskService extends BaseDbService {
     }
 
     /**
+     * 根据ID获取任务
+     *
+     * @param id
+     * @return
+     */
+    public InspecteTaskEntity getTask(String id) {
+        try {
+            return dbManager.selector(InspecteTaskEntity.class)
+                    .where("dlt", "=", "0")
+                    .and("id", "=", id)
+                    .findFirst();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * 获取-巡检任务(全部)
      *
      * @return

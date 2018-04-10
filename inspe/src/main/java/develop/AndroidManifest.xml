@@ -31,9 +31,11 @@
         <activity android:name=".ui.InspeIssueDetailActivity" />
         <activity android:name=".ui.InspeMainActivity" />
         <activity android:name=".ui.InspePlustekActivity" />
-        <activity android:name=".ui.InspePlustekDevicesActivity" />
+        <activity android:name=".ui.InspePlustekIssueListActivity" />
         <activity android:name=".ui.InspePlustekIssueActivity"/>
-        <activity android:name=".ui.InspePlustekStandardActivity" />
+        <activity android:name=".ui.InspePlustekStandardActivity" >
+
+        </activity>
         <activity android:name=".ui.InspeTeamActivity" />
         <activity android:name=".ui.InspeTeamIssueActivity" />
         <activity android:name=".ui.InspeTeamStandardActivity" />
