@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="2px"
+              android:background="@drawable/xs_pms_task_fff_to_333_bg_selector"
+              android:minHeight="196px"
+              android:orientation="horizontal">
+
+    <View
+        android:id="@+id/view_task_status"
+        android:layout_width="24px"
+        android:layout_height="24px"
+        android:layout_marginLeft="30px"
+        android:layout_marginTop="58px"
+        android:background="@drawable/xs_pms_task_notdownload_color_ff7575"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/xs__39px"
+        android:layout_marginLeft="46px"
+        android:orientation="vertical"
+        android:paddingRight="30px">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tv_packageName"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="2"
+                android:gravity="bottom"
+                android:text="fdksafjklsajfklsda"
+                android:textColor="@color/xs__333333_global_text_color"
+                android:textSize="40px"/>
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="未下载"
+                android:textColor="@color/xs__ff7575_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6px"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tv_user"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PMS账号：HuL6034"
+                android:textColor="@color/xs__c0bab9_color"
+                android:textSize="33px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="创建时间："/>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="end"
+                android:text="2017-9239-23"
+                android:textColor="@color/xs__c0bab9_color"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12px"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="计划时间："/>
+
+            <TextView
+                android:id="@+id/tv_date_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="2017-9239-23"
+                android:textColor="@color/xs__c0bab9_color"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout></layout>

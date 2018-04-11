@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_yw_desc_bg"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/xs_yw_desc_blank_h" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/yw_desc_header_text_bg">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/xs_yw_textview_margin"
+                        android:layout_marginLeft="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginTop="@dimen/xs_yw_textview_margin"
+                        android:padding="@dimen/xs_yw_textview_padding"
+                        android:text="@string/xs_yw_announcements"
+                        android:textColor="@color/xs_global_base_color"
+                        android:textSize="@dimen/xs_global_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white">
+
+                    <TextView
+                        android:id="@+id/announcements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginRight="@dimen/xs_yw_textview_marginleft"
+                        android:lineSpacingMultiplier="1.2"
+                        android:padding="@dimen/xs_yw_textview_padding"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/xs_global_text_size" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/xs_yw_desc_blank_h" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/yw_desc_header_text_bg">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/xs_yw_textview_margin"
+                        android:layout_marginLeft="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginTop="@dimen/xs_yw_textview_margin"
+                        android:padding="@dimen/xs_yw_textview_padding"
+                        android:text="@string/xs_yw_desc_photo"
+                        android:textColor="@color/xs_global_base_color"
+                        android:textSize="@dimen/xs_global_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white">
+
+                    <com.cnksi.bdzinspection.view.HorizontalListView
+                        android:id="@+id/horizon_listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/xs_yw_hlistview_h"
+                        android:layout_marginBottom="@dimen/xs_yw_hlistview_mtb"
+                        android:layout_marginLeft="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginRight="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginTop="@dimen/xs_yw_hlistview_mtb"></com.cnksi.bdzinspection.view.HorizontalListView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/xs_yw_desc_blank_h" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/yw_desc_header_text_bg">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/xs_yw_textview_margin"
+                        android:layout_marginLeft="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginTop="@dimen/xs_yw_textview_margin"
+                        android:padding="@dimen/xs_yw_textview_padding"
+                        android:text="@string/xs_yw_desc_audio"
+                        android:textColor="@color/xs_global_base_color"
+                        android:textSize="@dimen/xs_global_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white">
+
+                    <com.cnksi.bdzinspection.view.HorizontalListView
+                        android:id="@+id/audio_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/xs_yw_hlistview_audio_h"
+                        android:layout_marginBottom="@dimen/xs_yw_hlistview_mtb"
+                        android:layout_marginLeft="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginRight="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginTop="@dimen/xs_yw_hlistview_mtb"></com.cnksi.bdzinspection.view.HorizontalListView>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/xs_yw_desc_blank_h" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/yw_desc_header_text_bg">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/xs_yw_textview_margin"
+                        android:layout_marginLeft="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginTop="@dimen/xs_yw_textview_margin"
+                        android:padding="@dimen/xs_yw_textview_padding"
+                        android:text="@string/xs_yw_desc_video"
+                        android:textColor="@color/xs_global_base_color"
+                        android:textSize="@dimen/xs_global_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white">
+
+                    <com.cnksi.bdzinspection.view.HorizontalListView
+                        android:id="@+id/videolist"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/xs_yw_hlistview_h"
+                        android:layout_marginBottom="@dimen/xs_yw_hlistview_mtb"
+                        android:layout_marginLeft="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginRight="@dimen/xs_yw_textview_marginleft"
+                        android:layout_marginTop="@dimen/xs_yw_hlistview_mtb"></com.cnksi.bdzinspection.view.HorizontalListView>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

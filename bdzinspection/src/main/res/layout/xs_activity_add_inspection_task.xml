@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.zhy.core.AutoRadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/xs_bottom_line_background_selector"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/xs_content_minheight_px"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/rb_noperson_guards"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/xs_radio_button_selector"
+                    android:checked="true"
+                    android:text="@string/xs_noperson_guards_str"
+                    android:textColor="@color/xs_radio_button_text_selector"
+                    android:textSize="@dimen/xs_global_text_size_px"/>
+
+                <RadioButton
+                    android:id="@+id/rb_has_person_guards"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/xs_radio_button_selector"
+                    android:text="@string/xs_has_person_guards_str"
+                    android:textColor="@color/xs_radio_button_text_selector"
+                    android:textSize="@dimen/xs_global_text_size_px"/>
+            </com.zhy.core.AutoRadioGroup>
+
+            <com.cnksi.bdzinspection.view.LinearLayoutIntercept
+
+                android:id="@+id/bdz_contanier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/xs_bottom_line_background_selector"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_select_power_station"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/xs_please_select_power_station_str"
+                    android:minHeight="@dimen/xs_content_minheight_px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:textColor="@color/xs_global_text_color"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_global_text_size_px"/>
+
+                <ImageView
+                    android:id="@+id/bdz_type_ibt"
+                    android:layout_width="28px"
+                    android:layout_height="49px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/xs_ic_arrow_right"/>
+            </com.cnksi.bdzinspection.view.LinearLayoutIntercept>
+
+
+            <com.cnksi.bdzinspection.view.LinearLayoutIntercept
+                android:id="@+id/type_ll_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/xs_bottom_line_background_selector"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_select_inspection_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/xs_please_select_inspection_type_str"
+                    android:minHeight="@dimen/xs_content_minheight_px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:textColor="@color/xs_global_text_color"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_global_text_size_px"/>
+
+                <ImageButton
+                    android:id="@+id/type_xunjian_ibt"
+                    android:layout_width="28px"
+                    android:layout_height="49px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/xs_ic_arrow_right"/>
+            </com.cnksi.bdzinspection.view.LinearLayoutIntercept>
+
+            <TextView
+                android:id="@+id/tv_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/xs_gray_bottom_line_background"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/xs_content_minheight_px"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                android:textColor="@color/xs_global_gray_text_color"
+                android:textSize="@dimen/xs_device_item_name_text_size_px"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/ll_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/xs_bottom_line_background_selector"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/xs_content_minheight_px"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px">
+
+                <TextView
+                    android:id="@+id/tv_inspection_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/xs_please_select_inspection_date_str"
+                    android:textColor="@color/xs_green_color"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_global_text_size_px"/>
+
+                <ImageButton
+                    android:id="@+id/ibtn_select_inspection_date"
+                    style="@style/svgButtonDate"
+                    android:layout_width="@dimen/xs_content_minheight_px"
+                    android:layout_height="@dimen/xs_content_minheight_px"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/xs_eliminate_date_button_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/battery_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/xs_bottom_line_background_selector"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/xs_content_minheight_px"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="测试分类"
+                    android:textColor="@color/xs_dark_text"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_global_text_size_px"/>
+
+                <com.zhy.core.AutoRadioGroup
+                    android:id="@+id/radio_ceshi_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal">
+
+                    <com.cnksi.bdzinspection.view.CustomRadioButton
+                        android:id="@+id/radio_puce"
+                        style="@style/RadioButtonBaseStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:text="普测"
+                        android:textSize="@dimen/xs_global_text_size_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px"/>
+
+                    <com.cnksi.bdzinspection.view.CustomRadioButton
+                        android:id="@+id/radio_chouce"
+                        style="@style/RadioButtonBaseStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:text="抽测"
+                        android:textSize="@dimen/xs_global_text_size_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px"/>
+                </com.zhy.core.AutoRadioGroup>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/ll_persons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/xs_bottom_line_background_selector"
+                android:minHeight="188px"
+                android:paddingBottom="20px"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                android:paddingTop="43px"
+                >
+
+                <TextView
+                    android:layout_marginBottom="26px"
+                    android:id="@+id/txt_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="巡视人员"
+                    android:textColor="@color/xs_global_text_color"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="40px"/>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/ib_select_person"
+                    android:layout_width="74px"
+                    android:layout_height="74px"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/txt_person"
+                    android:layout_marginLeft="@dimen/xs__30px"
+                    android:layout_marginRight="@dimen/xs__30px"
+                    android:background="@drawable/xs_bg_01ce7f"
+                    android:src="@drawable/xs_icon_add_person_selector"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rec_person_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_person"
+                    android:layout_toLeftOf="@id/ib_select_person"/>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/xs_global_padding_left_right_px">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="118px"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/xs_global_padding_half_left_right_px"
+                    android:layout_weight="1"
+                    android:background="@drawable/xs_red_button_background_selector"
+                    android:gravity="center"
+                    android:minHeight="100px"
+                    android:text="@string/xs_dialog_cancel_text_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size_px"/>
+
+                <Button
+                    android:id="@+id/btn_confirm"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="118px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/xs_global_padding_half_left_right_px"
+                    android:layout_weight="1"
+                    android:background="@drawable/xs_grass_green_button_background_selector"
+                    android:gravity="center"
+                    android:minHeight="100px"
+                    android:text="@string/xs_confirm_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size_px"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

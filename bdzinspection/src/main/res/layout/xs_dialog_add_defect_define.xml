@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/xs_dialog_green_title_background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_tab_strip_minheight"
+        android:gravity="center"
+        android:text="@string/xs_tips_str"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/xs_global_text_size" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xs_bottom_line_background_selector"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/xs_content_minheight"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/xs_global_padding_left_right"
+        android:paddingRight="@dimen/xs_global_padding_left_right" >
+
+        <RadioButton
+            android:id="@+id/rb_general_defect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@drawable/xs_radio_button_selector"
+            android:checked="true"
+            android:text="@string/xs_general_defect_str"
+            android:textColor="@color/xs_radio_button_text_selector" />
+
+        <RadioButton
+            android:id="@+id/rb_serious_defect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@drawable/xs_radio_button_selector"
+            android:text="@string/xs_serious_defect_str"
+            android:textColor="@color/xs_radio_button_text_selector" />
+
+        <RadioButton
+            android:id="@+id/rb_crisis_defect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@drawable/xs_radio_button_selector"
+            android:text="@string/xs_crisis_defect_str"
+            android:textColor="@color/xs_radio_button_text_selector" />
+    </RadioGroup>
+
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/xs_global_padding_left_right"
+        android:background="@color/xs_gray_background_color"
+        android:gravity="left|top"
+        android:focusable="true"
+        android:hint="@string/xs_please_input_defect_content_str"
+        android:maxHeight="@dimen/xs_standard_image_minheight"
+        android:minHeight="@dimen/xs_standard_image_minheight"
+        android:padding="@dimen/xs_global_padding_top_bottom"
+        android:textColor="@color/xs_global_text_color"
+        android:textSize="@dimen/xs_global_text_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_line_eight_width"
+        android:background="@color/xs_line_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/xs_global_padding_top_bottom"
+        android:layout_marginTop="@dimen/xs_global_padding_top_bottom"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+            android:layout_marginRight="@dimen/xs_global_padding_left_right"
+            android:layout_weight="1"
+            android:background="@drawable/xs_red_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_dialog_cancle_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size" />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+            android:layout_marginRight="@dimen/xs_global_padding_left_right"
+            android:layout_weight="1"
+            android:background="@drawable/xs_green_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_dialog_sure_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size" />
+    </LinearLayout>
+
+</LinearLayout></layout>

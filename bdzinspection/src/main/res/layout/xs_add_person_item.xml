@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_container"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_child_item"
+        android:layout_width="match_parent"
+        android:layout_height="129px"
+        android:background="@drawable/xs_list_item_background_selector"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+        android:paddingLeft="@dimen/xs_inspection_type_child_item_padding_left_px"
+        android:paddingTop="@dimen/xs_global_padding_top_bottom_px"
+        android:text="张山"
+        android:textSize="@dimen/xs_global_text_size_px"/>
+</LinearLayout>
+</layout>

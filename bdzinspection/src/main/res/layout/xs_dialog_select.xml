@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data class=""></data>
+
+    <com.zhy.core.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                         android:layout_width="match_parent"
+                                         android:layout_height="match_parent"
+                                         android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
+                                         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:background="@drawable/xs_bdz_background_select"
+            android:gravity="center"
+            android:text="@string/xs_tips_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px"/>
+
+        <TextView
+            android:id="@+id/tv_dialog_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:minHeight="@dimen/xs_tab_strip_minheight_px"
+            android:padding="@dimen/xs_global_padding_left_right_px"
+            android:text="@string/xs_dialog_tips_content_str"
+            android:textColor="@color/xs_deep_grey"
+            android:textSize="@dimen/xs__42px"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_line_eight_width_px"
+            android:background="@color/xs_line_color"/>
+
+        <LinearLayout
+            android:paddingStart="@dimen/xs__30px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/xs__30px"
+            android:layout_marginTop="@dimen/xs__30px"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkbox_left"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="@dimen/xs__30px"
+                android:drawableStart="@drawable/xs_checkbox_selector"
+                android:gravity="left|center_vertical"
+                android:text="删除服务器任务"
+                android:textSize="44px"/>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkbox_right"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="@dimen/xs__30px"
+                android:drawableStart="@drawable/xs_checkbox_selector"
+                android:gravity="left|center_vertical"
+                android:text="删除本地任务"
+                android:textSize="44px"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_line_eight_width_px"
+            android:background="@color/xs_line_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+            android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_green_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancle_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+        </LinearLayout>
+
+    </com.zhy.core.AutoLinearLayout>
+</layout>

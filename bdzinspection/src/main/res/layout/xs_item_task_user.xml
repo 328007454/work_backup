@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#F8EFEF"
+        android:paddingBottom="15px"
+        android:paddingEnd="17px"
+        android:paddingStart="@dimen/xs__30px"
+        android:paddingTop="15px">
+
+        <android.support.v7.widget.AppCompatTextView
+
+            android:id="@+id/txt_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="张坤"
+            android:textColor="#F96a6a"
+            android:textSize="36px"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="24px"
+            android:layout_height="24px"
+            android:layout_marginLeft="17px"
+            android:src="@drawable/xs_ic_dele_user_selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_username"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

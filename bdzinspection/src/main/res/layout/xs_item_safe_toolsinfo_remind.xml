@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="1dp">
+
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="64px"
+            android:layout_height="64px"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="48px"
+            android:background="@drawable/xs_red_fd6067_background"
+            android:gravity="center"
+            android:textColor="@color/xs_white"
+            android:textSize="36px" />
+
+        <com.cnksi.bdzinspection.view.UnderLineLinearLayout
+            android:id="@+id/ll_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/tv_number"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="30px"
+            app:drawUnderLine="true">
+
+            <TextView
+                android:id="@+id/tv_tool_name"
+                android:layout_width="wrap_content"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:gravity="bottom|left"
+                android:textColor="#fd6067"
+                android:textSize="40px" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_marginTop="10px"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_serial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/tv_date"
+                    android:textColor="@color/xs__c0bab9_color"
+                    android:textSize="36px" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:text="2017/07/01"
+                    android:textColor="@color/xs__c0bab9_color"
+                    android:textSize="36px" />
+            </RelativeLayout>
+        </com.cnksi.bdzinspection.view.UnderLineLinearLayout>
+    </RelativeLayout>
+</layout>

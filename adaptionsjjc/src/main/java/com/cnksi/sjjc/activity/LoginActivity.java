@@ -217,10 +217,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             mHandler.sendEmptyMessage(SHOW_UPDATE_LOG_DIALOG);
         });
         binding.bAddPeopleButton.setOnClickListener(view -> {
-            ExecutorManager.executeTaskSerially( () ->{
-                FileUtil.copyDbtoInnerStorage(this);
-            });
-//            loginUser(false);
+            loginUser(false);
         });
         binding.maskWifi.setOnClickListener(view -> {
             if (count == 0) {
@@ -521,8 +518,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         KSyncConfig.getInstance().setDept_id(dept_id);
         if ("-1".equals(dept_id)) {
             ToastUtils.showMessage("当前登录帐号无任何班组信息！");
-        } else
-            ExecutorManager.executeTaskSerially(() -> DepartmentService.getInstance().deleteOtherDataByDept(dept_id));
+        } else {
+//            ExecutorManager.executeTaskSerially(() -> DepartmentService.getInstance().deleteOtherDataByDept(dept_id));
+        }
     }
 
     /**

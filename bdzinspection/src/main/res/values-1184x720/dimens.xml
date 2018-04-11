@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="xs_activity_horizontal_margin">16dp</dimen>
+    <dimen name="xs_activity_vertical_margin">16dp</dimen>
+
+    <dimen name="tab_text_size_px">37px</dimen>
+    <dimen name="xs__434px">289px</dimen>
+    <dimen name="xs__30px">20px</dimen>
+    <dimen name="xs__42px">28px</dimen>
+    <dimen name="xs__54px">36px</dimen>
+    <dimen name="xs__39px">26px</dimen>
+</resources>

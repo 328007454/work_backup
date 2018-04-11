@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_audio"
+        android:layout_width="@dimen/xs_yw_audio_w"
+        android:layout_height="@dimen/xs_yw_audio_h"
+        android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+        android:layout_marginTop="@dimen/xs_global_padding_top_bottom"
+        android:background="@drawable/xs_grass_green_button_background_selector"
+        android:drawableLeft="@drawable/xs_ic_audio"
+        android:gravity="center"
+        android:paddingLeft="@dimen/xs_global_padding_top_bottom"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/xs_audio_length_text_size" />
+
+</LinearLayout>
+    </layout>

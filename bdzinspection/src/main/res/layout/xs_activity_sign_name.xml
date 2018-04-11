@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <com.zhy.core.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- 签名的dialog -->
+
+        <com.zhy.core.AutoRelativeLayout
+            android:id="@+id/ll_sign_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_person_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+                android:layout_marginTop="@dimen/xs_global_padding_top_bottom"
+                android:textColor="@color/xs_global_text_color"
+                android:textSize="@dimen/xs_global_text_small_size" />
+        </com.zhy.core.AutoRelativeLayout>
+
+        <com.zhy.core.AutoLinearLayout
+            style="@style/ListItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancel_text_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_small_size" />
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_marginLeft="@dimen/xs_global_padding_half_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_reset_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_small_size" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_marginLeft="@dimen/xs_global_padding_half_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/xs_grass_green_button_background_selector"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_save_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_small_size" />
+        </com.zhy.core.AutoLinearLayout>
+
+    </com.zhy.core.AutoLinearLayout>
+</layout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" 
+	android:layout_height="match_parent"
+	android:orientation="horizontal" 
+	android:paddingLeft="10dip"
+	android:paddingRight="10dip" 
+	android:paddingTop="1dip"
+	android:paddingBottom="1dip">
+	<TextView android:id="@+id/TagData" 
+	    android:layout_width="match_parent"
+		android:layout_height="match_parent" 
+		android:textSize="6pt"
+		android:layout_weight="1"
+		android:singleLine="true" />
+	
+	<TextView android:id="@+id/CountNum" 
+	    android:layout_width="match_parent"
+		android:layout_height="match_parent" 
+		android:layout_weight="5"
+		android:textSize="6pt" />
+</LinearLayout></layout>

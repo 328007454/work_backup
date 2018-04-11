@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="XS_TaskTitleArray">
+        <item>未完成</item>
+        <item>已完成</item>
+        <item>全部</item>
+        <item>逾期</item>
+    </string-array>
+    <string-array name="XS_InspectionReadyTitleArray">
+        <item>抄录温度</item>
+        <item>危险点</item>
+        <item>工器具</item>
+        <item>巡检线路图</item>
+        <item>现存缺陷</item>
+    </string-array>
+
+    <string-array name="XS_InspectionReadyTitleArrayMore">
+        <item>抄录温度</item>
+        <item>危险点</item>
+        <item>工器具</item>
+        <item>巡检线路图</item>
+        <item>现存缺陷</item>
+        <item>综自后台</item>
+    </string-array>
+
+    <string-array name="XS_InspectionReadyTitleArrayForMembers">
+        <item>危险点</item>
+        <item>工器具</item>
+        <item>巡检线路图</item>
+        <item>现存缺陷</item>
+    </string-array>
+    <string-array name="XS_InspectionReadyTitleArrayForMembersMore">
+        <item>危险点</item>
+        <item>工器具</item>
+        <item>巡检线路图</item>
+        <item>现存缺陷</item>
+        <item>综自后台</item>
+    </string-array>
+
+    <string-array name="XS_DefectControlArray">
+        <item>记录缺陷</item>
+        <item>跟踪缺陷</item>
+        <item>验收缺陷</item>
+    </string-array>
+    <string-array name="XS_ChangPartPictureArray">
+        <item>查看大图</item>
+        <item>更换照片</item>
+        <item>恢复默认照片</item>
+        <item>添加全面巡检标准</item>
+        <item>删除该部件</item>
+    </string-array>
+    <string-array name="XS_ChangStandardArray">
+        <item>查看大图</item>
+        <item>更换照片</item>
+        <item>恢复默认照片</item>
+        <item>从库中选择图片</item>
+    </string-array>
+    <string-array name="XS_ChangeRegularArray">
+        <item>查看大图</item>
+        <item>更换照片</item>
+        <item>恢复默认照片</item>
+    </string-array>
+    <string-array name="XS_AddStandardArray">
+        <item>查看大图</item>
+        <item>更换照片</item>
+    </string-array>
+    <string-array name="XS_ReferenceStandardTitle">
+        <item>巡检标准</item>
+        <item>工作标准</item>
+        <item>技术标准</item>
+        <item>管理标准</item>
+    </string-array>
+    <string-array name="XS_ClampTitleArray">
+        <item>保护压板核对</item>
+        <item>定值核对</item>
+    </string-array>
+    <string-array name="XS_IsUploadOrDeleteArray">
+        <item>上传</item>
+        <item>不上传</item>
+        <item>删除</item>
+    </string-array>
+    <string-array name="XS_WordsNumberArray">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="XS_WordsOneArray">
+        <item>Q</item>
+        <item>W</item>
+        <item>E</item>
+        <item>R</item>
+        <item>T</item>
+        <item>Y</item>
+        <item>U</item>
+        <item>I</item>
+        <item>O</item>
+        <item>P</item>
+    </string-array>
+    <string-array name="XS_WordsTwoArray">
+        <item>A</item>
+        <item>S</item>
+        <item>D</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+    </string-array>
+    <string-array name="XS_WordsThreeArray">
+        <item>Z</item>
+        <item>X</item>
+        <item>C</item>
+        <item>V</item>
+        <item>B</item>
+        <item>N</item>
+        <item>M</item>
+    </string-array>
+    
+      <string-array name="xs_weather">
+        <item>晴</item>
+        <item>阴</item>
+        <item>多云</item>
+        <item>小雨</item>
+        <item>中雨</item>
+        <item>大雨</item>
+        <item>暴雨</item>
+        <item>冻雨</item>
+        <item>雷</item>
+        <item>霜冻</item>
+        <item>小雪</item>
+        <item>中雪</item>
+        <item>大雪</item>
+        <item>暴雪</item>
+        <item>雨夹雪</item>
+        <item>雾</item>
+        <item>浓雾</item>
+        <item>冰冻</item>
+        <item>雹灾</item>
+        <item>大风</item>
+        <item>热带风暴</item>
+        <item>强热带风暴</item>
+        <item>龙卷风</item>
+        <item>飑线风</item>
+        <item>台风</item>
+        <item>沙尘暴</item>
+        <item>扬尘</item>
+        <item>洪水</item>
+        <item>泥石流</item>
+        <item>地震</item>
+        <item>霾</item>
+        <item>雾霾</item>
+        <item>其他</item>
+    </string-array>
+    
+    <string-array name="XS_OperateTaskTitleArray">
+        <item>待办任务(0)</item>
+        <item>本月任务(0)</item>
+        <item>本年任务(0)</item>
+    </string-array>
+    
+    <string-array name="XS_AccidentDeal">
+        <item>运行规定</item>
+        <item>典型故障和异常处理</item>
+    </string-array>
+
+    <string-array name="XS_CopyItemCount">
+        <item>单相</item>
+        <item>三相</item>
+    </string-array>
+
+
+</resources>

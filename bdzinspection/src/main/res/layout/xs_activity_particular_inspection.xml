@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:autofit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:background="@color/xs_global_base_color">
+
+            <ImageButton
+                android:id="@+id/ibtn_cancel"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_cancel_button_background" />
+
+            <ImageButton
+                android:id="@+id/ibtn_add"
+                style="@style/svgButton"
+                android:layout_width="@dimen/xs_title_bar_image_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="gone"
+                app:srcCompat="@drawable/xs_copy_button_background" />
+
+
+            <ImageButton
+                android:id="@+id/ibtn_sort"
+                style="@style/svgButton"
+                android:layout_width="@dimen/xs_title_bar_image_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/ibtn_add"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="gone"
+                app:srcCompat="@drawable/xs_ibt_sort" />
+
+            <ImageButton
+                android:id="@+id/ibtn_bluetooth"
+                android:layout_width="@dimen/xs_title_bar_image_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30px"
+                android:layout_toLeftOf="@id/ibtn_sort"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:src="@drawable/xs_icon_bluetooth"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_battery_test_step"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:background="@drawable/xs_test_step_button_background_selector"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:paddingLeft="@dimen/xs_grid_vertical_spacing_px"
+                android:paddingRight="@dimen/xs_grid_vertical_spacing_px"
+                android:paddingTop="@dimen/xs_global_padding_top_bottom_px"
+                android:text="@string/xs_test_step_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_device_item_name_text_size_px"
+                android:visibility="gone" />
+
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+                android:layout_toLeftOf="@id/ibtn_sort"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_title_text_size_px"
+                autofit:minTextSize="10px" />
+
+        </RelativeLayout>
+
+
+        <com.cnksi.xscore.xsview.PagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tab_strip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:background="@color/xs_tab_strip_background_color" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_finish_inspection"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_button_minheight"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16px"
+            android:layout_marginLeft="22px"
+            android:layout_marginRight="22px"
+            android:layout_marginTop="16px"
+            android:background="@drawable/xs_red_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_finish_inspection_str"
+            android:textColor="@android:color/white"
+            android:textSize="48px" />
+
+    </LinearLayout>
+</layout>

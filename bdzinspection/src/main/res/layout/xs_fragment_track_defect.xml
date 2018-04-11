@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scv_root_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/xs_history_defect_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom_px">
+
+            <TextView
+                android:id="@+id/tv_defect_deal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/xs_green_color"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                android:text="@string/xs_add_defect_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+
+            <include
+                android:id="@+id/include_add"
+                layout="@layout/xs_add_defect_layout"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/contanier_sf6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_margin="@dimen/xs_global_padding_left_right_px"
+            android:background="@drawable/xs_grass_green_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_confirm_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px"/>
+
+        <TextView
+            android:id="@+id/tv_track_history_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_gray_background_color"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/xs_text_button_padding_top_px"
+            android:text="@string/xs_track_history_str"
+            android:textColor="@color/xs_green_color"
+            android:textSize="@dimen/xs_global_text_size_px"
+            android:visibility="gone"/>
+
+        <com.cnksi.xscore.xsview.InnerListView
+            android:id="@+id/lv_track_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/xs_line_color"
+            android:dividerHeight="@dimen/xs_line_half_width_px"
+            android:listSelector="@android:color/transparent"/>
+    </LinearLayout>
+
+</ScrollView></layout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_root_container"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:autofit="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_title_bar_minheight_px"
+        android:background="@color/xs_global_base_color">
+
+        <ImageButton
+            app:srcCompat="@drawable/xs_cancel_button_background"
+            style="@style/svgButtonBack"
+            android:id="@+id/ibtn_cancel"
+            android:layout_width="@dimen/xs_title_bar_minheight_px"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:visibility="visible" />
+
+
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/ibtn_sort"
+            android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+            android:gravity="center"
+            autofit:minTextSize="10px"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_title_text_size_px" />
+
+    </RelativeLayout>
+
+    <com.cnksi.xscore.xsview.PagerSlidingTabStrip
+        android:id="@+id/tab_strip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_tab_strip_minheight_px"
+        android:background="@color/xs_tab_strip_background_color" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btn_start_inspection"
+        android:layout_width="match_parent"
+        android:layout_height="118px"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+        android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+        android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+        android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+        android:background="@drawable/xs_red_button_background_selector"
+        android:gravity="center"
+        android:minHeight="@dimen/xs_button_minheight"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/xs_global_text_size_px" />
+
+</LinearLayout>
+</layout>

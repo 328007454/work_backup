@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:background="@drawable/xs_picktime_background_select"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_white"
+            android:paddingStart="@dimen/xs__30px"
+            android:text="温馨提示：在时间上可以上下滑动选择"
+            android:textColor="@color/xs_gray_stroke_color"
+            android:textSize="32px"/>
+
+
+        <!--此部分需要完整复制过去，删减或者更改ID会导致初始化找不到内容而报空-->
+        <LinearLayout
+            android:id="@+id/timepicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="100px"
+                android:layout_marginTop="10px"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingEnd="200px"
+                android:paddingStart="200px"
+                >
+
+                <com.bigkoo.pickerview.lib.WheelView
+                    android:id="@+id/year"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:layout_marginLeft="10px"
+                    android:textSize="42px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年"/>
+
+                <com.bigkoo.pickerview.lib.WheelView
+                    android:id="@+id/month"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:textSize="42px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="月"/>
+
+                <com.bigkoo.pickerview.lib.WheelView
+                    android:id="@+id/day"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:textSize="42px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="日"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="20px"
+                android:layout_marginTop="20px"
+                android:background="@color/xs_gray_stroke_color"/>
+
+
+            <LinearLayout
+                android:layout_width="300px"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20px"
+                android:background="@drawable/xs_add_copy_item_select_background"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <com.bigkoo.pickerview.lib.WheelView
+                    android:tag="@string/xs_picker_tag"
+                    android:id="@+id/hour"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "/>
+
+                <com.bigkoo.pickerview.lib.WheelView
+                    android:tag="@string/xs_picker_tag"
+                    android:id="@+id/min"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <com.bigkoo.pickerview.lib.WheelView
+                    android:id="@+id/second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_white"
+            android:orientation="horizontal"
+            android:paddingBottom="20px"
+            android:paddingEnd="@dimen/xs__30px"
+            android:paddingStart="@dimen/xs__30px"
+            android:paddingTop="10px">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_add_hour"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_add_copy_item_select_background"
+                android:gravity="center"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:text="+1小时"
+                android:textColor="@color/xs_green_color"
+                android:textSize="42px"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_minus_hour"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_add_copy_item_select_background"
+                android:gravity="center"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:text="-1小时"
+                android:textColor="@color/xs_green_color"
+                android:textSize="42px"
+            />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_minus_minute"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_add_copy_item_select_background"
+                android:gravity="center"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:text="-10分钟"
+                android:textColor="@color/xs_green_color"
+                android:textSize="42px"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_add_minute"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_add_copy_item_select_background"
+                android:gravity="center"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:text="+10分钟"
+                android:textColor="@color/xs_green_color"
+                android:textSize="42px"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/xs_gray_stroke_color"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_sum_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_white"
+            android:paddingBottom="30px"
+            android:paddingEnd="@dimen/xs__30px"
+            android:paddingStart="@dimen/xs__30px"
+            android:paddingTop="30px"
+            android:textColor="@color/xs_green_color"
+            android:textSize="42px"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/xs_gray_stroke_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/xs__30px"
+            android:paddingEnd="@dimen/xs__30px"
+            android:paddingStart="@dimen/xs__30px"
+            android:paddingTop="@dimen/xs__30px"
+            >
+
+            <Button
+                android:id="@+id/btn_reback"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginRight="24px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="还原"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="24px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_button_background_blue_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

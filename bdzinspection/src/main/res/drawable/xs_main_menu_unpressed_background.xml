@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:bottom="@dimen/xs_seven_oval_size"
+        android:left="@dimen/xs_seven_oval_size"
+        android:right="@dimen/xs_seven_oval_size"
+        android:top="@dimen/xs_seven_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/xs_main_background_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/xs_one_oval_size"
+        android:left="@dimen/xs_one_oval_size"
+        android:right="@dimen/xs_one_oval_size"
+        android:top="@dimen/xs_one_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/xs_main_circle_menu_unpressed_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/xs_two_oval_size"
+        android:left="@dimen/xs_two_oval_size"
+        android:right="@dimen/xs_two_oval_size"
+        android:top="@dimen/xs_two_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@android:color/white" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/xs_three_oval_size"
+        android:left="@dimen/xs_three_oval_size"
+        android:right="@dimen/xs_three_oval_size"
+        android:top="@dimen/xs_three_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/xs_main_circle_menu_unpressed_color" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/xs_three_oval_size"
+        android:left="@dimen/xs_three_oval_size"
+        android:right="@dimen/xs_three_oval_size"
+        android:top="@dimen/xs_three_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/xs_main_circle_menu_unpressed_color" >
+            </solid>
+        </shape>
+    </item>
+
+</layer-list>

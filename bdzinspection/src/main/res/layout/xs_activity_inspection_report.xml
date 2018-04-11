@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:autofit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:background="@color/xs_global_base_color">
+
+            <ImageButton
+                android:id="@+id/ibtn_cancel"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_cancel_button_background" />
+
+            <ImageButton
+                android:id="@+id/ibtn_exit"
+                style="@style/svgButtonAdd"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="gone"
+                app:srcCompat="@drawable/xs_exit_button_background" />
+
+            <ImageButton
+                android:id="@+id/ibtn_add"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/ibtn_exit"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:src="@drawable/xs_add_task_button_background"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_battery_test_step"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:background="@drawable/xs_test_step_button_background_selector"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:paddingLeft="@dimen/xs_grid_vertical_spacing_px"
+                android:paddingRight="@dimen/xs_grid_vertical_spacing_px"
+                android:paddingTop="@dimen/xs_global_padding_top_bottom_px"
+                android:text="@string/xs_test_step_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_device_item_name_text_size_px"
+                android:visibility="gone" />
+
+            <RadioGroup
+                android:id="@+id/rg_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:background="@drawable/xs_radiogroup_bg"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/rb_btn_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_rb_list_btn_selector_bg"
+                    android:button="@null"
+                    android:contentDescription="@null"
+                    android:drawableLeft="@drawable/xs_radio_button_list_selector"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+                    android:paddingLeft="@dimen/xs_grid_vertical_spacing_px"
+                    android:paddingRight="@dimen/xs_grid_vertical_spacing_px"
+                    android:paddingTop="@dimen/xs_global_padding_top_bottom_px" />
+
+                <RadioButton
+                    android:id="@+id/rb_btn_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_rb_img_btn_selector_bg"
+                    android:button="@null"
+                    android:checked="true"
+                    android:contentDescription="@null"
+                    android:drawableLeft="@drawable/xs_radio_button_images_selector"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+                    android:paddingLeft="@dimen/xs_grid_vertical_spacing_px"
+                    android:paddingRight="@dimen/xs_grid_vertical_spacing_px"
+                    android:paddingTop="@dimen/xs_global_padding_top_bottom_px" />
+            </RadioGroup>
+            <!--
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/title_bar_minheight"
+                    android:layout_marginRight="@dimen/title_bar_minheight"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/title_text_size" />-->
+
+            <com.cnksi.bdzinspection.view.AutoResizeTextView1
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+                android:layout_marginRight="@dimen/xs_title_bar_minheight_px"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_title_text_size_px" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingRight="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/xs_report_padding_top_px">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/xs_ic_report_exit" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:layout_marginTop="@dimen/xs_global_padding_half_left_right_px">
+
+                <!--  -->
+
+                <TextView
+                    android:id="@+id/tv_report_generate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawableLeft="@drawable/xs_ic_report_generate"
+                    android:drawablePadding="@dimen/xs_report_generate_drawable_padding_px"
+                    android:gravity="center"
+                    android:text="@string/xs_report_generating_str"
+                    android:textColor="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_report_generate_text_size_px" />
+                <!-- android:layout_marginTop="@dimen/report_margin_top" -->
+
+                <LinearLayout
+                    android:id="@+id/ll_report_content_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="1594px"
+                    android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                    android:layout_marginTop="0px"
+                    android:background="@drawable/xs_ic_report_background"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/xs_global_padding_half_left_right_px"
+                    android:paddingRight="@dimen/xs_global_padding_half_left_right_px"
+                    android:paddingTop="@dimen/xs_report_padding_top_px">
+
+                    <LinearLayout style="@style/IRInspectionBaseDataLL">
+
+                        <TextView
+                            style="@style/IRInspectionBaseDataTitle"
+                            android:text="@string/xs_inspection_start_time_str" />
+
+                        <TextView
+                            android:id="@+id/tv_inspection_start_time"
+                            style="@style/IRInspectionBaseDataValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/IRInspectionBaseDataLL">
+
+                        <TextView
+                            style="@style/IRInspectionBaseDataTitle"
+                            android:text="@string/xs_inspection_end_time_str" />
+
+                        <TextView
+                            android:id="@+id/tv_inspection_end_time"
+                            style="@style/IRInspectionBaseDataValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/IRInspectionBaseDataLL">
+
+                        <TextView
+                            style="@style/IRInspectionBaseDataTitle"
+                            android:text="工作人员" />
+
+                        <TextView
+                            android:id="@+id/tv_inspection_worker"
+                            style="@style/IRInspectionBaseDataValue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/IRInspectionBaseDataLL"
+                        android:visibility="gone">
+
+                        <TextView
+                            style="@style/IRInspectionBaseDataTitle"
+                            android:text="工作负责人" />
+
+                        <TextView
+                            android:id="@+id/tv_inspection_leader"
+                            style="@style/IRInspectionBaseDataValue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_temperature"
+                        style="@style/IRInspectionBaseDataLL">
+
+                        <TextView
+                            style="@style/IRInspectionBaseDataTitle"
+                            android:text="@string/xs_inspection_temperature_str" />
+
+                        <TextView
+                            android:id="@+id/tv_inspection_temperature"
+                            style="@style/IRInspectionBaseDataValue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_weather"
+                        style="@style/IRInspectionBaseDataLL">
+
+                        <TextView
+                            style="@style/IRInspectionBaseDataTitle"
+                            android:text="@string/xs_inspection_weather_str" />
+
+                        <TextView
+                            android:id="@+id/tv_inspection_tq"
+                            style="@style/IRInspectionBaseDataValue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_inspection"
+                        style="@style/IRInspectionBaseDataLL"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_type_name"
+                            style="@style/IRInspectionBaseDataTitle"
+                            android:text="@string/xs_inspection_type_name" />
+
+                        <TextView
+                            android:id="@+id/tv_inspection_type"
+                            style="@style/IRInspectionBaseDataValue" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_dash_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="45px"
+                        android:background="@drawable/xs_dotted_line_background" />
+
+                    <ScrollView
+                        android:id="@+id/sv_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fadeScrollbars="false">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/layout_xunshicontent"
+                                style="@style/IRBigLabelStyle"
+                                android:layout_marginTop="0dp">
+
+                                <TextView
+                                    style="@style/IRLableTextStyle"
+                                    android:text="巡视内容" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_content"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="left|center_vertical"
+                                    android:padding="24px"
+                                    android:text="123312"
+                                    android:textColor="@color/xs_dark_text"
+                                    android:textSize="@dimen/xs_device_item_name_text_size_px" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_result"
+                                style="@style/IRBigLabelStyle">
+
+                                <TextView
+                                    style="@style/IRLableTextStyle"
+                                    android:text="巡视结果" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_result"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="left|center_vertical"
+                                    android:padding="8dp"
+                                    android:textColor="@color/xs_dark_text"
+                                    android:textSize="@dimen/xs_device_item_name_text_size_px" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layout_mark"
+                                style="@style/IRBigLabelStyle">
+
+                                <TextView
+                                    style="@style/IRLableTextStyle"
+                                    android:text="备注" />
+
+                                <TextView
+                                    android:id="@+id/tv_inspection_mark"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="left|center_vertical"
+                                    android:padding="8dp"
+                                    android:textColor="@color/xs_dark_text"
+                                    android:textSize="@dimen/xs_device_item_name_text_size_px" />
+                            </LinearLayout>
+
+                            <LinearLayout style="@style/IRBigLabelStyle">
+
+                                <TextView
+                                    android:id="@+id/txt_xunshi_result"
+                                    style="@style/IRLableTextStyle"
+                                    android:text="记录情况" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:paddingBottom="@dimen/xs_global_padding_left_right_px"
+                                    android:paddingTop="@dimen/xs_global_padding_left_right_px">
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_new_defect_count"
+                                        style="@style/IRResultLL">
+
+                                        <TextView
+                                            style="@style/IRRusltNameTextStyle"
+                                            android:text="@string/xs_new_defect_count_str" />
+
+                                        <TextView
+                                            android:id="@+id/tv_new_defect_count"
+                                            style="@style/IRRusltValueTextStyle" />
+                                    </LinearLayout>
+
+                                    <View style="@style/GPInspectionReslutSplitLine" />
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_track_defect_count"
+                                        style="@style/IRResultLL">
+
+                                        <TextView
+                                            style="@style/IRRusltNameTextStyle"
+                                            android:text="@string/xs_track_count_str" />
+
+                                        <TextView
+                                            android:id="@+id/tv_track_defect_count"
+                                            style="@style/IRRusltValueTextStyle" />
+                                    </LinearLayout>
+
+                                    <View style="@style/GPInspectionReslutSplitLine" />
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_eliminate_defect_count"
+                                        style="@style/IRResultLL">
+
+                                        <TextView
+                                            style="@style/IRRusltNameTextStyle"
+                                            android:text="@string/xs_clear_count_str" />
+
+                                        <TextView
+                                            android:id="@+id/tv_eliminate_defect_count"
+                                            style="@style/IRRusltValueTextStyle" />
+                                    </LinearLayout>
+
+                                    <View
+                                        android:id="@+id/line_copy_result"
+                                        style="@style/GPInspectionReslutSplitLine" />
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_copy_result"
+                                        style="@style/IRResultLL">
+
+                                        <TextView
+                                            style="@style/IRRusltNameTextStyle"
+                                            android:text="@string/xs_copy_count_str" />
+
+                                        <TextView
+                                            android:id="@+id/tv_copy_result"
+                                            style="@style/IRRusltValueTextStyle" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                style="@style/IRBigLabelStyle"
+                                android:visibility="gone">
+
+                                <TextView
+                                    style="@style/IRLableTextStyle"
+                                    android:text="工作人员签名" />
+
+                                <HorizontalScrollView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="120px">
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_sign_container"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal" />
+                                </HorizontalScrollView>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                style="@style/IRBigLabelStyle"
+                                android:visibility="gone">
+
+                                <TextView
+                                    style="@style/IRLableTextStyle"
+                                    android:text="工作负责人签名" />
+
+                                <HorizontalScrollView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="120px">
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_sign_container1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal" />
+                                </HorizontalScrollView>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </ScrollView>
+
+                    <Button
+                        android:id="@+id/bt_xunjian_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/xs_playback_button_margin_px"
+                        android:background="@drawable/xs_dark_green_button_background_selector"
+                        android:gravity="center"
+                        android:text="@string/xs_xunjian_line"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_size_px"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_playback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/xs_playback_button_margin_px"
+                android:background="@drawable/xs_green_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_playback_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

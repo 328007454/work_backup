@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="xs_first_key" type="id"></item>
+    <item name="xs_second_key" type="id"></item>
+    <item name="xs_thrid_key" type="id"></item>
+    <item name="xs_radio_button_id" type="id"></item>
+    <item name="xs_label" type="id"></item>
+    <item name="xs_item_touch_helper_previous_elevation" type="id"/>
+</resources>

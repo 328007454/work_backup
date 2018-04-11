@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout_danger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xs_list_item_background_selector"
+        android:minHeight="@dimen/xs_list_item_minheight_px"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+        android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+        android:paddingRight="@dimen/xs_global_padding_left_right_px"
+        android:paddingTop="@dimen/xs_global_padding_top_bottom_px" >
+
+        <TextView
+            android:id="@+id/tv_danger_point_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/xs_gray_circle_background"
+            android:gravity="center"
+            android:visibility="gone"
+            android:minHeight="@dimen/xs_danger_point_num_minwidth_px"
+            android:minWidth="@dimen/xs_danger_point_num_minwidth_px"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <TextView
+            android:id="@+id/tv_danger_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/xs_green_color"
+            android:textSize="@dimen/xs_inspection_time_text_size_px" />
+    </LinearLayout>
+
+</LinearLayout></layout>

@@ -1,0 +1,39 @@
+<layout>
+
+    <data class="PopMenuBinding"></data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="310px"
+        android:layout_height="310px">
+
+        <ImageView
+            android:id="@+id/id_defect"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:contentDescription="@null"
+            android:src="@drawable/xs_regular_record_defect_button_selector"
+            android:tag="记录缺陷" />
+
+        <ImageView
+            android:id="@+id/id_record"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginLeft="-40px"
+            android:layout_marginTop="125px"
+            android:layout_toRightOf="@+id/id_defect"
+            android:contentDescription="@null"
+            android:src="@drawable/xs_regular_audio_record_button_selector"
+            android:tag="录音" />
+
+        <ImageView
+            android:id="@+id/id_camera"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="210px"
+            android:layout_toRightOf="@+id/id_record"
+            android:contentDescription="@null"
+            android:src="@drawable/xs_regular_take_picture_button_selector"
+            android:tag="照相" />
+    </RelativeLayout>
+</layout>

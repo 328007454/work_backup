@@ -1,0 +1,394 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="xs_activity_horizontal_margin">16dp</dimen>
+    <dimen name="xs_activity_vertical_margin">16dp</dimen>
+
+    <!-- Global -->
+    <dimen name="xs_global_text_size">18sp</dimen>
+    <dimen name="xs_global_text_size_1">42px</dimen>
+    <dimen name="xs_global_text_small_size">16sp</dimen>
+    <dimen name="xs_thumb_img_minheight">60dp</dimen>
+    <dimen name="xs_thumb_img_minwidth">80dp</dimen>
+    <dimen name="xs_image_item_margin">6dp</dimen>
+    <dimen name="xs_thumb_img_padding">1dp</dimen>
+    <dimen name="xs_title_bar_minheight">45dp</dimen>
+    <dimen name="xs_title_bar_image_minheight">30dp</dimen>
+    <dimen name="xs_title_text_size">20sp</dimen>
+    <dimen name="xs_login_persons_minheight">40dp</dimen>
+    <dimen name="xs_global_padding_top_bottom">6dp</dimen>
+    <dimen name="xs_global_padding_half_top_bottom">3dp</dimen>
+    <dimen name="xs_global_padding_left_right">8dp</dimen>
+    <dimen name="xs_global_margin_top">12dp</dimen>
+    <dimen name="xs_global_padding_half_left_right">4dp</dimen>
+    <dimen name="xs_list_item_minheight">50dp</dimen>
+    <dimen name="xs_label_minwidth">75dp</dimen>
+    <dimen name="xs_list_item_eight_minheight">40dp</dimen>
+    <dimen name="corner_radius">3dp</dimen>
+    <dimen name="xs_clock_corner_radius">10dp</dimen>
+    <dimen name="xs_clock_corner_radius2">8dp</dimen>
+    <dimen name="xs_half_corner_radius">3dp</dimen>
+    <dimen name="xs_global_text_line_spacing">9dp</dimen>
+    <dimen name="xs_global_text_large_size">50sp</dimen>
+    <dimen name="xs_global_accident_deal">165dp</dimen>
+    <dimen name="xs_global_btn_margin">5dp</dimen>
+
+    <!-- circle -->
+    <dimen name="xs_circle_one">6dp</dimen>
+    <dimen name="xs_circle_two">7dp</dimen>
+    <dimen name="xs_circle_three">8dp</dimen>
+    <dimen name="xs_circle_four">28dp</dimen>
+
+    <!-- MainMenuActivity -->
+    <dimen name="xs_one_oval_size">11dp</dimen>
+    <dimen name="xs_two_oval_size">14dp</dimen>
+    <dimen name="xs_three_oval_size">17dp</dimen>
+    <dimen name="xs_five_oval_size">4dp</dimen>
+    <dimen name="xs_six_oval_size">6dp</dimen>
+    <dimen name="xs_seven_oval_size">8dp</dimen>
+    <dimen name="xs_eight_oval_size">2.5dp</dimen>
+    <dimen name="xs_nine_oval_size">4dp</dimen>
+    <dimen name="xs_twelve_oval_size">5dp</dimen>
+    <dimen name="xs_ten_oval_size">7dp</dimen>
+    <dimen name="xs_main_menu_text_size">19sp</dimen>
+    <dimen name="xs_main_menu_circle_container_width">30dp</dimen>
+
+    <!-- InspectionTaskRemindActivity -->
+    <dimen name="xs_tab_strip_minheight">40dp</dimen>
+    <dimen name="xs_line_half_width">0.5dp</dimen>
+    <dimen name="xs_line_half_width_1">1.5px</dimen>
+    <dimen name="xs_line_eight_width">0.8dp</dimen>
+    <dimen name="xs_line_height">1dp</dimen>
+    <dimen name="xs_line_eight_widthtask_simple_name_minheight">55dp</dimen>
+    <dimen name="xs_line_eight_widthinspection_time_text_size">16sp</dimen>
+
+    <!-- InspectionReady -->
+    <dimen name="xs_button_minheight">118px</dimen>
+    <dimen name="xs_temperature_margin_top">55dp</dimen>
+    <dimen name="xs_danger_point_num_minwidth">35dp</dimen>
+    <dimen name="xs_edit_text_minwidth">50dp</dimen>
+    <dimen name="xs_edit_text_minheight">35dp</dimen>
+    <dimen name="xs_edit_text_maxheight">60dp</dimen>
+    <dimen name="xs_inspection_type_child_item_padding_left">25dp</dimen>
+    <dimen name="xs_inspection_type_child_item_minheight">40dp</dimen>
+
+    <!-- DeviceActivity -->
+    <dimen name="xs_device_item_minwidth">90dp</dimen>
+    <dimen name="xs_device_item_half_minwidht">45dp</dimen>
+    <dimen name="xs_new_device_item_half_minwidth">70dp</dimen>
+    <dimen name="xs_new_device_item_maxwidth">100dp</dimen>
+    <dimen name="xs_device_item_minheight">35dp</dimen>
+    <dimen name="xs_device_item_name_padding_left">8dp</dimen>
+    <dimen name="xs_device_item_name_padding_right">12dp</dimen>
+    <dimen name="xs_device_defect_count_text_size">12sp</dimen>
+    <dimen name="xs_device_defect_count_minheight">15dp</dimen>
+    <dimen name="xs_device_gps_tips_minheight">8dp</dimen>
+    <dimen name="xs_grid_vertical_spacing">10dp</dimen>
+    <dimen name="xs_device_item_name_text_size">14sp</dimen>
+    <dimen name="xs_battery_voltage_text_size">12sp</dimen>
+    <dimen name="xs_device_item_name_text_small_size">14sp</dimen>
+    <dimen name="xs_device_photo_tips_minheight">20dp</dimen>
+    <dimen name="xs_device_part_photo_container_minheight">60dp</dimen>
+    <dimen name="xs_drawable_padding">3dp</dimen>
+    <dimen name="xs_text_button_padding_left">15dp</dimen>
+    <dimen name="xs_text_button_padding_half_left">8dp</dimen>
+    <dimen name="xs_text_button_padding_top">3dp</dimen>
+    <dimen name="xs_swipe_menu_text_size">14sp</dimen>
+    <dimen name="xs_device_part_img_minheight">70dp</dimen>
+    <dimen name="xs_device_part_img_minwidth">70dp</dimen>
+    <dimen name="xs_clamp_img_minheight">80dp</dimen>
+    <dimen name="xs_clamp_img_minwidth">70dp</dimen>
+    <dimen name="xs_device_part_image_name_text_size">14sp</dimen>
+    <dimen name="xs_device_photo_maxheight">95dp</dimen>
+    <dimen name="xs_twice_horizontal_spacing">10dp</dimen>
+    <dimen name="xs_twice_vertical_spacing">12dp</dimen>
+    <dimen name="xs_device_danger_button_minheight">25dp</dimen>
+    <dimen name="xs_device_top_photo_maxheight">115dp</dimen>
+    <dimen name="xs_battery_voltage_padding_top">1.5dp</dimen>
+
+    <!-- InspectionReportActivity -->
+    <dimen name="xs_report_padding_top">15dp</dimen>
+    <dimen name="xs_playback_button_margin">12dp</dimen>
+    <dimen name="xs_playback_button_height">100px</dimen>
+    <dimen name="xs_dot_line_height">30dp</dimen>
+    <dimen name="xs_inspection_result_minheight">60dp</dimen>
+
+    <!-- DefectControlActivity -->
+    <dimen name="xs_content_minheight">45dp</dimen>
+    <dimen name="history_defect_photo_height">45dp</dimen>
+    <dimen name="xs_new_defect_photo_height">35dp</dimen>
+
+    <dimen name="xs_new_defect_photo_height_176px">176px</dimen>
+    <dimen name="xs_track_defect_button_minheight">22dp</dimen>
+    <dimen name="xs_find_question_button_minheight">25dp</dimen>
+    <dimen name="xs_history_defect_level_text_size">15sp</dimen>
+    <dimen name="xs_report_generate_text_size">22sp</dimen>
+    <dimen name="xs_report_generate_drawable_padding">12dp</dimen>
+    <dimen name="xs_defect_count_width">13dp</dimen>
+    <dimen name="xs_defect_count_text_size">10sp</dimen>
+    <dimen name="xs_audio_length_text_size">12sp</dimen>
+
+    <!-- ReportLeader -->
+    <dimen name="xs_report_edit_text_minheight">120dp</dimen>
+    <dimen name="xs_inspection_standard_padding_top">12dp</dimen>
+
+    <!-- WindInspectionActivity -->
+    <!-- CopyAllValueActivity -->
+    <dimen name="xs_copy_all_value_container_height">110dp</dimen>
+    <dimen name="xs_button_margin_top">10dp</dimen>
+    <dimen name="xs_standards_text_paddleft">10dp</dimen>
+
+    <!-- ReferenceStandardActivity -->
+    <dimen name="xs_standard_source_text_size">16sp</dimen>
+    <dimen name="xs_search_container_minheight">70dp</dimen>
+    <dimen name="xs_clamp_tips_height">45dp</dimen>
+    <dimen name="xs_drawable_padding_left">20dp</dimen>
+    <dimen name="xs_regular_step_text_size">10sp</dimen>
+    <dimen name="xs_regular_step_num_text_size">16sp</dimen>
+    <dimen name="xs_regular_menu_height">35dp</dimen>
+    <dimen name="xs_regular_menu_half_height">13dp</dimen>
+    <dimen name="xs_regular_arcmenu_minheight">110dp</dimen>
+    <dimen name="xs_regular_arcmenu_radius">75dp</dimen>
+
+    <!-- login -->
+    <dimen name="xs_sys_name_minheigth">50dp</dimen>
+    <dimen name="xs_sys_name_text_size">28sp</dimen>
+    <dimen name="xs_app_main_padding">12dp</dimen>
+    <dimen name="xs_waiting_area_text_size">18sp</dimen>
+    <dimen name="xs_waiting_area_padding_bottom">16dp</dimen>
+    <dimen name="xs_waiting_area_minheight">22dp</dimen>
+    <dimen name="xs_btn_login_minheight">40dp</dimen>
+    <dimen name="xs_btn_radius_size">5dp</dimen>
+    <dimen name="xs_sys_copyrights_text_size">14sp</dimen>
+    <dimen name="xs_portrait_thum_minheight">120dp</dimen>
+    <dimen name="xs_portrait_thum_margin">10dp</dimen>
+    <dimen name="xs_portrait_thum_padding">3dp</dimen>
+    <dimen name="xs_main_view_height">30dp</dimen>
+    <dimen name="xs_main_view_margintop">-22dp</dimen>
+    <dimen name="xs_et_user_edit_minheight">40dp</dimen>
+    <dimen name="xs_et_hint_text_size">18sp</dimen>
+    <dimen name="xs_main_hr_bg_margin">0dp</dimen>
+    <dimen name="xs_et_drawable_padding_left">12dp</dimen>
+    <dimen name="xs_btn_add_user_margin">20dp</dimen>
+    <dimen name="xs_btn_text_size">18sp</dimen>
+    <dimen name="xs_sys_min_minheight">100dp</dimen>
+    <dimen name="xs_sys_min_center_minheight">500dp</dimen>
+    <dimen name="xs_step_num_margin_bottom">2dp</dimen>
+    <dimen name="xs_regular_grid_item_height">26dp</dimen>
+    <dimen name="xs_regular_grid_item_width">40dp</dimen>
+    <dimen name="xs_regular_grid_item_container_width">48dp</dimen>
+    <dimen name="xs_current_time_text_size">35sp</dimen>
+    <dimen name="xs_media_content_minheight">60dp</dimen>
+    <dimen name="xs_defect_count_width_height">25dp</dimen>
+    <dimen name="xs_defect_count_number_height">22dp</dimen>
+
+    <!-- keyboard -->
+    <dimen name="xs_keyboard_text_size">22sp</dimen>
+    <dimen name="xs_keyboard_horizontal_padding">2dp</dimen>
+    <dimen name="xs_keyboard_left_padding">1dp</dimen>
+    <dimen name="xs_keyboard_vertical_padding">4dp</dimen>
+    <dimen name="xs_keyboard_horizontal_space">3dp</dimen>
+    <dimen name="xs_keyboard_vertical_space">8dp</dimen>
+
+    <!-- KeyBoard -->
+    <dimen name="xs_key_height">40dp</dimen>
+    <dimen name="xs_key_vertical_gap">6dp</dimen>
+    <dimen name="xs_keyboard_padding_top">6dp</dimen>
+    <dimen name="xs_key_text_size">20sp</dimen>
+    <dimen name="xs_seekbar_height">20dp</dimen>
+    <dimen name="xs_min_max_value_text_size">23sp</dimen>
+    <dimen name="xs_exclusive_menu_height">50dp</dimen>
+    <dimen name="xs_exclusive_media_margin_bottom">10dp</dimen>
+    <dimen name="xs_keyboard_offset">22dp</dimen>
+    <dimen name="xs_seek_number_text_size">15sp</dimen>
+
+    <!-- 水印字体大小 -->
+    <dimen name="xs_water_text_size">10sp</dimen>
+    <!-- 报告中ListView的高度 -->
+    <dimen name="xs_report_list_height">300dp</dimen>
+    <dimen name="xs_battery_report_list_height">100dp</dimen>
+    <dimen name="xs_report_margin_top">-500dp</dimen>
+    <!-- 数据同步 -->
+    <dimen name="xs_app_name_marginbottom">50dp</dimen>
+    <dimen name="xs_data_sync_text_size">35sp</dimen>
+    <dimen name="sync_progressbar_width_height">300dp</dimen>
+    <dimen name="xs_progressbar_maxheight">20dp</dimen>
+    <dimen name="xs_standard_image_minheight">100dp</dimen>
+    <dimen name="xs_list_standard_image_minheight">115dp</dimen>
+    <dimen name="xs_list_standard_image_minwidth">120dp</dimen>
+    <dimen name="xs_list_copy_value_container_minwidth">180dp</dimen>
+    <dimen name="xs_history_imagebutton_minheight">25dp</dimen>
+    <dimen name="xs_yw_adapter_margin">8dp</dimen>
+    <!-- 运维一体化 -->
+    <dimen name="xs_yw_slid_linear_padding">12dp</dimen>
+    <dimen name="xs_yw_textview_margin">5dp</dimen>
+    <dimen name="xs_yw_textview_marginleft">10dp</dimen>
+    <dimen name="xs_yw_textview_padding">3dp</dimen>
+    <dimen name="xs_yw_dialog_edittext_margin">10dp</dimen>
+    <dimen name="xs_yw_dialog_edittext_padding">10dp</dimen>
+    <dimen name="xs_yw_dialog_edittext_height">180dp</dimen>
+    <dimen name="xs_yw_title_gqj_size">16sp</dimen>
+    <dimen name="xs_yw_title_gqj_padding">5sp</dimen>
+    <dimen name="xs_yw_checkbox_w">50dp</dimen>
+    <dimen name="xs_yw_checkbox_s">20dp</dimen>
+    <dimen name="xs_yw_imageView_h">100dp</dimen>
+    <dimen name="xs_yw_imageView_m">5dp</dimen>
+    <dimen name="xs_yw_audio_w">70dp</dimen>
+    <dimen name="xs_yw_audio_h">30dp</dimen>
+    <dimen name="xs_yw_imageView_w">100dp</dimen>
+    <dimen name="xs_yw_hlistview_h">70dp</dimen>
+    <dimen name="xs_yw_hlistview_mtb">5dp</dimen>
+    <dimen name="xs_yw_hlistview_audio_h">44dp</dimen>
+    <dimen name="xs_yw_gqj_adapter_margin">10dp</dimen>
+    <dimen name="xs_yw_desc_blank_h">8dp</dimen>
+    <dimen name="xs_yw_vedio_learh">24dp</dimen>
+    <dimen name="xs_yw_vedio_p">3dp</dimen>
+    <dimen name="xs_yw_vedio_textsize">14sp</dimen>
+
+    <!-- 生成巡视报告 -->
+    <dimen name="xs_gp_slid_linear_padding">12dp</dimen>
+    <dimen name="xs_gp_textview_margin">5dp</dimen>
+    <dimen name="xs_gp_textview_minHeight">75dp</dimen>
+    <dimen name="xs_gp_textview_marginleft">10dp</dimen>
+    <dimen name="xs_gp_textview_padding">3dp</dimen>
+    <dimen name="xs_gp_dialog_edittext_margin">10dp</dimen>
+    <dimen name="xs_gp_dialog_edittext_padding">10dp</dimen>
+    <dimen name="xs_gp_dialog_edittext_height">180dp</dimen>
+    <dimen name="xs_gp_title_gqj_size">16sp</dimen>
+    <dimen name="xs_gp_title_gqj_padding">5sp</dimen>
+    <dimen name="xs_gp_checkbox_w">50dp</dimen>
+    <dimen name="xs_gp_checkbox_s">20dp</dimen>
+    <dimen name="xs_gp_imageView_h">100dp</dimen>
+    <dimen name="xs_gp_imageView_m">5dp</dimen>
+    <dimen name="xs_gp_audio_w">70dp</dimen>
+    <dimen name="xs_gp_audio_h">30dp</dimen>
+    <dimen name="xs_gp_imageView_w">100dp</dimen>
+    <dimen name="xs_gp_hlistview_h">70dp</dimen>
+    <dimen name="xs_gp_hlistview_mtb">5dp</dimen>
+    <dimen name="xs_gp_hlistview_audio_h">44dp</dimen>
+    <dimen name="xs_gp_gqj_adapter_margin">10dp</dimen>
+    <dimen name="xs_gp_desc_blank_h">8dp</dimen>
+    <dimen name="xs_gp_vedio_learh">24dp</dimen>
+    <dimen name="xs_gp_vedio_p">3dp</dimen>
+    <dimen name="xs_gp_vedio_textsize">14sp</dimen>
+    <!-- 操作票 -->
+
+    <dimen name="xs_czp_margin">24dp</dimen>
+    <dimen name="xs_operate_content_minheight">80dp</dimen>
+    <dimen name="xs_operate_function_height">150dp</dimen>
+    <dimen name="xs_radio_button_circle_radius_one">2dp</dimen>
+    <dimen name="xs_radio_button_circle_radius_two">3.5dp</dimen>
+    <dimen name="xs_radio_button_circle_radius_three">10dp</dimen>
+    <dimen name="xs_radio_button_circle_radius_four">6dp</dimen>
+    <dimen name="xs_dot_width_height">8dp</dimen>
+    <dimen name="xs_operate_function_text_size">13sp</dimen>
+    <dimen name="xs_operate_item_number_minheight">35dp</dimen>
+    <dimen name="xs_operate_sign_container_minheight">100dp</dimen>
+    <dimen name="xs_czp_sign_minheight">26dp</dimen>
+    <dimen name="xs_czp_download_text_size">23sp</dimen>
+    <dimen name="xs_czp_tips_download_padding_bottom">35dp</dimen>
+    <dimen name="xs_czp_start_button_width">90dp</dimen>
+    <dimen name="xs_tab_strip_text_size">20sp</dimen>
+    <!-- 普通文字大小 -->
+    <dimen name="xs_tv_text_size">42px</dimen>
+    <dimen name="xs_item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
+    <dimen name="xs_item_touch_helper_swipe_escape_velocity">120dp</dimen>
+    <dimen name="xs_item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
+
+
+    <!--适配采用px，对应原来名字_px -->
+    <dimen name="xs_title_bar_minheight_px">135px</dimen>
+    <dimen name="xs_title_text_size_px">55px</dimen>
+    <dimen name="xs_global_margin_top_px">36px</dimen>
+    <dimen name="xs_global_padding_top_bottom_px">18px</dimen>
+    <dimen name="xs_global_padding_half_left_right_px">12px</dimen>
+    <dimen name="xs_global_padding_left_right_px">24px</dimen>
+    <dimen name="xs_text_button_padding_top_px">9px</dimen>
+    <dimen name="xs_device_item_name_text_size_px">38px</dimen>
+    <dimen name="xs_global_accident_deal_px">495px</dimen>
+    <dimen name="xs_inspection_type_child_item_padding_left_px">75px</dimen>
+    <dimen name="xs_device_danger_button_minheight_px">75px</dimen>
+    <dimen name="xs_device_part_photo_container_minheight_px">180px</dimen>
+    <dimen name="xs_global_text_size_px">48px</dimen>
+    <dimen name="xs_defect_count_width_height_px">75px</dimen>
+    <dimen name="xs_drawable_padding_px">9px</dimen>
+    <dimen name="xs_text_button_padding_half_left_px">24px</dimen>
+    <dimen name="xs_defect_count_number_height_px">66px</dimen>
+    <dimen name="xs_text_button_padding_left_px">45px</dimen>
+    <dimen name="xs_line_half_width_px">1.5px</dimen>
+    <dimen name="xs_list_item_eight_minheight_px">120px</dimen>
+    <dimen name="xs_device_part_img_minwidth_px">210px</dimen>
+    <dimen name="xs_line_height_px">3px</dimen>
+    <dimen name="xs_device_defect_count_minheight_px">45px</dimen>
+    <dimen name="xs_device_defect_count_text_size_px">33px</dimen>
+    <dimen name="xs_tab_strip_minheight_px">120px</dimen>
+    <dimen name="xs_global_text_line_spacing_px">27px</dimen>
+    <dimen name="xs_twelve_oval_size_px">15px</dimen>
+    <dimen name="xs_line_eight_width_px">2.4px</dimen>
+    <dimen name="xs_list_item_minheight_px">150px</dimen>
+    <dimen name="xs_edit_text_minheight_px">105px</dimen>
+    <dimen name="xs_edit_text_minwidth_px">150px</dimen>
+    <dimen name="xs_tab_strip_text_size_px">55px</dimen>
+    <dimen name="xs_accidential_tab_strip_text_size_px">55px</dimen>
+    <dimen name="xs_grid_vertical_spacing_px">30px</dimen>
+    <dimen name="xs_device_item_minheight_px">105px</dimen>
+    <dimen name="xs_device_item_minwidth_px">270px</dimen>
+    <dimen name="xs_device_item_name_padding_left_px">24px</dimen>
+    <dimen name="xs_device_item_name_padding_right_px">36px</dimen>
+    <dimen name="xs_device_gps_tips_minheight_px">24px</dimen>
+    <dimen name="xs_device_item_half_minwidht_px">135px</dimen>
+    <dimen name="xs_copy_all_value_container_height_px">330px</dimen>
+    <dimen name="xs_dialog_title_textsize_px">44px</dimen>
+    <dimen name="xs_title_bar_image_minheight_px">90px</dimen>
+    <dimen name="xs_keyboard_vertical_padding_px">12px</dimen>
+    <dimen name="xs_keyboard_horizontal_space_px">9px</dimen>
+    <dimen name="xs_keyboard_text_size_px">60px</dimen>
+    <dimen name="xs_keyboard_vertical_space_px">24px</dimen>
+    <dimen name="xs_yw_checkbox_w_px">150px</dimen>
+    <dimen name="xs_yw_dialog_edittext_padding_px">30px</dimen>
+    <dimen name="xs_yw_title_gqj_padding_px">15px</dimen>
+    <dimen name="xs_yw_title_gqj_size_px">44px</dimen>
+    <dimen name="xs_device_space_height_px">84px</dimen>
+    <dimen name="xs_device_space_larger_height_px">112px</dimen>
+    <dimen name="xs_content_minheight_px">135px</dimen>
+
+    <dimen name="xs_new_defect_photo_height_px">105px</dimen>
+    <dimen name="xs_track_defect_button_minheight_px">66px</dimen>
+    <dimen name="xs_find_question_button_minheight_px">75px</dimen>
+    <dimen name="xs_history_defect_level_text_size_px">38px</dimen>
+    <dimen name="xs_report_generate_text_size_px">60px</dimen>
+    <dimen name="xs_report_generate_drawable_padding_px">36px</dimen>
+    <dimen name="xs_defect_count_width_px">39px</dimen>
+    <dimen name="xs_defect_count_text_size_px">27px</dimen>
+    <dimen name="xs_audio_length_text_size_px">33px</dimen>
+    <dimen name="xs_history_defect_photo_height_px">135px</dimen>
+    <dimen name="xs_inspection_time_text_size_px">44px</dimen>
+    <dimen name="xs_global_text_small_size_px">44px</dimen>
+    <dimen name="xs_edit_line_px">6px</dimen>
+    <dimen name="xs_dot_line_height_px">90px</dimen>
+    <dimen name="xs_danger_point_num_minwidth_px">105px</dimen>
+    <dimen name="xs_swipe_menu_text_size_px">38px</dimen>
+    <dimen name="xs_task_simple_name_minheight_px">165px</dimen>
+    <dimen name="xs_gp_desc_blank_h_px">24px</dimen>
+    <dimen name="xs_gp_textview_minHeight_px">225px</dimen>
+    <dimen name="xs_global_btn_margin_px">15px</dimen>
+    <dimen name="xs_report_padding_top_px">45px</dimen>
+    <dimen name="xs_report_margin_top_px">-1500px</dimen>
+    <dimen name="xs_playback_button_margin_px">36px</dimen>
+    <dimen name="xs_czp_sign_minheight_px">78px</dimen>
+    <dimen name="xs_regular_grid_item_width_px">120px</dimen>
+    <dimen name="xs_regular_grid_item_height_px">78px</dimen>
+    <dimen name="xs_yw_adapter_margin_px">24px</dimen>
+    <dimen name="xs_regular_grid_item_container_width_px">144px</dimen>
+    <dimen name="xs_activity_vertical_margin_px">48px</dimen>
+    <dimen name="xs_activity_horizontal_margin_px">192px</dimen>
+    <dimen name="xs_operate_content_minheight_px">240px</dimen>
+    <dimen name="xs_operate_sign_container_minheight_px">300px</dimen>
+    <dimen name="xs_global_padding_half_top_bottom_px">9px</dimen>
+    <dimen name="xs_inspection_result_minheight_px">180px</dimen>
+    <dimen name="xs__434px">434px</dimen>
+    <dimen name="xs__30px">30px</dimen>
+    <dimen name="xs__39px">39px</dimen>
+    <dimen name="xs__42px">42px</dimen>
+    <dimen name="xs__54px">54px</dimen>
+</resources>

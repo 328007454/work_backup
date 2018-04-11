@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layout>
+<com.cnksi.bdzinspection.view.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="@drawable/xs_white_and_gray_background_selector"
+    android:paddingBottom="1dp"
+    app:ios="false"
+    app:leftSwipe="true"
+    app:swipeEnable="true">
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="176px"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cb_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:paddingLeft="30px"
+            android:paddingRight="48px"
+            android:button="@null"
+            android:clickable="false"
+            android:drawableLeft="@drawable/xs_type_copy_selector"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textColor="@color/xs_copy_item_type"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_tool_order"
+            android:layout_width="64px"
+            android:layout_height="64px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="48px"
+            android:background="@drawable/xs_red_fd6067_background"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/xs_white"
+            android:textSize="36px" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_tool_name"
+                android:layout_width="wrap_content"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:gravity="bottom|left"
+                android:text="编号"
+                android:textColor="@color/xs_global_base_color"
+                android:textSize="40px" />
+
+            <LinearLayout
+                android:layout_marginTop="10px"
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_tool_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="top"
+                    android:lines="2"
+                    android:text="编号:"
+                    android:textColor="@color/xs__c0bab9_color"
+                    android:textSize="36px" />
+
+
+                <TextView
+                    android:id="@+id/txt_tool_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="50px"
+                    android:gravity="right|top"
+                    android:text=""
+                    android:textColor="@color/xs__c0bab9_color"
+                    android:textSize="36px" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:background="@color/xs__e8edec_color"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_overdate"
+        android:layout_width="140px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/xs_white"
+        android:gravity="center"
+        android:text="超期"
+        android:textColor="@color/xs_red_color"
+        android:textSize="44px"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txt_stop"
+        android:layout_width="140px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/xs_red_background_selector"
+        android:gravity="center"
+        android:text="停用"
+        android:textColor="@color/xs_white"
+        android:textSize="44px" />
+
+    <TextView
+        android:id="@+id/txt_test"
+        android:layout_width="140px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/xs_safety_tools_green_background_selector"
+        android:gravity="center"
+        android:text="试验"
+        android:textColor="@color/xs_white"
+        android:textSize="44px" />
+</com.cnksi.bdzinspection.view.SwipeMenuLayout></layout>

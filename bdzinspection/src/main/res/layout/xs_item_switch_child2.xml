@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<data class="SwitchItemChild2"></data>
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	              android:layout_width="match_parent"
+	              android:layout_height="wrap_content"
+	              android:paddingLeft="30px"
+	              android:orientation="vertical">
+		<View
+			style="@style/HLine"/>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+
+			<TextView
+				android:id="@+id/tv_desc"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="30px"
+				android:layout_marginBottom="30px"
+				android:layout_weight="1"
+				android:gravity="center_vertical"
+				android:text="1.1.1备件容器正常"
+				android:textColor="#98a2a1"
+				android:textSize="38px"/>
+
+			<LinearLayout
+				android:id="@+id/ll_copy"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="30px"
+				android:layout_marginRight="20px"
+				android:layout_marginTop="30px"
+				android:orientation="vertical">
+
+				<EditText
+					android:id="@+id/et_copy_values"
+					android:layout_width="232px"
+					android:layout_height="80px"
+					android:background="@drawable/xs_edittext_background"
+					android:gravity="left|center_vertical"
+					android:hint="@string/xs_please_input_value_str"
+					android:maxLength="8"
+					android:paddingLeft="5dp"
+					android:textColor="@color/xs_green_color"
+					android:textColorHint="@color/xs_global_gray_text_color"
+					android:textSize="38px"
+					android:visibility="visible"/>
+
+				<TextView
+					android:id="@+id/tv_copy_unit"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+					android:layout_gravity="center_vertical|right"
+					android:focusable="true"
+					android:text="(A)"
+					android:textColor="@color/xs_global_text_color"
+					android:textSize="38px"
+					android:visibility="visible"/>
+			</LinearLayout>
+
+			<ImageView
+				android:visibility="gone"
+				android:id="@+id/check"
+				android:layout_width="100px"
+				android:layout_height="100px"
+				android:layout_marginRight="30px"
+				android:background="@drawable/xs_ic_confirm_none"
+				android:padding="@dimen/xs_yw_adapter_margin"
+				android:src="@drawable/xs_ic_confirm"
+				app:layout_auto_baseheight="width" />
+		</LinearLayout>
+
+	</LinearLayout>
+</layout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/xs__30px"
+        android:paddingTop="10px"
+        >
+
+        <TextView
+            android:id="@+id/tv_audio"
+            android:layout_width="@dimen/xs_yw_audio_w"
+            android:layout_height="@dimen/xs_yw_audio_h"
+            android:layout_marginTop="20px"
+            android:background="@drawable/xs_grass_green_button_background_selector"
+            android:drawableLeft="@drawable/xs_ic_audio"
+            android:gravity="center"
+            android:paddingLeft="@dimen/xs_global_padding_top_bottom"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_audio_length_text_size"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/img_delete_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="180px"
+            android:background="@drawable/xs_delete_standard_selector"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

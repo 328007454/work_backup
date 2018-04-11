@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 巡视任务 -> 变电站巡视（全面、日常、夜巡）->第一个汉字提示->日常巡视样式  -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:bottom="@dimen/xs_five_oval_size"
+        android:left="@dimen/xs_five_oval_size"
+        android:right="@dimen/xs_five_oval_size"
+        android:top="@dimen/xs_five_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/xs_type_color_other" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/xs_six_oval_size"
+        android:left="@dimen/xs_six_oval_size"
+        android:right="@dimen/xs_six_oval_size"
+        android:top="@dimen/xs_six_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@android:color/white" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/xs_seven_oval_size"
+        android:left="@dimen/xs_seven_oval_size"
+        android:right="@dimen/xs_seven_oval_size"
+        android:top="@dimen/xs_seven_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/xs_type_color_other" >
+            </solid>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/xs_seven_oval_size"
+        android:left="@dimen/xs_seven_oval_size"
+        android:right="@dimen/xs_seven_oval_size"
+        android:top="@dimen/xs_seven_oval_size">
+        <shape android:shape="oval" >
+            <solid android:color="@color/xs_type_color_other" >
+            </solid>
+        </shape>
+    </item>
+
+</layer-list>

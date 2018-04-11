@@ -1,0 +1,210 @@
+package com.cnksi.bdzinspection.utils;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.lib.WheelView;
+import com.bigkoo.pickerview.listener.CustomListener;
+import com.cnksi.bdzinspection.R;
+import com.cnksi.xscore.xsutils.CoreConfig;
+import com.cnksi.xscore.xsutils.DateUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+/**
+ * Created by kkk on 2018/1/29.
+ */
+
+public class TimePickerUtils implements View.OnClickListener {
+
+    public static TimePickerUtils pickerUtils;
+    public Activity mActivity;
+    public TimePickerView pvCustomTime;
+    private String time;
+    private boolean initWidget;
+    private Button mBtnReback;
+    private Button mBtnSure;
+    private TextView mTxtAddHout;
+    private TextView mTxtMinusHour;
+    private TextView mTxtAddMinute;
+    private TextView mTxtMinusMinute;
+    private TextView mTxtTitle;
+    private TextView mTxtSumTime;
+    private View resLayOutView;
+    private boolean isStartTime;
+    private String dateString;
+    private String secondTime;
+    private String mDifferenceTime;
+
+    public interface TimePickerMissListener {
+        void returnDateTime(String dateString, boolean isStartTime);
+    }
+
+    TimePickerMissListener mMissListener;
+
+    public void setTimePickListener(TimePickerMissListener missListener) {
+        this.mMissListener = missListener;
+    }
+
+    public static TimePickerUtils getPickerUtils() {
+        if (pickerUtils == null) {
+            pickerUtils = new TimePickerUtils();
+        }
+        return pickerUtils;
+    }
+
+    private void initWidget(boolean isStartTime) {
+        if (!initWidget) {
+            mBtnReback = (Button) resLayOutView.findViewById(R.id.btn_reback);
+            mBtnSure = (Button) resLayOutView.findViewById(R.id.btn_sure);
+            mTxtAddHout = (TextView) resLayOutView.findViewById(R.id.txt_add_hour);
+            mTxtMinusHour = (TextView) resLayOutView.findViewById(R.id.txt_minus_hour);
+            mTxtAddMinute = (TextView) resLayOutView.findViewById(R.id.txt_add_minute);
+            mTxtMinusMinute = (TextView) resLayOutView.findViewById(R.id.txt_minus_minute);
+            mTxtTitle = (TextView) resLayOutView.findViewById(R.id.tv_dialog_title);
+            mTxtSumTime = (TextView) resLayOutView.findViewById(R.id.txt_sum_time);
+            mBtnReback.setOnClickListener(this);
+            mBtnSure.setOnClickListener(this);
+            mTxtAddHout.setOnClickListener(this);
+            mTxtMinusHour.setOnClickListener(this);
+            mTxtAddMinute.setOnClickListener(this);
+            mTxtMinusMinute.setOnClickListener(this);
+            initWidget = true;
+        }
+        mTxtTitle.setText(isStartTime ? "开始时间设定" : "结束时间设定");
+
+        if (isStartTime) {
+            secondTime = TextUtils.isEmpty(secondTime) ? DateUtils.getCurrentLongTime() : secondTime;
+            mDifferenceTime = DateUtils.getTimeDifference(dateString, secondTime);
+        } else {
+            mDifferenceTime = DateUtils.getTimeDifference(secondTime, dateString);
+        }
+        SpannableString string = new SpannableString("巡视任务总耗时：" + mDifferenceTime);
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#ff000000"));
+        string.setSpan(colorSpan, 8, string.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        mTxtSumTime.setText(string);
+    }
+
+
+    public void showDialog(Activity activity, String currentTime, String secondTime, boolean isStartTime) {
+        this.time = currentTime;
+        this.secondTime = secondTime;
+        this.isStartTime = isStartTime;
+        if (pvCustomTime == null) {
+            this.mActivity = activity;
+            initCustomTimePicker();
+            initWidget = false;
+        } else {
+            if (TextUtils.isEmpty(time)) {
+                time = DateUtils.getCurrentLongTime();
+            }
+            Calendar selectedDate = DateUtils.getCalendar(time, CoreConfig.dateFormat2);
+            dateString = getTime(selectedDate.getTime());
+            pvCustomTime.setDate(selectedDate);
+        }
+        pvCustomTime.show();
+        initWidget(isStartTime);
+    }
+
+
+    private void initCustomTimePicker() {
+        Calendar selectedDate = null;//系统当前时间
+        if (!TextUtils.isEmpty(time)) {
+            selectedDate = DateUtils.getCalendar(time, CoreConfig.dateFormat2);
+        } else {
+            selectedDate = Calendar.getInstance();
+        }
+        dateString = getTime(selectedDate.getTime());
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2009, 1, 1);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2099, 12, 31);
+        //时间选择器 ，自定义布局
+        pvCustomTime = new TimePickerView.Builder(mActivity, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                dateString = getTime(date);
+            }
+        }).setTextColorCenter(Color.BLACK)
+                .isDialog(true)
+                .isCyclic(true)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setLayoutRes(R.layout.xs_dialog_time_picker, new CustomListener() {
+
+                    @Override
+                    public void customLayout(View v) {
+                        resLayOutView = v;
+                    }
+                })
+                .setContentSize(20)
+                .setType(new boolean[]{true, true, true, true, true, false})
+                .setLabel("", "", "", "", "", "")
+                .setLineSpacingMultiplier(0f)
+                .setTextXOffset(0, 0, 0, 0, 0, 0)
+                .isCenterLabel(true) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setDividerColor(0xFF24AD9D)
+                .setDividerType(WheelView.DividerType.FILL)
+                .setOutSideCancelable(false)
+                .setInsideCancelable(false)
+                .setColors(new Integer[]{0xFF24AD9D, 0xFF24AD9D, 0xFF24AD9D, 0xfff, 0xfff, 0xfff})
+                .build();
+
+    }
+
+
+    private String getTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        int i = view.getId();
+        if (i == R.id.btn_sure) {
+            if (null != mMissListener) {
+                pvCustomTime.returnData();
+                mMissListener.returnDateTime(dateString, isStartTime);
+            }
+
+        } else if (i == R.id.btn_reback) {
+            Calendar selectedDate = DateUtils.getCalendar(time, CoreConfig.dateFormat2);
+            pvCustomTime.setDate(selectedDate);
+            pvCustomTime.returnData();
+
+        } else if (i == R.id.txt_add_hour) {
+            Calendar date = DateUtils.getAfterDay(dateString, 1, CoreConfig.dateFormat2);
+            pvCustomTime.setDate(date);
+            pvCustomTime.returnData();
+
+        } else if (i == R.id.txt_minus_hour) {
+            Calendar date1 = DateUtils.getAfterDay(dateString, -1, CoreConfig.dateFormat2);
+            pvCustomTime.setDate(date1);
+            pvCustomTime.returnData();
+
+        } else if (i == R.id.txt_minus_minute) {
+            Calendar date2 = DateUtils.getAfterMinute(dateString, -10, CoreConfig.dateFormat2);
+            pvCustomTime.setDate(date2);
+            pvCustomTime.returnData();
+
+        } else if (i == R.id.txt_add_minute) {
+            Calendar date3 = DateUtils.getAfterMinute(dateString, 10, CoreConfig.dateFormat2);
+            pvCustomTime.setDate(date3);
+            pvCustomTime.returnData();
+
+        } else {
+        }
+    }
+
+}

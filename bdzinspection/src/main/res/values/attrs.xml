@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="XS_Circle">
+        <attr name="circleBackground" format="integer" />
+        <attr name="firstChildPosition">
+            <enum name="East" value="0" />
+            <enum name="South" value="90" />
+            <enum name="West" value="180" />
+            <enum name="North" value="270" />
+        </attr>
+        <attr name="rotateToCenter" format="boolean" />
+        <attr name="isRotating" format="boolean" />
+    </declare-styleable>
+
+    <!-- 带有数字进度条的attrs -->
+    <declare-styleable name="XS_NumberProgressBar">
+        <attr name="progress" format="integer" />
+        <attr name="max" format="integer" />
+        <attr name="progress_unreached_color" format="color" />
+        <attr name="progress_reached_color" format="color" />
+        <attr name="progress_reached_bar_height" format="dimension" />
+        <attr name="progress_unreached_bar_height" format="dimension" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_offset" format="dimension" />
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="XS_ArcMenu">
+        <attr name="position">
+            <enum name="left_top" value="0"></enum>
+            <enum name="left_bottom" value="1"></enum>
+            <enum name="right_top" value="2"></enum>
+            <enum name="right_bottom" value="3"></enum>
+        </attr>
+        <attr name="radius" format="dimension"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="XS_WeatherView">
+        <!-- 文本提示 -->
+        <attr name="label" format="string" />
+        <!-- 文本颜色 -->
+        <attr name="label_color" format="color|reference" />
+        <!-- 文本居左 -->
+        <attr name="label_padding_left" format="dimension|reference" />
+        <!-- 文本字体大小 -->
+        <attr name="label_size" format="dimension|reference" />
+        <!-- icon宽度 -->
+        <attr name="icon_width" format="dimension|reference" />
+        <!-- icon资源 -->
+        <attr name="icon_src" format="reference" />
+        <!-- icon margin -->
+        <attr name="icon_margin" format="dimension|reference" />
+        <!-- 天气选项 -->
+        <attr name="selector" format="reference" />
+    </declare-styleable>
+
+
+    <!--<declare-styleable name="XS_RecyclerView">-->
+        <!--&lt;!&ndash; Class name of the Layout Manager to be used.-->
+        <!--<p/>-->
+        <!--The class must extend android.support.v7.widget.RecyclerView$LayoutManager-->
+        <!--and have either a default constructor or constructor with the signature-->
+        <!--(android.content.Context, android.util.AttributeSet, int, int).-->
+         <!--<p/>-->
+         <!--If the name starts with a '.', application package is prefixed.-->
+         <!--Else, if the name contains a '.', the classname is assumed to be a full class name.-->
+         <!--Else, the recycler view package name (android.support.v7.widget) is prefixed. &ndash;&gt;-->
+        <!--<attr name="layoutManager" format="string" />-->
+
+        <!--&lt;!&ndash; ============================= &ndash;&gt;-->
+        <!--&lt;!&ndash; Attributes for Layout Manager &ndash;&gt;-->
+        <!--&lt;!&ndash; ============================= &ndash;&gt;-->
+        <!--<eat-comment />-->
+
+        <!--<attr name="android:orientation" />-->
+        <!--<attr name="spanCount" format="integer" />-->
+        <!--<attr name="reverseLayout" format="boolean" />-->
+        <!--<attr name="stackFromEnd" format="boolean" />-->
+    <!--</declare-styleable>-->
+
+
+    <declare-styleable name="XS_PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+        <attr name="pstsIndicatorLeftRightPadding" format="dimension" />
+    </declare-styleable>
+    <!-- 签名view -->
+    <declare-styleable name="XS_SignaturePad">
+        <attr name="penMinWidth" format="dimension" />
+        <attr name="penMaxWidth" format="dimension" />
+        <attr name="penColor" format="color" />
+        <attr name="velocityFilterWeight" format="float" />
+        <attr name="clearOnDoubleClick" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="XS_CustomRadioButton">
+
+        <attr name="drawableSize" format="dimension" />
+        <attr name="drawableTop" format="reference" />
+        <attr name="drawableLeft" format="reference" />
+        <attr name="drawableRight" format="reference" />
+        <attr name="drawableBottom" format="reference" />
+
+    </declare-styleable>
+
+    <declare-styleable name="XS_UnderLineLinearLayout">
+        <attr name="drawUnderLine" format="boolean" />
+        <attr name="marginLeft" format="dimension" />
+        <attr name="marginRight" format="dimension" />
+        <attr name="lineColor" format="color" />
+        <attr name="lineHeight" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="XS_SwipeMenuLayout">
+        <attr name="swipeEnable" format="boolean" />
+        <attr name="ios" format="boolean" />
+        <attr name="leftSwipe" format="boolean" />
+    </declare-styleable>
+
+
+</resources>

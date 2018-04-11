@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="">
+
+    </data>
+
+    <com.zhy.core.AutoLinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/xs_dialog_green_title_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:background="@color/xs_green_color"
+            android:gravity="center"
+            android:text="抄录项添加"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#efefef"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_space_name"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px"
+                android:text="间隔名称："
+                android:textColor="@android:color/black"
+                android:textSize="40px" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/xs_gray_confirm_color" />
+
+            <TextView
+                android:id="@+id/tv_devie_name"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px"
+                android:text="设备名称："
+                android:textColor="@android:color/black"
+                android:textSize="40px" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/xs_gray_confirm_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="30px"
+                android:paddingRight="30px">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="新增抄录类型"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/xs_device_item_name_text_size_px" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="443px"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_add_copy_item_select_background"
+                    android:orientation="horizontal"
+                    android:padding="10px">
+
+                    <Spinner
+                        android:id="@+id/type_spinner"
+                        android:layout_width="360px"
+                        android:layout_height="80px"
+                        android:background="@android:color/transparent"
+                        android:dropDownVerticalOffset="10px"
+                        android:dropDownWidth="@dimen/xs__434px"
+                        android:popupBackground="@drawable/xs_item"
+                        android:spinnerMode="dropdown" />
+
+                    <ImageView
+                        android:id="@+id/iv_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14px"
+                        android:src="@drawable/xs_icon_up" />
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/xs_gray_confirm_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="20px"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:paddingTop="20px">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="新增抄录相数"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/xs_device_item_name_text_size_px" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="443px"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_add_copy_item_select_background"
+                    android:orientation="horizontal"
+                    android:padding="10px">
+
+
+                    <Spinner
+                        android:id="@+id/count_sipnner"
+                        android:layout_width="360px"
+                        android:layout_height="80px"
+                        android:background="@android:color/transparent"
+                        android:dropDownVerticalOffset="10px"
+                        android:dropDownWidth="@dimen/xs__434px"
+                        android:popupBackground="@drawable/xs_item"
+                        android:spinnerMode="dropdown" />
+
+                    <ImageView
+                        android:id="@+id/iv_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14px"
+                        android:src="@drawable/xs_icon_up" />
+
+
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/xs_gray_confirm_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="20px"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:paddingTop="20px">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="抄录项名称"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/xs_device_item_name_text_size_px" />
+
+                <com.cnksi.bdzinspection.view.ContainsEmojiEditText
+                    android:id="@+id/et_update_name"
+                    android:layout_width="443px"
+                    android:layout_height="100px"
+                    android:layout_marginLeft="60px"
+                    android:layout_marginRight="4px"
+                    android:background="@drawable/xs_add_copy_item_select_background"
+                    android:cursorVisible="true"
+                    android:gravity="center_vertical|start"
+                    android:paddingLeft="40px"
+                    android:text=""
+                    android:textColor="@color/xs_green_color"
+                    android:textSize="40px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/xs_gray_confirm_color" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px"
+                android:text="抄录项适用巡检类型"
+                android:textColor="@android:color/black"
+                android:textSize="40px" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/xs_gray_confirm_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="30px"
+                android:paddingRight="30px">
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/radio_full"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/xs_type_copy_selector"
+                    android:drawablePadding="20px"
+                    android:gravity="center_vertical"
+                    android:text="全面巡视"
+                    android:textColor="@color/xs_copy_item_type"
+                    android:textSize="@dimen/xs_dialog_title_textsize_px" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/radio_routine"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/xs_type_copy_selector"
+                    android:drawablePadding="20px"
+                    android:gravity="center_vertical"
+                    android:text="例行巡视"
+                    android:textColor="@color/xs_copy_item_type"
+                    android:textSize="@dimen/xs_dialog_title_textsize_px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/xs_gray_confirm_color" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/radio_special"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="@color/xs_white"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableLeft="@drawable/xs_type_copy_selector"
+                android:drawablePadding="20px"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px"
+                android:text="特殊巡视"
+                android:textColor="@color/xs_copy_item_type"
+                android:textSize="@dimen/xs_dialog_title_textsize_px"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/xs_gray_confirm_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="55px"
+                android:layout_marginTop="400px"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="118px"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="24px"
+                    android:layout_weight="1"
+                    android:background="@drawable/xs_red_button_background_selector"
+                    android:gravity="center"
+                    android:minHeight="@dimen/xs_button_minheight"
+                    android:text="@string/xs_dialog_cancle_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size_px" />
+
+                <Button
+                    android:id="@+id/btn_save"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="118px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="24px"
+                    android:layout_weight="1"
+                    android:background="@drawable/xs_button_background_blue_selector"
+                    android:gravity="center"
+                    android:minHeight="@dimen/xs_button_minheight"
+                    android:text="@string/xs_dialog_sure_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size_px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.core.AutoLinearLayout>
+</layout>

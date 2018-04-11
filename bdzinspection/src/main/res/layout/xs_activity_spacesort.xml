@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:dslv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.cnksi.xscore.xsview.swipemenulist.SwipeMenuDragSortListView
+            android:id="@+id/swlv_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:divider="@color/xs_line_color"
+            android:dividerHeight="@dimen/xs_line_half_width_px"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="vertical"
+            dslv:drag_enabled="true"
+            dslv:drag_handle_id="@id/xs_drag_handle"
+            dslv:drag_scroll_start="0.3"
+            dslv:float_alpha="0.6"
+            dslv:xs_drag_start_mode="onDown" />
+
+
+    </LinearLayout>
+</layout>

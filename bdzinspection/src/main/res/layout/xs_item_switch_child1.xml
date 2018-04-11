@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="SwitchItemChild1"></data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View style="@style/HLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_no"
+                android:layout_width="100px"
+                android:layout_height="38px"
+                android:background="@drawable/xs_item_switch_text_shape"
+                android:gravity="center"
+                android:text="1.1"
+                android:textColor="@color/xs_white"
+                android:textSize="32px" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30px"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="备件容器正常"
+                android:textColor="#333333"
+                android:textSize="38px" />
+
+            <ImageView
+                android:id="@+id/iv_regular"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="30px"
+                android:contentDescription="@null"
+                android:src="@drawable/xs_clamp_button_selector"
+                app:layout_auto_baseheight="width" />
+
+            <ImageView
+                android:id="@+id/check"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_marginRight="20px"
+                android:background="@drawable/xs_ic_confirm_none"
+                android:padding="@dimen/xs_yw_adapter_margin"
+                android:src="@drawable/xs_ic_confirm"
+                android:visibility="gone"
+                app:layout_auto_baseheight="width" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_pics"
+            android:layout_width="match_parent"
+            android:layout_height="96px"
+            android:layout_marginBottom="30px"
+            android:layout_marginLeft="130px"
+            android:orientation="horizontal">
+
+            <!--图片-->
+            <FrameLayout
+                android:id="@+id/rl_pic_container"
+                android:layout_width="139px"
+                android:layout_height="96px">
+
+                <ImageView
+                    android:id="@+id/ibtn_picture"
+                    android:layout_width="@dimen/xs_regular_grid_item_width_px"
+                    android:layout_height="78px"
+                    android:layout_marginTop="18px"
+                    android:background="@drawable/xs_grass_green_button_background_selector"
+                    android:paddingBottom="12px"
+                    android:paddingLeft="12px"
+                    android:paddingRight="12px"
+                    android:paddingTop="12px"
+                    android:src="@drawable/xs_ic_clamp_pic"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_img_count"
+                    android:layout_width="38px"
+                    android:layout_height="38px"
+                    android:layout_marginLeft="101px"
+                    android:background="@drawable/xs_circle_text_background"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_defect_count_text_size_px"
+                    android:visibility="invisible"
+                    app:layout_auto_baseheight="width" />
+            </FrameLayout>
+
+            <!--音频-->
+            <TextView
+                android:id="@+id/tv_audio"
+                android:layout_width="@dimen/xs_regular_grid_item_width_px"
+                android:layout_height="@dimen/xs_regular_grid_item_height_px"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+                android:background="@drawable/xs_grass_green_button_background_selector"
+                android:drawableLeft="@drawable/xs_ic_audio"
+                android:gravity="center"
+                android:paddingLeft="@dimen/xs_global_padding_top_bottom_px"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_audio_length_text_size_px"
+                android:visibility="visible" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

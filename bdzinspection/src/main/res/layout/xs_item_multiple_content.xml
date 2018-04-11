@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="30px">
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30px"
+            android:layout_marginTop="30px"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="1.1.1备件容器正常"
+            android:textColor="#98a2a1"
+            android:textSize="38px"/>
+
+        <EditText
+            android:id="@+id/et_copy_values"
+            android:layout_width="232px"
+            android:layout_height="80px"
+            android:background="@drawable/xs_edittext_background"
+            android:gravity="left|center_vertical"
+            android:hint="@string/xs_please_input_value_str"
+            android:inputType="numberDecimal"
+            android:maxLength="8"
+            android:paddingLeft="5dp"
+            android:textColor="@color/xs_green_color"
+            android:textColorHint="@color/xs_global_gray_text_color"
+            android:textSize="38px"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/tv_copy_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical|right"
+            android:text="(A)"
+            android:textColor="@color/xs_global_text_color"
+            android:textSize="38px"
+            />
+    </LinearLayout>
+</layout>

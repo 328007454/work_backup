@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto">
+
+    <data class="">
+
+        <variable
+            name="special"
+            type="boolean" />
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.cnksi.bdzinspection.activity.SettingCopyActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:background="#03b9a0"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ibtn_cancel"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:onClick="onClickEvent"
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_cancel_button_background" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_title"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_title_text_size_px"
+                autofit:minTextSize="10px" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:background="@color/xs_tab_strip_background_color"
+            android:textSize="80px"
+            app:tabBackground="@color/xs_tab_strip_background_color"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/xs_tab_strip_text_color"
+            app:tabIndicatorHeight="4px"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/TabLayoutTextStyle1"
+            app:tabSelectedTextColor="@color/xs_tab_strip_text_color"
+            app:tabTextColor="@android:color/black" />
+
+        <ListView
+            android:id="@+id/lv_copy"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_marginTop="20px"
+            android:layout_weight="1" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="50px"
+            android:orientation="horizontal"
+            android:paddingLeft="30px"
+            android:paddingRight="30px">
+
+            <Button
+                android:id="@+id/btn_add_copy"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginRight="24px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_grass_green_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:onClick="onClickEvent"
+                android:text="新增"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+            <Button
+                android:id="@+id/save_data"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="24px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_grass_green_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:onClick="onClickEvent"
+                android:text="保存"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

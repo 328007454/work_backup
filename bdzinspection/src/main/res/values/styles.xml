@@ -1,0 +1,395 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+
+
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+
+
+
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="android:listDivider">@drawable/xs_divider_bg</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="LoginAppTheme" parent="AppBaseTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+
+    <style name="App.Theme.Launch" parent="AppBaseTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="RadioButtonBaseStyle">
+        <item name="android:textColor">@color/xs_radio_button_text_selector</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingLeft">@dimen/xs_drawable_padding</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:button">@drawable/xs_radio_button_selector</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="BaseTextStyle">
+        <item name="android:textSize">@dimen/xs_global_text_size</item>
+    </style>
+    <!-- MainMenuStyle -->
+    <style name="MainMenuTextStyle" parent="BaseTextStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/xs_main_menu_text_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="MainMenuContainerStyle">
+        <item name="android:background">@drawable/xs_main_menu_unpressed_background</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- 自定义进度条 -->
+    <style name="ProgressBar_Mini" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:maxHeight">@dimen/xs_device_item_minheight</item>
+        <item name="android:minHeight">@dimen/xs_device_item_minheight</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:progressDrawable">@drawable/xs_progressbar_background</item>
+    </style>
+
+    <style name="Widget.SeekBar.Normal" parent="@android:style/Widget.SeekBar">
+        <item name="android:maxHeight">8.0dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:progressDrawable">@drawable/xs_seekbar_horizontal</item>
+        <item name="android:minHeight">8.0dip</item>
+        <item name="android:thumb">@drawable/xs_thumb_bar</item>
+        <item name="android:thumbOffset">10.0dip</item>
+    </style>
+
+    <style name="RelativeLayoutItemStyle">
+        <item name="android:minHeight">@dimen/xs_list_item_minheight</item>
+        <item name="android:background">@drawable/xs_bottom_line_background_selector</item>
+        <item name="android:paddingLeft">@dimen/xs_global_padding_left_right</item>
+        <item name="android:paddingRight">@dimen/xs_global_padding_left_right</item>
+    </style>
+
+    <style name="ItemLabelStyle">
+        <item name="android:textColor">@color/xs_global_text_color</item>
+        <item name="android:textSize">@dimen/xs_global_text_size</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:minWidth">@dimen/xs_label_minwidth</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:minHeight">@dimen/xs_edit_text_minheight</item>
+        <item name="android:paddingLeft">@dimen/xs_global_padding_left_right</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/xs_global_base_color</item>
+        <item name="android:textColorHint">@color/xs_global_gray_text_color</item>
+        <item name="android:textSize">@dimen/xs_global_text_size</item>
+    </style>
+
+    <style name="ListItemStyle">
+        <item name="android:minHeight">@dimen/xs_list_item_minheight</item>
+        <item name="android:paddingBottom">@dimen/xs_global_padding_top_bottom</item>
+        <item name="android:paddingTop">@dimen/xs_global_padding_top_bottom</item>
+        <item name="android:paddingRight">@dimen/xs_global_padding_left_right</item>
+        <item name="android:paddingLeft">@dimen/xs_global_padding_left_right</item>
+        <item name="android:background">@drawable/xs_list_item_background_selector</item>
+    </style>
+
+    <style name="DataSyncProgressBarStyleLarge">
+        <item name="android:indeterminateDrawable">@drawable/xs_progress_large</item>
+        <item name="android:minWidth">@dimen/sync_progressbar_width_height</item>
+        <item name="android:maxWidth">@dimen/sync_progressbar_width_height</item>
+        <item name="android:minHeight">@dimen/sync_progressbar_width_height</item>
+        <item name="android:maxHeight">@dimen/sync_progressbar_width_height</item>
+    </style>
+
+    <style name="DataSyncProgressBarStyleSmall">
+        <item name="android:minWidth">@dimen/xs_progressbar_maxheight</item>
+        <item name="android:maxWidth">@dimen/xs_progressbar_maxheight</item>
+        <item name="android:minHeight">@dimen/xs_progressbar_maxheight</item>
+        <item name="android:maxHeight">@dimen/xs_progressbar_maxheight</item>
+    </style>
+
+    <style name="GPLableTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">18px</item>
+        <item name="android:paddingLeft">30px</item>
+        <item name="android:paddingTop">18px</item>
+        <item name="android:textColor">@color/xs_global_base_color</item>
+        <item name="android:textSize">@dimen/xs_global_text_small_size_px</item>
+        <item name="android:background">@color/xs_gp_desc_header_text_bg</item>
+    </style>
+
+    <style name="GPInspectionRusltNameTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:textSize">@dimen/xs_global_text_small_size_px</item>
+    </style>
+
+    <style name="GPInspectionRusltValueTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textColor">@color/xs_defect_count_text_selector</item>
+        <item name="android:textSize">@dimen/xs_global_text_small_size_px</item>
+    </style>
+
+    <style name="GPInspectionResultLL">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="GPInspectionReslutSplitLine">
+        <item name="android:layout_width">@dimen/xs_line_half_width_px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#DDE1E4</item>
+    </style>
+
+    <style name="IRLableTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/xs_report_light_green_background_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/xs_text_button_padding_top_px</item>
+        <item name="android:textColor">@color/xs_report_light_green_text_color</item>
+        <item name="android:textSize">@dimen/xs_global_text_size_px</item>
+    </style>
+
+    <style name="IRRusltNameTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textColor">@color/xs_global_gray_text_color</item>
+        <item name="android:textSize">38px</item>
+    </style>
+
+    <style name="IRRusltValueTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textColor">@color/xs_defect_count_text_selector</item>
+        <item name="android:textSize">38px</item>
+        <item name="android:text">123</item>
+    </style>
+
+    <style name="IRResultLL">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="IRBigLabelStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/xs_global_padding_left_right_px</item>
+        <item name="android:layout_marginRight">@dimen/xs_global_padding_left_right_px</item>
+        <item name="android:layout_marginTop">@dimen/xs_global_padding_left_right_px</item>
+        <item name="android:background">@color/xs_gray_background_color</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="IRInspectionBaseDataLL">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/xs_global_padding_left_right_px</item>
+        <item name="android:layout_marginRight">@dimen/xs_global_padding_left_right_px</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="IRInspectionBaseDataTitle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textColor">@color/xs_global_gray_text_color</item>
+        <item name="android:textSize">@dimen/xs_device_item_name_text_size_px</item>
+    </style>
+
+    <style name="IRInspectionBaseDataValue">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1.5</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textColor">@color/xs_green_color</item>
+        <item name="android:textSize">@dimen/xs_global_text_size_px</item>
+    </style>
+
+    <style name="HLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2px</item>
+        <item name="android:background">#D3DFDE</item>
+    </style>
+
+    <style name="VLine">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">2px</item>
+        <item name="android:background">#D3DFDE</item>
+    </style>
+
+    <style name="svgButton">
+        <item name="android:paddingBottom">37.5px</item>
+        <item name="android:paddingTop">37.5px</item>
+        <item name="android:paddingLeft">15px</item>
+        <item name="android:paddingRight">15px</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="svgButtonBack">
+        <item name="android:paddingBottom">35.5px</item>
+        <item name="android:paddingTop">35.5px</item>
+        <item name="android:paddingLeft">46.5px</item>
+        <item name="android:paddingRight">49.5px</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="svgButtonAdd">
+        <item name="android:padding">37.5px</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="svgButtonDate">
+        <item name="android:paddingBottom">37.5px</item>
+        <item name="android:paddingTop">37.5px</item>
+        <item name="android:paddingLeft">51px</item>
+        <item name="android:paddingRight">25.5px</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="tictetsvgButtonDate">
+        <item name="android:paddingBottom">37.5px</item>
+        <item name="android:paddingTop">37.5px</item>
+        <item name="android:paddingLeft">0px</item>
+        <item name="android:paddingRight">0px</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="svgButtonCamera">
+        <item name="android:paddingBottom">38px</item>
+        <item name="android:paddingTop">38px</item>
+        <item name="android:paddingLeft">35.5px</item>
+        <item name="android:paddingRight">35.5px</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="svgButtonTools">
+        <item name="android:paddingBottom">23px</item>
+        <item name="android:paddingTop">23px</item>
+        <item name="android:paddingLeft">20.5px</item>
+        <item name="android:paddingRight">20.5px</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="svgButtonDialogCancel">
+        <item name="android:paddingBottom">29px</item>
+        <item name="android:paddingTop">29px</item>
+        <item name="android:paddingLeft">41px</item>
+        <item name="android:paddingRight">41px</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="safetytoolstypestyle">
+        <item name="android:layout_marginBottom">@dimen/xs_global_padding_top_bottom_px</item>
+        <item name="android:layout_marginTop">@dimen/xs_global_padding_top_bottom_px</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawableRight">@drawable/xs_icon_check</item>
+        <item name="android:background">@drawable/xs_radio_selector</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/xs_red_radio_button_text_selector</item>
+        <item name="android:textSize">@dimen/xs_device_item_name_padding_right_px</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="safetytoolsstoptypestyle">
+        <item name="android:layout_marginBottom">@dimen/xs_global_padding_top_bottom_px</item>
+        <item name="android:layout_marginLeft">@dimen/xs_global_padding_left_right_px</item>
+        <item name="android:layout_marginRight">@dimen/xs_global_padding_left_right_px</item>
+        <item name="android:layout_marginTop">@dimen/xs_global_padding_top_bottom_px</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/xs_global_text_size_px</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="CopyTypeTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:listDivider">@drawable/xs_divider_bg</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+
+    <style name="TabLayoutTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">@dimen/xs_tab_text_size_px</item>
+    </style>
+    <style name="TabLayoutTextStyle1" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">@dimen/xs__42px</item>
+    </style>
+
+    <style name="NewHeatPointEditTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:minWidth">200px</item>
+        <item name="android:minHeight">60px</item>
+        <item name="android:textColor">@color/xs_green_color</item>
+        <item name="android:textColorHint">@color/xs_global_gray_text_color</item>
+        <item name="android:textSize">@dimen/xs_tv_text_size</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+</resources>

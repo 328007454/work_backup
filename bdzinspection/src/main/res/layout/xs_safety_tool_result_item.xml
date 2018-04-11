@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data class="" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ll_new_defect_container"
+        android:layout_width="match_parent"
+        android:layout_height="176px"
+        android:layout_centerVertical="true"
+        android:background="@drawable/xs_bottom_line_background_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="30px">
+
+        <RelativeLayout
+            android:id="@+id/rl_cotainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@color/xs__e8edec_color" />
+
+            <View
+                android:id="@+id/view_tip"
+                android:layout_width="30px"
+                android:layout_height="30px"
+                android:layout_marginTop="50px"
+                android:background="@drawable/xs_item_safe_result_tip_background" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_cotainer"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20px"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/txt_test_time"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40px"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/xs_global_text_color"
+                android:textSize="38px" />
+
+            <TextView
+                android:id="@+id/txt_tool_qualify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20px"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text=""
+                android:textSize="38px" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="221px"
+            android:layout_height="152px"
+            android:layout_marginRight="30px">
+
+            <ImageView
+                android:id="@+id/iv_report_photo"
+                android:layout_width="176px"
+                android:layout_height="118px"
+                android:layout_centerInParent="true"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/txt_pic_count"
+                android:layout_width="@dimen/xs_defect_count_width_px"
+                android:layout_height="@dimen/xs_defect_count_width_px"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/xs_line_height_px"
+                android:background="@drawable/xs_circle_text_background"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_defect_count_text_size_px"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

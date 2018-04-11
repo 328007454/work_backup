@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.core.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/xs_fragment_record_defect_content_green_title_white_background"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:background="@drawable/xs_bdz_background_select"
+            android:gravity="center"
+            android:text="停用原因"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <TextView
+            android:id="@+id/txt_tool_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50px"
+            android:layout_marginTop="74px"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="30px"
+            android:textSize="40px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs__e1e1e4_color" />
+
+        <com.zhy.core.AutoRadioGroup
+            android:id="@+id/rg_stop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/xs_global_padding_left_right_px">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/rb_overdate"
+                android:layout_width="wrap_content"
+                android:layout_height="120px"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableLeft="@drawable/xs_rb_background_selector"
+                android:drawablePadding="10px"
+                android:gravity="center"
+                android:text="超期未试验"
+                android:textColor="@color/xs_green_radio_button_text_selector"
+                android:textSize="40px"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/rb_inperiod"
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:layout_marginLeft="25px"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableLeft="@drawable/xs_rb_background_selector"
+                android:drawablePadding="10px"
+                android:text="工器具送检"
+                android:textColor="@color/xs_green_radio_button_text_selector"
+                android:textSize="40px" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:background="@color/xs__e1e1e4_color" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/rb_unqualify"
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:layout_marginLeft="25px"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:drawableLeft="@drawable/xs_rb_background_selector"
+                android:drawablePadding="10px"
+                android:text="工器具不合格"
+                android:textColor="@color/xs_green_radio_button_text_selector"
+                android:textSize="40px" />
+
+            <com.cnksi.bdzinspection.view.ContainsEmojiEditText
+                android:id="@+id/et_input_reason"
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:layout_marginLeft="60px"
+                android:layout_marginRight="4px"
+                android:background="@drawable/xs_edtext_input_background"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|start"
+                android:hint="输入不合格的原因"
+                android:minHeight="100px"
+                android:paddingLeft="40px"
+                android:text=""
+                android:textColor="@color/xs_green_color"
+                android:textColorHint="@color/xs__c1d2cf_color"
+                android:textSize="38px"
+                android:visibility="visible" />
+        </com.zhy.core.AutoRadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs__e1e1e4_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="188px"
+            android:background="@color/xs_white"
+            android:orientation="vertical"
+            android:paddingLeft="30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32px"
+                android:gravity="center"
+                android:text="停用人员"
+                android:textSize="40px" />
+            <LinearLayout
+                android:id="@+id/ll_show_persons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10px"
+                android:layout_marginRight="30px"
+                android:layout_marginTop="18px"
+                android:orientation="horizontal"
+                android:padding="10px">
+
+                <com.cnksi.bdzinspection.view.ContainsEmojiEditText
+                    android:id="@+id/et_input_stopperson"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/xs_white"
+                    android:cursorVisible="true"
+                    android:gravity="center_vertical|start"
+                    android:hint="请输入停用人员姓名"
+                    android:text=""
+                    android:textColor="@color/xs_green_color"
+                    android:textColorHint="@color/xs_gray_background_color"
+                    android:textSize="40px"/>
+
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="100px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="14px"
+                    android:paddingLeft="30px"
+                    android:paddingRight="30px"
+                    android:src="@drawable/xs_icon_up"/>
+            </LinearLayout>
+
+            <!--<com.cnksi.bdzinspection.view.ContainsEmojiEditText-->
+                <!--android:id="@+id/et_input_stopperson"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="30px"-->
+                <!--android:layout_marginTop="18px"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@color/white"-->
+                <!--android:cursorVisible="true"-->
+                <!--android:gravity="center_vertical|start"-->
+                <!--android:hint="请输入操作人员姓名"-->
+                <!--android:text=""-->
+                <!--android:textColor="@color/green_color"-->
+                <!--android:textColorHint="@color/gray_background_color"-->
+                <!--android:textSize="40px" />-->
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs__e1e1e4_color" />
+
+        <TextView
+            android:id="@+id/txt_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:layout_marginTop="20px"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="30px"
+            android:text="提示:确定后该工器具将作废"
+            android:textColor="@color/xs_red_color"
+            android:textSize="40px"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40px"
+            android:layout_marginTop="40px"
+            android:background="@color/xs_white"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_green_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancle_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+        </LinearLayout>
+    </com.zhy.core.AutoLinearLayout>
+</layout>

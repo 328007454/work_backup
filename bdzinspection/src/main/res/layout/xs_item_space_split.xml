@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rl_device_container"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:background="@drawable/xs_device_green_border_background_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <!-- 设备名称 -->
+        <ImageView
+            android:id="@+id/ibt_copy_pen"
+            android:layout_width="29px"
+            android:layout_height="41px"
+            android:layout_marginLeft="@dimen/xs_device_item_name_padding_left_px"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:visibility="visible"
+            app:srcCompat="@drawable/xs_ic_green_finish"/>
+
+        <TextView
+            android:id="@+id/tv_device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/xs__30px"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:paddingRight="@dimen/xs_device_item_name_padding_right_px"
+            android:textColor="@drawable/xs_device_select_textcolor"
+            android:textSize="42px"/>
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="37px"
+            android:layout_height="28px"
+            android:layout_marginRight="@dimen/xs__30px"
+            android:src="@drawable/xs_icon_check_green"/>
+    </LinearLayout>
+</layout>

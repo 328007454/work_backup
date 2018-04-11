@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:minHeight="@dimen/xs_edit_text_minheight_px"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingRight="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
+
+            <TextView
+                android:id="@+id/tv_tools_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:textColor="@color/xs_tools_name_text_selector"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+            <EditText
+                android:id="@+id/et_input_values"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:hint="@string/xs_please_input_value_str"
+                android:inputType="number"
+                android:maxLength="5"
+                android:minHeight="@dimen/xs_edit_text_minheight_px"
+                android:minWidth="@dimen/xs_edit_text_minwidth_px"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/xs_green_color"
+                android:textColorHint="@color/xs_global_gray_text_color"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_tools_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/xs_gray_top_line_background"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingRight="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom_px"
+            android:textColor="@color/xs_global_gray_text_color"
+            android:textSize="@dimen/xs_swipe_menu_text_size_px" />
+
+    </LinearLayout>
+</layout>

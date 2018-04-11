@@ -632,40 +632,4 @@ public class FileUtil {
         }
     }
 
-    /**
-     * 移动数据库
-     */
-
-    public static void copyDbtoInnerStorage(Context context) {
-
-        try {
-            File file = new File(context.getFilesDir(), "BdzInspection/database/");
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-            File fileDb = new File(context.getFilesDir() + "/BdzInspection/database/bdzinspection.db");
-            if (!fileDb.exists()) {
-                fileDb.createNewFile();
-            }
-            DatabaseUtils.copyDatabase(CustomApplication.getInstance().getDaoConfig(),CustomApplication.getInstance().getDaoConfigInner(),new String[]{});
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @param path 路径
-     * @return 返回文件大小
-     */
-    public static long getFileSize(String path) {
-
-        if (TextUtils.isEmpty(path)) {
-            return -1;
-        }
-
-        File file = new File(path);
-        return (file.exists() && file.isFile() ? file.length() : -1);
-    }
-
 }

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/xs_dialog_green_title_background">
+
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:background="@color/xs_green_color"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px"/>
+
+        <TextView
+            android:id="@+id/txt_temp_title"
+            android:layout_width="0px"
+            android:layout_height="@dimen/xs_list_item_eight_minheight_px"
+            android:gravity="center_vertical|left"
+            android:paddingStart="@dimen/xs__30px"
+            android:text="温度"
+            android:textSize="@dimen/xs_global_text_size_px"
+            app:layout_constraintRight_toLeftOf="@+id/edit_temp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dialog_title"/>
+
+
+        <EditText
+            android:id="@+id/edit_temp"
+            android:layout_width="0px"
+            android:layout_height="@dimen/xs_list_item_eight_minheight_px"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical|right"
+            android:hint="请输入温度"
+            android:paddingEnd="@dimen/xs__30px"
+            android:textColor="@color/xs_dark_text"
+            android:textSize="@dimen/xs_global_text_size_px"
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/txt_temp_title"
+            app:layout_constraintTop_toTopOf="@+id/txt_temp_title"/>
+
+
+        <TextView
+            android:id="@+id/txt_sd_title"
+            android:layout_width="0px"
+            android:layout_height="@dimen/xs_list_item_eight_minheight_px"
+            android:gravity="left|center_vertical"
+            android:paddingStart="@dimen/xs__30px"
+            android:text="湿度"
+            android:textSize="@dimen/xs_global_text_size_px"
+            app:layout_constraintRight_toLeftOf="@+id/edit_sd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_temp_title"/>
+
+
+        <EditText
+            android:id="@+id/edit_sd"
+            android:layout_width="0px"
+            android:layout_height="@dimen/xs_list_item_eight_minheight_px"
+            android:background="#FFFFFF"
+            android:gravity="right|center_vertical"
+            android:hint="请输入湿度"
+            android:paddingEnd="@dimen/xs__30px"
+            android:inputType="numberDecimal"
+            android:textColor="@color/xs_dark_text"
+            android:textSize="@dimen/xs_global_text_size_px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/txt_sd_title"
+            app:layout_constraintTop_toTopOf="@+id/txt_sd_title"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_line_eight_width_px"
+            android:background="@color/xs_line_color"
+            app:layout_constraintTop_toBottomOf="@+id/edit_temp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_line_eight_width_px"
+            android:background="@color/xs_line_color"
+            app:layout_constraintTop_toBottomOf="@+id/edit_sd"/>
+
+        <com.zhy.core.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom_px"
+            app:layout_constraintTop_toBottomOf="@+id/edit_sd">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancle_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_button_background_blue_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+        </com.zhy.core.AutoLinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

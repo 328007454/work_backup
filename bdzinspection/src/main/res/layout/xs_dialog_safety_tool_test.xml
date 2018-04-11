@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/xs_fragment_record_defect_content_green_title_white_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:gravity="center"
+            android:text="试验信息"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="188px"
+            android:background="@color/xs_white"
+            android:orientation="vertical"
+            android:paddingLeft="30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32px"
+                android:gravity="center"
+                android:text="试验时间"
+                android:textSize="40px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_test_time"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text=""
+                    android:textColor="@color/xs_green_color"
+                    android:textSize="40px"/>
+
+                <ImageButton
+                    android:id="@+id/ibtn_select_inspection_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30px"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/xs_icon_time_select"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs_gray_confirm_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="188px"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30px"
+                android:layout_marginTop="32px"
+                android:gravity="center"
+                android:text="试验结果"
+                android:textSize="40px"/>
+
+            <com.zhy.core.AutoRadioGroup
+                android:id="@+id/rg_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                android:paddingRight="@dimen/xs_global_padding_left_right_px">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@null"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/xs_rb_background_selector"
+                    android:drawablePadding="10px"
+                    android:gravity="center_vertical"
+                    android:text="合格"
+                    android:textColor="@color/xs_green_radio_button_text_selector"
+                    android:textSize="40px"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb_unnormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200px"
+                    android:button="@null"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/xs_rb_background_selector"
+                    android:drawablePadding="10px"
+                    android:gravity="left|center_vertical"
+                    android:text="不合格"
+                    android:textColor="@color/xs_green_radio_button_text_selector"
+                    android:textSize="40px"/>
+            </com.zhy.core.AutoRadioGroup>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs_gray_confirm_color"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="188px"
+            android:background="@color/xs_white"
+            android:orientation="vertical"
+            android:paddingLeft="30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32px"
+                android:gravity="center"
+                android:text="试验人员"
+                android:textSize="40px"/>
+
+            <LinearLayout
+                android:id="@+id/ll_show_persons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10px"
+                android:layout_marginRight="30px"
+                android:layout_marginTop="18px"
+
+                android:orientation="horizontal"
+                android:padding="10px">
+
+                <com.cnksi.bdzinspection.view.ContainsEmojiEditText
+                    android:id="@+id/et_input_person"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/xs_white"
+                    android:cursorVisible="true"
+                    android:gravity="center_vertical|start"
+                    android:hint="请输入试验人员"
+                    android:text=""
+                    android:textColor="@color/xs_green_color"
+                    android:textColorHint="@color/xs_gray_background_color"
+                    android:textSize="40px"/>
+
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="100px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="14px"
+                    android:paddingLeft="30px"
+                    android:paddingRight="30px"
+                    android:src="@drawable/xs_icon_up"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs_gray_confirm_color"/>
+
+
+        <LinearLayout
+            android:id="@+id/ll_new_defect_container"
+            android:layout_width="match_parent"
+            android:layout_height="308px"
+            android:layout_centerVertical="true"
+            android:background="@color/xs_white"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32px"
+                android:gravity="center"
+                android:text="试验报告"
+                android:textSize="40px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="37px"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="260px"
+                    android:layout_height="180px">
+
+                    <ImageView
+                        android:id="@+id/iv_report_photo"
+                        android:layout_width="220px"
+                        android:layout_height="148px"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="10px"
+                        android:contentDescription="@null"/>
+
+                    <TextView
+                        android:id="@+id/txt_pic_count"
+                        android:layout_width="@dimen/xs_defect_count_width_px"
+                        android:layout_height="@dimen/xs_defect_count_width_px"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="18px"
+                        android:background="@drawable/xs_circle_text_background"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_defect_count_text_size_px"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/ibtn_take_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30px"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@null"
+                        app:srcCompat="@drawable/xs_icon_take_photo"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs_gray_confirm_color"/>
+
+        <TextView
+            android:id="@+id/txt_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="20px"
+            android:gravity="left"
+            android:text="提示:确定后该工器具将作废"
+            android:textColor="@color/xs_red_color"
+            android:textSize="40px"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40px"
+            android:layout_marginTop="40px"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancle_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_green_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

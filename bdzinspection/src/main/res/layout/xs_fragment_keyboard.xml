@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/xs_keyboard_vertical_padding_px"
+        android:paddingLeft="@dimen/xs_keyboard_horizontal_space_px"
+        android:paddingRight="@dimen/xs_keyboard_horizontal_space_px"
+        android:paddingTop="@dimen/xs_keyboard_vertical_padding_px">
+
+        <LinearLayout
+            android:id="@+id/ll_keyboard_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_keyboard_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:background="@drawable/xs_keyboard_bt_selector"
+                android:gravity="center_vertical|left"
+                android:minHeight="@dimen/xs_device_item_minheight_px"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                android:textColor="@color/xs_global_base_color"
+                android:textColorHint="@color/xs_keyboard_text_color"
+                android:textSize="@dimen/xs_global_text_size_px"/>
+
+            <ImageButton
+                android:id="@+id/ibtn_keyboard_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/xs_keyboard_horizontal_space_px"
+                android:layout_weight="2"
+                android:background="@drawable/xs_keyboard_delete_selector"
+                android:contentDescription="@null"
+                android:minHeight="@dimen/xs_device_item_minheight_px"
+                android:src="@drawable/xs_ic_delete_words"/>
+
+            <TextView
+                android:id="@+id/tv_keyboard_words"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/xs_keyboard_horizontal_space_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_keyboard_words_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_device_item_minheight_px"
+                android:text="@string/xs_letter_A_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_keyboard_text_size_px"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_keyboard_num_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/xs_keyboard_vertical_space_px">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_keyboard_words_one_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/xs_keyboard_vertical_space_px"
+            android:visibility="gone">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_keyboard_words_two_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/xs_keyboard_vertical_space_px"
+            android:visibility="gone">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_keyboard_words_three_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/xs_keyboard_vertical_space_px"
+            android:visibility="gone">
+        </LinearLayout>
+    </LinearLayout>
+</layout>
