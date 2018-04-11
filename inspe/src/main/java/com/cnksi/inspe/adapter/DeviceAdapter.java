@@ -95,28 +95,28 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     private MultiItemEntity lastExpandIndex = null;
 
     @Override
-    public int expand(int position, boolean animate) {
+    public int expand(int position, boolean animate, boolean notify) {
         MultiItemEntity entity = getData().get(position);
-        int index = super.expand(position);
-        if (entity !=lastExpandIndex){
-            if(lastExpandIndex ==null){
+        int index = super.expand(position, animate, notify);
+        if (entity != lastExpandIndex) {
+            if (lastExpandIndex == null) {
 //                lastExpandIndex = getData().get(0);
             }
-            if (lastExpandIndex!=null &&((SpaceItem)lastExpandIndex).isExpanded()){
-                int p= getData().indexOf(lastExpandIndex);
-                if (p>=0){
+            if (lastExpandIndex != null && ((SpaceItem) lastExpandIndex).isExpanded()) {
+                int p = getData().indexOf(lastExpandIndex);
+                if (p >= 0) {
                     collapse(p);
                 }
             }
         }
         lastExpandIndex = entity;
 
-            return index;
+        return index;
     }
 
     @Override
     public int collapse(int position, boolean animate) {
-        if (getData().get(position) == lastExpandIndex) lastExpandIndex =null;
+        if (getData().get(position) == lastExpandIndex) lastExpandIndex = null;
         return super.collapse(position, animate);
     }
 

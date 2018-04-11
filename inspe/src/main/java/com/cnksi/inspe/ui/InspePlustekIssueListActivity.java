@@ -73,8 +73,14 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        plustekService.delete(list.remove(position));
-                                        adapter.notifyDataSetChanged();
+                                        if (plustekService.delete(list.get(position).resultEntity)) {
+                                            plustekService.delete(list.remove(position));
+                                            adapter.notifyDataSetChanged();
+                                            showToast("删除成功");
+                                        } else {
+                                            showToast("删除失败！");
+                                        }
+
                                     }
                                 })
                         .setNegativeButton("取消",

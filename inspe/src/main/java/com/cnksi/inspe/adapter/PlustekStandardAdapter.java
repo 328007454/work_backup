@@ -48,9 +48,9 @@ public class PlustekStandardAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                     public void onClick(View v) {
                         int pos = holder.getAdapterPosition();
                         if (rule0.isExpanded()) { //当前是展开
-                            collapse(pos, false);//关闭
+                            collapse(pos, true);//关闭
                         } else {
-                            expand(pos, false);//展开
+                            expand(pos, true);//展开
                         }
                     }
                 });
@@ -86,9 +86,9 @@ public class PlustekStandardAdapter extends BaseMultiItemQuickAdapter<MultiItemE
     private MultiItemEntity lastExpandIndex = null;
 
     @Override
-    public int expand(int position, boolean animate) {
+    public int expand(int position, boolean animate, boolean notify) {
         MultiItemEntity entity = getData().get(position);
-        int index = super.expand(position);
+        int index = super.expand(position, animate, notify);
         if (entity != lastExpandIndex) {
             if (lastExpandIndex == null) {
 //                lastExpandIndex = getData().get(0);
@@ -101,7 +101,6 @@ public class PlustekStandardAdapter extends BaseMultiItemQuickAdapter<MultiItemE
             }
         }
         lastExpandIndex = entity;
-
         return index;
     }
 
