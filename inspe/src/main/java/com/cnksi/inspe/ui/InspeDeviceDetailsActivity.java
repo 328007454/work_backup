@@ -163,13 +163,10 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
                 PlusteRuleEntity entity = data.rule;
 
                 Intent intent = new Intent(context, InspePlustekIssueActivity.class);
-                intent.putExtra("info_txt", (deviceDbModel.getName() + " " + plusteRuleEntity1.name + "-" + entity.getName()));//设备名称+一级+二级（如:**避雷器 技术资料-安装技术文件）
                 intent.putExtra("data", entity);//计算可扣分数
                 intent.putExtra("task_id", taskId);//任务ID
                 intent.putExtra("device_id", deviceId);//设备ID
                 intent.putExtra("plustek_type", plustekType);
-                //计算出可以被扣得分值
-                intent.putExtra("max_minus", 10f);
                 startActivity(intent);
 
             }

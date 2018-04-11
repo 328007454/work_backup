@@ -74,6 +74,37 @@ public class PlustekService extends BaseDbService {
     }
 
     /**
+     * 根据问题ID，获取标准1,2级name
+     *
+     * @param levle4Id
+     * @return
+     */
+    public String[] getLeve1_2Name(String levle4Id) {
+        String level4 = "SELECT pid FROM xj_jyhpj_rule WHERE id='" + levle4Id + "'";//677747476032086022
+        String level3 = "SELECT pid FROM xj_jyhpj_rule WHERE id=(" + level4 + ")";
+        String level2 = "SELECT * FROM xj_jyhpj_rule WHERE id=(" + level3 + ")";
+        String level1 = "SELECT level1.name AS name1,level2.name AS name2 FROM xj_jyhpj_rule AS level1";
+        String sql = level1 + " JOIN (" + level2 + ")AS level2 ON level1.id=level2.pid;";
+
+        try {
+            DbModel dbModel = dbManager.findDbModelFirst(new SqlInfo(sql));
+            if (dbModel.isEmpty("name1") || dbModel.isEmpty("name2")) {
+                return null;
+            } else {
+                String[] names = new String[2];
+                names[0] = dbModel.getString("name1").replaceAll(" ", "");
+                names[1] = dbModel.getString("name2").replaceAll(" ", "");
+                return names;
+            }
+
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * 获取精益化问题
      *
      * @param taskId   任务ID
@@ -117,5 +148,52 @@ public class PlustekService extends BaseDbService {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * 根据标准ID（level=4）获取大项总分
+     *
+     * @param level4Id
+     * @return
+     */
+    public DbModel getStandardGroupScore(String level4Id) {
+        //level 4->3->2-1
+        String level4 = "SELECT pid FROM xj_jyhpj_rule WHERE id='" + level4Id + "'";
+        String level3 = "SELECT pid FROM xj_jyhpj_rule WHERE id=(" + level4 + ")";
+        String level2 = "SELECT pid FROM xj_jyhpj_rule WHERE id=(" + level3 + ")";
+        String sql = "SELECT score,id FROM xj_jyhpj_rule WHERE id=(" + level2 + ") AND dlt='0';";
+        try {
+            return dbManager.findDbModelFirst(new SqlInfo(sql));
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public float getStandaredMaxDult(String level4Id, String deviceId) {
+        //先将leve1下所有标准查询出来，在与结果中的rule_id做一对一管理
+        DbModel dbModelTotal = getStandardGroupScore(level4Id);
+        if (dbModelTotal == null || dbModelTotal.isEmpty("score") || dbModelTotal.isEmpty("id")) {
+            return 0;
+        }
+        String level1Id = dbModelTotal.getString("id");//level1ID
+        float totalScore = dbModelTotal.getFloat("score");//大项总分
+
+//        String level1="";
+        String level2 = "SELECT id FROM xj_jyhpj_rule WHERE pid IN('" + level1Id + "')";
+        String level3 = "SELECT id FROM xj_jyhpj_rule WHERE pid IN(" + level2 + ")";
+        String level4 = "SELECT level,* FROM xj_jyhpj_rule WHERE pid IN(" + level3 + ")";
+        String sql = "SELECT SUM(result.deduct_score)AS total_score FROM xj_group_con_rule_result AS result JOIN (" + level4 + ")AS ruel ON ruel.id=result.rule_id WHERE result.check_type='jyhjc' AND dlt='0' AND device_id='" + deviceId + "';";
+        try {
+            DbModel dbModel = dbManager.findDbModelFirst(new SqlInfo(sql));
+            float deductScore = 0;
+            if (dbModel == null || dbModel.isEmpty("total_score")) {
+                deductScore = dbModel.getFloat("total_score");
+            }
+            return Math.max(0, (totalScore - deductScore));
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return totalScore;
     }
 }

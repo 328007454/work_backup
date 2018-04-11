@@ -43,7 +43,7 @@ public class DeviceStandardTypeAdapter extends BaseQuickAdapter<PlusteRuleEntity
     @Override
     protected void convert(BaseViewHolder helper, PlusteRuleEntity item) {
         TextView typeName = helper.getView(R.id.txt_standard_type_name);
-        helper.setText(R.id.txt_standard_type_name, item.getName());//item.getString("name"));
+        helper.setText(R.id.txt_standard_type_name, item.getName().replaceAll(" ", ""));//item.getString("name"));
         if (helper.getAdapterPosition() == clickItemPosition) {
             typeName.setSelected(true);
             typeName.setTextColor(mContext.getResources().getColor(R.color.color_05c8b8));

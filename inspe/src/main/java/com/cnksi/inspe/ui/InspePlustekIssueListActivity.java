@@ -13,12 +13,8 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspePlustekIssuelistBinding;
 import com.cnksi.inspe.db.PlustekService;
-import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
-import com.cnksi.inspe.type.ProgressType;
-import com.cnksi.inspe.type.TaskType;
-import com.cnksi.inspe.utils.DateFormat;
-import com.cnksi.inspe.utils.StringUtils;
+import com.cnksi.inspe.entity.IssueListEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +29,7 @@ import java.util.List;
 public class InspePlustekIssueListActivity extends AppBaseActivity {
 
     private ActivityInspePlustekIssuelistBinding dataBinding;
-    private List<TeamRuleResultEntity> list = new ArrayList<>();
+    private List<IssueListEntity> list = new ArrayList<>();
     private PlustekIssueListAdapter adapter;
     private PlustekService plustekService = new PlustekService();
 
@@ -53,13 +49,17 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //修改
+                IssueListEntity entity = list.get(position);
                 Intent intent = new Intent(context, InspePlustekIssueActivity.class);
-                intent.putExtra("edit_data", list.get(position));//计算可扣分数
+                intent.putExtra("edit_data", list.get(position).resultEntity);//计算可扣分数
+                if (entity.names != null && entity.names.length > 1) {
+                    intent.putExtra("info_txt", (entity.resultEntity.getDevice_name() + " " + entity.names[0] + "-" + entity.names[1]));
+                } else {
+                    intent.putExtra("info_txt", entity.resultEntity.getDevice_name());
+                }
 //                intent.putExtra("task_id", taskId);//任务ID
 //                intent.putExtra("device_id", deviceId);//设备ID
 //                intent.putExtra("plustek_type", plustekType);
-                //计算出可以被扣得分值
-                intent.putExtra("max_minus", 10f);
                 startActivity(intent);
             }
         });
@@ -112,22 +112,30 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
         adapter.notifyDataSetChanged();
         List<TeamRuleResultEntity> listTemp = plustekService.getIssues(taskId, deviceId);
         if (listTemp != null && listTemp.size() > 0) {
-            list.addAll(listTemp);
+            TeamRuleResultEntity resultEntity;
+            for (int i = 0, size = listTemp.size(); i < size; i++) {
+                resultEntity = listTemp.get(i);
+                list.add(new IssueListEntity(resultEntity, plustekService.getLeve1_2Name(resultEntity.getRule_id())));
+            }
             adapter.notifyDataSetChanged();
         }
     }
 
-    public class PlustekIssueListAdapter extends BaseQuickAdapter<TeamRuleResultEntity, BaseViewHolder> {
-        public PlustekIssueListAdapter(int layoutResId, List<TeamRuleResultEntity> data) {
+    public class PlustekIssueListAdapter extends BaseQuickAdapter<IssueListEntity, BaseViewHolder> {
+        public PlustekIssueListAdapter(int layoutResId, List<IssueListEntity> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, TeamRuleResultEntity item) {
-            helper.setText(R.id.issueInfoTxt, item.getBdz_name());//1
-            helper.setText(R.id.issueScoreTxt, String.format("-%.2f", item.getDeduct_score()));//扣分
-            helper.setText(R.id.issueReasonTxt, "");//3
-            helper.setText(R.id.issueNatureTxt, item.getProblem_nature());//问题性质
+        protected void convert(BaseViewHolder helper, IssueListEntity item) {
+            helper.setText(R.id.issueInfoTxt, item.resultEntity.getDescription());//1
+            helper.setText(R.id.issueScoreTxt, String.format("-%.2f", item.resultEntity.getDeduct_score()));//扣分
+            if (item.names != null && item.names.length > 1) {
+                helper.setText(R.id.issueReasonTxt, item.names[0] + " " + item.names[1]);//3
+            } else {
+                helper.setText(R.id.issueReasonTxt, "");
+            }
+            helper.setText(R.id.issueNatureTxt, item.resultEntity.getProblem_nature());//问题性质
         }
     }
 }

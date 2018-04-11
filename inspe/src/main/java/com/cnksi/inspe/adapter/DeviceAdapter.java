@@ -100,7 +100,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         int index = super.expand(position);
         if (entity !=lastExpandIndex){
             if(lastExpandIndex ==null){
-                lastExpandIndex = getData().get(0);
+//                lastExpandIndex = getData().get(0);
             }
             if (lastExpandIndex!=null &&((SpaceItem)lastExpandIndex).isExpanded()){
                 int p= getData().indexOf(lastExpandIndex);

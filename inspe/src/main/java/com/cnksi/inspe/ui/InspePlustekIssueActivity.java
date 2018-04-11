@@ -156,7 +156,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     @Override
     public void initData() {
         teamRuleResult = (TeamRuleResultEntity) getIntent().getSerializableExtra("edit_data");
-        maxIntentMinus = (int) (SCAN_NUM * getIntent().getFloatExtra("max_minus", 0));
+
         //初始化功能部分
         natureList = dictionaryService.getDictonaryIssueNature();
         reasonList = dictionaryService.getDictonaryIssueReason();
@@ -174,17 +174,27 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             reasonArray.add(reasonList.get(i).getV());
         }
 
+
         if (teamRuleResult == null) {
             initCreateIssue();
         } else {
             initEditIssue();
         }
-
+        //描述
+        String info = getIntent().getStringExtra("info_txt");
+        if (TextUtils.isEmpty(info) && list != null && list.size() > 0 && deviceEntity != null) {
+            String[] names = plustekService.getLeve1_2Name(list.get(0).getId());
+            if (names != null && names.length > 1) {
+                info = deviceEntity.getName() + " " + names[0] + "-" + names[1];
+            }
+        }
+        dataBinding.contextTxt.setText(info);
 
     }
 
     private void initEditIssue() {
         checkRuleEntity = plustekService.getIssue(teamRuleResult.getRule_id());
+        maxIntentMinus = (int) (SCAN_NUM * plustekService.getStandaredMaxDult(teamRuleResult.getId(), deviceId));
         if (checkRuleEntity == null) {
             showToast("未查询到相关标准");
             finish();
@@ -253,6 +263,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             list = plustekService.getPlusteRule(teamRule.getBigid(), null, teamRule.getId());//检查类型在第1.2.3有用，4级无用
             if (list != null && list.size() > 0) {
                 listArray = new ArrayList<>(list.size());
+                maxIntentMinus = (int) (SCAN_NUM * plustekService.getStandaredMaxDult(list.get(0).getId(), deviceId));//获取可扣分值
                 for (int i = 0, size = list.size(); i < size; i++) {
                     listArray.add(list.get(i).getName());
                 }
@@ -278,8 +289,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             finish();
             return;
         }
-        //描述
-        dataBinding.contextTxt.setText(getIntent().getStringExtra("info_txt"));
+
         //初始化
         dataBinding.issueNatureTxt.setText(natureArray.get(0));//问题性质，默认一般
     }

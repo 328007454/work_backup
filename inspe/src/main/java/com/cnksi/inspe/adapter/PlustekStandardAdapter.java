@@ -48,9 +48,9 @@ public class PlustekStandardAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                     public void onClick(View v) {
                         int pos = holder.getAdapterPosition();
                         if (rule0.isExpanded()) { //当前是展开
-                            collapse(pos, true);//关闭
+                            collapse(pos, false);//关闭
                         } else {
-                            expand(pos, true);//展开
+                            expand(pos, false);//展开
                         }
                     }
                 });
