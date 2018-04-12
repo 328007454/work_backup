@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.GalleryAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
@@ -21,6 +22,8 @@ import com.cnksi.inspe.type.TaskType;
 import com.cnksi.inspe.ui.fragment.AllIssueFragment;
 import com.cnksi.inspe.ui.fragment.MyIssueFragment;
 import com.cnksi.inspe.utils.DateFormat;
+import com.cnksi.inspe.utils.FileUtils;
+import com.cnksi.inspe.utils.ImageUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,6 +99,17 @@ public class InspeIssueDetailActivity extends AppBaseActivity implements View.On
 
         galleryAdapte = new GalleryAdapter(picList);
         galleryAdapte.setMode(true);
+        galleryAdapte.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ArrayList<String> showList = new ArrayList<>(picList.size());
+                for (int i = 0, size = picList.size(); i < size; i++) {
+                    showList.add(FileUtils.getInpseRootPath() + picList.get(i));
+                }
+                ImageUtils.showImageDetails(context, position, showList, false, false);
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         dataBinding.galleryView.setLayoutManager(linearLayoutManager);
@@ -552,7 +566,7 @@ public class InspeIssueDetailActivity extends AppBaseActivity implements View.On
                                 for (int i = 0, size = chioseList.size(); i < size; i++) {
                                     //推送
                                     issueEntity.setProgress(ProgressType.wfp.name());
-                                    issueEntity.setId(UUID.randomUUID().toString());
+                                    issueEntity.setId(UUID.randomUUID().toString().replace("-", ""));
                                     issueEntity.setDept_id(groupList.get(Integer.valueOf(chioseList.get(i))).getId());//班组ID
                                     issueEntity.setDept_name(groupList.get(Integer.valueOf(chioseList.get(i))).getName());//班组名称
                                     issueEntity.setImprove_person_name(null);//整改人

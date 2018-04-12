@@ -104,7 +104,7 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
             userGroupArray.add(userGroup.get(i).getName());
         }
 
-        task.setId(UUID.randomUUID().toString());
+        task.setId(UUID.randomUUID().toString().replace("-",""));
         task.setType(TaskType.jyhjc.name());//检查类型
         task.setCheck_type(TaskType.jyhjc.getDesc());
         task.setCheckuser_id(expertUser.getId());//检查人ID
@@ -227,7 +227,7 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
         }
         //考虑到UUID重复情况(极为罕见)，index考虑到执行SQL错误情况，避免导致死循环
         if (!taskService.insert(task)) {
-            task.setId(UUID.randomUUID().toString());
+            task.setId(UUID.randomUUID().toString().replace("-",""));
             return createTask(task, index - 1);
         }
 

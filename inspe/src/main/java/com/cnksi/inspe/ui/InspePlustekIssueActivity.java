@@ -34,8 +34,10 @@ import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.utils.Config;
 import com.cnksi.inspe.utils.DateFormat;
+import com.cnksi.inspe.utils.FileUtils;
 import com.cnksi.inspe.utils.FunctionUtil;
 import com.cnksi.inspe.utils.FunctionUtils;
+import com.cnksi.inspe.utils.ImageUtils;
 import com.cnksi.inspe.widget.PopItemWindow;
 
 import org.w3c.dom.Text;
@@ -44,7 +46,9 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -96,6 +100,9 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     private String picTempPath;
     //**拍照保存的地址*/
     private List<String> picList = new ArrayList<>();
+    //**删除的地址的图片统一处理*/
+    private Set<String> picDeleteList = new HashSet<>();
+    private boolean isSave = false;//是否保存项目
 
     //检查记录
     private TeamRuleResultEntity teamRuleResult;
@@ -128,15 +135,22 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         galleryAdapte.setOnDeleteListener(new GalleryAdapter.OnDeleteListener() {
             @Override
             public void onDelete(String entity, int possion) {
-                picList.remove(possion);
+                picDeleteList.add(picList.remove(possion));//将图片添加进删除列表
                 galleryAdapte.notifyDataSetChanged();
-
-                File file = new File(entity);
-                if (file.exists()) {
-                    file.delete();
-                }
             }
         });
+        galleryAdapte.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ArrayList<String> showList = new ArrayList<>(picList.size());
+                for (int i = 0, size = picList.size(); i < size; i++) {
+                    showList.add(FileUtils.getInpseRootPath() + picList.get(i));
+                }
+                ImageUtils.showImageDetails(context, position, showList, false, false);
+            }
+        });
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         dataBinding.galleryView.setLayoutManager(linearLayoutManager);
@@ -194,7 +208,10 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     }
 
     private void initEditIssue() {
-        checkRuleEntity = plustekService.getIssue(teamRuleResult.getRule_id());
+        if (checkRuleEntity == null) {//避免重复查询
+            checkRuleEntity = plustekService.getIssue(teamRuleResult.getRule_id());
+        }
+
         maxIntentMinus = (int) (SCAN_NUM * plustekService.getStandaredMaxDult(teamRuleResult.getId(), deviceId));
         if (checkRuleEntity == null) {
             showToast("未查询到相关标准");
@@ -215,6 +232,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             galleryAdapte.notifyDataSetChanged();
         }
 
+        //扣分，修改扣分需要加上本身的扣分
         minusScore = 0;
         scoreEntity = (int) (teamRuleResult.getDeduct_score() * SCAN_NUM);
         if (!TextUtils.isEmpty(checkRuleEntity.getScore_content())) {
@@ -231,6 +249,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 
         setScoreTxt(scoreEntity);
 
+        //责任班组、责任部门
         listTeamArray = new ArrayList<>();
         listBranchArray = new ArrayList<>();
         subStationEntity = deviceService.getSubStation(teamRuleResult.getBdz_id());
@@ -300,8 +319,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAKEPIC_REQUEST) {
             if (resultCode == RESULT_OK) {
-//                BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + picTempPath, 4);
-                BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + picTempPath, 4, 500 * 500);
+                BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
             }
@@ -349,9 +367,9 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         int i = view.getId();
         if (i == R.id.cameraBtn) {//拍照
             if (picList.size() < 3) {
-                String picName = FunctionUtil.getCurrentImageName(this);//生成图片名称
-                picTempPath = subStationEntity.getFolder_name() + "/";//地址为../BdzInspection/${picTempPath}
-                FunctionUtils.takePicture(this, picName, Config.RESULT_PICTURES_FOLDER + picTempPath, TAKEPIC_REQUEST);
+                String picName = FileUtils.createInpseImgLongName(task);//生成图片名称
+                picTempPath = FileUtils.getInpseImgPath(task);
+                FunctionUtils.takePicture(this, picName, FileUtils.getInpseRootPath() + picTempPath, TAKEPIC_REQUEST);
                 //文件相对地址
                 picTempPath = picTempPath + picName;
             } else {
@@ -366,12 +384,44 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     PlusteRuleEntity entity = list.get(position);
+                    //判断是否为统一选择，同一选择不处理
+                    if (checkRuleEntity == entity) {
+                        return;
+                    }
                     checkRuleEntity = entity;
-                    teamRuleResult = teamService.getRuleResult(list.get(position).getId(), task.getId());
+
+                    //判断上次选择是否有记录问题，如果有需要将图片冲删除列表中移除
+                    if (teamRuleResult != null) {
+                        for (String picName : picList) {//先添加后移除，清理新添加的图片
+                            picDeleteList.add(picName);
+                        }
+                        if (!TextUtils.isEmpty(teamRuleResult.getImg())) {
+                            String[] imsg = teamRuleResult.getImg().split(",");
+                            for (String pic : imsg) {
+                                picDeleteList.remove(pic);//将删除的图片从列表中移除
+                            }
+                        }
+                        picList.clear();
+                        galleryAdapte.notifyDataSetChanged();
+                    }
+
+                    teamRuleResult = teamService.getRuleResult(list.get(position).getId(), task.getId());//查询数据库是否对该问题进行过记录
+                    if (teamRuleResult != null) {//初始化修改UI
+                        //对图片进行销毁
+                        for (String picName : picList) {//先添加后移除，清理新添加的图片
+                            picDeleteList.add(picName);
+                        }
+                        picDeleteList.clear();
+                        galleryAdapte.notifyDataSetChanged();
+
+                        initEditIssue();
+                        return;
+                    }
                     //问题描述
                     dataBinding.issueInfoTxt.setText(entity.getName());
-                    dataBinding.issueEdit.setText(entity.getName().replaceAll(",{0,}，{0,}[扣].*分.*", "").replaceAll("[0-9].]{0,}[a-z)]{0,}[a-z]{0,}", ""));
+                    dataBinding.issueEdit.setText(entity.getName().replaceAll("的{0,},{0,}，{0,}[扣].*分.*", "").replaceAll("[0-9].]{0,}[a-z)]{0,}[a-z]{0,}", ""));
 
+                    //扣分
                     minusScore = 0;
                     scoreEntity = (int) (entity.getScore() * SCAN_NUM);
                     if (!TextUtils.isEmpty(entity.getScore_content())) {
@@ -385,10 +435,9 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     } else {
                         maxMinus = maxIntentMinus;
                     }
-
                     setScoreTxt(scoreEntity);
 
-                    //检修班组
+                    //检修班组、检修部门
                     listTeamArray.clear();
                     listBranchArray.clear();
                     if (!TextUtils.isEmpty(entity.getScore_charge())) {
@@ -418,9 +467,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     } else {
                         dataBinding.blameBranchTxt.setText(null);
                     }
-
                 }
-
             }).showAsDropDown(view);
         } else if (i == R.id.issueNatureTxt) {//问题性质(独立),一般、严重、危急
             new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -518,7 +565,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         }
         //创建ID
         if (teamRuleResult.getId() == null) {//创建或覆盖
-            teamRuleResult.setId(UUID.randomUUID().toString());
+            teamRuleResult.setId(UUID.randomUUID().toString().replace("-", ""));
         }
         //任务ID
         teamRuleResult.setTask_id(task.id);
@@ -587,9 +634,45 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 
         if (teamService.saveRuleResult(teamRuleResult)) {
             showToast("操作成功");
+            isSave = true;
             finish();
         } else {
             showToast("保存数据库失败！");
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isSave) {//保存成功
+            for (String pic : picList) {
+                picDeleteList.remove(pic);//移除
+            }
+        } else {
+            if (teamRuleResult != null) {//重新编辑
+                for (String pic : picList) {
+                    picDeleteList.add(pic);//添加保存的图片
+                }
+                if (!TextUtils.isEmpty(teamRuleResult.getImg())) {
+                    String[] imsg = teamRuleResult.getImg().split(",");
+                    for (String pic : imsg) {
+                        picDeleteList.remove(pic);//将删除的图片从列表中移除
+                    }
+                }
+            } else {//取消
+                for (String pic : picList) {
+                    picDeleteList.add(pic);//将图片列表添加进删除文件夹
+                }
+            }
+        }
+
+        //删除文件
+        for (String fileName : picDeleteList) {
+            File file = new File(FileUtils.getInpseRootPath(), fileName);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+
     }
 }

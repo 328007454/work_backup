@@ -23,10 +23,10 @@ public class FunctionUtil extends FunctionUtils {
 
 
     /**
-     * @param context
+     * @param
      * @return
      */
-    public static String getCurrentImageName(Context context) {
+    public static String getCurrentImageName() {
         //获取图片目录
         String picPrefix = PreferencesUtils.get(Config.PICTURE_PREFIX, "");
 

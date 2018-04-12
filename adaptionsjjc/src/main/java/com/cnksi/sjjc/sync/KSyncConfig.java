@@ -38,7 +38,7 @@ public class KSyncConfig {
 
     private KSyncConfig() {
         //避免程序Crash之后失去了班组信息。
-        dept_id = PreferencesUtils.get( DEPT_ID, "-1");
+        dept_id = PreferencesUtils.get(DEPT_ID, "-1");
     }
 
     public static KSyncConfig getInstance() {
@@ -51,7 +51,7 @@ public class KSyncConfig {
 
     public KSyncConfig setDept_id(String dept_id) {
         this.dept_id = dept_id;
-        PreferencesUtils.put( DEPT_ID, dept_id);
+        PreferencesUtils.put(DEPT_ID, dept_id);
         initFolder();
         return this;
     }
@@ -62,7 +62,7 @@ public class KSyncConfig {
     }
 
     public void startNetWorkSync(Context context) {
-        PreferencesUtils.put( "SYNC_WAY", true);
+        PreferencesUtils.put("SYNC_WAY", true);
         Intent intent = new Intent(context, NetWorkSyncActivity.class);
         startSync(context, intent);
     }
@@ -79,7 +79,7 @@ public class KSyncConfig {
         initFolder();
         String deviceId = DeviceUtils.getSerialNumber(context);
         config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
-                Config.SYNC_URL, deviceId, CustomApplication.getInstance(). getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
+                Config.SYNC_URL, deviceId, CustomApplication.getInstance().getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
         config.configDebug(BuildConfig.DEBUG);
         config.configAppid(Config.SYNC_APP_ID);
         config.configUrl(Config.SYNC_URL);
@@ -112,8 +112,10 @@ public class KSyncConfig {
         downFolder.add("lib/wt");
         //  downFolder.add("signimg");
         downFolder.add("download");
+        downFolder.add("admin/jyhjc/");
 
 
+        uploadFolder.add("admin/jyhjc/");
         uploadFolder.add("signimg");
         uploadFolder.add("video");
         uploadFolder.add("audio");

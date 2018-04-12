@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.GalleryAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
@@ -21,12 +22,16 @@ import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.utils.Config;
 import com.cnksi.inspe.utils.DateFormat;
+import com.cnksi.inspe.utils.FileUtils;
 import com.cnksi.inspe.utils.FunctionUtil;
 import com.cnksi.inspe.utils.FunctionUtils;
+import com.cnksi.inspe.utils.ImageUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 整改
@@ -63,13 +68,19 @@ public class InspeRecfityActivity extends AppBaseActivity implements View.OnClic
         galleryAdapte.setOnDeleteListener(new GalleryAdapter.OnDeleteListener() {
             @Override
             public void onDelete(String entity, int possion) {
-                picList.remove(possion);
+                picDeleteList.add(picList.remove(possion));
                 galleryAdapte.notifyDataSetChanged();
+            }
+        });
+        galleryAdapte.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
 
-                File file = new File(entity);
-                if (file.exists()) {
-                    file.delete();
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ArrayList<String> showList = new ArrayList<>(picList.size());
+                for (int i = 0, size = picList.size(); i < size; i++) {
+                    showList.add(FileUtils.getInpseRootPath() + picList.get(i));
                 }
+                ImageUtils.showImageDetails(context, position, showList, false, false);
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -124,13 +135,14 @@ public class InspeRecfityActivity extends AppBaseActivity implements View.OnClic
             teamService.saveRuleResult(issueEntity);
 
             setResult(RESULT_OK);
+            isSave = true;
             finish();
 
         } else if (v.getId() == R.id.cameraBtn) {
             if (picList.size() < 3) {
-                String picName = FunctionUtil.getCurrentImageName(this);//生成图片名称
-                picTempPath = issueEntity.getDept_id() + "/";//地址为../BdzInspection/${picTempPath}
-                FunctionUtils.takePicture(this, picName, Config.RESULT_PICTURES_FOLDER + picTempPath, TAKEPIC_REQUEST);
+                String picName = FileUtils.createInpseImgLongName(issueEntity);//生成图片名称
+                picTempPath = FileUtils.getInpseImgPath(issueEntity);
+                FunctionUtils.takePicture(this, picName, FileUtils.getInpseRootPath() + picTempPath, TAKEPIC_REQUEST);
                 //文件相对地址
                 picTempPath = picTempPath + picName;
             } else {
@@ -143,15 +155,43 @@ public class InspeRecfityActivity extends AppBaseActivity implements View.OnClic
     private String picTempPath;
     //**拍照保存的地址*/
     private List<String> picList = new ArrayList<>();
+    //**删除的地址的图片统一处理*/
+    private Set<String> picDeleteList = new HashSet<>();
+    //是否保存
+    private boolean isSave = false;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAKEPIC_REQUEST) {
             if (resultCode == RESULT_OK) {
+                BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isSave) {//保存成功
+            for (String pic : picList) {
+                picDeleteList.remove(pic);//移除
+            }
+        } else {
+            for (String pic : picList) {
+                picDeleteList.add(pic);//将图片列表添加进删除文件夹
+            }
+        }
+
+        //删除文件
+        for (String fileName : picDeleteList) {
+            File file = new File(FileUtils.getInpseRootPath(), fileName);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+
     }
 }

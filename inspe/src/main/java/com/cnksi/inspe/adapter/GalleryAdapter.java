@@ -9,6 +9,7 @@ import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.entity.GalleryEntity;
 import com.cnksi.inspe.utils.Config;
+import com.cnksi.inspe.utils.FileUtils;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class GalleryAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, String item) {
 //        helper.setText(R.id.imgImg, item);
-        Bitmap bitmap = BitmapUtils.getImageThumbnail(Config.RESULT_PICTURES_FOLDER + item, 73 * 2, 49 * 2);
+        Bitmap bitmap = BitmapUtils.getImageThumbnail(FileUtils.getInpseRootPath() + item, 73 * 2, 49 * 2);
         helper.setImageBitmap(R.id.imgImg, bitmap);
         if (isRead) {
             helper.setVisible(R.id.delBtn, false);
@@ -35,7 +36,7 @@ public class GalleryAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
                 @Override
                 public void onClick(View view) {
                     if (onDeleteListener != null) {
-                        onDeleteListener.onDelete(Config.RESULT_PICTURES_FOLDER + item, helper.getAdapterPosition());
+                        onDeleteListener.onDelete(item, helper.getAdapterPosition());
                     }
                 }
             });
