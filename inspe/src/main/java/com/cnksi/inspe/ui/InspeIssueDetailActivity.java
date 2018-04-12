@@ -93,18 +93,6 @@ public class InspeIssueDetailActivity extends AppBaseActivity implements View.On
         dataBinding.allotBtn.setOnClickListener(this);
         dataBinding.nextBtn.setOnClickListener(this);
 
-        switch (getUserService().getUser1().getRoleType()) {
-            case director:
-            case specialty:
-                pageDeal = new DirectorDeal();
-                break;
-            case team_leader:
-                pageDeal = new TeamLeaderDeal();
-                break;
-            case tracker:
-                pageDeal = new TrackerDeal();
-                break;
-        }
 
         galleryAdapte = new GalleryAdapter(picList);
         galleryAdapte.setMode(true);
@@ -150,7 +138,26 @@ public class InspeIssueDetailActivity extends AppBaseActivity implements View.On
                 //暂不实现
 //                break;
             default:
+                showToast("暂不支持该类型！");
+                finish();
+                return;
+        }
+
+        switch (getUserService().getUser1().getRoleType()) {
+            case director:
+            case specialty:
+                pageDeal = new DirectorDeal();
+                break;
+            case team_leader:
+                pageDeal = new TeamLeaderDeal();
+                break;
+            case tracker:
+                pageDeal = new TrackerDeal();
+                break;
+            case expert:
+            default:
                 showToast("你没有权限查看!");
+                finish();
                 return;
         }
 

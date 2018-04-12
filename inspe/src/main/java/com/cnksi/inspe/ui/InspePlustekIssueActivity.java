@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.GalleryAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
@@ -299,6 +300,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAKEPIC_REQUEST) {
             if (resultCode == RESULT_OK) {
+//                BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + picTempPath, 4);
+                BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + picTempPath, 4, 500 * 500);
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
             }
@@ -346,11 +349,11 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         int i = view.getId();
         if (i == R.id.cameraBtn) {//拍照
             if (picList.size() < 3) {
-                picTempPath = FunctionUtil.getCurrentImageName(this);
-                FunctionUtils.takePicture(this, picTempPath, Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
-
-                //文件绝对路径
-                picTempPath = Config.RESULT_PICTURES_FOLDER + picTempPath;
+                String picName = FunctionUtil.getCurrentImageName(this);//生成图片名称
+                picTempPath = subStationEntity.getFolder_name() + "/";//地址为../BdzInspection/${picTempPath}
+                FunctionUtils.takePicture(this, picName, Config.RESULT_PICTURES_FOLDER + picTempPath, TAKEPIC_REQUEST);
+                //文件相对地址
+                picTempPath = picTempPath + picName;
             } else {
                 showToast("目前仅支持上传3张图片");
             }
@@ -358,20 +361,6 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             setScoreTxt(scoreEntity);
         } else if (i == R.id.minuxBtn) {//-扣分
             setScoreTxt(-scoreEntity);
-        } else if (i == R.id.issueNatureTxt) {//问题性质(独立),一般、严重、危急
-            new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    dataBinding.issueNatureTxt.setText(natureList.get(position).getV());
-                }
-            }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
-        } else if (i == R.id.issueReasonTxt) {//问题产生原因(独立)
-            new PopItemWindow(this).setListAdapter(reasonArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    dataBinding.issueReasonTxt.setText(reasonList.get(position).getV());
-                }
-            }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.issueInfoTxt) {//错误问题
             new PopItemWindow(this).setListAdapter(listArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -433,7 +422,13 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 }
 
             }).showAsDropDown(view);
-
+        } else if (i == R.id.issueNatureTxt) {//问题性质(独立),一般、严重、危急
+            new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    dataBinding.issueNatureTxt.setText(natureList.get(position).getV());
+                }
+            }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.blameTeamTxt) {//问题班组
             new PopItemWindow(this).setListAdapter(listTeamArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -447,6 +442,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         dataBinding.blameBranchTxt.setText(null);
                         listBranchArray.add(subStationEntity.getPower_company());
                         listBranchArray.add(task.getDept_name());
+                        dataBinding.blameBranchTxt.performClick();
 
                     } else if (team.contains("运维")) {
                         //供电公司
@@ -466,53 +462,51 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             } else {
                 showToast("请先选择扣分原因");
             }
+        } else if (i == R.id.issueReasonTxt) {//问题产生原因(独立)
+            new PopItemWindow(this).setListAdapter(reasonArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    dataBinding.issueReasonTxt.setText(reasonList.get(position).getV());
+                }
+            }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.okBtn) {//确定
             if (TextUtils.isEmpty(dataBinding.issueInfoTxt.getText().toString().trim())) {
-                //没有错误直接关闭,并删除记录
-//                teamService.delete(teamRuleResult);
-                finish();
-            } else {
-                if (TextUtils.isEmpty(dataBinding.issueEdit.getText().toString().trim())) {
-                    dataBinding.issueEdit.requestFocus();
-                    showToast("请输入问题描述");
-                    return;
+                dataBinding.issueInfoTxt.performClick();
+                showToast("请选择扣分原因");
+                return;
+            } else if (TextUtils.isEmpty(dataBinding.issueEdit.getText().toString().trim())) {
+                dataBinding.issueEdit.requestFocus();
+                showToast("请输入问题描述");
+                return;
 //                } else if (TextUtils.isEmpty(dataBinding.dateTxt.getText().toString().trim())) {
 //                    showToast("请输入整改日期");
 //                    dataBinding.dateBtn.performClick();
 //                    return;
-                } else if (TextUtils.isEmpty(dataBinding.issueReasonTxt.getText())) {
-                    showToast("请选择产生原因");
-                    dataBinding.issueReasonTxt.performClick();
-                    return;
-//                } else if (picList.size() == 0) {
-//                    showToast("请对问题拍照");
-//                    dataBinding.cameraBtn.performClick();
+            } else if (TextUtils.isEmpty(dataBinding.issueNatureTxt.getText())) {
+                showToast("请选择问题性质");
+                dataBinding.issueNatureTxt.performClick();
+                return;
+            } else if (TextUtils.isEmpty(dataBinding.blameTeamTxt.getText())) {
+                showToast("请选择责任班组");
+                dataBinding.blameTeamTxt.performClick();
+                return;
+            } else if (TextUtils.isEmpty(dataBinding.blameBranchTxt.getText())) {
+                showToast("请选择责任单位");
+                dataBinding.blameBranchTxt.performClick();
+                return;
+            } else if (TextUtils.isEmpty(dataBinding.issueReasonTxt.getText())) {
+                showToast("请选择产生原因");
+                dataBinding.issueReasonTxt.performClick();
+                return;
+//                } else if (TextUtils.isEmpty(dataBinding.suggestEdit.getText().toString().trim())) {
+//                    showToast("请输入处理措施");
+//                    dataBinding.suggestEdit.performClick();
 //                    return;
-                } else if (TextUtils.isEmpty(dataBinding.issueNatureTxt.getText())) {
-                    showToast("请选择问题性质");
-                    dataBinding.issueNatureTxt.performClick();
-                    return;
-                } else if (TextUtils.isEmpty(dataBinding.blameTeamTxt.getText())) {
-                    showToast("请选择责任班组");
-                    dataBinding.issueReasonTxt.performClick();
-                    return;
-                } else if (TextUtils.isEmpty(dataBinding.blameBranchTxt.getText())) {
-                    showToast("请选择责任单位");
-                    dataBinding.issueReasonTxt.performClick();
-                    return;
-                } else if (TextUtils.isEmpty(dataBinding.issueReasonTxt.getText())) {
-                    showToast("请选择产生原因");
-                    dataBinding.issueReasonTxt.performClick();
-                    return;
-                } else if (TextUtils.isEmpty(dataBinding.suggestEdit.getText().toString().trim())) {
-                    showToast("请输入处理措施");
-                    dataBinding.suggestEdit.performClick();
-                    return;
-                }
             }
 
             createIssue();//满足输入，创建错误
         }
+
     }
 
     /**

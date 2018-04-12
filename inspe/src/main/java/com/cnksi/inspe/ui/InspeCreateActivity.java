@@ -85,6 +85,9 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
 
     }
 
+    private List<UserGroupEntity> userGroup = getUserService().getUserGroup();
+    private List<String> userGroupArray = new ArrayList<>();
+
     @Override
     public void initData() {
         if (expertUser == null) {
@@ -92,6 +95,15 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
             finish();
             return;
         }
+        if (userGroup == null || userGroup.size() == 0) {
+            showToast("没有查询到运维班组，请先同步数据!");
+            finish();
+            return;
+        }
+        for (int i = 0, size = userGroup.size(); i < size; i++) {
+            userGroupArray.add(userGroup.get(i).getName());
+        }
+
         task.setId(UUID.randomUUID().toString());
         task.setType(TaskType.jyhjc.name());//检查类型
         task.setCheck_type(TaskType.jyhjc.getDesc());
@@ -111,17 +123,7 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.teamNameTxt) {//运维班组选择
-            final List<UserGroupEntity> userGroup = getUserService().getUserGroup();
-            if (userGroup == null || userGroup.size() == 0) {
-                showToast("没有查询到运维班组，请先同步数据!");
-                finish();
-                return;
-            }
-            List<String> array = new ArrayList<>();
-            for (int i = 0, size = userGroup.size(); i < size; i++) {
-                array.add(userGroup.get(i).getName());
-            }
-            new PopItemWindow(this).setListAdapter(array).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            new PopItemWindow(this).setListAdapter(userGroupArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     if (!userGroup.get(position).getId().equals(task.getDept_id())) {
@@ -133,9 +135,10 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
                         dataBinding.substationTxt.setText(null);
                         task.setBdz_id(null);
                         task.setBdz_name(null);
+                        dataBinding.substationTxt.performClick();//自动弹出变电站选择
                     }
                 }
-            }).showAsDropDown(v);
+            }).setPopWindowWidth(v.getWidth()).showAsDropDown(v);
         } else if (v.getId() == R.id.substationTxt) {//变电站选择
             if (TextUtils.isEmpty(task.getDept_id())) {
                 showToast("请先选择运维班组");
@@ -144,7 +147,7 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
             final List<SubStationEntity> subStations = deviceService.getSubStations(task.getDept_id());
             if (subStations == null || subStations.size() == 0) {
                 showToast("没有查询到变电站，请先同步数据!");
-//                finish();
+                //finish();有可能用户选择了错误的班组，没有数据，故在此不finish，仅做提示。
                 return;
             }
             List<String> array = new ArrayList<>();
@@ -158,8 +161,12 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
                     dataBinding.substationTxt.setText(subStations.get(position).getName());
                     task.setBdz_id(subStations.get(position).getBdzid());//设置被检查变电站
                     task.setBdz_name(subStations.get(position).getName());
+
+                    if (TextUtils.isEmpty(dataBinding.teamLeaderTxt.getText())) {
+                        dataBinding.teamLeaderTxt.performClick();//自动弹出任务组长选择
+                    }
                 }
-            }).showAsDropDown(v);
+            }).setPopWindowWidth(v.getWidth()).showAsDropDown(v);
         } else if (v.getId() == R.id.teamLeaderTxt) {//检查任务组长选择
             final List<UserEntity> users = getUserService().getUsers(null, null, RoleType.expert);
             if (users == null || users.size() == 0) {
@@ -178,19 +185,22 @@ public class InspeCreateActivity extends AppBaseActivity implements View.OnClick
                     task.setGroup_person_id(users.get(position).getId()); //设置任务创建人
                     task.setGroup_person_name(users.get(position).getUsername());
                 }
-            }).showAsDropDown(v);
+            }).setPopWindowWidth(v.getWidth()).showAsDropDown(v);
         } else if (v.getId() == R.id.okBtn) {//创建任务
 
             if (TextUtils.isEmpty(dataBinding.teamNameTxt.getText())) {
+                dataBinding.teamNameTxt.performClick();
                 showToast("请选择运维班组");
                 return;
             }
 
             if (TextUtils.isEmpty(dataBinding.substationTxt.getText())) {
+                dataBinding.substationTxt.performClick();
                 showToast("请选择变电站");
                 return;
             }
             if (TextUtils.isEmpty(dataBinding.teamLeaderTxt.getText())) {
+                dataBinding.teamLeaderTxt.performClick();
                 showToast("请选择组长");
                 return;
             }

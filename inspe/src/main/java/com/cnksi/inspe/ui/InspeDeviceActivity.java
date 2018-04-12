@@ -120,7 +120,6 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     /**
      * 组装adapter数据
      *
-     * @param models
      */
     private void loadAdapterData(List<DbModel> models) {
         if (!models.isEmpty()) {
@@ -135,7 +134,9 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
             }
         }
         runOnUiThread(() -> {
-            deviceAdapter.expand(0);
+            if (devicesList.size() > 0) {
+                deviceAdapter.expand(0);
+            }
             deviceAdapter.notifyDataSetChanged();
         });
     }
@@ -178,7 +179,13 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         devicesList.clear();
         List<DbModel> locaList = new ArrayList<>();
         for (DbModel model : dbModelList) {
-            if (model.getString("snamepy").toUpperCase().contains(newKey) || model.getString("dshortpinyin").toUpperCase().contains(newKey)) {
+//            if (model.getString("snamepy").toUpperCase().contains(newKey) || model.getString("dshortpinyin").toUpperCase().contains(newKey)) {
+//                locaList.add(model);
+//            }
+
+            if (!model.isEmpty("snamepy") && model.getString("snamepy").toUpperCase().contains(newKey)) {
+                locaList.add(model);
+            } else if (!model.isEmpty("dshortpinyin") && model.getString("dshortpinyin").toUpperCase().contains(newKey)) {
                 locaList.add(model);
             }
         }

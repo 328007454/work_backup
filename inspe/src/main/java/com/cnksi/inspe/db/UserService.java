@@ -1,5 +1,7 @@
 package com.cnksi.inspe.db;
 
+import android.text.TextUtils;
+
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.db.entity.UserEntity;
@@ -10,7 +12,9 @@ import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @version v1.0
@@ -114,14 +118,34 @@ public final class UserService extends BaseDbService {
     private void sort(UserEntity user1, UserEntity user2) {
         List<RoleType> roleTypes1 = null;
         List<RoleType> roleTypes2 = null;
+        Map<String, String> groupMap = new HashMap<>();
         if (user1 != null) {
             roleTypes1 = RoleType.getRoles(user1.getType());
             user1.setRoleTypes(roleTypes1);
+            if (!TextUtils.isEmpty(user1.getDept_id())) {
+                String[] userGroups = user1.getDept_id().split(",");
+                for (String g : userGroups) {
+                    groupMap.put(g, g);
+                }
+            }
         }
 
         if (user2 != null) {
             roleTypes2 = RoleType.getRoles(user2.getType());
             user2.setRoleTypes(roleTypes2);
+
+            if (!TextUtils.isEmpty(user2.getDept_id())) {
+                String[] userGroups = user2.getDept_id().split(",");
+                for (String g : userGroups) {
+                    groupMap.put(g, g);
+                }
+            }
+        }
+
+        userGroup = new String[groupMap.size()];
+        int i = 0;
+        for (String key : groupMap.keySet()) {
+            userGroup[i] = key;
         }
 
         //比较
@@ -175,6 +199,17 @@ public final class UserService extends BaseDbService {
         }
 
         return null;
+    }
+
+    private String[] userGroup;
+
+    /**
+     * 获取用组ID
+     *
+     * @return
+     */
+    public String[] getUserGroup0() {
+        return userGroup;
     }
 
     /**

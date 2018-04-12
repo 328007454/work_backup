@@ -112,20 +112,35 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
                     pageInterface = new PageInterface() {
                         @Override
                         public void onSearchData() {
-
+                            //专家
+                            if (expertUser != null) {
+                                List<InspecteTaskEntity> listTemp = taskService.getTaskList(new String[]{expertUser.getId()}, null, taskTypes);
+                                list.clear();
+                                if (listTemp != null && listTemp.size() > 0) {
+                                    list.addAll(listTemp);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
                         }
                     };
                     break;
 
             }
-        } catch (Exception e) {
+        } catch (
+                Exception e)
+
+        {
             showToast("角色类型错误！");
         }
 
-        if (expertUser == null) {
+        if (expertUser == null)
+
+        {
             dataBinding.createTaskBtn.setVisibility(View.GONE);
             taskTypes = new String[]{TaskType.bzjs.name()};
-        } else {
+        } else
+
+        {
             dataBinding.createTaskBtn.setOnClickListener(this);
             dataBinding.createTaskBtn.setVisibility(View.VISIBLE);
             taskTypes = new String[]{TaskType.bzjs.name(), TaskType.jyhjc.name()};

@@ -22,7 +22,8 @@ public class TaskService extends BaseDbService {
     public boolean updateTask(InspecteTaskEntity entity) {
         try {
             //修改时间为判断条件
-            entity.setUpdate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
+            entity.setLast_modify_time(DateFormat.dateToDbString(System.currentTimeMillis()));
+//            entity.setUpdate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
             dbManager.update(entity, "progress", "update_time");
         } catch (DbException e) {
             e.printStackTrace();
@@ -106,7 +107,7 @@ public class TaskService extends BaseDbService {
             }
 
             if (taskTypes != null && taskTypes.length > 0) {
-                selector.and("type", "in", taskTypes);
+                selector.and("type", "IN", taskTypes);
             }
 
             if (userIds != null && userIds.length > 0) {

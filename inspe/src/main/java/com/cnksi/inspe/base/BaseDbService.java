@@ -17,6 +17,10 @@ public class BaseDbService {
 
     protected DbManager dbManager = DBUtils.getDBManager();
 
+    public DbManager getDbManager() {
+        return dbManager;
+    }
+
     public <T> List<T> findAll(Class<T> cls) {
         try {
             return (List<T>) dbManager.selector(cls).select("dlt", "=", "0").findAll();

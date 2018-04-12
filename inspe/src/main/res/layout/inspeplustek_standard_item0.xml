@@ -1,10 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="33dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="1dp"
     android:background="#EAF4F2"
     android:gravity="center_vertical"
+    android:minHeight="33dp"
     android:orientation="horizontal"
     android:padding="8dp">
 
@@ -14,7 +15,6 @@
         android:layout_width="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_weight="1"
-        android:lines="1"
         android:text="1.安装投运技术文件"
         android:textColor="#1BBC9B"
         android:textSize="14dp" />
@@ -23,6 +23,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="0dp"
         app:srcCompat="@mipmap/inspe_arrow_down" />
 

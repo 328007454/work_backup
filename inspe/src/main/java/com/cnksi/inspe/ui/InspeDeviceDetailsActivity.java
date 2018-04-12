@@ -78,8 +78,8 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
 
         ExecutorManager.executeTaskSerially(() -> {
             deviceDbModel = service.getDeviceById(deviceId);
-            //typeModels = plustekService.getPlusteRule(deviceBigId, plustekType);//level=1，没有check_type,为了方便显示数据
-            typeModels = plustekService.getPlusteRule(deviceBigId, null);
+            typeModels = plustekService.getPlusteRule(deviceBigId, plustekType);//level=1，没有check_type,为了方便显示数据
+//            typeModels = plustekService.getPlusteRule(deviceBigId, null);
 
             runOnUiThread(() -> {
                 refreshUI();
@@ -103,12 +103,12 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
         String productNum = deviceDbModel.getModel();
         String date = deviceDbModel.getCommissioning_date();// TextUtils.isEmpty(deviceDbModel.getString("commissioning_date")) ? "" : deviceDbModel.getString("commissioning_date");
         detailsBinding.tvManufacturers.setText("生产厂家:" + company);
-        detailsBinding.tvProductModel.setText("产品型号" + productNum);
+        detailsBinding.tvProductModel.setText("产品型号:" + productNum);
         String dateFormat = StringUtils.cleanString(date);
         if (dateFormat.length() > 10) {
             dateFormat = dateFormat.substring(0, 10);
         }
-        detailsBinding.tvProductDate.setText("投产日期：" + dateFormat);
+        detailsBinding.tvProductDate.setText("投产日期:" + dateFormat);
         String picPath = deviceDbModel.getChange_pic();// TextUtils.isEmpty(deviceDbModel.getString("change_pic")) ? (TextUtils.isEmpty(deviceDbModel.getString("pic")) ? "" : deviceDbModel.getString("pic")) : deviceDbModel.getString("pic");
         if (TextUtils.isEmpty(picPath)) {
             picPath = deviceDbModel.getPic();
@@ -180,8 +180,8 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
      * @param pid
      */
     private void searchData(String bigId, String pid) {
-        //List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(bigId, plustekType, pid);//level=2，没有check_type,为了方便显示数据
-        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(bigId, null, pid);
+        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(bigId, plustekType, pid);//level=2，没有check_type,为了方便显示数据
+//        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(bigId, null, pid);
         list.clear();
         adapter.notifyDataSetChanged();
 
@@ -201,7 +201,9 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
             list.add(rule0);
         }
 
-        adapter.expand(0);
+        if (list.size() > 0) {
+            adapter.expand(0);
+        }
         adapter.notifyDataSetChanged();
 //        adapter.expandAll();
 

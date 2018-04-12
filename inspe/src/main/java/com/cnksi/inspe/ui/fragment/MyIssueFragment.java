@@ -85,7 +85,7 @@ public class MyIssueFragment extends AppBaseFragment {
                 pageLister = new TrackerPage();
                 break;
             default:
-                pageLister = new PageLister(){
+                pageLister = new PageLister() {
                     @Override
                     public void onSearch(String taskType, String bzdId) {
 
@@ -147,7 +147,7 @@ public class MyIssueFragment extends AppBaseFragment {
 
         @Override
         public void onSearch(String taskType, String bzdId) {
-            List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(new String[]{userService.getUser1().getDept_id()}, taskType, bzdId, ProgressType.wfp.name(), ProgressType.shwtg.name(), ProgressType.wzg.name(), ProgressType.bzzwsh.name());
+            List<TeamRuleResultEntity> listTemp = teamService.getIssueListForGroupIds(userService.getUserGroup0(), taskType, bzdId, ProgressType.wfp.name(), ProgressType.shwtg.name(), ProgressType.wzg.name(), ProgressType.bzzwsh.name());
             list.clear();
             if (listTemp != null && listTemp.size() > 0) {
                 list.addAll(listTemp);

@@ -328,7 +328,8 @@ public class TeamService extends BaseDbService {
      */
     public boolean saveRuleResult(TeamRuleResultEntity data) {
         try {
-            data.setUpdate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
+            data.setLast_modify_time(DateFormat.dateToDbString(System.currentTimeMillis()));
+//            data.setUpdate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
             dbManager.saveOrUpdate(data);
         } catch (DbException e) {
             e.printStackTrace();
@@ -487,7 +488,8 @@ public class TeamService extends BaseDbService {
         List<TeamRuleResultEntity> list = null;
 
         try {
-            Selector selector = dbManager.selector(TeamRuleResultEntity.class).where("record_type", "=", RecordType.answer.name());
+            Selector selector = dbManager.selector(TeamRuleResultEntity.class)
+                    .where("record_type", "=", RecordType.answer.name());
             if (groupIds != null) {
                 selector.and("dept_id", "IN", groupIds);
             }

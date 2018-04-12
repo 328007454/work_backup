@@ -128,11 +128,11 @@ public class InspeRecfityActivity extends AppBaseActivity implements View.OnClic
 
         } else if (v.getId() == R.id.cameraBtn) {
             if (picList.size() < 3) {
-                picTempPath = FunctionUtil.getCurrentImageName(this);
-                FunctionUtils.takePicture(this, picTempPath, Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
-
-                //文件绝对路径
-                picTempPath = Config.RESULT_PICTURES_FOLDER + picTempPath;
+                String picName = FunctionUtil.getCurrentImageName(this);//生成图片名称
+                picTempPath = issueEntity.getDept_id() + "/";//地址为../BdzInspection/${picTempPath}
+                FunctionUtils.takePicture(this, picName, Config.RESULT_PICTURES_FOLDER + picTempPath, TAKEPIC_REQUEST);
+                //文件相对地址
+                picTempPath = picTempPath + picName;
             } else {
                 showToast("目前仅支持上传3张图片");
             }

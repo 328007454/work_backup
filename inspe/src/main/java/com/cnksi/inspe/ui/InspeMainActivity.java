@@ -15,6 +15,7 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.base.AppBaseFragment;
 import com.cnksi.inspe.databinding.ActivityInspeMainBinding;
+import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.entity.UserEntity;
 import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.ui.fragment.AllIssueFragment;
@@ -176,6 +177,19 @@ public class InspeMainActivity extends AppBaseActivity {
 //        dateDialog.show();
 
         dataBinding.actionBar.toolbarMenuBtn.setVisibility(expertUser != null ? View.VISIBLE : View.INVISIBLE);
+
+        //开始线程更新
+        String lastUpdate = PreferencesUtils.get("inpse_plustek_lastmodify_time", "");
+        String lastModifyTime = PlustekService.getLastRecord(getUserService().getDbManager());
+        if (!lastUpdate.equals(lastModifyTime)) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    new PlustekService().initCheckWay();
+                    PreferencesUtils.put("inpse_plustek_lastmodify_time", lastModifyTime);
+                }
+            }).start();
+        }
     }
 
 

@@ -1,5 +1,8 @@
 package com.cnksi.inspe.db;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
@@ -7,13 +10,18 @@ import com.cnksi.inspe.db.entity.SubStationEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.type.TaskType;
+import com.cnksi.inspe.utils.StringUtils;
 
+import org.w3c.dom.Text;
+import org.xutils.DbManager;
 import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 精益化评价服务
@@ -196,4 +204,111 @@ public class PlustekService extends BaseDbService {
         }
         return totalScore;
     }
+
+    /**
+     * 获取上次最后一条记录修改时间
+     *
+     * @return
+     */
+    public static String getLastRecord(DbManager dbManager) {
+        try {
+            String sql = "SELECT last_modify_time,* FROM xj_jyhpj_rule ORDER BY last_modify_time DESC;";//LIMIT 1;
+            DbModel dbModel = dbManager.findDbModelFirst(new SqlInfo(sql));
+            if (dbModel != null && !dbModel.isEmpty("last_modify_time")) {
+                return dbModel.getString("last_modify_time");
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 初始化标准检查方式
+     */
+    public void initCheckWay() {
+        Log.e("PlustekService", "开始启动精益化规则数据修改...");
+        long startTime = System.currentTimeMillis();
+        //更新由精益化检查类型变化而变化
+        PlustekType[] plustekTypes = PlustekType.values();
+        final String[] plustekTypeArray = new String[plustekTypes.length];
+        for (int i = 0, length = plustekTypes.length; i < length; i++) {
+            plustekTypeArray[i] = plustekTypes[i].name();
+        }
+
+        initCheckWay("2", plustekTypeArray);
+        initCheckWay("1", plustekTypeArray);
+        Log.e("PlustekService", "修改数据库耗时:" + (System.currentTimeMillis() - startTime));
+    }
+
+
+    /**
+     * 获取当前级别的检查标准集合
+     *
+     * @param level，执行顺序必须必须为2->1
+     */
+    private void initCheckWay(String level, String[] plustekTypeArray) {
+        try {
+            // String sql = "SELECT * FROM xj_jyhpj_rule dlt='0' AND level='" + level + "'";//level=1/2
+            List<PlusteRuleEntity> level1List = dbManager.selector(PlusteRuleEntity.class)
+                    .where("dlt", "=", "0")
+                    .and("level", "=", level).findAll();
+            if (level1List == null || level1List.size() == 0) {
+                return;
+            }
+            for (PlusteRuleEntity entity : level1List) {
+                String checkWay = initCheckWayChild(entity.getId(), plustekTypeArray);//获取子类检查类型
+                if (!TextUtils.isEmpty(checkWay)) {//不为NULl更新当前记录检查类型
+                    entity.setCheck_way(checkWay);
+                    dbManager.saveOrUpdate(entity);
+                }
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 查询子类的所有检查类型
+     *
+     * @param id
+     * @return 如果没有子类检查类型则返回NULL
+     */
+    private String initCheckWayChild(String id, String[] plustekTypeArray) {
+        String sql = "SELECT check_way,* FROM xj_jyhpj_rule WHERE dlt='0' AND pid='" + id + "' GROUP BY check_way;";
+
+        try {
+            List<DbModel> dbModels = dbManager.findDbModelAll(new SqlInfo(sql));
+            if (dbModels != null && dbModels.size() > 0) {
+                Map<String, String> map = new HashMap<>();//获取同级的检查类型种类
+                for (DbModel dbModel : dbModels) {
+                    if (dbModel.isEmpty("check_way")) {//检查类型字段不为空
+                        continue;
+                    }
+                    String checkTypes = dbModel.getString("check_way");//检查类型值
+                    if (!TextUtils.isEmpty(checkTypes)) {
+                        continue;
+                    }
+                    for (String plustekType : plustekTypeArray) {
+                        if (checkTypes.contains(plustekType)) {//检查类型是否包含-精益化检查类型
+                            map.put(plustekType, plustekType);
+                        }
+                    }
+                }
+
+                if (map.size() > 0) {//只合并只有检查类型的记录
+                    StringBuffer sb = new StringBuffer();
+                    for (String key : map.keySet()) {
+                        sb.append(key).append(",");
+                    }
+                    return sb.substring(0, sb.length() - 1);
+                }
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

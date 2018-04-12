@@ -1,5 +1,9 @@
 package com.cnksi.inspe.adapter;
 
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -76,8 +80,7 @@ public class PlustekStandardAdapter extends BaseMultiItemQuickAdapter<MultiItemE
 //                } else {//未开始
 //                    holder.setBackgroundRes(R.id.itemView, R.drawable.inspe_itembg_dark_shape);
 //                }
-
-                holder.setText(R.id.titleTxt, ((char) (rule1.index + 97)) + "、" + rule1.rule.getName());
+                holder.setText(R.id.titleTxt, ((char) (rule1.index + 97)) + "、" + rule1.rule.getName() + (TextUtils.isEmpty(rule1.rule.getDescription()) ? "" : "-" + rule1.rule.getDescription()));
 //                holder.setText(R.id.scoreTxt, "(" + String.format("%.1f", (rule.rule.getScoreCount() - rule.rule.getDeduct_score())) + "/" + String.format("%.1f", rule.rule.getScoreCount()) + ")");
                 break;
         }
