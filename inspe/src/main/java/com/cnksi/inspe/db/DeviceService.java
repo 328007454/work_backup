@@ -38,7 +38,7 @@ public class DeviceService extends BaseDbService {
     }
 
     /**
-     * 根据班组ID查询变电站
+     * 根据ID查询变电站
      *
      * @param bzdId
      * @return
@@ -56,7 +56,7 @@ public class DeviceService extends BaseDbService {
     }
 
     /**
-     * 根据班组ID查询变电站
+     * 根据班组ID查询变电站集合
      *
      * @param groupId
      * @return
@@ -95,6 +95,9 @@ public class DeviceService extends BaseDbService {
      */
     public List<DbModel> getBigTypeModels(String bigId) throws DbException {
         List<DbModel> deviceModels = new ArrayList<>();
+//        dbManager.selector(DeviceTypeEntity.class)
+//                .where("dlt","=","0")
+//                .and("bigid","=",bigId);
         String bigTypesSql = "select * from device_bigtype where dlt = 0 and bigid in " + bigId + "";
         deviceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return deviceModels;
@@ -107,8 +110,6 @@ public class DeviceService extends BaseDbService {
      * @return
      */
     public DeviceEntity getDeviceById(String deviceId) {
-//        DbModel dbModel = null;
-//        String sql = "select * from device where deviceid = '" + deviceId + "' and dlt = '0'";
         try {
             return dbManager.selector(DeviceEntity.class)
                     .where("dlt", "=", "0")

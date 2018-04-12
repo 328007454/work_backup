@@ -212,7 +212,7 @@ public class PlustekService extends BaseDbService {
      */
     public static String getLastRecord(DbManager dbManager) {
         try {
-            String sql = "SELECT last_modify_time,* FROM xj_jyhpj_rule ORDER BY last_modify_time DESC;";//LIMIT 1;
+            String sql = "SELECT last_modify_time,* FROM xj_jyhpj_rule WHERE dlt='0' ORDER BY last_modify_time DESC;";//LIMIT 1;
             DbModel dbModel = dbManager.findDbModelFirst(new SqlInfo(sql));
             if (dbModel != null && !dbModel.isEmpty("last_modify_time")) {
                 return dbModel.getString("last_modify_time");
