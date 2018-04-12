@@ -16,7 +16,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.XunJianTypeAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.BdzDialogAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.InspectionTypeAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.TaskService;
@@ -177,10 +177,10 @@ public class AddTaskActivity extends BaseActivity {
         try {
             String bdzId = PreferencesUtils.getString(currentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, "");
             if (!TextUtils.isEmpty(bdzId)) {
-                mCurrentBdz = CustomApplication.getDbUtils()
+                mCurrentBdz = XunshiApplication.getDbUtils()
                         .findFirst(Selector.from(Bdz.class).where(Bdz.BDZID, "=", bdzId).and(Bdz.DLT, "=", 0));
             }
-            mBdzList = CustomApplication.getDbUtils()
+            mBdzList = XunshiApplication.getDbUtils()
                     .findAll(Selector.from(Bdz.class).where(Bdz.DLT, "=", "0"));
             mHandler.sendEmptyMessage(LOAD_BDZ_DATA);
             currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
@@ -427,9 +427,8 @@ public class AddTaskActivity extends BaseActivity {
             int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
             int dialogHeight = powerStationList.size() > 8 ? ScreenUtils.getScreenHeight(currentActivity) * 3 / 5
                     : LinearLayout.LayoutParams.WRAP_CONTENT;
-            dialogBinding = XsContentListDialogBinding.inflate(LayoutInflater.from(getApplicationContext()));
-            mPowerStationDialog = DialogUtils.createDialog(currentActivity, binding.getRoot(), dialogWidth, dialogHeight);
-
+            dialogBinding = XsContentListDialogBinding.inflate(getLayoutInflater());
+            mPowerStationDialog = DialogUtils.createDialog(currentActivity, dialogBinding.getRoot(), dialogWidth, dialogHeight);
         }
         dialogBinding.lvContainer.setAdapter(mPowerStationAdapter);
         dialogBinding.tvDialogTitle.setText(R.string.xs_please_select_power_station_str);
@@ -522,7 +521,7 @@ public class AddTaskActivity extends BaseActivity {
             PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
             boolean xudianchi = mInspectionType.v.contains(Config.XUDIANCHI) && (mInspectionType.v.contains(Config.DIANYA) || mInspectionType.v.contains(Config.NEIZU));
             try {
-                CustomApplication.getDbUtils().saveOrUpdate(mReport);
+                XunshiApplication.getDbUtils().saveOrUpdate(mReport);
                 if ("select_device".equalsIgnoreCase(mInspectionType.deviceWay)) {
                     // 手动选择设备
                     Intent intent = new Intent(currentActivity, DeviceSelectActivity.class);
@@ -539,8 +538,8 @@ public class AddTaskActivity extends BaseActivity {
                     } else {
                         taskExpand.sbjcIsAllCheck = 1;
                     }
-                    CustomApplication.getDbUtils().save(taskExpand);
-                    CustomApplication.getDbUtils().save(mCurrentTask);
+                    XunshiApplication.getDbUtils().save(taskExpand);
+                    XunshiApplication.getDbUtils().save(mCurrentTask);
                     setResult(RESULT_OK);
                     this.finish();
                 } else if (Config.InspectionType.operation.name().equalsIgnoreCase(mInspectionType.k)) {
@@ -548,7 +547,7 @@ public class AddTaskActivity extends BaseActivity {
                     Intent intent = new Intent(currentActivity, YWDeviceListActivity.class);
                     startActivityForResult(intent, ADD_YUNWEI_TASK_CODE);
                 } else {
-                    CustomApplication.getDbUtils().save(mCurrentTask);
+                    XunshiApplication.getDbUtils().save(mCurrentTask);
                     setResult(RESULT_OK);
                     this.finish();
                 }
@@ -565,7 +564,7 @@ public class AddTaskActivity extends BaseActivity {
             switch (requestCode) {
                 case SAVE_TASK_REQUEST_CODE:
                     try {
-                        CustomApplication.getDbUtils().save(mCurrentTask);
+                        XunshiApplication.getDbUtils().save(mCurrentTask);
                         setResult(RESULT_OK);
                         this.finish();
                     } catch (DbException e) {
@@ -587,7 +586,7 @@ public class AddTaskActivity extends BaseActivity {
                             PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
                             PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
                             try {
-                                CustomApplication.getDbUtils().save(mCurrentTask);
+                                XunshiApplication.getDbUtils().save(mCurrentTask);
                                 setResult(RESULT_OK);
                                 this.finish();
                             } catch (DbException e) {
@@ -601,8 +600,8 @@ public class AddTaskActivity extends BaseActivity {
                     mCurrentTask.selected_deviceid = selectDevice;
                     mReport.selected_deviceid = selectDevice;
                     try {
-                        CustomApplication.getDbUtils().saveOrUpdate(mReport);
-                        CustomApplication.getDbUtils().save(mCurrentTask);
+                        XunshiApplication.getDbUtils().saveOrUpdate(mReport);
+                        XunshiApplication.getDbUtils().save(mCurrentTask);
                         setResult(RESULT_OK);
                         this.finish();
                     } catch (DbException e) {

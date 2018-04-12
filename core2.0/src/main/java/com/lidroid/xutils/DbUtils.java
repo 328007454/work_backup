@@ -17,6 +17,7 @@ package com.lidroid.xutils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.lidroid.xutils.db.AndroidDatabase;
@@ -65,6 +66,15 @@ public class DbUtils {
         this.daoConfig = config;
     }
 
+    private DbUtils(Object database, DaoConfig daoConfig) {
+        this.daoConfig = daoConfig;
+        if (database instanceof SQLiteDatabase)
+            this.database = new AndroidDatabase((SQLiteDatabase) database);
+        else if (database instanceof net.sqlcipher.database.SQLiteDatabase) {
+            this.database = new CipherDatabase((net.sqlcipher.database.SQLiteDatabase) database);
+        }
+    }
+
 
     private synchronized static DbUtils getInstance(DaoConfig daoConfig) {
         DbUtils dao = daoMap.get(daoConfig.getDbName());
@@ -105,40 +115,12 @@ public class DbUtils {
         return dao;
     }
 
-    public static DbUtils create(Context context) {
-        DaoConfig config = new DaoConfig(context);
-        return getInstance(config);
+    public static DbUtils create(Object database, String dbName) {
+        DaoConfig daoConfig = new DaoConfig();
+        daoConfig.dbName = dbName;
+        return new DbUtils(database, daoConfig);
     }
 
-    public static DbUtils create(Context context, String dbName) {
-        DaoConfig config = new DaoConfig(context);
-        config.setDbName(dbName);
-        return getInstance(config);
-    }
-
-    public static DbUtils create(Context context, String dbDir, String dbName) {
-        DaoConfig config = new DaoConfig(context);
-        config.setDbDir(dbDir);
-        config.setDbName(dbName);
-        return getInstance(config);
-    }
-
-    public static DbUtils create(Context context, String dbName, int dbVersion, DbUpgradeListener dbUpgradeListener) {
-        DaoConfig config = new DaoConfig(context);
-        config.setDbName(dbName);
-        config.setDbVersion(dbVersion);
-        config.setDbUpgradeListener(dbUpgradeListener);
-        return getInstance(config);
-    }
-
-    public static DbUtils create(Context context, String dbDir, String dbName, int dbVersion, DbUpgradeListener dbUpgradeListener) {
-        DaoConfig config = new DaoConfig(context);
-        config.setDbDir(dbDir);
-        config.setDbName(dbName);
-        config.setDbVersion(dbVersion);
-        config.setDbUpgradeListener(dbUpgradeListener);
-        return getInstance(config);
-    }
 
     public static DbUtils create(DaoConfig daoConfig) {
         return getInstance(daoConfig);
@@ -623,6 +605,9 @@ public class DbUtils {
 
         public DaoConfig(Context context) {
             this.context = context.getApplicationContext();
+        }
+
+        public DaoConfig() {
         }
 
         public Context getContext() {

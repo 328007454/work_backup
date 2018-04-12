@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.TaskRemindAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
@@ -91,7 +91,7 @@ public class TaskRemindFragment extends BaseFragment {
         inspectionName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
         currentSelectInspectionType = InspectionType.get(inspectionName);
         if (mInspectionTaskAdapter == null) {
-            mInspectionTaskAdapter = new TaskRemindAdapter(getActivity());
+            mInspectionTaskAdapter = new TaskRemindAdapter(getActivity(),mDataList);
             binding.lvContainer.setAdapter(mInspectionTaskAdapter);
         }
         isPrepared = true;
@@ -190,9 +190,9 @@ public class TaskRemindFragment extends BaseFragment {
                 }
                 selector = selector.and(Task.DLT, "=", "0").orderBy(Task.SCHEDULE_TIME);
 
-                mDataList = CustomApplication.getDbUtils().findAll(selector);
+                mDataList = XunshiApplication.getDbUtils().findAll(selector);
 
-                List<Users> users = CustomApplication.getDbUtils().findAll(Selector.from(Users.class).where(Users.DLT, "=", "0"));
+                List<Users> users = XunshiApplication.getDbUtils().findAll(Selector.from(Users.class).where(Users.DLT, "=", "0"));
                 for (Users user : users) {
                     userMap.put(user.account, user.username);
                 }

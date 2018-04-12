@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.daoservice;
 
 import java.util.List;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.DeviceTypeImage;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
@@ -24,7 +24,7 @@ public class DeviceTypeImageService extends BaseService {
 	 */
 	public List<DeviceTypeImage> queryImage(String deviceType) throws DbException{
 		Selector selector=Selector.from(DeviceTypeImage.class).where(DeviceTypeImage.TYPE_ID,"=",deviceType).orderBy(DeviceTypeImage.ID);
-		return CustomApplication.getDbUtils().findAll(selector);
+		return XunshiApplication.getDbUtils().findAll(selector);
 	}
 	
 	

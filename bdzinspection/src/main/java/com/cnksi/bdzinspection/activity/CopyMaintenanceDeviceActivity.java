@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyMaintenanceDeviceAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyAll3Binding;
@@ -295,7 +295,7 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
                 resultHashMap.put(currentItem.id, result);
             }
             try {
-                CustomApplication.getDbUtils().saveOrUpdate(result);
+                XunshiApplication.getDbUtils().saveOrUpdate(result);
             } catch (DbException e) {
                 e.printStackTrace();
             }

@@ -40,6 +40,10 @@ public class CipherDatabase implements KDatabase {
         database = SQLiteDatabase.openOrCreateDatabase(dbFile, config.getPassword(), null);
     }
 
+    public CipherDatabase(SQLiteDatabase database){
+        this.database=database;
+    }
+
     @Override
     public void setVersion(int version) {
         database.setVersion(version);

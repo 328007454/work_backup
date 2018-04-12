@@ -221,7 +221,7 @@ public class DeviceService extends BaseService<Device> {
                 + bdzid + "' GROUP BY deviceid,standid order by discovered_date desc";
         SqlInfo sqlInfo = new SqlInfo(sql);
         try {
-            // if (!PreferencesUtils.getBoolean(CustomApplication.getInstance(), Config.IS_RECOVER_COPY_DATA + bdzid,
+            // if (!PreferencesUtils.getBoolean(XunshiApplication.getInstance(), Config.IS_RECOVER_COPY_DATA + bdzid,
             // false)) {
             List<DbModel> dataList = findDbModelAll(sqlInfo);
             if (dataList != null) {

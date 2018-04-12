@@ -22,7 +22,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.defectcontrol.DefectContentAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
@@ -251,7 +251,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                     // 1、复制一条原有缺陷并标记为已跟踪缺陷。并且把报告Id换为当前报告的Id
 
                     String defectId = DefectRecord.getDefectId();
-                    CustomApplication.getDbUtils().update(DefectRecord.class,
+                    XunshiApplication.getDbUtils().update(DefectRecord.class,
                             WhereBuilder.b(DefectRecord.DEFECTID, "=", mCurrentTrackDefect.defectid),
                             new String[]{DefectRecord.DEFECTID, DefectRecord.REPORTID, DefectRecord.HAS_TRACK}, new String[]{defectId, currentReportId, "Y"});
                     // 2、更新原有缺陷信息。
@@ -265,7 +265,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                         // 恢复状态
                         mDefectImageList.clear();
                     }
-                    CustomApplication.getDbUtils().save(mCurrentTrackDefect);
+                    XunshiApplication.getDbUtils().save(mCurrentTrackDefect);
                     // 刷新历史缺陷
                     trackDefectList.clear();
                     trackDefectList = DefectRecordService.getInstance().queryDefectHistoryByDefectCode(mCurrentTrackDefect.defectcode);

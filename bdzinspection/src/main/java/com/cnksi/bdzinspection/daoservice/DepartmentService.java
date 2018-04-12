@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Department;
 import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.xscore.xsutils.StringUtils;
@@ -37,7 +37,7 @@ public class DepartmentService {
     public Department findDepartmentById(String id) {
         Department mDepartment = null;
         try {
-            mDepartment = CustomApplication.getDbUtils().findById(Department.class, id);
+            mDepartment = XunshiApplication.getDbUtils().findById(Department.class, id);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class DepartmentService {
             if (StringUtils.containsChinese(name)) {
                 selector = Selector.from(Department.class).where(Department.DEPT_NAME, "like", "%" + name + "%");
             }
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
             return null;
@@ -72,7 +72,7 @@ public class DepartmentService {
     public Department findSingleDepartmentByName(String name) {
         try {
             Selector selector = Selector.from(Department.class).where(Department.DEPT_PINYIN, "=", name);
-            return CustomApplication.getDbUtils().findFirst(selector);
+            return XunshiApplication.getDbUtils().findFirst(selector);
         } catch (DbException e) {
             e.printStackTrace();
             return null;
@@ -89,7 +89,7 @@ public class DepartmentService {
     public DbModel findCurrentPlanDepartment(String planId) {
         try {
             String sql = "select d.* from department d left join scene_plan_original s on s.dept_id = d.dept_id where s.scene_plan_id=?";
-            return CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql, planId));
+            return XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql, planId));
         } catch (DbException e) {
             e.printStackTrace();
             return null;
@@ -108,7 +108,7 @@ public class DepartmentService {
         }
         String sql = "SELECT u.account,u.type, u.username,dp.name,u.dept_id FROM users u LEFT JOIN department dp on u.dept_id=dp.id where u.account IN("
                 + u + ")";
-        return CustomApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+        return XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
     }
 
 
@@ -124,7 +124,7 @@ public class DepartmentService {
         String sql = "SELECT u.account,u.username,dp.name,u.dept_id FROM users u LEFT JOIN department dp on u.dept_id=dp.id where u.dlt=0 and u.dept_id in(SELECT dept_id FROM users where account IN("
                 + u + "))";
         try {
-            return CustomApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+            return XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -133,7 +133,7 @@ public class DepartmentService {
 
     public List<Users> getAllUsers(String departID) throws DbException {
         List<Users> userses = new ArrayList<>();
-        userses = CustomApplication.getDbUtils().findAll(Selector.from(Users.class).where(Users.DEPT_ID, "=", departID).and(Users.DLT, "=", "0"));
+        userses = XunshiApplication.getDbUtils().findAll(Selector.from(Users.class).where(Users.DEPT_ID, "=", departID).and(Users.DLT, "=", "0"));
         return userses;
     }
 }

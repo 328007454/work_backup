@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.SqlInfo;
@@ -31,7 +31,7 @@ public class ZzhtService extends BaseService {
         Selector selector = from(Zzht.class).and(Zzht.BDZID, "=", currentBdzId);
         Zzht zzht = null;
         try {
-            zzht = CustomApplication.getDbUtils().findFirst(selector);
+            zzht = XunshiApplication.getDbUtils().findFirst(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class ZzhtService extends BaseService {
                 " report_zzht rz LEFT JOIN ( SELECT * FROM report_zzht_result WHERE reportid = '"+reportId+"') rzr ON rz.id = rzr.zzht_id" +
                 " WHERE rz.bdzid = '" + bdzId + "' AND rz.dlt = '0' and (rzr.reportid = '" + reportId + "' or rzr.reportid IS NULL) ORDER BY rz.LEVEL ASC, rz.sort ASC ";
         try {
-            dbModels = CustomApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+            dbModels = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }

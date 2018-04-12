@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.SpecialMenu;
 import com.lidroid.xutils.exception.DbException;
 
@@ -22,7 +22,7 @@ public class SpecialMenuService extends BaseService {
     public SpecialMenu findCurrentDeviceType(String currentType){
         SpecialMenu menu=null;
         try {
-            menu = CustomApplication.getDbUtils().findFirst(from(SpecialMenu.class).and(SpecialMenu.K,"=",currentType));
+            menu = XunshiApplication.getDbUtils().findFirst(from(SpecialMenu.class).and(SpecialMenu.K,"=",currentType));
         } catch (DbException e) {
             e.printStackTrace();
             menu = new SpecialMenu();

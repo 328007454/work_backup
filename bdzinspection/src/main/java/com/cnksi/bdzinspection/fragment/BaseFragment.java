@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.ImageDetailsActivity;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.xscore.xsfragment.BaseCoreFragment;
@@ -24,6 +25,7 @@ import com.cnksi.xscore.xsutils.CLog;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
 
 @SuppressLint("HandlerLeak")
 public abstract class BaseFragment extends BaseCoreFragment {
@@ -123,6 +125,8 @@ public abstract class BaseFragment extends BaseCoreFragment {
     public String currentAcounts;
 
     boolean isDetach = false;
+
+    protected ExecutorService mFixedThreadPoolExecutor = XunshiApplication.getFixedThreadPoolExecutor();
 
     protected Handler mHandler = new Handler() {
         @Override

@@ -1,8 +1,7 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.BaseModel;
-import com.cnksi.bdzinspection.model.OperateToolResult;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
 
@@ -19,7 +18,7 @@ public abstract class BaseService {
     public boolean saveOrUpdate(Object mObject) {
         boolean isSuccess = true;
         try {
-            CustomApplication.getDbUtils().saveOrUpdate(mObject);
+            XunshiApplication.getDbUtils().saveOrUpdate(mObject);
         } catch (DbException e) {
             e.printStackTrace();
             isSuccess = false;
@@ -36,7 +35,7 @@ public abstract class BaseService {
     public boolean saveOrUpdateAll(List<? extends Object> entities) {
         boolean isSuccess = true;
         try {
-            CustomApplication.getDbUtils().saveOrUpdateAll(entities);
+            XunshiApplication.getDbUtils().saveOrUpdateAll(entities);
         } catch (DbException e) {
             e.printStackTrace();
             isSuccess = false;
@@ -54,7 +53,7 @@ public abstract class BaseService {
     public boolean update(Object mObject, String... updateColumnNames) {
         boolean isSuccess = true;
         try {
-            CustomApplication.getDbUtils().update(mObject, updateColumnNames);
+            XunshiApplication.getDbUtils().update(mObject, updateColumnNames);
         } catch (DbException e) {
             e.printStackTrace();
             isSuccess = false;

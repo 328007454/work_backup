@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.CopyType;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-import static com.cnksi.bdzinspection.application.CustomApplication.getDbUtils;
+import static com.cnksi.bdzinspection.application.XunshiApplication.getDbUtils;
 
 public class CopyItemService {
     private final static String cptSql = "select count(case when val = 'Y' then 1 else null end)+" + "count(case when val_a = 'Y' then 1 else null end)+"
@@ -201,7 +201,7 @@ public class CopyItemService {
 
     public List<CopyType> findAllCopyType() {
         try {
-            List<CopyType> types = CustomApplication.getDbUtils().findAll(Selector.from(CopyType.class).where(CopyType.SELECTED_ABLE, "=", "Y"));
+            List<CopyType> types = XunshiApplication.getDbUtils().findAll(Selector.from(CopyType.class).where(CopyType.SELECTED_ABLE, "=", "Y"));
             return types;
         } catch (DbException e) {
             e.printStackTrace();
@@ -247,14 +247,14 @@ public class CopyItemService {
 
 
     public List<CopyItem> findAllMaintenanceHasCopyValue(String currentInspectionType, String currentBdzId) throws DbException {
-        return CustomApplication.getDbUtils().findAll(Selector.from(CopyItem.class).where(CopyItem.BDZID, "=", currentBdzId).and(CopyItem.KIND, "=", currentInspectionType)
+        return XunshiApplication.getDbUtils().findAll(Selector.from(CopyItem.class).where(CopyItem.BDZID, "=", currentBdzId).and(CopyItem.KIND, "=", currentInspectionType)
                 .and(CopyItem.DLT, "=", "0"));
     }
 
     public List<CopyItem> findAllBySpace(String spid) {
         Selector selector = BaseService.from(CopyItem.class).and(CopyItem.SPID, "=", spid);
         try {
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
             return new ArrayList<>();

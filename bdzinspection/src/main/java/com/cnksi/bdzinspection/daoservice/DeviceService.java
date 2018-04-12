@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.daoservice;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Device;
 import com.cnksi.bdzinspection.model.Report;
@@ -52,7 +52,7 @@ public class DeviceService {
                 + "			deviceid,	defectlevel ASC) t GROUP BY 	t.deviceid", bdzid);
         HashMap<String, DefectInfo> map = new HashMap<String, DefectInfo>();
         try {
-            List<DbModel> mDeviceList = CustomApplication.getDbUtils().findDbModelAll(sql);
+            List<DbModel> mDeviceList = XunshiApplication.getDbUtils().findDbModelAll(sql);
             if (mDeviceList != null && !mDeviceList.isEmpty()) {
                 for (DbModel model : mDeviceList) {
                     map.put(model.getString(DefectRecord.DEVICEID),
@@ -76,7 +76,7 @@ public class DeviceService {
      */
     public List<Device> findDeviceBySpacing(Spacing mSpacing, String deviceType) throws DbException {
         Selector selector = BaseService.from(Device.class).and(Device.SPID, "=", mSpacing.spid).and(Device.DEVICE_TYPE, "=", deviceType);
-        List<Device> mDeviceList = CustomApplication.getDbUtils().findAll(selector);
+        List<Device> mDeviceList = XunshiApplication.getDbUtils().findAll(selector);
         return mDeviceList;
     }
 
@@ -92,11 +92,11 @@ public class DeviceService {
         Device device = null;
         try {
             if ("left".equals(direction)) {
-                device = CustomApplication.getDbUtils()
+                device = XunshiApplication.getDbUtils()
                         .findFirst(Selector.from(Device.class).expr(Device.SPID, "=", spid).and(Device.SORT, ">", sort)
                                 .and(Device.DLT, "<>", Config.DELETED).orderBy(Device.SORT, false));
             } else {
-                device = CustomApplication.getDbUtils()
+                device = XunshiApplication.getDbUtils()
                         .findFirst(Selector.from(Device.class).expr(Device.SPID, "=", spid).and(Device.SORT, "<", sort)
                                 .and(Device.DLT, "<>", Config.DELETED).orderBy(Device.SORT, true));
             }
@@ -115,7 +115,7 @@ public class DeviceService {
     public void updateDeviceChangePic(Device mDevice, String changePicName) {
         try {
             mDevice.change_pic = changePicName;
-            CustomApplication.getDbUtils().update(mDevice, Device.CHANGE_PIC);
+            XunshiApplication.getDbUtils().update(mDevice, Device.CHANGE_PIC);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -129,7 +129,7 @@ public class DeviceService {
     public boolean updateDeviceLocationInfo(Device mDevice) {
         boolean isSuccess = false;
         try {
-            CustomApplication.getDbUtils().update(mDevice, Device.LATITUDE, Device.LONGITUDE);
+            XunshiApplication.getDbUtils().update(mDevice, Device.LATITUDE, Device.LONGITUDE);
             isSuccess = true;
         } catch (DbException e) {
             e.printStackTrace();
@@ -143,7 +143,7 @@ public class DeviceService {
     public boolean updateDeviceLocationInfo(String spid, String lat, String lng) {
         boolean isSuccess = false;
         try {
-            CustomApplication.getDbUtils().update(Device.class, WhereBuilder.b(Device.SPID, "=", spid),
+            XunshiApplication.getDbUtils().update(Device.class, WhereBuilder.b(Device.SPID, "=", spid),
                     new String[]{Device.LATITUDE, Device.LONGITUDE},
                     new String[]{lat, lng});
             isSuccess = true;
@@ -155,7 +155,7 @@ public class DeviceService {
 
     public DbModel findDeviceById(String deviceId) {
         try {
-            return CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from device where deviceid=?", deviceId));
+            return XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from device where deviceid=?", deviceId));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -177,7 +177,7 @@ public class DeviceService {
                 .concat(sb.toString()).concat(" order by s." + spacingSort + ",d.sort;");
         SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceType);
         try {
-            return CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -198,7 +198,7 @@ public class DeviceService {
                 .concat(" order by s.sort,d.sort ) as t where t.search_key like '%" + keyWord + "%'");
         SqlInfo sqlInfo = new SqlInfo(sql, bdzId);
         try {
-            return CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -219,7 +219,7 @@ public class DeviceService {
         }
         SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceType);
         try {
-            return CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -234,7 +234,7 @@ public class DeviceService {
         String sql = "SELECT DISTINCT deviceid FROM	copy_item WHERE kind LIKE '%" + currentInspectionType
                 + "%' and bdzid = '" + bdzId + "' AND dlt='0' ";
         List<String> deviceIdList = new ArrayList<String>();
-        List<DbModel> modelList = CustomApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+        List<DbModel> modelList = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
         if (null != modelList && !modelList.isEmpty())
             for (DbModel dbModel : modelList) {
                 deviceIdList.add(dbModel.getString(Device.DEVICEID));
@@ -245,7 +245,7 @@ public class DeviceService {
 
     public List<DbModel> findDeviceHasCopyValueBySelector(String selector, String bdzId) throws DbException {
         SqlInfo sqlInfo = new SqlInfo(" SELECT * from device d left join spacing s on d.spid = s.spid  WHERE  d.bdzid=? " + selector + " order by s.sort_one", bdzId);
-        List<DbModel> dbModelList = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+        List<DbModel> dbModelList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         return dbModelList;
     }
 
@@ -272,7 +272,7 @@ public class DeviceService {
         }
         sqlInfo = new SqlInfo(sql, bdzId, deviceType);
         try {
-            return CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
             return null;
@@ -289,7 +289,7 @@ public class DeviceService {
         if (deviceWay.equalsIgnoreCase("select_device")) {
             Report currentReport = null;
             try {
-                currentReport = CustomApplication.getDbUtils().findById(Report.class, currentReportId);
+                currentReport = XunshiApplication.getDbUtils().findById(Report.class, currentReportId);
             } catch (DbException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -313,7 +313,7 @@ public class DeviceService {
         }
         sqlInfo = new SqlInfo(sql, bdzId, deviceType);
         try {
-            return CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -323,7 +323,7 @@ public class DeviceService {
     public List<Device> findDeviceByType(String currentBdzId, String deviceType) {
         Selector selector = BaseService.from(Device.class).and(Device.BDZID, "=", currentBdzId).and(Device.DEVICE_TYPE, "=", deviceType);
         try {
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -336,7 +336,7 @@ public class DeviceService {
                 " where is_important='Y' and d.bdzid=? ;");
         sqlInfo.addBindArgs(reportId, bdzId);
         try {
-            DbModel model = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
             return model.getString("c") + "/" + model.getString("ic");
         } catch (DbException e) {
             e.printStackTrace();
@@ -349,7 +349,7 @@ public class DeviceService {
                 " and d.has_remove ='N' and ci.type_key = 'sf6yl_sf6yl' ";
         DbModel dbModel = null;
         try {
-            dbModel = CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql));
+            dbModel = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql));
             return dbModel;
         } catch (DbException e) {
             e.printStackTrace();

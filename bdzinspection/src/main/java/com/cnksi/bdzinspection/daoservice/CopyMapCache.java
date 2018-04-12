@@ -8,7 +8,7 @@ package com.cnksi.bdzinspection.daoservice;
 import java.util.HashMap;
 import java.util.List;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.lidroid.xutils.db.sqlite.SqlInfo;
 import com.lidroid.xutils.db.table.DbModel;
 import com.lidroid.xutils.exception.DbException;
@@ -21,7 +21,7 @@ public class CopyMapCache {
 		String sql = "select deviceid,standid,val from defect_record where val <> '' and reportId<>? and val is not null and bdzid =?  GROUP BY deviceid,standid order by discovered_date desc";
 		SqlInfo sqlInfo = new SqlInfo(sql, reportId, bdzid);
 		try {
-			List<DbModel> dataList = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+			List<DbModel> dataList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
 			if (dataList != null) {
 				for (DbModel model : dataList) {
 					// 标准+设备确保抄录唯一性

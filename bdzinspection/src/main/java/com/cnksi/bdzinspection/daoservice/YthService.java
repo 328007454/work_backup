@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.GQJ;
 import com.cnksi.bdzinspection.model.PlanProcessStatus;
 import com.cnksi.bdzinspection.model.Process;
@@ -45,7 +45,7 @@ public class YthService {
 		List<Process> processes = null;
 
 		try {
-			processes = CustomApplication.getDbUtils()
+			processes = XunshiApplication.getDbUtils()
 					.findAll(Selector.from(Process.class).where(Process.PRO_ID, "=", value).orderBy("id", false));
 		} catch (DbException e) {
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class YthService {
 
 		String sql = "select ifnull(parent_id,id) as id from project where id='" + value + "'";
 		try {
-			return CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql)).getString("id");
+			return XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql)).getString("id");
 
 		} catch (DbException e) {
 			// TODO Auto-generated catch block
@@ -77,7 +77,7 @@ public class YthService {
 		List<GQJ> processes = null;
 
 		try {
-			processes = CustomApplication.getDbUtils()
+			processes = XunshiApplication.getDbUtils()
 					.findAll(Selector.from(GQJ.class).where(Process.PRO_ID, "=", findProParentID(value)));
 		} catch (DbException e) {
 			e.printStackTrace();
@@ -94,7 +94,7 @@ public class YthService {
 	 */
 	public void saveRemain_Problem(String taskID, String problem) {
 		try {
-			CustomApplication.getDbUtils().update(Report.class, WhereBuilder.b(Report.TASK_ID, "=", taskID),
+			XunshiApplication.getDbUtils().update(Report.class, WhereBuilder.b(Report.TASK_ID, "=", taskID),
 					new String[] { Report.REMAIN_PROBLEMS, Report.ENDTIME },
 					new String[] { problem, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) });
 		} catch (DbException e) {
@@ -107,7 +107,7 @@ public class YthService {
 	public void savePlanProcessStatus(PlanProcessStatus list) {
 		if (list != null) {
 			try {
-				CustomApplication.getDbUtils().saveOrUpdate(list);
+				XunshiApplication.getDbUtils().saveOrUpdate(list);
 			} catch (DbException e) {
 				// TODO: handle exception
 			}
@@ -117,7 +117,7 @@ public class YthService {
 	public List<PlanProcessStatus> getProcessStatus(String taskid, String proid) {
 		List<PlanProcessStatus> list = null;
 		try {
-			list = CustomApplication.getDbUtils().findAll(Selector.from(PlanProcessStatus.class)
+			list = XunshiApplication.getDbUtils().findAll(Selector.from(PlanProcessStatus.class)
 					.where(PlanProcessStatus.TASK_ID, "=", taskid).orderBy("process_id", false));
 			if (list == null || list.size() < 1) {
 				List<Process> _t = findWorkflowById(proid);
@@ -126,8 +126,8 @@ public class YthService {
 
 					list.add(new PlanProcessStatus(taskid, object.id, "0"));
 				}
-				CustomApplication.getDbUtils().saveAll(list);
-				list = CustomApplication.getDbUtils()
+				XunshiApplication.getDbUtils().saveAll(list);
+				list = XunshiApplication.getDbUtils()
 						.findAll(Selector.from(PlanProcessStatus.class).where(PlanProcessStatus.TASK_ID, "=", taskid));
 			}
 

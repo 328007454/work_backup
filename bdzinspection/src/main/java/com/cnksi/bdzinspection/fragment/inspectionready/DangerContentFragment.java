@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.DangerPointAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Dangpoint;
@@ -83,11 +83,11 @@ public class DangerContentFragment extends BaseFragment {
     private void searchData() {
         try {
             DbModelSelector avoidSelector = Selector.from(Dangpoint.class).groupBy(Dangpoint.AVOID_TYPE).orderBy(Dangpoint.SORT, false);
-            List<DbModel> dangPoints = CustomApplication.getDbUtils().findDbModelAll(avoidSelector);
+            List<DbModel> dangPoints = XunshiApplication.getDbUtils().findDbModelAll(avoidSelector);
             for (DbModel dbModel : dangPoints) {
                 Selector selector = Selector.from(Dangpoint.class).where(Dangpoint.AVOID_TYPE, "=", dbModel.getString("avoid_type"));
                 //添加行头
-                List<Dangpoint> points = CustomApplication.getDbUtils().findAll(selector);
+                List<Dangpoint> points = XunshiApplication.getDbUtils().findAll(selector);
                 mDangerPointList.add(new Dangpoint(dbModel.getString("avoid_type")));
                 mDangerPointList.addAll(points);
             }

@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.daoservice;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.model.DefectDefine;
 import com.cnksi.bdzinspection.utils.Config;
@@ -46,7 +46,7 @@ public class DefectDefineService {
         LinkedHashMap<String, ArrayList<DefectDefine>> groupHashMap = new LinkedHashMap<String, ArrayList<DefectDefine>>();
         try {
             Selector selector = Selector.from(Defect.class).where(Defect.STAID, "=", staid).expr("and dlt <> '1'");
-            List<Defect> defects = CustomApplication.getDbUtils().findAll(selector);
+            List<Defect> defects = XunshiApplication.getDbUtils().findAll(selector);
             List<DefectDefine> ddlist = new ArrayList<DefectDefine>();
             if (null != defects && !defects.isEmpty()) {
                 for (Defect df : defects)
@@ -55,7 +55,7 @@ public class DefectDefineService {
             selector = Selector.from(DefectDefine.class).where(DefectDefine.STAID, "=", staid)
                     .expr("and (" + DefectDefine.DLT + " is null or " + DefectDefine.DLT + "<>'1')")
                     .orderBy(DefectDefine.LEVEL);
-            List<DefectDefine> defectList = CustomApplication.getDbUtils().findAll(selector);
+            List<DefectDefine> defectList = XunshiApplication.getDbUtils().findAll(selector);
             if (null != defectList)
                 ddlist.addAll(defectList);
             String _tmpLevel = "";
@@ -101,7 +101,7 @@ public class DefectDefineService {
                         + content + "%'",
                 deviceId);
 
-        List<DbModel> defectModel = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+        List<DbModel> defectModel = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         if (defectList == null)
             defectList = new ArrayList<DbModel>();
         if (defectModel != null)
@@ -116,7 +116,7 @@ public class DefectDefineService {
                 "SELECT dn.duid, dn.duname, d.* FROM defect d LEFT JOIN standards s ON d.staid = s.staid LEFT JOIN device_unit dn ON dn.duid = s.duid LEFT JOIN device dv ON dv.dtid = dn.dtid WHERE dv.deviceid = ? AND d.description LIKE ?",
                 deviceId, "%" + content + "%");
 
-        return CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+        return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
     }
 
     /**
@@ -155,7 +155,7 @@ public class DefectDefineService {
      */
     public boolean saveOrUpdateDefectDefine(DefectDefine mDefectDefine, boolean isAdd) {
         try {
-            CustomApplication.getDbUtils().saveOrUpdate(mDefectDefine);
+            XunshiApplication.getDbUtils().saveOrUpdate(mDefectDefine);
             return true;
         } catch (DbException e) {
             e.printStackTrace();
@@ -172,7 +172,7 @@ public class DefectDefineService {
     public boolean deleteDefectDefine(DefectDefine mDefectDefine) {
         try {
             mDefectDefine.dlt = Config.DELETED;
-            CustomApplication.getDbUtils().saveOrUpdate(mDefectDefine);
+            XunshiApplication.getDbUtils().saveOrUpdate(mDefectDefine);
             return true;
         } catch (DbException e) {
             e.printStackTrace();

@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.model;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.lidroid.xutils.db.annotation.Column;
@@ -138,7 +138,7 @@ public class ReportSnwsd extends BaseModel {
     public static HashSet<ReportSnwsd> getAllCopySNWSD(String reportID) {
         List<ReportSnwsd> snwsds = new ArrayList<ReportSnwsd>();
         try {
-            snwsds = CustomApplication.getDbUtils().findAll(Selector.from(ReportSnwsd.class).where(ReportSnwsd.REPORT_ID, "=", reportID).and(ReportSnwsd.DLT, "=", "0"));
+            snwsds = XunshiApplication.getDbUtils().findAll(Selector.from(ReportSnwsd.class).where(ReportSnwsd.REPORT_ID, "=", reportID).and(ReportSnwsd.DLT, "=", "0"));
         } catch (DbException e) {
             e.printStackTrace();
             return new HashSet<>(snwsds);

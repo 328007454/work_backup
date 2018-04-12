@@ -19,8 +19,10 @@ import com.cnksi.xscore.xsutils.StringUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,8 +35,8 @@ public class TaskRemindAdapter extends SimpleBaseAdapter {
 
     private Map<String, String> userHashMap = new HashMap<>();
 
-    public TaskRemindAdapter(Context context) {
-        super(context);
+    public TaskRemindAdapter(Context context, List<Task> tasks) {
+        super(context,tasks);
     }
 
     @Override
@@ -116,6 +118,7 @@ public class TaskRemindAdapter extends SimpleBaseAdapter {
 
     public void setUserMap(Map<String, String> map) {
         this.userHashMap = map;
+        notifyDataSetChanged();
     }
 
     private String getShortName(String bdzName) {

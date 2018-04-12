@@ -17,7 +17,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SafeToolsInfoAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyToolsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolStopBinding;
@@ -505,10 +505,10 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                         OperateToolResult toolResult = null;
                         if (stopBinding.rbUnqualify.isChecked()) {
                             toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name(), reason, stopPerson);
-                            CustomApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new String[]{"status"}, new String[]{Config.ToolStatus.stop.name()});
+                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new String[]{"status"}, new String[]{Config.ToolStatus.stop.name()});
                         } else {
                             toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, Config.ToolStatus.stop.name(), Config.ToolStatus.normal.name(), reason, stopPerson);
-                            CustomApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new String[]{"status"}, new String[]{Config.ToolStatus.inTest.name()});
+                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new String[]{"status"}, new String[]{Config.ToolStatus.inTest.name()});
                         }
                         resultList.add(toolResult);
                     } catch (DbException e) {
@@ -565,10 +565,10 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                                 nextTime = null;
                             else
                                 nextTime = DateUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
-                            CustomApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new String[]{"status", "isnormal", "lastly_check_time", "next_check_time"}, new String[]{Config.ToolStatus.normal.name(), Config.ToolStatus.normal.name(), lastTime, nextTime});
+                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new String[]{"status", "isnormal", "lastly_check_time", "next_check_time"}, new String[]{Config.ToolStatus.normal.name(), Config.ToolStatus.normal.name(), lastTime, nextTime});
                         } else if (testBinding.rbUnnormal.isChecked()) {
                             toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, Config.ToolStatus.unNormal.name(), pics, person, Config.ToolStatus.test.name());
-                            CustomApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id), new String[]{"status", "isnormal"}, new String[]{Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name()});
+                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id), new String[]{"status", "isnormal"}, new String[]{Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name()});
                         }
                         resultList.add(toolResult);
                     } catch (DbException e) {

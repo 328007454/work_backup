@@ -101,8 +101,8 @@ public class DialogUtils {
      */
     public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogTitle, CharSequence dialogContent, String sureText, String cancelText, OnViewClickListener mOnclickListener) {
         int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
-        XsDialogTipsBinding tipsBinding= XsDialogTipsBinding.inflate(LayoutInflater.from(mActivity));
-        createDialog(mActivity,tipsBinding.getRoot(),dialogWidth,LinearLayout.LayoutParams.WRAP_CONTENT);
+        XsDialogTipsBinding tipsBinding = XsDialogTipsBinding.inflate(LayoutInflater.from(mActivity));
+        createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogTitle.setText(TextUtils.isEmpty(dialogTitle) ? mActivity.getString(R.string.xs_dialog_tips_str) : dialogTitle);
         tipsBinding.tvDialogContent.setText(dialogContent);
         tipsBinding.btnSure.setText(TextUtils.isEmpty(sureText) ? mActivity.getString(R.string.xs_yes_str) : sureText);
@@ -110,7 +110,7 @@ public class DialogUtils {
         dialog.show();
         tipsBinding.btnCancel.setOnClickListener(view -> {
             dialog.dismiss();
-            dialog =null;
+            dialog = null;
         });
         tipsBinding.btnSure.setOnClickListener(view -> {
             if (mOnclickListener != null) {
@@ -126,7 +126,7 @@ public class DialogUtils {
      */
     public static Dialog createDialog(Context context, View view, int width, int height) {
         Dialog dialog = new Dialog(context, R.style.XS_DialogStyle);
-        dialog.setContentView(view);
+       dialog.setContentView(view);
         dialog.setCanceledOnTouchOutside(true);
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();

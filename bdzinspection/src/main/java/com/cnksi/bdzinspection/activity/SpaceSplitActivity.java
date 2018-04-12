@@ -9,7 +9,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.SpaceSplitAdapter;
 import com.cnksi.bdzinspection.adapter.base.GridSpacingItemDecoration;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpaceSplitBinding;
@@ -160,11 +160,11 @@ public class SpaceSplitActivity extends TitleActivity {
                 copyItemIds.append("'").append(item.id).append("',");
             }
         }
-        DbUtils dbUtils = CustomApplication.getDbUtils();
+        DbUtils dbUtils = XunshiApplication.getDbUtils();
         try {
             dbUtils.beginTransaction();
             //复制一个新间隔
-            DbModel model = CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from spacing where spid=?", spacing.pid));
+            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from spacing where spid=?", spacing.pid));
             StringBuilder insertSql = new StringBuilder("INSERT INTO spacing( ");
             StringBuilder values = new StringBuilder();
             for (Map.Entry<String, String> entry : model.getDataMap().entrySet()) {

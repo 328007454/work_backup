@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
@@ -131,7 +131,7 @@ public class NewRegularReportActivity extends BaseActivity {
             public void run() {
                 // 查询report数据
                 try {
-                    report = CustomApplication.getDbUtils().findById(Report.class, currentReportId);
+                    report = XunshiApplication.getDbUtils().findById(Report.class, currentReportId);
                     mReportSignnameListCzr = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
                     mReportSignnameListFzr = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
                     mHandler.sendEmptyMessage(REFRESH_DATA);

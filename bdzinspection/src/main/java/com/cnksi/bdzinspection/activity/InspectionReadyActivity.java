@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.daoservice.ZzhtService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReadyBinding;
@@ -139,7 +139,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
 
     private void initFragmentList() {
         try {
-            task = CustomApplication.getDbUtils().findById(Task.class, currentTaskId);
+            task = XunshiApplication.getDbUtils().findById(Task.class, currentTaskId);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -219,7 +219,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             binding.tabStrip.setShouldExpand(false);
         }
         try {
-            mReport = CustomApplication.getDbUtils()
+            mReport = XunshiApplication.getDbUtils()
                     .findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", currentTaskId));
         } catch (DbException e) {
             e.printStackTrace();
@@ -303,8 +303,8 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         mFixedThreadPoolExecutor.execute(() -> {
             InspectionPrepared prepared = new InspectionPrepared(mReport.reportid, task.taskid, PreferencesUtils.getString(Config.CURRENT_LOGIN_ACCOUNT, ""));
             try {
-                CustomApplication.getDbUtils().createTableIfNotExist(InspectionPrepared.class, true);
-                CustomApplication.getDbUtils().saveOrUpdate(prepared);
+                XunshiApplication.getDbUtils().createTableIfNotExist(InspectionPrepared.class, true);
+                XunshiApplication.getDbUtils().saveOrUpdate(prepared);
             } catch (DbException e) {
                 e.printStackTrace();
             }
@@ -362,7 +362,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             mReport.reportSource = Config.REPORT;
             mReport.inspectionValue = currentInspectionTypeName;
             mReport.departmentId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
-            CustomApplication.getDbUtils().saveOrUpdate(mReport);
+            XunshiApplication.getDbUtils().saveOrUpdate(mReport);
             PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, mReport.reportid);
             if (mToolsFragment != null) {
                 mToolsFragment.save(mReport.reportid);
@@ -375,13 +375,13 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     }
 
     private void saveReportSign() throws DbException {
-        List<ReportSignname> reportSignnames = CustomApplication.getDbUtils().findAll(Selector.from(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid));
+        List<ReportSignname> reportSignnames = XunshiApplication.getDbUtils().findAll(Selector.from(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid));
         String currentAccounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
         List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAccounts);
         if (reportSignnames == null || reportSignnames.isEmpty()) {
             for (DbModel dbModel : defaultUesrs) {
                 ReportSignname reportSignname = new ReportSignname(mReport.reportid, Config.Role.worker.name(), dbModel);
-                CustomApplication.getDbUtils().saveOrUpdate(reportSignname);
+                XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
             }
         } else {
             StringBuilder accountBuilder = new StringBuilder();
@@ -393,7 +393,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                     continue;
                 } else {
                     ReportSignname reportSignname = new ReportSignname(mReport.reportid, Config.Role.worker.name(), dbModel);
-                    CustomApplication.getDbUtils().saveOrUpdate(reportSignname);
+                    XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
                 }
             }
         }

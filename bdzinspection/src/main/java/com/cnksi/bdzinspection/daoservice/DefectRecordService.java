@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.bdzinspection.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Device;
@@ -53,7 +53,7 @@ public class DefectRecordService {
                 .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)  AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
                 .orderBy(DefectRecord.DISCOVERED_DATE, true);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class DefectRecordService {
                 .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)  AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
                 .orderBy(DefectRecord.DISCOVERED_DATE, true);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -94,7 +94,7 @@ public class DefectRecordService {
                 .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)")
                 .orderBy(DefectRecord.UPDATE_TIME, true);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -117,7 +117,7 @@ public class DefectRecordService {
                 .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)")
                 .orderBy(DefectRecord.DISCOVERED_DATE, true);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -141,7 +141,7 @@ public class DefectRecordService {
                     + batteryNum + "' and bd.reportid='" + reportid + "' and bd.batteryid='" + batteryId
                     + "') group by battery_number";
             SqlInfo sqlInfo = new SqlInfo(sql);
-            batteryDbModel = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+            batteryDbModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -163,7 +163,7 @@ public class DefectRecordService {
                     + "' order by dr.deviceid,dr.defectlevel asc) dr on dr.deviceid=bd.battery_number and dr.reportid=bd.reportid and dr.spid=bd.batteryid where bd.battery_number='"
                     + batteryNum + "' and bd.reportid='" + reportid + "') group by battery_number";
             SqlInfo sqlInfo = new SqlInfo(sql);
-            batteryDbModel = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+            batteryDbModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -179,7 +179,7 @@ public class DefectRecordService {
     public List<BatteryDetails> queryAllRecordBattery(String reportid) {
         List<BatteryDetails> batterys = null;
         try {
-            batterys = CustomApplication.getDbUtils().findAll(Selector.from(BatteryDetails.class)
+            batterys = XunshiApplication.getDbUtils().findAll(Selector.from(BatteryDetails.class)
                     .where(BatteryDetails.REPORTID, "=", reportid).orderBy(BatteryDetails.BATTERY_NUMBER, false));
         } catch (DbException e) {
             e.printStackTrace();
@@ -206,7 +206,7 @@ public class DefectRecordService {
         }
         selector = selector.orderBy(DefectRecord.DISCOVERED_DATE, true);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
             if (isTemperatureRecord && defects != null) {
                 for (DefectRecord mDefectRecord : defects) {
                     selector = Selector.from(DefectRecord.class).where(DefectRecord.REPORTID, "=", reportId)
@@ -217,7 +217,7 @@ public class DefectRecordService {
                             .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND "
                                     + DefectRecord.DESCRIPTION + "<>'' AND " + DefectRecord.DESCRIPTION
                                     + " IS NOT NULL");
-                    long count = CustomApplication.getDbUtils().count(selector);
+                    long count = XunshiApplication.getDbUtils().count(selector);
                     if (count > 0) {
                         mDefectRecord.has_infrade_temperature_question = true;
                     }
@@ -243,7 +243,7 @@ public class DefectRecordService {
                 .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
                 .orderBy(DefectRecord.DISCOVERED_DATE, false);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -265,7 +265,7 @@ public class DefectRecordService {
                 .and(DefectRecord.DLT, "=", "0")
                 .orderBy(DefectRecord.DISCOVERED_DATE, false);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -286,7 +286,7 @@ public class DefectRecordService {
                 .and(DefectRecord.DLT, "=", "0")
                 .and(DefectRecord.REPORTID, "=", reportId).orderBy(DefectRecord.DISCOVERED_DATE, true);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -307,7 +307,7 @@ public class DefectRecordService {
                 .and(DefectRecord.DLT, "=", "0")
                 .and(DefectRecord.REPORTID, "=", reportId).orderBy(DefectRecord.DISCOVERED_DATE, true);
         try {
-            defects = CustomApplication.getDbUtils().findAll(selector);
+            defects = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -326,7 +326,7 @@ public class DefectRecordService {
                 + "' AND has_track = 'N' and is_copy<>'Y' AND has_remove = 'N' AND (val='' OR val IS NULL) AND reportid = (select reportid from report where report.taskid = '"
                 + taskId + "') ORDER BY discovered_date DESC");
         try {
-            defects = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            defects = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -344,7 +344,7 @@ public class DefectRecordService {
     public List<DbModel> getCurrentTaskSwitchPic(String reportId, String bdzId) throws DbException {
         DbModelSelector selector = DbModelSelector.from(SwitchPic.class).where(SwitchPic.REPORTID, "=", reportId)
                 .and(SwitchPic.BDZID, "=", bdzId);
-        List<DbModel> mSwitchPicList = CustomApplication.getDbUtils().findDbModelAll(selector);
+        List<DbModel> mSwitchPicList = XunshiApplication.getDbUtils().findDbModelAll(selector);
         return mSwitchPicList;
     }
 
@@ -361,7 +361,7 @@ public class DefectRecordService {
         // TODO: 是查询本次发现的缺陷 还是 查询所有的现存的缺陷
         List<DefectRecord> defectRecordList = null;
         try {
-            defectRecordList = CustomApplication.getDbUtils()
+            defectRecordList = XunshiApplication.getDbUtils()
                     .findAll(Selector.from(DefectRecord.class).where(DefectRecord.BDZID, "=", bdzId)
                             .and(DefectRecord.STADID, "=", stadId).and(DefectRecord.HAS_TRACK, "=", "N")
                             .and(DefectRecord.IS_COPY, "<>", "Y").and(DefectRecord.HAS_REMOVE, "=", "N")
@@ -387,7 +387,7 @@ public class DefectRecordService {
                             + bdzId
                             + "') dr on d.staid=dr.standid where dr.standid=? order by dr.standid,dr.defectlevel asc) d group by d.staid",
                     mStandardModel.getString(DeviceStandards.STAID));
-            mDefectRecordModel = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+            mDefectRecordModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
             if (mDefectRecordModel != null) {
                 mStandardModel.add(Config.DEFECT_COUNT_KEY, mDefectRecordModel.getString(Config.DEFECT_COUNT_KEY));
                 mStandardModel.add(DefectRecord.DEFECTLEVEL, mDefectRecordModel.getString(DefectRecord.DEFECTLEVEL));
@@ -410,7 +410,7 @@ public class DefectRecordService {
             SqlInfo sqlInfo = new SqlInfo(
                     "select d.defectlevel,count(1) as defect_count_key from (select d.*,dr.defectlevel from device d left join (select * from defect_record where has_track='N' and is_copy<>'Y' and has_remove='N' AND (val='' OR val IS NULL) AND (dlt = '0' OR dlt IS NULL)) dr on d.deviceid = dr.deviceid where d.deviceid=? order by dr.deviceid,dr.defectlevel asc) d  group by d.deviceid",
                     mDeviceModel.getString(Device.DEVICEID));
-            mDefectRecordModel = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+            mDefectRecordModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
             if (mDefectRecordModel != null) {
                 mDeviceModel.add(Config.DEFECT_COUNT_KEY, mDefectRecordModel.getString(Config.DEFECT_COUNT_KEY));
                 mDeviceModel.add(DefectRecord.DEFECTLEVEL, mDefectRecordModel.getString(DefectRecord.DEFECTLEVEL));
@@ -433,7 +433,7 @@ public class DefectRecordService {
             SqlInfo sqlInfo = new SqlInfo(
                     "select d.defectlevel,d.name as duname,count(1) as defect_count_key from (select d.*,dr.defectlevel from device_part d left join (select * from defect_record where has_track='N' and is_copy<>'Y' and has_remove='N' AND (val='' OR val IS NULL)) dr on d.duid = dr.duid where dr.duid=? order by dr.duid,dr.defectlevel asc) d  group by d.duid",
                     mDevicePartModel.getString(DevicePart.DUID));
-            mDefectRecordModel = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+            mDefectRecordModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
             if (mDefectRecordModel != null) {
                 mDevicePartModel.add(Config.DEFECT_COUNT_KEY, mDefectRecordModel.getString(Config.DEFECT_COUNT_KEY));
                 mDevicePartModel.add(DefectRecord.DEFECTLEVEL, mDefectRecordModel.getString(DefectRecord.DEFECTLEVEL));
@@ -456,7 +456,7 @@ public class DefectRecordService {
                 "select strftime('%m-%d',discovered_date) discovered_date,val from defect_record where val is not null and val <>''");
 
         try {
-            dataList = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            dataList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -473,17 +473,17 @@ public class DefectRecordService {
                 + bdzid + "' GROUP BY deviceid,standid order by discovered_date desc";
         SqlInfo sqlInfo = new SqlInfo(sql);
         try {
-            // if (!PreferencesUtils.getBoolean(CustomApplication.getInstance(), Config.IS_RECOVER_COPY_DATA + bdzid,
+            // if (!PreferencesUtils.getBoolean(XunshiApplication.getInstance(), Config.IS_RECOVER_COPY_DATA + bdzid,
             // false)) {
-            List<DbModel> dataList = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> dataList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (dataList != null) {
                 for (DbModel model : dataList) {
                     // 标准+设备确保抄录唯一性
                     String key = model.getString("standid") + "_" + model.getString("deviceid");
                     String value = model.getString("val");
-                    PreferencesUtils.put(CustomApplication.getInstance(), key, value);
+                    PreferencesUtils.put(XunshiApplication.getInstance(), key, value);
                 }
-                PreferencesUtils.put(CustomApplication.getInstance(), Config.IS_RECOVER_COPY_DATA + bdzid, true);
+                PreferencesUtils.put(XunshiApplication.getInstance(), Config.IS_RECOVER_COPY_DATA + bdzid, true);
             }
             // }
         } catch (DbException e) {
@@ -519,7 +519,7 @@ public class DefectRecordService {
             sqlInfo = new SqlInfo(sql, bdzid, reportId, bdzid, deviceType);
         }
         try {
-            List<DbModel> dataList = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> dataList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (null != dataList && !dataList.isEmpty()) {
                 for (DbModel dbModel : dataList) {
                     String spid = dbModel.getString(Device.SPID);
@@ -553,7 +553,7 @@ public class DefectRecordService {
                 .and(DefectRecord.STADIDSWICHERID, "=", kindId).and(DefectRecord.HAS_REMOVE, "=", "N")
                 .and(DefectRecord.HAS_TRACK, "=", "N").and(DefectRecord.IS_COPY, "=", "N");
         try {
-            List<DefectRecord> defectRecords = CustomApplication.getDbUtils().findAll(selector);
+            List<DefectRecord> defectRecords = XunshiApplication.getDbUtils().findAll(selector);
             if (null != defectRecords && defectRecords.size() > 0)
                 for (DefectRecord defect : defectRecords) {
                     if (level < Integer.parseInt(defect.defectlevel)) {
@@ -579,7 +579,7 @@ public class DefectRecordService {
                 .and(DefectRecord.STADIDSWICHERID, "=", kindId).and(DefectRecord.HAS_REMOVE, "=", "N")
                 .and(DefectRecord.HAS_TRACK, "=", "N").and(DefectRecord.IS_COPY, "=", "Y");
         try {
-            defectRecord = CustomApplication.getDbUtils().findFirst(selector);
+            defectRecord = XunshiApplication.getDbUtils().findFirst(selector);
             if (defectRecord == null)
                 defectRecord = new DefectRecord();
         } catch (DbException e) {
@@ -596,7 +596,7 @@ public class DefectRecordService {
                 .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
                 .orderBy(DefectRecord.DISCOVERED_DATE, true);
         try {
-            defectRecords = CustomApplication.getDbUtils().findAll(selector);
+            defectRecords = XunshiApplication.getDbUtils().findAll(selector);
             if (null == defectRecords) {
                 defectRecords = new ArrayList<>();
             }
@@ -615,7 +615,7 @@ public class DefectRecordService {
     public DefectRecord findFirstCopyRecord(String currentReportId, String standId) {
         DefectRecord deRecord = null;
         try {
-            deRecord = CustomApplication.getDbUtils().findFirst(Selector.from(DefectRecord.class).where(DefectRecord.REPORTID, "=", currentReportId).and(DefectRecord.STADIDSWICHERID, "=", standId).and(DefectRecord.IS_COPY, "=", "Y"));
+            deRecord = XunshiApplication.getDbUtils().findFirst(Selector.from(DefectRecord.class).where(DefectRecord.REPORTID, "=", currentReportId).and(DefectRecord.STADIDSWICHERID, "=", standId).and(DefectRecord.IS_COPY, "=", "Y"));
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

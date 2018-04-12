@@ -15,7 +15,7 @@ import com.cnksi.bdzinspection.adapter.AdapterClickListener;
 import com.cnksi.bdzinspection.adapter.AddPersonAdapter;
 import com.cnksi.bdzinspection.adapter.SignNameAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
@@ -165,7 +165,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             @Override
             public void run() {
                 try {
-                    currentReport = CustomApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId));
+                    currentReport = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId));
                     inspectionMark = currentReport.inspectionRemark;
                     inspectionResult = currentReport.inspectionResult;
                     if ((!isParticularInspection()) && (!isRoutineNotCopy())) {
@@ -200,7 +200,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
                             String selectDevices = "'" + (currentReport.selected_deviceid == null ? "" : currentReport.selected_deviceid) + "'";
                             selectDevices = selectDevices.replace(",", "','");
-                            DbModel model = CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT group_concat(name,',') as rs  FROM	device WHERE deviceid IN (" + selectDevices + ")"));
+                            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT group_concat(name,',') as rs  FROM	device WHERE deviceid IN (" + selectDevices + ")"));
                             String mark = model.getString("rs");
                             inspectionMark = mark == null ? "" : "本次巡视的设备：\n" + mark.replace(",", "\n");
                         }
@@ -218,9 +218,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 }
 
                 try {
-//                    DbModel model = CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT inspection_content FROM 'lookup' where k=?;", currentInspectionType));
+//                    DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT inspection_content FROM 'lookup' where k=?;", currentInspectionType));
 
-                    DbModel model = CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;", currentInspectionType));
+                    DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;", currentInspectionType));
                     inspectionContent = TextUtils.isEmpty(currentReport.inspectionContent) ? model == null ? "" : model.getString("xjnr") : currentReport.inspectionContent;
                     if (model != null) {
                         inspectionMark = TextUtils.isEmpty(inspectionMark) ? model.getString("remark") : inspectionMark;
@@ -396,9 +396,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             currentReport.inspectionResult = binding.etResult.getText().toString();
             if (TextUtils.isEmpty(currentReport.endtime))
                 currentReport.endtime = DateUtils.getCurrentLongTime();
-            CustomApplication.getDbUtils().saveOrUpdate(currentReport);
+            XunshiApplication.getDbUtils().saveOrUpdate(currentReport);
             Task mTask = new Task(currentTaskId);
-            CustomApplication.getDbUtils().update(mTask, Task.STATUS);
+            XunshiApplication.getDbUtils().update(mTask, Task.STATUS);
             if (!TextUtils.isEmpty(currentReport.pmsJhid)) {
                 NariDataManager.markBdPackageStatus(currentReport.pmsJhid, PackageStatus.done);
                 NariActivity.isNeedUpdateStatus = true;
@@ -569,7 +569,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                     ReportSignname reportSignname = list.remove(position);
                     reportSignname.setDlt("1");
                     try {
-                        CustomApplication.getDbUtils().saveOrUpdate(reportSignname);
+                        XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }

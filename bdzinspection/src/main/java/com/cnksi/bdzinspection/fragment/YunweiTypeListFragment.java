@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.activity.AddTaskActivity;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentExpadableListBinding;
 import com.cnksi.bdzinspection.model.Project;
 import com.cnksi.bdzinspection.utils.Config;
@@ -92,12 +92,12 @@ public class YunweiTypeListFragment extends BaseFragment {
 			public void run() {
 				try {
 					Selector selector = Selector.from(Project.class).where(Project.LOOKUP_TYPE, "=", currentFunctionModel);
-					List<Project> projectList = CustomApplication.getDbUtils().findAll(selector);
+					List<Project> projectList = XunshiApplication.getDbUtils().findAll(selector);
 					groupList = new LinkedList<Project>(projectList);
 					if (groupList != null && !groupList.isEmpty()) {
 						for (Project mProject : groupList) {
 							selector = Selector.from(Project.class).where(Project.PARENT_ID, "=", mProject.id);
-							List<Project> childProjectList = CustomApplication.getDbUtils().findAll(selector);
+							List<Project> childProjectList = XunshiApplication.getDbUtils().findAll(selector);
 							ArrayList<Project> childList = null;
 							if (childProjectList == null || childProjectList.isEmpty()) {
 								childList = new ArrayList<Project>();

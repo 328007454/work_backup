@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
-
-import com.cnksi.bdzinspection.application.CustomApplication;
 //import com.cnksi.tts.ISpeakCallback;
 //import com.cnksi.tts.ISpeakInterface;
 
@@ -66,7 +63,7 @@ public class TTSUtils {
 //                e.printStackTrace();
 //            }
 //        } else {
-//            init(CustomApplication.getAppContext());
+//            init(XunshiApplication.getAppContext());
 //        }
     }
 
@@ -80,7 +77,7 @@ public class TTSUtils {
     }
 
     public boolean isConnect() {
-//        if (!isConnect) CToast.showShort(CustomApplication.getAppContext(), "没有连接到TTS服务。");
+//        if (!isConnect) CToast.showShort(XunshiApplication.getAppContext(), "没有连接到TTS服务。");
         return isConnect;
     }
 }

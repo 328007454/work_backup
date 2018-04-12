@@ -29,7 +29,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.New1RegularSwitchListAdapter2;
 import com.cnksi.bdzinspection.adapter.SwitchMenuAudioAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.ReportService;
 import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
@@ -287,7 +287,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         super.onResume();
         if (!isFirstLoad) {
             try {
-                report = CustomApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId));
+                report = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId));
                 report.inspection = currentInspectionType;
             } catch (DbException e) {
                 e.printStackTrace();
@@ -302,7 +302,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
             @Override
             public void run() {
                 try {
-                    report = CustomApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId));
+                    report = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId));
                     String repSwitchId = report.repSwithoverId;
                     dbModelList = StandardSwitchOverService.getInstance().getAllTypeNew(currentInspectionType, currentBdzId, currentReportId, repSwitchId);
                     boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
@@ -380,7 +380,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         String standId = model.getString(StandardSwitchover.ID);
         StandardStepConfirm item = null;
         try {
-            item = CustomApplication.getDbUtils().findFirst(
+            item = XunshiApplication.getDbUtils().findFirst(
                     Selector.from(StandardStepConfirm.class).where(StandardStepConfirm.BDZID, "=", currentBdzId).and(StandardStepConfirm.REPORTID, "=", currentReportId).and(StandardStepConfirm.STANDID, "=", standId));
         } catch (DbException e) {
             e.printStackTrace();
@@ -388,7 +388,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         item = item != null ? item : StandardStepConfirm.create(currentBdzId, currentReportId, standId);
         item.confirm_date = DateUtils.getCurrentLongTime();
         try {
-            CustomApplication.getDbUtils().saveOrUpdate(item);
+            XunshiApplication.getDbUtils().saveOrUpdate(item);
             model.add(StandardStepConfirm.CONFIRMDATE, item.confirm_date);
             return true;
         } catch (DbException e) {
@@ -616,7 +616,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         mAudioAdapter.notifyDataSetChanged();
         audioFileName = "";
         try {
-            CustomApplication.getDbUtils().saveOrUpdate(report);
+            XunshiApplication.getDbUtils().saveOrUpdate(report);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -715,7 +715,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         pic.pic = dbModel.getString(SwitchPic.PIC);
         try {
             audioFileName = "";
-            CustomApplication.getDbUtils().saveOrUpdate(pic);
+            XunshiApplication.getDbUtils().saveOrUpdate(pic);
             mHandler.sendEmptyMessage(LOAD_MORE_DATA);
         } catch (DbException e) {
             e.printStackTrace();
@@ -732,7 +732,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
 //                if (!TextUtils.isEmpty(PreferencesUtils.getString(currentActivity, SwitchMenu.REPSWITCHOVERID, ""))) {
 //                    report.repSwithoverId = PreferencesUtils.getString(currentActivity, SwitchMenu.REPSWITCHOVERID, "");
                 try {
-                    CustomApplication.getDbUtils().saveOrUpdate(report);
+                    XunshiApplication.getDbUtils().saveOrUpdate(report);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
@@ -748,7 +748,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                         defectRecord.val = model.getString(DefectRecord.VAL);
                         defectRecord.oldval = model.getString(DefectRecord.OLDVAL);
                         try {
-                            CustomApplication.getDbUtils().saveOrUpdate(defectRecord);
+                            XunshiApplication.getDbUtils().saveOrUpdate(defectRecord);
                         } catch (DbException e) {
                             e.printStackTrace();
                         }

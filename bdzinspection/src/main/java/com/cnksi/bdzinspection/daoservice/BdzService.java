@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Bdz;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.SqlInfo;
@@ -38,7 +38,7 @@ public class BdzService extends BaseService {
     public Bdz findById(Object idValue) {
         Bdz bdz = null;
         try {
-            bdz = CustomApplication.getDbUtils().findById(Bdz.class, idValue);
+            bdz = XunshiApplication.getDbUtils().findById(Bdz.class, idValue);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class BdzService extends BaseService {
     }
 
     public Bdz findByPmsId(String pms_id) throws DbException {
-        return CustomApplication.getDbUtils().findFirst(Selector.from(Bdz.class).where("pms_id", "=", pms_id));
+        return XunshiApplication.getDbUtils().findFirst(Selector.from(Bdz.class).where("pms_id", "=", pms_id));
     }
 
     /**
@@ -62,7 +62,7 @@ public class BdzService extends BaseService {
         try {
             String sql = "select b.*,r.reportid,r.inspection,r.persons,r.temperature,r.humidity,r.starttime,r.endtime,r.submittime,r.taskid from bdz b left join (select * from report where inspection='" + inspectionType + "' and taskid='" + taskId + "') r on b.bdzid=r.bdzid where b.dlt='0'";
             SqlInfo sqlInfo = new SqlInfo(sql);
-            mBdzModelList = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            mBdzModelList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class BdzService extends BaseService {
         List<String> folder = new ArrayList<String>();
         try {
             SqlInfo sqlInfo = new SqlInfo("select distinct(folder_name) from bdz");
-            List<DbModel> folderList = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> folderList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (null != folderList && !folderList.isEmpty()) {
                 for (DbModel model : folderList)
                     folder.add(model.getString("folder_name"));
@@ -87,7 +87,7 @@ public class BdzService extends BaseService {
 
     public List<Bdz> findAllBdzByDp(String dept_id) {
         try {
-            return CustomApplication.getDbUtils().findAll(from(Bdz.class).and(Bdz.DEPTID, "=", dept_id));
+            return XunshiApplication.getDbUtils().findAll(from(Bdz.class).and(Bdz.DEPTID, "=", dept_id));
         } catch (DbException e) {
             e.printStackTrace();
         }

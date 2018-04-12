@@ -14,19 +14,14 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.RoadMapAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
@@ -44,7 +39,6 @@ import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.Config.Role;
-import com.cnksi.bdzinspection.utils.DialogUtil;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
@@ -189,7 +183,7 @@ public class InspectionReportActivity extends BaseActivity {
             public void run() {
                 // 查询report数据
                 try {
-                    report = CustomApplication.getDbUtils().findById(Report.class, currentReportId);
+                    report = XunshiApplication.getDbUtils().findById(Report.class, currentReportId);
                 } catch (DbException e) {
                     e.printStackTrace(System.out);
                 }
@@ -235,7 +229,7 @@ public class InspectionReportActivity extends BaseActivity {
                                     + fucntionModel + "' and bdzid = '" + currentBdzId + "')")
                             .orderBy(sort, false);
                     try {
-                        spacingList = CustomApplication.getDbUtils().findAll(selector);
+                        spacingList = XunshiApplication.getDbUtils().findAll(selector);
                     } catch (DbException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();

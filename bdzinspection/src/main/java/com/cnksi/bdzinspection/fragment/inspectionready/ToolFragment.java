@@ -16,7 +16,7 @@ import android.widget.ScrollView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.inspectionready.ToolsAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.BaseService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
@@ -81,14 +81,14 @@ public class ToolFragment extends BaseFragment {
                 public void run() {
                     Selector selector = BaseService.from(Tool.class).and(Tool.INSPECTION, "=", currentInspectionType);
                     try {
-                        mToolsList = CustomApplication.getDbUtils().findAll(selector);
+                        mToolsList = XunshiApplication.getDbUtils().findAll(selector);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
                     if (!TextUtils.isEmpty(currentReportId)) {
                         selector = BaseService.from(ReportTool.class).and(ReportTool.REPORTID, "=", currentReportId);
                         try {
-                            List<ReportTool> reportTools = CustomApplication.getDbUtils().findAll(selector);
+                            List<ReportTool> reportTools = XunshiApplication.getDbUtils().findAll(selector);
                             if (null == reportTools)
                                 reportTools = new ArrayList<ReportTool>();
                             if (reportTools.size() > 0) {
@@ -146,7 +146,7 @@ public class ToolFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    CustomApplication.getDbUtils().saveAll(saveList);
+                    XunshiApplication.getDbUtils().saveAll(saveList);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }

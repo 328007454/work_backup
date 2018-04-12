@@ -5,7 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.DefectRecord;
@@ -40,7 +40,7 @@ public class ShowHistroyDialogUtils {
                         + "LEFT JOIN report rp on dr.reportid=rp.reportid "
                         + " where dr.dlt<>'1'  AND  rp.temperature is not null and dr.deviceid=? and dr.standid=? and dr.bdzid=? and dr.is_copy='Y' order by dr.discovered_date DESC limit 20",
                 deviceId, standId, bdzId);
-        return CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+        return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
     }
 
     private static List<DbModel> findStardHistoryRecord(String deviceId, String standId, String bdzId)
@@ -49,7 +49,7 @@ public class ShowHistroyDialogUtils {
                 "SELECT dr.val,dr.discovered_date from defect_record dr "
                         + " where dr.dlt<>'1'  AND dr.deviceid=? and dr.standid=? and dr.bdzid=? and dr.is_copy='Y' order by dr.discovered_date desc limit 20",
                 deviceId, standId, bdzId);
-        return CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+        return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
     }
 
     private static void showHistoryDialog(Activity activity, DbModel mStandardModel, String deviceID,
@@ -157,7 +157,7 @@ public class ShowHistroyDialogUtils {
                 + " AND result.deviceid = ? AND result.item_id=?" + " ORDER BY time";
         SqlInfo sqlInfo = new SqlInfo(sql, item.bdzid, item.deviceid, item.id);
         try {
-            List<DbModel> resultModel = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> resultModel = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (resultModel == null || resultModel.size() < 1) {
                 CToast.showShort(context, "当前没有历史抄录记录");
                 return;

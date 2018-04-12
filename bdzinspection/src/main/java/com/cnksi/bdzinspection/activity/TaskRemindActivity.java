@@ -15,7 +15,7 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionTaskRemindBinding;
@@ -43,6 +43,7 @@ import com.lidroid.xutils.db.table.DbModel;
 import com.lidroid.xutils.exception.DbException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.cnksi.ksynclib.KSync.SYNC_ERROR;
@@ -129,41 +130,24 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
     }
 
     private void initFragmentList() {
-//        mFragmentList = new ArrayList<>();
-//        for (int i = 0; i < titleArray.length; i++) {
-//            TaskRemindFragment mTaskFragment = new TaskRemindFragment();
-//            mTaskFragment.setOnFragmentEventListener(this);
-//            Bundle args = new Bundle();
-//            args.putString(Config.CURRENT_FUNCTION_MODEL, functionModelArray[i]);
-//            args.putString(Config.CURRENT_INSPECTION_TYPE_NAME, currentSelectInspectionType.name());
-//            mTaskFragment.setArguments(args);
-//            mFragmentList.add(mTaskFragment);
-//        }
-//        fragmentPagerAdapter = new FragmentPagerAdapter(fManager, mFragmentList, Arrays.asList(titleArray));
-//        binding.viewPager.setAdapter(fragmentPagerAdapter);
-//        binding.tabStrip.setViewPager(binding.viewPager);
-//        binding.tabStrip.setOnPageChangeListener(this);
-//        setPagerTabStripValue(binding.tabStrip);
-//        binding.viewPager.setOffscreenPageLimit(4);
+        mFragmentList = new ArrayList<>();
+        for (int i = 0; i < titleArray.length; i++) {
+            TaskRemindFragment mTaskFragment = new TaskRemindFragment();
+            mTaskFragment.setOnFragmentEventListener(this);
+            Bundle args = new Bundle();
+            args.putString(Config.CURRENT_FUNCTION_MODEL, functionModelArray[i]);
+            args.putString(Config.CURRENT_INSPECTION_TYPE_NAME, currentSelectInspectionType.name());
+            mTaskFragment.setArguments(args);
+            mFragmentList.add(mTaskFragment);
+        }
+        fragmentPagerAdapter = new FragmentPagerAdapter(fManager, mFragmentList, Arrays.asList(titleArray));
+        binding.viewPager.setAdapter(fragmentPagerAdapter);
+        binding.tabStrip.setViewPager(binding.viewPager);
+        binding.tabStrip.setOnPageChangeListener(this);
+        setPagerTabStripValue(binding.tabStrip);
+        binding.viewPager.setOffscreenPageLimit(4);
 
     }
-
-//    @OnClick({R.id.ibtn_cancel, R.id.ibtn_exit, R.id.add_task})
-//    private void OnViewClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.ibtn_cancel:
-//                onBackPressed();
-//                break;
-//            case R.id.ibtn_exit://同步数据
-//
-//                break;
-//            case R.id.add_task:
-//
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 
     public void initOnClick(){
         binding.includeTitle.ibtnCancel.setOnClickListener(v -> {
@@ -241,14 +225,6 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
     protected void onRefresh(Message msg) {
         super.onRefresh(msg);
         switch (msg.what) {
-//            case UPDATE_APP_CODE:
-//                if (msg.obj != null && msg.obj instanceof UpdateInfor) {
-//                    UpdateUtils.showUpdateDialog(currentActivity, CoreConfig.SERVER_URL + File.separator + ((UpdateInfor) msg.obj).file, ((UpdateInfor) msg.obj).remark, com.cnksi.bdzinspection.utils.Config.DOWNLOAD_APP_FOLDER, com.cnksi.bdzinspection.utils.Config.DOWNLOAD_FILE_NAME);
-//                }
-//                break;
-//            case INSTALL_APP_CODE:
-//                UpdateUtils.showInstallNewApkDialog(currentActivity, mUpdateFile);
-//                break;
             case SYNC_START://开始同步
                 String messageStart = (String) msg.obj;
                 if (messageStart.contains("开始上传数据")) {
@@ -317,7 +293,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
     public void startTask(Task mTask) {
         Bdz bdz = null;
         try {
-            bdz = CustomApplication.getDbUtils().findFirst(Selector.from(Bdz.class).where(Bdz.BDZID, "=", mTask.bdzid));
+            bdz = XunshiApplication.getDbUtils().findFirst(Selector.from(Bdz.class).where(Bdz.BDZID, "=", mTask.bdzid));
             // 创建变电站下目录
             if (!FileUtils.isFileExists(Config.BDZ_INSPECTION_FOLDER + bdz.folder)) {
                 FileUtils.initFile(new String[]{Config.BDZ_INSPECTION_FOLDER + bdz.folder});
@@ -330,7 +306,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         if (mTask.isFinish()) {
             Report mReport = null;
             try {
-                mReport = CustomApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", mTask.taskid));
+                mReport = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", mTask.taskid));
                 if (mReport == null) {
                     CToast.showShort(currentActivity, "异常任务，找不到对应的报告！");
                     return;
@@ -385,7 +361,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                     String reportId = null;
                     List<InspectionPrepared> prepareds = null;
                     try {
-                        prepareds = CustomApplication.getDbUtils().findAll(Selector.from(InspectionPrepared.class).where(InspectionPrepared.TASKID, "=", mTask.taskid));
+                        prepareds = XunshiApplication.getDbUtils().findAll(Selector.from(InspectionPrepared.class).where(InspectionPrepared.TASKID, "=", mTask.taskid));
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
@@ -430,7 +406,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
      */
     private void generateReport(Task mTask) {
         try {
-            Report mReport = CustomApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", mTask.taskid));
+            Report mReport = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", mTask.taskid));
             String loginPerson = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_USER, "");
             if (mReport == null) {
                 mReport = new Report(mTask.taskid, mTask.bdzid, mTask.bdzname, mTask.inspection, loginPerson);
@@ -441,15 +417,15 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             mReport.inspectionValue = mTask.inspection_name;
             mReport.reportSource = Config.REPORT;
             mReport.departmentId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
-            CustomApplication.getDbUtils().saveOrUpdate(mReport);
+            XunshiApplication.getDbUtils().saveOrUpdate(mReport);
 
-            ReportSignname reportSignname = CustomApplication.getDbUtils().findFirst(Selector.from(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid));
+            ReportSignname reportSignname = XunshiApplication.getDbUtils().findFirst(Selector.from(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid));
             if (reportSignname == null) {
                 String currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
                 List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);
                 for (DbModel dbModel : defaultUesrs) {
                     reportSignname = new ReportSignname(mReport.reportid, Config.Role.worker.name(), dbModel);
-                    CustomApplication.getDbUtils().saveOrUpdate(reportSignname);
+                    XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
                 }
             }
             if (mReport != null) {

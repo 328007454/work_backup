@@ -17,7 +17,7 @@ import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.daoservice.DepartmentService;
@@ -408,7 +408,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                     @Override
                     public void run() {
                         try {
-                            CustomApplication.getDbUtils().saveOrUpdateAll(saveList);
+                            XunshiApplication.getDbUtils().saveOrUpdateAll(saveList);
                         } catch (DbException e) {
                             e.printStackTrace();
                         }

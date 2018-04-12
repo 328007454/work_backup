@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.utils;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.SwitchMenu;
 import com.cnksi.bdzinspection.model.Task;
 import com.cnksi.xscore.xsutils.CoreConfig;
@@ -28,15 +28,15 @@ public class PushNewTaskUtil {
     public void createNewTaskByPeriod(String taskId, String type) {
         boolean goOn = !TextUtils.isEmpty(type) && (type.contains("maintenance") || type.contains("switchover_581"));
         if (goOn) {
-            CustomApplication.getFixedThreadPoolExecutor().execute(() -> {
+            XunshiApplication.getFixedThreadPoolExecutor().execute(() -> {
                 try {
-                    Task task = CustomApplication.getDbUtils().findFirst(Selector.from(Task.class).where(Task.TASKID, "=", taskId).and(Task.DLT, "<>", 1));
+                    Task task = XunshiApplication.getDbUtils().findFirst(Selector.from(Task.class).where(Task.TASKID, "=", taskId).and(Task.DLT, "<>", 1));
                     String startTime = null==task ?DateUtils.getCurrentLongTime():(TextUtils.isEmpty(task.schedule_time)?DateUtils.getCurrentLongTime():task.schedule_time);
-                    SwitchMenu menu = CustomApplication.getDbUtils().findFirst(Selector.from(SwitchMenu.class).where(SwitchMenu.BDZID, "=", task.bdzid).and(SwitchMenu.DLT, "=", 0).and(SwitchMenu.K, "=", type));
+                    SwitchMenu menu = XunshiApplication.getDbUtils().findFirst(Selector.from(SwitchMenu.class).where(SwitchMenu.BDZID, "=", task.bdzid).and(SwitchMenu.DLT, "=", 0).and(SwitchMenu.K, "=", type));
                     if (null != task && menu != null && !TextUtils.isEmpty(menu.cycle)) {
                         String nextTime = DateUtils.getAfterMonth(DateUtils.formatDateTime(startTime, CoreConfig.dateFormat2), Integer.valueOf(menu.cycle));
                         Task newTask = new Task(MyUUID.id(4), task.bdzid, task.bdzname, task.inspection, task.inspection_name, nextTime, Config.TaskStatus.undo.name(), task.createAccount, null);
-                        CustomApplication.getDbUtils().saveOrUpdate(newTask);
+                        XunshiApplication.getDbUtils().saveOrUpdate(newTask);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

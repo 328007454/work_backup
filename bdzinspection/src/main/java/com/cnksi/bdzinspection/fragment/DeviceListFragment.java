@@ -25,7 +25,7 @@ import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
@@ -482,7 +482,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                     CToast.showShort("温度：-99.9-99.9；湿度：0-100");
                     return;
                 }
-                CustomApplication.getDbUtils().saveOrUpdate(snwsd);
+                XunshiApplication.getDbUtils().saveOrUpdate(snwsd);
                 reportSnwsds.add(snwsd);
                 dialogCopySNWSD.dismiss();
                 mSnwsdBinding.editTemp.setText("");

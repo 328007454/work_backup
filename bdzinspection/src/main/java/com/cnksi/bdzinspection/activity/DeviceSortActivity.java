@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.activity;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DeviceSortAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.BaseService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
 import com.cnksi.bdzinspection.model.Device;
@@ -63,7 +63,7 @@ public class DeviceSortActivity extends TitleActivity {
         // TODO: 2017/3/22
         Selector selector = BaseService.from(Device.class).and(Device.SPID, "=", spacing.spid).and(Device.DEVICE_TYPE, "=", functionMode).orderBy(Device.SORT);
         try {
-            mData = CustomApplication.getDbUtils().findAll(selector);
+            mData = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class DeviceSortActivity extends TitleActivity {
             mData.get(i).sort = i + 1;
         }
         try {
-            CustomApplication.getDbUtils().updateAll(mData, "sort");
+            XunshiApplication.getDbUtils().updateAll(mData, "sort");
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

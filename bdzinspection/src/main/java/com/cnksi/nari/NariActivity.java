@@ -10,7 +10,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,7 +23,7 @@ import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.BdzService;
 import com.cnksi.bdzinspection.daoservice.UserService;
 import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
@@ -321,12 +320,12 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     private boolean genData(BDPackage bdPackage, Report report) {
         try {
 
-            DbModel model = CustomApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from users where account='" + account + "'"));
+            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from users where account='" + account + "'"));
 //查询巡视人员的IDS 和Name
             SqlInfo sqlInfo = new SqlInfo("SELECT distinct u.account  account ,rs.name,u.pms_id FROM report_signname rs " +
                     "LEFT JOIN (SELECT * from users where dept_id=?) u ON rs.name = u.username WHERE report_id = ? ;");
             sqlInfo.addBindArgs(model.getString("dept_id"), report.reportid);
-            List<DbModel> users = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> users = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             String ids = "";
             String names = "";
             //逗号分隔ID和name
@@ -380,7 +379,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 for (BDPackage bdPackage : bdPackages) {
                     Report report;
                     try {
-                        report = CustomApplication.getDbUtils()
+                        report = XunshiApplication.getDbUtils()
                                 .findFirst(Selector.from(Report.class).where(Report.PMS_JHID, "=", bdPackage.pmsJhid));
                     } catch (DbException e) {
                         e.printStackTrace();
@@ -409,7 +408,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                         //更新提交时间
                         report.submittime = DateUtils.getCurrentLongTime();
                         try {
-                            CustomApplication.getDbUtils().update(report, "submittime");
+                            XunshiApplication.getDbUtils().update(report, "submittime");
                         } catch (DbException e) {
                             e.printStackTrace();
                         }
@@ -518,9 +517,9 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 return false;
             }
             if (t != null) {
-                CustomApplication.getDbUtils().addColumn(Task.class, Task.PMS_JHID, "TEXT");
+                XunshiApplication.getDbUtils().addColumn(Task.class, Task.PMS_JHID, "TEXT");
                 try {
-                    CustomApplication.getDbUtils().save(t);
+                    XunshiApplication.getDbUtils().save(t);
                     bdPackage.taskId = tid;
                     bdPackage.status = PackageStatus.undo.name();
                     NariDataManager.getPackageManager().saveOrUpdate(bdPackage);
@@ -714,10 +713,10 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     public void deleteLocalData(BDPackage item) {
         try {
-            CustomApplication.getDbUtils().deleteById(BDPackage.class, item.packageID);
+            XunshiApplication.getDbUtils().deleteById(BDPackage.class, item.packageID);
             if (!TextUtils.isEmpty(item.status) && PackageStatus.undo.name().equalsIgnoreCase(item.status)) {
-                CustomApplication.getDbUtils().update(Task.class, WhereBuilder.b(Task.PMS_JHID, "=", item.pmsJhid), new String[]{"dlt"}, new String[]{"1"});
-                CustomApplication.getDbUtils().update(Report.class, WhereBuilder.b(Report.PMS_JHID, "=", item.pmsJhid), new String[]{"dlt"}, new String[]{"1"});
+                XunshiApplication.getDbUtils().update(Task.class, WhereBuilder.b(Task.PMS_JHID, "=", item.pmsJhid), new String[]{"dlt"}, new String[]{"1"});
+                XunshiApplication.getDbUtils().update(Report.class, WhereBuilder.b(Report.PMS_JHID, "=", item.pmsJhid), new String[]{"dlt"}, new String[]{"1"});
             }
         } catch (DbException e) {
             e.printStackTrace();

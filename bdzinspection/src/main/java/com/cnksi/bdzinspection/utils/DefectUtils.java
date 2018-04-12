@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.DefectRecord;
@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class DefectUtils {
 
-    public static final int CRISIS_COLOR = CustomApplication.getAppContext().getResources().getColor(R.color.xs_red_color);
-    public static final int SERIOUS_COLOR = CustomApplication.getAppContext().getResources().getColor(R.color.xs_orange_color);
-    public static final int COMMON_COLOR = CustomApplication.getAppContext().getResources().getColor(R.color.xs_yellow_color);
+    public static final int CRISIS_COLOR = XunshiApplication.getAppContext().getResources().getColor(R.color.xs_red_color);
+    public static final int SERIOUS_COLOR = XunshiApplication.getAppContext().getResources().getColor(R.color.xs_orange_color);
+    public static final int COMMON_COLOR = XunshiApplication.getAppContext().getResources().getColor(R.color.xs_yellow_color);
 
     /**
      * 转换缺陷等级为 一般 严重 危机
@@ -139,9 +139,9 @@ public class DefectUtils {
                 }
             } else {
                 if (currentValue >= max) {
-                    tips = String.format(CustomApplication.getAppContext().getResources().getString(R.string.xs_copy_max_tips), descript, max + "");
+                    tips = String.format(XunshiApplication.getAppContext().getResources().getString(R.string.xs_copy_max_tips), descript, max + "");
                 } else {
-                    tips = String.format(CustomApplication.getAppContext().getResources().getString(R.string.xs_copy_min_tips), descript, min + "");
+                    tips = String.format(XunshiApplication.getAppContext().getResources().getString(R.string.xs_copy_min_tips), descript, min + "");
                 }
             }
             result.clear();

@@ -6,6 +6,8 @@ import android.content.Intent;
 
 import com.cnksi.bdloc.LLog;
 import com.cnksi.bdloc.LocationUtil;
+import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.inter.XunshiDatabaseProvider;
 import com.cnksi.core.application.CoreApplication;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
@@ -64,6 +66,7 @@ public class CustomApplication extends CoreApplication {
             Config.NFC_FOLDER,
             Config.WWWROOT_FOLDER};
     private HashMap<String, String> copyedMap = new HashMap<>();
+    XunshiApplication xunshiApplication;
 
     public static DbManager getPJDbManager() {
         if (PJDbManager == null) {
@@ -81,7 +84,7 @@ public class CustomApplication extends CoreApplication {
      *
      * @return
      */
-    public  DbManager getDbManager() {
+    public DbManager getDbManager() {
         if (mDbManager == null) {
             mDbManager = x.getDb(getDaoConfig());
         }
@@ -90,15 +93,15 @@ public class CustomApplication extends CoreApplication {
 
 
     public static void closeDbConnection() {
-        if (mDbManager != null) {
-            try {
-                FileUtils.deleteAllFiles(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME + "-journal"));
-                mDbManager.close();
-                mDbManager = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        if (mDbManager != null) {
+//            try {
+//                FileUtils.deleteAllFiles(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME + "-journal"));
+//                mDbManager.close();
+//                mDbManager = null;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     /**
@@ -135,7 +138,7 @@ public class CustomApplication extends CoreApplication {
      * @return
      */
 
-    public  DbManager.DaoConfig getDaoConfig() {
+    public DbManager.DaoConfig getDaoConfig() {
         int dbVersion = getDbVersion();
         DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
                 .setDbOpenListener(db -> {
@@ -152,7 +155,7 @@ public class CustomApplication extends CoreApplication {
         return config;
     }
 
-    public  DbManager.DaoConfig getDaoConfigInner() {
+    public DbManager.DaoConfig getDaoConfigInner() {
         int dbVersion = getDbVersion();
         DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(mInstance.getFilesDir() + "/BdzInspection/database")).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
                 .setDbOpenListener(db -> {
@@ -168,8 +171,6 @@ public class CustomApplication extends CoreApplication {
                 .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
         return config;
     }
-
-
 
 
     /**
@@ -329,6 +330,19 @@ public class CustomApplication extends CoreApplication {
         TTSUtils.init(getAppContext());
         LocationUtil.init(getAppContext());
         LLog.isLog = BuildConfig.LOG_DEBUG;
+        xunshiApplication = new XunshiApplication();
+        xunshiApplication.init(mInstance, getApplicationContext(),new XunshiDatabaseProvider() {
+
+            @Override
+            public Object getDatabase() {
+                return getDbManager().getDatabase();
+            }
+
+            @Override
+            public String getDbName() {
+                return getDaoConfig().getDbName();
+            }
+        });
     }
 
     public void initApp() {

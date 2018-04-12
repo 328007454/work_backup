@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Report;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
@@ -18,7 +18,7 @@ import com.lidroid.xutils.exception.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cnksi.bdzinspection.application.CustomApplication.getDbUtils;
+import static com.cnksi.bdzinspection.application.XunshiApplication.getDbUtils;
 
 /**
  * 巡检任务的数据查询
@@ -250,7 +250,7 @@ public class TaskService {
             extraSql = "";
         }
         try {
-            tasks = CustomApplication.getDbUtils().findAll(Selector.from(Task.class).where(Task.DLT, "=", "0").and(Task.INSPECTION, "=", name).and(Task.STATUS, "=", "undo").and(Task.BDZID, "=", bdzId)
+            tasks = XunshiApplication.getDbUtils().findAll(Selector.from(Task.class).where(Task.DLT, "=", "0").and(Task.INSPECTION, "=", name).and(Task.STATUS, "=", "undo").and(Task.BDZID, "=", bdzId)
                     .expr(extraSql + " and (select datetime('" + chooseTime + "','+24 hour'))> schedule_time and schedule_time >= (select datetime('" + chooseTime + "'))"));
             if (null == tasks)
                 return new ArrayList<Task>();

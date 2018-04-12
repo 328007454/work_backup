@@ -3,7 +3,7 @@ package com.cnksi.bdzinspection.utils;
 
 import android.util.Log;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.lidroid.xutils.db.sqlite.SqlInfo;
 import com.lidroid.xutils.db.table.DbModel;
@@ -75,7 +75,7 @@ public class SystemConfig {
     public static void init() {
         SqlInfo sqlInfo = new SqlInfo("select * from system_config");
         try {
-            List<DbModel> models = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> models = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (models != null) {
                 for (DbModel model : models) {
                     SYSTEM_CONFIG.put(model.getString("k"), model.getString("v"));

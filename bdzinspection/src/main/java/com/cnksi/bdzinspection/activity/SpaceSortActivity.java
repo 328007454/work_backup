@@ -6,7 +6,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SpaceSortAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.BaseService;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
@@ -74,7 +74,7 @@ public class SpaceSortActivity extends TitleActivity {
                         + "' and bdzid = '" + currentBdzId + "'  and dlt=0)")
                 .orderBy(sort, false);
         try {
-            mData = CustomApplication.getDbUtils().findAll(selector);
+            mData = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -138,7 +138,7 @@ public class SpaceSortActivity extends TitleActivity {
     private boolean restore(Spacing spacing) {
         String sqlDevice = "update device set spid='" + spacing.pid + "' where spid='" + spacing.spid + "'";
         String sqlCopyItem = "update copy_item set spid='" + spacing.pid + "' where spid='" + spacing.spid + "'";
-        DbUtils dbUtils = CustomApplication.getDbUtils();
+        DbUtils dbUtils = XunshiApplication.getDbUtils();
         try {
             dbUtils.beginTransaction();
             dbUtils.execNonQuery(sqlDevice);
@@ -181,7 +181,7 @@ public class SpaceSortActivity extends TitleActivity {
             updateColumnNames = "sort";
         }
         try {
-            CustomApplication.getDbUtils().updateAll(mData, updateColumnNames);
+            XunshiApplication.getDbUtils().updateAll(mData, updateColumnNames);
             PreferencesUtils.put(this, "RELOAD_DATA", true);
         } catch (DbException e) {
             // TODO Auto-generated catch block

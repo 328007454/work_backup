@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.model;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyMapCache;
 import com.cnksi.bdzinspection.utils.CalcUtils;
 import com.cnksi.bdzinspection.utils.Config;
@@ -257,7 +257,7 @@ public class DefectRecord extends BaseModel {
         this.pics = pics;
         this.defectid = getDefectId();
         this.discovered_date = DateUtils.getCurrentLongTime();
-        this.discoverer = PreferencesUtils.getString(CustomApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
+        this.discoverer = PreferencesUtils.getString(XunshiApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
         this.defectcode = getDefectId();
         this.standid = standid;
         this.standSwitchId = standid;
@@ -295,8 +295,8 @@ public class DefectRecord extends BaseModel {
         this.val = val;
         this.defectid = getDefectId();
         this.discovered_date = DateUtils.getCurrentLongTime();
-        this.discoverer = PreferencesUtils.getString(CustomApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
-        this.discoverer_unit=PreferencesUtils.getString(CustomApplication.getInstance(),Config.CURRENT_DEPARTMENT_NAME,"");
+        this.discoverer = PreferencesUtils.getString(XunshiApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
+        this.discoverer_unit=PreferencesUtils.getString(XunshiApplication.getInstance(),Config.CURRENT_DEPARTMENT_NAME,"");
         this.defectcode = getDefectId();
         this.has_track = "N";
         this.has_remove = "N";
@@ -319,7 +319,7 @@ public class DefectRecord extends BaseModel {
         this.duid = model.getString(DeviceStandards.DUID);
         this.duname = model.getString(DevicePart.NAME); // 设备部件名称;
         this.unit = TextUtils.isEmpty(model.getString(UNIT)) ? "" : model.getString(UNIT);
-        this.discoverer = PreferencesUtils.getString(CustomApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
+        this.discoverer = PreferencesUtils.getString(XunshiApplication.getInstance(), Config.CURRENT_LOGIN_USER, "");
         this.description = model.getString(DESCRIPTION); // 巡视标准id
         this.standid = model.getString(DeviceStandards.STAID);
         this.val = model.getString(VAL);
@@ -349,7 +349,7 @@ public class DefectRecord extends BaseModel {
                 this.dzcs = CalcUtils.sub(val, oldval);
                 SqlInfo sql = new SqlInfo("SELECT dzcs FROM defect_record where reportid<>? and deviceid=? and standid=? and bdzid=? and dlt=0 ORDER BY discovered_date DESC LIMIT 1", reportid, deviceid, standid, bdzid);
                 try {
-                    DbModel data = CustomApplication.getDbUtils().findDbModelFirst(sql);
+                    DbModel data = XunshiApplication.getDbUtils().findDbModelFirst(sql);
                     this.olddzcs = data != null ? data.getString(DZCS) : null;
                 } catch (DbException e) {
                     e.printStackTrace();

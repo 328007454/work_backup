@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityYunweiReportBinding;
@@ -87,7 +87,7 @@ public class YunweiReportActivity extends BaseActivity {
 					// 查询状态
 					mCurrentDepartment = DepartmentService.getInstance().findDepartmentById(currentDepartmentId);
 					status = TaskService.getInstance().getTaskStatus(currentTaskId);
-					report = CustomApplication.getDbUtils().findById(Report.class, currentReportId);
+					report = XunshiApplication.getDbUtils().findById(Report.class, currentReportId);
 
 				} catch (DbException e) {
 					e.printStackTrace();

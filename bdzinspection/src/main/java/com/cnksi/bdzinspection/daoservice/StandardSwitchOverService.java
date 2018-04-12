@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.bdzinspection.model.SwitchPic;
 import com.lidroid.xutils.db.sqlite.Selector;
@@ -35,7 +35,7 @@ public class StandardSwitchOverService extends BaseService {
                 + " LEFT JOIN (SELECT stand_switch_id,group_concat(val) val,max(defectlevel) defectlevel,group_concat(oldval) oldval,deviceid,group_concat(confirm_date) confirm_date FROM defect_record WHERE reportid = '" + currentReportId + "' AND DLT = '0' AND has_remove = 'N' AND has_track = 'N' GROUP BY stand_switch_id)"
                 + " dr ON ss.id = dr.stand_switch_id"
                 + " WHERE ss.kind = '" + currentInspectionType + "'AND ss.bdzid = '" + currentBdzId + "' and ss.rep_swithover_id = '"+reportSwitchId+"' and ss.dlt=0 order by ss.sort,ss.code";
-        List<DbModel> dbModleList = CustomApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+        List<DbModel> dbModleList = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
 
         return repeatSort(dbModleList);
     }
@@ -87,12 +87,12 @@ public class StandardSwitchOverService extends BaseService {
                 + " LEFT JOIN (select standid,confirm_date from standard_step_confirm where bdzid=?  and reportid=?) stc on stc.standid=ss.id "
                 + " WHERE ss.kind =  ? AND ss.bdzid = ?  and ss.rep_swithover_id = '"+reportSwitchId+"' and ss.dlt=0 order by ss.sort ,ss.code";
         SqlInfo sqlInfo = new SqlInfo(sql, currentReportId, currentReportId, currentBdzId, currentReportId, currentInspectionType, currentBdzId);
-        List<DbModel> dbModleList = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+        List<DbModel> dbModleList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         return repeatSort(dbModleList);
     }
 
     public SwitchPic findFirstPic(String currentReportId, String standId) throws DbException {
-        SwitchPic pic = CustomApplication.getDbUtils().findFirst(Selector.from(SwitchPic.class).where(SwitchPic.REPORTID, "=", currentReportId).and(SwitchPic.STADIDSWICHERID, "=", standId));
+        SwitchPic pic = XunshiApplication.getDbUtils().findFirst(Selector.from(SwitchPic.class).where(SwitchPic.REPORTID, "=", currentReportId).and(SwitchPic.STADIDSWICHERID, "=", standId));
         return pic;
     }
 
@@ -100,7 +100,7 @@ public class StandardSwitchOverService extends BaseService {
     public String getStandardMaxLevel(String standardId, String reportId) throws DbException {
         SqlInfo sqlInfo = new SqlInfo(" SELECT  max(defectlevel) maxdefect FROM defect_record dr where dr.reportid =? AND has_remove = 'N' " +
                 "AND has_track = 'N' and  dr.stand_switch_id =? and dr.dlt = '0'", reportId, standardId);
-        DbModel model = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+        DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
         return model.getString("maxdefect");
     }
 

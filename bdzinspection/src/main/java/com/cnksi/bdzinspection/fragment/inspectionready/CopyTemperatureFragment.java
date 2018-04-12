@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentCopyTemperature2Binding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Report;
@@ -59,7 +59,7 @@ public class CopyTemperatureFragment extends BaseFragment {
                 @Override
                 public void run() {
                     try {
-                        mReport = CustomApplication.getDbUtils()
+                        mReport = XunshiApplication.getDbUtils()
                                 .findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", currentTaskId));
                         mHandler.sendEmptyMessage(LOAD_DATA);
                     } catch (DbException e) {

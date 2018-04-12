@@ -32,6 +32,11 @@ public class AndroidDatabase implements KDatabase {
         }
         this.database = result;
     }
+    public AndroidDatabase(SQLiteDatabase database) {
+
+
+        this.database = database;
+    }
 
     @Override
     public void setVersion(int version) {

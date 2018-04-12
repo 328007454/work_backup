@@ -11,7 +11,7 @@ import android.widget.PopupWindow;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerDataBindingAdapter;
 import com.cnksi.bdzinspection.adapter.PersonAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.databinding.XsRecyclerviewBinding;
 import com.cnksi.bdzinspection.model.Users;
@@ -137,7 +137,7 @@ public class PersonListUtils implements BaseRecyclerDataBindingAdapter.OnItemCli
      *                    查询当前部门所有的成员
      */
     public void initPersonData(final String currentDept) {
-        CustomApplication.getFixedThreadPoolExecutor().execute(new Runnable() {
+        XunshiApplication.getFixedThreadPoolExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 try {

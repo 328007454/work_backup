@@ -20,7 +20,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.DefectControlActivity;
 import com.cnksi.bdzinspection.adapter.BatteryDetailsAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwBatteryBinding;
@@ -115,7 +115,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         binding.includeTitle.tvTitle.setText(R.string.xs_yw_battery_title);
         String _t = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
         binding.time.append(StringUtils.changePartTextColor(currentActivity, _t, R.color.xs_green_color, 0, _t.length()));
-        binding.clr.append(StringUtils.changePartTextColor(currentActivity, mApp.getUsers().username, R.color.xs_green_color, 0, mApp.getUsers().username.length()));
+        binding.clr.append(StringUtils.changePartTextColor(currentActivity, getUsers().username, R.color.xs_green_color, 0, getUsers().username.length()));
     }
 
     private void initData() {
@@ -124,11 +124,11 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             public void run() {
                 try {
                     // 查询已选择的电池组
-                    mCurrentBatteryReport = CustomApplication.getDbUtils().findFirst(Selector.from(BatteryReport.class).where(BatteryReport.REPORTID, "=", currentReportId));
+                    mCurrentBatteryReport = XunshiApplication.getDbUtils().findFirst(Selector.from(BatteryReport.class).where(BatteryReport.REPORTID, "=", currentReportId));
                     if (mCurrentBatteryReport == null) {
                         mCurrentBatteryReport = new BatteryReport(currentReportId);
                     }
-                    CustomApplication.getDbUtils().saveOrUpdate(mCurrentBatteryReport);
+                    XunshiApplication.getDbUtils().saveOrUpdate(mCurrentBatteryReport);
                     initBatteryDetails();
                     mHandler.sendEmptyMessage(LOAD_DATA);
                 } catch (Exception e) {
@@ -341,7 +341,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                 mBatteryDetails.id = FunctionUtils.getPrimarykey();
             }
             mBatteryDetails.reportid = currentReportId;
-            CustomApplication.getDbUtils().saveOrUpdate(mBatteryDetails);
+            XunshiApplication.getDbUtils().saveOrUpdate(mBatteryDetails);
             PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID + currentReportId, true);
         } catch (DbException e1) {
             e1.printStackTrace();
@@ -460,7 +460,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                 ""// pics图片
         );
         try {
-            CustomApplication.getDbUtils().save(record);
+            XunshiApplication.getDbUtils().save(record);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -536,4 +536,5 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     public void onKeyBoardNextInput(EditText editText) {
 
     }
+
 }

@@ -38,10 +38,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.daoservice.UserService;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.Report;
 import com.cnksi.bdzinspection.model.Task;
+import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
@@ -51,6 +53,7 @@ import com.cnksi.xscore.xsactivity.BaseCoreActivity;
 import com.cnksi.xscore.xscommon.ScreenManager;
 import com.cnksi.xscore.xsutils.BitmapHelp;
 import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
@@ -65,19 +68,23 @@ import com.zhy.core.utils.AutoUtils;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import static android.os.Build.VERSION.SDK_INT;
 
 @SuppressLint("HandlerLeak")
 public class BaseActivity extends BaseCoreActivity {
-    public CustomApplication mApp;
     private static final String LAYOUT_LINEARLAYOUT = "LinearLayout";
     private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static final int INIT_SPEECH = -0x101001;
     public static final int ACTION_RECORDVIDEO = 0x500;
     public static final int PERMISSION_WINDOW = ACTION_RECORDVIDEO + 1;
+    /** 线程池 */
+    protected ExecutorService mFixedThreadPoolExecutor = XunshiApplication.getFixedThreadPoolExecutor();
     /**
      * 利用静态变量多个实例共享的特性 控制TaskRemind更新任务逻辑
      **/
@@ -210,10 +217,8 @@ public class BaseActivity extends BaseCoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mWindowManager = (WindowManager) currentActivity.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        mWindowLayoutParams = CustomApplication.getInstance().getWindowManagerParams();
+        mWindowLayoutParams = getWindowManagerParams();
         mVibrator = (Vibrator) currentActivity.getSystemService(Context.VIBRATOR_SERVICE);
-        mApp = (CustomApplication) getApplication();
-
         // Bundle bundle=getIntent().getExtras();
         Intent intent = getIntent();
         if (null != intent) {
@@ -228,6 +233,9 @@ public class BaseActivity extends BaseCoreActivity {
         }
     }
 
+    public WindowManager.LayoutParams getWindowManagerParams() {
+        return new WindowManager.LayoutParams();
+    }
 
     /**
      * 适配布局控件
@@ -469,13 +477,14 @@ public class BaseActivity extends BaseCoreActivity {
      * 完成巡检提示框
      */
     XsDialogTipsBinding tipsBinding;
+
     protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, int requestCode, CharSequence text,
                                   boolean isFinishInspection) {
         int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         if (tipsDialog == null) {
             tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-            tipsDialog = DialogUtils.createDialog(currentActivity,tipsBinding.getRoot(),dialogWidth,dialogHeight);
+            tipsDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         tipsBinding.tvDialogContent.setText(text);
         tipsDialog.show();
@@ -496,9 +505,9 @@ public class BaseActivity extends BaseCoreActivity {
     protected void updateReportStatus() {
         try {
             Report report = new Report(currentReportId);
-            CustomApplication.getDbUtils().update(report, Report.ENDTIME);
+            XunshiApplication.getDbUtils().update(report, Report.ENDTIME);
             Task mTask = new Task(currentTaskId);
-            CustomApplication.getDbUtils().update(mTask, Task.STATUS);
+            XunshiApplication.getDbUtils().update(mTask, Task.STATUS);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -689,5 +698,48 @@ public class BaseActivity extends BaseCoreActivity {
         mEditText.setText(spannable);
         //设置完成后 需要把焦点移动到最后一位
         mEditText.setSelection(spannable.length());
+    }
+
+    private Users one, two;
+
+    public Users getUsers() {
+        if (one != null) {
+            return one;
+        }
+        if (two != null) {
+            return two;
+        } else {
+            String[] account = PreferencesUtils.getString(this, Users.ACCOUNT, "").split(CoreConfig.COMMA_SEPARATOR);
+            for (int i = 0; i < account.length; i++) {
+                Users _t = null;
+                if (!TextUtils.isEmpty(account[i])) {
+                    {
+                        _t = UserService.getInstance().findUserByAccount(account[i]);
+                    }
+                }
+                if (one != null) {
+                    two = _t;
+                } else {
+                    one = _t;
+                }
+            }
+        }
+        return one;
+    }
+
+    /**
+     * 工器具零时状态保存
+     */
+    private Map<String, Map<Integer, Boolean>> gqjcheck = null;
+
+
+    /**
+     * @return the gqjcheck
+     */
+    public Map<String, Map<Integer, Boolean>> getGqjcheck() {
+        if (gqjcheck == null) {
+            gqjcheck = new HashMap<>();
+        }
+        return gqjcheck;
     }
 }

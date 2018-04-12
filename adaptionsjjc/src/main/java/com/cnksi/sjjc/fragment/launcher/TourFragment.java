@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -118,9 +119,12 @@ public class TourFragment extends BaseCoreFragment {
             ComponentName componentName5 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.nari.NariActivity");
             intent.setComponent(componentName5);
         } else {
-            ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+//            ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+//            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionType);
+//            intent.setComponent(componentName4);
+
+            intent.setClass(getActivity(),TaskRemindActivity.class);
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionType);
-            intent.setComponent(componentName4);
         }
         startActivity(intent);
     }

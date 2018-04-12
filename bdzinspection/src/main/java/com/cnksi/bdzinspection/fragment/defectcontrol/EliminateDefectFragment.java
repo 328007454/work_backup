@@ -25,7 +25,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.defectcontrol.DefectReasonDialogAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectReasonBinding;
@@ -252,7 +252,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
                     try {
                         mCurrentEliminateDefect.has_remove = "Y";
                         mCurrentEliminateDefect.removeDate = DateUtils.getCurrentLongTime();
-                        CustomApplication.getDbUtils().update(mCurrentEliminateDefect, DefectRecord.HAS_REMOVE, DefectRecord.REMOVE_DATE);
+                        XunshiApplication.getDbUtils().update(mCurrentEliminateDefect, DefectRecord.HAS_REMOVE, DefectRecord.REMOVE_DATE);
                         DefectRecord mTempDefectRecord = null;
                         for (DefectRecord mDefectRecord : dataList) {
                             if (mDefectRecord.defectid.equalsIgnoreCase(currentSelectDefectRecordId)) {

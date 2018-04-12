@@ -25,7 +25,7 @@ import com.cnksi.bdzinspection.adapter.DevicePartRecylerAdapter;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.StandardAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.DevicePartService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
@@ -252,7 +252,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 try {
                     specialMenu = SpecialMenuService.getInstance().findCurrentDeviceType(currentInspectionType);
                     // 1、查询设备
-                    mCurrentDevice = CustomApplication.getDbUtils().findById(Device.class, currentDeviceId);
+                    mCurrentDevice = XunshiApplication.getDbUtils().findById(Device.class, currentDeviceId);
                     staidMarkMap = StandardService.getInstance().findStandardMark(mCurrentDevice.bdzid, mCurrentDevice.deviceid);
                     // 查询设备所属类型
                     dbModel = DevicePartService.getInstance().getDeviceType(mCurrentDevice.dtid);
@@ -278,7 +278,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     mHandler.sendEmptyMessage(DEVICE_EXIST_DEFECT);
                     //控制点及危险措施
                     SqlInfo sqlInfo = new SqlInfo("select * from device_bigtype where bigid= '" + mCurrentDevice.bigid + "'");
-                    bigTypeModel = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+                    bigTypeModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
@@ -533,7 +533,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         @Override
                         public void onClick(View v) {
                             try {
-                                CustomApplication.getDbUtils().saveOrUpdate(mark);
+                                XunshiApplication.getDbUtils().saveOrUpdate(mark);
                                 CToast.showShort(currentActivity, "操作成功");
                                 if ("1".equals(mark.dlt)) {
                                     standard.add("isMark", "N");
@@ -703,7 +703,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         imgList.add(currentImageName);
                         placedDevice.pic = StringUtils.ArrayListToString(imgList);
                         try {
-                            CustomApplication.getDbUtils().saveOrUpdate(placedDevice);
+                            XunshiApplication.getDbUtils().saveOrUpdate(placedDevice);
                         } catch (DbException e) {
                             e.printStackTrace();
                         }
@@ -724,7 +724,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         refreshDevicePic();
                         try {
                             placedDevice.pic = StringUtils.ArrayListToString(imgList);
-                            CustomApplication.getDbUtils().saveOrUpdate(placedDevice);
+                            XunshiApplication.getDbUtils().saveOrUpdate(placedDevice);
                         } catch (DbException e) {
                             e.printStackTrace();
                         }

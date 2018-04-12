@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.RoadMapAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.BaseService;
 import com.cnksi.bdzinspection.databinding.XsFragmentRoadmapBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
@@ -106,13 +106,13 @@ public class RoadMapFragment extends BaseFragment {
                         + "' and bdzid = '" + currentBdzId + "' and dlt<>1)")
                 .orderBy(sort, false);
         try {
-            spaceList = CustomApplication.getDbUtils().findAll(selector);
+            spaceList = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 //		try {
-//			bdz = CustomApplication.getDbUtils().findById(Bdz.class, currentBdzId);
+//			bdz = XunshiApplication.getDbUtils().findById(Bdz.class, currentBdzId);
 //		} catch (DbException e) {
 //			e.printStackTrace();
 //		}

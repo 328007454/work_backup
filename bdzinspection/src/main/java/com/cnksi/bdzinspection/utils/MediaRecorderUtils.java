@@ -11,7 +11,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.util.Log;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.xscore.xsutils.CToast;
 
 public class MediaRecorderUtils {
@@ -101,7 +101,7 @@ public class MediaRecorderUtils {
 			e.printStackTrace();
 		}
 		isPlaying = true;
-		CToast.showShort(CustomApplication.getInstance(), "正在播放...");
+		CToast.showShort(XunshiApplication.getInstance(), "正在播放...");
 	}
 
 	public void stopPlayAudio() {

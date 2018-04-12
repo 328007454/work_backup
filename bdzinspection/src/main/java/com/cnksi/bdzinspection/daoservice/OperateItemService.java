@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.daoservice;
 
 import java.util.List;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
@@ -36,7 +36,7 @@ public class OperateItemService extends BaseService {
 	public List<OperateItem> findAllOperateItemByTaskId(String taskId) {
 		List<OperateItem> result = null;
 		try {
-			result = CustomApplication.getDbUtils().findAll(Selector.from(OperateItem.class).where(OperateItem.TID, "=", taskId));
+			result = XunshiApplication.getDbUtils().findAll(Selector.from(OperateItem.class).where(OperateItem.TID, "=", taskId));
 		} catch (DbException e) {
 			e.printStackTrace();
 		}
@@ -52,7 +52,7 @@ public class OperateItemService extends BaseService {
 	public String getCountByOperateTick(String taskId) {
 		long count = 0;
 		try {
-			count = CustomApplication.getDbUtils().count(Selector.from(OperateItem.class).where(OperateItem.TID, "=", taskId));
+			count = XunshiApplication.getDbUtils().count(Selector.from(OperateItem.class).where(OperateItem.TID, "=", taskId));
 		} catch (DbException e) {
 			e.printStackTrace();
 			count = 0;

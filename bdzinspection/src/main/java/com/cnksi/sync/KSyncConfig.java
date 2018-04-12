@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 
 import com.cnksi.bdzinspection.BuildConfig;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xscommon.DeviceUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
@@ -34,7 +34,7 @@ public class KSyncConfig {
         mActivity = (Activity) context;
         String deviceId = DeviceUtils.getSerialNumber(context);
         KNConfig config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID_VALUE,
-                Config.SYNC_URL_VALUE, deviceId, (SQLiteDatabase) CustomApplication.getDbUtils().getDatabase(), Config.BDZ_INSPECTION_FOLDER);
+                Config.SYNC_URL_VALUE, deviceId, (SQLiteDatabase) XunshiApplication.getDbUtils().getDatabase(), Config.BDZ_INSPECTION_FOLDER);
         config.configDebug(BuildConfig.DEBUG);
         config.configDynicParam("dept_id", PreferencesUtils.getString(context, Config.CURRENT_DEPARTMENT_ID, ""));
         ksync = new KSync(config, handler);

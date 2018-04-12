@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.model;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.CalcUtils;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.lidroid.xutils.db.annotation.Column;
@@ -163,7 +163,7 @@ public class CopyResult extends BaseModel {
                     "SELECT dzcs FROM copy_result where item_id=? and type_key=? and dlt<>1 AND  deviceid=? order by update_time DESC ",
                     item_id, type_key, deviceid);
             try {
-                DbModel data = CustomApplication.getDbUtils().findDbModelFirst(sql);
+                DbModel data = XunshiApplication.getDbUtils().findDbModelFirst(sql);
                 this.dzcs_old = data != null ? data.getString(DZCS) : null;
             } catch (DbException e) {
                 e.printStackTrace();

@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.DevicePart;
 import com.cnksi.bdzinspection.utils.Config;
 import com.lidroid.xutils.db.sqlite.Selector;
@@ -41,7 +41,7 @@ public class DevicePartService {
         Selector selector = Selector.from(DevicePart.class).where(DevicePart.DEVICEID, "=", deviceid)
                 .and(DevicePart.DLT, "!=", "1");
         try {
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
             return null;
@@ -61,7 +61,7 @@ public class DevicePartService {
                 + "' order by dr.duid,dr.defectlevel asc) d  group by d.duid";
         SqlInfo sqlInfo = new SqlInfo(sql, deviceid);
         try {
-            datas = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            datas = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -96,7 +96,7 @@ public class DevicePartService {
         info.addBindArgs(dtid);
         HashSet<String> hashSet = new HashSet<>();
         try {
-            List<DbModel> standard = CustomApplication.getDbUtils().findDbModelAll(info);
+            List<DbModel> standard = XunshiApplication.getDbUtils().findDbModelAll(info);
             if (standard != null) {
                 for (DbModel model : standard) {
                     hashSet.add(model.getString("duid"));
@@ -104,7 +104,7 @@ public class DevicePartService {
             }
             info = new SqlInfo("Select DISTINCT duid from device_standards where device_id=? and dlt=0 and kind like '%" + inspectionType + "%'");
             info.addBindArgs(deviceid);
-            standard = CustomApplication.getDbUtils().findDbModelAll(info);
+            standard = XunshiApplication.getDbUtils().findDbModelAll(info);
             if (standard != null) {
                 for (DbModel model : standard) {
                     hashSet.add(model.getString("duid"));
@@ -148,7 +148,7 @@ public class DevicePartService {
                 " where du.dtid=? and du.dlt<>'1' order by sort";
         SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceid, dtid);
         try {
-            datas = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            datas = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -164,7 +164,7 @@ public class DevicePartService {
         DbModel dbModel;
         SqlInfo sqlInfo = new SqlInfo("select name from device_type as dp where dp.dtid = '" + dtid + "' ");
         try {
-            dbModel = CustomApplication.getDbUtils().findDbModelFirst(sqlInfo);
+            dbModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
             if (dbModel == null)
                 dbModel = new DbModel();
         } catch (DbException e) {

@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Report;
 import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.model.SpacingGroup;
@@ -42,7 +42,7 @@ public class SpacingService {
     public boolean updateSpacingLocationInfo(String spid, String lat, String lng) {
         boolean isSuccess = false;
         try {
-            CustomApplication.getDbUtils().update(Spacing.class, WhereBuilder.b(Spacing.SPID, "=", spid),
+            XunshiApplication.getDbUtils().update(Spacing.class, WhereBuilder.b(Spacing.SPID, "=", spid),
                     new String[]{Spacing.LATITUDE, Spacing.LONGITUDE},
                     new String[]{lat, lng});
             isSuccess = true;
@@ -66,7 +66,7 @@ public class SpacingService {
         Selector selector = Selector.from(Spacing.class).where(Spacing.DLT, "=", "0").and(Spacing.BDZID, "=", bdzId)
                 .expr((hasCopy ? " and spid in(" : "and spid not in(") + copySpaceId + ")");
         try {
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class SpacingService {
         Selector selector = Selector.from(Spacing.class).where(Spacing.DLT, "=", "0").and(Spacing.BDZID, "=", bdzId)
                 .expr(" and spid in(select distinct(spid) from device where dlt='0' and device_type='" + deviceType + "' and bdzid='" + bdzId + "')");
         try {
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -106,7 +106,7 @@ public class SpacingService {
                         + "' and bdzid = '" + bdzid + "')")
                 .orderBy(sort, false);
         try {
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class SpacingService {
         Selector selector;
         try {
             if (inspectionType.startsWith("special_manual")) {
-                Report currentReport = CustomApplication.getDbUtils().findById(Report.class, reportId);
+                Report currentReport = XunshiApplication.getDbUtils().findById(Report.class, reportId);
                 String devices = "'" + (currentReport.selected_deviceid == null ? "" : currentReport.selected_deviceid)
                         + "'";
                 devices = devices.replace(",", "','");
@@ -144,7 +144,7 @@ public class SpacingService {
                                 + inspectionType + "') and d.device_type='" + type + "' )")
                         .orderBy(sort, false);
             }
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -157,7 +157,7 @@ public class SpacingService {
         sqlInfo.addBindArgs(bdzId, deviceType);
         HashMap<String, Integer> rs = new HashMap<>();
         try {
-            List<DbModel> models = CustomApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> models = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (models != null) {
                 for (DbModel model : models) {
                     rs.put(model.getString("spid"), model.getInt("c"));
@@ -172,7 +172,7 @@ public class SpacingService {
     public List<SpacingGroup> findSpacingGroup(String bdzId) {
         Selector selector = BaseService.from(SpacingGroup.class).and(SpacingGroup.BDZID, "=", bdzId).orderBy(SpacingGroup.SORT);
         try {
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -183,9 +183,9 @@ public class SpacingService {
         String[] accountArray = accounts.split(",");
         try {
             if (accountArray.length > 1) {
-                return CustomApplication.getDbUtils().findFirst(Selector.from(SpacingLastly.class).where(SpacingLastly.REPORTID, "=", reportId).and(SpacingLastly.DEVICE_TYPE, "=", mode).expr("and account like '%" + accountArray[0] + "%' and account like '%" + accountArray[1] + "%'"));
+                return XunshiApplication.getDbUtils().findFirst(Selector.from(SpacingLastly.class).where(SpacingLastly.REPORTID, "=", reportId).and(SpacingLastly.DEVICE_TYPE, "=", mode).expr("and account like '%" + accountArray[0] + "%' and account like '%" + accountArray[1] + "%'"));
             } else {
-                return CustomApplication.getDbUtils().findFirst(Selector.from(SpacingLastly.class).where(SpacingLastly.REPORTID, "=", reportId).and(SpacingLastly.DEVICE_TYPE, "=", mode).expr("and account like '%" + accountArray[0] + "%'"));
+                return XunshiApplication.getDbUtils().findFirst(Selector.from(SpacingLastly.class).where(SpacingLastly.REPORTID, "=", reportId).and(SpacingLastly.DEVICE_TYPE, "=", mode).expr("and account like '%" + accountArray[0] + "%'"));
             }
         } catch (DbException x) {
         }

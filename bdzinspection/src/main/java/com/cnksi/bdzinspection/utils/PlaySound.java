@@ -6,7 +6,7 @@ import android.media.SoundPool;
 import android.util.SparseIntArray;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 
 public class PlaySound {
 
@@ -24,7 +24,7 @@ public class PlaySound {
 	private PlaySound(final Context context) {
 		this.context = context;
 		mSoundPool = new SoundPool(100, AudioManager.STREAM_MUSIC, 100);
-		CustomApplication.getFixedThreadPoolExecutor().execute(new Runnable() {
+		XunshiApplication.getFixedThreadPoolExecutor().execute(new Runnable() {
 
 			@Override
 			public void run() {

@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.CustomApplication;
 import com.cnksi.bdzinspection.databinding.PermissionBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
 import com.cnksi.xscore.xsutils.ScreenUtils;
@@ -129,7 +128,7 @@ public class PermissionUtil {
             public void onClick(View v) {
 //                退出系统
                 permissionDialog.dismiss();
-                    CustomApplication.getInstance().exitApplication();
+                  exitApplication();
             }
         });
         permissionDialog.show();
@@ -153,5 +152,17 @@ public class PermissionUtil {
             }
         }
         return deniedPermissions.toArray(new String[]{});
+    }
+
+    /**
+     * 结束应用
+     */
+    public void exitApplication() {
+        try {
+            int pid = android.os.Process.myPid();
+            android.os.Process.killProcess(pid);
+        } catch (Exception e) {
+            Runtime.getRuntime().exit(-1);
+        }
     }
 }

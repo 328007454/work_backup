@@ -1,10 +1,9 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.SpecialMenu;
 import com.cnksi.bdzinspection.model.SwitchMenu;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.WhereBuilder;
@@ -43,7 +42,7 @@ public class LookupService {
         Selector selector = Selector.from(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
                 .orderBy(Lookup.SORT, false);
         try {
-            List<Lookup> lookups = CustomApplication.getDbUtils().findAll(selector);
+            List<Lookup> lookups = XunshiApplication.getDbUtils().findAll(selector);
             for (Lookup look : lookups) {
                 valueList.add(look.v);
             }
@@ -66,7 +65,7 @@ public class LookupService {
 
     public Lookup findLookupByK(String k) {
         try {
-            return CustomApplication.getDbUtils().findFirst(Selector.from(Lookup.class).where(Lookup.K, "=", k));
+            return XunshiApplication.getDbUtils().findFirst(Selector.from(Lookup.class).where(Lookup.K, "=", k));
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -79,7 +78,7 @@ public class LookupService {
         Selector selector = Selector.from(Lookup.class).where(Lookup.V, "=", value);
 
         try {
-            lup = CustomApplication.getDbUtils().findFirst(selector);
+            lup = XunshiApplication.getDbUtils().findFirst(selector);
         } catch (DbException ex) {
             ex.printStackTrace();
         }
@@ -97,7 +96,7 @@ public class LookupService {
         Selector selector = Selector.from(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
                 .orderBy(Lookup.SORT, false);
         try {
-            lookups = CustomApplication.getDbUtils().findAll(selector);
+            lookups = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -124,7 +123,7 @@ public class LookupService {
                         + Lookup.LOO_ID + "='')")
                 .orderBy(Lookup.SORT, false);
         try {
-            lookups = CustomApplication.getDbUtils().findAll(selector);
+            lookups = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -142,7 +141,7 @@ public class LookupService {
         Selector selector = Selector.from(Lookup.class).where(Lookup.TYPE, "=", type)
                 .and(WhereBuilder.b(Lookup.K, "in", new String[]{"full", "day"})).orderBy(Lookup.SORT, false);
         try {
-            lookups = CustomApplication.getDbUtils().findAll(selector);
+            lookups = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -162,7 +161,7 @@ public class LookupService {
                         + Lookup.LOO_ID + " IS NULL OR " + Lookup.LOO_ID + "='')")
                 .orderBy(Lookup.SORT, false);
         try {
-            lookups = CustomApplication.getDbUtils().findAll(selector);
+            lookups = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -183,7 +182,7 @@ public class LookupService {
                 .and(Lookup.K, "<>", "special_xideng").and(Lookup.K, "<>", "special_nighttime")
                 .orderBy(Lookup.SORT, false);
         try {
-            lookups = CustomApplication.getDbUtils().findAll(selector);
+            lookups = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -203,7 +202,7 @@ public class LookupService {
         Selector selector = Selector.from(SwitchMenu.class).where(SwitchMenu.BDZID, "=", bdzId).and(SwitchMenu.DLT,"<>", "1").expr("and k like  '" + type + "%' ")
                 .orderBy(Lookup.SORT, false);
         try {
-            menus = CustomApplication.getDbUtils().findAll(selector);
+            menus = XunshiApplication.getDbUtils().findAll(selector);
             if (null != menus && !menus.isEmpty())
                 for (SwitchMenu menu : menus) {
                     lookups.add(new Lookup(menu));
@@ -225,7 +224,7 @@ public class LookupService {
         String remark = "";
         Selector selector = Selector.from(Lookup.class).where(Lookup.K, "=", k);
         try {
-            Lookup mLookUp = CustomApplication.getDbUtils().findFirst(selector);
+            Lookup mLookUp = XunshiApplication.getDbUtils().findFirst(selector);
             if (mLookUp != null) {
                 remark = mLookUp.remark;
             }
@@ -263,7 +262,7 @@ public class LookupService {
         try {
             Selector selector = Selector.from(Lookup.class).where(Lookup.TYPE, "=", LookUpType.defect_reason.name())
                     .and(Lookup.LOO_ID, "=", parentId);
-            lookupList = CustomApplication.getDbUtils().findAll(selector);
+            lookupList = XunshiApplication.getDbUtils().findAll(selector);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -281,7 +280,7 @@ public class LookupService {
         try {
             Selector selector = Selector.from(Lookup.class).where(Lookup.TYPE, "=", LookUpType.defect_reason.name())
                     .and(WhereBuilder.b(Lookup.LOO_ID, "=", "").expr("OR " + Lookup.LOO_ID + " IS NULL"));
-            lookupList = CustomApplication.getDbUtils().findAll(selector);
+            lookupList = XunshiApplication.getDbUtils().findAll(selector);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -299,7 +298,7 @@ public class LookupService {
         List<Lookup> lookups = null;
         Selector selector = Selector.from(Lookup.class).where(Lookup.LOO_ID, "=", id);
         try {
-            lookups = CustomApplication.getDbUtils().findAll(selector);
+            lookups = XunshiApplication.getDbUtils().findAll(selector);
             if (null == lookups)
                 lookups = new ArrayList<Lookup>();
         } catch (DbException e) {
@@ -315,7 +314,7 @@ public class LookupService {
         Selector selector = Selector.from(SpecialMenu.class).where(SpecialMenu.DLT,"<>", "1").expr("and k like  '" + currentTypeStr + "%' ")
                 .orderBy(Lookup.SORT, false);
         try {
-            specialMenus = CustomApplication.getDbUtils().findAll(selector);
+            specialMenus = XunshiApplication.getDbUtils().findAll(selector);
             if (null != specialMenus && !specialMenus.isEmpty())
                 for (SpecialMenu menu : specialMenus) {
                     lookups.add(new Lookup(menu));

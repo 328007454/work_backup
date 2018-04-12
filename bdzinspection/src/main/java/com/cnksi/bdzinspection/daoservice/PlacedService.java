@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.xscore.xsutils.DateUtils;
@@ -39,7 +39,7 @@ public class PlacedService extends BaseService {
         Selector selector = BaseService.from(Placed.class).where(Placed.REPORTID, "=", reportId).and(Placed.PLACED, "=",
                 "1");
         try {
-            placed = CustomApplication.getDbUtils().findAll(selector);
+            placed = XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class PlacedService extends BaseService {
 
         Selector selector = BaseService.from(PlacedDevice.class).where(PlacedDevice.REPORTID, "=", reportId);
         try {
-            return CustomApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().findAll(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class PlacedService extends BaseService {
     public HashMap<String, String> findPmsPlaced(String reportId) {
         HashMap<String, String> map = new HashMap<>();
         try {
-            List<DbModel> dbModels = CustomApplication.getDbUtils().findDbModelAll(new SqlInfo("SELECT  s.pms_id,p.create_time FROM `placed` p LEFT JOIN spacing s on p.spid=s.spid  where report_id=? and p.dlt=0 GROUP BY pms_id; ", reportId));
+            List<DbModel> dbModels = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo("SELECT  s.pms_id,p.create_time FROM `placed` p LEFT JOIN spacing s on p.spid=s.spid  where report_id=? and p.dlt=0 GROUP BY pms_id; ", reportId));
             if (dbModels != null) {
                 for (DbModel model : dbModels) {
                     map.put(model.getString("pms_id"), model.getString("create_time"));
@@ -110,7 +110,7 @@ public class PlacedService extends BaseService {
         Selector selector = BaseService.from(Placed.class).and(Placed.REPORTID, "=", reportId)
                 .and(Placed.PLACED, "=", "1").and(Placed.SPID, "=", spid);
         try {
-            return CustomApplication.getDbUtils().findFirst(selector);
+            return XunshiApplication.getDbUtils().findFirst(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -122,7 +122,7 @@ public class PlacedService extends BaseService {
         Selector selector = Selector.from(PlacedDevice.class).where(PlacedDevice.REPORTID, "=", reportId)
                 .and(PlacedDevice.DEVICEID, "=", deviceId);
         try {
-            return CustomApplication.getDbUtils().findFirst(selector);
+            return XunshiApplication.getDbUtils().findFirst(selector);
         } catch (DbException e) {
             e.printStackTrace();
         }

@@ -22,7 +22,7 @@ import android.view.Window;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.BluetoothAdapter.BlueDeviceAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.BluetoothBinding;
 import com.cnksi.bdzinspection.model.bluetooth.BluetoothFileBean;
 import com.cnksi.bdzinspection.reciever.BluetoothBroardCastReceiver;
@@ -77,7 +77,7 @@ public class BluetoothFragment extends DialogFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MESSAGE_CONNECT_ERROR://连接失败
-                    CToast.showLong(CustomApplication.getAppContext(), "通讯失败，请重新发送信息");
+                    CToast.showLong(XunshiApplication.getAppContext(), "通讯失败，请重新发送信息");
                     break;
                 case MESSAGE_READ_OBJECT:
                     BluetoothFileBean fileBean = (BluetoothFileBean) msg.obj;
@@ -122,7 +122,7 @@ public class BluetoothFragment extends DialogFragment {
             blueIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
             startActivity(blueIntent);
             //开始连接线程
-            CustomApplication.getFixedThreadPoolExecutor().execute(serverConnThread);
+            XunshiApplication.getFixedThreadPoolExecutor().execute(serverConnThread);
         }
 
         IntentFilter filter = new IntentFilter();
@@ -181,7 +181,7 @@ public class BluetoothFragment extends DialogFragment {
                 while (!isInterrupted) {
                     socket = serverSocket.accept();
                     if (null != socket) {
-                        CustomApplication.getFixedThreadPoolExecutor().execute(commonThread);
+                        XunshiApplication.getFixedThreadPoolExecutor().execute(commonThread);
                     }
                 }
             } catch (IOException e) {

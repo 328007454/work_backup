@@ -71,7 +71,7 @@ public class YWGQJActivity extends TitleActivity {
 		if (dlist == null) {
 			dlist = new ArrayList<GQJ>();
 		}
-		flag = mApp.getGqjcheck().get(currentTaskId);
+		flag = getGqjcheck().get(currentTaskId);
 		if (flag == null) {
 			flag = new HashMap<Integer, Boolean>();
 		}
@@ -91,7 +91,7 @@ public class YWGQJActivity extends TitleActivity {
 	@Override
 	protected void releaseResAndSaveData() {
 		// TODO Auto-generated method stub
-		mApp.getGqjcheck().put(currentTaskId, flag);
+		getGqjcheck().put(currentTaskId, flag);
 	}
 
 }

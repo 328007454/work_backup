@@ -29,7 +29,7 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.DefectContentAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.adapter.infrared.DevicePartAdapter;
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.DevicePartService;
@@ -246,7 +246,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
             public void onClick(View view) {
                 deleteRecord.dlt = "1";
                 try {
-                    CustomApplication.getDbUtils().saveOrUpdate(deleteRecord);
+                    XunshiApplication.getDbUtils().saveOrUpdate(deleteRecord);
                     dataList.remove(deleteRecord);
                     mHistoryDefectAdapter.notifyDataSetChanged();
                     deleteRecord = null;
@@ -739,7 +739,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
         }
         record.discoverer_unit = departmentName;
         try {
-            CustomApplication.getDbUtils().saveOrUpdate(record);
+            XunshiApplication.getDbUtils().saveOrUpdate(record);
             mofifyDefectRe = null;
         } catch (DbException e) {
             e.printStackTrace();

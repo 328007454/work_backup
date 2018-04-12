@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.bdzinspection.application.CustomApplication;
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
 import com.cnksi.bdzinspection.czp.adapter.OperateTaskListAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
@@ -108,7 +108,7 @@ public class OperateTaskListFragment extends BaseFragment {
         binding.lvContainer.setOnItemLongClickListener((parent,view,position,id) -> {
             DbModel item = (DbModel) parent.getItemAtPosition(position);
             try {
-                CustomApplication.getDbUtils().deleteById(OperateTick.class, item.getString(OperateTick.ID));
+                XunshiApplication.getDbUtils().deleteById(OperateTick.class, item.getString(OperateTick.ID));
             } catch (DbException e) {
                 e.printStackTrace();
             }
