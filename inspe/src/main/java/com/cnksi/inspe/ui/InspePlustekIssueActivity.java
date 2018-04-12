@@ -468,7 +468,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         dataBinding.blameBranchTxt.setText(null);
                     }
                 }
-            }).showAsDropDown(view);
+            }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.issueNatureTxt) {//问题性质(独立),一般、严重、危急
             new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override

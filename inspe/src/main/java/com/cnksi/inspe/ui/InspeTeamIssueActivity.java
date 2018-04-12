@@ -223,7 +223,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
 
                 }
 
-            }).showAsDropDown(v);
+            }).setPopWindowWidth(v.getWidth()).showAsDropDown(v);
 
         } else if (i == R.id.okBtn) {
             if (!TextUtils.isEmpty(dataBinding.issueInfoTxt.getText().toString().trim())) {

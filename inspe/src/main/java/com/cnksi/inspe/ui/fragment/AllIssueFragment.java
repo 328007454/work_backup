@@ -180,7 +180,7 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
                         case 3:
                     }
                 }
-            }).showAsDropDown(v);
+            }).setPopWindowWidth(v.getWidth()).showAsDropDown(v);
 
         } else if (v.getId() == R.id.searchConvertTxt) {//变电站查询
             new PopItemWindow(getContext()).setListAdapter(convertList).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -194,7 +194,7 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
                         dataDinding.batRunBtn.setVisibility(View.VISIBLE);
                     }
                 }
-            }).showAsDropDown(v);
+            }).setPopWindowWidth(v.getWidth()).showAsDropDown(v);
         } else if (v.getId() == R.id.batRunBtn) {//批处理
             pageLister.onBat(taskType, null);
         }
