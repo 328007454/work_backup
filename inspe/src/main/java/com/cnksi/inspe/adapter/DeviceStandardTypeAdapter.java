@@ -48,7 +48,7 @@ public class DeviceStandardTypeAdapter extends BaseQuickAdapter<PlusteRuleEntity
             typeName.setSelected(true);
             typeName.setTextColor(mContext.getResources().getColor(R.color.color_05c8b8));
         } else {
-            typeName.setSelected(false);
+            typeName.setSelected(true);
             typeName.setTextColor(mContext.getResources().getColor(R.color.btn_disable));
         }
 
