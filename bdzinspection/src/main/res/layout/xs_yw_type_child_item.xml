@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tv_child_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xs_list_item_gray_background_selector"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/xs_inspection_type_child_item_minheight"
+        android:paddingBottom="@dimen/xs_global_padding_top_bottom"
+        android:paddingLeft="@dimen/xs_inspection_type_child_item_padding_left"
+        android:paddingTop="@dimen/xs_global_padding_top_bottom"
+        android:textSize="@dimen/xs_global_text_size" />
+</layout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:dslv="http://schemas.android.com/apk/res-auto"
+                  android:id="@+id/ll_root_container"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title"/>
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/xs_selector_bc_switchmenu_audio"
+            android:clickable="true"
+            android:drawableLeft="@drawable/xs_regular_audio_record_button_selector"
+            android:drawablePadding="@dimen/xs__30px"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/xs_tab_strip_minheight_px"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingRight="@dimen/xs_global_padding_left_right_px"
+            android:text="点击此处可以随意录音"
+            android:textColor="@color/xs_global_gray_text_color"
+            android:textSize="@dimen/xs_device_item_name_text_size_px"
+            android:visibility="visible"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recy_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/xs__30px"/>
+
+        <ExpandableListView
+            android:id="@+id/lv_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:descendantFocusability="beforeDescendants"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="vertical"/>
+
+        <LinearLayout
+            android:id="@+id/ll_keyboard_help_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="match_parent"
+            android:layout_height="118px"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+            android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+            android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+            android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+            android:background="@drawable/xs_red_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_complete_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px"/>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="140px"
+        android:background="@color/xs_white"
+        android:divider="@color/xs_gray_stroke_color"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/xs__30px"
+            android:paddingStart="@dimen/xs__30px">
+
+            <TextView
+                android:id="@+id/txt_multiple_num"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:background="@drawable/xs_green_circle_background"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@android:color/white"
+                android:textSize="40px"
+                app:layout_auto_baseheight="width|minWidth"/>
+
+            <TextView
+                android:id="@+id/txt_multiple_title"
+                android:layout_width="240px"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|left"
+                android:paddingStart="20px"
+                android:textColor="@color/xs_green_color"
+                android:textSize="42px"
+                />
+
+            <LinearLayout
+                android:id="@+id/txt_item_multiple_content"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"/>
+
+            <ImageView
+                android:id="@+id/check"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:background="@drawable/xs_ic_confirm_none"
+                android:padding="@dimen/xs_yw_adapter_margin"
+                android:src="@drawable/xs_ic_confirm"
+                app:layout_auto_baseheight="width"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/xs_gray_stroke_color"
+            />
+
+    </LinearLayout>
+
+</layout>

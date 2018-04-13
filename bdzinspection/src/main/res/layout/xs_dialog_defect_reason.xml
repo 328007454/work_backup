@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/xs_global_padding_half_left_right_px">
+
+    <!-- 缺陷原因 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_tab_strip_minheight_px"
+        android:background="@drawable/xs_bdz_background_select">
+
+        <ImageButton
+            style="@style/svgButtonDialogCancel"
+            app:srcCompat="@drawable/xs_cancel_button_background"
+            android:id="@+id/ibtn_cancel"
+            android:layout_width="@dimen/xs_tab_strip_minheight_px"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+            android:gravity="center"
+            android:text="@string/xs_defect_reason_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/xs_line_color"
+        android:dividerHeight="@dimen/xs_line_half_width_px"
+        android:listSelector="@android:color/transparent" />
+
+</LinearLayout></layout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/xs_yw_imageView_w"
+    android:layout_height="@dimen/xs_yw_imageView_h"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/xs_yw_imageView_w"
+        android:layout_height="@dimen/xs_yw_imageView_h"
+        android:layout_margin="@dimen/xs_yw_imageView_m"
+        android:scaleType="fitXY"
+        android:src="@drawable/xs_ic_yellow_unfinish" />
+
+    <LinearLayout
+        android:layout_width="@dimen/xs_yw_imageView_w"
+        android:layout_height="@dimen/xs_yw_vedio_learh"
+        android:layout_alignBottom="@+id/img"
+        android:layout_alignLeft="@+id/img"
+        android:background="@color/xs_yw_video_bg"
+        android:padding="@dimen/xs_yw_vedio_p" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/xs_icon_luxiang" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/xs_yw_vedio_textsize"
+            android:textColor="@color/xs_white_text" />
+    </LinearLayout>
+
+</RelativeLayout></layout>

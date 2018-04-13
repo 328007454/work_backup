@@ -79,7 +79,7 @@
     </style>
 
     <style name="NewHeatPointEditTextStyle">
-        <item name="android:paddingEnd">@dimen/_30px</item>
+        <item name="android:paddingEnd">@dimen/sjjc_30px</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:gravity">right|center_vertical</item>
         <item name="android:layout_height">wrap_content</item>
@@ -138,6 +138,7 @@
         <item name="android:layout_height">@dimen/line_width</item>
         <item name="android:layout_width">match_parent</item>
     </style>
+
     <style name="VLine" parent="Line">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">@dimen/line_width</item>
@@ -219,6 +220,8 @@
         <item name="android:scaleType">centerInside</item>
     </style>
 
+    <attr name="xslineHeight" />
+
     <style name="UnderLineTextViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -227,7 +230,7 @@
         <item name="android:textColor">#a8abaa</item>
         <item name="lineColor">#1bbc9b</item>
         <item name="textSelectColor">#1bbc9b</item>
-        <item name="lineHeight">4px</item>
+        <item name="xslineHeight">4px</item>
     </style>
 
     <!--NavigationIcon和标题之间的距离-->

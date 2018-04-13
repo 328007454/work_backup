@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f0f2f2"
+        android:orientation="vertical">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:autofit="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:background="@color/xs_global_base_color">
+
+            <ImageButton
+                android:id="@+id/ibtn_cancel"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_cancel_button_background" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+                android:layout_marginRight="@dimen/xs_title_bar_minheight_px"
+                android:gravity="center"
+                android:text="请选择变电站或班组"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_title_text_size_px"
+                autofit:minTextSize="26px" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30px"
+            android:background="@drawable/xs_green_background_selector"
+            android:minHeight="100px"
+            android:text="开 始"
+            android:textColor="@color/xs_white"
+            android:textSize="42px" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="false"><layer-list>
+            <item><shape>
+                    <solid android:color="@color/xs_line_color" />
+                </shape></item>
+            <item android:bottom="@dimen/xs_line_eight_width" android:left="@dimen/xs_line_eight_width" android:right="@dimen/xs_line_eight_width" android:top="@dimen/xs_line_eight_width"><shape>
+                    <solid android:color="@android:color/white" />
+                </shape></item>
+        </layer-list></item>
+    <item android:drawable="@drawable/xs_gray_bottom_line_background" android:state_pressed="true"></item>
+
+</selector>

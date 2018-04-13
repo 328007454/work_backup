@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title" />
+
+        <com.cnksi.xscore.xsview.PagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tab_strip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight"
+            android:background="@color/xs_tab_strip_background_color" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_accident_deal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/xs_more_button_background"
+                    android:paddingTop="@dimen/xs_text_button_padding_top"
+                    android:singleLine="true"
+                    android:textColor="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_device_item_name_text_size" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

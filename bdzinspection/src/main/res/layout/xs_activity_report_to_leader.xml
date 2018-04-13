@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <com.cnksi.xscore.xsview.InnerListView
+                    android:id="@+id/lv_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:divider="@color/xs_line_color"
+                    android:dividerHeight="@dimen/xs_line_half_width"
+                    android:listSelector="@android:color/transparent" />
+
+                <EditText
+                    android:id="@+id/et_report_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/xs_global_padding_top_bottom"
+                    android:background="@drawable/xs_top_bottom_line_background"
+                    android:gravity="left|top"
+                    android:hint="@string/xs_please_input_report_value_str"
+                    android:minHeight="@dimen/xs_report_edit_text_minheight"
+                    android:padding="@dimen/xs_global_padding_left_right"
+                    android:textColor="@color/xs_global_text_color"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_global_text_size" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/xs_global_padding_left_right">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/xs_global_padding_half_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancel_text_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size" />
+
+            <Button
+                android:id="@+id/btn_report"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_half_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/xs_grass_green_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_report_to_leader_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

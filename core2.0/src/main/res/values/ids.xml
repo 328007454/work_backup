@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="xs_tv_device_number" type="id"/>
+    <item name="xs_et_register_code" type="id"/>
+    <item name="xs_drag_handle" type="id"/>
+
+</resources>

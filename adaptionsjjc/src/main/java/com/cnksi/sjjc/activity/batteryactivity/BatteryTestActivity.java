@@ -210,7 +210,7 @@ public class BatteryTestActivity extends BaseActivity {
                 PreferencesUtils.put(Config.CURRENT_MAINTANENCE_BATTERY, "");
                 Intent intent = new Intent();
                 ComponentName componentName;
-                componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+                componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
                 intent.setComponent(componentName);
                 intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
                 startActivity(intent);

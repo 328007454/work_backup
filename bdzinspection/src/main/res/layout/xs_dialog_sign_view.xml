@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<com.zhy.core.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_tab_strip_minheight_px"
+        android:background="@drawable/xs_bdz_background_select"
+        android:gravity="center"
+        android:text="@string/xs_tips_str"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/xs_global_text_size_px" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_line_eight_width_px"
+        android:background="@color/xs_line_color" />
+
+    <ImageView
+        app:layout_auto_baseheight="width"
+        android:id="@+id/img_head"
+        android:layout_width="360px"
+        android:layout_height="360px"
+        android:layout_gravity="center"
+        android:layout_margin="30px"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/img_sign"
+        android:layout_width="720px"
+        android:layout_height="240px"
+        android:layout_gravity="center"
+        android:layout_margin="30px"
+        android:background="#FFFFFF"
+        android:padding="9px" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+        android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_delete"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="118px"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+            android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+            android:layout_weight="1"
+            android:background="@drawable/xs_red_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_gp_delete_this_person"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <Button
+            android:id="@+id/btn_resign"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="118px"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+            android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+            android:layout_weight="1"
+            android:background="@drawable/xs_grass_green_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_gp_resign"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+    </LinearLayout>
+
+</com.zhy.core.AutoLinearLayout></layout>

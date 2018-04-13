@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data class=""></data>
+
+    <com.zhy.core.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/xs_dialog_green_title_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:background="@color/xs_green_color"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <EditText
+            android:id="@+id/edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_yw_checkbox_w_px"
+            android:background="#FFFFFF"
+            android:gravity="top"
+            android:padding="@dimen/xs_yw_dialog_edittext_padding_px"
+            android:textColor="@color/xs_dark_text"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_line_eight_width_px"
+            android:background="@color/xs_line_color" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_gray_background_color"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancle_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_button_background_blue_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.core.AutoLinearLayout>
+</layout>

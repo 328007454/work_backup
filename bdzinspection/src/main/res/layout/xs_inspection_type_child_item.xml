@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout_container"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/xs_white"
+              android:gravity="center_vertical"
+              android:orientation="vertical">
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:drawablePadding="40px"
+        android:id="@+id/tv_child_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/xs_defect_count_width_px"
+        android:textColor="@color/xs_special_type_color"
+        android:textSize="40px"/>
+
+    <TextView
+        android:id="@+id/tv_child_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/xs_defect_count_width_px"
+        android:paddingRight="@dimen/xs_defect_count_width_px"
+        android:textColor="@color/xs_et_hint_color"
+        android:textSize="36px"/>
+</LinearLayout></layout>

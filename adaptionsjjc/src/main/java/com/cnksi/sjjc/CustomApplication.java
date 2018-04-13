@@ -8,6 +8,8 @@ import android.util.Pair;
 import com.cnksi.DebugDB;
 import com.cnksi.bdloc.LLog;
 import com.cnksi.bdloc.LocationUtil;
+import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.inter.XunshiDatabaseProvider;
 import com.cnksi.core.application.CoreApplication;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
@@ -19,6 +21,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
 import com.cnksi.sjjc.bean.TaskExtend;
+import com.cnksi.sjjc.util.EssSafeUtil;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
@@ -65,6 +68,7 @@ public class CustomApplication extends CoreApplication {
             Config.NFC_FOLDER,
             Config.WWWROOT_FOLDER};
     private HashMap<String, String> copyedMap = new HashMap<>();
+    XunshiApplication xunshiApplication;
 
     public static DbManager getPJDbManager() {
         if (PJDbManager == null) {
@@ -90,16 +94,17 @@ public class CustomApplication extends CoreApplication {
         return mDbManager;
     }
 
+
     public static void closeDbConnection() {
-        if (mDbManager != null) {
-            try {
-                FileUtils.deleteAllFiles(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME + "-journal"));
-                mDbManager.close();
-                mDbManager = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        if (mDbManager != null) {
+//            try {
+//                FileUtils.deleteAllFiles(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME + "-journal"));
+//                mDbManager.close();
+//                mDbManager = null;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     /**
@@ -152,6 +157,24 @@ public class CustomApplication extends CoreApplication {
                 .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
         return config;
     }
+
+    public DbManager.DaoConfig getDaoConfigInner() {
+        int dbVersion = getDbVersion();
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(mInstance.getFilesDir() + "/BdzInspection/database")).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
+                .setDbOpenListener(db -> {
+                    // 开启WAL, 对写入加速提升巨大
+                    //db.getDatabase().enableWriteAheadLogging();
+                    //此处不处理数据库版本更新  全权交给同步框架处理。
+                    try {
+                        db.addColumn(TaskExtend.class, "dlt");
+                    } catch (DbException e) {
+
+                    }
+                })
+                .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
+        return config;
+    }
+
 
     /**
      * 获得显示大图的图像配置，大图不适合内存缓存
@@ -296,10 +319,6 @@ public class CustomApplication extends CoreApplication {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-//        AutoLayoutConifg.getInstance().useDeviceSize().init(this);
-//        TCAgent.LOG_ON = true;
-//        TCAgent.init(this, "70961CDA8A5045B89CB4215349CA8A78", "内部测试");
-//        TCAgent.setReportUncaughtExceptions(true);
         PreferencesUtils.init(getApplicationContext());
         ToastUtils.init(getApplicationContext());
         DisplayUtils.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
@@ -309,14 +328,26 @@ public class CustomApplication extends CoreApplication {
         if (PreferencesUtils.get(Config.MASK_WIFI, true) && !BuildConfig.USE_NETWORK_SYNC) {
             NetWorkUtils.disableNetWork(this);
         }
+        EssSafeUtil.checkInEmualtorOrDebuggable(getApplicationContext());
         initRuntimeVar();
         TTSUtils.init(getAppContext());
         LocationUtil.init(getAppContext());
         LLog.isLog = BuildConfig.LOG_DEBUG;
         initDebugDb();
+        xunshiApplication = new XunshiApplication();
+        xunshiApplication.init(mInstance, getApplicationContext(),new XunshiDatabaseProvider() {
+
+            @Override
+            public Object getDatabase() {
+                return getDbManager().getDatabase();
+            }
+
+            @Override
+            public String getDbName() {
+                return getDaoConfig().getDbName();
+            }
+        });
     }
-
-
     private void initDebugDb() {
         if (BuildConfig.DEBUG) {
             HashMap<String, Pair<File, String>> stringPairHashMap = new HashMap<>();
@@ -324,6 +355,7 @@ public class CustomApplication extends CoreApplication {
             DebugDB.setCustomDatabaseFiles(stringPairHashMap);
         }
     }
+
 
     public void initApp() {
         FileUtils.makeDirectory(filePathArray);
@@ -349,7 +381,6 @@ public class CustomApplication extends CoreApplication {
             }
         }
         android.os.Process.killProcess(android.os.Process.myPid());  //结束进程之前可以把你程序的注销或者退出代码放在这段代码之前
-
     }
 
     private void copyAssetsToSDCard() {

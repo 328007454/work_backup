@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/xs_operate_function_height"
+                    android:background="@drawable/xs_bottom_line_background_selector"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/xs_global_margin_top"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right"
+                    android:paddingRight="@dimen/xs_global_padding_left_right"
+                    android:paddingTop="@dimen/xs_global_margin_top">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_audio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/xs_operate_audio_background_selector">
+
+                        <ImageView
+                            android:id="@+id/iv_record_audio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:contentDescription="@null"
+                            android:src="@drawable/xs_record_audio_anim" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_audio_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/xs_text_button_padding_top"
+                            android:paddingLeft="@dimen/xs_global_padding_left_right"
+                            android:paddingRight="@dimen/xs_global_padding_left_right"
+                            android:paddingTop="@dimen/xs_text_button_padding_top"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/xs_red_dot_background"
+                                android:drawablePadding="@dimen/xs_drawable_padding"
+                                android:gravity="center_vertical"
+                                android:text="@string/xs_recording_operate_audio_str"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/xs_operate_function_text_size" />
+
+                            <Chronometer
+                                android:id="@+id/tv_audio_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:format="%s"
+                                android:gravity="center_vertical"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/xs_operate_function_text_size" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ibtn_stop_audio"
+                            android:layout_width="@dimen/xs_tab_strip_minheight"
+                            android:layout_height="@dimen/xs_tab_strip_minheight"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="@dimen/xs_global_margin_top"
+                            android:background="@null"
+                            android:contentDescription="@null"
+                            android:src="@drawable/xs_ic_stop"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tv_start_audio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_vertical"
+                            android:paddingBottom="@dimen/xs_global_margin_top"
+                            android:text="@string/xs_click_audio_str"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/xs_global_text_size"
+                            android:visibility="visible" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_video"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/xs_global_margin_top"
+                        android:layout_weight="1"
+                        android:background="@drawable/xs_operate_video_background_selector">
+
+                        <LinearLayout
+                            android:id="@+id/ll_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_video_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/xs_operate_video_time_background"
+                            android:paddingBottom="@dimen/xs_text_button_padding_top"
+                            android:paddingLeft="@dimen/xs_global_padding_left_right"
+                            android:paddingRight="@dimen/xs_global_padding_left_right"
+                            android:paddingTop="@dimen/xs_text_button_padding_top"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/xs_red_dot_background"
+                                android:drawablePadding="@dimen/xs_drawable_padding"
+                                android:gravity="center_vertical"
+                                android:text="@string/xs_recording_operate_video_str"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/xs_operate_function_text_size" />
+
+                            <Chronometer
+                                android:id="@+id/tv_video_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:format="%s"
+                                android:gravity="center_vertical"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/xs_operate_function_text_size" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ibtn_stop_video"
+                            android:layout_width="@dimen/xs_tab_strip_minheight"
+                            android:layout_height="@dimen/xs_tab_strip_minheight"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="@dimen/xs_global_margin_top"
+                            android:background="@null"
+                            android:contentDescription="@null"
+                            android:src="@drawable/xs_ic_stop"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tv_start_video"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_vertical"
+                            android:paddingBottom="@dimen/xs_global_margin_top"
+                            android:text="@string/xs_click_video_str"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/xs_global_text_size" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/xs_global_margin_top"
+                    android:background="@color/xs_green_color"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/xs_text_button_padding_top"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right"
+                    android:paddingRight="@dimen/xs_global_padding_left_right"
+                    android:paddingTop="@dimen/xs_text_button_padding_top"
+                    android:text="@string/xs_operate_ticket_item_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_small_size" />
+
+                <ListView
+                    android:id="@+id/lv_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:divider="@color/xs_line_color"
+                    android:dividerHeight="@dimen/xs_line_half_width"
+                    android:listSelector="@android:color/transparent" />
+
+                <Button
+                    android:id="@+id/btn_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/xs_global_padding_left_right"
+                    android:background="@drawable/xs_red_button_unenabled_background_selector"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:minHeight="@dimen/xs_button_minheight"
+                    android:text="@string/xs_complete_operate_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_function_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/xs_half_translate_color"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/ibtn_start"
+                    android:layout_width="@dimen/xs_czp_start_button_width"
+                    android:layout_height="@dimen/xs_czp_start_button_width"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/xs_red_circle_background_selector"
+                    android:contentDescription="@null"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right"
+                    android:src="@drawable/xs_ic_start"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/ll_function_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xs_global_margin_top">
+
+                    <Button
+                        android:id="@+id/btn_pause"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/xs_orgage_button_background_selector"
+                        android:drawableLeft="@drawable/xs_ic_pause"
+                        android:minHeight="@dimen/xs_button_minheight"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right"
+                        android:paddingRight="@dimen/xs_global_padding_left_right"
+                        android:text="@string/xs_pause_str"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_small_size" />
+
+                    <Button
+                        android:id="@+id/btn_stop"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+                        android:layout_weight="1"
+                        android:background="@drawable/xs_red_button_background_selector"
+                        android:drawableLeft="@drawable/xs_ic_white_stop"
+                        android:minHeight="@dimen/xs_button_minheight"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right"
+                        android:paddingRight="@dimen/xs_global_padding_left_right"
+                        android:text="@string/xs_stop_str"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_small_size" />
+
+                    <Button
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+                        android:layout_weight="1"
+                        android:background="@drawable/xs_grass_green_button_background_selector"
+                        android:drawableLeft="@drawable/xs_ic_white_cancel"
+                        android:minHeight="@dimen/xs_button_minheight"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right"
+                        android:paddingRight="@dimen/xs_global_padding_left_right"
+                        android:text="@string/xs_cancel_str"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_small_size" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

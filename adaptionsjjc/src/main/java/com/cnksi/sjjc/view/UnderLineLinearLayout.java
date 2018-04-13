@@ -47,7 +47,7 @@ public class UnderLineLinearLayout extends LinearLayout {
         lineColor = a.getColor(R.styleable.UnderLineLinearLayout_lineColor, getResources().getColor(R.color.line_color));
         marginLeft = a.getDimensionPixelSize(R.styleable.UnderLineLinearLayout_marginLeft, 0);
         marginRight = a.getDimensionPixelSize(R.styleable.UnderLineLinearLayout_marginRight, 0);
-        lineHeight = a.getDimensionPixelSize(R.styleable.UnderLineLinearLayout_lineHeight, 2);
+        lineHeight = a.getDimensionPixelSize(R.styleable.UnderLineLinearLayout_sjjclineHeight, 2);
         drawUnderLine = a.getBoolean(R.styleable.UnderLineLinearLayout_drawUnderLine, false);
         linePaint = new Paint();
         linePaint.setAntiAlias(true);

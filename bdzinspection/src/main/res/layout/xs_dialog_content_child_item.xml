@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_container"
+    android:layout_width="match_parent"
+    android:layout_height="120px"
+    android:background="@drawable/xs_list_item_background_selector"
+    android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+    android:paddingRight="@dimen/xs_global_padding_left_right_px"
+    android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
+
+    <ImageView
+        android:id="@+id/img_child_item_bt"
+        android:layout_width="76px"
+        android:layout_height="70px"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:srcCompat="@drawable/xs_check_source_selector" />
+
+    <TextView
+        android:id="@+id/tv_child_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/img_child_item_bt"
+        android:gravity="center_vertical"
+        android:textColor="@color/xs_global_text_color"
+        android:textSize="@dimen/xs_global_text_size_px" />
+
+</RelativeLayout></layout>

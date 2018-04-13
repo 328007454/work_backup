@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_dialog_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/xs_global_padding_half_left_right">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingLeft="@dimen/xs_global_padding_left_right"
+            android:paddingRight="@dimen/xs_global_padding_left_right">
+
+            <EditText
+                android:id="@+id/et_voltage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@android:color/white"
+                android:focusable="true"
+                android:hint="@string/xs_please_input_voltage_str"
+                android:inputType="numberDecimal"
+                android:maxLength="5"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/xs_green_color"
+                android:textColorHint="@color/xs_global_gray_text_color"
+                android:textSize="@dimen/xs_global_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/white"
+                android:text="@string/xs_voltage_unit_str"
+                android:textColor="@color/xs_global_text_color"
+                android:textSize="@dimen/xs_global_text_size" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_line_half_width"
+            android:background="@color/xs_line_color" />
+
+        <RelativeLayout
+            android:id="@+id/rl_resistance_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingLeft="@dimen/xs_global_padding_left_right"
+            android:paddingRight="@dimen/xs_global_padding_left_right"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/et_resistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/xs_please_input_resistance_str"
+                android:inputType="numberDecimal"
+                android:maxLength="5"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/xs_green_color"
+                android:textColorHint="@color/xs_global_gray_text_color" />
+
+            <TextView
+                android:id="@+id/unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/xs_resistance_unit_str"
+                android:textColor="@color/xs_global_text_color"
+                android:textSize="@dimen/xs_global_text_size" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xs_global_padding_top_bottom"
+            android:orientation="horizontal"
+            android:padding="@dimen/xs_global_padding_left_right">
+
+            <RelativeLayout
+                android:id="@+id/rl_add_new_defect"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:clickable="true"
+                android:minHeight="@dimen/xs_edit_text_minheight">
+
+                <Button
+                    android:id="@+id/btn_add_new_defect"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/xs_ic_add_defect"
+                    android:drawablePadding="@dimen/xs_global_padding_half_left_right"
+                    android:gravity="center"
+                    android:minHeight="@dimen/xs_edit_text_minheight"
+                    android:text="@string/xs_add_new_defect_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_confirm"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/xs_grass_green_button_background_selector"
+                android:clickable="true"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_edit_text_minheight"
+                android:text="@string/xs_confirm_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

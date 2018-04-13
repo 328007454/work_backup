@@ -24,8 +24,8 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rlv_container"
-            android:paddingStart="@dimen/_30px"
-            android:paddingEnd="@dimen/_30px"
+            android:paddingStart="@dimen/sjjc_30px"
+            android:paddingEnd="@dimen/sjjc_30px"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="1"/>

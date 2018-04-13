@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.DateUtils;
@@ -70,12 +71,13 @@ public class MaintenanceFragment extends BaseCoreFragment {
     public void gotoTaskList(String typeName) {
         CustomApplication.closeDbConnection();
         Intent intent4 = new Intent();
-        ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+//        ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
+        intent4.setClass(getActivity(), TaskRemindActivity.class);
         intent4.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
         intent4.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         intent4.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
         intent4.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
-        intent4.setComponent(componentName4);
+//        intent4.setComponent(componentName4);
         startActivity(intent4);
     }
 
@@ -175,9 +177,10 @@ public class MaintenanceFragment extends BaseCoreFragment {
             intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
             intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
             intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
-            ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+//            ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
+            intent.setClass(getActivity(),TaskRemindActivity.class);
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);
-            intent.setComponent(componentName);
+//            intent.setComponent(componentName);
             intent.putExtra(Config.IS_FROM_SJJC, true);
             intent.putExtra("task_id", task.taskid);
             startActivity(intent);

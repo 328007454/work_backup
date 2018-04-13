@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_gray_background_color"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            android:background="@color/xs_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/xs__30px"
+            android:paddingRight="@dimen/xs__30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新间隔名称:"
+                android:textColor="@color/xs__333333_global_text_color"
+                android:textSize="42px" />
+
+            <EditText
+                android:id="@+id/et_space_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/xs__30px"
+                android:layout_marginRight="@dimen/xs__30px"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入新间隔的名称"
+                android:singleLine="true"
+                android:textColor="@color/xs__333333_global_text_color"
+                android:textSize="42px" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="@dimen/xs__30px"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_complete"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/xs__30px"
+            android:background="@drawable/xs_grass_green_button_background_selector"
+            android:minHeight="100px"
+            android:text="确认拆分"
+            android:textColor="@color/xs_white"
+            android:textSize="@dimen/xs_btn_text_size" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/xs_list_item_background_selector"
+    android:descendantFocusability="blocksDescendants"
+    android:minHeight="@dimen/xs_list_item_eight_minheight"
+    android:paddingBottom="@dimen/xs_global_padding_top_bottom"
+    android:paddingLeft="@dimen/xs_global_padding_left_right"
+    android:paddingRight="@dimen/xs_global_padding_left_right"
+    android:paddingTop="@dimen/xs_global_padding_top_bottom" >
+
+    <ImageButton
+        android:id="@+id/ibtn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:contentDescription="@null"
+        android:focusable="false"
+        android:src="@drawable/xs_delete_standard_selector" />
+
+    <TextView
+        android:id="@+id/tv_defect_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:drawableRight="@drawable/xs_ic_arrow_right"
+        android:textColor="@color/xs_global_text_color"
+        android:textSize="@dimen/xs_global_text_size" />
+
+    <TextView
+        android:id="@+id/tv_child_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+        android:layout_marginRight="@dimen/xs_global_padding_left_right"
+        android:layout_toLeftOf="@id/tv_defect_level"
+        android:layout_toRightOf="@id/ibtn_delete"
+        android:textColor="@color/xs_global_text_color"
+        android:textSize="@dimen/xs_global_text_size" />
+
+</RelativeLayout></layout>

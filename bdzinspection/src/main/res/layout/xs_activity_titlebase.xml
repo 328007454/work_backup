@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:background="@color/xs_global_base_color">
+
+            <ImageButton
+                android:id="@+id/ibtn_cancel"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_cancel_button_background" />
+
+            <com.cnksi.bdzinspection.view.AutoFitTextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+                android:layout_marginRight="@dimen/xs_title_bar_minheight_px"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_title_text_size_px" />
+
+            <TextView
+                android:id="@+id/right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:background="@drawable/xs_textview_grass_conner"
+                android:padding="@dimen/xs_yw_title_gqj_padding_px"
+                android:textColor="@color/xs_white_text"
+                android:textSize="@dimen/xs_yw_title_gqj_size_px"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/mh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+
+    </LinearLayout>
+</layout>

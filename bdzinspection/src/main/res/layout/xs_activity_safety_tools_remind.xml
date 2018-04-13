@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data class=""></data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_gray_confirm_color"
+        android:orientation="vertical">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:autofit="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:background="@color/xs_global_base_color">
+
+            <ImageButton
+                android:id="@+id/ibtn_cancel"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_cancel_button_background" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+                android:layout_marginRight="@dimen/xs_title_bar_minheight_px"
+                android:gravity="center"
+                android:text="安全工器具提醒"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_title_text_size_px"
+                autofit:minTextSize="26px" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/keyboard_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_white"
+            android:orientation="vertical"
+            android:paddingBottom="10px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs_gray_background_color" />
+
+        <ExpandableListView
+            android:id="@+id/lv_tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/xs_white"
+            android:childDivider="@android:color/transparent"
+            android:divider="@color/xs_line_color"
+            android:dividerHeight="@dimen/xs_line_half_width"
+            android:groupIndicator="@null"
+            android:listSelector="@android:color/transparent" />
+
+    </LinearLayout>
+</layout>

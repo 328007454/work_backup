@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.iflytek.cloud.ErrorCode;
@@ -140,7 +139,6 @@ public class TTService extends Service {
         log("onCreate");
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return stub;

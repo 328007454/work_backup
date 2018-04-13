@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 巡视线路图Fragment -->
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.cnksi.xscore.xsview.TouchImageView
+            android:id="@+id/zoom_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:background="@android:color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/xs_test_line" />
+
+        <ListView
+            android:id="@+id/ltv_spaces"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/xs_line_color"
+            android:dividerHeight="@dimen/xs_line_half_width"
+            android:listSelector="@android:color/transparent"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/include_title"
+                layout="@layout/xs_include_title"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_copy_all_value_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/xs_gray_background_color"
+                >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <!--<GridView-->
+                <!--android:id="@+id/gv_container"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:cacheColorHint="@android:color/transparent"-->
+                <!--android:gravity="center"-->
+                <!--android:horizontalSpacing="@dimen/global_padding_left_right_px"-->
+                <!--android:listSelector="@android:color/transparent"-->
+                <!--android:numColumns="2"-->
+                <!--android:paddingBottom="40px"-->
+                <!--android:paddingEnd="@dimen/_30px"-->
+                <!--android:paddingStart="@dimen/_30px"-->
+                <!--android:paddingTop="24px"-->
+                <!--android:stretchMode="columnWidth"-->
+                <!--android:verticalSpacing="30px"-->
+                <!--/>-->
+
+                <ImageButton
+                    android:id="@+id/ibtn_spread"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/xs_global_padding_left_right_px"
+                    android:background="@drawable/xs_gray_button_background_selector"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/xs_twelve_oval_size_px"
+                    android:src="@drawable/xs_ic_amplify"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/type_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rl_copy_all_value_container">
+
+
+                <LinearLayout
+                    android:id="@+id/ll_keyboard_help_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="340px"
+                    android:layout_above="@+id/btn_layout"
+                    android:orientation="horizontal"
+                    android:visibility="gone"/>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/ll_keyboard_help_layout"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="30px">
+
+                    <LinearLayout
+                        android:id="@+id/copy_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@color/xs_line_color"
+                        android:dividerHeight="@dimen/xs_line_half_width_px"
+                        android:orientation="vertical"
+                        android:showDividers="middle"/>
+                </ScrollView>
+
+                <LinearLayout
+                    android:id="@+id/btn_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                    android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                    android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_pre"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="118px"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/xs_grass_green_button_background_selector"
+                        android:drawableLeft="@drawable/xs_ic_pre_page"
+                        android:gravity="center"
+                        android:minHeight="@dimen/xs_button_minheight"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                        android:text="@string/xs_pre"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_size_px"/>
+
+                    <Button
+                        android:id="@+id/btn_next"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="118px"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                        android:layout_weight="1"
+                        android:background="@drawable/xs_grass_green_button_background_selector"
+                        android:drawableRight="@drawable/xs_ic_next_page"
+                        android:gravity="center"
+                        android:minHeight="@dimen/xs_button_minheight"
+                        android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                        android:text="@string/xs_next"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_size_px"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/shadom_tip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:gravity="center"
+            android:textColor="@color/xs_white_text"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </FrameLayout>
+</layout>

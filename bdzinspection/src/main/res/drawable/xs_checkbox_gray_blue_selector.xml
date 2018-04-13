@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+   	<item android:drawable="@color/xs_green_color" android:state_enabled="false"></item>
+    <item android:drawable="@drawable/xs_ic_checked_small" android:state_checked="true"></item>
+    <item android:drawable="@drawable/xs_ic_check" android:state_checked="false"></item>
+     
+
+</selector>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140px"
+    android:paddingLeft="30px"
+    android:background="@drawable/xs_list_item_background_selector"
+    android:gravity="center_vertical"
+    >
+
+    <ImageView
+        android:id="@+id/img_check"
+        android:layout_width="52px"
+        android:layout_height="52px"
+        android:contentDescription="@null"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:id="@+id/tv_bdz_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48px"
+        android:gravity="center_vertical"
+        android:textColor="@color/xs_global_text_color"
+        android:textSize="@dimen/xs_global_text_size_px" />
+
+</LinearLayout>
+    </layout>

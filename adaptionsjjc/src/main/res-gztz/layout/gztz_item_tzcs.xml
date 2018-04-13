@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_20px"
-            android:layout_marginRight="@dimen/_30px"
+            android:layout_marginRight="@dimen/sjjc_30px"
             app:srcCompat="@drawable/ic_copy_hover"/>
     </merge>
 </layout>

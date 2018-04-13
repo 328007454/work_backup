@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white">
+
+            <com.cnksi.xscore.xsview.HackyViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/page_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/xs_global_padding_top_bottom"
+                android:textColor="@color/xs_global_text_color"
+                android:textSize="@dimen/xs_global_text_size" />
+
+            <ImageButton
+                android:id="@+id/ibtn_delete"
+                android:layout_width="@dimen/xs_title_bar_minheight"
+                android:layout_height="@dimen/xs_title_bar_minheight"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:src="@drawable/xs_delete_image_selector"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

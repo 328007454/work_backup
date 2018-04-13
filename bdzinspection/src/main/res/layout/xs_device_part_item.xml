@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/xs_list_item_background_selector"
+    android:minHeight="@dimen/xs_list_item_minheight"
+    android:paddingBottom="@dimen/xs_global_padding_top_bottom"
+    android:paddingLeft="@dimen/xs_global_padding_left_right"
+    android:paddingRight="@dimen/xs_global_padding_left_right"
+    android:paddingTop="@dimen/xs_global_padding_top_bottom" >
+
+    <ImageView
+        android:id="@+id/iv_device_part"
+        android:layout_width="@dimen/xs_history_defect_photo_height_px"
+        android:layout_height="@dimen/history_defect_photo_height"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@null"
+        android:gravity="center"
+        android:scaleType="centerCrop"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/xs_global_text_size" />
+
+    <TextView
+        android:id="@+id/tv_device_part_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/xs_global_padding_half_left_right"
+        android:layout_toRightOf="@id/iv_device_part"
+        android:textColor="@color/xs_global_text_color"
+        android:textSize="@dimen/xs_global_text_size" />
+
+</RelativeLayout></layout>

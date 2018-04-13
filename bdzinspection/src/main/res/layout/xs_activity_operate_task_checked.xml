@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title" />
+
+        <TextView
+            android:id="@+id/tv_operate_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+            android:background="@drawable/xs_top_bottom_line_gray_background_selector"
+            android:drawableRight="@drawable/xs_ic_gray_up"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingRight="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/xs_text_button_padding_top_px"
+            android:text="@string/xs_operate_ticket_infor_str"
+            android:textColor="@color/xs_global_base_color"
+            android:textSize="@dimen/xs_global_text_small_size_px" />
+
+        <LinearLayout
+            android:id="@+id/ll_operate_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/RelativeLayoutItemStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@id/xs_label"
+                    style="@style/ItemLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/xs_department_str2"
+                    android:textColor="@color/xs_global_base_color" />
+
+                <TextView
+                    android:id="@+id/tv_department"
+                    style="@style/EditTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/xs_label"
+                    android:gravity="center_vertical|left"
+                    android:textColor="@color/xs_global_text_color" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/RelativeLayoutItemStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@id/xs_label"
+                    style="@style/ItemLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/xs_operate_code_str2"
+                    android:textColor="@color/xs_global_base_color" />
+
+                <TextView
+                    android:id="@+id/tv_code"
+                    style="@style/EditTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/xs_label"
+                    android:gravity="center_vertical|left"
+                    android:textColor="@color/xs_global_text_color" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/RelativeLayoutItemStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@id/xs_label"
+                    style="@style/ItemLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/xs_operate_content_str2"
+                    android:textColor="@color/xs_global_base_color" />
+
+                <TextView
+                    android:id="@+id/tv_operate_content"
+                    style="@style/EditTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/xs_label"
+                    android:gravity="center_vertical|left"
+                    android:textColor="@color/xs_global_text_color" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+            android:background="@drawable/xs_top_bottom_line_gray_background_selector">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                android:text="@string/xs_operate_ticket_item_str"
+                android:textColor="@color/xs_global_base_color"
+                android:textSize="@dimen/xs_global_text_small_size_px" />
+
+            <TextView
+                android:id="@+id/tv_operate_item_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                android:text="@string/xs_operate_ticket_item_str"
+                android:textColor="@color/xs_global_text_color"
+                android:textSize="@dimen/xs_global_text_small_size_px" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/xs_line_color"
+            android:dividerHeight="@dimen/xs_line_half_width_px"
+            android:listSelector="@android:color/transparent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+            android:background="@drawable/xs_top_bottom_line_gray_background_selector"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingRight="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/xs_text_button_padding_top_px"
+            android:text="@string/xs_sign_str"
+            android:textColor="@color/xs_global_base_color"
+            android:textSize="@dimen/xs_global_text_small_size_px" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_operate_sign_container_minheight_px"
+            android:background="@drawable/xs_bottom_line_background_selector"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="@dimen/xs_global_padding_left_right_px">
+
+                <LinearLayout
+                    android:id="@+id/tv_czr_sign_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_green_button_background_selector"
+                    android:gravity="center_vertical"
+                    android:minHeight="100px"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/signImg_pic"
+                        android:layout_width="61px"
+                        android:layout_height="61px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20px"
+                        android:scaleType="centerInside"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/xs_ic_sign" />
+
+                    <TextView
+                        android:id="@+id/tv_czr_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/xs_czp_sign_minheight_px"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                        android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                        android:text="@string/xs_czp_czr_str"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_czr_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:src="@drawable/xs_ic_default_pic" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/xs_line_eight_width_px"
+                android:layout_height="match_parent"
+                android:background="@color/xs_line_color" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="@dimen/xs_global_padding_left_right">
+
+                <LinearLayout
+
+                    android:id="@+id/tv_jhr_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_green_button_background_selector"
+                    android:gravity="center_vertical"
+                    android:minHeight="100px"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/signImg_pic"
+                        android:layout_width="61px"
+                        android:layout_height="61px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20px"
+                        android:scaleType="centerInside"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/xs_ic_sign" />
+
+                    <TextView
+                        android:id="@+id/tv_jhr_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/xs_czp_sign_minheight"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right"
+                        android:paddingRight="@dimen/xs_global_padding_left_right"
+                        android:text="@string/xs_czp_czfzr_str"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/iv_czfzr_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:src="@drawable/xs_ic_default_pic" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/xs_line_eight_width_px"
+                android:layout_height="match_parent"
+                android:background="@color/xs_line_color" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="@dimen/xs_global_padding_left_right_px">
+
+                <LinearLayout
+                    android:id="@+id/tv_ywfzr_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_green_button_background_selector"
+                    android:gravity="center_vertical"
+                    android:minHeight="100px"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/signImg_pic"
+                        android:layout_width="61px"
+                        android:layout_height="61px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20px"
+                        android:scaleType="centerInside"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/xs_ic_sign" />
+
+                    <TextView
+                        android:id="@+id/tv_ywfzr_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minHeight="@dimen/xs_czp_sign_minheight"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right"
+                        android:paddingRight="@dimen/xs_global_padding_left_right"
+                        android:text="@string/xs_czp_zbfzr_str"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/iv_zbfzr_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:src="@drawable/xs_ic_default_pic" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/xs_global_padding_left_right_px"
+            android:background="@drawable/xs_red_button_unenabled_background_selector"
+            android:enabled="false"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_czp_start_operate_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_inspection_standard_list_background_color"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xs_global_padding_half_top_bottom"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom"
+            android:paddingLeft="@dimen/xs_global_padding_left_right"
+            android:paddingRight="@dimen/xs_global_padding_left_right"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom"
+            android:text="@string/xs_yw_test_time"
+            android:textColor="@color/xs_dark_text"
+            android:textSize="@dimen/xs_global_text_size"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/clr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xs_global_padding_half_top_bottom"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom"
+            android:paddingLeft="@dimen/xs_global_padding_left_right"
+            android:paddingRight="@dimen/xs_global_padding_left_right"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom"
+            android:text="@string/xs_yw_test_people"
+            android:textColor="@color/xs_dark_text"
+            android:textSize="@dimen/xs_global_text_size"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xs_global_padding_half_top_bottom"
+            android:background="@color/xs_green_color"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom"
+            android:paddingLeft="@dimen/xs_global_padding_left_right"
+            android:paddingRight="@dimen/xs_global_padding_left_right"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom"
+            android:text="@string/xs_result_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size"
+            android:visibility="visible" />
+
+        <GridView
+            android:id="@+id/gv_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/xs_global_padding_left_right"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/xs_global_padding_left_right"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="5"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/xs_grid_vertical_spacing" />
+
+        <Button
+            android:id="@+id/btn_finish_inspection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/xs_global_padding_top_bottom"
+            android:layout_marginLeft="@dimen/xs_global_padding_left_right"
+            android:layout_marginRight="@dimen/xs_global_padding_left_right"
+            android:background="@drawable/xs_red_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_finish_battery_tria_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size" />
+
+    </LinearLayout>
+</layout>

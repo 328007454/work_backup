@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_gp_desc_bg"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/sv_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layout_message_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/GPLableTextStyle"
+                        android:layout_marginTop="@dimen/xs_gp_desc_blank_h_px"
+                        android:text="@string/xs_gp_inspection_content" />
+
+                    <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                        android:id="@+id/inspection_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/xs_gp_desc_blank_h_px"
+                        android:background="@color/xs_white"
+                        android:gravity="left|top"
+                        android:lineSpacingMultiplier="1.2"
+                        android:minHeight="@dimen/xs_gp_textview_minHeight_px"
+                        android:padding="12dp"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/xs_global_text_small_size_px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/GPLableTextStyle"
+                        android:text="巡视结果" />
+
+                    <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                        android:id="@+id/et_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/xs_white"
+                        android:gravity="left|top"
+                        android:hint="请输巡视结果"
+                        android:minHeight="@dimen/xs_gp_textview_minHeight_px"
+                        android:padding="36px"
+                        android:textSize="@dimen/xs_global_text_small_size_px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_message_resultinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/GPLableTextStyle"
+                        android:text="@string/xs_gp_remark" />
+
+                    <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                        android:id="@+id/et_remark"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/xs_white"
+                        android:gravity="left|top"
+                        android:hint="@string/xs_gp_remark_tips"
+                        android:minHeight="@dimen/xs_gp_textview_minHeight_px"
+                        android:padding="36px"
+                        android:textSize="@dimen/xs_global_text_small_size_px" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_result"
+                    style="@style/GPLableTextStyle"
+                    android:text="记录情况" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/xs_gp_desc_blank_h_px"
+                    android:background="@color/xs_white"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/xs_global_padding_left_right_px">
+
+                        <LinearLayout
+                            android:id="@+id/ll_new_defect_count"
+                            style="@style/GPInspectionResultLL">
+
+                            <TextView
+                                style="@style/GPInspectionRusltNameTextStyle"
+                                android:text="@string/xs_new_defect_count_str" />
+
+                            <TextView
+                                android:id="@+id/tv_new_defect_count"
+                                style="@style/GPInspectionRusltValueTextStyle" />
+                        </LinearLayout>
+
+                        <View style="@style/GPInspectionReslutSplitLine" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_track_defect_count"
+                            style="@style/GPInspectionResultLL">
+
+                            <TextView
+                                style="@style/GPInspectionRusltNameTextStyle"
+                                android:text="@string/xs_track_count_str" />
+
+                            <TextView
+                                android:id="@+id/tv_track_defect_count"
+                                style="@style/GPInspectionRusltValueTextStyle" />
+                        </LinearLayout>
+
+                        <View style="@style/GPInspectionReslutSplitLine" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_eliminate_defect_count"
+                            style="@style/GPInspectionResultLL">
+
+                            <TextView
+                                style="@style/GPInspectionRusltNameTextStyle"
+                                android:text="@string/xs_clear_count_str" />
+
+                            <TextView
+                                android:id="@+id/tv_eliminate_defect_count"
+                                style="@style/GPInspectionRusltValueTextStyle" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/line_copy_result"
+                            style="@style/GPInspectionReslutSplitLine" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_copy_result"
+                            style="@style/GPInspectionResultLL">
+
+                            <TextView
+                                style="@style/GPInspectionRusltNameTextStyle"
+                                android:text="@string/xs_copy_count_str" />
+
+                            <TextView
+                                android:id="@+id/tv_copy_result"
+                                style="@style/GPInspectionRusltValueTextStyle" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/xs_gp_desc_blank_h_px"
+                    android:background="@color/xs_gp_desc_header_text_bg"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/GPLableTextStyle"
+                        android:layout_weight="1"
+                        android:text="@string/xs_gp_sign_worker" />
+
+                    <TextView
+                        android:id="@+id/btn_add_person"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="30px"
+                        android:background="@drawable/xs_green_background_selector"
+                        android:gravity="center"
+                        android:padding="9px"
+                        android:text="@string/xs_gp_add_pesron"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_history_defect_level_text_size_px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white"
+                    android:minHeight="138px">
+
+                    <com.cnksi.bdzinspection.view.NoScrollGridView
+                        android:id="@+id/signList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:listSelector="@android:color/transparent"
+                        android:numColumns="3"></com.cnksi.bdzinspection.view.NoScrollGridView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/xs_gp_desc_blank_h_px"
+                    android:background="@color/xs_gp_desc_header_text_bg"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/GPLableTextStyle"
+                        android:layout_weight="1"
+                        android:text="@string/xs_gp_sign_leader" />
+
+                    <TextView
+                        android:id="@+id/btn_add_person1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="30px"
+                        android:background="@drawable/xs_green_background_selector"
+                        android:gravity="center"
+                        android:padding="9px"
+                        android:text="@string/xs_gp_add_pesron"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_history_defect_level_text_size_px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white"
+                    android:minHeight="228px"
+                    android:visibility="visible">
+
+                    <com.cnksi.bdzinspection.view.NoScrollGridView
+                        android:id="@+id/signList1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:listSelector="@android:color/transparent"
+                        android:numColumns="3"></com.cnksi.bdzinspection.view.NoScrollGridView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_conclusion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/GPLableTextStyle"
+                        android:text="分析结论" />
+
+                    <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                        android:id="@+id/et_conlusion"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/xs_white"
+                        android:gravity="left|top"
+                        android:hint="请输入分析结论"
+                        android:minHeight="@dimen/xs_gp_textview_minHeight_px"
+                        android:padding="36px"
+                        android:textSize="@dimen/xs_global_text_small_size_px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/time_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/GPLableTextStyle"
+                        android:text="@string/xs_inspection_time" />
+
+                    <TextView
+                        android:id="@+id/txt_start_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:gravity="left|center_vertical"
+                        android:paddingStart="@dimen/xs__30px"
+                        android:text="开始时间："
+                        android:textColor="#333333"
+                        android:textSize="@dimen/xs_global_text_small_size_px" />
+
+                    <TextView
+                        android:id="@+id/txt_end_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:gravity="left|center_vertical"
+                        android:paddingStart="@dimen/xs__30px"
+                        android:text="结束时间："
+                        android:textColor="#333333"
+                        android:textSize="@dimen/xs_global_text_small_size_px" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="match_parent"
+            android:layout_height="118px"
+            android:layout_marginBottom="60px"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/xs_red_button_background_selector"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_gp_generate_report"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_small_size_px" />
+
+    </LinearLayout>
+</layout>

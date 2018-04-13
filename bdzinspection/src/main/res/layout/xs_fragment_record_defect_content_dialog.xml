@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layout>
+<com.zhy.core.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:background="@drawable/xs_bdz_background_select"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_tab_strip_minheight_px"
+        android:gravity="center"
+        android:text="@string/xs_defect_content_str"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/xs_global_text_size_px" />
+
+    <ExpandableListView
+        android:id="@+id/elv_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:childDivider="@color/xs_line_color"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="@dimen/xs_line_half_width_px"
+        android:fadeScrollbars="true"
+        android:fadingEdge="vertical"
+        android:fastScrollEnabled="true"
+        android:groupIndicator="@null"
+        android:listSelector="@android:color/transparent" />
+
+    <Button
+        android:id="@+id/btn_custom_defect"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xs_button_minheight"
+        android:layout_margin="@dimen/xs_global_padding_left_right_px"
+        android:background="@drawable/xs_grass_green_button_background_selector"
+        android:gravity="center"
+        android:minHeight="@dimen/xs_button_minheight"
+        android:text="@string/xs_custom_defect_content_str"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/xs_global_text_size_px" />
+
+</com.zhy.core.AutoLinearLayout></layout>

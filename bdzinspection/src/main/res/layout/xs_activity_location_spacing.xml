@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/xs_include_title" />
+
+        <RelativeLayout
+            android:id="@+id/rl_anim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#63D1C4"
+            android:paddingBottom="@dimen/xs_activity_vertical_margin_px"
+            android:paddingLeft="@dimen/xs_activity_horizontal_margin_px"
+            android:paddingRight="@dimen/xs_activity_horizontal_margin_px"
+            android:paddingTop="@dimen/xs_activity_vertical_margin_px"
+            android:visibility="gone">
+
+            <com.cnksi.bdzinspection.view.CircleBar
+                android:id="@+id/circleBar"
+                android:layout_width="900px"
+                android:layout_height="900px"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/circleBar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="360px"
+                android:text="正在匹配间隔"
+                android:textColor="#FFFFFF"
+                android:textSize="60px" />
+
+            <TextView
+                android:id="@+id/tv_space_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="45px"
+                android:text="1"
+                android:textColor="#FFFFFF"
+                android:textSize="80px" />
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/list_spacing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:layoutAnimation="@anim/xs_layout_anim"></ListView>
+
+            <LinearLayout
+                android:id="@+id/open"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/xs_top" />
+
+                <ImageView
+                    android:id="@+id/buttom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/xs_bottom" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:autofit="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="hasSignPhoto"
+            type="boolean"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_global_base_color"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:layout_marginTop="75px"
+            android:background="@color/xs_global_base_color"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/ibtn_cancel"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+               
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_cancel_button_background"/>
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_title_text_size_px"
+                autofit:minTextSize="10px"/>
+
+            <ImageButton
+                android:id="@+id/ibtn_setting"
+                android:layout_width="65px"
+                android:layout_height="65px"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20px"
+                android:layout_marginRight="30px"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+               
+                android:src="@drawable/xs_icon_setting"
+                android:visibility="visible"/>
+
+            <ImageButton
+                android:id="@+id/ibtn_copy"
+                style="@style/svgButton"
+                android:layout_width="@dimen/xs_title_bar_image_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30px"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+               
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_copy_button_background"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrooller_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f0f0f0">
+
+            <LinearLayout
+                android:id="@+id/ll_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#03b9a0"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="432px"
+                        android:background="#f0f0f0"
+                        android:orientation="vertical"
+                        android:paddingTop="260px">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="186px"
+                            android:layout_marginLeft="30px"
+                            android:layout_marginRight="30px"
+                            android:background="@drawable/xs_device_container_background"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/tv_defect_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="30px"
+                                android:gravity="center_vertical"
+                               
+                                android:text=""
+                                android:textSize="44px" />
+
+                            <TextView
+                                android:id="@+id/tv_add_new_defect"
+                                android:layout_width="290px"
+                                android:layout_height="100px"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="30px"
+                                android:background="@drawable/xs_red_button_background_selector"
+                                android:clickable="true"
+                                android:drawablePadding="@dimen/xs_drawable_padding_px"
+                                android:gravity="center"
+                               
+                                android:text="添加缺陷"
+                                android:textColor="@android:color/white"
+                                android:textSize="44px" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="590px"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginRight="30px"
+                        android:layout_marginTop="42px"
+                        android:background="@drawable/xs_device_container_background">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200px"
+                            android:layout_marginLeft="537px"
+                            android:layout_marginTop="60px"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_manufacturers"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                                android:singleLine="true"
+                                android:textColor="@color/xs_light_black"
+                                android:textSize="@dimen/xs_device_item_name_text_size_px" />
+
+                            <TextView
+                                android:id="@+id/tv_product_model"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                                android:singleLine="true"
+                                android:textColor="@color/xs_light_black"
+                                android:textSize="@dimen/xs_device_item_name_text_size_px" />
+
+                            <TextView
+                                android:id="@+id/tv_product_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_below="@id/tv_manufacturers"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:singleLine="true"
+                                android:text="投产日期："
+                                android:textColor="@color/xs_light_black"
+                                android:textSize="@dimen/xs_device_item_name_text_size_px" />
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/device_part_recy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="150px"
+                            android:background="@color/xs_white" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="102px"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="2px"
+                            android:background="#f0f0f0"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/bt_accident_deal"
+                                android:layout_width="0px"
+                                android:layout_height="102px"
+                                android:layout_weight="1"
+                                android:background="@drawable/xs_yxgd_background"
+                                android:gravity="center"
+                               
+                                android:singleLine="true"
+                                android:text="@string/xs_typical_accident_deal"
+                                android:textColor="@color/xs_white"
+                                android:textSize="@dimen/xs_device_item_name_text_size_px" />
+
+                            <LinearLayout
+                                android:id="@+id/bt_photo_sign"
+                                android:layout_width="0px"
+                                android:layout_height="102px"
+                                android:layout_marginLeft="@dimen/xs__30px"
+                                android:layout_weight="1"
+                                android:background="@drawable/xs_yxgd_background"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/iv_sign_image"
+                                    android:layout_width="120px"
+                                    android:layout_height="84px"
+                                    android:layout_centerVertical="true"
+                                    android:paddingBottom="10px"
+                                    android:paddingLeft="20px"
+                                    android:paddingRight="20px"
+                                    android:paddingTop="10px"
+                                    android:visibility="@{hasSignPhoto?View.GONE:View.VISIBLE}"
+                                    app:srcCompat="@drawable/xs_ic_camera_white" />
+
+                                <RelativeLayout
+                                    android:layout_width="100px"
+                                    android:layout_height="100px">
+
+                                    <ImageView
+                                        android:id="@+id/img_arrived"
+                                        android:layout_width="88px"
+                                        android:layout_height="64px"
+                                        android:layout_centerInParent="true"
+                                        android:background="@drawable/xs_grass_green_button_background_selector"
+                                        android:paddingBottom="8px"
+                                        android:paddingLeft="12px"
+                                        android:paddingRight="12px"
+                                        android:paddingTop="8px"
+                                        android:src="@drawable/xs_ic_clamp_pic"
+                                        android:visibility="@{hasSignPhoto?View.VISIBLE:View.GONE}" />
+
+                                    <TextView
+                                        android:id="@+id/tv_pic_num"
+                                        android:layout_width="@dimen/xs__30px"
+                                        android:layout_height="@dimen/xs__30px"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_gravity="right"
+                                        android:layout_marginTop="10px"
+                                        android:background="@drawable/xs_red_background_circle"
+                                        android:gravity="center"
+                                        android:text=""
+                                        android:textColor="@android:color/white"
+                                        android:textSize="18px"
+                                        android:visibility="gone"
+                                        app:layout_auto_baseheight="width" />
+                                </RelativeLayout>
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="20px"
+                                    android:text="拍照到位确认"
+                                    android:textColor="@color/xs_white_text"
+                                    android:textSize="@dimen/xs_device_item_name_text_size_px" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <FrameLayout
+                        android:layout_width="480px"
+                        android:layout_height="330px"
+                        android:layout_marginLeft="60px"
+                        android:background="@drawable/xs_shape_round_white_bg">
+
+                        <com.cnksi.xscore.xsview.RoundRectImageView
+                            android:id="@+id/iv_device_image"
+                            android:layout_width="480px"
+                            android:layout_height="330px" />
+
+                        <ImageButton
+                            android:id="@+id/ibtn_danger"
+                            android:layout_width="@dimen/xs_device_danger_button_minheight_px"
+                            android:layout_height="@dimen/xs_device_danger_button_minheight_px"
+                            android:layout_marginLeft="25px"
+                            android:layout_marginTop="10px"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@null"
+                            android:minHeight="@dimen/xs_device_danger_button_minheight_px"
+                            android:minWidth="@dimen/xs_device_danger_button_minheight_px"
+                            android:padding="15px"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/xs_danger_point_button_background" />
+                    </FrameLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#f0f0f0"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginTop="65px"
+                        android:text="巡视标准"
+                        android:textColor="#d3d1d1"
+                        android:textSize="44px" />
+
+                    <com.cnksi.bdzinspection.view.MyScrollVListView
+                        android:id="@+id/device_standard_lv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30px"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginRight="30px"
+                        android:layout_marginTop="20px"
+                        android:background="@drawable/xs_device_container_background"
+                        android:divider="#e0e0e0"
+                        android:dividerHeight="3px"
+                        android:paddingBottom="15px"
+                        android:paddingLeft="28px"
+                        android:paddingRight="28px" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

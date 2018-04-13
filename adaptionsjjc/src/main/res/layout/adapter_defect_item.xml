@@ -57,7 +57,7 @@
                     android:id="@+id/tv_defect_remind_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_30px"
+                    android:layout_marginLeft="@dimen/sjjc_30px"
                     android:textColor="#626262"
                     android:textSize="38px"/>
             </LinearLayout>

@@ -3,24 +3,37 @@ package com.cnksi.sjjc.util;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.cnksi.core.utils.FileUtils;
+import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
+
+import org.xutils.common.util.DatabaseUtils;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -618,4 +631,5 @@ public class FileUtil {
             }
         }
     }
+
 }

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data class=""></data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_color_fof2f2"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/title_include"
+            layout="@layout/xs_include_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:background="@color/xs_color_fof2f2"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/rg_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/xs_white"
+                android:orientation="horizontal"
+                android:paddingBottom="10px"
+                android:paddingTop="20px">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/bt_all"
+                    style="@style/safetytoolstypestyle"
+                    android:layout_width="0px"
+                    android:layout_height="80px"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="15px"
+                    android:text="全部" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/bt_inmaintenance"
+                    style="@style/safetytoolstypestyle"
+                    android:layout_width="0px"
+                    android:layout_height="80px"
+                    android:layout_marginLeft="15px"
+                    android:layout_marginRight="15px"
+                    android:text="试验中" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/bt_overdate"
+                    style="@style/safetytoolstypestyle"
+                    android:layout_width="0px"
+                    android:layout_height="80px"
+                    android:layout_marginLeft="15px"
+                    android:layout_marginRight="15px"
+                    android:text="超期" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/bt_inmonth"
+                    style="@style/safetytoolstypestyle"
+                    android:layout_width="0px"
+                    android:layout_height="80px"
+                    android:layout_marginLeft="15px"
+                    android:layout_marginRight="30px"
+                    android:text="一月内" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/keyoard_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/xs_white"
+                android:orientation="vertical"
+                android:paddingBottom="10px" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40px"
+                android:background="#f0f2f2" />
+
+            <RelativeLayout
+                android:id="@+id/ll_cb_container"
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:background="@color/xs_white"
+                android:gravity="center_vertical">
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/cb_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30px"
+                    android:button="@null"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/xs_type_copy_selector"
+                    android:drawablePadding="40px"
+                    android:gravity="center_vertical"
+                    android:onClick="show"
+                    android:text="全部"
+                    android:textColor="#626262"
+                    android:textSize="40px"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:background="@color/xs_gray_background_color" />
+
+            <!--<ListView-->
+            <!--android:id="@+id/lv_tools"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/white"-->
+            <!--android:cacheColorHint="@android:color/transparent"-->
+            <!--android:childDivider="@android:color/transparent"-->
+            <!--android:divider="@color/line_color"-->
+            <!--android:dividerHeight="@dimen/line_half_width"-->
+            <!--android:fadingEdge="vertical"-->
+            <!--android:fastScrollEnabled="true"-->
+            <!--android:groupIndicator="@null"-->
+            <!--android:listSelector="@android:color/transparent"-->
+            <!--android:scrollbars="none|vertical" />-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/lv_tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/xs_white" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_white"
+            android:orientation="horizontal"
+            android:paddingBottom="60px"
+            android:paddingTop="20px">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="15px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_cancel_line_background_selector"
+                android:gravity="center"
+                android:onClick="show"
+                android:text="取 消"
+                android:textColor="@color/xs_red_color"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+            <Button
+                android:id="@+id/btn_stop"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15px"
+                android:layout_marginRight="15px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:onClick="show"
+                android:text="停 用"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+            <Button
+                android:id="@+id/btn_test"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0px"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15px"
+                android:layout_marginRight="30px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_green_background_selector"
+                android:gravity="center"
+                android:onClick="show"
+                android:text="试 验"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
