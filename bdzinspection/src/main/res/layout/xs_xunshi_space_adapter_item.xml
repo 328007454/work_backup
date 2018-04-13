@@ -25,7 +25,8 @@
         <TextView
             android:id="@+id/tv_space_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="120px"
             android:layout_marginLeft="35px"
             android:textColor="@color/xs_global_text_color"
             android:textSize="@dimen/xs_global_text_size_1" />

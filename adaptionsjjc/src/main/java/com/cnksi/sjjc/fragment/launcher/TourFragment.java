@@ -14,6 +14,7 @@ import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.nari.NariActivity;
 import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -116,10 +117,11 @@ public class TourFragment extends BaseCoreFragment {
         intent.putExtra(Config.KEY_SYNC_URL, Config.SYNC_URL);
         intent.putExtra(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         if (TextUtils.isEmpty(inspectionType)) {
-            ComponentName componentName5 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.nari.NariActivity");
-            intent.setComponent(componentName5);
+//            ComponentName componentName5 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.nari.NariActivity");
+//            intent.setComponent(componentName5);
+            intent.setClass(getActivity(), NariActivity.class);
         } else {
-//            ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+//            ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
 //            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionType);
 //            intent.setComponent(componentName4);
 

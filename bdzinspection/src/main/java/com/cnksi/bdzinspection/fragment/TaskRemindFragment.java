@@ -21,8 +21,6 @@ import com.cnksi.bdzinspection.model.Task;
 import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
-import com.cnksi.bdzinspection.utils.Config.TaskStatus;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
@@ -37,84 +35,90 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.day;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.full;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.maintenance;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.operation;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.professional;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.routine;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.special;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.special_nighttime;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.special_xideng;
+import static com.cnksi.bdzinspection.utils.Config.InspectionType.switchover;
+
 /**
- * 巡检任务提醒
- *
- * @author terry
+ * Created by Mr.K on 2018/4/12.
  */
+
 public class TaskRemindFragment extends BaseFragment {
-    private TaskRemindAdapter mInspectionTaskAdapter = null;
-    /**
-     * 巡检任务的数据集合
-     */
-    public List<Task> mDataList = null;
+    XsFragmentListBinding binding;
+
+    private TaskRemindAdapter mInspectionTaskAdapter;
+    private String inspectionName;
+    public List<Task> mDataList;
+    private Map<String, String> userMap = new HashMap<>();
     /**
      * 主菜单界面点击的巡检类型
      */
-    private InspectionType currentSelectInspectionType;
-
+    private Config.InspectionType currentSelectInspectionType;
     /**
      * 长按已完成任务的dialog
      */
     private Dialog mFinishOptionDialog = null;
     private ListContentDialogAdapter mListContentDialogAdapter = null;
-    private Map<String, String> userMap = new HashMap<>();
+    private boolean updateTask;
+
+    public void updateTask(boolean updateTask) {
+        this.updateTask = updateTask;
+    }
+
     public interface OnFragmentEventListener {
         void updateTaskStatus();
 
         void startTask(Task task);
     }
 
-    private OnFragmentEventListener mOnFragmentEventListener;
+    private TaskRemindFragment.OnFragmentEventListener mOnFragmentEventListener;
 
-    public void setOnFragmentEventListener(OnFragmentEventListener mOnFragmentEventListener) {
+    public void setOnFragmentEventListener(TaskRemindFragment.OnFragmentEventListener mOnFragmentEventListener) {
         this.mOnFragmentEventListener = mOnFragmentEventListener;
     }
 
-    View view;
-    private String inspectionName;
-    XsFragmentListBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentListBinding.inflate(inflater);
         initUI();
-        lazyLoad();
-
-        initOnClick();
-        return view;
+        return binding.getRoot();
     }
-
 
     private void initUI() {
         getBundleValue();
         inspectionName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
-        currentSelectInspectionType = InspectionType.get(inspectionName);
+        currentSelectInspectionType = Config.InspectionType.get(inspectionName);
         if (mInspectionTaskAdapter == null) {
-            mInspectionTaskAdapter = new TaskRemindAdapter(getActivity(),mDataList);
+            mInspectionTaskAdapter = new TaskRemindAdapter(getActivity(), mDataList);
             binding.lvContainer.setAdapter(mInspectionTaskAdapter);
         }
-        isPrepared = true;
+        searchData();
+        initOnClick();
     }
 
-    @Override
-    protected void onRefresh(Message msg) {
-        switch (msg.what) {
-            case LOAD_DATA:
-                mInspectionTaskAdapter.setList(mDataList);
-                mInspectionTaskAdapter.setUserMap(userMap);
-                break;
-            default:
-                break;
-        }
-    }
 
     @Override
     protected void lazyLoad() {
         if (isPrepared && isVisible && isFirstLoad) {
-            // 填充各控件的数据
+
+//         searchData();
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (updateTask) {
             searchData();
-            isFirstLoad = false;
         }
     }
 
@@ -122,10 +126,8 @@ public class TaskRemindFragment extends BaseFragment {
         this.isFirstLoad = isFirstLoad;
     }
 
-    /**
-     * 查询数据
-     */
     public void searchData() {
+
         mFixedThreadPoolExecutor.execute(() -> {
             try {
                 if (currentInspectionType == null) {
@@ -134,7 +136,7 @@ public class TaskRemindFragment extends BaseFragment {
                 }
                 if (TextUtils.isEmpty(inspectionName)) {
                     inspectionName = PreferencesUtils.getString(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, "full");
-                    currentSelectInspectionType = InspectionType.get(inspectionName);
+                    currentSelectInspectionType = Config.InspectionType.get(inspectionName);
                 }
                 String deptId = "";
                 if (null != currentActivity) {
@@ -146,44 +148,44 @@ public class TaskRemindFragment extends BaseFragment {
                 // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                 if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
                     // 未完成
-                    selector = selector.and(Task.STATUS, "<>", TaskStatus.done.name()).expr("AND " + Task.SCHEDULE_TIME + ">=" + SqliteUtils.DATE_TIME_START_OF_DAY);
+                    selector = selector.and(Task.STATUS, "<>", Config.TaskStatus.done.name()).expr("AND " + Task.SCHEDULE_TIME + ">=" + SqliteUtils.DATE_TIME_START_OF_DAY);
                 } else if (Config.FINISHED_MODEL.equalsIgnoreCase(currentFunctionModel)) {
                     // 完成
-                    selector = selector.and(Task.STATUS, "=", TaskStatus.done.name());
+                    selector = selector.and(Task.STATUS, "=", Config.TaskStatus.done.name());
                 } else if (Config.OVER_DUE_MODEL.equalsIgnoreCase(currentFunctionModel)) {
                     // 逾期
                     selector = selector.expr("AND " + Task.SCHEDULE_TIME + "< " + SqliteUtils.DATE_TIME_START_OF_DAY + " AND (status = 'doing' OR status = 'undo') ");
                 }
                 switch (currentSelectInspectionType) {
                     case professional: // 设备新投
-                        selector = selector.and(Task.INSPECTION, "like", "%" + InspectionType.professional.name() + "%");
+                        selector = selector.and(Task.INSPECTION, "like", "%" + professional.name() + "%");
                         break;
                     case full: // 全面巡检
-                        selector = selector.and(Task.INSPECTION, "like", "%" + InspectionType.full.name() + "%");
+                        selector = selector.and(Task.INSPECTION, "like", "%" + full.name() + "%");
                         break;
                     case day: // 日常巡检
-                        selector = selector.and(Task.INSPECTION, "like", "%" + InspectionType.day.name() + "%");
+                        selector = selector.and(Task.INSPECTION, "like", "%" + day.name() + "%");
                         break;
                     case routine: // 例行巡视
-                        selector = selector.and(Task.INSPECTION, "like", "%" + InspectionType.routine.name() + "%");
+                        selector = selector.and(Task.INSPECTION, "like", "%" + routine.name() + "%");
                         break;
                     case special: // 特殊巡检
-                        selector = selector.and(WhereBuilder.b(Task.INSPECTION, "like", "%" + InspectionType.special.name() + "%").and(Task.INSPECTION, "not like", "%" + InspectionType.special_nighttime.name() + "%").and(Task.INSPECTION, "not like", "%" + InspectionType.special_xideng.name() + "%"));
+                        selector = selector.and(WhereBuilder.b(Task.INSPECTION, "like", "%" + special.name() + "%").and(Task.INSPECTION, "not like", "%" + special_nighttime.name() + "%").and(Task.INSPECTION, "not like", "%" + special_xideng.name() + "%"));
                         break;
                     case special_nighttime: // 夜间巡检
-                        selector = selector.and(WhereBuilder.b(Task.INSPECTION, "like", "%" + InspectionType.special_nighttime.name() + "%"));
+                        selector = selector.and(WhereBuilder.b(Task.INSPECTION, "like", "%" + special_nighttime.name() + "%"));
                         break;
                     case special_xideng: // 熄灯巡检
-                        selector = selector.and(WhereBuilder.b(Task.INSPECTION, "like", "%" + InspectionType.special_xideng.name() + "%"));
+                        selector = selector.and(WhereBuilder.b(Task.INSPECTION, "like", "%" + special_xideng.name() + "%"));
                         break;
                     case switchover: // 定期切换试验 包括蓄电池测试 和红外线测温
-                        selector = selector.and(WhereBuilder.b(Task.INSPECTION, "like", "%" + InspectionType.switchover.name() + "%").or(Task.INSPECTION, "like", "%" + InspectionType.battery.name() + "%"));
+                        selector = selector.and(WhereBuilder.b(Task.INSPECTION, "like", "%" + switchover.name() + "%").or(Task.INSPECTION, "like", "%" + Config.InspectionType.battery.name() + "%"));
                         break;
                     case maintenance: // 定期维护
-                        selector = selector.and(Task.INSPECTION, "like", "%" + InspectionType.maintenance.name() + "%");
+                        selector = selector.and(Task.INSPECTION, "like", "%" + maintenance.name() + "%");
                         break;
                     case operation:// 运维一体化
-                        selector = selector.and(Task.TYPE, "=", InspectionType.operation.name());
+                        selector = selector.and(Task.TYPE, "=", operation.name());
                         break;
                     default:
                         break;
@@ -200,13 +202,27 @@ public class TaskRemindFragment extends BaseFragment {
             } catch (DbException e) {
                 e.printStackTrace();
             }
+
         });
+    }
+
+    @Override
+    protected void onRefresh(Message msg) {
+        switch (msg.what) {
+            case LOAD_DATA:
+                mInspectionTaskAdapter.setList(mDataList);
+                mInspectionTaskAdapter.setUserMap(userMap);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
      * 已完成的长按操作Dialog
      */
     XsContentListDialogBinding dialogBinding;
+
     private void showDefectDialog(Task mTask) {
         if (mListContentDialogAdapter == null) {
             List<String> functionArray = Arrays.asList(getResources().getStringArray(R.array.XS_IsUploadOrDeleteArray));
@@ -215,12 +231,12 @@ public class TaskRemindFragment extends BaseFragment {
         if (mFinishOptionDialog == null) {
             dialogBinding = XsContentListDialogBinding.inflate(getActivity().getLayoutInflater());
             int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            mFinishOptionDialog = DialogUtils.createDialog(currentActivity,dialogBinding.getRoot(),dialogWidth,LinearLayout.LayoutParams.WRAP_CONTENT);
+            mFinishOptionDialog = DialogUtils.createDialog(currentActivity, dialogBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
-       dialogBinding.lvContainer.setAdapter(mListContentDialogAdapter);
+        dialogBinding.lvContainer.setAdapter(mListContentDialogAdapter);
         dialogBinding.tvDialogTitle.setText(R.string.xs_task_function_title_str);
         mFinishOptionDialog.show();
-        dialogBinding.lvContainer.setOnItemClickListener((parent,view,position,id) ->{
+        dialogBinding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
             switch (position) {
                 case 0:
                     TaskService.getInstance().isUploadCurrentTask(mTask, true);// 上传
@@ -245,7 +261,7 @@ public class TaskRemindFragment extends BaseFragment {
 
 
     private void initOnClick() {
-        binding.lvContainer.setOnItemClickListener((parent,view,position,id) -> {
+        binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
             Task mTask = (Task) parent.getItemAtPosition(position);
             if (null != mOnFragmentEventListener)
                 mOnFragmentEventListener.startTask(mTask);
@@ -254,7 +270,7 @@ public class TaskRemindFragment extends BaseFragment {
             }
         });
 
-        binding.lvContainer.setOnItemLongClickListener((parent,view,position,id) -> {
+        binding.lvContainer.setOnItemLongClickListener((parent, view, position, id) -> {
             Task mTask = (Task) parent.getItemAtPosition(position);
             if (!mTask.isMyCreate()) {
                 CToast.showShort(currentActivity, "您不是任务创建者，无法删除");

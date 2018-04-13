@@ -62,6 +62,7 @@ public class XunshiApplication {
         Config.COPY_MAX_DISTANCE = PreferencesUtils.getFloat(mInstance, Config.COPY_DISTANCE_KEY, Config.COPY_MAX_DISTANCE);
         NariDataManager.init(Config.NARI_BASEFOLDER);
         PreferencesUtils.init(context);
+        DisplayUtil.getInstance().init(context);
     }
 
 

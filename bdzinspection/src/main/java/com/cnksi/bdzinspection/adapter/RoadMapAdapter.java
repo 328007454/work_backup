@@ -38,14 +38,11 @@ public class RoadMapAdapter extends SimpleBaseAdapter {
         Spacing space = (Spacing) getItem(position);
         XsXunshiSpaceAdapterItemBinding itemBinding;
         if (convertView == null) {
-            itemBinding = XsXunshiSpaceAdapterItemBinding.inflate(LayoutInflater.from(mContext));
+            itemBinding = XsXunshiSpaceAdapterItemBinding.inflate(LayoutInflater.from(parent.getContext()));
             AutoUtils.autoSize(itemBinding.getRoot());
-
         } else {
             itemBinding = DataBindingUtil.findBinding(convertView);
         }
-
-
         itemBinding.tvSpaceNum.setBackgroundResource(R.drawable.xs_xunshi_spacing_record_background);
         if (isReport) {
             itemBinding.tvSpaceName.setText(space.name);

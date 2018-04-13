@@ -19,6 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_tab_strip_minheight_px"
             android:background="@color/xs_tab_strip_background_color"/>
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/tab_strip"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/xs_tab_strip_minheight_px"-->
+            <!--android:background="@color/xs_tab_strip_background_color"/>-->
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"

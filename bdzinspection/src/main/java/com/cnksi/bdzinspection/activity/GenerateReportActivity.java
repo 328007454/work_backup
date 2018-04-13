@@ -44,6 +44,7 @@ import com.cnksi.bdzinspection.utils.TimePickerUtils;
 import com.cnksi.nari.NariActivity;
 import com.cnksi.nari.type.PackageStatus;
 import com.cnksi.nari.utils.NariDataManager;
+import com.cnksi.xscore.xscommon.ScreenManager;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
@@ -409,9 +410,8 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 intent = new Intent(currentActivity, InspectionReportActivity.class);
             }
             PushNewTaskUtil.getTaskUtilInstance().createNewTaskByPeriod(currentTaskId, currentInspectionType);
-
+            ScreenManager.getInstance().popAllActivityExceptOne(null);
             startActivity(intent);
-            finish();
         } catch (DbException e) {
             e.printStackTrace();
         }

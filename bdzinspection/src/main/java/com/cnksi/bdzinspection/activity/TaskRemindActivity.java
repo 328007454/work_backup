@@ -267,6 +267,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             if (i == currentSelectedPosition) {
                 mFragmentList.get(i).isRepeatLoad = true;
             } else mFragmentList.get(i).setIsFirstLoad(true);
+            mFragmentList.get(i).updateTask(true);
         }
         isNeedUpdateTaskStatus = false;
     }

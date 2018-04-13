@@ -83,7 +83,9 @@ public class BaseActivity extends BaseCoreActivity {
     public static final int INIT_SPEECH = -0x101001;
     public static final int ACTION_RECORDVIDEO = 0x500;
     public static final int PERMISSION_WINDOW = ACTION_RECORDVIDEO + 1;
-    /** 线程池 */
+    /**
+     * 线程池
+     */
     protected ExecutorService mFixedThreadPoolExecutor = XunshiApplication.getFixedThreadPoolExecutor();
     /**
      * 利用静态变量多个实例共享的特性 控制TaskRemind更新任务逻辑
@@ -570,11 +572,12 @@ public class BaseActivity extends BaseCoreActivity {
     }
 
     public void ExitThisAndGoLauncher() {
-        Intent intent = new Intent();
-        ComponentName componentName = new ComponentName("com.cnksi.sjjc", "com.cnksi.sjjc.activity.HomeActivity");
-        intent.setComponent(componentName);
-        startActivity(intent);
-        ScreenManager.getInstance().popAllActivityExceptOne(null);
+//        Intent intent = new Intent();
+//        ComponentName componentName = new ComponentName("com.cnksi.sjjc", "com.cnksi.sjjc.activity.HomeActivity");
+//        intent.setComponent(componentName);
+//        startActivity(intent);
+//        ScreenManager.getInstance().popAllActivityExceptOne(null);
+        this.finish();
     }
 
     public boolean isParticularInspection() {

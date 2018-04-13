@@ -1,5 +1,6 @@
 package com.cnksi.bdzinspection.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -195,7 +196,9 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         getIntentValue();
         initUI();
         initData();
+        initOnClick();
     }
+
 
     private void initUI() {
         devicedetailsBinding.devicePartRecy.setVisibility(View.GONE);
@@ -247,6 +250,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
 
     private void initData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
+            @SuppressLint("StringFormatMatches")
             @Override
             public void run() {
                 try {
@@ -443,9 +447,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         intent.putExtra(Config.IS_DEVICE_PART, Config.InspectionType.special_xideng.equals(currentInspectionType) ? true : (isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin)));
     }
 
-    public void onClickEvent(View view) {
-        int i = view.getId();
-        if (i == R.id.ibtn_copy) {
+    private void initOnClick() {
+        devicedetailsBinding.ibtnCopy.setOnClickListener(view -> {
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             Intent intent = new Intent(currentActivity, CopyValueActivity2.class);
             intent.putExtra(Config.CURRENT_DEVICE_NAME, mCurrentDevice.name);
@@ -453,20 +456,23 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             intent.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
             intent.putExtra(Config.CURRENT_SPACING_NAME, currentSpacingName);
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+        });
 
-        } else if (i == R.id.ibtn_danger) {
+        devicedetailsBinding.ibtnDanger.setOnClickListener(view -> {
             if (null != bigTypeModel && !TextUtils.isEmpty(bigTypeModel.getString("identification_prevent_measures"))) {
                 showDangerPointDialog();
             } else {
                 CToast.showShort(currentActivity, "该设备暂无危险点及控制措施");
             }
+        });
 
-        } else if (i == R.id.bt_accident_deal) {
+        devicedetailsBinding.btAccidentDeal.setOnClickListener(view -> {
             Intent intentAccident = new Intent(currentActivity, AccidentExceptionActivity.class);
             intentAccident.putExtra(Config.CURRENT_DEVICE_ID, currentDeviceId);
             startActivity(intentAccident);
+        });
 
-        } else if (i == R.id.tv_defect_count) {
+        devicedetailsBinding.tvDefectCount.setOnClickListener(view -> {
             Intent intent;
             if (null == mExistDefectList || mExistDefectList.isEmpty())
                 return;
@@ -477,26 +483,23 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             intent.putExtra(Config.IS_SHOW_DEVICE_WIDGET, false);
             intent.putExtra(Config.IS_NEED_SEARCH_DEFECT_REASON, true);
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+        });
 
-        } else if (i == R.id.tv_add_new_defect) {
+        devicedetailsBinding.tvAddNewDefect.setOnClickListener(view -> {
             Intent intent;
             intent = new Intent(currentActivity, AddNewDefectActivity.class);
             setIntentValue(intent);
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
-
-        } else if (i == R.id.ibtn_cancel) {
-            onBackPressed();
-
-        } else if (i == R.id.ibtn_setting) {
+        });
+        devicedetailsBinding.ibtnCancel.setOnClickListener(view -> onBackPressed());
+        devicedetailsBinding.ibtnSetting.setOnClickListener(view -> {
             Intent intent1 = new Intent(currentActivity, SettingCopyTypeActivity.class);
             intent1.putExtra(Config.CURRENT_DEVICE_NAME, mCurrentDevice.name);
             intent1.putExtra(Config.CURRENT_DEVICE_ID, mCurrentDevice.deviceid);
             intent1.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
             intent1.putExtra(Config.CURRENT_SPACING_NAME, currentSpacingName);
             startActivity(intent1);
-
-        } else {
-        }
+        });
     }
 
     private void showStandardSource(final DbModel standard) {
@@ -756,6 +759,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
      */
     public void searchCurrentDeviceExistDefect() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
+            @SuppressLint("StringFormatMatches")
             @Override
             public void run() {
                 mExistDefectList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
@@ -793,7 +797,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
     //25%-%75 右滑  %75-%25 左滑
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        return gestureHandler.doEventFling(ev) || super.dispatchTouchEvent(ev);
+        return gestureHandler.doEventFling(ev)||super.dispatchTouchEvent(ev);
+//        return gestureHandler.doEventFling(ev) || super.dispatchTouchEvent(ev);
     }
 
 

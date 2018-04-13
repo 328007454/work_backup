@@ -300,4 +300,6 @@ public abstract class BaseFragment extends BaseCoreFragment {
         mImageUrlList.add(mImageUrl);
         showImageDetails(context, 0, mImageUrlList, false);
     }
+
+
 }

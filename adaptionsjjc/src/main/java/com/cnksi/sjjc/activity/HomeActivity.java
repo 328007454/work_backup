@@ -575,7 +575,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         if ("workticket".equals(task.inspection))
             componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
         else {
-            componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+            componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
             intent.putExtra(Config.IS_FROM_SJJC, true);
         }
         intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);

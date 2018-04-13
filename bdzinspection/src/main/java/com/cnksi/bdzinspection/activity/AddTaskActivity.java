@@ -401,6 +401,9 @@ public class AddTaskActivity extends BaseActivity {
                 mInspectionTypeDialog.dismiss();
             }
         });
+        typeDialogBinding.btnConfirm.setOnClickListener(view -> {
+            mInspectionTypeDialog.dismiss();
+        });
     }
 
     /**

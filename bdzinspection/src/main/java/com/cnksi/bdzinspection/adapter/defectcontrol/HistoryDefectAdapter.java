@@ -69,10 +69,11 @@ public class HistoryDefectAdapter extends SimpleBaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         DefectRecord mDefect = (DefectRecord) getItem(position);
-        XsHistoryDefectItemBinding itemBinding =null;
+        XsHistoryDefectItemBinding itemBinding = null;
         if (convertView == null) {
             itemBinding = XsHistoryDefectItemBinding.inflate(LayoutInflater.from(parent.getContext()));
             AutoUtils.autoSize(itemBinding.getRoot());
+            convertView = itemBinding.getRoot();
         } else {
             itemBinding = DataBindingUtil.findBinding(convertView);
         }
@@ -95,7 +96,7 @@ public class HistoryDefectAdapter extends SimpleBaseAdapter {
         if (isParticularInspection) {
             itemBinding.tvDefectDescription.setText(mDefect.description);
         }
-       itemBinding.tvDefectDiscoverTime.setText(mContext.getResources().getString(R.string.xs_defect_discover_time_format_str, DateUtils.getFormatterTime(mDefect.discovered_date)));
+        itemBinding.tvDefectDiscoverTime.setText(mContext.getResources().getString(R.string.xs_defect_discover_time_format_str, DateUtils.getFormatterTime(mDefect.discovered_date)));
 
         // 判读图片是否存在，不存在就不显示，或显示默认图片
         String[] defectPicArray = StringUtils.cleanString(mDefect.pics).split(CoreConfig.COMMA_SEPARATOR);
@@ -107,7 +108,7 @@ public class HistoryDefectAdapter extends SimpleBaseAdapter {
 
         if (Config.TRACK_DEFECT_MODEL.equalsIgnoreCase(currentFunctionModel)) {
             // 跟踪模式下
-           itemBinding.tvEliminateDefect.setVisibility(View.GONE);
+            itemBinding.tvEliminateDefect.setVisibility(View.GONE);
             if (!TextUtils.isEmpty(defectRecordId)) {
                 if (defectRecordId.equalsIgnoreCase(mDefect.defectid)) {
                     convertView.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
@@ -127,23 +128,23 @@ public class HistoryDefectAdapter extends SimpleBaseAdapter {
             if (!TextUtils.isEmpty(defectRecordId)) {
                 if (defectRecordId.equalsIgnoreCase(mDefect.defectid)) {
                     convertView.setBackgroundColor(mContext.getResources().getColor(android.R.color.white));
-                   itemBinding.tvEliminateDefect.setBackgroundResource(R.drawable.xs_gray_button_background);
-                   itemBinding.tvEliminateDefect.setEnabled(false);
-                   itemBinding.tvEliminateDefect.setTextColor(mContext.getResources().getColor(R.color.xs_white));
+                    itemBinding.tvEliminateDefect.setBackgroundResource(R.drawable.xs_gray_button_background);
+                    itemBinding.tvEliminateDefect.setEnabled(false);
+                    itemBinding.tvEliminateDefect.setTextColor(mContext.getResources().getColor(R.color.xs_white));
                 } else {
                     convertView.setBackgroundResource(R.drawable.xs_history_defect_item_background_selector);
-                   itemBinding.tvEliminateDefect.setBackgroundResource(R.drawable.xs_red_button_background_selector);
-                   itemBinding.tvEliminateDefect.setEnabled(true);
-                   itemBinding.tvEliminateDefect.setTextColor(mContext.getResources().getColor(R.color.xs_white));
+                    itemBinding.tvEliminateDefect.setBackgroundResource(R.drawable.xs_red_button_background_selector);
+                    itemBinding.tvEliminateDefect.setEnabled(true);
+                    itemBinding.tvEliminateDefect.setTextColor(mContext.getResources().getColor(R.color.xs_white));
                 }
             }
         }
 
 
-        itemBinding.tvReportDefect.setOnClickListener(view -> onClick(view,mDefect));
-        itemBinding.tvEliminateDefect.setOnClickListener(view -> onClick(view,mDefect));
-        itemBinding.ivDefectImage.setOnClickListener(view -> onClick(view,mDefect));
-        itemBinding.tvReportDefect.setOnClickListener(view -> onClick(view,mDefect));
+        itemBinding.tvReportDefect.setOnClickListener(view -> onClick(view, mDefect));
+        itemBinding.tvEliminateDefect.setOnClickListener(view -> onClick(view, mDefect));
+        itemBinding.ivDefectImage.setOnClickListener(view -> onClick(view, mDefect));
+        itemBinding.tvTrackDefect.setOnClickListener(view -> onClick(view, mDefect));
 
         return itemBinding.getRoot();
     }

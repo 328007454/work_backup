@@ -174,7 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1594px"
                     android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
-                    android:layout_marginTop="0px"
+                    android:layout_marginTop="-1558px"
                     android:background="@drawable/xs_ic_report_background"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/xs_global_padding_half_left_right_px"

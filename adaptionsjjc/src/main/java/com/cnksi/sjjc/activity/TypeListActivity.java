@@ -155,7 +155,7 @@ public class TypeListActivity extends BaseActivity {
                 switch (mInspectionType) {
                     case SBXS:
                         CustomApplication.closeDbConnection();
-                        componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+                        componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
                         //正常巡视
                         if ("正常巡视".equals(s)) {
                             intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.day.name());
@@ -195,7 +195,7 @@ public class TypeListActivity extends BaseActivity {
                     case switchover:
                         return;
                     case maintenance:
-                        componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindActivity");
+                        componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
                         //全站卫生清洁
                         if (position == 0) {
                             intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_01.name());
