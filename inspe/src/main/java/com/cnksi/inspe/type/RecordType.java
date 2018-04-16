@@ -1,7 +1,7 @@
 package com.cnksi.inspe.type;
 
 /**
- * 角色
+ * 标准检查状态
  *
  * @version v1.0
  * @auther Today(张军)
