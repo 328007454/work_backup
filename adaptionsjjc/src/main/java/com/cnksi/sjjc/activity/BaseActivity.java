@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.DialogUtil;
 import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ExecutorManager;
@@ -621,13 +622,17 @@ public abstract class BaseActivity extends BaseCoreActivity {
     /**
      * 备份数据库
      */
-
     public void copyBdzInspectionDb() {
         ProgressDialog dialog = ProgressDialog.show(this, "提示", "正在加密数据，请稍等...请不要强行取消，耐心等待", false, false);
         ExecutorManager.executeTaskSerially(() -> {
             try {
+                String innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath()+"/database/";
+                File innerFile = new File(innerDateBaseFolder);
+                if (!innerFile.exists()) {
+                    innerFile.mkdir();
+                }
                 if (FileUtils.isFileExists(Config.DATABASE_FOLDER + Config.DATABASE_NAME)) {
-                    DatabaseUtils.copyDatabase(new File(Config.DATABASE_FOLDER+Config.DATABASE_NAME),"",new File(Config.DATABASE_FOLDER+Config.ENCRYPT_DATABASE_NAME),"com.cnksi");
+                    DatabaseUtils.copyDatabase(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME), "", new File(innerDateBaseFolder + Config.ENCRYPT_DATABASE_NAME), "com.cnksi");
                     FileUtils.deleteFile(Config.DATABASE_FOLDER + Config.DATABASE_NAME);
                 }
                 runOnUiThread(() -> {
@@ -639,7 +644,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
                 e.printStackTrace();
             } finally {
                 dialog.cancel();
-        }
+            }
         });
 
     }

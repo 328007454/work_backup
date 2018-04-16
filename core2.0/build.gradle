@@ -32,7 +32,7 @@ dependencies {
     implementation files('libs/core-3.2.1.jar')
     compile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'
     implementation 'com.cnksi:core:1.2.7.1'
-    compile('com.cnksi:ksynclib:3.1.8.2-xj'){
+    compile("com.cnksi:ksynclib:$ksi_sync_version"){
         exclude module: 'fastjson'
         exclude module: 'autolayout'
     }

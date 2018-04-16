@@ -69,6 +69,7 @@ public class CustomApplication extends CoreApplication {
             Config.WWWROOT_FOLDER};
     private HashMap<String, String> copyedMap = new HashMap<>();
     XunshiApplication xunshiApplication;
+    private String innerDateBaseFolder ;
 
     public static DbManager getPJDbManager() {
         if (PJDbManager == null) {
@@ -144,8 +145,9 @@ public class CustomApplication extends CoreApplication {
 
     public DbManager.DaoConfig getDaoConfig() {
         int dbVersion = getDbVersion();
+        innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
         if (config == null) {
-            config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(dbVersion)
+            config = new DbManager.DaoConfig().setDbDir(new File(innerDateBaseFolder)).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(dbVersion)
                     .setDbOpenListener(db -> {
                         // 开启WAL, 对写入加速提升巨大
                         //db.getDatabase().enableWriteAheadLogging();
@@ -163,30 +165,6 @@ public class CustomApplication extends CoreApplication {
         } else
             return config;
     }
-
-    /**
-     * 自定义数据库配置 需要重写
-     *
-     * @return
-     */
-
-    public DbManager.DaoConfig getOldDaoConfig() {
-        int dbVersion = getDbVersion();
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
-                .setDbOpenListener(db -> {
-                    // 开启WAL, 对写入加速提升巨大
-                    //db.getDatabase().enableWriteAheadLogging();
-                    //此处不处理数据库版本更新  全权交给同步框架处理。
-                    try {
-                        db.addColumn(TaskExtend.class, "dlt");
-                    } catch (DbException e) {
-
-                    }
-                })
-                .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
-        return config;
-    }
-
 
     /**
      * 获得显示大图的图像配置，大图不适合内存缓存

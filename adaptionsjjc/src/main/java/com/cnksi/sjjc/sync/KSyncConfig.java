@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.core.utils.DeviceUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.ksynclib.KNConfig;
@@ -77,7 +78,8 @@ public class KSyncConfig {
     public KNConfig getKNConfig(Context context) {
         initFolder();
         String deviceId = DeviceUtils.getSerialNumber(context);
-        config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
+       String  innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
+        config = new KNConfig(context, Config.ENCRYPT_DATABASE_NAME, innerDateBaseFolder, Config.SYNC_APP_ID,
                 Config.SYNC_URL, deviceId, CustomApplication.getInstance().getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
         config.configDebug(BuildConfig.DEBUG);
         config.configAppid(Config.SYNC_APP_ID);

@@ -76,6 +76,8 @@ ext {
     ksi_core_version = "1.2.7.1"
     //com.cnksi:ksynclib:3.3.6-SNAPSHOT
     ksi_ksynclib_version = "3.3.6-SNAPSHOT"
+
+    ksi_sync_version="3.1.8.1-xj-sqlcipher"
 }
 
 
