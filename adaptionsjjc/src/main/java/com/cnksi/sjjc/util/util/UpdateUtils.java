@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
 
@@ -18,6 +20,7 @@ import com.cnksi.core.common.DeviceInfor;
 import com.cnksi.core.common.UpdateInfor;
 import com.cnksi.core.utils.DeviceUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.FunctionUtils;
@@ -43,13 +46,20 @@ public class UpdateUtils {
      */
     public static void installNewApk(Context context, File updateApkFile) {
         if (updateApkFile != null && updateApkFile.exists()) {
-            Intent intent = new Intent();
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setAction(Intent.ACTION_VIEW);
-            Uri uri = Uri.fromFile(updateApkFile);
-            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            //判断是否是AndroidN以及更高的版本
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", updateApkFile);
+                intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(updateApkFile), "application/vnd.android.package-archive");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
             context.startActivity(intent);
         }
+
+
     }
 
     /**
@@ -123,21 +133,6 @@ public class UpdateUtils {
                 file = getTheNewApkFile(context, appFloder, localPackageInfo == null ? "" : localPackageInfo.packageName, localPackageInfo.versionCode);
             }
         }
-//        if (file != null && file.exists()) {
-//            PackageInfo remotePackageInfo = AppUtils.getAPKPackageInfo(context, file);
-//            PackageInfo localPackageInfo = AppUtils.getLocalPackageInfo(context);
-//            int remoteVersionCode = 0;
-//            int localVersionCode = 0;
-//            if (remotePackageInfo != null && localPackageInfo != null) {
-//                remoteVersionCode = remotePackageInfo.versionCode;
-//                localVersionCode = localPackageInfo.versionCode;
-//            }
-//            if (remoteVersionCode > localVersionCode) {
-//                return file;
-//            } else {
-//                return null;
-//            }
-//        }
         return file;
     }
 
@@ -174,12 +169,9 @@ public class UpdateUtils {
                 }
                 // 从找到的APK文件中找到最新的APK文件
                 if (!realApkFileList.isEmpty()) {
-//                    newApkFile = realApkFileList.get(0);
-//                    newAPkPackageInfo = AppUtils.getAPKPackageInfo(context, newApkFile);
                     for (File fileTemp : realApkFileList) {
                         PackageInfo tempAPkPackageInfo = AppUtils.getAPKPackageInfo(context, fileTemp);
                         if (tempAPkPackageInfo != null && tempAPkPackageInfo.versionCode > currentVersionCode) {
-                            newAPkPackageInfo = tempAPkPackageInfo;
                             newApkFile = fileTemp;
                         }
                     }
@@ -252,13 +244,13 @@ public class UpdateUtils {
             @Override
             public void confirm() {
                 UpdateUtils.installNewApk(mContext, file);
-                PreferencesUtils.put( AppUtils.IS_SJJC_AREADY_UPDATE, true);
+                PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, true);
             }
 
             @Override
             public void cancel() {
                 if (!isPms)
-                    PreferencesUtils.put( AppUtils.IS_SJJC_AREADY_UPDATE, false);
+                    PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, false);
                 if (isPms && PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
                     System.exit(0);
                 }
@@ -267,6 +259,7 @@ public class UpdateUtils {
         }, R.string.install_now_str, R.string.cancel_install_str, isPms);
         return mDialog;
     }
+
     /**
      * 解析升级数据
      *

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -96,7 +97,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             isShowExistDefect = true;
         }
 
-        TTSUtils.getInstance().startSpeaking(getString(R.string.xs_before_inspection_ready_str), null);
+        TTSUtils.getInstance().startSpeaking(getString(R.string.xs_before_inspection_ready_str));
         binding.btnLeft.setVisibility(View.GONE);
         if (SystemConfig.isMustVerifyInspectionReady()) {
             binding.btnRight.setText(getString(R.string.xs_sure_and_next));

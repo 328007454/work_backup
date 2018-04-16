@@ -361,9 +361,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                 case KSync.SYNC_SUCCESS:
                     info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
                     CustomApplication.saveDbVersion(ksync.getKnConfig().getDatabase().getVersion());
-                    if ((KSyncConfig.getInstance().isHaveDept())) {
-                        showDialogTips();
-                    }
+//                    if ((KSyncConfig.getInstance().isHaveDept())) {
+//                        showDialogTips();
+//                    }
                     break;
                 case KSync.SYNC_PING:
                     setNetwork(msg);

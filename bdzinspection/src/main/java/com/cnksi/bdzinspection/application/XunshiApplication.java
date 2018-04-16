@@ -21,6 +21,7 @@ import com.cnksi.bdzinspection.utils.XZip;
 import com.cnksi.ksynclib.model.App;
 import com.cnksi.xscore.xsapplication.CoreApplication;
 import com.cnksi.xscore.xsutils.CLog;
+import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.FileUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
@@ -63,6 +64,8 @@ public class XunshiApplication {
         NariDataManager.init(Config.NARI_BASEFOLDER);
         PreferencesUtils.init(context);
         DisplayUtil.getInstance().init(context);
+        TTSUtils.init(context);
+        CToast.init(context);
     }
 
 

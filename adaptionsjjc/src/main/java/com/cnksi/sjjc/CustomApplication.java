@@ -140,27 +140,39 @@ public class CustomApplication extends CoreApplication {
      *
      * @return
      */
+    DbManager.DaoConfig config;
 
-    protected DbManager.DaoConfig getDaoConfig() {
+    public DbManager.DaoConfig getDaoConfig() {
         int dbVersion = getDbVersion();
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
-                .setDbOpenListener(db -> {
-                    // 开启WAL, 对写入加速提升巨大
-                    //db.getDatabase().enableWriteAheadLogging();
-                    //此处不处理数据库版本更新  全权交给同步框架处理。
-                    try {
-                        db.addColumn(TaskExtend.class, "dlt");
-                    } catch (DbException e) {
+        if (config == null) {
+            config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(dbVersion)
+                    .setDbOpenListener(db -> {
+                        // 开启WAL, 对写入加速提升巨大
+                        //db.getDatabase().enableWriteAheadLogging();
+                        //此处不处理数据库版本更新  全权交给同步框架处理。
+                        try {
+                            db.addColumn(TaskExtend.class, "dlt");
+                        } catch (DbException e) {
 
-                    }
-                })
-                .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
-        return config;
+                        }
+                    })
+                    .setUseEncrypt(true)
+                    .setKey("com.cnksi")
+                    .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
+            return config;
+        } else
+            return config;
     }
 
-    public DbManager.DaoConfig getDaoConfigInner() {
+    /**
+     * 自定义数据库配置 需要重写
+     *
+     * @return
+     */
+
+    public DbManager.DaoConfig getOldDaoConfig() {
         int dbVersion = getDbVersion();
-        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(mInstance.getFilesDir() + "/BdzInspection/database")).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
+        DbManager.DaoConfig config = new DbManager.DaoConfig().setDbDir(new File(Config.DATABASE_FOLDER)).setDbName(Config.DATABASE_NAME).setDbVersion(dbVersion)
                 .setDbOpenListener(db -> {
                     // 开启WAL, 对写入加速提升巨大
                     //db.getDatabase().enableWriteAheadLogging();
@@ -335,7 +347,7 @@ public class CustomApplication extends CoreApplication {
         LLog.isLog = BuildConfig.LOG_DEBUG;
         initDebugDb();
         xunshiApplication = new XunshiApplication();
-        xunshiApplication.init(mInstance, getApplicationContext(),new XunshiDatabaseProvider() {
+        xunshiApplication.init(mInstance, getApplicationContext(), new XunshiDatabaseProvider() {
 
             @Override
             public Object getDatabase() {
@@ -348,6 +360,7 @@ public class CustomApplication extends CoreApplication {
             }
         });
     }
+
     private void initDebugDb() {
         if (BuildConfig.DEBUG) {
             HashMap<String, Pair<File, String>> stringPairHashMap = new HashMap<>();

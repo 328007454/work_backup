@@ -4,8 +4,11 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -15,6 +18,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -25,23 +29,34 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cnksi.bdzinspection.utils.DialogUtil;
 import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.common.UpdateInfor;
+import com.cnksi.core.utils.Cst;
+import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.NetWorkUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.cnksi.sjjc.Config;
+import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.bean.AppVersion;
+import com.cnksi.sjjc.databinding.DialogCopyTipsBinding;
 import com.cnksi.sjjc.databinding.IncludeTitleBinding;
+import com.cnksi.sjjc.sync.KSyncConfig;
+import com.cnksi.sjjc.util.AppUtils;
 import com.cnksi.sjjc.util.CoreConfig;
+import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.FunctionUtils;
 import com.cnksi.sjjc.util.KeyBoardUtils;
 import com.cnksi.sjjc.util.util.UpdateUtils;
@@ -50,6 +65,10 @@ import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
 
+import org.xutils.common.util.DatabaseUtils;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 import org.xutils.x;
 
 import java.io.File;
@@ -57,6 +76,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+
+import static com.cnksi.sjjc.activity.LoginActivity.SHOW_UPDATE_LOG_DIALOG;
 
 /**
  * @author luoxy
@@ -492,6 +513,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * 更新日志
      */
     protected String updateContent;
+
     protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, boolean isPms, String updateContent) {
         this.updateContent = updateContent;
         this.isPms = isPms;
@@ -501,13 +523,17 @@ public abstract class BaseActivity extends BaseCoreActivity {
     /**
      * 检测更新
      */
+    File localUpdateFile;
+
     protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, final String appCode) {
         ExecutorManager.executeTaskSerially(() -> {
-            if (mUpdateFile == null) {
-                mUpdateFile = UpdateUtils.hasUpdateApk(mActivity, downloadFolder, isPms);
-                if (mUpdateFile != null) {
+            if (localUpdateFile == null) {
+                localUpdateFile = UpdateUtils.hasUpdateApk(mActivity, downloadFolder, isPms);
+                if (localUpdateFile != null) {
+                    com.cnksi.sjjc.view.CustomerDialog.dismissProgress();
                     mHandler.sendEmptyMessage(CoreConfig.INSTALL_APP_CODE);
-                } else if (null == mUpdateFile) {
+                } else if (null == localUpdateFile) {
+                    com.cnksi.sjjc.view.CustomerDialog.dismissProgress();
                     return;
                 } else {
                     if (NetWorkUtils.isNetworkConnected(mActivity)) {
@@ -516,6 +542,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
                     }
                 }
             } else {
+                com.cnksi.sjjc.view.CustomerDialog.dismissProgress();
                 mHandler.sendEmptyMessage(CoreConfig.INSTALL_APP_CODE);
             }
         });
@@ -529,22 +556,92 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
     protected void onRefresh(android.os.Message msg) {
         switch (msg.what) {
-            case CoreConfig.NETWORK_UNVISIBLE:
-                CustomerDialog.dismissProgress();
-//                CToast.showLong(mCurrentActivity, R.string.network_unvisible_str);
-                break;
-            case CoreConfig.UPDATE_APP_CODE:
-
-                if (msg.obj != null && msg.obj instanceof UpdateInfor) {
-//                    UpdateUtils.showUpdateDialog(_this, CoreConfig.SERVER_URL + File.separator + ((UpdateInfor) msg.obj).file, ((UpdateInfor) msg.obj).remark, mDownloadFolder, mDownloadFile);
-                }
-                break;
             case CoreConfig.INSTALL_APP_CODE:
                 // TODO:显示安装对话框
-//                UpdateUtils.showInstallNewApkDialog(mCurrentActivity, mUpdateFile);
-                UpdateUtils.showInstallNewApkDialog(_this, mUpdateFile, isPms, updateContent);
+                UpdateUtils.showInstallNewApkDialog(_this, localUpdateFile, isPms, updateContent);
+                break;
+            case SHOW_UPDATE_LOG_DIALOG:
+                if (null != updateLogDialog && null != remoteSjjcAppVersion) {
+                    layout.tvDialogTitle.setText("本次更新内容");
+                    layout.clickLinearlayout.setVisibility(View.GONE);
+                    layout.tvCopy.setVisibility(View.GONE);
+                    layout.tvTips.setText(Html.fromHtml(TextUtils.isEmpty(remoteSjjcAppVersion.description) ? "欢迎使用！" : remoteSjjcAppVersion.description));
+                    updateLogDialog.show();
+                }
                 break;
         }
+    }
+
+    private Dialog updateLogDialog;
+    private AppVersion remoteSjjcAppVersion;
+    private DialogCopyTipsBinding layout;
+
+    /**
+     * 检测升级
+     */
+    public void checkUpdate() {
+        layout = DialogCopyTipsBinding.inflate(getLayoutInflater());
+        int dialogWidth = ScreenUtils.getScreenWidth(_this) * 9 / 10;
+        int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
+        updateLogDialog = DialogUtils.creatDialog(_this, layout.getRoot(), dialogWidth, dialogHeight);
+        PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
+        int version = info.versionCode;
+        try {
+            remoteSjjcAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (remoteSjjcAppVersion != null) {
+            com.cnksi.sjjc.view.CustomerDialog.showProgress(_this, "检测到需要升级，请等待");
+            ExecutorManager.executeTaskSerially(() -> {
+                try {
+                    remoteSjjcAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    String apkPath = "";
+                    //下载APK文件夹
+                    SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
+                    try {
+                        DbModel model = CustomApplication.getInstance().getDbManager().findDbModelFirst(info1);
+                        if (model != null) {
+                            apkPath = "admin/" + model.getString("short_name_pinyin") + "/apk";
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (null != remoteSjjcAppVersion) {
+                        checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
+                                Config.PCODE, false, TextUtils.isEmpty(remoteSjjcAppVersion.description) ? "修复bug,优化流畅度" : remoteSjjcAppVersion.description);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
+
+    /**
+     * 备份数据库
+     */
+
+    public void copyBdzInspectionDb() {
+        ProgressDialog dialog = ProgressDialog.show(this, "提示", "正在加密数据，请稍等...请不要强行取消，耐心等待", false, false);
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + Config.DATABASE_NAME)) {
+                    DatabaseUtils.copyDatabase(new File(Config.DATABASE_FOLDER+Config.DATABASE_NAME),"",new File(Config.DATABASE_FOLDER+Config.ENCRYPT_DATABASE_NAME),"com.cnksi");
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + Config.DATABASE_NAME);
+                }
+                runOnUiThread(() -> {
+                    checkUpdate();
+                    KSyncConfig.getInstance().setDept_id("-1");
+                });
+            } catch (Exception e) {
+                ToastUtils.showMessage("加密失败，请重新同步数据，继续使用");
+                e.printStackTrace();
+            } finally {
+                dialog.cancel();
+        }
+        });
+
     }
 
 }

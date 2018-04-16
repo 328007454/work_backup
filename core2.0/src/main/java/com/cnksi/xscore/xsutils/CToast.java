@@ -11,10 +11,14 @@ import com.cnksi.xscore.xsapplication.CoreApplication;
 public class CToast {
 
     public static boolean isShow = true;
-
+    public static Context context;
     private CToast() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
+    public  static  void init(Context context){
+        CToast.context = context;
     }
 
     /**
@@ -29,10 +33,10 @@ public class CToast {
     }
 
     public static void showShort(CharSequence message) {
-        showShort(CoreApplication.getAppContext(), message);
+        showShort(context, message);
     }
     public static void showLong(CharSequence message) {
-        showLong(CoreApplication.getAppContext(), message);
+        showLong(context, message);
     }
 
     /**

@@ -624,6 +624,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
+        if (currentSign==null) return;
         switch (requestCode) {
             case 0x300:
                 currentSign.setImg(currentHeadPath);

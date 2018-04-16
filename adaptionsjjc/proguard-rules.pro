@@ -104,7 +104,38 @@
 -keepattributes Signature
 -keep class com.iflytek.**{*;}
 
+#bdzinspection
 
+-keep class * extends java.lang.annotation.Annotation { *; }
+-keepclassmembers class * extends android.support.v4.app.Fragment {
+  public *;
+}
+-keep class com.cnksi.bdzinspection.model.**{*;}
+-keepattributes Exceptions,InnerClasses,...
+-keep  class com.cnksi.bdzinspection.adapter.**$*{*;}
+-keepattributes Exceptions,InnerClasses,...
+-keep  class com.cnksi.bdzinspection.activity.**$*{*;}
+
+-keepattributes Exceptions,InnerClasses,...
+-keep  class com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment$*{*;}
+
+-keepattributes Exceptions,InnerClasses,...
+-keep  class com.cnksi.bdzinspection.utils.DialogUtils*{*;}
+
+-ignorewarnings
+-keep class javax.ws.rs.** { *; }
+-keep class org.spring.**{*;}
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *; }
+
+
+
+-libraryjars ../bdzinspection/libs/MPChartLib.jar
+-dontwarn org.dom4j.**
+-libraryjars ../bdzinspection/libs/dom4j-2.0.0.jar
+-keep class org.dom4j.**{*;}
+-libraryjars ../bdzinspection/libs/M100_RFID_API.jar
+-libraryjars ../bdzinspection/libs/httpmime-4.1.3.jar
 
 
 

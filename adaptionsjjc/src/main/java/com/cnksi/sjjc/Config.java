@@ -61,7 +61,9 @@ public class Config extends CoreConfig {
     public static final String DOWNLOAD_FILE_NAME = "BdzInspection" + DateUtils.getCurrentShortTime() + ".apk";
 
     public static final String DATABASE_NAME = "bdzinspection.db";
+    public static final String ENCRYPT_DATABASE_NAME = "bdzinspection-encrypt.db";
     public static final String YANSHOUEDATABASE_NAME = "accept.db";
+    public static final String DB_COPY = "dbcopy.db";
 
     /**
      * 名称

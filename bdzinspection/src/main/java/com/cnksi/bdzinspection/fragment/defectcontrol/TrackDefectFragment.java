@@ -409,11 +409,11 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
     XsFragmentRecordDefectContentDialogBinding contentDialogBinding;
     private void showDefectContentDialog(String standardId) {
         HashMap<String, ArrayList<DefectDefine>> dataMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
+        contentDialogBinding = XsFragmentRecordDefectContentDialogBinding.inflate(getActivity().getLayoutInflater());
         if (dataMap != null && !dataMap.isEmpty()) {
             if (mDefectContentDialog == null) {
                 int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
                 int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) * 2 / 3;
-                contentDialogBinding = XsFragmentRecordDefectContentDialogBinding.inflate(getActivity().getLayoutInflater());
                 mDefectContentDialog = DialogUtils.createDialog(currentActivity,contentDialogBinding.getRoot(),dialogWidth,dialogHeight);
             }
             if (mDialogContentAdapter == null) {

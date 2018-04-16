@@ -51,6 +51,7 @@ import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.FileUtil;
 import com.cnksi.sjjc.util.PermissionUtil;
 import com.cnksi.sjjc.util.TTSUtils;
+import com.cnksi.sjjc.view.CustomerDialog;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
@@ -79,10 +80,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private Users mCurrentUserOne, mCurrentUserTwo;
     private List<String> usersName = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
-    private Dialog updateLogDialog;
-    private AppVersion remoteSjjcAppVersion;
-    private AppVersion currentVersion;
-    private DialogCopyTipsBinding layout;
+
     private String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.RECORD_AUDIO,
@@ -119,51 +117,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     }
 
 
-    public void inData() {
-        layout = DialogCopyTipsBinding.inflate(getLayoutInflater());
-        int dialogWidth = ScreenUtils.getScreenWidth(_this) * 9 / 10;
-        int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
-        updateLogDialog = DialogUtils.creatDialog(_this, layout.getRoot(), dialogWidth, dialogHeight);
-        ExecutorManager.executeTaskSerially(new Runnable() {
-            @Override
-            public void run() {
-                PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
-                int version = info.versionCode;
-                PackageInfo infoXunshi = null;
-                PackageManager manager = null;
-                try {
-                    //获取巡视app安装版本号
-                    manager = _this.getPackageManager();
-                    infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
-                    remoteSjjcAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-                    String apkPath = "";
-                    //增加下载APK文件夹
-                    SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
-                    try {
-                        DbModel model = CustomApplication.getInstance().getDbManager().findDbModelFirst(info1);
-                        if (model != null) {
-                            apkPath = "admin/" + model.getString("short_name_pinyin") + "/apk";
-                        }
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-                    if (null != remoteSjjcAppVersion) {
-                        checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
-                                Config.PCODE, false, TextUtils.isEmpty(remoteSjjcAppVersion.description) ? "修复bug,优化流畅度" : remoteSjjcAppVersion.description);
-                    }
-                    if (null != remoteSjjcAppVersion && PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
-                        PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, false);
-                    }
-                    currentVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + version + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-                    if (currentVersion == null)
-                        currentVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code = '" + infoXunshi.versionCode + "'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
-    }
 
 
     public void inUI() {
@@ -371,8 +325,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     protected void onResume() {
         super.onResume();
         //清空当前登录信息
-        if (isGrantPermission)
-            KSyncConfig.getInstance().setDept_id("-1");
+        if (isGrantPermission) {
+
+        }
     }
 
 
@@ -418,14 +373,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             case USER_LOGIN_SUCCESS:
                 loginSystem();
                 break;
-            case SHOW_UPDATE_LOG_DIALOG:
-                if (null != updateLogDialog && null != currentVersion) {
-                    layout.tvDialogTitle.setText("本次更新内容");
-                    layout.clickLinearlayout.setVisibility(View.GONE);
-                    layout.tvCopy.setVisibility(View.GONE);
-                    layout.tvTips.setText(Html.fromHtml(TextUtils.isEmpty(currentVersion.description) ? "欢迎使用！" : currentVersion.description));
-                    updateLogDialog.show();
-                }
             case LOAD_DATA:
                 arrayAdapter.clear();
                 arrayAdapter.addAll(usersName);
@@ -548,11 +495,10 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         PreferencesUtils.put(Config.PERMISSION_STASTUS, true);
         LocationUtil.getInstance().preSearchGps(mActivity);
         CustomApplication.getInstance().initApp();
+        copyBdzInspectionDb();
         isGrantPermission = true;
         if (thirdLogin()) return;
         inUI();
-        inData();
         initOnClick();
-
     }
 }

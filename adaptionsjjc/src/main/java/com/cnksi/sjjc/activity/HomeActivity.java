@@ -110,7 +110,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         changedStatusColor();
         checkIsNeedSync();
-        initUpdateSystem();
         inUI();
         initTabs();
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
@@ -136,37 +135,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     }
 
-    private void initUpdateSystem() {
-        ExecutorManager.executeTaskSerially(() -> {
-            String apkPath = "";
-            //增加下载APK文件夹
-            SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
-            try {
-                PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
-                int version = info.versionCode;
-                PackageManager manager = _this.getPackageManager();
-                PackageInfo infoXunshi = manager.getPackageInfo("com.cnksi.bdzinspection", 0);
-                remoteSjjcAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-                remoteXunshiAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + infoXunshi.versionCode + "'").expr("and file_name like '%xunshi%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
-                DbModel model = CustomApplication.getInstance().getDbManager().findDbModelFirst(info1);
-                if (model != null) {
-                    apkPath = Config.BDZ_INSPECTION_FOLDER + "admin/" + model.getString("short_name_pinyin") + "/apk";
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                apkPath = Config.DOWNLOAD_APP_FOLDER;
-            }
-            if (remoteSjjcAppVersion != null && remoteXunshiAppVersion != null && !PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
-//TODO:
-            } else if (remoteXunshiAppVersion != null && remoteSjjcAppVersion == null && PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
-                checkUpdateVersion(apkPath, Config.PCODE, true, "");
-            } else if (remoteXunshiAppVersion == null || remoteSjjcAppVersion == null) {
-                PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, false);
-                checkUpdateVersion(apkPath, Config.PCODE, true, "");
-            }
-        });
-
-    }
 
     private void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
@@ -285,6 +253,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         for (TaskType tab : tabs) {
             tab.init();
         }
+
+        checkUpdate();
     }
 
     @Override

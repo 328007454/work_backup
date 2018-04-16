@@ -28,6 +28,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled false
         }
     }
 
@@ -50,4 +51,5 @@ dependencies {
     compile 'com.baoyz.pullrefreshlayout:library:1.2.0'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation files('libs/M100_RFID_API.jar')
+    compile project(':tts')
 }

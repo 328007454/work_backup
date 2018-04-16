@@ -31,7 +31,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('libs/core-3.2.1.jar')
     compile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'
-    implementation 'com.cnksi:core:1.2.6'
+    implementation 'com.cnksi:core:1.2.7.1'
     compile('com.cnksi:ksynclib:3.1.8.2-xj'){
         exclude module: 'fastjson'
         exclude module: 'autolayout'
