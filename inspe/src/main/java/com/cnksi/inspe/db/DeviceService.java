@@ -134,8 +134,8 @@ public class DeviceService extends BaseDbService {
     public DeviceEntity getDeviceById(String deviceId) {
         try {
             return dbManager.selector(DeviceEntity.class)
-                    .where("dlt", "=", "0")
-                    .and("deviceid", "=", deviceId)
+//                    .where("dlt", "=", "0")//自定义添加设备dlt=1;
+                    .where("deviceid", "=", deviceId)
                     .findFirst();
         } catch (DbException e) {
             e.printStackTrace();

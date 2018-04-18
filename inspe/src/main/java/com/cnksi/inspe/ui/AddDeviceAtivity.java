@@ -136,7 +136,7 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
         this.finish();
 
         Intent intent = new Intent(context, InspePlustekIssueActivity.class)
-                .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.COPY)//
+                .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.NOPMS)//
                 .putExtra(InspePlustekIssueActivity.IntentKey.TASK_ID, taskId)//
                 .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, deviceIds.remove(0))//
                 .putExtra(InspePlustekIssueActivity.IntentKey.NOPMS_DEVICE_OTHER, ArrayInspeUtils.toListString(deviceIds));//

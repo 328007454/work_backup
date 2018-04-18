@@ -26,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.AddDeviceAtivity"/>
         <activity android:name=".ui.InspeCreateActivity" />
         <activity android:name=".ui.InspeModifyActivity" />
         <activity android:name=".ui.InspeHtmlActivity" />

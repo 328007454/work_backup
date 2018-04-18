@@ -3,6 +3,7 @@ package com.cnksi.inspe.ui;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -74,12 +75,12 @@ import java.util.UUID;
  * <li>{@link StartMode#COPY}:问题拷贝，参数:{任务ID、设备ID、问题ID、说明内容}</li>
  * <li>{@link StartMode#NOPMS}:无设备信息(台账))，参数:{任务ID、设备ID}</li>
  * </ol>
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/21 09:25
  */
 public class InspePlustekIssueActivity extends AppBaseActivity implements View.OnClickListener {
+    private Set<String> noPmsIds = new HashSet<>();
     private ActivityInspePlustekissueBinding dataBinding;
 
     private DictionaryService dictionaryService = new DictionaryService();
@@ -316,6 +317,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
      */
     private void initCopyIssue(String taskId, String deviceId, String ruleResultId, String content) {
         rule4Entity = plustekService.getIssue(ruleResultEntity.getRule_id());
+        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
         ruleResultEntity.setId(null);
 
         dataBinding.issueInfoTxt.setOnClickListener(null);
@@ -371,7 +373,33 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
      * 设备无PMS
      */
     private void initNoPmsIssue(String taskId, String deviceId) {
+        rule4Entity = plustekService.getNoPMS4(deviceEntity.getBigid());
+        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
+        maxIntentMinus = (int) (plustekService.getStandaredMaxDult(rule4Entity.id, deviceId) * SCAN_NUM);
+        if (rule4Entity == null) {
+            showToast("未查询到标准！");
+            finish();
+            startNoPmsActivity();
+            return;
+        }
+        String otherDevices = getIntent().getStringExtra(IntentKey.NOPMS_DEVICE_OTHER);
+        if (!TextUtils.isEmpty(otherDevices)) {
+            noPmsIds.addAll(Arrays.asList(otherDevices.split(",")));
+        }
+        list = new ArrayList<>();
+        listArray = new ArrayList<>();
+        list.add(rule4Entity);
+        list.add(rule4Entity);
+        listArray.add(rule4Entity.getName());
 
+        String[] leve12Name = plustekService.getLeve1_2Name(list.get(0).getId());
+        if (leve12Name != null && leve12Name.length > 1) {
+            content = deviceEntity.getName_short() + " " + leve12Name[0] + "-" + leve12Name[1];
+        }
+
+        dataBinding.contextTxt.setText(content);
+        dataBinding.issueNatureTxt.setText(natureArray.get(0));
+        checkIssuUpdateUI(rule4Entity);
     }
 
     /**
@@ -386,6 +414,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             finish();
             return;
         }
+        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
+
         dataBinding.issueInfoTxt.setOnClickListener(null);
         dataBinding.issueInfoTxt.setText(rule4Entity.getName());
         dataBinding.issueEdit.setText(ruleResultEntity.getDescription());
@@ -439,7 +469,6 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     }
 
     private void initCreateIssue(String taskId, String deviceId, String ruleId3) {
-
         //描述
         dataBinding.contextTxt.setText(content);
         //初始化
@@ -452,9 +481,9 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         if (resultCode == RESULT_OK) {
             if (requestCode == TAKEPIC_REQUEST) {
                 BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
-                String picContent = DateUtils.getFormatterTime(new Date(), InspeConfig.dateFormatYMDHM )+ "\n" + deviceEntity.name + "\n" + taskEntity.checkuser_name;
+                String picContent = DateUtils.getFormatterTime(new Date(), InspeConfig.dateFormatYMDHM) + "\n" + deviceEntity.name + "\n" + taskEntity.checkuser_name;
                 drawCircle(FileUtils.getInpseRootPath() + picTempPath, picContent);
-            }else if (requestCode==InspeConfig.LOAD_DATA){
+            } else if (requestCode == InspeConfig.LOAD_DATA) {
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
             }
@@ -464,7 +493,6 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     /**
      * 扣分显示<p/>
      * 根据最大扣分值来作为判断
-     *
      * @param value
      */
 
@@ -549,56 +577,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         initEditIssue(taskId, deviceId, ruleResultId, content);
                         return;
                     }
-                    //问题描述
-                    dataBinding.issueInfoTxt.setText(entity.getName());
-                    //dataBinding.issueEdit.setText(entity.getName().replaceAll("的{0,},{0,}，{0,}[扣].*分.*", "").replaceAll("[0-9].]{0,}[a-z)]{0,}[a-z]{0,}", ""));
-
-                    //扣分
-                    minusScore = 0;
-                    scoreEntity = (int) (entity.getScore() * SCAN_NUM);
-                    if (!TextUtils.isEmpty(entity.getScore_content())) {
-                        InspeScoreEntity scoreObject = JSON.parseObject(entity.getScore_content(), InspeScoreEntity.class);
-                        int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
-                        if (maxV > 0) {
-                            maxMinus = Math.min(maxIntentMinus, maxV);
-                        } else {
-                            maxMinus = maxIntentMinus;
-                        }
-                    } else {
-                        maxMinus = maxIntentMinus;
-                    }
-                    setScoreTxt(scoreEntity);
-
-                    //检修班组、检修部门
-                    listTeamArray.clear();
-                    listBranchArray.clear();
-                    if (!TextUtils.isEmpty(entity.getScore_charge())) {
-                        String[] branchs = entity.getScore_charge().split(",");
-
-                        listTeamArray.addAll(Arrays.asList(branchs));
-                        if (branchs.length > 1) {
-                            dataBinding.blameTeamTxt.setText(null);
-                            dataBinding.blameBranchTxt.setText(null);
-                        } else {
-                            String team = branchs[0];
-                            dataBinding.blameTeamTxt.setText(team);
-
-                            if (team.contains("检修")) {
-                                //运维或供电公司
-                                dataBinding.blameBranchTxt.setText(null);
-                                listBranchArray.add(subStationEntity.getPower_company());
-                                listBranchArray.add(taskEntity.getDept_name());
-
-                            } else if (team.contains("运维")) {
-                                //供电公司
-                                dataBinding.blameBranchTxt.setText(subStationEntity.getPower_company());
-                                listBranchArray.add(subStationEntity.getPower_company());
-                            }
-
-                        }
-                    } else {
-                        dataBinding.blameBranchTxt.setText(null);
-                    }
+                    checkIssuUpdateUI(entity);
                 }
             }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.issueEdit) {
@@ -694,11 +673,65 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 //                    return;
             } else if (picList.size() == 0) {
                 showToast("请对问题拍照处理");
+                return;
             }
 
             createIssue();//满足输入，创建错误
         }
 
+    }
+
+    private void checkIssuUpdateUI(PlusteRuleEntity entity) {
+        //问题描述
+        dataBinding.issueInfoTxt.setText(entity.getName());
+        //dataBinding.issueEdit.setText(entity.getName().replaceAll("的{0,},{0,}，{0,}[扣].*分.*", "").replaceAll("[0-9].]{0,}[a-z)]{0,}[a-z]{0,}", ""));
+
+        //扣分
+        minusScore = 0;
+        scoreEntity = (int) (entity.getScore() * SCAN_NUM);
+        if (!TextUtils.isEmpty(entity.getScore_content())) {
+            InspeScoreEntity scoreObject = JSON.parseObject(entity.getScore_content(), InspeScoreEntity.class);
+            int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
+            if (maxV > 0) {
+                maxMinus = Math.min(maxIntentMinus, maxV);
+            } else {
+                maxMinus = maxIntentMinus;
+            }
+        } else {
+            maxMinus = maxIntentMinus;
+        }
+        setScoreTxt(scoreEntity);
+
+        //检修班组、检修部门
+        listTeamArray.clear();
+        listBranchArray.clear();
+        if (!TextUtils.isEmpty(entity.getScore_charge())) {
+            String[] branchs = entity.getScore_charge().split(",");
+
+            listTeamArray.addAll(Arrays.asList(branchs));
+            if (branchs.length > 1) {
+                dataBinding.blameTeamTxt.setText(null);
+                dataBinding.blameBranchTxt.setText(null);
+            } else {
+                String team = branchs[0];
+                dataBinding.blameTeamTxt.setText(team);
+
+                if (team.contains("检修")) {
+                    //运维或供电公司
+                    dataBinding.blameBranchTxt.setText(null);
+                    listBranchArray.add(subStationEntity.getPower_company());
+                    listBranchArray.add(taskEntity.getDept_name());
+
+                } else if (team.contains("运维")) {
+                    //供电公司
+                    dataBinding.blameBranchTxt.setText(subStationEntity.getPower_company());
+                    listBranchArray.add(subStationEntity.getPower_company());
+                }
+
+            }
+        } else {
+            dataBinding.blameBranchTxt.setText(null);
+        }
     }
 
     /**
@@ -781,8 +814,21 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             showToast("操作成功");
             isSave = true;
             finish();
+            startNoPmsActivity();
+
         } else {
             showToast("保存数据库失败！");
+        }
+    }
+
+    private void startNoPmsActivity() {
+        if (StartMode.NOPMS == startMode && noPmsIds.size() > 0) {
+            Intent intent = new Intent(context, InspePlustekIssueActivity.class)
+                    .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, StartMode.NOPMS)//
+                    .putExtra(InspePlustekIssueActivity.IntentKey.TASK_ID, taskId)//
+                    .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, noPmsIds.remove(0))//
+                    .putExtra(InspePlustekIssueActivity.IntentKey.NOPMS_DEVICE_OTHER, ArrayInspeUtils.toListString(noPmsIds));//
+            startActivity(intent);
         }
     }
 
@@ -821,6 +867,26 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 
     }
 
+    @Override
+    protected void onBack(View view) {
+        if (StartMode.NOPMS == startMode) {
+            showToast("添加设备必须，不可取消");
+        } else {
+            onBack(view);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBack(toolbar_back_btn);
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+
+    }
+
     /**
      * Intent参数KEY
      */
@@ -849,10 +915,10 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
          * 问题ID
          */
         String RULE_RESULT_ID = "rule_ruslt_id";
-        /**
-         * 描述内容
-         */
+        /** 描述内容 */
         String CONTENT = "content";
+        /** NOPMSIDS */
+        String NOPMS_DEVICE_OTHER = "nopms_device_other";
     }
 
     /**
