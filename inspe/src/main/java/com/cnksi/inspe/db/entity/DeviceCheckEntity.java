@@ -8,7 +8,6 @@ import org.xutils.db.annotation.Table;
 
 /**
  * 设备检查记录表(仅本地使用)
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/04/16 11:04
@@ -17,29 +16,38 @@ import org.xutils.db.annotation.Table;
 public class DeviceCheckEntity extends BaseDBEntity {
     public DeviceCheckEntity() {
     }
+
+    /***/
+    @Column(name = "id", autoGen = true, isId = true)
+    public int id;
+
     /***/
     @Column(name = "task_id")
     public String task_id;
 
     /***/
-    @Column(name = "deviceid")
-    public String deviceid;
+    @Column(name = "device_id")
+    public String device_id;
 
     /***/
-    @Column(name = "bdzid")
-    public String bdzid;
+    @Column(name = "plustek_type")
+    public String plustek_type;
 
     /***/
     @Column(name = "record_type")
     public String record_type;
 
     /***/
-    @Column(name = "bigid")
-    public String bigid;
-
-      /***/
-    @Column(name = "dlt")
+    @Column(name = "dlt", property = "\0")
     public int dlt;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTask_id() {
         return task_id;
@@ -49,20 +57,20 @@ public class DeviceCheckEntity extends BaseDBEntity {
         this.task_id = task_id;
     }
 
-    public String getDeviceid() {
-        return deviceid;
+    public String getDevice_id() {
+        return device_id;
     }
 
-    public void setDeviceid(String deviceid) {
-        this.deviceid = deviceid;
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
     }
 
-    public String getBdzid() {
-        return bdzid;
+    public String getPlustek_type() {
+        return plustek_type;
     }
 
-    public void setBdzid(String bdzid) {
-        this.bdzid = bdzid;
+    public void setPlustek_type(String plustek_type) {
+        this.plustek_type = plustek_type;
     }
 
     public String getRecord_type() {
@@ -71,14 +79,6 @@ public class DeviceCheckEntity extends BaseDBEntity {
 
     public void setRecord_type(String record_type) {
         this.record_type = record_type;
-    }
-
-    public String getBigid() {
-        return bigid;
-    }
-
-    public void setBigid(String bigid) {
-        this.bigid = bigid;
     }
 
     public int getDlt() {

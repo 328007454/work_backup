@@ -15,8 +15,10 @@ import com.cnksi.inspe.databinding.ActivityInspePlustekIssuelistBinding;
 import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.entity.DeviceEntity;
+import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.entity.IssueListEntity;
+import com.cnksi.inspe.type.PlustekType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,16 +55,13 @@ public class InspePlustekSimilarIssueActivity extends AppBaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //修改
                 IssueListEntity entity = list.get(position);
-                Intent intent = new Intent(context, InspePlustekIssueActivity.class);
-                intent.putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.COPY);//设置页面模式
-                intent.putExtra("device_id", deviceId);//设备ID
-                intent.putExtra("task_id", taskId);//任务ID
-                intent.putExtra("edit_data", list.get(position).resultEntity);//计算可扣分数
-                if (entity.names != null && entity.names.length > 1) {
-                    intent.putExtra("info_txt", (entity.resultEntity.getDevice_name() + " " + entity.names[0] + "-" + entity.names[1]));
-                } else {
-                    intent.putExtra("info_txt", entity.resultEntity.getDevice_name());
-                }
+                Intent intent = new Intent(context, InspePlustekIssueActivity.class)
+                        .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.COPY)//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.TASK_ID, taskId)//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, deviceId)//
+//                        .putExtra(InspePlustekIssueActivity.IntentKey.PLUSTEK_TYPE, PlustekType.valueOf(entity.resultEntity.check_type))//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.RULE_RESULT_ID, entity.resultEntity.getId())
+                        .putExtra(InspePlustekIssueActivity.IntentKey.CONTENT, entity.resultEntity.getDevice_name() + " " + entity.names[0] + "-" + entity.names[1]);
 
                 startActivity(intent);
             }
@@ -102,6 +101,7 @@ public class InspePlustekSimilarIssueActivity extends AppBaseActivity {
 
     private String taskId;
     private String deviceId;
+    private DeviceTypeEntity deviceTypeEntity;
 
     @Override
     public void initData() {
@@ -113,10 +113,16 @@ public class InspePlustekSimilarIssueActivity extends AppBaseActivity {
             return;
         }
         deviceEntity = deviceService.getDeviceById(deviceId);
+
         if (deviceEntity == null) {
+
             showToast("未查询到设备！");
             finish();
             return;
+        }
+        deviceTypeEntity = deviceService.getDeviceTypes(deviceEntity.getBigid());
+        if (deviceTypeEntity != null) {
+            setTitle(deviceTypeEntity.getName() + "问题", R.drawable.inspe_left_black_24dp);
         }
 
     }

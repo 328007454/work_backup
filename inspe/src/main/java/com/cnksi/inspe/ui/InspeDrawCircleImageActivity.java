@@ -25,7 +25,6 @@ import java.io.OutputStream;
 
 public class InspeDrawCircleImageActivity extends AppBaseActivity {
 
-  
 
     private PicturePaintView mPicturePaintView;
     /**
@@ -48,12 +47,16 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
     @Override
     public void initUI() {
         binding = (ActivityInspeDrawCircleImageBinding) rootDataBinding;
+        binding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
         mHandler = new MyHandler();
+        initOnClick();
     }
 
     @Override
     public void initData() {
-
+        currentImagePath = getIntent().getStringExtra(Config.CURRENT_IMAGE_NAME);
+        binding.includeInspeTitle.toolbarTitle.setText("标记图片");
+        initBitmap();
     }
 
 

@@ -23,4 +23,9 @@ public class InspeConfig {
      * 保存数据
      */
     public static final int SAVE_DATA = 0x3;
+
+    /**
+     * yyyy-MM-dd HH:mm
+     */
+    public static final String dateFormatYMDHM= "yyyy-MM-dd HH:mm";
 }

@@ -37,6 +37,18 @@ public class DeviceService extends BaseDbService {
         return null;
     }
 
+    public DeviceTypeEntity getDeviceTypes(String bigId) {
+        try {
+            return dbManager.selector(DeviceTypeEntity.class)
+                    .where("dlt", "=", "0")
+                    .and("bigid", "=", bigId)
+                    .findFirst();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * 根据ID查询变电站
      *
@@ -133,21 +145,22 @@ public class DeviceService extends BaseDbService {
     }
 
     /**
-     *
      * @return
      */
     public List<DbModel> getAllOneSpace(String bdzId) throws DbException {
         List<DbModel> spaceModels = new ArrayList<>();
-        String bigTypesSql = "select * from spacing where bdzid = '"+bdzId+"' and dlt = 0 and device_type like '%one%'";
+        String bigTypesSql = "select * from spacing where bdzid = '" + bdzId + "' and dlt = 0 and device_type like '%one%'";
         spaceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return spaceModels;
     }
 
+
     /**
      * 保存缺失的设备台账到设备表中
+     *
      * @param entities
      */
-    public void saveExtraDevice(List<DeviceEntity> entities){
+    public void saveExtraDevice(List<DeviceEntity> entities) {
         try {
             dbManager.saveOrUpdate(entities);
         } catch (DbException e) {
@@ -157,13 +170,14 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 获取手机端添加的缺设备台账
+     *
      * @param bdzId
      * @return
      */
     public List<DbModel> getAddDevice(String bdzId) throws DbException {
 
         List<DbModel> spaceModels = new ArrayList<>();
-        String bigTypesSql = "select * from device where bdzid = '"+bdzId+"' and dlt = 1 and type ='all' ";
+        String bigTypesSql = "select * from device where bdzid = '" + bdzId + "' and dlt = 1 and type ='all' ";
         spaceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return spaceModels;
     }

@@ -104,15 +104,15 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
                 startMain(null, new String[]{"test2"});
                 break;
             case expert:
-                String userId = "2c9082925f6aeda2015f6aeea92a000b";
-                UserEntity userEntity = getUserService().getUserOnId(userId);
+                String userName = "zj";
+                UserEntity userEntity = getUserService().getUserOnName(userName);
                 if (userEntity != null) {
                     userEntity.setRoleTypes(RoleType.getRoles(userEntity.getType()));
                     if (!(userEntity.getRoleTypes()).contains(RoleType.expert)) {
                         userEntity.setType(userEntity.getType() + "," + RoleType.expert);
                         getUserService().update(userEntity);
                     }
-                    startMain(new String[]{userId}, null);
+                    startMain(null, new String[]{userName});
                 } else {
                     showToast("未查询到用户");
                 }
