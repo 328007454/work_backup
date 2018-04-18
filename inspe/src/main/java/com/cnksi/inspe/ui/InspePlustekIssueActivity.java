@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.GalleryAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
@@ -39,6 +40,8 @@ import com.cnksi.inspe.utils.ImageUtils;
 import com.cnksi.inspe.utils.InspeConfig;
 import com.cnksi.inspe.widget.BreakWordDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
+
+import org.xutils.db.converter.StringValueFilter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -343,7 +346,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             maxMinus = maxIntentMinus;
         }
 
-        setScoreTxt(scoreEntity);
+        setScoreTxt(scoreEntity, true);
 
         //责任班组、责任部门
         listTeamArray = new ArrayList<>();
@@ -405,6 +408,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         scoreEntity = (int) (ruleResultEntity.getDeduct_score() * SCAN_NUM);
         if (!TextUtils.isEmpty(rule4Entity.getScore_content())) {
             InspeScoreEntity scoreObject = JSON.parseObject(rule4Entity.getScore_content(), InspeScoreEntity.class);
+            minusScore = (int) (scoreObject.score * SCAN_NUM);
             int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
             if (maxV > 0) {
                 maxMinus = Math.min(maxIntentMinus, maxV) + scoreEntity;
@@ -415,7 +419,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             maxMinus = maxIntentMinus;
         }
 
-        setScoreTxt(scoreEntity);
+        setScoreTxt(scoreEntity, true);
 
         //责任班组、责任部门
         listTeamArray = new ArrayList<>();
@@ -452,9 +456,9 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         if (resultCode == RESULT_OK) {
             if (requestCode == TAKEPIC_REQUEST) {
                 BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
-                String picContent = DateUtils.getFormatterTime(new Date(), InspeConfig.dateFormatYMDHM )+ "\n" + deviceEntity.name + "\n" + taskEntity.checkuser_name;
+                String picContent = DateUtils.getFormatterTime(new Date(), InspeConfig.dateFormatYMDHM) + "\n" + deviceEntity.name + "\n" + taskEntity.checkuser_name;
                 drawCircle(FileUtils.getInpseRootPath() + picTempPath, picContent);
-            }else if (requestCode==InspeConfig.LOAD_DATA){
+            } else if (requestCode == InspeConfig.LOAD_DATA) {
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
             }
@@ -465,16 +469,22 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
      * 扣分显示<p/>
      * 根据最大扣分值来作为判断
      *
+     * @param isFirstInit true 表示问题记录见面或者问题复制首次进入时只展示上次扣分，false代表点击点击加号等人为主动触发
      * @param value
      */
 
-    private void setScoreTxt(int value) {
+    private void setScoreTxt(int value, boolean isFirstInit) {
         boolean isAdd = true;
-        int nextValue = minusScore + value;
+        int nextValue;
+        if (!isFirstInit)
+            nextValue = minusScore + value;
+        else
+            nextValue = minusScore;
+
         if (nextValue > maxMinus) {
             isAdd = false;
             dataBinding.addBtn.setEnabled(false);
-        } else if (nextValue == maxMinus || scoreEntity == 0) {
+        } else if (nextValue == maxMinus || minusScore == 0) {
             dataBinding.addBtn.setEnabled(false);
         } else {
             dataBinding.addBtn.setEnabled(true);
@@ -567,7 +577,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     } else {
                         maxMinus = maxIntentMinus;
                     }
-                    setScoreTxt(scoreEntity);
+                    setScoreTxt(scoreEntity, false);
 
                     //检修班组、检修部门
                     listTeamArray.clear();
@@ -602,63 +612,44 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 }
             }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.issueEdit) {
-            new BreakWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName()).setOnCheckListener(new BreakWordDialog.OnCheckedListener() {
-                @Override
-                public void onChecked(String msg) {
-                    dataBinding.issueEdit.setText(msg);
-                }
-            }).show();
+            if (rule3Entity == null || rule4Entity == null) {
+                ToastUtils.showMessage("未查询到数据，请手动输入数据");
+                return;
+            }
+            new BreakWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName()).setOnCheckListener(msg -> dataBinding.issueEdit.setText(msg)).show();
         } else if (i == R.id.addBtn) {//+扣分
-            setScoreTxt(scoreEntity);
+            setScoreTxt(scoreEntity, false);
         } else if (i == R.id.minuxBtn) {//-扣分
-            setScoreTxt(-scoreEntity);
+            setScoreTxt(-scoreEntity, false);
         } else if (i == R.id.issueNatureTxt) {//问题性质(独立),一般、严重、危急
-            new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    dataBinding.issueNatureTxt.setText(natureList.get(position).getV());
-                }
-            }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
+            new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener((adapter, view1, position) -> dataBinding.issueNatureTxt.setText(natureList.get(position).getV())).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.blameTeamTxt) {//问题班组
-            new PopItemWindow(this).setListAdapter(listTeamArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            new PopItemWindow(this).setListAdapter(listTeamArray).setOnItemClickListener((adapter, view12, position) -> {
 
-                    String team = listTeamArray.get(position);
-                    dataBinding.blameTeamTxt.setText(team);
-                    listBranchArray.clear();
-                    if (team.contains("检修")) {
-                        //运维或供电公司
-                        dataBinding.blameBranchTxt.setText(null);
-                        listBranchArray.add(subStationEntity.getPower_company());
-                        listBranchArray.add(taskEntity.getDept_name());
-                        dataBinding.blameBranchTxt.performClick();
+                String team = listTeamArray.get(position);
+                dataBinding.blameTeamTxt.setText(team);
+                listBranchArray.clear();
+                if (team.contains("检修")) {
+                    //运维或供电公司
+                    dataBinding.blameBranchTxt.setText(null);
+                    listBranchArray.add(subStationEntity.getPower_company());
+                    listBranchArray.add(taskEntity.getDept_name());
+                    dataBinding.blameBranchTxt.performClick();
 
-                    } else if (team.contains("运维")) {
-                        //供电公司
-                        dataBinding.blameBranchTxt.setText(subStationEntity.getPower_company());
-                        listBranchArray.add(subStationEntity.getPower_company());
-                    }
+                } else if (team.contains("运维")) {
+                    //供电公司
+                    dataBinding.blameBranchTxt.setText(subStationEntity.getPower_company());
+                    listBranchArray.add(subStationEntity.getPower_company());
                 }
             }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.blameBranchTxt) {//责任单位
             if (listBranchArray.size() > 0) {
-                new PopItemWindow(this).setListAdapter(listBranchArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        dataBinding.blameBranchTxt.setText(listBranchArray.get(position));
-                    }
-                }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
+                new PopItemWindow(this).setListAdapter(listBranchArray).setOnItemClickListener((adapter, view13, position) -> dataBinding.blameBranchTxt.setText(listBranchArray.get(position))).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
             } else {
                 showToast("请先选择扣分原因");
             }
         } else if (i == R.id.issueReasonTxt) {//问题产生原因(独立)
-            new PopItemWindow(this).setListAdapter(reasonArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    dataBinding.issueReasonTxt.setText(reasonList.get(position).getV());
-                }
-            }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
+            new PopItemWindow(this).setListAdapter(reasonArray).setOnItemClickListener((adapter, view14, position) -> dataBinding.issueReasonTxt.setText(reasonList.get(position).getV())).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.okBtn) {//确定
             if (TextUtils.isEmpty(dataBinding.issueInfoTxt.getText().toString().trim())) {
                 dataBinding.issueInfoTxt.performClick();
