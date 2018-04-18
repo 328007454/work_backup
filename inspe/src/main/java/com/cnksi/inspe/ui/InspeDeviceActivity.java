@@ -93,7 +93,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         InspecteTaskEntity taskEntity = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
         taskId = taskEntity.id;
         bdzId = taskEntity.bdz_id;
-        String bigId = taskEntity.checked_device_bigid;
+        String bigId = taskEntity.persion_device_bigid;
         bigIds = com.cnksi.inspe.utils.StringUtils.getDeviceStandardsType(bigId);
         ExecutorManager.executeTaskSerially(() -> {
             try {
