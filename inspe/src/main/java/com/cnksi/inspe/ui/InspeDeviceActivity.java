@@ -55,7 +55,9 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private String bigIds = "";
     private PlustekType plustekType;
     private String bdzId;
-    private boolean isFirstLoad=false;
+    private boolean isFirstLoad = false;
+    private InspecteTaskEntity taskEntity;
+
     @Override
     public int getLayoutResId() {
         return R.layout.activity_inspe_device;
@@ -86,22 +88,33 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         popItemWindow = new PopItemWindow(this);
         popItemWindow.setOnItemClickListener(this);
         initOnClick();
-    }
 
-    @Override
-    public void initData() {
-        InspecteTaskEntity taskEntity = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
+        taskEntity = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
         taskId = taskEntity.id;
         bdzId = taskEntity.bdz_id;
         String bigId = taskEntity.persion_device_bigid;
         deviceBinding.includeInspeTitle.toolbarTitle.setText(TextUtils.isEmpty(taskEntity.bdz_name) ? (plustekType.getDesc()) : taskEntity.bdz_name + plustekType.getDesc());
         bigIds = com.cnksi.inspe.utils.StringUtils.getDeviceStandardsType(bigId);
+    }
+
+    @Override
+    public void initData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 bigTypeModels = new DeviceService().getBigTypeModels(bigIds);
                 dbModelList = new DeviceService().getAllDeviceByBigID(bdzId, bigIds);
                 List<DbModel> otherDevice = new DeviceService().getAddDevice(bdzId);
                 if (otherDevice != null && !otherDevice.isEmpty()) {
+                    for (DbModel model : otherDevice) {
+                        if (TextUtils.isEmpty(model.getString("spid"))) {
+                            model.add("spid", "000000");
+                            model.add("sname", "添加设备");
+                            model.add("dnameshort", model.getString("name_short"));
+                        }
+                        if (TextUtils.isEmpty(model.getString("dnameshort"))) {
+                            model.add("dnameshort", model.getString("name_short"));
+                        }
+                    }
                     dbModelList.addAll(otherDevice);
                 }
             } catch (DbException e) {
@@ -122,12 +135,13 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         });
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        if (isFirstLoad){
+        if (isFirstLoad) {
             initData();
-        }else {
+        } else {
             isFirstLoad = !isFirstLoad;
         }
     }
@@ -139,14 +153,6 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         if (!models.isEmpty()) {
             Set<String> spaceIds = new ArraySet<>();
             for (DbModel model : models) {
-                if (TextUtils.isEmpty(model.getString("spid"))) {
-                    model.add("spid", "000000");
-                    model.add("sname", "添加设备");
-                    model.add("dnameshort", model.getString("name_short"));
-                }
-                if (TextUtils.isEmpty(model.getString("dnameshort"))) {
-                    model.add("dnameshort", model.getString("name_short"));
-                }
                 if (spaceIds.contains(model.getString("spid")))
                     continue;
                 SpaceItem spaceItem = new SpaceItem(model);

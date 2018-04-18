@@ -106,8 +106,6 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
     private void initOnClick() {
         binding.btnSave.setOnClickListener(view -> {
             saveData();
-            Intent intent = new Intent(this, InspePlustekIssueActivity.class);
-            startActivity(intent);
         });
         binding.includeInspeTitle.toolbarBackBtn.setOnClickListener(view -> {
             this.finish();
@@ -132,11 +130,11 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
             deviceIds.add(entity.deviceid);
         }
         new DeviceService().saveExtraDevice(entityList);
-        Intent intent = new Intent();
-        intent.setClass(this, InspePlustekSimilarIssueActivity.class);
-        intent.putStringArrayListExtra("device_id_arrays", deviceIds);
-        startActivity(intent);
-        this.finish();
+//        Intent intent = new Intent();
+//        intent.setClass(this, InspePlustekSimilarIssueActivity.class);
+//        intent.putStringArrayListExtra("device_id_arrays", deviceIds);
+//        startActivity(intent);
+//        this.finish();
     }
 
     DialogListviewLayoutBinding spaceBinding;

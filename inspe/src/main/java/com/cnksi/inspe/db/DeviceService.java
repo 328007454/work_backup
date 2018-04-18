@@ -91,7 +91,7 @@ public class DeviceService extends BaseDbService {
 
     public List<DbModel> getAllDeviceByBigID(String bdzId, String bigId) throws DbException {
         List<DbModel> deviceModels = new ArrayList<>();
-        String deviceSql = "SELECT s.`name` sname ,s.bdzid,s.spid,s.name_pinyin snamepy , d.deviceid , d.`name` dname,d.name_short dnameshort, d.name_short_pinyin dshortpinyin ,d.bigid,d.name_pinyin dnamepy " +
+        String deviceSql = "SELECT d.type type,s.`name` sname ,s.bdzid,s.spid,s.name_pinyin snamepy , d.deviceid , d.`name` dname,d.name_short dnameshort, d.name_short_pinyin dshortpinyin ,d.bigid,d.name_pinyin dnamepy " +
                 "FROM device d LEFT JOIN spacing  s on d.spid = s.spid  WHERE d.bdzid = '" + bdzId + "' and d.bigid in " + bigId + "and d.dlt =0 ";
 
         deviceModels = dbManager.findDbModelAll(new SqlInfo(deviceSql));

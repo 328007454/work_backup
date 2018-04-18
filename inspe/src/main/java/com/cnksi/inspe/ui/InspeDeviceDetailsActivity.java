@@ -110,21 +110,23 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
      * 刷新设备检查大的类型
      */
     private void refreshUI() {
-        String company = deviceDbModel.getManufacturer();
-        String productNum = deviceDbModel.getModel();
-        String date = deviceDbModel.getCommissioning_date();// TextUtils.isEmpty(deviceDbModel.getString("commissioning_date")) ? "" : deviceDbModel.getString("commissioning_date");
-        detailsBinding.tvManufacturers.setText("生产厂家:" + company);
-        detailsBinding.tvProductModel.setText("产品型号:" + productNum);
-        String dateFormat = StringUtils.cleanString(date);
-        if (dateFormat.length() > 10) {
-            dateFormat = dateFormat.substring(0, 10);
+        if (deviceDbModel != null) {
+            String company = deviceDbModel.getManufacturer();
+            String productNum = deviceDbModel.getModel();
+            String date = deviceDbModel.getCommissioning_date();// TextUtils.isEmpty(deviceDbModel.getString("commissioning_date")) ? "" : deviceDbModel.getString("commissioning_date");
+            detailsBinding.tvManufacturers.setText("生产厂家:" + company);
+            detailsBinding.tvProductModel.setText("产品型号:" + productNum);
+            String dateFormat = StringUtils.cleanString(date);
+            if (dateFormat.length() > 10) {
+                dateFormat = dateFormat.substring(0, 10);
+            }
+            detailsBinding.tvProductDate.setText("投产日期:" + dateFormat);
+            String picPath = deviceDbModel.getChange_pic();// TextUtils.isEmpty(deviceDbModel.getString("change_pic")) ? (TextUtils.isEmpty(deviceDbModel.getString("pic")) ? "" : deviceDbModel.getString("pic")) : deviceDbModel.getString("pic");
+            if (TextUtils.isEmpty(picPath)) {
+                picPath = deviceDbModel.getPic();
+            }
+            detailsBinding.ivDeviceImage.setImageBitmap(BitmapUtils.getImageThumbnail(getPic(picPath), 480, 330));
         }
-        detailsBinding.tvProductDate.setText("投产日期:" + dateFormat);
-        String picPath = deviceDbModel.getChange_pic();// TextUtils.isEmpty(deviceDbModel.getString("change_pic")) ? (TextUtils.isEmpty(deviceDbModel.getString("pic")) ? "" : deviceDbModel.getString("pic")) : deviceDbModel.getString("pic");
-        if (TextUtils.isEmpty(picPath)) {
-            picPath = deviceDbModel.getPic();
-        }
-        detailsBinding.ivDeviceImage.setImageBitmap(BitmapUtils.getImageThumbnail(getPic(picPath), 480, 330));
         typeAdapter = new DeviceStandardTypeAdapter(R.layout.inspe_item_device_part_, typeModels);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         detailsBinding.devicePartRecy.setLayoutManager(layoutManager);
@@ -187,6 +189,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
 
     /**
      * 查询设备标准 level=2
+     *
      * @param bigId
      * @param pid
      */
