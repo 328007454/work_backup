@@ -55,6 +55,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private String bigIds = "";
     private PlustekType plustekType;
     private String bdzId;
+    private boolean isFirstLoad=false;
     @Override
     public int getLayoutResId() {
         return R.layout.activity_inspe_device;
@@ -63,10 +64,9 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     @Override
     public void initUI() {
         deviceBinding = (ActivityInspeDeviceBinding) rootDataBinding;
-
         deviceBinding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
         plustekType = (PlustekType) getIntent().getSerializableExtra("plustek_type");
-        deviceBinding.includeInspeTitle.toolbarTitle.setText(plustekType.getDesc());
+
         qwerKeyBoardUtils = new QWERKeyBoardUtils(this);
         qwerKeyBoardUtils.init(deviceBinding.keyboardContainer, this);
 
@@ -94,11 +94,16 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         taskId = taskEntity.id;
         bdzId = taskEntity.bdz_id;
         String bigId = taskEntity.persion_device_bigid;
+        deviceBinding.includeInspeTitle.toolbarTitle.setText(TextUtils.isEmpty(taskEntity.bdz_name) ? (plustekType.getDesc()) : taskEntity.bdz_name + plustekType.getDesc());
         bigIds = com.cnksi.inspe.utils.StringUtils.getDeviceStandardsType(bigId);
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 bigTypeModels = new DeviceService().getBigTypeModels(bigIds);
                 dbModelList = new DeviceService().getAllDeviceByBigID(bdzId, bigIds);
+                List<DbModel> otherDevice = new DeviceService().getAddDevice(bdzId);
+                if (otherDevice != null && !otherDevice.isEmpty()) {
+                    dbModelList.addAll(otherDevice);
+                }
             } catch (DbException e) {
                 e.printStackTrace();
                 dbModelList = new ArrayList<>();
@@ -117,6 +122,16 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isFirstLoad){
+            initData();
+        }else {
+            isFirstLoad = !isFirstLoad;
+        }
+    }
+
     /**
      * 组装adapter数据
      */
@@ -124,6 +139,14 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         if (!models.isEmpty()) {
             Set<String> spaceIds = new ArraySet<>();
             for (DbModel model : models) {
+                if (TextUtils.isEmpty(model.getString("spid"))) {
+                    model.add("spid", "000000");
+                    model.add("sname", "添加设备");
+                    model.add("dnameshort", model.getString("name_short"));
+                }
+                if (TextUtils.isEmpty(model.getString("dnameshort"))) {
+                    model.add("dnameshort", model.getString("name_short"));
+                }
                 if (spaceIds.contains(model.getString("spid")))
                     continue;
                 SpaceItem spaceItem = new SpaceItem(model);
@@ -151,7 +174,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
 
         deviceBinding.btnAddDevice.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddDeviceAtivity.class);
-            intent.putExtra("bdzId",bdzId);
+            intent.putExtra("bdzId", bdzId);
             startActivity(intent);
         });
 

@@ -24,6 +24,7 @@ import com.cnksi.inspe.databinding.DialogListviewLayoutBinding;
 import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.entity.device.SpaceItem;
+import com.cnksi.inspe.widget.BigDevicePopWindow;
 import com.cnksi.inspe.widget.CustomDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
 
@@ -33,17 +34,27 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapter.OnViewClickLitener, BaseQuickAdapter.OnItemClickListener {
+
+
+/**
+ * @author Mr.K 2018/4/17
+ * @description 该类主要是增加缺失的设备台账
+ */
+public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapter.OnViewClickLitener{
 
     AddDeviceAdapter adapter;
     ActivityInspeAddDeviceBinding binding;
     private List<DeviceEntity> entityList = new ArrayList<>();
     private List<DbModel> bigTypeModels = new ArrayList<>();
     private List<DbModel> spaceModels = new ArrayList<>();
-    private PopItemWindow popItemWindow;
+    private BigDevicePopWindow popItemWindow;
     private Dialog spaceDialog;
     private SpaceItemAdapter spaceItemAdapter;
     private String bdzId;
+    /**
+     * 大类id
+     */
+    private String deviceBigId;
 
     @Override
     public int getLayoutResId() {
@@ -61,10 +72,14 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.recyclerView.setLayoutManager(layoutManager);
         adapter.setOnViewClick(this);
+        popItemWindow = new BigDevicePopWindow(context);
+        popItemWindow.setOnItemClickListtener((view, item, position) -> {
+            deviceBigId = bigTypeModels.get(position).getString("bigid");
+            binding.txtBigDevice.setText(bigTypeModels.get(position).getString("name"));
+            adapter.setBigId(deviceBigId);
+            popItemWindow.dismiss();
+        });
 
-        popItemWindow = new PopItemWindow(this);
-        popItemWindow.setOnItemClickListener(this);
-        popItemWindow.setLayoutManager(new GridLayoutManager(context, 3));
     }
 
 
@@ -76,17 +91,13 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 bigTypeModels = new DeviceService().getBigTypeAll();
-                spaceModels = new DeviceService().getAllOneSpace();
+                spaceModels = new DeviceService().getAllOneSpace(bdzId);
             } catch (DbException e) {
                 e.printStackTrace();
             }
             runOnUiThread(() -> {
                 if (!bigTypeModels.isEmpty()) {
-                    List<String> bigTypeNames = new ArrayList<>();
-                    for (DbModel model : bigTypeModels) {
-                        bigTypeNames.add(TextUtils.isEmpty(model.getString("name")) ? "" : model.getString("name"));
-                    }
-                    popItemWindow.setListAdapter(bigTypeNames);
+                    popItemWindow.setAdapterData(bigTypeModels);
                 }
             });
         });
@@ -102,8 +113,7 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
             this.finish();
         });
         binding.llContainer.setOnClickListener(view -> {
-            popItemWindow.setPopWindowWidth(binding.txtBigDevice.getWidth());
-            popItemWindow.showAsDropDown(binding.txtBigDevice);
+            popItemWindow.setPopWindowWidth(binding.txtBigDevice.getWidth()).showAsDropDown(binding.txtBigDevice);
         });
         binding.device.setOnClickListener(view -> {
             entityList.get(entityList.size() - 1).setDeviceInfo(bdzId, deviceBigId);
@@ -116,6 +126,7 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
      * 保存添加的设备
      */
     private void saveData() {
+        entityList.get(entityList.size() - 1).setDeviceInfo(bdzId, deviceBigId);
         ArrayList<String> deviceIds = new ArrayList<>();
         for (DeviceEntity entity : entityList) {
             deviceIds.add(entity.deviceid);
@@ -159,19 +170,5 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
         }
     }
 
-    private String deviceBigId;
 
-    /**
-     * 设备大类选择Item点击事件
-     *
-     * @param adapter1
-     * @param view
-     * @param position
-     */
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter1, View view, int position) {
-        deviceBigId = bigTypeModels.get(position).getString("bigid");
-        binding.txtBigDevice.setText(bigTypeModels.get(position).getString("name"));
-        adapter.setBigId(deviceBigId);
-    }
 }

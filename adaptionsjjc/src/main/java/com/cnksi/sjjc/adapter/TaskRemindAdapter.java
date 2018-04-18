@@ -65,21 +65,15 @@ public class TaskRemindAdapter extends BaseAdapter<Task> {
         // 设置巡视时间
         holder.setText(R.id.tv_inspection_time, DateUtils.getFormatterTime(item.schedule_time, CoreConfig.dateFormat1));
 
-        holder.getRootView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != itemClickListener)
-                    itemClickListener.itemClick(v, item, position);
-            }
+        holder.getRootView().setOnClickListener(v -> {
+            if (null != itemClickListener)
+                itemClickListener.itemClick(v, item, position);
         });
-        holder.getRootView().setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if (null != itemClickListener) {
-                    itemClickListener.itemLongClick(view, item, position);
-                }
-                return false;
+        holder.getRootView().setOnLongClickListener(view -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemLongClick(view, item, position);
             }
+            return false;
         });
         holder.setText(R.id.tv_task_simple_name,getFirstChineseChar(item.bdzname) );
     }

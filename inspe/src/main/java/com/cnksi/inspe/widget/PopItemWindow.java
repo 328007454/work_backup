@@ -40,12 +40,9 @@ public class PopItemWindow extends PopupWindow implements BaseQuickAdapter.OnIte
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         rootView = inflater.inflate(R.layout.widget_popitemwindow, null);
-//        int h = context.getWindowManager().getDefaultDisplay().getHeight();
-//        int w = context.getWindowManager().getDefaultDisplay().getWidth();
         // 设置SelectPicPopupWindow的View
         this.setContentView(rootView);
         // 设置SelectPicPopupWindow弹出窗体的宽
-//        this.setWidth(w / 2 + 50);
         // 设置SelectPicPopupWindow弹出窗体的高
         this.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         // 设置SelectPicPopupWindow弹出窗体可点击
@@ -54,12 +51,9 @@ public class PopItemWindow extends PopupWindow implements BaseQuickAdapter.OnIte
         // 刷新状态
         this.update();
         // 实例化一个ColorDrawable颜色为半透明
-        ColorDrawable dw = new ColorDrawable(0000000000);
+        ColorDrawable dw = new ColorDrawable(-00000);
         // 点back键和其他地方使其消失,设置了这个才能触发OnDismisslistener ，设置其他控件变化等操作
         this.setBackgroundDrawable(dw);
-        // mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-        // 设置SelectPicPopupWindow弹出窗体动画效果，设置动画，一会会讲解
-//        this.setAnimationStyle(R.style.AnimationPreview);
         //布局控件初始化与监听设置
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -137,6 +131,5 @@ public class PopItemWindow extends PopupWindow implements BaseQuickAdapter.OnIte
             helper.setText(R.id.itemText, item.content);
         }
     }
-
 
 }

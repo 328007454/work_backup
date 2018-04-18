@@ -21,9 +21,12 @@
         <activity
             android:name=".ui.InspeLoadingActivity"
             android:exported="true" />
-        <activity android:name=".ui.AddDeviceAtivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            />
+        <activity
+            android:name=".ui.AddDeviceAtivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".ui.InspeModifyActivity" />
+        <activity android:name=".ui.InspePlustekSimilarIssueActivity" />
+        <activity android:name=".ui.InspeDrawCircleImageActivity"></activity>
     </application>
 
 </manifest>

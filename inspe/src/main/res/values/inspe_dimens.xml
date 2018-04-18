@@ -23,4 +23,5 @@
     <dimen name="inspe_38px">38px</dimen>
     <dimen name="inspe_120px">120px</dimen>
     <dimen name="inspe_21px">21px</dimen>
+    <dimen name="inspe_108px">108px</dimen>
 </resources>

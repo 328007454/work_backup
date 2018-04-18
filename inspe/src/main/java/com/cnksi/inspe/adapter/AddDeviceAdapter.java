@@ -61,7 +61,7 @@ public class AddDeviceAdapter extends BaseQuickAdapter<DeviceEntity, BaseViewHol
         if (editText.getTag() instanceof  EditTextWatcher){
             editText.removeTextChangedListener((android.text.TextWatcher) editText.getTag());
         }
-        editText.setText(TextUtils.isEmpty(item.name) ? "" : item.name);
+        editText.setText(TextUtils.isEmpty(item.name_short) ? "" : item.name_short);
 
         EditTextWatcher watcher = new EditTextWatcher();
         watcher.setEntity(item);
@@ -109,7 +109,7 @@ public class AddDeviceAdapter extends BaseQuickAdapter<DeviceEntity, BaseViewHol
         @Override
         public void afterTextChanged(Editable editable) {
             String text = editable.toString();
-            entity.name = text;
+            entity.setName_short(text);
         }
     }
 

@@ -38,6 +38,7 @@
         <EditText
             android:id="@+id/et_device_name"
             android:layout_width="0px"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/include_inspe_title"
             android:layout_marginTop="30px"

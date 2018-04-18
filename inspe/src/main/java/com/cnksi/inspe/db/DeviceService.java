@@ -80,7 +80,7 @@ public class DeviceService extends BaseDbService {
     public List<DbModel> getAllDeviceByBigID(String bdzId, String bigId) throws DbException {
         List<DbModel> deviceModels = new ArrayList<>();
         String deviceSql = "SELECT s.`name` sname ,s.bdzid,s.spid,s.name_pinyin snamepy , d.deviceid , d.`name` dname,d.name_short dnameshort, d.name_short_pinyin dshortpinyin ,d.bigid,d.name_pinyin dnamepy " +
-                "FROM device d LEFT JOIN spacing  s on d.spid = s.spid  WHERE d.bdzid = '" + bdzId + "' and d.bigid in " + bigId + "and (d.dlt =0 or d.type='all')";
+                "FROM device d LEFT JOIN spacing  s on d.spid = s.spid  WHERE d.bdzid = '" + bdzId + "' and d.bigid in " + bigId + "and d.dlt =0 ";
 
         deviceModels = dbManager.findDbModelAll(new SqlInfo(deviceSql));
         return deviceModels;
@@ -136,18 +136,35 @@ public class DeviceService extends BaseDbService {
      *
      * @return
      */
-    public List<DbModel> getAllOneSpace() throws DbException {
+    public List<DbModel> getAllOneSpace(String bdzId) throws DbException {
         List<DbModel> spaceModels = new ArrayList<>();
-        String bigTypesSql = "select * from spacing where dlt = 0 and device_type like '%one%'";
+        String bigTypesSql = "select * from spacing where bdzid = '"+bdzId+"' and dlt = 0 and device_type like '%one%'";
         spaceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return spaceModels;
     }
 
+    /**
+     * 保存缺失的设备台账到设备表中
+     * @param entities
+     */
     public void saveExtraDevice(List<DeviceEntity> entities){
         try {
             dbManager.saveOrUpdate(entities);
         } catch (DbException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 获取手机端添加的缺设备台账
+     * @param bdzId
+     * @return
+     */
+    public List<DbModel> getAddDevice(String bdzId) throws DbException {
+
+        List<DbModel> spaceModels = new ArrayList<>();
+        String bigTypesSql = "select * from device where bdzid = '"+bdzId+"' and dlt = 1 and type ='all' ";
+        spaceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
+        return spaceModels;
     }
 }

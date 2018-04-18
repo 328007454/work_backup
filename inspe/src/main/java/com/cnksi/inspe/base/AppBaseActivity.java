@@ -1,6 +1,7 @@
 package com.cnksi.inspe.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -18,6 +19,8 @@ import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.db.UserService;
+import com.cnksi.inspe.ui.InspeDrawCircleImageActivity;
+import com.cnksi.inspe.utils.InspeConfig;
 
 /**
  * @version v1.0
@@ -145,5 +148,16 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
     public void showToast(String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 可以标记图片
+     */
+
+    public void drawCircle(String pictureName, String pictureContent) {
+        Intent intent = new Intent(this, InspeDrawCircleImageActivity.class);
+        intent.putExtra(InspeConfig.CURRENT_IMAGE_NAME, pictureName);
+        intent.putExtra(InspeConfig.PICTURE_CONTENT, pictureContent);
+        startActivityForResult(intent, InspeConfig.LOAD_DATA);
     }
 }
