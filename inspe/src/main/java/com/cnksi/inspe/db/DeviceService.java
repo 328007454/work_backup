@@ -22,7 +22,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 获取精益化评价设备类型,共计28类
-     *
      * @return
      */
     public List<DeviceTypeEntity> getDeviceTypes() {
@@ -37,9 +36,20 @@ public class DeviceService extends BaseDbService {
         return null;
     }
 
+    public DeviceTypeEntity getDeviceTypes(String bigId) {
+        try {
+            return dbManager.selector(DeviceTypeEntity.class)
+                    .where("dlt", "=", "0")
+                    .and("bigid", "=", bigId)
+                    .findFirst();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * 根据ID查询变电站
-     *
      * @param bzdId
      * @return
      */
@@ -57,7 +67,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 根据班组ID查询变电站集合
-     *
      * @param groupId
      * @return
      */
@@ -88,7 +97,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 查询设备大类
-     *
      * @param bigId
      * @return
      * @throws DbException
@@ -102,7 +110,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 查询所有的设备大类
-     *
      * @return 所有的数据
      * @throws DbException
      */
@@ -115,7 +122,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 根据设备ID查询设备
-     *
      * @param deviceId
      * @return
      */
@@ -133,7 +139,6 @@ public class DeviceService extends BaseDbService {
     }
 
     /**
-     *
      * @return
      */
     public List<DbModel> getAllOneSpace() throws DbException {
@@ -143,11 +148,12 @@ public class DeviceService extends BaseDbService {
         return spaceModels;
     }
 
-    public void saveExtraDevice(List<DeviceEntity> entities){
+    public void saveExtraDevice(List<DeviceEntity> entities) {
         try {
             dbManager.saveOrUpdate(entities);
         } catch (DbException e) {
             e.printStackTrace();
         }
     }
+
 }

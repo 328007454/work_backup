@@ -24,11 +24,14 @@ import com.cnksi.inspe.adapter.entity.PlustekRule1Entity;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityDeviceDetailsBinding;
 import com.cnksi.inspe.db.DeviceService;
+import com.cnksi.inspe.db.PlustekCheckServer;
 import com.cnksi.inspe.db.PlustekService;
+import com.cnksi.inspe.db.entity.DeviceCheckEntity;
 import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
 import com.cnksi.inspe.type.PlustekType;
+import com.cnksi.inspe.type.RecordType;
 import com.cnksi.inspe.utils.Config;
 import com.cnksi.inspe.utils.StringUtils;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -54,6 +57,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
     String taskId;
     DeviceEntity deviceDbModel;
     PlustekType plustekType;
+    private PlustekCheckServer plustekCheckServer = new PlustekCheckServer();
 
     @Override
     public int getLayoutResId() {
@@ -65,12 +69,15 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
         detailsBinding = (ActivityDeviceDetailsBinding) rootDataBinding;
         detailsBinding.includeInspeTitle.toolbarTitle.setText(getIntent().getStringExtra("deviceName"));
         detailsBinding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
+        detailsBinding.copyIssueBtn.setOnClickListener(this);
+        detailsBinding.finishBtn.setOnClickListener(this);
     }
+
+    DeviceService service = new DeviceService();
 
     @Override
     public void initData() {
-        DeviceService service = new DeviceService();
-        PlustekService plustekService = new PlustekService();
+
         deviceId = getIntent().getStringExtra("deviceId");
         deviceBigId = getIntent().getStringExtra("deviceBigId");
         taskId = getIntent().getStringExtra("taskId");
@@ -78,7 +85,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
 
         ExecutorManager.executeTaskSerially(() -> {
             deviceDbModel = service.getDeviceById(deviceId);
-            typeModels = plustekService.getPlusteRule(taskId,deviceBigId, plustekType);//level=1，没有check_type,为了方便显示数据
+            typeModels = plustekService.getPlusteRule(taskId, deviceBigId, plustekType);//level=1，没有check_type,为了方便显示数据
 //            typeModels = plustekService.getPlusteRule(deviceBigId, null);
 
             runOnUiThread(() -> {
@@ -93,6 +100,10 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
         });
         detailsBinding.tvAddNewDefect.setOnClickListener(this);
         initStandardModule();
+
+        //设置设置检查是否可用
+        detailsBinding.finishBtn.setEnabled(plustekCheckServer.getDeviceEntity(taskId, deviceId, plustekType) == null);
+
     }
 
     /**
@@ -162,11 +173,12 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
 //                adapter.getMulti
                 PlusteRuleEntity entity = data.rule;
 
-                Intent intent = new Intent(context, InspePlustekIssueActivity.class);
-                intent.putExtra("data", entity);//计算可扣分数
-                intent.putExtra("task_id", taskId);//任务ID
-                intent.putExtra("device_id", deviceId);//设备ID
-                intent.putExtra("plustek_type", plustekType);
+                Intent intent = new Intent(context, InspePlustekIssueActivity.class)
+                        .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.DEFAULT)//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.TASK_ID, taskId)//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, deviceId)//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.PLUSTEK_TYPE, plustekType)//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.RULE_ID_3, entity.id);//
                 startActivity(intent);
 
             }
@@ -175,12 +187,11 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
 
     /**
      * 查询设备标准 level=2
-     *
      * @param bigId
      * @param pid
      */
     private void searchData(String bigId, String pid) {
-        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(taskId,bigId, plustekType, pid);//level=2，没有check_type,为了方便显示数据
+        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(taskId, bigId, plustekType, pid);//level=2，没有check_type,为了方便显示数据
 //        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(bigId, null, pid);
         list.clear();
         adapter.notifyDataSetChanged();
@@ -193,7 +204,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
             PlusteRuleEntity entity = ruleList.get(i);
             PlustekRule0Entity rule0 = new PlustekRule0Entity(entity, i);
 
-            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(taskId,bigId, plustekType, entity.getId());
+            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(taskId, bigId, plustekType, entity.getId());
             for (int j = 0, jSize = ruleItemList.size(); j < jSize; j++) {
                 rule0.addSubItem(new PlustekRule1Entity(ruleItemList.get(j), j));
             }
@@ -225,6 +236,23 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
                 startActivity(new Intent(context, InspePlustekIssueListActivity.class).putExtra("task_id", taskId).putExtra("device_id", deviceId));
             } else {
                 showToast("没有任何问题");
+            }
+        } else if (i == R.id.copyIssueBtn) {//同类设备异常
+            startActivity(new Intent(this, InspePlustekSimilarIssueActivity.class)
+                    .putExtra("task_id", taskId)
+                    .putExtra("device_id", deviceId));
+        } else if (i == R.id.finishBtn) {//完成设备检查
+            //
+            DeviceCheckEntity checkEntity = new DeviceCheckEntity();
+            checkEntity.setDevice_id(deviceId);
+            checkEntity.setRecord_type(RecordType.finish.name());
+            checkEntity.setPlustek_type(plustekType.name());
+            checkEntity.setTask_id(taskId);
+
+            if (plustekCheckServer.updateDeviceEntity(checkEntity)) {
+                detailsBinding.finishBtn.setEnabled(false);
+            } else {
+                showToast("操作失败！");
             }
         }
     }

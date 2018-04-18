@@ -66,9 +66,9 @@ import java.util.UUID;
  * </ol>
  * <ol>
  * 启动模式及参数{@link StartMode}
- * <li>{@link StartMode#DEFAULT}:问题创建(默认)，参数:{任务ID、设备ID、标准ID3、说明内容}</li>
- * <li>{@link StartMode#MODIFY}:问题修改，参数:{任务ID、设备ID、问题ID、说明内容}</li>
- * <li>{@link StartMode#COPY}:问题拷贝，参数:{任务ID、设备ID、问题ID、说明内容}</li>
+ * <li>{@link StartMode#DEFAULT}:问题创建(默认)，参数:{任务ID、设备ID、检查类型、标准ID3}</li>
+ * <li>{@link StartMode#MODIFY}:问题修改，参数:{任务ID、设备ID、检查类型、问题ID、说明内容}</li>
+ * <li>{@link StartMode#COPY}:问题拷贝，参数:{任务ID、设备ID、检查类型、问题ID、说明内容}</li>
  * <li>{@link StartMode#NOPMS}:无设备信息(台账))，参数:{任务ID、设备ID、检查类型}</li>
  * </ol>
  * @version v1.0
@@ -159,7 +159,6 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 
     private int startMode = StartMode.DEFAULT; //页面启动模式 */
     private String taskId;//任务ID
-    private String plustek;//检查类型
     private String deviceId;//设备ID
     private String ruleId3;//标准ID(level=3)
     private String ruleResultId;//错误
@@ -181,11 +180,16 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     public void initData() {
         startMode = getIntent().getIntExtra(IntentKey.START_MODE, StartMode.DEFAULT);
         taskId = getIntent().getStringExtra(IntentKey.TASK_ID);
-        plustek = getIntent().getStringExtra(IntentKey.PLUSTEK_TYPE);
+        plustekType = (PlustekType) getIntent().getSerializableExtra(IntentKey.PLUSTEK_TYPE);
         deviceId = getIntent().getStringExtra(IntentKey.DEVICE_ID);
         ruleId3 = getIntent().getStringExtra(IntentKey.RULE_ID_3);
         ruleResultId = getIntent().getStringExtra(IntentKey.RULE_RESULT_ID);
         content = getIntent().getStringExtra(IntentKey.CONTENT);
+        if (expertEntity == null) {
+            showToast("非法权限!");
+            finish();
+            return;
+        }
 
         if (!initDictionary()) {
             showToast("没有查询到字典，请先同步数据!");
@@ -222,12 +226,18 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     finish();
                     return;
                 } else {
-                    list = plustekService.getPlusteRule(taskId, deviceEntity.getBigid(), plustekType, ruleId3);
+                    list = plustekService.getPlusteRule(taskId, deviceEntity.getBigid(), null, ruleId3);
+                    rule3Entity = plustekService.getIssue(ruleId3);
                     if (list == null || list.size() == 0) {
                         showToast("参数错误!");
                         finish();
                         return;
                     }
+                    listArray = new ArrayList<>();
+                    for (PlusteRuleEntity entity : list) {
+                        listArray.add(entity.getName());
+                    }
+
                     String[] leve12Name = plustekService.getLeve1_2Name(list.get(0).getId());
                     if (leve12Name != null && leve12Name.length > 1) {
                         content = deviceEntity.getName() + " " + leve12Name[0] + "-" + leve12Name[1];
@@ -294,7 +304,56 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 
     /** 问题复制 */
     private void initCopyIssue(String taskId, String deviceId, String ruleResultId, String content) {
+        rule4Entity = plustekService.getIssue(ruleResultEntity.getRule_id());
+        ruleResultEntity.setId(null);
 
+        dataBinding.issueInfoTxt.setOnClickListener(null);
+        dataBinding.issueEdit.setOnClickListener(null);
+
+        dataBinding.issueInfoTxt.setText(rule4Entity.getName());
+        dataBinding.issueEdit.setText(ruleResultEntity.getDescription());
+        dataBinding.issueNatureTxt.setText(ruleResultEntity.getProblem_nature());
+        dataBinding.blameTeamTxt.setText(ruleResultEntity.getCharge_group());
+        dataBinding.blameBranchTxt.setText(ruleResultEntity.getCharge_unit());
+        dataBinding.issueReasonTxt.setText(ruleResultEntity.getProduce_reason());
+        dataBinding.suggestEdit.setText(ruleResultEntity.getSuggest_deal_way());
+
+        minusScore = 0;
+        scoreEntity = (int) (ruleResultEntity.getDeduct_score() * SCAN_NUM);
+        if (!TextUtils.isEmpty(rule4Entity.getScore_content())) {
+            InspeScoreEntity scoreObject = JSON.parseObject(rule4Entity.getScore_content(), InspeScoreEntity.class);
+            int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
+            if (maxV > 0) {
+                maxMinus = Math.min(maxIntentMinus, maxV) + scoreEntity;
+            } else {
+                maxMinus = maxIntentMinus + scoreEntity;
+            }
+        } else {
+            maxMinus = maxIntentMinus;
+        }
+
+        setScoreTxt(scoreEntity);
+
+        //责任班组、责任部门
+        listTeamArray = new ArrayList<>();
+        listBranchArray = new ArrayList<>();
+        subStationEntity = deviceService.getSubStation(ruleResultEntity.getBdz_id());
+        taskEntity = taskService.getTask(ruleResultEntity.getTask_id());
+
+
+        if (!TextUtils.isEmpty(rule4Entity.getScore_charge())) {
+            String[] branchs = rule4Entity.getScore_charge().split(",");
+
+            listTeamArray.addAll(Arrays.asList(branchs));
+            String team = ruleResultEntity.getCharge_group();
+            if (team.contains("检修")) {
+                listBranchArray.add(subStationEntity.getPower_company());
+                listBranchArray.add(taskEntity.getDept_name());
+            } else if (team.contains("运维")) {
+                listBranchArray.add(subStationEntity.getPower_company());
+            }
+
+        }
     }
 
     /** 设备无PMS */
@@ -367,42 +426,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     }
 
     private void initCreateIssue(String taskId, String deviceId, String ruleId3) {
-        Object teamRuleObject = getIntent().getSerializableExtra("data");
-
-        plustekType = (PlustekType) getIntent().getSerializableExtra("plustek_type");
-
-//        if (teamRuleObject != null && teamRuleObject instanceof PlusteRuleEntity) {
-//            rule3Entity = (PlusteRuleEntity) teamRuleObject;
-//            list = plustekService.getPlusteRule(rule3Entity.getBigid(), null, rule3Entity.getId());//检查类型在第1.2.3有用，4级无用
-//            if (list != null && list.size() > 0) {
-//                listArray = new ArrayList<>(list.size());
-//                maxIntentMinus = (int) (SCAN_NUM * plustekService.getStandaredMaxDult(list.get(0).getId(), deviceId));//获取可扣分值
-//                for (int i = 0, size = list.size(); i < size; i++) {
-//                    listArray.add(list.get(i).getName());
-//                }
-//            }
-//        }
-        if (!TextUtils.isEmpty(taskId)) {
-            taskEntity = taskService.getTask(taskId);
-            if (taskEntity != null) {
-                subStationEntity = deviceService.getSubStation(taskEntity.getBdz_id());
-                deviceEntity = deviceService.getDeviceById(deviceId);
-            }
-        }
-
-        if (rule3Entity == null || taskEntity == null || subStationEntity == null || deviceEntity == null) {
-            showToast("参数错误!");
-            finish();
-            return;
-        }
-
-
-        if (expertEntity == null) {
-            showToast("非法权限!");
-            finish();
-            return;
-        }
-
+        //描述
+        dataBinding.contextTxt.setText(content);
         //初始化
         dataBinding.issueNatureTxt.setText(natureArray.get(0));//问题性质，默认一般
     }
@@ -467,17 +492,6 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             } else {
                 showToast("目前仅支持上传3张图片");
             }
-        } else if (i == R.id.issueEdit) {
-            new BreakWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName()).setOnCheckListener(new BreakWordDialog.OnCheckedListener() {
-                @Override
-                public void onChecked(String msg) {
-                    dataBinding.issueEdit.setText(msg);
-                }
-            }).show();
-        } else if (i == R.id.addBtn) {//+扣分
-            setScoreTxt(scoreEntity);
-        } else if (i == R.id.minuxBtn) {//-扣分
-            setScoreTxt(-scoreEntity);
         } else if (i == R.id.issueInfoTxt) {//错误问题
             new PopItemWindow(this).setListAdapter(listArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -568,6 +582,17 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     }
                 }
             }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
+        } else if (i == R.id.issueEdit) {
+            new BreakWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName()).setOnCheckListener(new BreakWordDialog.OnCheckedListener() {
+                @Override
+                public void onChecked(String msg) {
+                    dataBinding.issueEdit.setText(msg);
+                }
+            }).show();
+        } else if (i == R.id.addBtn) {//+扣分
+            setScoreTxt(scoreEntity);
+        } else if (i == R.id.minuxBtn) {//-扣分
+            setScoreTxt(-scoreEntity);
         } else if (i == R.id.issueNatureTxt) {//问题性质(独立),一般、严重、危急
             new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -632,14 +657,14 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 showToast("请选择问题性质");
                 dataBinding.issueNatureTxt.performClick();
                 return;
-            } else if (TextUtils.isEmpty(dataBinding.blameTeamTxt.getText())) {
-                showToast("请选择责任班组");
-                dataBinding.blameTeamTxt.performClick();
-                return;
-            } else if (TextUtils.isEmpty(dataBinding.blameBranchTxt.getText())) {
-                showToast("请选择责任单位");
-                dataBinding.blameBranchTxt.performClick();
-                return;
+//            } else if (TextUtils.isEmpty(dataBinding.blameTeamTxt.getText())) {
+//                showToast("请选择责任班组");
+//                dataBinding.blameTeamTxt.performClick();
+//                return;
+//            } else if (TextUtils.isEmpty(dataBinding.blameBranchTxt.getText())) {
+//                showToast("请选择责任单位");
+//                dataBinding.blameBranchTxt.performClick();
+//                return;
             } else if (TextUtils.isEmpty(dataBinding.issueReasonTxt.getText())) {
                 showToast("请选择产生原因");
                 dataBinding.issueReasonTxt.performClick();
@@ -648,6 +673,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 //                    showToast("请输入处理措施");
 //                    dataBinding.suggestEdit.performClick();
 //                    return;
+            } else if (picList.size() == 0) {
+                showToast("请对问题拍照处理");
             }
 
             createIssue();//满足输入，创建错误

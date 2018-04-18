@@ -123,7 +123,7 @@ public class PlustekService extends BaseDbService {
      */
     public List<TeamRuleResultEntity> getSimilarIssues(String taskId, String deviceId, String bigId) {
         String group_sql = "SELECT * FROM xj_group_con_rule_result WHERE dlt='0' AND task_id='" + taskId + "' AND device_bigtype='" + bigId + "' GROUP BY rule_id";
-        String device_result_sql = "SELECT rule_id FROM xj_group_con_rule_result WHERE dlt='0' AND task_id='" + taskId + "' device_id='" + deviceId + "'";
+        String device_result_sql = "SELECT rule_id FROM xj_group_con_rule_result WHERE dlt='0' AND task_id='" + taskId + "' AND device_id='" + deviceId + "'";
         String sql = "SELECT * FROM (" + group_sql + ") WHERE rule_id NOT IN(" + device_result_sql + ");";
 
         try {
