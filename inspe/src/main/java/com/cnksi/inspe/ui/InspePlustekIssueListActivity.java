@@ -49,17 +49,13 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //修改
                 IssueListEntity entity = list.get(position);
-                Intent intent = new Intent(context, InspePlustekIssueActivity.class);
-                intent.putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.COPY);//设置页面模式
-                intent.putExtra("edit_data", list.get(position).resultEntity);//计算可扣分数
-                if (entity.names != null && entity.names.length > 1) {
-                    intent.putExtra("info_txt", (entity.resultEntity.getDevice_name() + " " + entity.names[0] + "-" + entity.names[1]));
-                } else {
-                    intent.putExtra("info_txt", entity.resultEntity.getDevice_name());
-                }
-//                intent.putExtra("task_id", taskId);//任务ID
-//                intent.putExtra("device_id", deviceId);//设备ID
-//                intent.putExtra("plustek_type", plustekType);
+                Intent intent = new Intent(context, InspePlustekIssueActivity.class)
+                        .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.MODIFY)//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.TASK_ID, taskId)//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, deviceId)//
+//                        .putExtra(InspePlustekIssueActivity.IntentKey.PLUSTEK_TYPE, PlustekType.valueOf(entity.resultEntity.check_type))//
+                        .putExtra(InspePlustekIssueActivity.IntentKey.RULE_RESULT_ID, entity.resultEntity.getId())
+                        .putExtra(InspePlustekIssueActivity.IntentKey.CONTENT, entity.resultEntity.getDevice_name() + " " + entity.names[0] + "-" + entity.names[1]);
                 startActivity(intent);
             }
         });

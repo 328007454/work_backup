@@ -69,10 +69,10 @@ import java.util.UUID;
  * </ol>
  * <ol>
  * 启动模式及参数{@link StartMode}
- * <li>{@link StartMode#DEFAULT}:问题创建(默认)，参数:{任务ID、设备ID、检查类型、标准ID3}</li>
- * <li>{@link StartMode#MODIFY}:问题修改，参数:{任务ID、设备ID、检查类型、问题ID、说明内容}</li>
- * <li>{@link StartMode#COPY}:问题拷贝，参数:{任务ID、设备ID、检查类型、问题ID、说明内容}</li>
- * <li>{@link StartMode#NOPMS}:无设备信息(台账))，参数:{任务ID、设备ID、检查类型}</li>
+ * <li>{@link StartMode#DEFAULT}:问题创建(默认)，参数:{任务ID、设备ID、标准ID3}</li>
+ * <li>{@link StartMode#MODIFY}:问题修改，参数:{任务ID、设备ID、问题ID、说明内容}</li>
+ * <li>{@link StartMode#COPY}:问题拷贝，参数:{任务ID、设备ID、问题ID、说明内容}</li>
+ * <li>{@link StartMode#NOPMS}:无设备信息(台账))，参数:{任务ID、设备ID}</li>
  * </ol>
  *
  * @version v1.0
@@ -237,6 +237,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         finish();
                         return;
                     }
+                    maxIntentMinus = (int) (plustekService.getStandaredMaxDult(list.get(0).getId(), deviceId) * SCAN_NUM);
                     listArray = new ArrayList<>();
                     for (PlusteRuleEntity entity : list) {
                         listArray.add(entity.getName());
@@ -257,6 +258,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     return;
                 }
                 ruleResultEntity = teamService.getRuleResult(ruleResultId);//获取问题
+                maxIntentMinus = (int) ((plustekService.getStandaredMaxDult(ruleResultEntity.getRule_id(), deviceId) - ruleResultEntity.getDeduct_score()) * SCAN_NUM);
                 if (ruleResultEntity == null) {
                     showToast("参数错误!");
                     finish();
@@ -272,6 +274,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     return;
                 }
                 ruleResultEntity = teamService.getRuleResult(ruleResultId);
+                maxIntentMinus = (int) (plustekService.getStandaredMaxDult(ruleResultEntity.getRule_id(), deviceId) * SCAN_NUM);
                 if (ruleResultEntity == null) {
                     showToast("参数错误!");
                     finish();
@@ -378,8 +381,6 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         if (rule4Entity == null) {//避免重复查询
             rule4Entity = plustekService.getIssue(ruleResultEntity.getRule_id());
         }
-
-        maxIntentMinus = (int) (SCAN_NUM * plustekService.getStandaredMaxDult(ruleResultEntity.getId(), deviceId));
         if (rule4Entity == null) {
             showToast("未查询到相关标准");
             finish();
@@ -438,6 +439,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     }
 
     private void initCreateIssue(String taskId, String deviceId, String ruleId3) {
+
         //描述
         dataBinding.contextTxt.setText(content);
         //初始化
@@ -543,6 +545,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         picDeleteList.clear();
                         galleryAdapte.notifyDataSetChanged();
 
+                        maxIntentMinus = (int) ((plustekService.getStandaredMaxDult(ruleResultEntity.getRule_id(), deviceId) + ruleResultEntity.getDeduct_score()) * SCAN_NUM);
                         initEditIssue(taskId, deviceId, ruleResultId, content);
                         return;
                     }

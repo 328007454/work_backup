@@ -7,6 +7,7 @@ import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
 import com.cnksi.inspe.db.entity.SubStationEntity;
+import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.type.TaskType;
@@ -26,7 +27,6 @@ import java.util.Map;
 
 /**
  * 精益化评价服务
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/04/09 20:27
@@ -35,13 +35,12 @@ public class PlustekService extends BaseDbService {
 
     /**
      * 获取精益化评价规则
-     *
-     * @param bigid       设备大类
-     * @param pid         null获取根目录(标准类型)
+     * @param bigid 设备大类
+     * @param pid null获取根目录(标准类型)
      * @param plustekType 检查类型
      * @return
      */
-    public List<PlusteRuleEntity> getPlusteRule(String taskId,String bigid, PlustekType plustekType, String... pid) {
+    public List<PlusteRuleEntity> getPlusteRule(String taskId, String bigid, PlustekType plustekType, String... pid) {
         try {
             Selector selector = dbManager.selector(PlusteRuleEntity.class)
                     .where("dlt", "=", "0");
@@ -66,7 +65,6 @@ public class PlustekService extends BaseDbService {
 
     /**
      * 根据标准ID查询标准
-     *
      * @param id
      * @return
      */
@@ -84,7 +82,26 @@ public class PlustekService extends BaseDbService {
 
     /**
      * 根据问题ID，获取标准1,2级name
-     *
+     * @param levle4Id
+     * @return
+     */
+    public PlusteRuleEntity getPlusteRule1(String levle4Id) {
+        String level4 = "SELECT pid FROM xj_jyhpj_rule WHERE id='" + levle4Id + "'";//677747476032086022
+        String level3 = "SELECT pid FROM xj_jyhpj_rule WHERE id=(" + level4 + ")";
+        String level2 = "SELECT pid FROM xj_jyhpj_rule WHERE id=(" + level3 + ")";
+        String level1 = "SELECT * AS name2 FROM xj_jyhpj_rule AS WHERE id=" + level2 + ";";
+
+        try {
+            return DBUtils.parseObject(dbManager.findDbModelFirst(new SqlInfo(level1)), PlusteRuleEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 根据问题ID，获取标准1,2级name
      * @param levle4Id
      * @return
      */
@@ -116,7 +133,6 @@ public class PlustekService extends BaseDbService {
     /**
      * 同类设备问题
      * <br/>显示未添加的同类设备问题，当前设备有的问题，同类设备也有不查询。
-     *
      * @param taskId
      * @param deviceId
      * @return
@@ -137,8 +153,7 @@ public class PlustekService extends BaseDbService {
 
     /**
      * 获取精益化问题
-     *
-     * @param taskId   任务ID
+     * @param taskId 任务ID
      * @param deviceId 设备ID,如果不存在则查询该任务所有问题
      * @return
      */
@@ -163,7 +178,6 @@ public class PlustekService extends BaseDbService {
     /**
      * 错误统计
      * <p/>统计该任务下，变电站错误数
-     *
      * @param taskId
      * @param deviceId
      * @return
@@ -183,7 +197,6 @@ public class PlustekService extends BaseDbService {
 
     /**
      * 根据标准ID（level=4）获取大项总分
-     *
      * @param level4Id
      * @return
      */
@@ -230,7 +243,6 @@ public class PlustekService extends BaseDbService {
 
     /**
      * 获取上次最后一条记录修改时间
-     *
      * @return
      */
     public static String getLastRecord(DbManager dbManager) {
@@ -267,7 +279,6 @@ public class PlustekService extends BaseDbService {
 
     /**
      * 获取当前级别的检查标准集合
-     *
      * @param level，执行顺序必须必须为2->1
      */
     private void initCheckWay(String level, String[] plustekTypeArray) {
@@ -294,7 +305,6 @@ public class PlustekService extends BaseDbService {
 
     /**
      * 查询子类的所有检查类型
-     *
      * @param id
      * @return 如果没有子类检查类型则返回NULL
      */
