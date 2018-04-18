@@ -1,9 +1,6 @@
 package com.cnksi.inspe.adapter;
 
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -12,10 +9,6 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.entity.PlustekRule0Entity;
 import com.cnksi.inspe.adapter.entity.PlustekRule1Entity;
-import com.cnksi.inspe.adapter.entity.TeamRole0Entity;
-import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
-import com.cnksi.inspe.entity.device.SpaceItem;
-import com.cnksi.inspe.type.RecordType;
 
 import java.util.List;
 

@@ -1,7 +1,10 @@
 package com.cnksi.inspe.utils;
 
+import android.os.Build;
 import android.text.TextUtils;
 
+import java.text.BreakIterator;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,5 +69,50 @@ public class StringUtils {
         } else {
             return str.trim();
         }
+    }
+
+    /**
+     * 字符串分词
+     *
+     * @param sentence
+     * @return
+     */
+    public static ArrayList<String> breakWord(final String sentence) {
+        final ArrayList<String> result = new ArrayList<String>();
+        if (!TextUtils.isEmpty(sentence)) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                final BreakIterator boundary = BreakIterator.getWordInstance();//目前仅使用分词，还可以根据单字、句进行分割
+                boundary.setText(sentence);
+                try {
+                    int start = boundary.first();
+                    for (int end = boundary.next(); end != BreakIterator.DONE; start = end, end = boundary.next()) {
+                        String word = sentence.substring(start, end);
+                        if (!TextUtils.isEmpty(word)) {
+                            result.add(word);
+                        }
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    result.clear();
+                }
+            } else {
+                //仅能在Android-O及以上版本使用
+                final android.icu.text.BreakIterator boundary = android.icu.text.BreakIterator.getWordInstance();
+                boundary.setText(sentence);
+                try {
+                    int start = boundary.first();
+                    for (int end = boundary.next(); end != android.icu.text.BreakIterator.DONE; start = end, end = boundary.next()) {
+                        String word = sentence.substring(start, end);
+                        if (!TextUtils.isEmpty(word)) {
+                            result.add(word);
+                        }
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    result.clear();
+                }
+            }
+        }
+        return result;
     }
 }
