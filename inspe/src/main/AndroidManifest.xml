@@ -21,6 +21,9 @@
         <activity
             android:name=".ui.InspeLoadingActivity"
             android:exported="true" />
+        <activity android:name=".ui.AddDeviceAtivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
     </application>
 
 </manifest>

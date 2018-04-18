@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout >
+<layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -11,14 +11,15 @@
             layout="@layout/include_inspe_title" />
 
         <TextView
-            android:layout_marginTop="10px"
-            android:layout_marginBottom="10px"
-            android:layout_marginRight="10px"
-            android:layout_marginLeft="10px"
-            android:background="@drawable/inspe_keyboard_bt_selector"
             android:id="@+id/txt_big_device"
             style="@style/View.TextView"
             android:layout_width="match_parent"
+            android:layout_below="@id/include_inspe_title"
+            android:layout_marginBottom="10px"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="10px"
+            android:background="@drawable/inspe_keyboard_bt_selector"
             android:drawableRight="@mipmap/inspe_arrow_down"
             android:hint="请选择设备大类"
             android:paddingBottom="10dp"
@@ -30,19 +31,57 @@
             android:textSize="14dp" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:id="@+id/keyboard_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_big_device"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/btn_add_device"
+                style="@style/View.Button"
+                android:layout_width="0px"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/inspe_btn_red_selector"
+                android:text="添加台账缺失设备" />
+
+            <Button
+                android:id="@+id/btn_finish"
+                style="@style/View.Button"
+                android:layout_width="0px"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/inspe_btn_green_selector"
+                android:text="完成检查" />
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:layout_above="@id/ll_container"
             android:id="@+id/inspe_rec_device"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="10000px"
+            android:layout_below="@id/keyboard_container"
             android:fadeScrollbars="true"
             android:fadingEdge="vertical"
             android:fastScrollEnabled="true" />
 
-    </LinearLayout>
+
+
+
+    </RelativeLayout>
 </layout>

@@ -80,7 +80,7 @@ public class DeviceService extends BaseDbService {
     public List<DbModel> getAllDeviceByBigID(String bdzId, String bigId) throws DbException {
         List<DbModel> deviceModels = new ArrayList<>();
         String deviceSql = "SELECT s.`name` sname ,s.bdzid,s.spid,s.name_pinyin snamepy , d.deviceid , d.`name` dname,d.name_short dnameshort, d.name_short_pinyin dshortpinyin ,d.bigid,d.name_pinyin dnamepy " +
-                "FROM device d LEFT JOIN spacing  s on d.spid = s.spid  WHERE d.bdzid = '" + bdzId + "' and d.bigid in " + bigId + "and d.dlt =0";
+                "FROM device d LEFT JOIN spacing  s on d.spid = s.spid  WHERE d.bdzid = '" + bdzId + "' and d.bigid in " + bigId + "and (d.dlt =0 or d.type='all')";
 
         deviceModels = dbManager.findDbModelAll(new SqlInfo(deviceSql));
         return deviceModels;
@@ -95,10 +95,20 @@ public class DeviceService extends BaseDbService {
      */
     public List<DbModel> getBigTypeModels(String bigId) throws DbException {
         List<DbModel> deviceModels = new ArrayList<>();
-//        dbManager.selector(DeviceTypeEntity.class)
-//                .where("dlt","=","0")
-//                .and("bigid","=",bigId);
         String bigTypesSql = "select * from device_bigtype where dlt = 0 and bigid in " + bigId + "";
+        deviceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
+        return deviceModels;
+    }
+
+    /**
+     * 查询所有的设备大类
+     *
+     * @return 所有的数据
+     * @throws DbException
+     */
+    public List<DbModel> getBigTypeAll() throws DbException {
+        List<DbModel> deviceModels = new ArrayList<>();
+        String bigTypesSql = "select * from device_bigtype where dlt = 0";
         deviceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return deviceModels;
     }
@@ -120,5 +130,16 @@ public class DeviceService extends BaseDbService {
         }
 
         return null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<DbModel> getAllOneSpace() throws DbException {
+        List<DbModel> spaceModels = new ArrayList<>();
+        String bigTypesSql = "select * from spacing where dlt = 0 and device_type like '%one%'";
+        spaceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
+        return spaceModels;
     }
 }

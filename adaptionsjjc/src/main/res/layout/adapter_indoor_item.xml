@@ -46,7 +46,7 @@
                     android:background="@android:color/transparent"
                     android:contentDescription="@null"
                     android:scaleType="centerInside"
-                    app:srcCompat="@drawable/icon_indoor_add" />
+                    app:srcCompat="@drawable/inspe_add_icon" />
 
                 <ImageButton
                     android:id="@+id/delete_indoor_weather"
@@ -56,7 +56,7 @@
                     android:background="@android:color/transparent"
                     android:contentDescription="@null"
                     android:scaleType="centerInside"
-                    app:srcCompat="@drawable/icon_indoor_delete" />
+                    app:srcCompat="@drawable/inspe_delete_icon" />
 
 
                 <EditText

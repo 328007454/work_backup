@@ -3,6 +3,7 @@ package com.cnksi.inspe.widget;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,9 +25,11 @@ import java.util.List;
  */
 
 public class PopItemWindow extends PopupWindow implements BaseQuickAdapter.OnItemClickListener {
+    private Context context;
 
     public PopItemWindow(Context context) {
         super(context);
+        this.context = context;
         init(context);
     }
 
@@ -134,5 +137,6 @@ public class PopItemWindow extends PopupWindow implements BaseQuickAdapter.OnIte
             helper.setText(R.id.itemText, item.content);
         }
     }
+
 
 }

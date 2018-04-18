@@ -54,7 +54,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private String taskId;
     private String bigIds = "";
     private PlustekType plustekType;
-
+    private String bdzId;
     @Override
     public int getLayoutResId() {
         return R.layout.activity_inspe_device;
@@ -92,7 +92,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     public void initData() {
         InspecteTaskEntity taskEntity = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
         taskId = taskEntity.id;
-        String bdzId = taskEntity.bdz_id;
+        bdzId = taskEntity.bdz_id;
         String bigId = taskEntity.checked_device_bigid;
         bigIds = com.cnksi.inspe.utils.StringUtils.getDeviceStandardsType(bigId);
         ExecutorManager.executeTaskSerially(() -> {
@@ -119,7 +119,6 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
 
     /**
      * 组装adapter数据
-     *
      */
     private void loadAdapterData(List<DbModel> models) {
         if (!models.isEmpty()) {
@@ -148,8 +147,17 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         deviceBinding.txtBigDevice.setOnClickListener(view -> {
             popItemWindow.setPopWindowWidth(deviceBinding.txtBigDevice.getWidth());
             popItemWindow.showAsDropDown(deviceBinding.txtBigDevice);
-        })
-        ;
+        });
+
+        deviceBinding.btnAddDevice.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AddDeviceAtivity.class);
+            intent.putExtra("bdzId",bdzId);
+            startActivity(intent);
+        });
+
+        deviceBinding.btnFinish.setOnClickListener(view -> {
+            finish();
+        });
 
     }
 
@@ -179,10 +187,6 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         devicesList.clear();
         List<DbModel> locaList = new ArrayList<>();
         for (DbModel model : dbModelList) {
-//            if (model.getString("snamepy").toUpperCase().contains(newKey) || model.getString("dshortpinyin").toUpperCase().contains(newKey)) {
-//                locaList.add(model);
-//            }
-
             if (!model.isEmpty("snamepy") && model.getString("snamepy").toUpperCase().contains(newKey)) {
                 locaList.add(model);
             } else if (!model.isEmpty("dshortpinyin") && model.getString("dshortpinyin").toUpperCase().contains(newKey)) {
