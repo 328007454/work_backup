@@ -175,6 +175,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         deviceBinding.btnAddDevice.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddDeviceAtivity.class);
             intent.putExtra("bdzId", bdzId);
+            intent.putExtra("task_id", taskId);
             startActivity(intent);
         });
 
