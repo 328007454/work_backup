@@ -46,6 +46,7 @@ import java.util.UUID;
  * @auther Today(张军)
  * @date 2018/3/21 09:19
  */
+@Deprecated
 public class InspeCreateActivity extends AppBaseActivity implements View.OnClickListener {
 
     private ActivityInspeCreateBinding dataBinding;

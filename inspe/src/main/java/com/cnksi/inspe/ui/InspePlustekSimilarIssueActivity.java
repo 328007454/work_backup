@@ -12,7 +12,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspePlustekIssuelistBinding;
+import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.PlustekService;
+import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.entity.IssueListEntity;
 
@@ -20,17 +22,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 精益化检查-问题列表
+ * 同类设备列表
  * @version v1.0
  * @auther Today(张军)
- * @date 2018/04/10 15:49
+ * @date 2018/04/17 14:34
  */
-public class InspePlustekIssueListActivity extends AppBaseActivity {
+public class InspePlustekSimilarIssueActivity extends AppBaseActivity {
 
     private ActivityInspePlustekIssuelistBinding dataBinding;
     private List<IssueListEntity> list = new ArrayList<>();
     private PlustekIssueListAdapter adapter;
     private PlustekService plustekService = new PlustekService();
+    private DeviceService deviceService = new DeviceService();
+    private DeviceEntity deviceEntity;
 
     @Override
     public int getLayoutResId() {
@@ -39,7 +43,7 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
 
     @Override
     public void initUI() {
-        setTitle("问题记录", R.drawable.inspe_left_black_24dp);
+        setTitle("同类设备问题", R.drawable.inspe_left_black_24dp);
         dataBinding = (ActivityInspePlustekIssuelistBinding) rootDataBinding;
         adapter = new PlustekIssueListAdapter(R.layout.inspe_plustek_issuelist_item, list);
         dataBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -51,15 +55,15 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
                 IssueListEntity entity = list.get(position);
                 Intent intent = new Intent(context, InspePlustekIssueActivity.class);
                 intent.putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.COPY);//设置页面模式
+                intent.putExtra("device_id", deviceId);//设备ID
+                intent.putExtra("task_id", taskId);//任务ID
                 intent.putExtra("edit_data", list.get(position).resultEntity);//计算可扣分数
                 if (entity.names != null && entity.names.length > 1) {
                     intent.putExtra("info_txt", (entity.resultEntity.getDevice_name() + " " + entity.names[0] + "-" + entity.names[1]));
                 } else {
                     intent.putExtra("info_txt", entity.resultEntity.getDevice_name());
                 }
-//                intent.putExtra("task_id", taskId);//任务ID
-//                intent.putExtra("device_id", deviceId);//设备ID
-//                intent.putExtra("plustek_type", plustekType);
+
                 startActivity(intent);
             }
         });
@@ -108,6 +112,12 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
             finish();
             return;
         }
+        deviceEntity = deviceService.getDeviceById(deviceId);
+        if (deviceEntity == null) {
+            showToast("未查询到设备！");
+            finish();
+            return;
+        }
 
     }
 
@@ -116,7 +126,7 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
         super.onStart();
         list.clear();
         adapter.notifyDataSetChanged();
-        List<TeamRuleResultEntity> listTemp = plustekService.getIssues(taskId, deviceId);
+        List<TeamRuleResultEntity> listTemp = plustekService.getSimilarIssues(taskId, deviceId, deviceEntity.getBigid());
         if (listTemp != null && listTemp.size() > 0) {
             TeamRuleResultEntity resultEntity;
             for (int i = 0, size = listTemp.size(); i < size; i++) {

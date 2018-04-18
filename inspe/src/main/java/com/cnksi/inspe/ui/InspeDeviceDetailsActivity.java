@@ -78,7 +78,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
 
         ExecutorManager.executeTaskSerially(() -> {
             deviceDbModel = service.getDeviceById(deviceId);
-            typeModels = plustekService.getPlusteRule(deviceBigId, plustekType);//level=1，没有check_type,为了方便显示数据
+            typeModels = plustekService.getPlusteRule(taskId,deviceBigId, plustekType);//level=1，没有check_type,为了方便显示数据
 //            typeModels = plustekService.getPlusteRule(deviceBigId, null);
 
             runOnUiThread(() -> {
@@ -180,7 +180,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
      * @param pid
      */
     private void searchData(String bigId, String pid) {
-        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(bigId, plustekType, pid);//level=2，没有check_type,为了方便显示数据
+        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(taskId,bigId, plustekType, pid);//level=2，没有check_type,为了方便显示数据
 //        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(bigId, null, pid);
         list.clear();
         adapter.notifyDataSetChanged();
@@ -193,7 +193,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
             PlusteRuleEntity entity = ruleList.get(i);
             PlustekRule0Entity rule0 = new PlustekRule0Entity(entity, i);
 
-            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(bigId, plustekType, entity.getId());
+            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(taskId,bigId, plustekType, entity.getId());
             for (int j = 0, jSize = ruleItemList.size(); j < jSize; j++) {
                 rule0.addSubItem(new PlustekRule1Entity(ruleItemList.get(j), j));
             }

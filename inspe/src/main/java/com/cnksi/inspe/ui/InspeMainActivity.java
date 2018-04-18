@@ -2,6 +2,7 @@ package com.cnksi.inspe.ui;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -126,6 +127,11 @@ public class InspeMainActivity extends AppBaseActivity {
             @Override
             public int getCount() {
                 return fragments.length;
+            }
+
+            @Override
+            public Parcelable saveState() {
+                return super.saveState();
             }
 
             @Override

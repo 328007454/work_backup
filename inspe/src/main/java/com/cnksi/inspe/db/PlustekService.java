@@ -10,6 +10,7 @@ import com.cnksi.inspe.db.entity.SubStationEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.type.TaskType;
+import com.cnksi.inspe.utils.DBUtils;
 import com.cnksi.inspe.utils.StringUtils;
 
 import org.w3c.dom.Text;
@@ -40,7 +41,7 @@ public class PlustekService extends BaseDbService {
      * @param plustekType 检查类型
      * @return
      */
-    public List<PlusteRuleEntity> getPlusteRule(String bigid, PlustekType plustekType, String... pid) {
+    public List<PlusteRuleEntity> getPlusteRule(String taskId,String bigid, PlustekType plustekType, String... pid) {
         try {
             Selector selector = dbManager.selector(PlusteRuleEntity.class)
                     .where("dlt", "=", "0");
@@ -105,6 +106,28 @@ public class PlustekService extends BaseDbService {
                 return names;
             }
 
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 同类设备问题
+     * <br/>显示未添加的同类设备问题，当前设备有的问题，同类设备也有不查询。
+     *
+     * @param taskId
+     * @param deviceId
+     * @return
+     */
+    public List<TeamRuleResultEntity> getSimilarIssues(String taskId, String deviceId, String bigId) {
+        String group_sql = "SELECT * FROM xj_group_con_rule_result WHERE dlt='0' AND task_id='" + taskId + "' AND device_bigtype='" + bigId + "' GROUP BY rule_id";
+        String device_result_sql = "SELECT rule_id FROM xj_group_con_rule_result WHERE dlt='0' AND task_id='" + taskId + "' device_id='" + deviceId + "'";
+        String sql = "SELECT * FROM (" + group_sql + ") WHERE rule_id NOT IN(" + device_result_sql + ");";
+
+        try {
+            return DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleResultEntity.class);
         } catch (DbException e) {
             e.printStackTrace();
         }

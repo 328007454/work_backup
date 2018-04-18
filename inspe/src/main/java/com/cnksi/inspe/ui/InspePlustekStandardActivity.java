@@ -28,7 +28,6 @@ import java.util.List;
 
 /**
  * 精益化评价-显示设备基本信息，及相关评判标准
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/21 09:31
@@ -95,7 +94,7 @@ public class InspePlustekStandardActivity extends AppBaseActivity {
     }
 
     private void searchData() {
-        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(null, null);
+        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(null, null, plustekType);
 
         if (ruleList == null) {
             return;
@@ -105,7 +104,7 @@ public class InspePlustekStandardActivity extends AppBaseActivity {
             PlusteRuleEntity entity = ruleList.get(i);
             PlustekRule0Entity rule0 = new PlustekRule0Entity(entity);
 
-            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(null, null, entity.getPid());
+            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(null, null, null, entity.getPid());
             for (PlusteRuleEntity e : ruleItemList) {
                 PlustekRule1Entity rule = new PlustekRule1Entity(e);
                 rule0.addSubItem(rule);

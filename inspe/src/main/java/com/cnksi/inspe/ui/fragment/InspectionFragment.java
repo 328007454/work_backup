@@ -1,8 +1,14 @@
 package com.cnksi.inspe.ui.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -15,6 +21,7 @@ import com.cnksi.inspe.db.entity.UserEntity;
 import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskType;
 import com.cnksi.inspe.ui.InspeCreateActivity;
+import com.cnksi.inspe.ui.InspeModifyActivity;
 import com.cnksi.inspe.ui.InspePlustekActivity;
 import com.cnksi.inspe.ui.InspeTeamActivity;
 import com.cnksi.inspe.utils.DateFormat;
@@ -25,7 +32,6 @@ import java.util.List;
 
 /**
  * 检查任务模块首页-检查任务列表
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/20 16:13
@@ -62,6 +68,42 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
 //        homeAdapter.addHeaderView(top);
         //分割线
         //dataBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                InspecteTaskEntity task = list.get(position);
+
+                TaskType taskType = null;
+                try {
+                    taskType = TaskType.valueOf(task.getType());
+                    if (taskType == TaskType.jyhjc && !TextUtils.isEmpty(task.getPersion_device_bigid())) {//修改精益化任务
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("任务修改确认").setMessage("任务已经开始，你确定要修改任务?\n")
+                                .setPositiveButton("确定",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                startActivity(new Intent(getContext(), InspeModifyActivity.class).putExtra("task_id", task.getId()));
+                                            }
+                                        })
+                                .setNegativeButton("取消",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        })
+                                .show();
+
+                    } else {
+                        startActivity(new Intent(getContext(), InspeModifyActivity.class).putExtra("task_id", task.getId()));
+                    }
+
+                } catch (Exception e) {
+                    showToast("任务类型不正确");
+                }
+                return false;
+            }
+        });
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -78,7 +120,11 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
 
                 switch (taskType) {
                     case jyhjc:
-                        intent.setClass(getContext(), InspePlustekActivity.class).putExtra("task", task);
+                        if (TextUtils.isEmpty(task.getPersion_device_bigid())) {
+                            intent.setClass(getContext(), InspeModifyActivity.class).putExtra("task_id", task.getId());
+                        } else {
+                            intent.setClass(getContext(), InspePlustekActivity.class).putExtra("task", task);
+                        }
                         break;
                     case bzjs:
                         intent.setClass(getContext(), InspeTeamActivity.class).putExtra("task", task);
@@ -133,19 +179,21 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
             showToast("角色类型错误！");
         }
 
-        if (expertUser == null)
-
-        {
-            dataBinding.createTaskBtn.setVisibility(View.GONE);
+        dataBinding.createTaskBtn.setVisibility(View.GONE);
+        if (expertUser == null) {
+//            dataBinding.createTaskBtn.setVisibility(View.GONE);
             taskTypes = new String[]{TaskType.bzjs.name()};
-        } else
-
-        {
-            dataBinding.createTaskBtn.setOnClickListener(this);
-            dataBinding.createTaskBtn.setVisibility(View.VISIBLE);
+        } else {
+//            dataBinding.createTaskBtn.setOnClickListener(this);
+//            dataBinding.createTaskBtn.setVisibility(View.VISIBLE);
             taskTypes = new String[]{TaskType.bzjs.name(), TaskType.jyhjc.name()};
         }
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
