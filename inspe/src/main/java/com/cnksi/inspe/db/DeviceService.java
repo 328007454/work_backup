@@ -142,4 +142,12 @@ public class DeviceService extends BaseDbService {
         spaceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return spaceModels;
     }
+
+    public void saveExtraDevice(List<DeviceEntity> entities){
+        try {
+            dbManager.saveOrUpdate(entities);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -117,12 +117,15 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
      */
     private void saveData() {
         ArrayList<String> deviceIds = new ArrayList<>();
-        for (DeviceEntity entity: entityList){
+        for (DeviceEntity entity : entityList) {
             deviceIds.add(entity.deviceid);
         }
-        Intent intent = new Intent ();
-        intent.putStringArrayListExtra("device_id_arrays",deviceIds);
-
+        new DeviceService().saveExtraDevice(entityList);
+        Intent intent = new Intent();
+        intent.setClass(this, InspePlustekSimilarIssueActivity.class);
+        intent.putStringArrayListExtra("device_id_arrays", deviceIds);
+        startActivity(intent);
+        this.finish();
     }
 
     DialogListviewLayoutBinding spaceBinding;

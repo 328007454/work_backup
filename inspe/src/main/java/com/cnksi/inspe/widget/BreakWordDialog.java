@@ -173,15 +173,14 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.okBtn:
-                dismiss();
-                if (onCheckedListener != null) {
-                    onCheckedListener.onChecked(dataBinding.issueEdit.getText().toString().trim());
-                }
-                break;
-            default:
-                break;
+        int i = view.getId();
+        if (i == R.id.okBtn) {
+            dismiss();
+            if (onCheckedListener != null) {
+                onCheckedListener.onChecked(dataBinding.issueEdit.getText().toString().trim());
+            }
+
+        } else {
         }
     }
 
