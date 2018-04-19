@@ -57,7 +57,7 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
      * 大类id
      */
     private String deviceBigId;
-
+    private String bigids;
     @Override
     public int getLayoutResId() {
         return R.layout.activity_inspe_add_device;
@@ -90,12 +90,13 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
     public void initData() {
         bdzId = getIntent().getStringExtra("bdzId");
         taskId = getIntent().getStringExtra("task_id");
+        bigids = getIntent().getStringExtra("bigid");
         entityList.add(new DeviceEntity());
         adapter.setBigId(deviceBigId);
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 bigTypeModels = new DeviceService().getBigTypeAll();
-                spaceModels = new DeviceService().getAllOneSpace(bdzId);
+                spaceModels = new DeviceService().getAllOneSpace(bdzId,bigids);
             } catch (DbException e) {
                 e.printStackTrace();
             }

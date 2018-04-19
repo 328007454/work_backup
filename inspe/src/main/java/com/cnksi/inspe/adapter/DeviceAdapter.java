@@ -20,7 +20,9 @@ import com.cnksi.inspe.entity.device.SpaceItem;
 
 import org.xutils.db.table.DbModel;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mr.K on 2018/4/9.
@@ -32,19 +34,24 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     public final static int DEVICE_ITEM = 2;
     private String keyWord;
     private OnDeviceItemClickListerner onItemClickListerner;
-    private List<String> listCheck;
+    Map<String ,Integer> checkMap = new HashMap<>();
+    private List<String> checkDevice;
 
     public void setKeyWord(String newKey) {
         this.keyWord = newKey;
     }
 
-    public void setListCheck(List<String> listCheck) {
-        this.listCheck = listCheck;
+    public void setListCheck(Map<String ,Integer> checkMap) {
+        this.checkMap = checkMap;
     }
 
     public void setExpandablePosition(int expandPosition) {
 
         this.expandPosition = expandPosition;
+    }
+
+    public void setCheckDevice(List<String> checkDevice) {
+        this.checkDevice = checkDevice;
     }
 
     public interface OnDeviceItemClickListerner {
@@ -87,6 +94,12 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                         expandPosition = helper.getAdapterPosition();
                     }
                 });
+
+                if (!checkMap.isEmpty()&&null!=checkMap.get(spModel.getString("spid"))&&checkMap.get(spModel.getString("spid"))==spaceItem.getSubSize()){
+                    helper.setTextColor(R.id.tv_group_item,mContext.getResources().getColor(R.color.color_333333));
+                }else{
+                    helper.setTextColor(R.id.tv_group_item,mContext.getResources().getColor(R.color.color_03b9a0));
+                }
                 formatKeyWord(helper, spaceName, spModel.getString("snamepy"));
 
                 break;
@@ -101,7 +114,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                     }
                 });
                 formatKeyWord(helper, deviceName, dvModle.getString("dshortpinyin"));
-                if (!listCheck.isEmpty()&&listCheck.contains(dvModle.getString("deviceid"))){
+                if (!checkDevice.isEmpty()&&checkDevice.contains(dvModle.getString("deviceid"))){
                     helper.setTextColor(R.id.tv_device_name,mContext.getResources().getColor(R.color.color_333333));
                     helper.getView(R.id.rl_device_container).setBackground(ContextCompat.getDrawable(mContext, R.drawable.inspe_black_line_shape));
                 }else {

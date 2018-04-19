@@ -1,6 +1,9 @@
 package com.cnksi.inspe.db;
 
+import android.text.TextUtils;
+
 import com.cnksi.inspe.base.BaseDbService;
+import com.cnksi.inspe.db.entity.DeviceCheckEntity;
 import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.SubStationEntity;
@@ -11,7 +14,9 @@ import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @version v1.0
@@ -22,6 +27,7 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 获取精益化评价设备类型,共计28类
+     *
      * @return
      */
     public List<DeviceTypeEntity> getDeviceTypes() {
@@ -50,6 +56,7 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 根据ID查询变电站
+     *
      * @param bzdId
      * @return
      */
@@ -67,6 +74,7 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 根据班组ID查询变电站集合
+     *
      * @param groupId
      * @return
      */
@@ -97,6 +105,7 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 查询设备大类
+     *
      * @param bigId
      * @return
      * @throws DbException
@@ -110,6 +119,7 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 查询所有的设备大类
+     *
      * @return 所有的数据
      * @throws DbException
      */
@@ -122,6 +132,7 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 根据设备ID查询设备
+     *
      * @param deviceId
      * @return
      */
@@ -141,9 +152,9 @@ public class DeviceService extends BaseDbService {
     /**
      * @return
      */
-    public List<DbModel> getAllOneSpace(String bdzId) throws DbException {
+    public List<DbModel> getAllOneSpace(String bdzId, String bigids) throws DbException {
         List<DbModel> spaceModels = new ArrayList<>();
-        String bigTypesSql = "select * from spacing where bdzid = '" + bdzId + "' and dlt = 0 and device_type like '%one%'";
+        String bigTypesSql = "select * from spacing where spid in ( select distinct(spid) from device where bdzid = '" + bdzId + "' and bigid in " + bigids + "and dlt = 0 and device_type like '%one%')";
         spaceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return spaceModels;
     }
@@ -151,6 +162,7 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 保存缺失的设备台账到设备表中
+     *
      * @param entities
      */
     public void saveExtraDevice(List<DeviceEntity> entities) {
@@ -163,6 +175,7 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 获取手机端添加的缺设备台账
+     *
      * @param bdzId
      * @return
      */
@@ -174,17 +187,46 @@ public class DeviceService extends BaseDbService {
         return spaceModels;
     }
 
-    public List<String> getCheckDevices(String taskId, String plustekType) throws DbException {
+    public Map<String, Integer> getCheckSpace(String taskId, String plustekType) {
         List<DbModel> checkDeviceModels = new ArrayList<>();
-        List<String> checkDeviceIds = new ArrayList<>();
+        Map<String, Integer> checkMap = new HashMap<>();
+        String sqlspacee = "SELECT  device_id ,spid ,count(spid) count  FROM device_check_temp WHERE task_id='" + taskId + "' AND plustek_type ='" + plustekType + "' and  dlt =0  group by spid ;";
 
-        String sql = "SELECT * FROM device_check_temp WHERE task_id='" + taskId + "' AND plustek_type ='"+plustekType+"' and  dlt =0 ;";
-        checkDeviceModels = dbManager.findDbModelAll(new SqlInfo(sql));
-        if (checkDeviceModels!=null&&!checkDeviceModels.isEmpty()){
-            for (DbModel model: checkDeviceModels){
-                checkDeviceIds.add(model.getString("device_id"));
+        try {
+            checkDeviceModels = dbManager.findDbModelAll(new SqlInfo(sqlspacee));
+
+            if (checkDeviceModels != null && !checkDeviceModels.isEmpty()) {
+                for (DbModel model : checkDeviceModels) {
+                    String count = model.getString("count");
+                    int num = 0;
+                    if (!TextUtils.isEmpty(count)) {
+                        num = Integer.valueOf(count);
+                    }
+                    checkMap.put(model.getString("spid"), num);
+                }
             }
+
+        } catch (DbException e) {
+            e.printStackTrace();
         }
-        return checkDeviceIds ;
+        return checkMap;
+    }
+
+    public List<String> getCheckDevices(String taskId, String plustekType){
+        List<DbModel> checkdevice = new ArrayList<>();
+        List<String> deivceIds = new ArrayList<>();
+        String sqldevice = "SELECT * FROM device_check_temp WHERE task_id='" + taskId + "' AND plustek_type ='" + plustekType + "' and  dlt =0   ;";
+        try {
+            checkdevice = dbManager.findDbModelAll(new SqlInfo(sqldevice));
+            if (checkdevice!=null&&!checkdevice.isEmpty()){
+                for (DbModel model: checkdevice){
+                    deivceIds.add(model.getString("device_id"));
+                }
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return deivceIds;
     }
 }

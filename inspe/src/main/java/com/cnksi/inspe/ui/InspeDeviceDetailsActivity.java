@@ -57,6 +57,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
     String taskId;
     DeviceEntity deviceDbModel;
     PlustekType plustekType;
+    String spid;
     private PlustekCheckServer plustekCheckServer = new PlustekCheckServer();
 
     @Override
@@ -81,6 +82,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
         deviceId = getIntent().getStringExtra("deviceId");
         deviceBigId = getIntent().getStringExtra("deviceBigId");
         taskId = getIntent().getStringExtra("taskId");
+        spid = getIntent().getStringExtra("spid");
         plustekType = (PlustekType) getIntent().getSerializableExtra("plustek_type");
 
         ExecutorManager.executeTaskSerially(() -> {
@@ -252,6 +254,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
             checkEntity.setRecord_type(deviceIssueTotal == 0 ? RecordType.normal.name() : RecordType.answer.name());
             checkEntity.setPlustek_type(plustekType.name());
             checkEntity.setTask_id(taskId);
+            checkEntity.setSpid(spid);
             checkEntity.setDlt(0);
 
             if (plustekCheckServer.updateDeviceEntity(checkEntity)) {

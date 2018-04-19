@@ -8,6 +8,7 @@ import org.xutils.db.annotation.Table;
 
 /**
  * 设备检查记录表(仅本地使用)
+ *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/04/16 11:04
@@ -36,6 +37,10 @@ public class DeviceCheckEntity extends BaseDBEntity {
     /***/
     @Column(name = "record_type")
     public String record_type;
+
+    /***/
+    @Column(name = "spid")
+    public String spid;
 
     /***/
     @Column(name = "dlt")
@@ -87,5 +92,9 @@ public class DeviceCheckEntity extends BaseDBEntity {
 
     public void setDlt(int dlt) {
         this.dlt = dlt;
+    }
+
+    public void setSpid(String spid) {
+        this.spid = spid;
     }
 }

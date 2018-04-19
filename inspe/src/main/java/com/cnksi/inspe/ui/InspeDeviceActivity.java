@@ -34,7 +34,9 @@ import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -59,8 +61,8 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private String bdzId;
     private boolean isFirstLoad = true;
     private InspecteTaskEntity taskEntity;
-    private List<String> checkDeviceIds = new ArrayList<>();
-
+    Map<String ,Integer> checkMap = new HashMap<>();
+    List<String> checkDevices = new ArrayList<>();
     @Override
     public int getLayoutResId() {
         return R.layout.activity_inspe_device;
@@ -115,7 +117,8 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
                 bigTypeModels = new DeviceService().getBigTypeModels(bigIds);
                 dbModelList = new DeviceService().getAllDeviceByBigID(bdzId, bigIds);
                 List<DbModel> otherDevice = new DeviceService().getAddDevice(bdzId, taskId);
-                checkDeviceIds = new DeviceService().getCheckDevices(taskId, plustekType.name());
+                checkMap = new DeviceService().getCheckSpace(taskId, plustekType.name());
+                checkDevices = new DeviceService().getCheckDevices(taskId, plustekType.name());
                 if (otherDevice != null && !otherDevice.isEmpty()) {
                     for (DbModel model : otherDevice) {
                         if (TextUtils.isEmpty(model.getString("spid"))) {
@@ -135,7 +138,8 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
             }
 
             runOnUiThread(() -> {
-                deviceAdapter.setListCheck(checkDeviceIds);
+                deviceAdapter.setListCheck(checkMap);
+                deviceAdapter.setCheckDevice(checkDevices);
                 filterDevice(checkModule);
 
 
@@ -189,8 +193,13 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
                 expandPosition = 0;
             }
             deviceAdapter.notifyDataSetChanged();
-            deviceBinding.inspeRecDevice.scrollToPosition(expandPosition);
-            deviceAdapter.expand(expandPosition);
+            if (!devicesList.isEmpty()) {
+                try {
+                    deviceBinding.inspeRecDevice.scrollToPosition(expandPosition);
+                    deviceAdapter.expand(expandPosition);
+                } catch (Exception e) {
+                }
+            }
         });
     }
 
@@ -207,6 +216,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
             Intent intent = new Intent(this, AddDeviceAtivity.class);
             intent.putExtra("bdzId", bdzId);
             intent.putExtra("task_id", taskId);
+            intent.putExtra("bigid", bigIds);
             startActivity(intent);
         });
 
@@ -310,6 +320,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         intent.putExtra("taskId", taskId);
         intent.putExtra("deviceName", ((DeviceItem) item).dbModel.getString("dname"));
         intent.putExtra("plustek_type", plustekType);//检查类型
+        intent.putExtra("spid",((DeviceItem) item).dbModel.getString("spid"));
         startActivity(intent);
     }
 }
