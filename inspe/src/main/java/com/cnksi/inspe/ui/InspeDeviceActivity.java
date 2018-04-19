@@ -55,7 +55,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private String bigIds = "";
     private PlustekType plustekType;
     private String bdzId;
-    private boolean isFirstLoad = false;
+    private boolean isFirstLoad = true;
     private InspecteTaskEntity taskEntity;
 
     @Override
@@ -139,7 +139,9 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     @Override
     protected void onResume() {
         super.onResume();
-        if (isFirstLoad) {
+        if (!isFirstLoad) {
+            devicesList.clear();
+            deviceAdapter.notifyDataSetChanged();
             initData();
         } else {
             isFirstLoad = !isFirstLoad;
@@ -181,6 +183,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         deviceBinding.btnAddDevice.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddDeviceAtivity.class);
             intent.putExtra("bdzId", bdzId);
+            intent.putExtra("task_id", taskId);
             startActivity(intent);
         });
 

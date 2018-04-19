@@ -344,4 +344,20 @@ public class PlustekService extends BaseDbService {
         return null;
     }
 
+    /**
+     * 获取没有台账的设备标准
+     * @param bigId
+     * @return
+     */
+    public PlusteRuleEntity getNoPMS4(String bigId) {
+        String sql = "SELECT * FROM xj_jyhpj_rule WHERE pid IN(SELECT id FROM xj_jyhpj_rule WHERE pid IN(SELECT id FROM xj_jyhpj_rule WHERE name='台账')) AND bigid='" + bigId + "' AND dlt='0';";
+        try {
+            return DBUtils.parseObject(dbManager.findDbModelFirst(new SqlInfo(sql)), PlusteRuleEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

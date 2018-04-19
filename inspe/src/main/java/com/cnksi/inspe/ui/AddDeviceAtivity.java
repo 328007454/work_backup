@@ -24,6 +24,7 @@ import com.cnksi.inspe.databinding.DialogListviewLayoutBinding;
 import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.entity.device.SpaceItem;
+import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.widget.BigDevicePopWindow;
 import com.cnksi.inspe.widget.CustomDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
@@ -35,12 +36,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
  * @author Mr.K 2018/4/17
  * @description 该类主要是增加缺失的设备台账
  */
-public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapter.OnViewClickLitener{
+public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapter.OnViewClickLitener {
 
     AddDeviceAdapter adapter;
     ActivityInspeAddDeviceBinding binding;
@@ -51,6 +51,7 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
     private Dialog spaceDialog;
     private SpaceItemAdapter spaceItemAdapter;
     private String bdzId;
+    private String taskId;
     /**
      * 大类id
      */
@@ -65,6 +66,7 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
     public void initUI() {
         binding = (ActivityInspeAddDeviceBinding) rootDataBinding;
         binding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
+
         setTitle("添加PMS台账缺失设备");
         initOnClick();
         adapter = new AddDeviceAdapter(R.layout.inspe_add_device_item, entityList);
@@ -86,6 +88,7 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
     @Override
     public void initData() {
         bdzId = getIntent().getStringExtra("bdzId");
+        taskId = getIntent().getStringExtra("task_id");
         entityList.add(new DeviceEntity());
         adapter.setBigId(deviceBigId);
         ExecutorManager.executeTaskSerially(() -> {
@@ -125,16 +128,18 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
      */
     private void saveData() {
         entityList.get(entityList.size() - 1).setDeviceInfo(bdzId, deviceBigId);
-        ArrayList<String> deviceIds = new ArrayList<>();
+        List<String> deviceIds = new ArrayList<>();
         for (DeviceEntity entity : entityList) {
             deviceIds.add(entity.deviceid);
         }
         new DeviceService().saveExtraDevice(entityList);
-//        Intent intent = new Intent();
-//        intent.setClass(this, InspePlustekSimilarIssueActivity.class);
-//        intent.putStringArrayListExtra("device_id_arrays", deviceIds);
-//        startActivity(intent);
-//        this.finish();
+        Intent intent = new Intent(context, InspePlustekIssueActivity.class)
+                .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, InspePlustekIssueActivity.StartMode.NOPMS)//
+                .putExtra(InspePlustekIssueActivity.IntentKey.TASK_ID, taskId)//
+                .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, deviceIds.remove(0))//
+                .putExtra(InspePlustekIssueActivity.IntentKey.NOPMS_DEVICE_OTHER, ArrayInspeUtils.toListString(deviceIds));//
+        startActivity(intent);
+        this.finish();
     }
 
     DialogListviewLayoutBinding spaceBinding;
