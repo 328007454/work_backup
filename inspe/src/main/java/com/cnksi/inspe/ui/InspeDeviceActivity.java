@@ -159,6 +159,16 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         initDevice();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isFirstLoad) {
+            expandPosition = deviceAdapter.getExpandPosition();
+        } else {
+            isFirstLoad = !isFirstLoad;
+        }
+    }
+
     /**
      * 组装adapter数据
      */
@@ -175,10 +185,11 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
             }
         }
         runOnUiThread(() -> {
-            if (devicesList.size() > 0) {
-                deviceAdapter.expand(0);
+            if (expandPosition == -1) {
+                expandPosition = 0;
             }
-            deviceAdapter.notifyDataSetChanged();
+            deviceBinding.inspeRecDevice.scrollToPosition(expandPosition);
+            deviceAdapter.expand(expandPosition);
         });
     }
 
@@ -206,6 +217,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
 
     /**
      * 界面键盘控件响应
+     *
      * @param v
      * @param oldKey 老的Key
      * @param newKey 新的key
@@ -222,6 +234,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
 
     /**
      * 搜索查询本地数据
+     *
      * @param newKey
      */
     private void localSearchData(String newKey) {
@@ -266,14 +279,23 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         }
     }
 
+    int expandPosition = -1;
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        checkModule = bigTypeModels.get(position);
+        if (position == bigTypeModels.size()) {
+            checkModule = null;
+        } else {
+            checkModule = bigTypeModels.get(position);
+        }
+        expandPosition = -1;
         filterDevice(checkModule);
+
     }
 
     /**
      * 点击设备跳转详情界面
+     *
      * @param v
      * @param item
      * @param position

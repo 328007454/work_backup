@@ -178,15 +178,13 @@ public class DeviceService extends BaseDbService {
         List<DbModel> checkDeviceModels = new ArrayList<>();
         List<String> checkDeviceIds = new ArrayList<>();
 
-        String sql = "SELECT * FROM device_check_temp WHERE task_id='" + taskId + "' AND plustek_type;";
+        String sql = "SELECT * FROM device_check_temp WHERE task_id='" + taskId + "' AND plustek_type ='"+plustekType+"' and  dlt =0 ;";
         checkDeviceModels = dbManager.findDbModelAll(new SqlInfo(sql));
         if (checkDeviceModels!=null&&!checkDeviceModels.isEmpty()){
             for (DbModel model: checkDeviceModels){
                 checkDeviceIds.add(model.getString("device_id"));
             }
         }
-
-
         return checkDeviceIds ;
     }
 }

@@ -3,6 +3,7 @@ package com.cnksi.inspe.adapter;
 import android.app.Activity;
 import android.graphics.Color;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -60,6 +61,8 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         addItemType(DEVICE_ITEM, R.layout.inspe_device_item);
     }
 
+    private int expandPosition;
+
     @Override
     protected void convert(BaseViewHolder helper, MultiItemEntity item) {
         switch (helper.getItemViewType()) {
@@ -76,6 +79,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                         collapse(helper.getAdapterPosition(), true);
                     } else {
                         expand(helper.getAdapterPosition(), true);
+                        expandPosition = helper.getAdapterPosition();
                     }
                 });
                 formatKeyWord(helper, spaceName, spModel.getString("snamepy"));
@@ -93,9 +97,12 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                 });
                 formatKeyWord(helper, deviceName, dvModle.getString("dshortpinyin"));
                 if (!listCheck.isEmpty()&&listCheck.contains(dvModle.getString("deviceid"))){
-//                    helper.setTextColor(R.id.tv_add_new_defect,"");
+                    helper.setTextColor(R.id.tv_device_name,mContext.getResources().getColor(R.color.color_333333));
+                    helper.getView(R.id.rl_device_container).setBackground(ContextCompat.getDrawable(mContext, R.drawable.inspe_black_line_shape));
+                }else {
+                    helper.setTextColor(R.id.tv_device_name,mContext.getResources().getColor(R.color.color_03b9a0));
+                    helper.getView(R.id.rl_device_container).setBackground(ContextCompat.getDrawable(mContext, R.drawable.inspe_device_green_border_background_selector ));
                 }
-
                 break;
         }
     }
@@ -118,7 +125,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             }
         }
         lastExpandIndex = entity;
-
         return index;
     }
 
@@ -148,6 +154,10 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                 }
             }
         }
+    }
+
+    public int  getExpandPosition(){
+        return expandPosition;
     }
 
 }
