@@ -10,6 +10,7 @@
             android:id="@+id/include_inspe_title"
             layout="@layout/include_inspe_title" />
 
+
         <TextView
             android:id="@+id/txt_big_device"
             style="@style/View.TextView"
@@ -20,9 +21,10 @@
             android:layout_marginRight="10px"
             android:layout_marginTop="10px"
             android:background="@drawable/inspe_keyboard_bt_selector"
-            android:drawableRight="@mipmap/inspe_arrow_down"
+            android:drawableRight="@drawable/inspe_arrow_up_down_selector"
             android:hint="请选择设备大类"
             android:paddingBottom="10dp"
+            android:checked="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
@@ -44,6 +46,7 @@
             android:layout_alignParentBottom="true">
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/btn_add_device"
                 style="@style/View.Button"
                 android:layout_width="0px"

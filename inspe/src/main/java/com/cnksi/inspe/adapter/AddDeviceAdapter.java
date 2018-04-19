@@ -110,6 +110,7 @@ public class AddDeviceAdapter extends BaseQuickAdapter<DeviceEntity, BaseViewHol
         public void afterTextChanged(Editable editable) {
             String text = editable.toString();
             entity.setName_short(text);
+            entity.setName(text);
         }
     }
 

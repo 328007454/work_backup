@@ -3,6 +3,7 @@ package com.cnksi.inspe.db.entity;
 
 import android.text.TextUtils;
 
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.inspe.base.BaseDBEntity;
 
 import org.xutils.db.annotation.Column;
@@ -133,7 +134,7 @@ public class DeviceEntity extends BaseDBEntity {
 
     /***/
     @Column(name = "createtime")
-    public String createtime;
+    public String createtime = DateUtils.getCurrentLongTime();
 
     /***/
     @Column(name = "creater")
@@ -602,18 +603,18 @@ public class DeviceEntity extends BaseDBEntity {
     }
 
 
-    public void setSpace(DbModel spaceModel,String bigid) {
+    public void setSpace(DbModel spaceModel, String bigid) {
         if (TextUtils.isEmpty(this.deviceid))
             this.deviceid = UUID.randomUUID().toString();
         this.spid = spaceModel.getString("spid");
         this.bdzid = spaceModel.getString("bdzid");
         this.type = "all";
         this.dlt = 1;
-        this.bigid=bigid;
+        this.bigid = bigid;
         this.spaceName = spaceModel.getString("name");
     }
 
-    public void setDeviceInfo(String bdzid,String bigid) {
+    public void setDeviceInfo(String bdzid, String bigid) {
         if (TextUtils.isEmpty(this.deviceid))
             this.deviceid = UUID.randomUUID().toString();
         this.bdzid = bdzid;

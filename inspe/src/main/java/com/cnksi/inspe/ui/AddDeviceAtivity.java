@@ -34,6 +34,7 @@ import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -117,6 +118,10 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
             popItemWindow.setPopWindowWidth(binding.txtBigDevice.getWidth()).showAsDropDown(binding.txtBigDevice);
         });
         binding.device.setOnClickListener(view -> {
+            if (TextUtils.isEmpty(entityList.get(entityList.size() - 1).name)) {
+                ToastUtils.showMessage("请输入设备名称再添加");
+                return;
+            }
             entityList.get(entityList.size() - 1).setDeviceInfo(bdzId, deviceBigId);
             entityList.add(new DeviceEntity());
             adapter.notifyDataSetChanged();
@@ -130,6 +135,13 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
         entityList.get(entityList.size() - 1).setDeviceInfo(bdzId, deviceBigId);
         List<String> deviceIds = new ArrayList<>();
         for (DeviceEntity entity : entityList) {
+            if (TextUtils.isEmpty(entity.deviceid)) {
+                entity.deviceid = UUID.randomUUID().toString();
+            }
+            if (TextUtils.isEmpty(entity.name)) {
+              ToastUtils.showMessage("请填写设备名称，再点击保存，否则请点击返回键推出页面");
+              return;
+            }
             deviceIds.add(entity.deviceid);
         }
         new DeviceService().saveExtraDevice(entityList);

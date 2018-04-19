@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.Toast;
 
@@ -95,6 +96,10 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         String bigId = taskEntity.persion_device_bigid;
         deviceBinding.includeInspeTitle.toolbarTitle.setText(TextUtils.isEmpty(taskEntity.bdz_name) ? (plustekType.getDesc()) : taskEntity.bdz_name + plustekType.getDesc());
         bigIds = com.cnksi.inspe.utils.StringUtils.getDeviceStandardsType(bigId);
+
+        if (TextUtils.equals(plustekType.name(),PlustekType.pmsjc.name())){
+            deviceBinding.btnAddDevice.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
