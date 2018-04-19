@@ -2,6 +2,7 @@ package com.cnksi.sjjc.util;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
@@ -74,10 +75,13 @@ public class PermissionUtil {
                 return;
             } else {
                 grantPermissionListener.allPermissionsGranted();
+                instance =null;
             }
         } else {
             grantPermissionListener.allPermissionsGranted();
+            instance =null;
         }
+
     }
 
     /**
@@ -98,9 +102,11 @@ public class PermissionUtil {
                     activity.requestPermissions(deniedPermissions, requestCode);
                 } else {
                     grantPermissionListener.allPermissionsGranted();
+                    instance =null;
                 }
             } else {
                 grantPermissionListener.allPermissionsGranted();
+                instance =null;
             }
         }
     }

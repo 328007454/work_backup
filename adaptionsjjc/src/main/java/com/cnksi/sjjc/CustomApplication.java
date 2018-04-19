@@ -25,6 +25,7 @@ import com.cnksi.sjjc.util.EssSafeUtil;
 import com.cnksi.sjjc.util.PlaySound;
 import com.cnksi.sjjc.util.TTSUtils;
 import com.cnksi.sjjc.util.XZip;
+import com.squareup.leakcanary.LeakCanary;
 
 import org.xutils.DbManager;
 import org.xutils.ex.DbException;
@@ -160,7 +161,7 @@ public class CustomApplication extends CoreApplication {
                     })
                     .setUseEncrypt(true)
                     .setKey("com.cnksi")
-                    .setDbUpgradeListener((db, oldVersion, newVersion) -> saveDbVersion(newVersion)).setAllowTransaction(true);
+                    .setDbUpgradeListener((db, oldVersion, newVersion) -> {}).setAllowTransaction(true);
             return config;
         } else
             return config;
@@ -309,6 +310,8 @@ public class CustomApplication extends CoreApplication {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        LeakCanary.install(mInstance);
+
         PreferencesUtils.init(getApplicationContext());
         ToastUtils.init(getApplicationContext());
         DisplayUtils.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());

@@ -130,23 +130,14 @@ public class TimePickerUtils implements View.OnClickListener {
         Calendar endDate = Calendar.getInstance();
         endDate.set(2099, 12, 31);
         //时间选择器 ，自定义布局
-        pvCustomTime = new TimePickerView.Builder(mActivity, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                dateString = getTime(date);
-            }
+        pvCustomTime = new TimePickerView.Builder(mActivity, (date, v) -> {//选中事件回调
+            dateString = getTime(date);
         }).setTextColorCenter(Color.BLACK)
                 .isDialog(true)
                 .isCyclic(true)
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
-                .setLayoutRes(R.layout.xs_dialog_time_picker, new CustomListener() {
-
-                    @Override
-                    public void customLayout(View v) {
-                        resLayOutView = v;
-                    }
-                })
+                .setLayoutRes(R.layout.xs_dialog_time_picker, v -> resLayOutView = v)
                 .setContentSize(20)
                 .setType(new boolean[]{true, true, true, true, true, false})
                 .setLabel("", "", "", "", "", "")

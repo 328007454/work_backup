@@ -161,137 +161,119 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             binding.layoutConclusion.setVisibility(View.VISIBLE);
         }
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    currentReport = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId));
-                    inspectionMark = currentReport.inspectionRemark;
-                    inspectionResult = currentReport.inspectionResult;
-                    if ((!isParticularInspection()) && (!isRoutineNotCopy())) {
-                        copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-                        totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
-                        if (xudianchi) {
-                            List<DbModel> batteryDbmodelList = ReportService.getInstance().findBatteryGroup(currentBdzId);
-                            DbModel batteryCopyTotal = ReportService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
-                            int sumBatteryCode = 0;
-                            for (DbModel dbModel : batteryDbmodelList) {
-                                sumBatteryCode = sumBatteryCode + Integer.valueOf(dbModel.getString("amount"));
-                            }
-                            copyCount = Integer.valueOf(TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? "0" : batteryCopyTotal.getString("count"));
-                            totalCount = sumBatteryCode;
-                            mBatteryGroupList = ReportService.getInstance().findAllBatteryGroup(currentBdzId, currentReportId);
-                            if (mBatteryGroupList.isEmpty() && !batteryDbmodelList.isEmpty()) {
-                                BatteryGroup batteryGroup = new BatteryGroup(currentReportId, currentBdzId, currentBdzName, batteryDbmodelList.get(0).getString("bid"));
-                                mBatteryGroupList.add(batteryGroup);
-                            }
-                        } else if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
-                            if (currentInspectionType.equalsIgnoreCase("maintenance_blqdzcs")) {
-                                copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-                                totalCount = CopyItemService.getInstance().getCopyItemCount1(currentBdzId, CopyItemService.getInstance().getCopyType());
-                            } else {
-                                copyCount = TaskService.getInstance().queryCopyData(currentReportId);
-                                totalCount = TaskService.getInstance().getSwitchOverCopyTotal(currentInspectionType, currentBdzId);
-                            }
-
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                currentReport = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId));
+                inspectionMark = currentReport.inspectionRemark;
+                inspectionResult = currentReport.inspectionResult;
+                if ((!isParticularInspection()) && (!isRoutineNotCopy())) {
+                    copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
+                    totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
+                    if (xudianchi) {
+                        List<DbModel> batteryDbmodelList = ReportService.getInstance().findBatteryGroup(currentBdzId);
+                        DbModel batteryCopyTotal = ReportService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
+                        int sumBatteryCode = 0;
+                        for (DbModel dbModel : batteryDbmodelList) {
+                            sumBatteryCode = sumBatteryCode + Integer.valueOf(dbModel.getString("amount"));
                         }
-                    } else {
-                        if (currentInspectionType.startsWith("special_manual") && TextUtils.isEmpty(inspectionMark)) {
-
-                            String selectDevices = "'" + (currentReport.selected_deviceid == null ? "" : currentReport.selected_deviceid) + "'";
-                            selectDevices = selectDevices.replace(",", "','");
-                            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT group_concat(name,',') as rs  FROM	device WHERE deviceid IN (" + selectDevices + ")"));
-                            String mark = model.getString("rs");
-                            inspectionMark = mark == null ? "" : "本次巡视的设备：\n" + mark.replace(",", "\n");
+                        copyCount = Integer.valueOf(TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? "0" : batteryCopyTotal.getString("count"));
+                        totalCount = sumBatteryCode;
+                        mBatteryGroupList = ReportService.getInstance().findAllBatteryGroup(currentBdzId, currentReportId);
+                        if (mBatteryGroupList.isEmpty() && !batteryDbmodelList.isEmpty()) {
+                            BatteryGroup batteryGroup = new BatteryGroup(currentReportId, currentBdzId, currentBdzName, batteryDbmodelList.get(0).getString("bid"));
+                            mBatteryGroupList.add(batteryGroup);
                         }
+                    } else if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
+                        if (currentInspectionType.equalsIgnoreCase("maintenance_blqdzcs")) {
+                            copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
+                            totalCount = CopyItemService.getInstance().getCopyItemCount1(currentBdzId, CopyItemService.getInstance().getCopyType());
+                        } else {
+                            copyCount = TaskService.getInstance().queryCopyData(currentReportId);
+                            totalCount = TaskService.getInstance().getSwitchOverCopyTotal(currentInspectionType, currentBdzId);
+                        }
+
                     }
+                } else {
+                    if (currentInspectionType.startsWith("special_manual") && TextUtils.isEmpty(inspectionMark)) {
 
-                    // 查询本次发现的缺陷
-                    mNewDefectList = DefectRecordService.getInstance().findCurrentTaskNewDefectList(currentBdzId, currentReportId);
-                    // 查询本次跟踪的缺陷
-                    mTrackDefectList = DefectRecordService.getInstance().findCurrentTaskTrackDefectList(currentBdzId, currentReportId);
-                    // 查询本次消除的缺陷
-                    mEliminateDefectList = DefectRecordService.getInstance().findCurrentTaskEliminateDefectList(currentBdzId, currentReportId);
-
-                } catch (DbException e1) {
-                    e1.printStackTrace();
+                        String selectDevices = "'" + (currentReport.selected_deviceid == null ? "" : currentReport.selected_deviceid) + "'";
+                        selectDevices = selectDevices.replace(",", "','");
+                        DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT group_concat(name,',') as rs  FROM	device WHERE deviceid IN (" + selectDevices + ")"));
+                        String mark = model.getString("rs");
+                        inspectionMark = mark == null ? "" : "本次巡视的设备：\n" + mark.replace(",", "\n");
+                    }
                 }
 
-                try {
+                // 查询本次发现的缺陷
+                mNewDefectList = DefectRecordService.getInstance().findCurrentTaskNewDefectList(currentBdzId, currentReportId);
+                // 查询本次跟踪的缺陷
+                mTrackDefectList = DefectRecordService.getInstance().findCurrentTaskTrackDefectList(currentBdzId, currentReportId);
+                // 查询本次消除的缺陷
+                mEliminateDefectList = DefectRecordService.getInstance().findCurrentTaskEliminateDefectList(currentBdzId, currentReportId);
+
+            } catch (DbException e1) {
+                e1.printStackTrace();
+            }
+
+            try {
 //                    DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT inspection_content FROM 'lookup' where k=?;", currentInspectionType));
 
-                    DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;", currentInspectionType));
-                    inspectionContent = TextUtils.isEmpty(currentReport.inspectionContent) ? model == null ? "" : model.getString("xjnr") : currentReport.inspectionContent;
-                    if (model != null) {
-                        inspectionMark = TextUtils.isEmpty(inspectionMark) ? model.getString("remark") : inspectionMark;
-                        inspectionResult = TextUtils.isEmpty(inspectionResult) ? model.getString("xsjg") : inspectionResult;
-                    }
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                    inspectionMark = "";
+                DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;", currentInspectionType));
+                inspectionContent = TextUtils.isEmpty(currentReport.inspectionContent) ? model == null ? "" : model.getString("xjnr") : currentReport.inspectionContent;
+                if (model != null) {
+                    inspectionMark = TextUtils.isEmpty(inspectionMark) ? model.getString("remark") : inspectionMark;
+                    inspectionResult = TextUtils.isEmpty(inspectionResult) ? model.getString("xsjg") : inspectionResult;
                 }
-                // 显示 发现的缺陷 跟踪的缺陷 以及 消除的缺陷
-                runOnUiThread(new Runnable() {
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                inspectionMark = "";
+            }
+            // 显示 发现的缺陷 跟踪的缺陷 以及 消除的缺陷
+            runOnUiThread(() -> {
+                binding.tvNewDefectCount.setText(String.valueOf(mNewDefectList == null ? 0 : mNewDefectList.size()));
+                binding.tvTrackDefectCount.setText(String.valueOf(mTrackDefectList == null ? 0 : mTrackDefectList.size()));
+                binding.tvEliminateDefectCount.setText(String.valueOf(mEliminateDefectList == null ? 0 : mEliminateDefectList.size()));
+                binding.tvCopyResult.setText(String.valueOf(copyCount) + "/" + String.valueOf(totalCount));
+                binding.inspectionContent.setText(inspectionContent);
+                binding.etRemark.setText(TextUtils.isEmpty(inspectionMark) ? "" : inspectionMark);
+                binding.etResult.setText(TextUtils.isEmpty(inspectionResult) ? "" : inspectionResult);
+                returnDateTime(currentReport.starttime, true);
+                returnDateTime(currentReport.endtime, false);
+            });
 
-                    @Override
-                    public void run() {
-                        binding.tvNewDefectCount.setText(String.valueOf(mNewDefectList == null ? 0 : mNewDefectList.size()));
-                        binding.tvTrackDefectCount.setText(String.valueOf(mTrackDefectList == null ? 0 : mTrackDefectList.size()));
-                        binding.tvEliminateDefectCount.setText(String.valueOf(mEliminateDefectList == null ? 0 : mEliminateDefectList.size()));
-                        binding.tvCopyResult.setText(String.valueOf(copyCount) + "/" + String.valueOf(totalCount));
-                        binding.inspectionContent.setText(inspectionContent);
-                        binding.etRemark.setText(TextUtils.isEmpty(inspectionMark) ? "" : inspectionMark);
-                        binding.etResult.setText(TextUtils.isEmpty(inspectionResult) ? "" : inspectionResult);
-                        returnDateTime(currentReport.starttime, true);
-                        returnDateTime(currentReport.endtime, false);
-                    }
-                });
-
-                try {
-                    List<ReportSignname> mList = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Config.Role.worker.name());
-                    if (mList != null) {
-                        StringBuilder nameBuilder = new StringBuilder();
-                        for (int i = 0; i < mList.size(); i++) {
-                            if (!TextUtils.isEmpty(mList.get(i).getAccount()) && !nameBuilder.toString().contains(mList.get(i).getAccount())) {
-                                czrModels.add(mList.get(i).getAccount());
-                                nameBuilder.append(mList.get(i).getAccount()).append(",");
-                                mDataCzr.add(mList.get(i));
-                            }
+            try {
+                List<ReportSignname> mList = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
+                if (mList != null) {
+                    StringBuilder nameBuilder = new StringBuilder();
+                    for (int i = 0; i < mList.size(); i++) {
+                        if (!TextUtils.isEmpty(mList.get(i).getAccount()) && !nameBuilder.toString().contains(mList.get(i).getAccount())) {
+                            czrModels.add(mList.get(i).getAccount());
+                            nameBuilder.append(mList.get(i).getAccount()).append(",");
+                            mDataCzr.add(mList.get(i));
                         }
-                        czrModelsOrigin.addAll(czrModels);
                     }
-                    String userAccount = (String) PreferencesUtils.get(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
-                    List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(userAccount);
-                    totalCountUser = defaultUesrs.size();
-                    mList = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Config.Role.leader.name());
-                    if (mList != null) {
-                        mDataFzr.addAll(mList);
-                    }
-                } catch (DbException e) {
-                    e.printStackTrace();
+                    czrModelsOrigin.addAll(czrModels);
                 }
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        adapterGzr = new SignNameAdapter(currentActivity, mDataCzr, GenerateReportActivity.this, MASKGzr);
-                        adapterGzr.setUserCount(totalCountUser);
-                        adapterFzr = new SignNameAdapter(currentActivity, mDataFzr, GenerateReportActivity.this, MASKFzr);
-                        binding.signList.setAdapter(adapterGzr);
-                        binding.signList1.setAdapter(adapterFzr);
-                    }
-                });
+                String userAccount = (String) PreferencesUtils.get(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
+                List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(userAccount);
+                totalCountUser = defaultUesrs.size();
+                mList = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
+                if (mList != null) {
+                    mDataFzr.addAll(mList);
+                }
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            runOnUiThread(() -> {
+                adapterGzr = new SignNameAdapter(currentActivity, mDataCzr, GenerateReportActivity.this, MASKGzr);
+                adapterGzr.setUserCount(totalCountUser);
+                adapterFzr = new SignNameAdapter(currentActivity, mDataFzr, GenerateReportActivity.this, MASKFzr);
+                binding.signList.setAdapter(adapterGzr);
+                binding.signList1.setAdapter(adapterFzr);
+            });
         });
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                persons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts);
-            }
-        });
+        mFixedThreadPoolExecutor.execute(() -> persons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts));
     }
 
     /**

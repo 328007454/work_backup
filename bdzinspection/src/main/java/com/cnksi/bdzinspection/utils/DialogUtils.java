@@ -168,5 +168,10 @@ public class DialogUtils {
         return dialog;
     }
 
+    public static void setDialogNull() {
+        if (dialog != null) {
+            dialog = null;
+        }
+    }
 
 }

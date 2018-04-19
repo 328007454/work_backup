@@ -47,7 +47,9 @@ import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
+import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.view.RadiusSpan;
 import com.cnksi.xscore.xsactivity.BaseCoreActivity;
 import com.cnksi.xscore.xscommon.ScreenManager;
@@ -415,6 +417,8 @@ public class BaseActivity extends BaseCoreActivity {
             mHandler.removeCallbacksAndMessages(0);
             mHandler = null;
         }
+        DialogUtils.setDialogNull();
+        PlaySound.setPlayNull();
         super.onDestroy();
     }
 
@@ -745,4 +749,6 @@ public class BaseActivity extends BaseCoreActivity {
         }
         return gqjcheck;
     }
+
+
 }

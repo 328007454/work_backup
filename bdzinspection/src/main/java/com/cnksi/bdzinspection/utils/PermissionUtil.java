@@ -71,9 +71,11 @@ public class PermissionUtil {
                 return;
             } else {
                 grantPermissionListener.allPermissionsGranted();
+                instance =null;
             }
         } else {
             grantPermissionListener.allPermissionsGranted();
+            instance =null;
         }
     }
 
@@ -94,9 +96,11 @@ public class PermissionUtil {
                     showPermissionDeniedDialog(activity, deniedPermissions);
                 } else {
                     grantPermissionListener.allPermissionsGranted();
+                    instance =null;
                 }
             } else {
                 grantPermissionListener.allPermissionsGranted();
+                instance =null;
             }
         }
     }

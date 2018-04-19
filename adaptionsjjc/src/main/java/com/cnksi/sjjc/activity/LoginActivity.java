@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -92,16 +93,19 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
      * 屏蔽Wifi计数器
      */
     private int count = 0;
-    private long startTime = 0;
+    private long startTime1 = 0;
     private boolean isGrantPermission = false;
     private String userOnePassword;
     private String userTwoPassword;
 
     private ActivityLoginBinding binding;
 
+    private long startTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startTime1 = System.currentTimeMillis();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, permissions);
     }
@@ -115,9 +119,6 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     public void initData() {
 
     }
-
-
-
 
 
     public void inUI() {
@@ -326,7 +327,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         super.onResume();
         //清空当前登录信息
         if (isGrantPermission) {
-
+            Log.i("message", (System.currentTimeMillis() - startTime1) + "");
         }
     }
 

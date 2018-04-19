@@ -150,9 +150,6 @@ android {
 repositories { flatDir { dirs 'libs' } }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-//    implementation ("com.cnksi:ksynclib:$ksi_sync_version") {
-//        exclude module: 'fastjson'
-//    }
     if (InspeIsLibrary.toBoolean()) {
         compile project(path: ':inspe')
     }
@@ -175,4 +172,6 @@ dependencies {
             force "com.android.support:appcompat-v7:$appcompat_v7_version"
         }
     }
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
