@@ -132,6 +132,7 @@ public class InspeModifyActivity extends AppBaseActivity implements View.OnClick
                 return;
             }
             taskExtendEntity.setChecked_device_bigid(ArrayInspeUtils.toListIntegerString(checkIds));
+            taskExtendEntity.setProgress(TaskProgressType.doing.name());
             taskEntity.setDo_check_time(DateFormat.dateToDbString(System.currentTimeMillis()));
             taskService.updateTask(taskEntity);
             if (taskService.updateTaskExtend(taskExtendEntity)) {

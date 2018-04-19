@@ -108,7 +108,7 @@ public class TaskService extends BaseDbService {
         sql_left_table += ") AS extend";
 
         String sql_left_join = "SELECT extend.person_id,extend.person_name,extend.checked_device_bigid AS persion_device_bigid,task.* FROM xj_jyh_task AS task LEFT JOIN " + sql_left_table + " ON task.id=extend.task_id";
-        String sql = sql_left_join + " WHERE task.dlt='0' AND progress !='" + TaskProgressType.done.name() + "' ";
+        String sql = sql_left_join + " WHERE task.dlt='0' AND ((extend.progress IS NULL AND task.progress !='done') OR (extend.progress IS NOT NULL AND extend.progress!='done')) ";
         if (deptId != null) {
             sql += "AND dept_id='" + deptId + "' ";//查询本班任务
         }

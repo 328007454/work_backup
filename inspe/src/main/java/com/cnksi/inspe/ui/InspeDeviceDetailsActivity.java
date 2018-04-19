@@ -249,13 +249,14 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
             //
             DeviceCheckEntity checkEntity = new DeviceCheckEntity();
             checkEntity.setDevice_id(deviceId);
-            checkEntity.setRecord_type(RecordType.finish.name());
+            checkEntity.setRecord_type(deviceIssueTotal == 0 ? RecordType.normal.name() : RecordType.answer.name());
             checkEntity.setPlustek_type(plustekType.name());
             checkEntity.setTask_id(taskId);
             checkEntity.setDlt(0);
 
             if (plustekCheckServer.updateDeviceEntity(checkEntity)) {
                 detailsBinding.finishBtn.setEnabled(false);
+                finish();
             } else {
                 showToast("操作失败！");
             }

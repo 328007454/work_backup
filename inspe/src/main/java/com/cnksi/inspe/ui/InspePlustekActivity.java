@@ -15,8 +15,10 @@ import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspePlustekBinding;
 import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.db.entity.TaskExtendEntity;
 import com.cnksi.inspe.entity.InspectePlustekEntity;
 import com.cnksi.inspe.type.PlustekType;
+import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.type.TaskType;
 import com.cnksi.inspe.utils.DateFormat;
@@ -35,7 +37,6 @@ import java.util.List;
  * <li>PMS检查:根据设备查找标准，与【全面巡视】类似</li>
  * <li>现场检查:与【全面巡视】类似</li>
  * </ul>
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/21 09:04
@@ -132,8 +133,11 @@ public class InspePlustekActivity extends AppBaseActivity implements View.OnClic
      * 更新任务状态
      */
     private void updateTask() {
-        task.setProgress(TaskProgressType.done.name());
-        if (new TaskService().updateTask(task)) {
+
+        TaskService taskService = new TaskService();
+        TaskExtendEntity extendEntity = taskService.getTaskExtend(task.getId(), getUserService().getUserExpert(RoleType.expert).getId());
+        extendEntity.setProgress(TaskProgressType.done.name());
+        if (taskService.updateTaskExtend(extendEntity)) {
             showToast("保存完成");
             finish();
         } else {
