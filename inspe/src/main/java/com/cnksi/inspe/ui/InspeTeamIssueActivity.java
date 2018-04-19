@@ -70,7 +70,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
     private TaskService taskService = new TaskService();
     private InspeScoreEntity scoreBean;
     //当前扣分项(单位扣分)(将扣分的float转为int后处理，避免float计算误差导致不正确的数引入)
-    private int scoreEntity;
+    private int scoreUnit;
     //当前扣分
     private int minusScore;
 
@@ -142,7 +142,7 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
         dataBinding.contextTxt.setText(teamRule.getName());
 
         //
-        teamRuleResult = teamService.getRuleResult(teamRule.getId(), task.getId());
+        teamRuleResult = teamService.getRuleResult(teamRule.getId(), null, task.getId());
         if (teamRuleResult == null) {
             teamRuleResult = new TeamRuleResultEntity();
         }
@@ -161,16 +161,16 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
         if (nextValue > maxMinus) {
             isAdd = false;
             dataBinding.addBtn.setEnabled(false);
-        } else if (nextValue == maxMinus || scoreEntity == 0) {
+        } else if (nextValue == maxMinus || scoreUnit == 0) {
             dataBinding.addBtn.setEnabled(false);
         } else {
             dataBinding.addBtn.setEnabled(true);
         }
 
-        if (nextValue < scoreEntity) {
+        if (nextValue < scoreUnit) {
             isAdd = false;
             dataBinding.minuxBtn.setEnabled(false);
-        } else if (nextValue == scoreEntity) {
+        } else if (nextValue == scoreUnit) {
             dataBinding.minuxBtn.setEnabled(false);
         } else {
             dataBinding.minuxBtn.setEnabled(true);
@@ -218,8 +218,8 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
                     }
 
                     minusScore = 0;
-                    scoreEntity = (int) (scoreBean.score * 10);
-                    setScoreTxt(scoreEntity);
+                    scoreUnit = (int) (scoreBean.score * 10);
+                    setScoreTxt(scoreUnit);
 
                 }
 
@@ -323,9 +323,9 @@ public class InspeTeamIssueActivity extends AppBaseActivity implements View.OnCl
             }
 
         } else if (i == R.id.addBtn) {
-            setScoreTxt(scoreEntity);
+            setScoreTxt(scoreUnit);
         } else if (i == R.id.minuxBtn) {
-            setScoreTxt(-scoreEntity);
+            setScoreTxt(-scoreUnit);
         }
     }
 

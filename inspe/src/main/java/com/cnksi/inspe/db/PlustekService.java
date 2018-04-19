@@ -214,7 +214,7 @@ public class PlustekService extends BaseDbService {
         return null;
     }
 
-    public float getStandaredMaxDult(String level4Id, String deviceId) {
+    public float getStandaredMaxDult(String task,String level4Id, String deviceId) {
         //先将leve1下所有标准查询出来，在与结果中的rule_id做一对一管理
         DbModel dbModelTotal = getStandardGroupScore(level4Id);
         if (dbModelTotal == null || dbModelTotal.isEmpty("score") || dbModelTotal.isEmpty("id")) {
@@ -227,11 +227,11 @@ public class PlustekService extends BaseDbService {
         String level2 = "SELECT id FROM xj_jyhpj_rule WHERE pid IN('" + level1Id + "')";
         String level3 = "SELECT id FROM xj_jyhpj_rule WHERE pid IN(" + level2 + ")";
         String level4 = "SELECT level,* FROM xj_jyhpj_rule WHERE pid IN(" + level3 + ")";
-        String sql = "SELECT SUM(result.deduct_score)AS total_score FROM xj_group_con_rule_result AS result JOIN (" + level4 + ")AS ruel ON ruel.id=result.rule_id WHERE result.check_type='jyhjc' AND dlt='0' AND device_id='" + deviceId + "';";
+        String sql = "SELECT SUM(result.deduct_score)AS total_score FROM xj_group_con_rule_result AS result JOIN (" + level4 + ")AS ruel ON ruel.id=result.rule_id WHERE result.check_type='jyhjc' AND result.dlt='0' AND result.device_id='" + deviceId + "' AND task_id='"+task+"';";
         try {
             DbModel dbModel = dbManager.findDbModelFirst(new SqlInfo(sql));
             float deductScore = 0;
-            if (dbModel == null || dbModel.isEmpty("total_score")) {
+            if (dbModel != null && !dbModel.isEmpty("total_score")) {
                 deductScore = dbModel.getFloat("total_score");
             }
             return Math.max(0, (totalScore - deductScore));

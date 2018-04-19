@@ -70,29 +70,29 @@ public class InspePlustekSimilarIssueActivity extends AppBaseActivity {
         adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
-                new AlertDialog.Builder(context)
-                        .setTitle("删除确认").setMessage("您是想要删除该问题记录?\n")
-                        .setPositiveButton("删除",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (plustekService.delete(list.get(position).resultEntity)) {
-                                            plustekService.delete(list.remove(position));
-                                            adapter.notifyDataSetChanged();
-                                            showToast("删除成功");
-                                        } else {
-                                            showToast("删除失败！");
-                                        }
-
-                                    }
-                                })
-                        .setNegativeButton("取消",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                })
-                        .show();
+//                new AlertDialog.Builder(context)
+//                        .setTitle("删除确认").setMessage("您是想要删除该问题记录?\n")
+//                        .setPositiveButton("删除",
+//                                new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        if (plustekService.delete(list.get(position).resultEntity)) {
+//                                            plustekService.delete(list.remove(position));
+//                                            adapter.notifyDataSetChanged();
+//                                            showToast("删除成功");
+//                                        } else {
+//                                            showToast("删除失败！");
+//                                        }
+//
+//                                    }
+//                                })
+//                        .setNegativeButton("取消",
+//                                new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                    }
+//                                })
+//                        .show();
                 // 显示
                 return false;
             }

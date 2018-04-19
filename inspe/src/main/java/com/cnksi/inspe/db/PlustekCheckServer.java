@@ -2,6 +2,7 @@ package com.cnksi.inspe.db;
 
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.DeviceCheckEntity;
+import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.type.PlustekType;
 
 import org.xutils.ex.DbException;
@@ -30,6 +31,19 @@ public class PlustekCheckServer extends BaseDbService {
         } catch (DbException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public DeviceEntity getDeviceNotCheckDevice(String taskId, PlustekType plustekType) {
+//        try {
+//            return dbManager.selector(DeviceCheckEntity.class)
+//                    .where("task_id", "=", taskId)
+//                    .and("device_id", "=", deviceId)
+//                    .and("plustek_type", "=", plustekType.name())
+//                    .findFirst();
+//        } catch (DbException e) {
+//            e.printStackTrace();
+////        }
         return null;
     }
 

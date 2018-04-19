@@ -38,6 +38,7 @@ import com.cnksi.inspe.utils.FileUtils;
 import com.cnksi.inspe.utils.FunctionUtils;
 import com.cnksi.inspe.utils.ImageUtils;
 import com.cnksi.inspe.utils.InspeConfig;
+import com.cnksi.inspe.utils.ScoreUtils;
 import com.cnksi.inspe.widget.BreakWordDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
 
@@ -82,6 +83,7 @@ import java.util.UUID;
 public class InspePlustekIssueActivity extends AppBaseActivity implements View.OnClickListener {
     private Set<String> noPmsIds = new HashSet<>();
     private ActivityInspePlustekissueBinding dataBinding;
+    private ScoreUtils scoreUtils = null;
 
     private DictionaryService dictionaryService = new DictionaryService();
     private DeviceService deviceService = new DeviceService();
@@ -95,11 +97,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     private List<String> natureArray;
     private List<String> reasonArray;
 
-    private float maxMinus; //最大扣分值
-    private int maxIntentMinus;//最大扣分会随着选择扣分项不同而动态变化，intent传递过来的扣分为大项可扣总分
-    private int scoreEntity; //当前扣分项(单位扣分)(将扣分的float转为int后处理，避免float计算误差导致不正确的数引入)
-    private int minusScore;  //当前扣分/
     final int SCAN_NUM = 100;//扣分放大倍数
+    private float maxIntentMinus = 0;
 
     private GalleryAdapter galleryAdapte;
     private String picTempPath;  //**拍照临时图片地址*/
@@ -115,6 +114,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     @Override
     public void initUI() {
         dataBinding = (ActivityInspePlustekissueBinding) rootDataBinding;
+        scoreUtils = new ScoreUtils(dataBinding.addBtn, dataBinding.minuxBtn, SCAN_NUM);
         setTitle("问题记录", R.drawable.inspe_left_black_24dp);
 
         dataBinding.addBtn.setOnClickListener(this);
@@ -238,7 +238,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         finish();
                         return;
                     }
-                    maxIntentMinus = (int) (plustekService.getStandaredMaxDult(list.get(0).getId(), deviceId) * SCAN_NUM);
+
+                    maxIntentMinus = plustekService.getStandaredMaxDult(taskId, list.get(0).getId(), deviceId);
                     listArray = new ArrayList<>();
                     for (PlusteRuleEntity entity : list) {
                         listArray.add(entity.getName());
@@ -259,7 +260,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     return;
                 }
                 ruleResultEntity = teamService.getRuleResult(ruleResultId);//获取问题
-                maxIntentMinus = (int) ((plustekService.getStandaredMaxDult(ruleResultEntity.getRule_id(), deviceId) - ruleResultEntity.getDeduct_score()) * SCAN_NUM);
+                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                 if (ruleResultEntity == null) {
                     showToast("参数错误!");
                     finish();
@@ -275,7 +276,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     return;
                 }
                 ruleResultEntity = teamService.getRuleResult(ruleResultId);
-                maxIntentMinus = (int) (plustekService.getStandaredMaxDult(ruleResultEntity.getRule_id(), deviceId) * SCAN_NUM);
+                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                 if (ruleResultEntity == null) {
                     showToast("参数错误!");
                     finish();
@@ -319,6 +320,9 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         rule4Entity = plustekService.getIssue(ruleResultEntity.getRule_id());
         rule3Entity = plustekService.getIssue(rule4Entity.getPid());
         ruleResultEntity.setId(null);
+        ruleResultEntity.setDevice_name(deviceEntity.getName());
+        ruleResultEntity.setDevice_id(deviceEntity.getDeviceid());
+        ruleResultEntity.setCreate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
 
         dataBinding.issueInfoTxt.setOnClickListener(null);
         dataBinding.issueEdit.setOnClickListener(null);
@@ -331,21 +335,12 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         dataBinding.issueReasonTxt.setText(ruleResultEntity.getProduce_reason());
         dataBinding.suggestEdit.setText(ruleResultEntity.getSuggest_deal_way());
 
-        minusScore = 0;
-        scoreEntity = (int) (ruleResultEntity.getDeduct_score() * SCAN_NUM);
-        if (!TextUtils.isEmpty(rule4Entity.getScore_content())) {
-            InspeScoreEntity scoreObject = JSON.parseObject(rule4Entity.getScore_content(), InspeScoreEntity.class);
-            int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
-            if (maxV > 0) {
-                maxMinus = Math.min(maxIntentMinus, maxV) + scoreEntity;
-            } else {
-                maxMinus = maxIntentMinus + scoreEntity;
-            }
-        } else {
-            maxMinus = maxIntentMinus;
-        }
 
-        setScoreTxt(scoreEntity);
+        scoreUtils.setValue(
+                Math.min(maxIntentMinus, JSON.parseObject(TextUtils.isEmpty(rule4Entity.getScore_content()) ? "{}" : rule4Entity.getScore_content(), InspeScoreEntity.class).max_decuct_score),
+                (float) rule4Entity.getScore(),//扣分单位值
+                Math.max(ruleResultEntity.getDeduct_score( ), (float) rule4Entity.getScore()));
+        dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
 
         //责任班组、责任部门
         listTeamArray = new ArrayList<>();
@@ -375,7 +370,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     private void initNoPmsIssue(String taskId, String deviceId) {
         rule4Entity = plustekService.getNoPMS4(deviceEntity.getBigid());
         rule3Entity = plustekService.getIssue(rule4Entity.getPid());
-        maxIntentMinus = (int) (plustekService.getStandaredMaxDult(rule4Entity.id, deviceId) * SCAN_NUM);
+        maxIntentMinus = plustekService.getStandaredMaxDult(taskId, rule4Entity.id, deviceId);
         if (rule4Entity == null) {
             showToast("未查询到标准！");
             finish();
@@ -400,7 +395,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         dataBinding.contextTxt.setText(content);
         dataBinding.issueEdit.setText("必填项参数错误或空缺");
         dataBinding.issueNatureTxt.setText(natureArray.get(0));
-        checkIssuUpdateUI(rule4Entity);
+        checkCreateUpdateUI(rule4Entity);
     }
 
     /**
@@ -432,21 +427,11 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         }
 
         //扣分，修改扣分需要加上本身的扣分
-        minusScore = 0;
-        scoreEntity = (int) (ruleResultEntity.getDeduct_score() * SCAN_NUM);
-        if (!TextUtils.isEmpty(rule4Entity.getScore_content())) {
-            InspeScoreEntity scoreObject = JSON.parseObject(rule4Entity.getScore_content(), InspeScoreEntity.class);
-            int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
-            if (maxV > 0) {
-                maxMinus = Math.min(maxIntentMinus, maxV) + scoreEntity;
-            } else {
-                maxMinus = maxIntentMinus + scoreEntity;
-            }
-        } else {
-            maxMinus = maxIntentMinus;
-        }
-
-        setScoreTxt(scoreEntity);
+        scoreUtils.showValue(
+                Math.min(maxIntentMinus + ruleResultEntity.getDeduct_score(), JSON.parseObject(TextUtils.isEmpty(rule4Entity.getScore_content()) ? "{}" : rule4Entity.getScore_content(), InspeScoreEntity.class).max_decuct_score),
+                (float) rule4Entity.getScore(),
+                Math.max(ruleResultEntity.getDeduct_score(),ruleResultEntity.getDeduct_score()));
+        dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
 
         //责任班组、责任部门
         listTeamArray = new ArrayList<>();
@@ -497,41 +482,6 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         }
     }
 
-    /**
-     * 扣分显示<p/>
-     * 根据最大扣分值来作为判断
-     * @param value
-     */
-
-    private void setScoreTxt(int value) {
-        boolean isAdd = true;
-        int nextValue = minusScore + value;
-        if (nextValue > maxMinus) {
-            isAdd = false;
-            dataBinding.addBtn.setEnabled(false);
-        } else if (nextValue == maxMinus || scoreEntity == 0) {
-            dataBinding.addBtn.setEnabled(false);
-        } else {
-            dataBinding.addBtn.setEnabled(true);
-        }
-
-        if (nextValue < scoreEntity) {
-            isAdd = false;
-            dataBinding.minuxBtn.setEnabled(false);
-        } else if (nextValue == scoreEntity) {
-            dataBinding.minuxBtn.setEnabled(false);
-        } else {
-            dataBinding.minuxBtn.setEnabled(true);
-        }
-
-        if (isAdd) {
-            minusScore = nextValue;
-        }
-
-        dataBinding.minusScoreEdit.setText(String.format("%.2f", (minusScore * 1.0f / SCAN_NUM)));
-
-    }
-
     @Override
     public void onClick(View view) {
         int i = view.getId();
@@ -571,7 +521,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         galleryAdapte.notifyDataSetChanged();
                     }
 
-                    ruleResultEntity = teamService.getRuleResult(list.get(position).getId(), taskEntity.getId());//查询数据库是否对该问题进行过记录
+                    ruleResultEntity = teamService.getRuleResult(list.get(position).getId(), deviceId, taskEntity.getId());//查询数据库是否对该问题进行过记录
                     if (ruleResultEntity != null) {//初始化修改UI
                         //对图片进行销毁
                         for (String picName : picList) {//先添加后移除，清理新添加的图片
@@ -580,14 +530,18 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         picDeleteList.clear();
                         galleryAdapte.notifyDataSetChanged();
 
-                        maxIntentMinus = (int) ((plustekService.getStandaredMaxDult(ruleResultEntity.getRule_id(), deviceId) + ruleResultEntity.getDeduct_score()) * SCAN_NUM);
+                        maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                         initEditIssue(taskId, deviceId, ruleResultId, content);
                         return;
                     }
-                    checkIssuUpdateUI(entity);
+                    checkCreateUpdateUI(entity);
                 }
             }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
         } else if (i == R.id.issueEdit) {
+            if (rule4Entity == null || rule3Entity == null) {
+                showToast("请先选择扣分原因");
+                return;
+            }
             new BreakWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName()).setOnCheckListener(new BreakWordDialog.OnCheckedListener() {
                 @Override
                 public void onChecked(String msg) {
@@ -595,9 +549,11 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 }
             }).show();
         } else if (i == R.id.addBtn) {//+扣分
-            setScoreTxt(scoreEntity);
+            scoreUtils.add();
+            dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
         } else if (i == R.id.minuxBtn) {//-扣分
-            setScoreTxt(-scoreEntity);
+            scoreUtils.minux();
+            dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
         } else if (i == R.id.issueNatureTxt) {//问题性质(独立),一般、严重、危急
             new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -688,26 +644,17 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 
     }
 
-    private void checkIssuUpdateUI(PlusteRuleEntity entity) {
+    private void checkCreateUpdateUI(PlusteRuleEntity entity) {
         //问题描述
         dataBinding.issueInfoTxt.setText(entity.getName());
         //dataBinding.issueEdit.setText(entity.getName().replaceAll("的{0,},{0,}，{0,}[扣].*分.*", "").replaceAll("[0-9].]{0,}[a-z)]{0,}[a-z]{0,}", ""));
 
         //扣分
-        minusScore = 0;
-        scoreEntity = (int) (entity.getScore() * SCAN_NUM);
-        if (!TextUtils.isEmpty(entity.getScore_content())) {
-            InspeScoreEntity scoreObject = JSON.parseObject(entity.getScore_content(), InspeScoreEntity.class);
-            int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
-            if (maxV > 0) {
-                maxMinus = Math.min(maxIntentMinus, maxV);
-            } else {
-                maxMinus = maxIntentMinus;
-            }
-        } else {
-            maxMinus = maxIntentMinus;
-        }
-        setScoreTxt(scoreEntity);
+        scoreUtils.setValue(
+                Math.min(maxIntentMinus, JSON.parseObject(TextUtils.isEmpty(rule4Entity.getScore_content()) ? "{}" : rule4Entity.getScore_content(), InspeScoreEntity.class).max_decuct_score),
+                (float) rule4Entity.getScore(),//扣分单位
+                (float) rule4Entity.getScore());//值
+        dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
 
         //检修班组、检修部门
         listTeamArray.clear();
@@ -788,7 +735,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         //问题类型(记录类型：问题（answer）、普通记录（normal）)
         ruleResultEntity.setRecord_type(RecordType.answer.name());
         //扣分情况
-        ruleResultEntity.setDeduct_score(minusScore * 1.0f / SCAN_NUM);//放大数据后对数据进行缩小
+        ruleResultEntity.setDeduct_score(scoreUtils.getValueInt() * 1.f / SCAN_NUM);//放大数据后对数据进行缩小
         //问题描述
         ruleResultEntity.setDescription(dataBinding.issueEdit.getText().toString().trim());
         //扣分原因jsonArray
@@ -949,4 +896,5 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
          */
         int NOPMS = 3;
     }
+
 }

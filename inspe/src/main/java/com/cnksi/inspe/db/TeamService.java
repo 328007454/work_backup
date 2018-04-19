@@ -39,7 +39,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取Levenl=1数据
-     *
      * @return
      */
     public List<TeamRuleEntity> getRoleList() {
@@ -54,7 +53,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取建设项目(获取Level=2数据)
-     *
      * @param levle1Id {@link #getRoleList()}查询出的对象id
      * @return
      */
@@ -79,7 +77,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取资料规范(在查看标准页面使用)
-     *
      * @param level2Id {@link #getRoleList(String, String)}查询出的对象id
      * @return
      */
@@ -103,7 +100,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取规范标准文件名
-     *
      * @param level2Id
      * @return
      */
@@ -197,7 +193,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取资料规范(在检查标准页面使用)
-     *
      * @param levle2Id {{@link #getRoleDoc(String)}}集合中的id
      * @return
      */
@@ -224,7 +219,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取资料规范(模块)总分
-     *
      * @return
      */
     public TeamRuleEntity getRoleScore(TeamRuleEntity entityLevel4, String taskId) {
@@ -258,7 +252,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取资料规范(模块)总分
-     *
      * @return
      */
     private void getRoleRecord(TeamRuleEntity entity, String taskId) {
@@ -281,7 +274,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 解析统计
-     *
      * @param entity
      * @param moble
      */
@@ -323,7 +315,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 保存班组建设记录
-     *
      * @return
      */
     public boolean saveRuleResult(TeamRuleResultEntity data) {
@@ -340,7 +331,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 保存班组建设记录
-     *
      * @return
      */
     public TeamRuleResultEntity getRuleResult(String id) {
@@ -357,12 +347,16 @@ public class TeamService extends BaseDbService {
 
     /**
      * 保存班组建设记录
-     *
      * @return
      */
-    public TeamRuleResultEntity getRuleResult(String ruleId, String taskId) {
+    public TeamRuleResultEntity getRuleResult(String ruleId, String deviceId, String taskId) {
         try {
-            String sql = "SELECT * FROM xj_group_con_rule_result WHERE rule_id='" + ruleId + "' AND task_id='" + taskId + "' AND dlt='0';";
+            String sql = "SELECT * FROM xj_group_con_rule_result WHERE rule_id='" + ruleId + "' AND task_id='" + taskId + "' AND dlt='0'";
+            if (deviceId != null) {
+                sql += "AND device_id='" + deviceId + "'";
+            }
+            sql += ";";
+
             TeamRuleResultEntity entity = DBUtils.parseObject(dbManager.findDbModelFirst(new SqlInfo(sql)), TeamRuleResultEntity.class);
             return entity;
         } catch (DbException e) {
@@ -375,7 +369,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取问题记录
-     *
      * @return
      */
     public List<TeamRuleResultEntity> getIssueList() {
@@ -393,8 +386,7 @@ public class TeamService extends BaseDbService {
 
     /**
      * 根据用户ID和状态查看问题
-     *
-     * @param userIds  用户IDS
+     * @param userIds 用户IDS
      * @param progress 问题状态
      * @return
      */
@@ -428,7 +420,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 判断该问题是否已经分享
-     *
      * @param taskId
      * @param ruleId
      * @return
@@ -455,7 +446,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 班组长，我处理的问题
-     *
      * @param groupIds
      * @param taskType
      * @param bdzId
@@ -479,7 +469,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 根据组和状态查询问题
-     *
      * @param groupIds
      * @param progress
      * @return
@@ -514,7 +503,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 保存数据库记录日志
-     *
      * @param data
      * @return
      */
@@ -531,7 +519,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 清除数据
-     *
      * @param cls
      * @param <T>
      * @return
@@ -546,10 +533,8 @@ public class TeamService extends BaseDbService {
     }
 
 
-
     /**
      * 获取资料规范(模块)总分
-     *
      * @return
      */
     private float getRoleScore(String pid) {

@@ -146,7 +146,7 @@ public final class DBUtils {
                     field.set(entity, model.getInt(name));
                 } else if (type.contains("float") || type.contains("Float")) {
                     field.set(entity, model.getFloat(name));
-                } else if (type.contains("Double") || type.contains("Double")) {
+                } else if (type.contains("double") || type.contains("Double")) {
                     field.set(entity, model.getDouble(name));
                 } else if (type.contains("boolean") || type.contains("Boolean")) {
                     field.set(entity, model.getBoolean(name));

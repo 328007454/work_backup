@@ -34,7 +34,6 @@ import java.util.UUID;
 
 /**
  * 班组建设检查-显示检查标准
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/21 09:31
@@ -127,7 +126,7 @@ public class InspeTeamStandardActivity extends AppBaseActivity implements View.O
     private void saveOK(TeamRuleEntity teamRule) {
         teamRule.setRecord_type(RecordType.normal.name());
 
-        TeamRuleResultEntity teamRuleResult = teamService.getRuleResult(teamRule.getId(), task.getId());
+        TeamRuleResultEntity teamRuleResult = teamService.getRuleResult(teamRule.getId(), null, task.getId());
         //创建ID
         if (teamRuleResult == null) {//创建或覆盖
             teamRuleResult = new TeamRuleResultEntity();
