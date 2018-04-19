@@ -137,13 +137,38 @@ public class PlustekService extends BaseDbService {
      * @param deviceId
      * @return
      */
-    public List<TeamRuleResultEntity> getSimilarIssues(String taskId, String deviceId, String bigId) {
+    public List<TeamRuleResultEntity> getSimilarIssues(String taskId, String plusteckType, String deviceId, String bigId) {
         String group_sql = "SELECT * FROM xj_group_con_rule_result WHERE dlt='0' AND task_id='" + taskId + "' AND device_bigtype='" + bigId + "' GROUP BY rule_id";
         String device_result_sql = "SELECT rule_id FROM xj_group_con_rule_result WHERE dlt='0' AND task_id='" + taskId + "' AND device_id='" + deviceId + "'";
-        String sql = "SELECT * FROM (" + group_sql + ") WHERE rule_id NOT IN(" + device_result_sql + ");";
-
+        String sql_all = "SELECT * FROM (" + group_sql + ") WHERE rule_id NOT IN(" + device_result_sql + ");";
+//        String sql = "SELECT * FROM xj_jyhpj_rule AS rul LEFT JOIN (" + sql_all + " ON issue.id=rul.rule_id WHERE rul.check_way LIKE '%" + plusteckType + "%';";
+//        AND check_way LIKE '%"+plusteckType+"%'
         try {
-            return DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleResultEntity.class);
+            List<TeamRuleResultEntity> list = DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql_all)), TeamRuleResultEntity.class);
+            for (int i = list.size() - 1; i >= 0; i--) {
+                PlusteRuleEntity ruleEntity = getTeamRuleResultEntity3(list.get(i).getRule_id(), plusteckType);
+                if (ruleEntity == null) {
+                    list.remove(i);
+                }
+            }
+            return list;
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 根据level=4查level=3
+     * @param level4Id
+     * @param plustekType
+     * @return
+     */
+    private PlusteRuleEntity getTeamRuleResultEntity3(String level4Id, String plustekType) {
+        String slq = "SELECT * FROM xj_jyhpj_rule WHERE id=(SELECT pid FROM xj_jyhpj_rule WHERE id='" + level4Id + "') AND check_way LIKE '%" + plustekType + "%'";
+        try {
+            return DBUtils.parseObject(dbManager.findDbModelFirst(new SqlInfo(slq)), PlusteRuleEntity.class);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -214,7 +239,7 @@ public class PlustekService extends BaseDbService {
         return null;
     }
 
-    public float getStandaredMaxDult(String task,String level4Id, String deviceId) {
+    public float getStandaredMaxDult(String task, String level4Id, String deviceId) {
         //先将leve1下所有标准查询出来，在与结果中的rule_id做一对一管理
         DbModel dbModelTotal = getStandardGroupScore(level4Id);
         if (dbModelTotal == null || dbModelTotal.isEmpty("score") || dbModelTotal.isEmpty("id")) {
@@ -227,7 +252,7 @@ public class PlustekService extends BaseDbService {
         String level2 = "SELECT id FROM xj_jyhpj_rule WHERE pid IN('" + level1Id + "')";
         String level3 = "SELECT id FROM xj_jyhpj_rule WHERE pid IN(" + level2 + ")";
         String level4 = "SELECT level,* FROM xj_jyhpj_rule WHERE pid IN(" + level3 + ")";
-        String sql = "SELECT SUM(result.deduct_score)AS total_score FROM xj_group_con_rule_result AS result JOIN (" + level4 + ")AS ruel ON ruel.id=result.rule_id WHERE result.check_type='jyhjc' AND result.dlt='0' AND result.device_id='" + deviceId + "' AND task_id='"+task+"';";
+        String sql = "SELECT SUM(result.deduct_score)AS total_score FROM xj_group_con_rule_result AS result JOIN (" + level4 + ")AS ruel ON ruel.id=result.rule_id WHERE result.check_type='jyhjc' AND result.dlt='0' AND result.device_id='" + deviceId + "' AND task_id='" + task + "';";
         try {
             DbModel dbModel = dbManager.findDbModelFirst(new SqlInfo(sql));
             float deductScore = 0;

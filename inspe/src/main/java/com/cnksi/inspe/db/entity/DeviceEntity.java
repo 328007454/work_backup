@@ -608,7 +608,6 @@ public class DeviceEntity extends BaseDBEntity {
             this.deviceid = UUID.randomUUID().toString();
         this.spid = spaceModel.getString("spid");
         this.bdzid = spaceModel.getString("bdzid");
-        this.type = "all";
         this.dlt = 1;
         this.bigid = bigid;
         this.spaceName = spaceModel.getString("name");
@@ -618,7 +617,6 @@ public class DeviceEntity extends BaseDBEntity {
         if (TextUtils.isEmpty(this.deviceid))
             this.deviceid = UUID.randomUUID().toString();
         this.bdzid = bdzid;
-        this.type = "all";
         this.bigid = bigid;
         this.dlt = 1;
     }

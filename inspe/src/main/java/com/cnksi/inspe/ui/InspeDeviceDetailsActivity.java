@@ -189,7 +189,6 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
 
     /**
      * 查询设备标准 level=2
-     *
      * @param bigId
      * @param pid
      */
@@ -243,7 +242,9 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
         } else if (i == R.id.copyIssueBtn) {//同类设备异常
             startActivity(new Intent(this, InspePlustekSimilarIssueActivity.class)
                     .putExtra("task_id", taskId)
-                    .putExtra("device_id", deviceId));
+                    .putExtra("device_id", deviceId)
+                    .putExtra("plustek_type", plustekType.name())
+            );
         } else if (i == R.id.finishBtn) {//完成设备检查
             //
             DeviceCheckEntity checkEntity = new DeviceCheckEntity();
@@ -251,6 +252,7 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
             checkEntity.setRecord_type(RecordType.finish.name());
             checkEntity.setPlustek_type(plustekType.name());
             checkEntity.setTask_id(taskId);
+            checkEntity.setDlt(0);
 
             if (plustekCheckServer.updateDeviceEntity(checkEntity)) {
                 detailsBinding.finishBtn.setEnabled(false);

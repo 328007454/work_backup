@@ -31,9 +31,14 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     public final static int DEVICE_ITEM = 2;
     private String keyWord;
     private OnDeviceItemClickListerner onItemClickListerner;
+    private List<String> listCheck;
 
     public void setKeyWord(String newKey) {
         this.keyWord = newKey;
+    }
+
+    public void setListCheck(List<String> listCheck) {
+        this.listCheck = listCheck;
     }
 
     public interface OnDeviceItemClickListerner {
@@ -47,7 +52,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
-     *
      * @param data A new list is created out of this one to avoid mutable list
      */
     public DeviceAdapter(Activity context, List<MultiItemEntity> data) {
@@ -88,6 +92,10 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                     }
                 });
                 formatKeyWord(helper, deviceName, dvModle.getString("dshortpinyin"));
+                if (!listCheck.isEmpty()&&listCheck.contains(dvModle.getString("deviceid"))){
+//                    helper.setTextColor(R.id.tv_add_new_defect,"");
+                }
+
                 break;
         }
     }
@@ -122,7 +130,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
 
     /**
      * 搜索的内容标红色
-     *
      * @param helper
      * @param name
      */

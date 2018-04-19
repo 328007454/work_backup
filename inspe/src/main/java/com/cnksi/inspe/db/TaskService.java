@@ -25,7 +25,7 @@ public class TaskService extends BaseDbService {
         try {
             //修改时间为判断条件
             entity.setLast_modify_time(DateFormat.dateToDbString(System.currentTimeMillis()));
-            dbManager.update(entity, "progress", "update_time");
+            dbManager.saveOrUpdate(entity);
         } catch (DbException e) {
             e.printStackTrace();
             return false;

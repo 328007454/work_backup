@@ -22,7 +22,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 获取精益化评价设备类型,共计28类
-     *
      * @return
      */
     public List<DeviceTypeEntity> getDeviceTypes() {
@@ -51,7 +50,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 根据ID查询变电站
-     *
      * @param bzdId
      * @return
      */
@@ -69,7 +67,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 根据班组ID查询变电站集合
-     *
      * @param groupId
      * @return
      */
@@ -92,15 +89,14 @@ public class DeviceService extends BaseDbService {
     public List<DbModel> getAllDeviceByBigID(String bdzId, String bigId) throws DbException {
         List<DbModel> deviceModels = new ArrayList<>();
         String deviceSql = "SELECT d.type type,s.`name` sname ,s.bdzid,s.spid,s.name_pinyin snamepy , d.deviceid , d.`name` dname,d.name_short dnameshort, d.name_short_pinyin dshortpinyin ,d.bigid,d.name_pinyin dnamepy " +
-                "FROM device d LEFT JOIN spacing  s on d.spid = s.spid  WHERE d.bdzid = '" + bdzId + "' and d.bigid in " + bigId + "and d.dlt =0 ";
-
+                "FROM device d LEFT JOIN spacing  s on d.spid = s.spid  WHERE d.bdzid = '" + bdzId + "' and d.bigid in " + bigId + "and d.dlt =0 AND (d.zhsblx is null OR d.zhsblx='null' OR d.zhsblx='01' OR d.zhsblx='');";
+        //过滤组合设备AND (zhsblx is null or zhsblx='null' or zhsblx='01' or zhsblx='')
         deviceModels = dbManager.findDbModelAll(new SqlInfo(deviceSql));
         return deviceModels;
     }
 
     /**
      * 查询设备大类
-     *
      * @param bigId
      * @return
      * @throws DbException
@@ -114,7 +110,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 查询所有的设备大类
-     *
      * @return 所有的数据
      * @throws DbException
      */
@@ -127,7 +122,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 根据设备ID查询设备
-     *
      * @param deviceId
      * @return
      */
@@ -157,7 +151,6 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 保存缺失的设备台账到设备表中
-     *
      * @param entities
      */
     public void saveExtraDevice(List<DeviceEntity> entities) {
@@ -170,15 +163,30 @@ public class DeviceService extends BaseDbService {
 
     /**
      * 获取手机端添加的缺设备台账
-     *
      * @param bdzId
      * @return
      */
-    public List<DbModel> getAddDevice(String bdzId) throws DbException {
+    public List<DbModel> getAddDevice(String bdzId, String taskId) throws DbException {
 
         List<DbModel> spaceModels = new ArrayList<>();
-        String bigTypesSql = "select * from device where bdzid = '" + bdzId + "' and dlt = 1 and type ='all' ";
+        String bigTypesSql = "select * from device where bdzid = '" + bdzId + "' and dlt = 1 and type ='" + taskId + "' ";
         spaceModels = dbManager.findDbModelAll(new SqlInfo(bigTypesSql));
         return spaceModels;
+    }
+
+    public List<String> getCheckDevices(String taskId, String plustekType) throws DbException {
+        List<DbModel> checkDeviceModels = new ArrayList<>();
+        List<String> checkDeviceIds = new ArrayList<>();
+
+        String sql = "SELECT * FROM device_check_temp WHERE task_id='" + taskId + "' AND plustek_type;";
+        checkDeviceModels = dbManager.findDbModelAll(new SqlInfo(sql));
+        if (checkDeviceModels!=null&&!checkDeviceModels.isEmpty()){
+            for (DbModel model: checkDeviceModels){
+                checkDeviceIds.add(model.getString("device_id"));
+            }
+        }
+
+
+        return checkDeviceIds ;
     }
 }

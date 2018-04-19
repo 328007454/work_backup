@@ -78,7 +78,7 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
                     taskType = TaskType.valueOf(task.getType());
                     if (taskType == TaskType.jyhjc && !TextUtils.isEmpty(task.getPersion_device_bigid())) {//修改精益化任务
                         new AlertDialog.Builder(getContext())
-                                .setTitle("任务修改确认").setMessage("任务已经开始，你确定要修改任务?\n")
+                                .setTitle("任务修改确认").setMessage("任务已开始，你确定要修改评价的设备类型吗？\n")
                                 .setPositiveButton("确定",
                                         new DialogInterface.OnClickListener() {
                                             @Override
@@ -257,7 +257,11 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
             //检查类型
             helper.setText(R.id.typeTxt, item.getCheck_type());
             //检查完成时间
-            helper.setText(R.id.dateTxt, "时间：" + DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_check_time())));
+            if (TaskType.jyhjc.name().equals(item.check_type)) {
+                helper.setText(R.id.dateTxt, "时间：" + DateFormat.formatYM(DateFormat.dbdateToLong(item.getPlan_check_time())));
+            } else {
+                helper.setText(R.id.dateTxt, "时间：" + DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_check_time())));
+            }
             //检查人(可能是多人，用,分割的字符串)
             helper.setText(R.id.persionsTxt, item.getCheckuser_name().replace(",", " "));
         }

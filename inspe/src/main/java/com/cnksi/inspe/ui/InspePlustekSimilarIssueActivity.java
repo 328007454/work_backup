@@ -101,12 +101,14 @@ public class InspePlustekSimilarIssueActivity extends AppBaseActivity {
 
     private String taskId;
     private String deviceId;
+    private String plustekType;
     private DeviceTypeEntity deviceTypeEntity;
 
     @Override
     public void initData() {
         taskId = getIntent().getStringExtra("task_id");
         deviceId = getIntent().getStringExtra("device_id");
+        plustekType= getIntent().getStringExtra("plustek_type");
         if (TextUtils.isEmpty(taskId) || TextUtils.isEmpty(deviceId)) {
             showToast("参数错误！");
             finish();
@@ -132,7 +134,7 @@ public class InspePlustekSimilarIssueActivity extends AppBaseActivity {
         super.onStart();
         list.clear();
         adapter.notifyDataSetChanged();
-        List<TeamRuleResultEntity> listTemp = plustekService.getSimilarIssues(taskId, deviceId, deviceEntity.getBigid());
+        List<TeamRuleResultEntity> listTemp = plustekService.getSimilarIssues(taskId,plustekType, deviceId, deviceEntity.getBigid());
         if (listTemp != null && listTemp.size() > 0) {
             TeamRuleResultEntity resultEntity;
             for (int i = 0, size = listTemp.size(); i < size; i++) {

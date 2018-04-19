@@ -34,7 +34,7 @@ public class PlustekCheckServer extends BaseDbService {
         return null;
     }
 
-    public DeviceEntity getDeviceNotCheckDevice(String taskId, PlustekType plustekType) {
+//    public DeviceEntity getDeviceNotCheckDevice(String taskId, PlustekType plustekType) {
 //        try {
 //            return dbManager.selector(DeviceCheckEntity.class)
 //                    .where("task_id", "=", taskId)
@@ -43,9 +43,9 @@ public class PlustekCheckServer extends BaseDbService {
 //                    .findFirst();
 //        } catch (DbException e) {
 //            e.printStackTrace();
-////        }
-        return null;
-    }
+//        }
+//        return null;
+//    }
 
     /**
      * 设备详情页面使用

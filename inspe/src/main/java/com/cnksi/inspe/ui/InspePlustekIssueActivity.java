@@ -339,7 +339,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         scoreUtils.setValue(
                 Math.min(maxIntentMinus, JSON.parseObject(TextUtils.isEmpty(rule4Entity.getScore_content()) ? "{}" : rule4Entity.getScore_content(), InspeScoreEntity.class).max_decuct_score),
                 (float) rule4Entity.getScore(),//扣分单位值
-                Math.max(ruleResultEntity.getDeduct_score( ), (float) rule4Entity.getScore()));
+                Math.max(ruleResultEntity.getDeduct_score(), (float) rule4Entity.getScore()));
         dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
 
         //责任班组、责任部门
@@ -393,7 +393,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         }
 
         dataBinding.contextTxt.setText(content);
-        dataBinding.issueEdit.setText("必填项参数错误或空缺");
+        dataBinding.issueEdit.setText("无该项相关描述。");
         dataBinding.issueNatureTxt.setText(natureArray.get(0));
         checkCreateUpdateUI(rule4Entity);
     }
@@ -430,7 +430,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         scoreUtils.showValue(
                 Math.min(maxIntentMinus + ruleResultEntity.getDeduct_score(), JSON.parseObject(TextUtils.isEmpty(rule4Entity.getScore_content()) ? "{}" : rule4Entity.getScore_content(), InspeScoreEntity.class).max_decuct_score),
                 (float) rule4Entity.getScore(),
-                Math.max(ruleResultEntity.getDeduct_score(),ruleResultEntity.getDeduct_score()));
+                Math.max(ruleResultEntity.getDeduct_score(), ruleResultEntity.getDeduct_score()));
         dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
 
         //责任班组、责任部门
@@ -452,6 +452,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             }
 
         }
+
+        dataBinding.contextTxt.setText(content);
     }
 
     private void initCreateIssue(String taskId, String deviceId, String ruleId3) {
@@ -467,9 +469,14 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         if (resultCode == RESULT_OK) {
             if (requestCode == TAKEPIC_REQUEST) {
                 BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
-                String picContent = DateUtils.getFormatterTime(new Date(), InspeConfig.dateFormatYMDHM) + "\n" + deviceEntity.name + "\n" + taskEntity.checkuser_name;
+                StringBuffer picTxt = new StringBuffer();
+                picTxt.append(deviceEntity.getName()).append("\n")
+                        .append(expertEntity.getUsername()).append("\n")
+                        .append(dataBinding.issueEdit.getText().toString().trim()).append("\n")
+                        .append(DateFormat.dateToDbString(System.currentTimeMillis()));//.append("\n")
+                        ;
                 try {
-                    drawCircle(FileUtils.getInpseRootPath() + picTempPath, picContent);
+                    drawCircle(FileUtils.getInpseRootPath() + picTempPath, picTxt.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                     picList.add(picTempPath);
@@ -486,6 +493,10 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.cameraBtn) {//拍照
+            if (TextUtils.isEmpty(dataBinding.issueEdit.getText().toString().trim())) {
+                showToast("请先输入问题描述");
+                return;
+            }
             if (picList.size() < 3) {
                 String picName = FileUtils.createInpseImgLongName(taskEntity);//生成图片名称
                 picTempPath = FileUtils.getInpseImgPath(taskEntity);
@@ -626,10 +637,10 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 //                showToast("请选择责任单位");
 //                dataBinding.blameBranchTxt.performClick();
 //                return;
-            } else if (TextUtils.isEmpty(dataBinding.issueReasonTxt.getText())) {
-                showToast("请选择产生原因");
-                dataBinding.issueReasonTxt.performClick();
-                return;
+//            } else if (TextUtils.isEmpty(dataBinding.issueReasonTxt.getText())) {
+//                showToast("请选择产生原因");
+//                dataBinding.issueReasonTxt.performClick();
+//                return;
 //                } else if (TextUtils.isEmpty(dataBinding.suggestEdit.getText().toString().trim())) {
 //                    showToast("请输入处理措施");
 //                    dataBinding.suggestEdit.performClick();
@@ -776,11 +787,14 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     }
 
     private void startNoPmsActivity() {
+
         if (StartMode.NOPMS == startMode && noPmsIds.size() > 0) {
+            String deviceId = noPmsIds.iterator().next();
+            noPmsIds.remove(deviceId);
             Intent intent = new Intent(context, InspePlustekIssueActivity.class)
                     .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, StartMode.NOPMS)//
                     .putExtra(InspePlustekIssueActivity.IntentKey.TASK_ID, taskId)//
-                    .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, noPmsIds.remove(0))//
+                    .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, deviceId)//
                     .putExtra(InspePlustekIssueActivity.IntentKey.NOPMS_DEVICE_OTHER, ArrayInspeUtils.toListString(noPmsIds));//
             startActivity(intent);
         }

@@ -46,7 +46,6 @@
             android:layout_alignParentBottom="true">
 
             <Button
-                android:visibility="gone"
                 android:id="@+id/btn_add_device"
                 style="@style/View.Button"
                 android:layout_width="0px"

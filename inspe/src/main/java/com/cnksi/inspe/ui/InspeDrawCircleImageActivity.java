@@ -35,7 +35,7 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
      * 是否保存图片
      */
     private boolean isSavePicture = false;
-    private MyHandler mHandler;
+    private MyHandler mHandler=null;
 
     ActivityInspeDrawCircleImageBinding binding;
 
@@ -124,8 +124,6 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
 
     @Override
     public void onBackPressed() {
-        mHandler.removeCallbacksAndMessages(0);
-        mHandler = null;
         if (isSavePicture) {
             setResult(RESULT_OK, getIntent());
             this.finish();
@@ -134,10 +132,15 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(0);
+        mHandler = null;
+    }
 
     /**
      * 保存手写笔记
-     *
      * @return
      */
     public boolean saveEditPicture(View view, String picturePath, int quality) {

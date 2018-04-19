@@ -15,6 +15,7 @@ import java.util.Date;
 
 public final class DateFormat {
     final static SimpleDateFormat sdfymd = new SimpleDateFormat("yyyy年MM月dd日");
+    final static SimpleDateFormat sdfym = new SimpleDateFormat("yyyy年MM月");
 
     final static SimpleDateFormat sdfymdhms = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     final static SimpleDateFormat sdfymd000 = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
@@ -36,9 +37,14 @@ public final class DateFormat {
         }
     }
 
+    public static String formatYM(Object date) {
+        synchronized (sdfymd) {
+            return sdfym.format(date);
+        }
+    }
+
     /**
      * 将系统时间转为数据库存储的日期字符串
-     *
      * @param datetime
      * @return
      */
@@ -50,7 +56,6 @@ public final class DateFormat {
 
     /**
      * 仅保存日期
-     *
      * @param datetime
      * @return
      */
@@ -62,7 +67,6 @@ public final class DateFormat {
 
     /**
      * 将日期字符串转为long
-     *
      * @param datetime 必须满足"yyyy-MM-dd HH:mm:ss"
      * @return
      */

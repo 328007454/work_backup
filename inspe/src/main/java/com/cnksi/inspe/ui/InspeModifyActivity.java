@@ -2,6 +2,7 @@ package com.cnksi.inspe.ui;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -131,7 +132,8 @@ public class InspeModifyActivity extends AppBaseActivity implements View.OnClick
                 return;
             }
             taskExtendEntity.setChecked_device_bigid(ArrayInspeUtils.toListIntegerString(checkIds));
-
+            taskEntity.setDo_check_time(DateFormat.dateToDbString(System.currentTimeMillis()));
+            taskService.updateTask(taskEntity);
             if (taskService.updateTaskExtend(taskExtendEntity)) {
                 showToast("操作成功");
                 finish();

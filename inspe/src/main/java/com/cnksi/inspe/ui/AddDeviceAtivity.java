@@ -138,9 +138,10 @@ public class AddDeviceAtivity extends AppBaseActivity implements AddDeviceAdapte
             if (TextUtils.isEmpty(entity.deviceid)) {
                 entity.deviceid = UUID.randomUUID().toString();
             }
+            entity.type = taskId;
             if (TextUtils.isEmpty(entity.name)) {
-              ToastUtils.showMessage("请填写设备名称，再点击保存，否则请点击返回键推出页面");
-              return;
+                ToastUtils.showMessage("请填写设备名称，再点击保存，否则请点击返回键推出页面");
+                return;
             }
             deviceIds.add(entity.deviceid);
         }

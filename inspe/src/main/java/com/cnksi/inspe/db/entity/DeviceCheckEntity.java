@@ -38,7 +38,7 @@ public class DeviceCheckEntity extends BaseDBEntity {
     public String record_type;
 
     /***/
-    @Column(name = "dlt", property = "\0")
+    @Column(name = "dlt")
     public int dlt;
 
     public int getId() {
