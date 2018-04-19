@@ -42,6 +42,11 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         this.listCheck = listCheck;
     }
 
+    public void setExpandablePosition(int expandPosition) {
+
+        this.expandPosition = expandPosition;
+    }
+
     public interface OnDeviceItemClickListerner {
         void OnItemClickListen(View v, Object item, int position);
     }

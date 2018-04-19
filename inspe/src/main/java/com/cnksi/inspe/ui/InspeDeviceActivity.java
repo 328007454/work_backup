@@ -154,6 +154,11 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     @Override
     protected void onStart() {
         super.onStart();
+        if (!isFirstLoad) {
+            expandPosition = deviceAdapter.getExpandPosition();
+        } else {
+            isFirstLoad = !isFirstLoad;
+        }
         devicesList.clear();
         deviceAdapter.notifyDataSetChanged();
         initDevice();
@@ -162,11 +167,6 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isFirstLoad) {
-            expandPosition = deviceAdapter.getExpandPosition();
-        } else {
-            isFirstLoad = !isFirstLoad;
-        }
     }
 
     /**
@@ -188,6 +188,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
             if (expandPosition == -1) {
                 expandPosition = 0;
             }
+            deviceAdapter.notifyDataSetChanged();
             deviceBinding.inspeRecDevice.scrollToPosition(expandPosition);
             deviceAdapter.expand(expandPosition);
         });
@@ -258,11 +259,11 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private DbModel checkModule;
 
     private void filterDevice(DbModel bigEntity) {
+        devicesList.clear();
+        deviceAdapter.notifyDataSetChanged();
         String name = bigEntity == null ? "全部" : bigEntity.getString("name");
         deviceBinding.txtBigDevice.setText(name);
         if (TextUtils.equals(name, "全部")) {
-            devicesList.clear();
-            deviceAdapter.notifyDataSetChanged();
             loadAdapterData(dbModelList);
             return;
         }
@@ -289,6 +290,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
             checkModule = bigTypeModels.get(position);
         }
         expandPosition = -1;
+        deviceAdapter.setExpandablePosition(expandPosition);
         filterDevice(checkModule);
 
     }
