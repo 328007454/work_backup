@@ -471,10 +471,10 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
                 StringBuffer picTxt = new StringBuffer();
                 picTxt.append(deviceEntity.getName()).append("\n")
-                        .append(expertEntity.getUsername()).append("\n")
                         .append(dataBinding.issueEdit.getText().toString().trim()).append("\n")
+                        .append(expertEntity.getUsername()).append("\n")
                         .append(DateFormat.dateToDbString(System.currentTimeMillis()));//.append("\n")
-                        ;
+                ;
                 try {
                     drawCircle(FileUtils.getInpseRootPath() + picTempPath, picTxt.toString());
                 } catch (Exception e) {

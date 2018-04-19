@@ -49,6 +49,10 @@ public class TaskExtendEntity {
     @Column(name = "last_modify_time")
     public String last_modify_time;
 
+    /***/
+    @Column(name = "progress")
+    public String progress;
+
     public String getId() {
         return this.id;
     }
@@ -121,4 +125,11 @@ public class TaskExtendEntity {
         this.last_modify_time = last_modify_time;
     }
 
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
 }
