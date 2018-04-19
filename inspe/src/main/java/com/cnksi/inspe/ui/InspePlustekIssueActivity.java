@@ -879,7 +879,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         if (StartMode.NOPMS == startMode) {
             showToast("添加设备必须，不可取消");
         } else {
-            onBack(view);
+            super.onBack(view);
         }
     }
 
