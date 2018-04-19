@@ -235,6 +235,8 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
      */
     @Override
     public void onChange(View v, String oldKey, String newKey) {
+        devicesList.clear();
+        deviceAdapter.notifyDataSetChanged();
         deviceAdapter.setKeyWord(newKey);
         if (!TextUtils.isEmpty(newKey)) {
             localSearchData(newKey);

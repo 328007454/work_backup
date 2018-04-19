@@ -161,7 +161,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         if (!TextUtils.isEmpty(keyWord)) {
             SpannableStringBuilder builder = new SpannableStringBuilder(name);
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.RED);
-            if (shortName.toUpperCase().contains(keyWord)) {
+            if (!TextUtils.isEmpty(shortName)&&!TextUtils.isEmpty(keyWord)&&shortName.toUpperCase().contains(keyWord)) {
                 int index = shortName.toUpperCase().indexOf(keyWord);
                 if (index != -1 && name.length() >= (index + keyWord.length())) {
                     builder.setSpan(colorSpan, index, index + keyWord.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
