@@ -232,20 +232,24 @@ public class InspeMainActivity extends AppBaseActivity {
     protected void onMenu(View view) {
         super.onMenu(view);
         //启动同步，仅专家可用
-        Intent intent = new Intent();
-        if (PreferencesUtils.get("SYNC_WAY", true)) {//默认网络，配置变量为sjjc私有，BuildConfig.USE_NETWORK_SYNC
-            //网络同步
-            PreferencesUtils.put("SYNC_WAY", true);
-            intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
-            ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.NetWorkSyncActivity");
-            intent.setComponent(componentName);
-        } else {
-            //USB同步
-            PreferencesUtils.put("SYNC_WAY", false);
-            intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
-            ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.UsbSyncActivity");
-            intent.setComponent(componentName);
+        try {
+            Intent intent = new Intent();
+            if (PreferencesUtils.get("SYNC_WAY", true)) {//默认网络，配置变量为sjjc私有，BuildConfig.USE_NETWORK_SYNC
+                //网络同步
+                PreferencesUtils.put("SYNC_WAY", true);
+                intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
+                ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.NetWorkSyncActivity");
+                intent.setComponent(componentName);
+            } else {
+                //USB同步
+                PreferencesUtils.put("SYNC_WAY", false);
+                intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
+                ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.UsbSyncActivity");
+                intent.setComponent(componentName);
+            }
+            startActivity(intent);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        startActivity(intent);
     }
 }

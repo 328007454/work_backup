@@ -398,6 +398,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         }
 
         dataBinding.contextTxt.setText(content);
+        dataBinding.issueEdit.setText("必填项参数错误或空缺");
         dataBinding.issueNatureTxt.setText(natureArray.get(0));
         checkIssuUpdateUI(rule4Entity);
     }
@@ -482,7 +483,13 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             if (requestCode == TAKEPIC_REQUEST) {
                 BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
                 String picContent = DateUtils.getFormatterTime(new Date(), InspeConfig.dateFormatYMDHM) + "\n" + deviceEntity.name + "\n" + taskEntity.checkuser_name;
-                drawCircle(FileUtils.getInpseRootPath() + picTempPath, picContent);
+                try {
+                    drawCircle(FileUtils.getInpseRootPath() + picTempPath, picContent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    picList.add(picTempPath);
+                    galleryAdapte.notifyDataSetChanged();
+                }
             } else if (requestCode == InspeConfig.LOAD_DATA) {
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
@@ -872,7 +879,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         if (StartMode.NOPMS == startMode) {
             showToast("添加设备必须，不可取消");
         } else {
-            onBack(view);
+            super.onBack(view);
         }
     }
 
