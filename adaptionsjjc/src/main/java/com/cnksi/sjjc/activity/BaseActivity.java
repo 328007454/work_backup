@@ -626,7 +626,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         ProgressDialog dialog = ProgressDialog.show(this, "提示", "正在加密数据，请稍等...请不要强行取消，耐心等待", false, false);
         ExecutorManager.executeTaskSerially(() -> {
             try {
-                String innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath()+"/database/";
+                String innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
                 File innerFile = new File(innerDateBaseFolder);
                 if (!innerFile.exists()) {
                     innerFile.mkdir();
@@ -649,4 +649,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogUtils.setDialogNull();
+    }
 }

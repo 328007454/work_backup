@@ -1,5 +1,8 @@
 package com.cnksi.bdzinspection.daoservice;
 
+import android.text.TextUtils;
+import android.view.TextureView;
+
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
@@ -51,12 +54,18 @@ public class CopyItemService {
         return null;
     }
 
-    public List<DbModel> getCopyDeviceList(String bdzId, String deviceType, String inspection) {
+    public List<DbModel> getCopyDeviceList(String bdzId, String deviceType, String inspection,String deviceWay) {
         String sort = "one".equals(deviceType) ? Spacing.SORT_ONE : "second".equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
 
         String sql = "select d.name_short name_short ,d.deviceid,d.is_important,d.name,d.latitude,d.spid,d.device_type,d.longitude,sp.name as sname from device d "
                 + "left join spacing sp on d.spid=sp.spid where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and " + "kind like '%" + inspection
-                + "%' and dlt = '0') and d.device_type=? order by sp." + sort;
+                + "%' and dlt = '0')  and d.device_type=?";
+
+        if (!TextUtils.isEmpty(deviceWay)&&deviceWay.contains("bigtype_device")){
+            sql =sql+" and d.bigid in ( select bigid from standard_special where kind = '"+inspection+"' and dlt = 0 )";
+        }
+
+        sql = sql + " order by sp."+sort;
         SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceType);
         try {
             return getDbUtils().findDbModelAll(sqlInfo);

@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyDeviceAdapter;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
+import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.databinding.XsFragmentGridlistBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
+import com.cnksi.bdzinspection.model.SpecialMenu;
 import com.lidroid.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
@@ -28,6 +30,10 @@ public class CopyValueFragment2 extends BaseFragment {
     private List<DbModel> data;
     private HashSet<String> copyDeviceIds = new HashSet<>();
     private List<DbModel> originModel = new ArrayList<>();
+    /**
+     * 特殊巡视抄录抄录需要根据特殊条件展示设备
+     */
+    private SpecialMenu specialMenu;
 
     /**
      * 是否选择了未抄录设备
@@ -102,8 +108,9 @@ public class CopyValueFragment2 extends BaseFragment {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
+                searchCurrentDeviceType();
                 List<DbModel> deviceList = CopyItemService.getInstance().getCopyDeviceList(currentBdzId,
-                        currentFunctionModel, currentInspectionType);
+                        currentFunctionModel, currentInspectionType,specialMenu.deviceWay);
                 if (null != deviceList && !deviceList.isEmpty()) {
                     data.addAll(deviceList);
                     originModel.addAll(deviceList);
@@ -111,6 +118,13 @@ public class CopyValueFragment2 extends BaseFragment {
                 mHandler.sendEmptyMessage(LOAD_DATA);
             }
         });
+    }
+
+    /**
+     * 特殊巡视查询设备需要展示的方式
+     */
+    private void searchCurrentDeviceType() {
+        specialMenu = SpecialMenuService.getInstance().findCurrentDeviceType(currentInspectionType);
     }
 
     @Override

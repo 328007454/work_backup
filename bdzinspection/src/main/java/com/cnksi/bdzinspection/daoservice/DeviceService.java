@@ -262,7 +262,7 @@ public class DeviceService {
                 + " WHERE d.bdzid = ?";
         sql += "AND d.device_type = ?";
         if ("bigtype_device".equalsIgnoreCase(deviceWay)) {
-            sql += "and d.bigid in (select bigid from standard_special where kind = '" + inspectionType + "')";
+            sql += "and d.bigid in (select bigid from standard_special where kind = '" + inspectionType + "' and dlt = 0 )";
         }
         sql += " and s.dlt='0' AND d.dlt != 1 ORDER BY s." + spaceSort + " , s.assist_sort, d.sort";
 

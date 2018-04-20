@@ -499,6 +499,7 @@ public class BaseActivity extends BaseCoreActivity {
                 updateReportStatus();
             }
             startActivityForResult(intent, requestCode);
+            tipsDialog.dismiss();
         });
         tipsBinding.btnCancel.setOnClickListener(view -> {
             tipsDialog.dismiss();

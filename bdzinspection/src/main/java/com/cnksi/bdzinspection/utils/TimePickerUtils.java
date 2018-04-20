@@ -98,6 +98,9 @@ public class TimePickerUtils implements View.OnClickListener {
 
     public void showDialog(Activity activity, String currentTime, String secondTime, boolean isStartTime) {
         this.time = currentTime;
+        if (TextUtils.isEmpty(time)) {
+            time = DateUtils.getCurrentLongTime();
+        }
         this.secondTime = secondTime;
         this.isStartTime = isStartTime;
         if (pvCustomTime == null) {
@@ -105,9 +108,6 @@ public class TimePickerUtils implements View.OnClickListener {
             initCustomTimePicker();
             initWidget = false;
         } else {
-            if (TextUtils.isEmpty(time)) {
-                time = DateUtils.getCurrentLongTime();
-            }
             Calendar selectedDate = DateUtils.getCalendar(time, CoreConfig.dateFormat2);
             dateString = getTime(selectedDate.getTime());
             pvCustomTime.setDate(selectedDate);

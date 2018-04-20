@@ -482,7 +482,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
             rv_top_bar.setBackgroundColor(Color_Background_Title == 0 ? pickerview_bg_topbar : Color_Background_Title);
         } else {
-            customListener.customLayout(LayoutInflater.from(context).inflate(layoutRes, TimePickerView.contentContainer));
+            customListener.customLayout(LayoutInflater.from(context).inflate(layoutRes, contentContainer));
         }
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);

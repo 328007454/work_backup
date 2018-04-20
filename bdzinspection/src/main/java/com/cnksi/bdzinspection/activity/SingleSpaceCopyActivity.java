@@ -25,6 +25,8 @@ import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsActivitySingleSpaceCopyBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogInput1Binding;
+import com.cnksi.bdzinspection.databinding.XsDialogInputBinding;
+import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.CopyItem;
@@ -83,7 +85,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
     private boolean isFinish;
 
     private Dialog defectDialog;
-    private XsDialogInput1Binding tipsBinding;
+    private XsDialogTipsBinding tipsBinding;
 
     //传递预设缺陷内容
     private String transDefectContent = "";
@@ -431,7 +433,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         }
         List<String> rs = new ArrayList<>();
         if (DefectUtils.calcCopyBound(item, copyHelper.getCopyResultMap().get(item.id), val, mExistDefectList, rs)) {
-//            tipsBinding.tvDialogContent.setText(rs.get(1));
+            tipsBinding.tvDialogContent.setText(rs.get(1));
             transDefectContent = rs.get(0);
             if (null != defectDialog)
                 defectDialog.show();
@@ -441,7 +443,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
 
     public void createDefectDialog() {
         int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
-        tipsBinding = XsDialogInput1Binding.inflate(getLayoutInflater());
+        tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
         defectDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");

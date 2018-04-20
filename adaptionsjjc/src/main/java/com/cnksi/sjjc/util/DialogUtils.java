@@ -475,4 +475,10 @@ public class DialogUtils {
 //        }
     }
 
+    public static void setDialogNull(){
+        if (dialog!=null){
+            dialog =null;
+        }
+    }
+
 }

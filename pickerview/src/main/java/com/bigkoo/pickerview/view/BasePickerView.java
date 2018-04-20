@@ -29,7 +29,7 @@ public class BasePickerView {
     );
 
     private Context context;
-    protected static ViewGroup contentContainer;
+    protected  ViewGroup contentContainer;
     public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
     private ViewGroup rootView;//附加View 的 根View
     private ViewGroup dialogView;//附加Dialog 的 根View
