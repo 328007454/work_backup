@@ -65,7 +65,7 @@
     <string name="sys_copyrights_str">Copyrights\t中国电信集团公司</string>
     <string name="sys_copyrights_str">Copyrights\t四川金信石信息技术有限公司</string>
     -->
-    <string name="sys_copyrights_format_str">Copyrights\t四川嘉能佳电力集团有限责任公司网创科技分公司 \tV%1$s</string>
+    <string name="sys_copyrights_format_str">Copyrights\厦门亿力吉奥信息科技有限公司\tV%1$s</string>
     <string name="et_user_hint_str">请输入用户名</string>
     <string name="et_password_hint_str">请输入密码</string>
     <string name="btn_add_user_str">添\t\t加</string>
