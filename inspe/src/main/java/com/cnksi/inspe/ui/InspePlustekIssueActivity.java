@@ -325,7 +325,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         ruleResultEntity.setCreate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
 
         dataBinding.issueInfoTxt.setOnClickListener(null);
-        dataBinding.issueEdit.setOnClickListener(null);
+//        dataBinding.issueEdit.setOnClickListener(null);
 
         dataBinding.issueInfoTxt.setText(rule4Entity.getName());
         dataBinding.issueEdit.setText(ruleResultEntity.getDescription());
@@ -362,6 +362,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             }
 
         }
+        dataBinding.contextTxt.setText(content);
     }
 
     /**
@@ -645,9 +646,9 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 //                    showToast("请输入处理措施");
 //                    dataBinding.suggestEdit.performClick();
 //                    return;
-            } else if (picList.size() == 0) {
-                showToast("请对问题拍照处理");
-                return;
+//            } else if (picList.size() == 0) {
+//                showToast("请对问题拍照处理");
+//                return;
             }
 
             createIssue();//满足输入，创建错误

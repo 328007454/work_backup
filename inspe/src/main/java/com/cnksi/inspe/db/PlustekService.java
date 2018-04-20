@@ -21,6 +21,7 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -385,4 +386,32 @@ public class PlustekService extends BaseDbService {
         return null;
     }
 
+    /**
+     * 获取用户所有问题
+     * @param userId
+     * @return
+     */
+    public List<TeamRuleResultEntity> getUserResult(String userId) {
+        //获取专家用，未完成任务的错误问题记录
+        try {
+            String sql = "SELECT e.progress,e.person_id,r.* FROM xj_group_con_rule_result AS r LEFT JOIN  xj_jyh_task_extend AS e ON r.task_id=e.task_id WHERE r.check_person_id= '" + userId + "' AND e.person_id='" + userId + "' AND e.progress!='done'  ORDER BY r.create_time DESC";
+            return DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleResultEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>(0);
+    }
+
+    public List<DeviceTypeEntity> getUserResultBigType() {
+        String sql = "SELECT * FROM device_bigtype AS dt WHERE dt.bigid IN(" +
+                "SELECT r.device_bigtype FROM xj_group_con_rule_result AS r LEFT JOIN  xj_jyh_task_extend AS e ON r.task_id=e.task_id WHERE r.check_person_id= '2c90e5e862d7df020162d7e250ff0001' AND e.person_id='2c90e5e862d7df020162d7e250ff0001' AND e.progress!='done' GROUP BY r.device_bigtype" +
+                ");";
+        try {
+            return DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), DeviceTypeEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

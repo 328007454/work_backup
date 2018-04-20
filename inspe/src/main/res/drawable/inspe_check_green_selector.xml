@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--选中-->
-    <item android:state_enabled="true" android:state_checked="true">
+    <item android:state_checked="true" android:state_enabled="true">
         <shape android:shape="rectangle">
             <solid android:color="#05b1a3" />
             <corners android:radius="@dimen/btn_radius" />
@@ -12,7 +12,7 @@
     </item>
 
     <!--默认-->
-    <item android:state_enabled="true" android:state_checked="false">
+    <item android:state_checked="false" android:state_enabled="true">
         <shape android:shape="rectangle">
             <solid android:color="#0005b1a3" />
             <corners android:radius="@dimen/btn_radius" />
