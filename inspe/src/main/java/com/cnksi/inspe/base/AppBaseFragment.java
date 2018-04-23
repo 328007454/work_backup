@@ -19,10 +19,10 @@ import com.cnksi.inspe.db.UserService;
  * @date 2018/3/20 14:24
  */
 
-public abstract class AppBaseFragment extends Fragment {
+public abstract class AppBaseFragment extends BaseCoreFragment {
     protected final String tag = getClass().getSimpleName();
 
-    protected ViewDataBinding fragmentDataBinding;
+    //    protected ViewDataBinding fragmentDataBinding;
     protected UserService userService = UserService.getInstance();
 
 //    @Override
@@ -30,24 +30,23 @@ public abstract class AppBaseFragment extends Fragment {
 //        return super.onCreateView(inflater, container, savedInstanceState);
 //    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View fragmentRootView = null;
-        if (fragmentDataBinding == null) {
-            fragmentDataBinding = DataBindingUtil.inflate(inflater, getFragmentLayout(), container, false);
-            fragmentRootView = fragmentDataBinding.getRoot();
-            lazyLoad();
-        } else {
-            fragmentRootView = fragmentDataBinding.getRoot();
-        }
-
-        return fragmentRootView;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        super.onCreateView(inflater, container, savedInstanceState);
+//        View fragmentRootView = null;
+//        if (fragmentDataBinding == null) {
+//            fragmentDataBinding = DataBindingUtil.inflate(inflater, getFragmentLayout(), container, false);
+//            fragmentRootView = fragmentDataBinding.getRoot();
+//            lazyLoad();
+//        } else {
+//            fragmentRootView = fragmentDataBinding.getRoot();
+//        }
+//
+//        return fragmentRootView;
+//    }
 
     /**
      * fragment布局文件
-     *
      * @return
      */
     public abstract int getFragmentLayout();

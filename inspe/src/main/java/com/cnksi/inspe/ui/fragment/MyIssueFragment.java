@@ -2,6 +2,7 @@ package com.cnksi.inspe.ui.fragment;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -54,6 +55,12 @@ public class MyIssueFragment extends AppBaseFragment {
 
     @Override
     protected void lazyLoad() {
+
+    }
+    @Override
+    protected void initUI() {
+        super.initUI();
+        Log.e(tag, "initUI()");
         dataDinding = (FragmentInspeMyissueBinding) fragmentDataBinding;
         dataDinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

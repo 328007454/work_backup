@@ -28,10 +28,10 @@ import com.cnksi.inspe.utils.InspeConfig;
  * @date 2018/3/20 11:23
  */
 
-public abstract class AppBaseActivity extends AppCompatActivity {
+public abstract class AppBaseActivity extends BaseCoreActivity {
 
     protected final String tag = this.getClass().getSimpleName();
-    protected ViewDataBinding rootDataBinding;
+    //    protected ViewDataBinding rootDataBinding;
     private UserService userService;// = UserService.getInstance();
 
     protected UserService getUserService() {
@@ -46,25 +46,10 @@ public abstract class AppBaseActivity extends AppCompatActivity {
         return userService;
     }
 
-    //    @Override
-//    protected final void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
-//
-//    @Override
-//    public final void getRootDataBinding() {
-//        super.getRootDataBinding();
-//    }
-    protected TextView titleTxt;
-    protected ImageButton toolbar_back_btn, toolbar_menu_btn;
-
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏
+    public void getRootDataBinding() {
+        super.getRootDataBinding();
         context = this;
-        getRootDataBinding();
-
         titleTxt = (TextView) findViewById(R.id.toolbar_title);
         toolbar_back_btn = (ImageButton) findViewById(R.id.toolbar_back_btn);
         toolbar_menu_btn = (ImageButton) findViewById(R.id.toolbar_menu_btn);
@@ -74,12 +59,39 @@ public abstract class AppBaseActivity extends AppCompatActivity {
         if (toolbar_menu_btn != null) {
             toolbar_menu_btn.setOnClickListener(toolBarOnClickListener);
         }
-
-        initUI();
-
-        initData();
-
     }
+
+    @Override
+    protected final void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
+    protected TextView titleTxt;
+    protected ImageButton toolbar_back_btn, toolbar_menu_btn;
+
+//    @Override
+//    protected final void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏
+//        context = this;
+//        getRootDataBinding();
+//
+//        titleTxt = (TextView) findViewById(R.id.toolbar_title);
+//        toolbar_back_btn = (ImageButton) findViewById(R.id.toolbar_back_btn);
+//        toolbar_menu_btn = (ImageButton) findViewById(R.id.toolbar_menu_btn);
+//        if (toolbar_back_btn != null) {
+//            toolbar_back_btn.setOnClickListener(toolBarOnClickListener);
+//        }
+//        if (toolbar_menu_btn != null) {
+//            toolbar_menu_btn.setOnClickListener(toolBarOnClickListener);
+//        }
+//
+//        initUI();
+//
+//        initData();
+//
+//    }
 
     @Override
     public void setTitle(CharSequence title) {
@@ -133,10 +145,10 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     }
 
 
-    public final void getRootDataBinding() {
-        rootDataBinding = DataBindingUtil.setContentView(this, getLayoutResId());
-        setContentView(rootDataBinding.getRoot());
-    }
+//    public final void getRootDataBinding() {
+//        rootDataBinding = DataBindingUtil.setContentView(this, getLayoutResId());
+//        setContentView(rootDataBinding.getRoot());
+//    }
 
     public abstract int getLayoutResId();
 

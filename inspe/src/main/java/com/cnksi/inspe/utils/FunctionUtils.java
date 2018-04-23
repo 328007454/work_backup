@@ -38,7 +38,6 @@ public class FunctionUtils {
 
     /**
      * 根据listView的每个item计算ListView的高度
-     *
      * @param listView
      */
     public static int setListViewHeightBasedOnChildren(ListView listView) {
@@ -57,7 +56,6 @@ public class FunctionUtils {
 
     /**
      * 根据listView的每个item计算ListView的高度
-     *
      * @param listView
      */
     public static int getListViewHeightBasedOnChildren(ListView listView) {
@@ -73,7 +71,6 @@ public class FunctionUtils {
 
     /**
      * 计算GridView的高度
-     *
      * @param gridView
      */
     public static int setGridViewHeightBasedOnChildren(GridView gridView) {
@@ -118,7 +115,6 @@ public class FunctionUtils {
 
     /**
      * 以系统时间返回照相图片文件名称
-     *
      * @return yyyyMMddHHmmssSSSadfdfdsfwei.jpg
      */
     public static String getCurrentImageName() {
@@ -132,7 +128,6 @@ public class FunctionUtils {
 
     /**
      * 得到随机码
-     *
      * @param count 几位
      */
     public static String getRandomUUID(int count) {
@@ -145,10 +140,9 @@ public class FunctionUtils {
 
     /**
      * 启动系统照相功能，按指定的文件名称存储到系统图片路径下
-     *
-     * @param activity         启动activity
+     * @param activity 启动activity
      * @param currentImageName 当前照片文件名
-     * @param imageFolder      文件夹
+     * @param imageFolder 文件夹
      */
     public static void takePicture(Activity activity, String currentImageName, String imageFolder) {
         takePicture(activity, currentImageName, imageFolder, CoreConfig.ACTION_IMAGE);
@@ -156,10 +150,9 @@ public class FunctionUtils {
 
     /**
      * 启动系统照相功能，按指定的文件名称存储到系统图片路径下
-     *
-     * @param activity         启动activity
+     * @param activity 启动activity
      * @param currentImageName 当前照片文件名
-     * @param imageFolder      文件夹
+     * @param imageFolder 文件夹
      */
     public static void takePicture(Activity activity, String currentImageName, String imageFolder, int requestCode) {
         if (!FileUtils.isFolderExists(imageFolder)) {
@@ -175,9 +168,19 @@ public class FunctionUtils {
     }
 
     /**
+     * 启动相册选择
+     * @param context
+     * @param requestCode
+     */
+    public static void takeAlbum(Activity context, int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        context.startActivityForResult(intent, requestCode);
+    }
+
+    /**
      * 启动系统照相功能，按指定的文件名称存储到系统图片路径下
-     *
-     * @param fragment         启动activity
+     * @param fragment 启动activity
      * @param currentImageName 当前照片文件名
      */
     public static void takePictureFromFragment(Fragment fragment, String currentImageName, String defectImagePath) {
@@ -186,7 +189,6 @@ public class FunctionUtils {
 
     /**
      * 启动系统照相功能，按指定的文件名称存储到系统图片路径下
-     *
      * @param fragment
      * @param currentImageName
      * @param imageFolder
@@ -206,7 +208,6 @@ public class FunctionUtils {
 
     /**
      * 得到以时间戳的字符串
-     *
      * @return String HHmmssSSS+UUID
      */
     public static String getPrimarykey() {
@@ -216,7 +217,6 @@ public class FunctionUtils {
 
     /**
      * 获取ApiKey
-     *
      * @param context
      * @param metaKey
      * @return
@@ -243,11 +243,10 @@ public class FunctionUtils {
 
     /**
      * 打开应用导航
-     *
      * @param context
-     * @param latitude  纬度
+     * @param latitude 纬度
      * @param longitude 经度
-     * @param address   地址
+     * @param address 地址
      */
     public static void startNavigation(Context context, String latitude, String longitude, String address) {
         if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
@@ -264,7 +263,6 @@ public class FunctionUtils {
 
     /**
      * 开启百度导航
-     *
      * @param mContext
      * @param endLatitude
      * @param endLongitude
@@ -289,10 +287,9 @@ public class FunctionUtils {
 
     /**
      * 开启百度导航
-     *
      * @param mContext
-     * @param lon       百度地图经度
-     * @param lat       百度地图纬度
+     * @param lon 百度地图经度
+     * @param lat 百度地图纬度
      * @param describle 目的地
      */
     public static void startBaiduNavi(Context mContext, double lat, double lon, String describle) {
@@ -325,10 +322,9 @@ public class FunctionUtils {
 
     /**
      * 开启高德导航
-     *
      * @param mContext
-     * @param lon       百度地图经度
-     * @param lat       百度地图纬度
+     * @param lon 百度地图经度
+     * @param lat 百度地图纬度
      * @param describle 目的地
      */
     public static void startGaodeNavi(Context mContext, double lat, double lon, String describle) {
@@ -357,7 +353,6 @@ public class FunctionUtils {
 
     /**
      * 百度坐标转高德坐标
-     *
      * @param bd_lat 百度纬度
      * @param bd_lon 百度经度
      * @return
@@ -375,7 +370,6 @@ public class FunctionUtils {
 
     /**
      * 高德坐标转百度坐标
-     *
      * @param gd_lon 高德经度
      * @param gd_lat 高德纬度
      * @return

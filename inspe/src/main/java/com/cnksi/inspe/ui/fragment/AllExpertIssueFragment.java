@@ -57,10 +57,14 @@ public class AllExpertIssueFragment extends AppBaseFragment implements View.OnCl
 
     private BaseQuickAdapter adapter;
 
-
     @Override
     protected void lazyLoad() {
-        Log.e(tag, "lazyLoad()");
+
+    }
+    @Override
+    protected void initUI() {
+        super.initUI();
+        Log.e(tag, "initUI()");
         dataDinding = (FragmentInspeIssueBinding) fragmentDataBinding;
         dataDinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -130,8 +134,14 @@ public class AllExpertIssueFragment extends AppBaseFragment implements View.OnCl
     @Override
     public void onStart() {
         super.onStart();
+        if (expertEntity == null) {
+            showToast("非法权限");
+            getActivity().finish();
+            return;
+        }
+
         orinList = plustekService.getUserResult(expertEntity.getId());
-        bigTypeList = plustekService.getUserResultBigType();
+        bigTypeList = plustekService.getUserResultBigType(expertEntity.getId());
         bigTypeArray.clear();
         bigTypeArray.add("全部");
         if (bigTypeList != null) {

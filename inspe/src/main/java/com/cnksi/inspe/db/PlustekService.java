@@ -402,9 +402,9 @@ public class PlustekService extends BaseDbService {
         return new ArrayList<>(0);
     }
 
-    public List<DeviceTypeEntity> getUserResultBigType() {
+    public List<DeviceTypeEntity> getUserResultBigType(String userId) {
         String sql = "SELECT * FROM device_bigtype AS dt WHERE dt.bigid IN(" +
-                "SELECT r.device_bigtype FROM xj_group_con_rule_result AS r LEFT JOIN  xj_jyh_task_extend AS e ON r.task_id=e.task_id WHERE r.check_person_id= '2c90e5e862d7df020162d7e250ff0001' AND e.person_id='2c90e5e862d7df020162d7e250ff0001' AND e.progress!='done' GROUP BY r.device_bigtype" +
+                "SELECT r.device_bigtype FROM xj_group_con_rule_result AS r LEFT JOIN  xj_jyh_task_extend AS e ON r.task_id=e.task_id WHERE r.check_person_id= '"+userId+"' AND e.person_id='"+userId+"' AND e.progress!='done' GROUP BY r.device_bigtype" +
                 ");";
         try {
             return DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), DeviceTypeEntity.class);

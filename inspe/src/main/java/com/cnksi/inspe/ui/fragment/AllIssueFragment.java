@@ -61,7 +61,12 @@ public class AllIssueFragment extends AppBaseFragment implements View.OnClickLis
 
     @Override
     protected void lazyLoad() {
-        Log.e(tag, "lazyLoad()");
+
+    }
+    @Override
+    protected void initUI() {
+        super.initUI();
+        Log.e(tag, "initUI()");
 
         dataDinding = (FragmentInspeIssueBinding) fragmentDataBinding;
         dataDinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

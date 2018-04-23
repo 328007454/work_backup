@@ -131,10 +131,15 @@ public class InspeModifyActivity extends AppBaseActivity implements View.OnClick
                 showToast("请选择评价设备类型");
                 return;
             }
-            taskExtendEntity.setChecked_device_bigid(ArrayInspeUtils.toListIntegerString(checkIds));
-            taskExtendEntity.setProgress(TaskProgressType.doing.name());
+            //修改任务执行时间
             taskEntity.setDo_check_time(DateFormat.dateToDbString(System.currentTimeMillis()));
             taskService.updateTask(taskEntity);
+
+            //修改检查设备类型，及任务状态
+            taskExtendEntity.setChecked_device_bigid(ArrayInspeUtils.toListIntegerString(checkIds));
+            taskExtendEntity.setProgress(TaskProgressType.doing.name());
+
+
             if (taskService.updateTaskExtend(taskExtendEntity)) {
                 showToast("操作成功");
                 finish();

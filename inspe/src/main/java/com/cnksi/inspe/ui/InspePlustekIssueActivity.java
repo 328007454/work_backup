@@ -1,6 +1,9 @@
 package com.cnksi.inspe.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -41,6 +44,7 @@ import com.cnksi.inspe.utils.InspeConfig;
 import com.cnksi.inspe.utils.ScoreUtils;
 import com.cnksi.inspe.widget.BreakWordDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
+import com.cnksi.inspe.widget.PopMenu;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -91,7 +95,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     private TeamService teamService = new TeamService();
     private TaskService taskService = new TaskService();
 
-    private static final int TAKEPIC_REQUEST = 100;
+    private static final int TAKE_PIC_REQUEST = 100;
+    private static final int TAKE_ALBUM_REQUEST = 101;
     private List<DictionaryEntity> natureList;
     private List<DictionaryEntity> reasonList;
     private List<String> natureArray;
@@ -468,25 +473,64 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == TAKEPIC_REQUEST) {
+            if (requestCode == TAKE_PIC_REQUEST) {
                 BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
-                StringBuffer picTxt = new StringBuffer();
-                picTxt.append(deviceEntity.getName()).append("\n")
-                        .append(dataBinding.issueEdit.getText().toString().trim()).append("\n")
-                        .append(expertEntity.getUsername()).append("\n")
-                        .append(DateFormat.dateToDbString(System.currentTimeMillis()));//.append("\n")
-                ;
-                try {
-                    drawCircle(FileUtils.getInpseRootPath() + picTempPath, picTxt.toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    picList.add(picTempPath);
-                    galleryAdapte.notifyDataSetChanged();
+                startDrawCircle(picTempPath);//相对地址
+
+            } else if (requestCode == TAKE_ALBUM_REQUEST) {
+                if (data == null) {
+                    showToast("获取图片失败!");
+                    return;
                 }
+                Uri selectedImage = data.getData();
+                String[] filePathColumns = {MediaStore.Images.Media.DATA};
+                Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePathColumns[0]);
+                String imagePath = c.getString(columnIndex);
+                c.close();
+                //
+                picTempPath = FileUtils.getInpseImgPath(taskEntity) + FileUtils.createInpseImgLongName(taskEntity);//文件相对路径
+                File file = new File(FileUtils.getInpseRootPath() + picTempPath);
+                //文件拷贝
+                if (!com.cnksi.core.utils.FileUtils.copyFile(imagePath, FileUtils.getInpseRootPath() + picTempPath)) {
+                    showToast("获取图片失败!");
+                    if (file.exists()) {//清除产生文件
+                        file.delete();
+                    }
+                    return;
+                }
+
+                if (file.length() > 100 * 1024) {
+                    BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4); //压缩
+                }
+                startDrawCircle(picTempPath);//相对地址
+
             } else if (requestCode == InspeConfig.LOAD_DATA) {
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
             }
+        }
+    }
+
+    /**
+     * 启动图片水印
+     * @param path 相对地址
+     */
+    private void startDrawCircle(String path) {
+        //绘制文本
+        StringBuffer picTxt = new StringBuffer();
+        picTxt.append(deviceEntity.getName()).append("\n")
+                .append(dataBinding.issueEdit.getText().toString().trim()).append("\n")
+                .append(expertEntity.getUsername()).append("\n")
+                .append(DateFormat.dateToDbString(System.currentTimeMillis()));//.append("\n")
+
+        try {
+            drawCircle(FileUtils.getInpseRootPath() + path, picTxt.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            picList.add(picTempPath);
+            galleryAdapte.notifyDataSetChanged();
         }
     }
 
@@ -499,11 +543,26 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 return;
             }
             if (picList.size() < 3) {
-                String picName = FileUtils.createInpseImgLongName(taskEntity);//生成图片名称
-                picTempPath = FileUtils.getInpseImgPath(taskEntity);
-                FunctionUtils.takePicture(this, picName, FileUtils.getInpseRootPath() + picTempPath, TAKEPIC_REQUEST);
-                //文件相对地址
-                picTempPath = picTempPath + picName;
+                new PopMenu(context)
+                        .setListAdapter(Arrays.asList(new String[]{"相册", "拍照"}))
+                        .setCancleListener("取消", null)
+                        .setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                if (position == 0) {//相册
+                                    FunctionUtils.takeAlbum(InspePlustekIssueActivity.this, TAKE_ALBUM_REQUEST);
+                                } else {//拍照
+                                    String picName = FileUtils.createInpseImgLongName(taskEntity);//生成图片名称
+                                    picTempPath = FileUtils.getInpseImgPath(taskEntity);
+                                    FunctionUtils.takePicture(InspePlustekIssueActivity.this, picName, FileUtils.getInpseRootPath() + picTempPath, TAKE_PIC_REQUEST);
+                                    //文件相对地址
+                                    picTempPath = picTempPath + picName;
+                                }
+                            }
+                        })
+                        .show(view);
+
+
             } else {
                 showToast("目前仅支持上传3张图片");
             }
