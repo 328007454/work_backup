@@ -264,7 +264,7 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
             //检查类型
             helper.setText(R.id.typeTxt, item.getCheck_type());
             //检查完成时间
-            if (TaskType.jyhjc.name().equals(item.check_type)) {
+            if (TaskType.jyhjc.name().equals(item.type)) {
                 helper.setText(R.id.dateTxt, "时间：" + DateFormat.formatYM(DateFormat.dbdateToLong(item.getPlan_check_time())));
             } else {
                 helper.setText(R.id.dateTxt, "时间：" + DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_check_time())));

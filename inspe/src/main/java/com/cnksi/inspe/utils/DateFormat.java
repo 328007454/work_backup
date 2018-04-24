@@ -38,7 +38,7 @@ public final class DateFormat {
     }
 
     public static String formatYM(Object date) {
-        synchronized (sdfymd) {
+        synchronized (sdfym) {
             return sdfym.format(date);
         }
     }

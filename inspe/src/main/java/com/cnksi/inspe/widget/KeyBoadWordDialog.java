@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -28,27 +29,61 @@ import java.util.List;
  * @auther Today(张军)
  * @date 2018/04/17 09:26
  */
-public class BreakWordDialog extends AlertDialog implements View.OnClickListener {
+public class KeyBoadWordDialog extends AlertDialog implements View.OnClickListener {
     private WidgetBreakwardDialogBinding dataBinding;
 
-    public BreakWordDialog(Context context) {
+    public KeyBoadWordDialog(Context context) {
         super(context);
         initCreate(context);
     }
 
-    public BreakWordDialog(Context context, int themeResId) {
+    public KeyBoadWordDialog(Context context, int themeResId) {
         super(context, themeResId);
         initCreate(context);
     }
 
-    public BreakWordDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
+    public KeyBoadWordDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         initCreate(context);
     }
 
+    private String lastWord;
+
+    private void onCheckedWord(int position, String word, boolean check) {
+//        if (word.equals(lastWord)) {
+//            String inputValue = dataBinding.issueEdit.getText().toString();
+//            StringBuffer stringBuffer = new StringBuffer();
+//
+//            int selection = dataBinding.issueEdit.getSelectionStart() + word.length();
+//            stringBuffer.append(inputValue.substring(0, dataBinding.issueEdit.getSelectionStart()))
+//                    .append(word)
+//                    .append(inputValue.substring(dataBinding.issueEdit.getSelectionEnd(), inputValue.length()));
+//
+//            dataBinding.issueEdit.setSelection(selection);
+//            dataBinding.issueEdit.setText(stringBuffer.toString());
+//        }
+
+        String inputValue = dataBinding.issueEdit.getText().toString();
+        StringBuffer stringBuffer = new StringBuffer();
+        int selection = dataBinding.issueEdit.getSelectionStart() + word.length();
+        stringBuffer.append(inputValue.substring(0, dataBinding.issueEdit.getSelectionStart()))
+                .append(word)
+                .append(inputValue.substring(dataBinding.issueEdit.getSelectionEnd(), inputValue.length()));
+
+        dataBinding.issueEdit.setText(stringBuffer.toString());
+        dataBinding.issueEdit.setSelection(selection);
+
+        lastWord = word;
+    }
+
+    InputMethodManager imm = null;
+
     private void initCreate(Context context) {
+        imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.widget_breakward_dialog, null, false);
         dataBinding.okBtn.setOnClickListener(this);
+        dataBinding.scoreDescTxt.setVisibility(View.GONE);
+        dataBinding.standardDescTxt.setVisibility(View.GONE);
         dataBinding.issueEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -93,14 +128,7 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
 
             @Override
             public void onCheckedWord(int position, String word, boolean check) {
-                if (check) {
-                    addWord(0, position, word);
-                } else {
-                    delWord(0, position, word);
-                }
-                String checkLine = getCheckWord();
-                dataBinding.issueEdit.setText(checkLine);
-                dataBinding.issueEdit.setSelection(checkLine.length());
+                KeyBoadWordDialog.this.onCheckedWord(position, word, check);
             }
         });
         scoreAdapter = new BreakWordAdapter(R.layout.inspe_breakword_item, scoreList, new OnBreakCheckedListener() {
@@ -110,14 +138,7 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
 
             @Override
             public void onCheckedWord(int position, String word, boolean check) {
-                if (check) {
-                    addWord(1, position, word);
-                } else {
-                    delWord(1, position, word);
-                }
-                String checkLine = getCheckWord();
-                dataBinding.issueEdit.setText(checkLine);
-                dataBinding.issueEdit.setSelection(checkLine.length());
+                KeyBoadWordDialog.this.onCheckedWord(position, word, check);
             }
         });
         dataBinding.standardWordRecycler.setAdapter(standardAdapter);
@@ -150,10 +171,11 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
      * @param scoreWord
      * @return
      */
-    public BreakWordDialog setBreakList(String standarWord, String scoreWord, String oldWord) {
+    public KeyBoadWordDialog setBreakList(String standarWord, String scoreWord, String oldWord) {
         dataBinding.standardDescTxt.setText(standarWord);
         dataBinding.scoreDescTxt.setText(scoreWord);
         dataBinding.issueEdit.setText(oldWord);
+        dataBinding.issueEdit.setSelection(dataBinding.issueEdit.getText().length());
 
         for (String msg : StringUtils.breakWord(standarWord)) {
             if (!TextUtils.isEmpty(msg)) {
@@ -173,7 +195,7 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
 
     private OnCheckedListener onCheckedListener;
 
-    public BreakWordDialog setOnCheckListener(OnCheckedListener listener) {
+    public KeyBoadWordDialog setOnCheckListener(OnCheckedListener listener) {
         onCheckedListener = listener;
         return this;
     }
@@ -212,17 +234,14 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     item.isChecked = b;
-                    onBreakCheckedListener.onCheckedWord(helper.getAdapterPosition(), item.name, b);
-
-//                    StringBuffer stringBuffer = new StringBuffer();
-//                    for (BreakItemBean bean : list) {
-//                        if (bean.isChecked) {
-//                            stringBuffer.append(bean.name);
-//                        }
-//                    }
-//                    onBreakCheckedListener.onCheckedLine(stringBuffer.toString());
+                    if (b) {
+                        imm.hideSoftInputFromWindow(dataBinding.okBtn.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        onBreakCheckedListener.onCheckedWord(helper.getAdapterPosition(), item.name, b);
+                        compoundButton.setChecked(false);
+                    }
                 }
             });
+
             helper.setText(R.id.nameTxt, item.name);
             helper.setChecked(R.id.nameTxt, item.isChecked);
         }

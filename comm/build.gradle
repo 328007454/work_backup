@@ -1,77 +1,49 @@
-if (InspeIsLibrary.toBoolean()) {
+if (true) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
 }
 
-android {
-    compileSdkVersion 25
-    buildToolsVersion rootProject.build_tools_version
-    sourceSets {
-        main {
-            if (InspeIsLibrary.toBoolean()) {
-                java {
-                    exclude '**/develop/**'
-                }
-            } else {
-                manifest.srcFile 'src/main/java/develop/AndroidManifest.xml'
-            }
-        }
-    }
-    defaultConfig {
-        if (!InspeIsLibrary.toBoolean()) {
-            applicationId "com.cnksi.inspe"
-        } else {
 
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        if (false) {
+            applicationId "com.ksi.comm"
         }
+
         minSdkVersion rootProject.min_sdk_version
         targetSdkVersion rootProject.target_sdk_version
         versionCode rootProject.version_code
         versionName rootProject.version_name
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
 
-        //Arouter
-        //javaCompileOptions {
-        //    annotationProcessorOptions {
-        //        arguments = [moduleName: project.getName()]
-        //    }
-        //}
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled = true
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+
 }
 
 dependencies {
-    //android引用资源
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':comm')
-    //noinspection GradleCompatible
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "com.android.support:appcompat-v7:$appcompat_v7_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     implementation "com.android.support:design:$design_version"
-    //noinspection GradleCompatible
     implementation "com.android.support:support-vector-drawable:$support_vector_drawable_version"
     //implementation "com.android.support:support-v4:$support_v4_version"//引用v7可不再引用v4
     testImplementation "junit:junit:$junit_version"
     androidTestCompile "com.android.support.test:runner:$runner_version"
     androidTestCompile "com.android.support.test.espresso:espresso-core:$espresso_core_version"
-    //开源引用资源
-    // compile "com.alibaba:arouter-api:$arouter_version"
-    //annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${BaseRecyclerViewAdapterHelper_version}"
-    //ksi引用资源
     implementation "com.cnksi:core:$ksi_core_version"
 }

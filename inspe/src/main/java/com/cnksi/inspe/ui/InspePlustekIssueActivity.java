@@ -43,6 +43,7 @@ import com.cnksi.inspe.utils.ImageUtils;
 import com.cnksi.inspe.utils.InspeConfig;
 import com.cnksi.inspe.utils.ScoreUtils;
 import com.cnksi.inspe.widget.BreakWordDialog;
+import com.cnksi.inspe.widget.KeyBoadWordDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
 import com.cnksi.inspe.widget.PopMenu;
 
@@ -474,8 +475,12 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == TAKE_PIC_REQUEST) {
-                BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
-                startDrawCircle(picTempPath);//相对地址
+                if (picTempPath != null) {
+                    BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
+                    startDrawCircle(picTempPath);//相对地址
+                } else {
+                    showToast("图片地址不存在");
+                }
 
             } else if (requestCode == TAKE_ALBUM_REQUEST) {
                 if (data == null) {
@@ -613,7 +618,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 showToast("请先选择扣分原因");
                 return;
             }
-            new BreakWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName()).setOnCheckListener(new BreakWordDialog.OnCheckedListener() {
+            new KeyBoadWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName(), dataBinding.issueEdit.getText().toString()).setOnCheckListener(new KeyBoadWordDialog.OnCheckedListener() {
                 @Override
                 public void onChecked(String msg) {
                     dataBinding.issueEdit.setText(msg);
