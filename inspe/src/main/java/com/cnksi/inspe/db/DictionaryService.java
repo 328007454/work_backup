@@ -1,9 +1,7 @@
 package com.cnksi.inspe.db;
 
 import com.cnksi.inspe.base.BaseDbService;
-import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.DictionaryEntity;
-import com.cnksi.inspe.db.entity.SubStationEntity;
 
 import org.xutils.ex.DbException;
 

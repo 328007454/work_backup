@@ -2,7 +2,6 @@ package com.cnksi.inspe.ui;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -11,22 +10,18 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.entity.DeviceTypeCheckEntity;
 import com.cnksi.inspe.base.AppBaseActivity;
-import com.cnksi.inspe.databinding.ActivityInspeCreateBinding;
 import com.cnksi.inspe.databinding.ActivityInspeModifyBinding;
 import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
-import com.cnksi.inspe.db.entity.SubStationEntity;
 import com.cnksi.inspe.db.entity.TaskExtendEntity;
 import com.cnksi.inspe.db.entity.UserEntity;
 import com.cnksi.inspe.db.entity.UserGroupEntity;
 import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskProgressType;
-import com.cnksi.inspe.type.TaskType;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.utils.DateFormat;
-import com.cnksi.inspe.widget.PopItemWindow;
 
 import java.util.ArrayList;
 import java.util.HashSet;

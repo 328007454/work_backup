@@ -3,11 +3,9 @@ package com.cnksi.inspe.db;
 import android.text.TextUtils;
 
 import com.cnksi.inspe.base.BaseDbService;
-import com.cnksi.inspe.db.entity.DeviceCheckEntity;
 import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.SubStationEntity;
-import com.cnksi.inspe.db.entity.UserGroupEntity;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;

@@ -6,17 +6,12 @@ import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cnksi.core.activity.BaseCoreActivity;
-import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.db.UserService;
 import com.cnksi.inspe.ui.InspeDrawCircleImageActivity;
@@ -34,13 +29,9 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     protected ViewDataBinding rootDataBinding;
     private UserService userService;// = UserService.getInstance();
 
-    protected UserService getUserService() {
+    protected synchronized UserService getUserService() {
         if (userService == null) {
-            synchronized (this) {
-                if (userService == null) {
-                    userService = UserService.getInstance();
-                }
-            }
+            userService = UserService.getInstance();
         }
 
         return userService;

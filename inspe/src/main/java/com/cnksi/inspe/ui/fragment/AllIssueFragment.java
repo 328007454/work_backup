@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.PopupWindow;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -15,14 +14,12 @@ import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.UserService;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.type.ProgressType;
-import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskType;
 import com.cnksi.inspe.ui.InspeIssueDetailActivity;
 import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.widget.PopItemWindow;
 
 import java.lang.ref.SoftReference;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 

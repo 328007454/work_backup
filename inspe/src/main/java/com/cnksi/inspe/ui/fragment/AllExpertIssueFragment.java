@@ -3,8 +3,6 @@ package com.cnksi.inspe.ui.fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
@@ -19,20 +17,12 @@ import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.db.entity.UserEntity;
-import com.cnksi.inspe.entity.IssueListEntity;
-import com.cnksi.inspe.type.ProgressType;
 import com.cnksi.inspe.type.RoleType;
-import com.cnksi.inspe.type.TaskType;
-import com.cnksi.inspe.ui.InspeIssueDetailActivity;
 import com.cnksi.inspe.ui.InspePlustekIssueActivity;
-import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.widget.PopItemWindow;
 
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * 检查任务模块首页-所有问题(专家)

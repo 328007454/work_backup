@@ -3,7 +3,6 @@ package com.cnksi.inspe.widget;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.widget.ListView;
 
 /**
  * Created by ksi-android on 2016/4/29.

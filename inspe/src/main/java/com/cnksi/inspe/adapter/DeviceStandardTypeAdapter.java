@@ -1,19 +1,13 @@
 package com.cnksi.inspe.adapter;
 
-import android.bluetooth.BluetoothClass;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
-
-import org.xutils.db.table.DbModel;
 
 import java.util.List;
 

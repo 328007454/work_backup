@@ -1,7 +1,5 @@
 package com.cnksi.inspe.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -18,7 +16,6 @@ import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.entity.IssueListEntity;
-import com.cnksi.inspe.type.PlustekType;
 
 import java.util.ArrayList;
 import java.util.List;

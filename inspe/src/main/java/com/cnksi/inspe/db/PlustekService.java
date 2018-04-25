@@ -6,15 +6,11 @@ import android.util.Log;
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
-import com.cnksi.inspe.db.entity.SubStationEntity;
-import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.type.TaskType;
 import com.cnksi.inspe.utils.DBUtils;
-import com.cnksi.inspe.utils.StringUtils;
 
-import org.w3c.dom.Text;
 import org.xutils.DbManager;
 import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;

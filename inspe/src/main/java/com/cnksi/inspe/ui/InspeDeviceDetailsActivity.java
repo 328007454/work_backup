@@ -1,8 +1,6 @@
 package com.cnksi.inspe.ui;
 
-import android.bluetooth.BluetoothClass;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Spannable;
@@ -28,16 +26,11 @@ import com.cnksi.inspe.db.PlustekCheckServer;
 import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.entity.DeviceCheckEntity;
 import com.cnksi.inspe.db.entity.DeviceEntity;
-import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
 import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.type.RecordType;
 import com.cnksi.inspe.utils.Config;
 import com.cnksi.inspe.utils.StringUtils;
-import com.zhy.autolayout.utils.AutoUtils;
-
-import org.xutils.db.table.DbModel;
-import org.xutils.ex.DbException;
 
 import java.io.File;
 import java.util.ArrayList;

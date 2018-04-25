@@ -9,7 +9,6 @@ import com.cnksi.inspe.adapter.DeviceAdapter;
 import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

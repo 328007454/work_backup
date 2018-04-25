@@ -3,14 +3,9 @@ package com.cnksi.inspe.widget;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.DatePicker;
 
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.databinding.WidgetDatedialogBinding;

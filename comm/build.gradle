@@ -6,7 +6,7 @@ if (true) {
 
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion complile_sdk_version
 
 
 

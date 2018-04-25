@@ -12,7 +12,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.core.utils.DateUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.GalleryAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
@@ -42,7 +41,6 @@ import com.cnksi.inspe.utils.FunctionUtils;
 import com.cnksi.inspe.utils.ImageUtils;
 import com.cnksi.inspe.utils.InspeConfig;
 import com.cnksi.inspe.utils.ScoreUtils;
-import com.cnksi.inspe.widget.BreakWordDialog;
 import com.cnksi.inspe.widget.KeyBoadWordDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
 import com.cnksi.inspe.widget.PopMenu;
@@ -50,7 +48,6 @@ import com.cnksi.inspe.widget.PopMenu;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -266,12 +263,12 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     return;
                 }
                 ruleResultEntity = teamService.getRuleResult(ruleResultId);//获取问题
-                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                 if (ruleResultEntity == null) {
                     showToast("参数错误!");
                     finish();
                     return;
                 }
+                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                 initEditIssue(taskId, deviceId, ruleResultId, content);
 
                 break;
@@ -282,12 +279,13 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     return;
                 }
                 ruleResultEntity = teamService.getRuleResult(ruleResultId);
-                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                 if (ruleResultEntity == null) {
                     showToast("参数错误!");
                     finish();
                     return;
                 }
+                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
+
                 initCopyIssue(taskId, deviceId, ruleResultId, content);
                 break;
             case StartMode.NOPMS:
@@ -376,14 +374,16 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
      */
     private void initNoPmsIssue(String taskId, String deviceId) {
         rule4Entity = plustekService.getNoPMS4(deviceEntity.getBigid());
-        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
-        maxIntentMinus = plustekService.getStandaredMaxDult(taskId, rule4Entity.id, deviceId);
         if (rule4Entity == null) {
             showToast("未查询到标准！");
             finish();
             startNoPmsActivity();
             return;
         }
+
+        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
+        maxIntentMinus = plustekService.getStandaredMaxDult(taskId, rule4Entity.id, deviceId);
+
         String otherDevices = getIntent().getStringExtra(IntentKey.NOPMS_DEVICE_OTHER);
         if (!TextUtils.isEmpty(otherDevices)) {
             noPmsIds.addAll(Arrays.asList(otherDevices.split(",")));

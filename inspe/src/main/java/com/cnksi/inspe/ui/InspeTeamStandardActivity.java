@@ -8,24 +8,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.inspe.R;
-import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamstandardBinding;
 import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.TeamService;
-import com.cnksi.inspe.db.entity.InspeScoreEntity;
-import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
-import com.cnksi.inspe.type.ProgressType;
 import com.cnksi.inspe.type.RecordType;
 import com.cnksi.inspe.type.TaskProgressType;
-import com.cnksi.inspe.type.TaskType;
-import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.utils.DateFormat;
 
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
 package com.cnksi.inspe.utils;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;

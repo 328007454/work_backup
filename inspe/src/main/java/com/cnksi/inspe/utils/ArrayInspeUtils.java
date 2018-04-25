@@ -1,7 +1,6 @@
 package com.cnksi.inspe.utils;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @version v1.0
