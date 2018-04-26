@@ -4,9 +4,6 @@ import android.text.TextUtils;
 
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
-import com.cnksi.inspe.type.TaskType;
-
-import java.io.File;
 
 /**
  * 文件工具类<br/>

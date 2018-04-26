@@ -25,11 +25,11 @@ public enum RecordType {
      */
     def("未检查"),
     /** 已完成 检查 */
-    finish("已完成"),;;
+    finish("已完成"),;
 
     String desc;
 
-    private RecordType(String desc) {
+    RecordType(String desc) {
         this.desc = desc;
     }
 

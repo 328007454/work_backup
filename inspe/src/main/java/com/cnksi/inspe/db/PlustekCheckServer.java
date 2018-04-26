@@ -2,7 +2,6 @@ package com.cnksi.inspe.db;
 
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.DeviceCheckEntity;
-import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.type.PlustekType;
 
 import org.xutils.ex.DbException;

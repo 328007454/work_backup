@@ -3,12 +3,9 @@ package com.cnksi.inspe.db;
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TaskExtendEntity;
-import com.cnksi.inspe.type.RoleType;
-import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.utils.DBUtils;
 import com.cnksi.inspe.utils.DateFormat;
 
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.ex.DbException;
 

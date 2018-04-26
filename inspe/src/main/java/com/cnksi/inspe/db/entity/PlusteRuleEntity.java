@@ -1,7 +1,6 @@
 package com.cnksi.inspe.db.entity;
 
 import com.cnksi.inspe.base.BaseDBEntity;
-import com.cnksi.inspe.base.BaseDbService;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

@@ -2,24 +2,21 @@ package com.cnksi.inspe.ui.fragment;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseFragment;
-import com.cnksi.inspe.databinding.FragmentInspeIssueBinding;
 import com.cnksi.inspe.databinding.FragmentInspeMyissueBinding;
 import com.cnksi.inspe.db.TeamService;
-import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.type.ProgressType;
-import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.ui.InspeIssueDetailActivity;
 import com.cnksi.inspe.utils.DateFormat;
 
 import java.lang.ref.SoftReference;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +51,12 @@ public class MyIssueFragment extends AppBaseFragment {
 
     @Override
     protected void lazyLoad() {
+
+    }
+    @Override
+    protected void initUI() {
+        super.initUI();
+        Log.e(tag, "initUI()");
         dataDinding = (FragmentInspeMyissueBinding) fragmentDataBinding;
         dataDinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

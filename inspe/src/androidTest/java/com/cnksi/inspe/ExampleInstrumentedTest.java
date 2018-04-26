@@ -6,13 +6,10 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.cnksi.inspe.type.PlustekType;
-import com.cnksi.inspe.ui.InspeIssueDetailActivity;
 import com.cnksi.inspe.ui.InspePlustekIssueActivity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -21,7 +18,7 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
     @Test
-    public void useAppContext() throws Exception {
+    public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
         Intent intent = new Intent(appContext, InspePlustekIssueActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

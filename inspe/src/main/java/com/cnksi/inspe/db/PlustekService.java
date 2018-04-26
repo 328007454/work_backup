@@ -6,21 +6,18 @@ import android.util.Log;
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
-import com.cnksi.inspe.db.entity.SubStationEntity;
-import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.type.TaskType;
 import com.cnksi.inspe.utils.DBUtils;
-import com.cnksi.inspe.utils.StringUtils;
 
-import org.w3c.dom.Text;
 import org.xutils.DbManager;
 import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -385,4 +382,32 @@ public class PlustekService extends BaseDbService {
         return null;
     }
 
+    /**
+     * 获取用户所有问题
+     * @param userId
+     * @return
+     */
+    public List<TeamRuleResultEntity> getUserResult(String userId) {
+        //获取专家用，未完成任务的错误问题记录
+        try {
+            String sql = "SELECT e.progress,e.person_id,r.* FROM xj_group_con_rule_result AS r LEFT JOIN  xj_jyh_task_extend AS e ON r.task_id=e.task_id WHERE r.check_person_id= '" + userId + "' AND e.person_id='" + userId + "' AND e.progress!='done'  ORDER BY r.create_time DESC";
+            return DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleResultEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>(0);
+    }
+
+    public List<DeviceTypeEntity> getUserResultBigType(String userId) {
+        String sql = "SELECT * FROM device_bigtype AS dt WHERE dt.bigid IN(" +
+                "SELECT r.device_bigtype FROM xj_group_con_rule_result AS r LEFT JOIN  xj_jyh_task_extend AS e ON r.task_id=e.task_id WHERE r.check_person_id= '"+userId+"' AND e.person_id='"+userId+"' AND e.progress!='done' GROUP BY r.device_bigtype" +
+                ");";
+        try {
+            return DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), DeviceTypeEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

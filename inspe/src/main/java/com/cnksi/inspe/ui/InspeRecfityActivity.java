@@ -1,29 +1,23 @@
 package com.cnksi.inspe.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.GalleryAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
-import com.cnksi.inspe.databinding.ActivityInspePlustekBinding;
 import com.cnksi.inspe.databinding.ActivityInspeRecfityBinding;
 import com.cnksi.inspe.db.TeamService;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.entity.InspectePlustekEntity;
 import com.cnksi.inspe.type.ProgressType;
-import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
-import com.cnksi.inspe.utils.Config;
 import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.utils.FileUtils;
-import com.cnksi.inspe.utils.FunctionUtil;
 import com.cnksi.inspe.utils.FunctionUtils;
 import com.cnksi.inspe.utils.ImageUtils;
 

@@ -70,7 +70,7 @@ public class InspePlustekIssueListActivity extends AppBaseActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         if (plustekService.delete(list.get(position).resultEntity)) {
-                                            plustekService.delete(list.remove(position));
+                                            list.remove(position);
                                             adapter.notifyDataSetChanged();
                                             showToast("删除成功");
                                         } else {

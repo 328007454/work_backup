@@ -16,7 +16,6 @@ import java.util.List;
  * 数据库工具类
  * <br/>
  * 主要初始化数据库
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/22 11:14
@@ -61,17 +60,12 @@ public final class DBUtils {
 
     /**
      * 获取数据库管理对象
-     *
      * @return
      */
-    public static DbManager getDBManager() {
+    public static synchronized DbManager getDBManager() {
 
         if (dbUtils == null) {
-            synchronized (DBUtils.class) {
-                if (dbUtils == null) {
-                    dbUtils = new DBUtils();
-                }
-            }
+            dbUtils = new DBUtils();
         }
 
         if (dbUtils.dbManager != null) {
@@ -83,7 +77,6 @@ public final class DBUtils {
 
     /**
      * DB Array对象解析
-     *
      * @param modles
      * @param cls
      * @param <T>
@@ -102,7 +95,6 @@ public final class DBUtils {
 
     /**
      * DB Object解析
-     *
      * @param model
      * @param cls
      * @param <T>

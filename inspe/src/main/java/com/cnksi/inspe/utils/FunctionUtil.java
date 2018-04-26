@@ -1,12 +1,9 @@
 package com.cnksi.inspe.utils;
 
 import android.content.Context;
-import android.os.Environment;
-import android.util.Log;
 
 import com.cnksi.core.utils.PreferencesUtils;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

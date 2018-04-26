@@ -1,7 +1,5 @@
 package com.cnksi.inspe.utils;
 
-import com.cnksi.inspe.type.RoleType;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +36,7 @@ public final class DateFormat {
     }
 
     public static String formatYM(Object date) {
-        synchronized (sdfymd) {
+        synchronized (sdfym) {
             return sdfym.format(date);
         }
     }
@@ -60,7 +58,7 @@ public final class DateFormat {
      * @return
      */
     public static String dateToDbString000(long datetime) {
-        synchronized (sdfymdhms) {
+        synchronized (sdfymd000) {
             return sdfymd000.format(datetime);
         }
     }

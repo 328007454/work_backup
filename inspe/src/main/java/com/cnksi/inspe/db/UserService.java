@@ -3,7 +3,6 @@ package com.cnksi.inspe.db;
 import android.text.TextUtils;
 
 import com.cnksi.inspe.base.BaseDbService;
-import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.db.entity.UserEntity;
 import com.cnksi.inspe.db.entity.UserGroupEntity;
 import com.cnksi.inspe.type.RoleType;
@@ -26,13 +25,9 @@ public final class UserService extends BaseDbService {
 
     private static UserService userService;
 
-    public static UserService getInstance() {
+    public synchronized static UserService getInstance() {
         if (userService == null) {
-            synchronized (UserService.class) {
-                if (userService == null) {
-                    userService = new UserService();
-                }
-            }
+            userService = new UserService();
         }
 
         return userService;
@@ -50,7 +45,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 初始化登录用户
-     *
      * @param userIds
      */
     public void initIds(String... userIds) {
@@ -111,7 +105,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 根据权限排序，权限大的拍第一位
-     *
      * @param user1
      * @param user2
      */
@@ -171,7 +164,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 根据Id获取用户
-     *
      * @param id
      * @return
      */
@@ -187,7 +179,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 根据account获取用户
-     *
      * @param name
      * @return
      */
@@ -205,7 +196,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 获取用组ID
-     *
      * @return
      */
     public String[] getUserGroup0() {
@@ -214,7 +204,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 获取用户分组
-     *
      * @return
      */
     public List<UserGroupEntity> getUserGroup() {
@@ -229,9 +218,8 @@ public final class UserService extends BaseDbService {
 
     /**
      * 获取指定角色用户组<p/>
-     *
-     * @param groupId  组ID
-     * @param userId   用户ID
+     * @param groupId 组ID
+     * @param userId 用户ID
      * @param roleType 角色
      * @return
      */
@@ -262,7 +250,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 获取专家用户
-     *
      * @param roleType
      * @return 没有专家则返回null
      */
@@ -280,7 +267,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 当前用户是否包含了指定账户
-     *
      * @param userId
      * @return
      */
@@ -288,16 +274,12 @@ public final class UserService extends BaseDbService {
         if (userEntity1 != null && userEntity1.getId().equals(userId)) {
             return true;
         }
-        if (userEntity2 != null && userEntity2.getId().equals(userId)) {
-            return true;
-        }
-        return false;
+        return userEntity2 != null && userEntity2.getId().equals(userId);
     }
 
 
     /**
      * 获取用户1
-     *
      * @return
      */
     public UserEntity getUser1() {
@@ -306,7 +288,6 @@ public final class UserService extends BaseDbService {
 
     /**
      * 获取用户2
-     *
      * @return
      */
     public UserEntity getUser2() {

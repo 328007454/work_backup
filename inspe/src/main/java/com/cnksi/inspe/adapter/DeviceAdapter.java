@@ -2,7 +2,6 @@ package com.cnksi.inspe.adapter;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;

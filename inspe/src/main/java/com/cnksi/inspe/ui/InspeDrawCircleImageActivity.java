@@ -3,8 +3,6 @@ package com.cnksi.inspe.ui;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
 import com.cnksi.core.common.ExecutorManager;
@@ -21,6 +19,7 @@ import com.cnksi.inspe.utils.InspeConfig;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 public class InspeDrawCircleImageActivity extends AppBaseActivity {
@@ -35,7 +34,7 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
      * 是否保存图片
      */
     private boolean isSavePicture = false;
-    private MyHandler mHandler=null;
+    private MyHandler handler = null;
 
     ActivityInspeDrawCircleImageBinding binding;
 
@@ -48,7 +47,7 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
     public void initUI() {
         binding = (ActivityInspeDrawCircleImageBinding) rootDataBinding;
         binding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
-        mHandler = new MyHandler();
+        handler = new MyHandler();
         initOnClick();
     }
 
@@ -77,7 +76,7 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
             if (bitmapTemp != null) {
                 mPicturePaintView = new PicturePaintView(this, bitmapTemp);
             }
-            mHandler.sendEmptyMessage(InspeConfig.SAVE_DATA);
+            handler.sendEmptyMessage(InspeConfig.SAVE_DATA);
         });
     }
 
@@ -89,7 +88,7 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
             saveMarkAndExit();
         });
         binding.btnAddMark.setOnClickListener(view -> {
-            mPicturePaintView.saveMark();
+            PicturePaintView.saveMark();
         });
         binding.btnClearMark.setOnClickListener(view -> {
             CustomerDialog.showSelectDialog(this, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {
@@ -114,10 +113,10 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
         isSavePicture = true;
         CustomerDialog.showProgress(this, "正在保存图片...");
         ExecutorManager.executeTaskSerially(() -> {
-            mPicturePaintView.saveMark();
+            PicturePaintView.saveMark();
             if (saveEditPicture(binding.rlCirclePicture, currentImagePath, 80)) {
                 mPicturePaintView.setBitmapNull();
-                mHandler.sendEmptyMessage(InspeConfig.LOAD_DATA);
+                handler.sendEmptyMessage(InspeConfig.LOAD_DATA);
             }
         });
     }
@@ -135,8 +134,8 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mHandler.removeCallbacksAndMessages(0);
-        mHandler = null;
+        handler.removeCallbacksAndMessages(0);
+        handler = null;
     }
 
     /**
@@ -151,21 +150,33 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos);
         byte[] buffer = bos.toByteArray();
         if (buffer != null) {
+            OutputStream outputStream = null;
             try {
                 File file = new File(picturePath);
                 if (file.exists()) {
                     file.delete();
                 }
-                OutputStream outputStream = new FileOutputStream(file);
+                outputStream = new FileOutputStream(file);
                 outputStream.write(buffer);
-                outputStream.close();
-                bos.close();
+                outputStream.flush();
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             } finally {
                 view.setDrawingCacheEnabled(false);
+                if (outputStream != null) {
+                    try {
+                        bos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        outputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         bitmap.recycle();

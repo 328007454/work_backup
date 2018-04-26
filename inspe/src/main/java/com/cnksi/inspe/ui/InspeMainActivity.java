@@ -19,6 +19,7 @@ import com.cnksi.inspe.databinding.ActivityInspeMainBinding;
 import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.entity.UserEntity;
 import com.cnksi.inspe.type.RoleType;
+import com.cnksi.inspe.ui.fragment.AllExpertIssueFragment;
 import com.cnksi.inspe.ui.fragment.AllIssueFragment;
 import com.cnksi.inspe.ui.fragment.InspectionFragment;
 import com.cnksi.inspe.ui.fragment.MyIssueFragment;
@@ -26,7 +27,6 @@ import com.cnksi.inspe.ui.fragment.MyIssueFragment;
 
 /**
  * 检查任务模块首页
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/20 13:41
@@ -201,7 +201,6 @@ public class InspeMainActivity extends AppBaseActivity {
 
     /**
      * 创建Fragment
-     *
      * @param postion
      * @return
      * @throws NullPointerException postion 超过2会抛异常
@@ -218,7 +217,11 @@ public class InspeMainActivity extends AppBaseActivity {
                     fragments[postion] = new MyIssueFragment();
                     break;
                 case 2:
-                    fragments[postion] = new AllIssueFragment();
+                    if (expertUser == null) {
+                        fragments[postion] = new AllIssueFragment();
+                    } else {
+                        fragments[postion] = new AllExpertIssueFragment();
+                    }
                     break;
                 default:
                     throw new NullPointerException("你创建的Fragment不在设计内,fragments=" + fragments.length + ",positon=" + postion);
@@ -248,7 +251,7 @@ public class InspeMainActivity extends AppBaseActivity {
                 intent.setComponent(componentName);
             }
             startActivity(intent);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

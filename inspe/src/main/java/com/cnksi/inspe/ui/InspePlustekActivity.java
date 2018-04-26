@@ -21,9 +21,6 @@ import com.cnksi.inspe.type.PlustekType;
 import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.type.TaskType;
-import com.cnksi.inspe.utils.DateFormat;
-
-import org.xutils.common.util.Task;
 
 import java.util.ArrayList;
 import java.util.List;

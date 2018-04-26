@@ -5,23 +5,18 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.PlustekStandardAdapter;
 import com.cnksi.inspe.adapter.TeamRoleAdapter;
 import com.cnksi.inspe.adapter.entity.PlustekRule0Entity;
 import com.cnksi.inspe.adapter.entity.PlustekRule1Entity;
-import com.cnksi.inspe.adapter.entity.TeamRole0Entity;
-import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspePlustekstandardBinding;
 import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
-import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.type.PlustekType;
-import com.cnksi.inspe.type.RecordType;
 
 import java.util.ArrayList;
 import java.util.List;

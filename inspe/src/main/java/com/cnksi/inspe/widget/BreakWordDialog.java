@@ -24,7 +24,6 @@ import java.util.List;
 
 /**
  * 分词选择对话框
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/04/17 09:26
@@ -90,27 +89,35 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
         standardAdapter = new BreakWordAdapter(R.layout.inspe_breakword_item, standardList, new OnBreakCheckedListener() {
             @Override
             public void onCheckedLine(String line) {
-                standardWord = line;
-                dataBinding.issueEdit.setText(standardWord + scoreWord);
-                dataBinding.issueEdit.setSelection(dataBinding.issueEdit.getText().length());
             }
 
             @Override
             public void onCheckedWord(int position, String word, boolean check) {
-
+                if (check) {
+                    addWord(0, position, word);
+                } else {
+                    delWord(0, position, word);
+                }
+                String checkLine = getCheckWord();
+                dataBinding.issueEdit.setText(checkLine);
+                dataBinding.issueEdit.setSelection(checkLine.length());
             }
         });
         scoreAdapter = new BreakWordAdapter(R.layout.inspe_breakword_item, scoreList, new OnBreakCheckedListener() {
             @Override
             public void onCheckedLine(String line) {
-                scoreWord = line;
-                dataBinding.issueEdit.setText(standardWord + scoreWord);
-                dataBinding.issueEdit.setSelection(dataBinding.issueEdit.getText().length());
             }
 
             @Override
             public void onCheckedWord(int position, String word, boolean check) {
-
+                if (check) {
+                    addWord(1, position, word);
+                } else {
+                    delWord(1, position, word);
+                }
+                String checkLine = getCheckWord();
+                dataBinding.issueEdit.setText(checkLine);
+                dataBinding.issueEdit.setSelection(checkLine.length());
             }
         });
         dataBinding.standardWordRecycler.setAdapter(standardAdapter);
@@ -139,14 +146,14 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
 
     /**
      * 设置风格字符串
-     *
      * @param standarWord
      * @param scoreWord
      * @return
      */
-    public BreakWordDialog setBreakList(String standarWord, String scoreWord) {
+    public BreakWordDialog setBreakList(String standarWord, String scoreWord, String oldWord) {
         dataBinding.standardDescTxt.setText(standarWord);
         dataBinding.scoreDescTxt.setText(scoreWord);
+        dataBinding.issueEdit.setText(oldWord);
 
         for (String msg : StringUtils.breakWord(standarWord)) {
             if (!TextUtils.isEmpty(msg)) {
@@ -207,13 +214,13 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
                     item.isChecked = b;
                     onBreakCheckedListener.onCheckedWord(helper.getAdapterPosition(), item.name, b);
 
-                    StringBuffer stringBuffer = new StringBuffer();
-                    for (BreakItemBean bean : list) {
-                        if (bean.isChecked) {
-                            stringBuffer.append(bean.name);
-                        }
-                    }
-                    onBreakCheckedListener.onCheckedLine(stringBuffer.toString());
+//                    StringBuffer stringBuffer = new StringBuffer();
+//                    for (BreakItemBean bean : list) {
+//                        if (bean.isChecked) {
+//                            stringBuffer.append(bean.name);
+//                        }
+//                    }
+//                    onBreakCheckedListener.onCheckedLine(stringBuffer.toString());
                 }
             });
             helper.setText(R.id.nameTxt, item.name);
@@ -240,4 +247,42 @@ public class BreakWordDialog extends AlertDialog implements View.OnClickListener
             this.name = name;
         }
     }
+
+    private List<CheckShowEntity> checkShowEntityList = new ArrayList<>();
+
+    private void addWord(int type, int index, String value) {
+        checkShowEntityList.add(new CheckShowEntity(type, index, value));
+    }
+
+    private void delWord(int type, int index, String value) {
+        for (CheckShowEntity entity : checkShowEntityList) {
+            if (entity.type == type && entity.index == index) {
+                checkShowEntityList.remove(entity);
+                break;
+            }
+        }
+    }
+
+    private String getCheckWord() {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (CheckShowEntity bean : checkShowEntityList) {
+            stringBuffer.append(bean.value);
+        }
+
+        return stringBuffer.toString();
+    }
+
+    class CheckShowEntity {
+        public int type;//类型
+        public int index;//list编号
+        public String value;//值
+
+        public CheckShowEntity(int type, int index, String value) {
+            this.type = type;
+            this.index = index;
+            this.value = value;
+        }
+    }
+
+
 }

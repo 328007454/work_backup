@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,12 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
 
     @Override
     protected void lazyLoad() {
+
+    }
+    @Override
+    protected void initUI() {
+        super.initUI();
+        Log.e(tag, "initUI()");
         dataBinding = (FragmentInspeInspectionBinding) fragmentDataBinding;
 
 
@@ -257,7 +264,7 @@ public class InspectionFragment extends AppBaseFragment implements View.OnClickL
             //检查类型
             helper.setText(R.id.typeTxt, item.getCheck_type());
             //检查完成时间
-            if (TaskType.jyhjc.name().equals(item.check_type)) {
+            if (TaskType.jyhjc.name().equals(item.type)) {
                 helper.setText(R.id.dateTxt, "时间：" + DateFormat.formatYM(DateFormat.dbdateToLong(item.getPlan_check_time())));
             } else {
                 helper.setText(R.id.dateTxt, "时间：" + DateFormat.formatYMD(DateFormat.dbdateToLong(item.getPlan_check_time())));

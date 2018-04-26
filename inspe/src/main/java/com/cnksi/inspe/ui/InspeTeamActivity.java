@@ -18,14 +18,10 @@ import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamBinding;
 import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.TeamService;
-import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.type.RecordType;
 import com.cnksi.inspe.type.TaskProgressType;
-import com.cnksi.inspe.type.TaskType;
-import com.cnksi.inspe.utils.DateFormat;
-
-import org.xutils.common.util.Task;
 
 import java.util.ArrayList;
 import java.util.List;

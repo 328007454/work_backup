@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.AddDeviceAtivity"/>
+        <activity android:name=".ui.AddDeviceAtivity" />
         <activity android:name=".ui.InspeCreateActivity" />
         <activity android:name=".ui.InspeModifyActivity" />
         <activity android:name=".ui.InspeHtmlActivity" />
@@ -44,6 +44,16 @@
         <activity android:name=".ui.InspeDocActivity" />
         <activity android:name=".ui.InspeDeviceActivity" />
         <activity android:name=".ui.InspeDeviceDetailsActivity" />
+        <activity
+            android:name=".ui.InspeDrawCircleImageActivity"
+            android:screenOrientation="portrait"></activity><!--screenOrientation必须配置，否则在横屏时启动会导致启动2次-->
+
+        <meta-data
+            android:name="design_width"
+            android:value="1080" />
+        <meta-data
+            android:name="design_height"
+            android:value="1920" />
     </application>
 
 </manifest>

@@ -3,6 +3,6 @@
 //include ':autolayout'
 ////include ":myapplication"
 //=======
-include ':adaptionsjjc', ':tts', ':bdloc',':inspe'
+include ':adaptionsjjc', ':tts', ':bdloc',':inspe', ':comm',':workticket'
 
 

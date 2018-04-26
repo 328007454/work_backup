@@ -2,17 +2,12 @@ package com.cnksi.inspe.ui;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.inspe.R;
@@ -23,11 +18,9 @@ import com.cnksi.inspe.databinding.ActivityInspeAddDeviceBinding;
 import com.cnksi.inspe.databinding.DialogListviewLayoutBinding;
 import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.entity.DeviceEntity;
-import com.cnksi.inspe.entity.device.SpaceItem;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.widget.BigDevicePopWindow;
 import com.cnksi.inspe.widget.CustomDialog;
-import com.cnksi.inspe.widget.PopItemWindow;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

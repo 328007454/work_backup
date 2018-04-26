@@ -1,20 +1,12 @@
 package com.cnksi.inspe.db;
 
-import android.os.DropBoxManager;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.DbLogEntity;
-import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
-import com.cnksi.inspe.entity.InspectePlustekEntity;
-import com.cnksi.inspe.type.ProgressType;
 import com.cnksi.inspe.type.RecordType;
-import com.cnksi.inspe.type.TaskProgressType;
-import com.cnksi.inspe.ui.InspePlustekActivity;
 import com.cnksi.inspe.utils.DBUtils;
 import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.utils.StringUtils;
@@ -24,9 +16,6 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -170,7 +159,7 @@ public class TeamService extends BaseDbService {
                     .where("id", "=", entity4.getPid())
                     .and("dlt", "=", "0")
                     .findFirst();
-            if (entity4 == null) {
+            if (entity2 == null) {
                 return null;
             }
             String level2Id = entity2.getPid();
@@ -441,7 +430,7 @@ public class TeamService extends BaseDbService {
             e.printStackTrace();
         }
 
-        return entity == null ? false : true;
+        return entity != null;
     }
 
     /**

@@ -1,29 +1,20 @@
 package com.cnksi.inspe.ui;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.support.v4.util.ArraySet;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.TextureView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.core.common.ExecutorManager;
-import com.cnksi.core.utils.StringUtils;
-import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.DeviceAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeDeviceBinding;
 import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
-import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.entity.device.DeviceItem;
 import com.cnksi.inspe.entity.device.SpaceItem;
 import com.cnksi.inspe.type.PlustekType;
@@ -275,7 +266,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         deviceAdapter.notifyDataSetChanged();
         String name = bigEntity == null ? "全部" : bigEntity.getString("name");
         deviceBinding.txtBigDevice.setText(name);
-        if (TextUtils.equals(name, "全部")) {
+        if (bigEntity==null||TextUtils.equals(name, "全部")) {
             loadAdapterData(dbModelList);
             return;
         }

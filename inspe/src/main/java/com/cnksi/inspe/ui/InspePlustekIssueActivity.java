@@ -1,6 +1,9 @@
 package com.cnksi.inspe.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -9,7 +12,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.core.utils.DateUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.GalleryAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
@@ -39,13 +41,13 @@ import com.cnksi.inspe.utils.FunctionUtils;
 import com.cnksi.inspe.utils.ImageUtils;
 import com.cnksi.inspe.utils.InspeConfig;
 import com.cnksi.inspe.utils.ScoreUtils;
-import com.cnksi.inspe.widget.BreakWordDialog;
+import com.cnksi.inspe.widget.KeyBoadWordDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
+import com.cnksi.inspe.widget.PopMenu;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -91,7 +93,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     private TeamService teamService = new TeamService();
     private TaskService taskService = new TaskService();
 
-    private static final int TAKEPIC_REQUEST = 100;
+    private static final int TAKE_PIC_REQUEST = 100;
+    private static final int TAKE_ALBUM_REQUEST = 101;
     private List<DictionaryEntity> natureList;
     private List<DictionaryEntity> reasonList;
     private List<String> natureArray;
@@ -260,12 +263,12 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     return;
                 }
                 ruleResultEntity = teamService.getRuleResult(ruleResultId);//获取问题
-                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                 if (ruleResultEntity == null) {
                     showToast("参数错误!");
                     finish();
                     return;
                 }
+                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                 initEditIssue(taskId, deviceId, ruleResultId, content);
 
                 break;
@@ -276,12 +279,13 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                     return;
                 }
                 ruleResultEntity = teamService.getRuleResult(ruleResultId);
-                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
                 if (ruleResultEntity == null) {
                     showToast("参数错误!");
                     finish();
                     return;
                 }
+                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
+
                 initCopyIssue(taskId, deviceId, ruleResultId, content);
                 break;
             case StartMode.NOPMS:
@@ -325,7 +329,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         ruleResultEntity.setCreate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
 
         dataBinding.issueInfoTxt.setOnClickListener(null);
-        dataBinding.issueEdit.setOnClickListener(null);
+//        dataBinding.issueEdit.setOnClickListener(null);
 
         dataBinding.issueInfoTxt.setText(rule4Entity.getName());
         dataBinding.issueEdit.setText(ruleResultEntity.getDescription());
@@ -362,6 +366,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             }
 
         }
+        dataBinding.contextTxt.setText(content);
     }
 
     /**
@@ -369,14 +374,16 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
      */
     private void initNoPmsIssue(String taskId, String deviceId) {
         rule4Entity = plustekService.getNoPMS4(deviceEntity.getBigid());
-        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
-        maxIntentMinus = plustekService.getStandaredMaxDult(taskId, rule4Entity.id, deviceId);
         if (rule4Entity == null) {
             showToast("未查询到标准！");
             finish();
             startNoPmsActivity();
             return;
         }
+
+        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
+        maxIntentMinus = plustekService.getStandaredMaxDult(taskId, rule4Entity.id, deviceId);
+
         String otherDevices = getIntent().getStringExtra(IntentKey.NOPMS_DEVICE_OTHER);
         if (!TextUtils.isEmpty(otherDevices)) {
             noPmsIds.addAll(Arrays.asList(otherDevices.split(",")));
@@ -467,25 +474,68 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == TAKEPIC_REQUEST) {
-                BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
-                StringBuffer picTxt = new StringBuffer();
-                picTxt.append(deviceEntity.getName()).append("\n")
-                        .append(dataBinding.issueEdit.getText().toString().trim()).append("\n")
-                        .append(expertEntity.getUsername()).append("\n")
-                        .append(DateFormat.dateToDbString(System.currentTimeMillis()));//.append("\n")
-                ;
-                try {
-                    drawCircle(FileUtils.getInpseRootPath() + picTempPath, picTxt.toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    picList.add(picTempPath);
-                    galleryAdapte.notifyDataSetChanged();
+            if (requestCode == TAKE_PIC_REQUEST) {
+                if (picTempPath != null) {
+                    BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
+                    startDrawCircle(picTempPath);//相对地址
+                } else {
+                    showToast("图片地址不存在");
                 }
+
+            } else if (requestCode == TAKE_ALBUM_REQUEST) {
+                if (data == null) {
+                    showToast("获取图片失败!");
+                    return;
+                }
+                Uri selectedImage = data.getData();
+                String[] filePathColumns = {MediaStore.Images.Media.DATA};
+                Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePathColumns[0]);
+                String imagePath = c.getString(columnIndex);
+                c.close();
+                //
+                picTempPath = FileUtils.getInpseImgPath(taskEntity) + FileUtils.createInpseImgLongName(taskEntity);//文件相对路径
+                File file = new File(FileUtils.getInpseRootPath() + picTempPath);
+                //文件拷贝
+                if (!com.cnksi.core.utils.FileUtils.copyFile(imagePath, FileUtils.getInpseRootPath() + picTempPath)) {
+                    showToast("获取图片失败!");
+                    if (file.exists()) {//清除产生文件
+                        file.delete();
+                    }
+                    return;
+                }
+
+                if (file.length() > 100 * 1024) {
+                    BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4); //压缩
+                }
+                startDrawCircle(picTempPath);//相对地址
+
             } else if (requestCode == InspeConfig.LOAD_DATA) {
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
             }
+        }
+    }
+
+    /**
+     * 启动图片水印
+     * @param path 相对地址
+     */
+    private void startDrawCircle(String path) {
+        //绘制文本
+        StringBuffer picTxt = new StringBuffer();
+        picTxt.append(deviceEntity.getName()).append("\n")
+                .append(dataBinding.issueEdit.getText().toString().trim()).append("\n")
+                .append(expertEntity.getUsername()).append("\n")
+                .append(DateFormat.dateToDbString(System.currentTimeMillis()));//.append("\n")
+
+        try {
+            drawCircle(FileUtils.getInpseRootPath() + path, picTxt.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            picList.add(picTempPath);
+            galleryAdapte.notifyDataSetChanged();
         }
     }
 
@@ -498,11 +548,26 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 return;
             }
             if (picList.size() < 3) {
-                String picName = FileUtils.createInpseImgLongName(taskEntity);//生成图片名称
-                picTempPath = FileUtils.getInpseImgPath(taskEntity);
-                FunctionUtils.takePicture(this, picName, FileUtils.getInpseRootPath() + picTempPath, TAKEPIC_REQUEST);
-                //文件相对地址
-                picTempPath = picTempPath + picName;
+                new PopMenu(context)
+                        .setListAdapter(Arrays.asList("相册", "拍照"))
+                        .setCancleListener("取消", null)
+                        .setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                if (position == 0) {//相册
+                                    FunctionUtils.takeAlbum(InspePlustekIssueActivity.this, TAKE_ALBUM_REQUEST);
+                                } else {//拍照
+                                    String picName = FileUtils.createInpseImgLongName(taskEntity);//生成图片名称
+                                    picTempPath = FileUtils.getInpseImgPath(taskEntity);
+                                    FunctionUtils.takePicture(InspePlustekIssueActivity.this, picName, FileUtils.getInpseRootPath() + picTempPath, TAKE_PIC_REQUEST);
+                                    //文件相对地址
+                                    picTempPath = picTempPath + picName;
+                                }
+                            }
+                        })
+                        .show(view);
+
+
             } else {
                 showToast("目前仅支持上传3张图片");
             }
@@ -553,7 +618,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 showToast("请先选择扣分原因");
                 return;
             }
-            new BreakWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName()).setOnCheckListener(new BreakWordDialog.OnCheckedListener() {
+            new KeyBoadWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName(), dataBinding.issueEdit.getText().toString()).setOnCheckListener(new KeyBoadWordDialog.OnCheckedListener() {
                 @Override
                 public void onChecked(String msg) {
                     dataBinding.issueEdit.setText(msg);
@@ -645,9 +710,9 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 //                    showToast("请输入处理措施");
 //                    dataBinding.suggestEdit.performClick();
 //                    return;
-            } else if (picList.size() == 0) {
-                showToast("请对问题拍照处理");
-                return;
+//            } else if (picList.size() == 0) {
+//                showToast("请对问题拍照处理");
+//                return;
             }
 
             createIssue();//满足输入，创建错误

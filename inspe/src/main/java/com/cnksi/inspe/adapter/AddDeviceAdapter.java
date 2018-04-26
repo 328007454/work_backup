@@ -1,19 +1,14 @@
 package com.cnksi.inspe.adapter;
 
-import android.bluetooth.BluetoothClass;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.db.entity.DeviceEntity;
 

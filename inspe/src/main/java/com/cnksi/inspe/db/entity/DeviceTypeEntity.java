@@ -5,7 +5,6 @@ import com.cnksi.inspe.base.BaseDBEntity;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
-import org.xutils.db.table.DbBase;
 
 /**
  * 设备打类
