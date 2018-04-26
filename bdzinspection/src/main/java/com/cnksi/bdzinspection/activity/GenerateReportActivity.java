@@ -116,6 +116,8 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
     private XsActivityGenerateReportBinding binding;
 
+    private boolean isFirstEnter = true;
+
     @Override
     protected int setLayout() {
         return R.layout.xs_activity_generate_report;
@@ -135,6 +137,16 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         return getString(R.string.xs_gp_generate_report);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isFirstEnter){
+            initData();
+        }else{
+            isFirstEnter = false;
+        }
+
+    }
 
     @Override
     protected void initData() {
