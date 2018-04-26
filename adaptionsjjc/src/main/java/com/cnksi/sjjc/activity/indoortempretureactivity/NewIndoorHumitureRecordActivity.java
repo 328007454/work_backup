@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -114,25 +115,19 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
 
     private void saveData() {
         if (TextUtils.isEmpty(binding.weatherView1.getSelectWeather())) {
-            ToastUtils.showMessage( "请选择天气");
+            ToastUtils.showMessage("请选择天气");
             return;
         }
         for (ReportSnwsd reportSnwsd : mReportList) {
             if (TextUtils.isEmpty(reportSnwsd.location) || TextUtils.isEmpty(reportSnwsd.wd) || TextUtils.isEmpty(reportSnwsd.sd)) {
-                ToastUtils.showMessage(  "请填写完相应的数据");
+                ToastUtils.showMessage("请填写完相应的数据");
                 return;
-            } else if (TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.wd))) {
-                ToastUtils.showMessage( "温度在-99.9℃到99.9℃");
-                return;
-            } else if ((-99.9f > new Float(reportSnwsd.wd) || new Float(reportSnwsd.wd) > 99.99)) {
-                ToastUtils.showMessage( "温度在-99.9℃到99.9℃");
+            } else if ((TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.wd))) || (-99.9f > Float.valueOf(reportSnwsd.wd) || Float.valueOf(reportSnwsd.wd) > 99.99)) {
+                ToastUtils.showMessage("温度在-99.9℃到99.9℃");
                 return;
             }
-            if (TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.sd))) {
-                ToastUtils.showMessage(  "湿度在0到100");
-                return;
-            } else if ((0 > new Float(reportSnwsd.sd) || new Float(reportSnwsd.sd) > 100)) {
-                ToastUtils.showMessage( "湿度在0到100");
+            if ((TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.sd))) || (0 > Float.valueOf(reportSnwsd.sd) || Float.valueOf(reportSnwsd.sd) > 100)) {
+                ToastUtils.showMessage("湿度在0到100");
                 return;
             }
             reportSnwsd.last_modify_time = DateUtils.getCurrentLongTime();
@@ -141,7 +136,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
         try {
             BaseService.getInstance(ReportSnwsd.class).saveOrUpdate(mReportList);
         } catch (DbException e) {
-            e.printStackTrace();
+            Log.d("Tag", e.getMessage());
         }
         mReport.tq = binding.weatherView1.getSelectWeather().isEmpty() ? "" : binding.weatherView1.getSelectWeather();
         mReport.temperature = mReportList.get(0).wd;
@@ -152,7 +147,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
             ReportService.getInstance().saveOrUpdate(mReport);
             TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
         } catch (DbException e) {
-            e.printStackTrace();
+            Log.d("Tag", e.getMessage());
         }
         Intent intent = new Intent(_this, IndoorHumitureReportActivity.class);
         startActivity(intent);

@@ -20,6 +20,7 @@ import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore.Images.Thumbnails;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.cnksi.core.utils.FileUtils;
@@ -528,11 +529,12 @@ public class BitmapUtil {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static String saveViewToBitmap(View view, String filePath) throws NullPointerException, FileNotFoundException, IOException {
+    public static String saveViewToBitmap(View view, String filePath) throws NullPointerException, FileNotFoundException {
         view.setDrawingCacheEnabled(true);
         String fileName = "";
         Bitmap bitmap = view.getDrawingCache();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        OutputStream outputStream = null;
         bitmap.compress(Bitmap.CompressFormat.JPEG, DEFAULT_QUALITY, bos);
         byte[] buffer = bos.toByteArray();
         if (buffer != null) {
@@ -541,9 +543,18 @@ public class BitmapUtil {
                 filePath += File.separator;
             }
             File file = new File(filePath + fileName);
-            OutputStream outputStream = new FileOutputStream(file);
-            outputStream.write(buffer);
-            outputStream.close();
+            outputStream = new FileOutputStream(file);
+            try {
+                outputStream.write(buffer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    Log.d("Tag", e.getMessage());
+                }
+            }
         }
         view.setDrawingCacheEnabled(false);
         return fileName;
@@ -825,21 +836,30 @@ public class BitmapUtil {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos);
         byte[] buffer = bos.toByteArray();
+        OutputStream outputStream = null;
         if (buffer != null) {
             try {
                 File file = new File(picturePath);
                 if (file.exists()) {
                     file.delete();
                 }
-                OutputStream outputStream = new FileOutputStream(file);
+                outputStream = new FileOutputStream(file);
                 outputStream.write(buffer);
-                outputStream.close();
-                bos.close();
+
+
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             } finally {
+                try {
+                    if (outputStream != null) {
+                        outputStream.close();
+                    }
+                    bos.close();
+                } catch (IOException e) {
+                    Log.d("Tag", e.getMessage());
+                }
                 view.setDrawingCacheEnabled(false);
             }
         }

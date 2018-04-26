@@ -14,6 +14,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.cnksi.core.utils.FileUtils;
 
@@ -34,8 +35,10 @@ public class AppUtils {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
+
     public static final String IS_SJJC_AREADY_UPDATE = "isSjjcAreadyUpdate";
     public static final String IS_XUNSHI_AREADY_UPDATE = "isXunshiAreadyUpdate";
+
     /**
      * 获取系统安装的所有程序
      *
@@ -519,12 +522,15 @@ public class AppUtils {
             Signature sign = signs[0];
             int hasCode = sign.hashCode();
             String md5 = getMD5String(sign.toByteArray());
-
+            if (TextUtils.isEmpty(md5)) {
+                return false;
+            }
             packageInfo = context.getPackageManager().getPackageArchiveInfo(filePath, PackageManager.GET_SIGNATURES);
             signs = packageInfo.signatures;
             sign = signs[0];
             int hasCodeApk = sign.hashCode();
             String md5Str = getMD5String(sign.toByteArray());
+
             isVer = md5.equalsIgnoreCase(md5Str) && (hasCode == hasCodeApk);
         } catch (Exception e) {
             e.printStackTrace();

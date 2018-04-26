@@ -334,9 +334,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             startActivityForResult(intent, LOAD_DATA);
         });
         binding.llNewDefectCount.setOnClickListener(view -> {
-            PlaySound.getIntance(currentActivity).play(R.raw.input);
-            Intent intent = new Intent(currentActivity, CopyAllValueActivity2.class);
-            startActivityForResult(intent, LOAD_DATA);
+           showDefectDialog(mNewDefectList,R.string.xs_new_defect_count_str);
         });
 
         initOnLongClick();

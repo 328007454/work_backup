@@ -60,7 +60,7 @@ public class AcceptReport {
     public String standerCardBaseInfo;
 
 
-    public class StanderBaseInfo implements Serializable {
+    public static  class StanderBaseInfo implements Serializable {
         /**
          * 基本内容key
          */

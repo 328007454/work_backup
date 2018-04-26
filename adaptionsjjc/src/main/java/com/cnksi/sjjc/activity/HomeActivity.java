@@ -217,6 +217,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         homePageBinding.serious.setOnClickListener(this);
         homePageBinding.crisis.setOnClickListener(this);
         homePageBinding.bdzAllName.setOnClickListener(this);
+        homePageBinding.homeInclude.txtTicketLauncher.setOnClickListener(this);
         bdzPopwindowBinding = BdzPopwindowBinding.inflate(getLayoutInflater(), null, false);
         mPop = new PopupWindow(bdzPopwindowBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         mPop.setBackgroundDrawable(new BitmapDrawable());
@@ -333,6 +334,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 homePageBinding.serious.setSelected(false);
                 homePageBinding.crisis.setSelected(true);
                 defectAdapter.setList(mCrisisMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCrisisMap.get(currentSelectBdzId));
+                break;
+            case R.id.txt_ticket_launcher:
+                ActivityUtil.startTicketDateModel(_this);
                 break;
             default:
                 break;

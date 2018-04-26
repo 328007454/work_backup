@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="StyleLineLinearLayout">
+        <attr name="left_line_color" format="color"/>
+        <attr name="right_line_color" format="color"/>
+        <attr name="top_line_color" format="color"/>
+        <attr name="bottom_line_color" format="color"/>
+
+
+        <attr name="margin_left_line_size" format="integer"/>
+        <attr name="margin_right_line_size" format="integer"/>
+        <attr name="margin_top_line_size" format="integer"/>
+        <attr name="margin_bottom_line_size" format="integer"/>
+
+        <attr name="line_size" format="integer"/>
+
+        <attr name="bottom_line_visible" format="boolean"/>
+        <attr name="top_line_visible" format="boolean"/>
+        <attr name="right_line_visible" format="boolean"/>
+        <attr name="left_line_visible" format="boolean"/>
+    </declare-styleable>
+
+</resources>

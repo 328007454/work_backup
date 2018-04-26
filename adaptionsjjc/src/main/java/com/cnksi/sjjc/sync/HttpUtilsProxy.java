@@ -137,7 +137,8 @@ public class HttpUtilsProxy extends KOkHttpUtil {
         if (knConfig.isHttps()) {
             X509TrustManager trustManager;
             SSLSocketFactory sslSocketFactory;
-            final InputStream caInputStream, bksInputStream;
+            InputStream caInputStream = null;
+            InputStream bksInputStream = null;
             try {
                 caInputStream = knConfig.getContext().getAssets().open(knConfig.getTrustCAName()); // 得到证书的输入流
                 bksInputStream = knConfig.getContext().getAssets().open(knConfig.getClientKeyStoreName()); //客户端证书
@@ -159,7 +160,16 @@ public class HttpUtilsProxy extends KOkHttpUtil {
                 clientProxy = builder.sslSocketFactory(sslSocketFactory, trustManager).build();
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException(e.getMessage());
+            } finally {
+                try {
+                    if (caInputStream != null)
+                        caInputStream.close();
+                    if (bksInputStream != null)
+                        bksInputStream.close();
+                } catch (IOException e) {
+                    Log.d("Tag", e.getMessage());
+                }
             }
         } else {
             clientProxy = builder.build();

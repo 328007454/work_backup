@@ -10,7 +10,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="482px"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -248,7 +248,19 @@
                     android:textColor="@color/color_626262"
                     android:textSize="34px" />
             </RelativeLayout>
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_ticket_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/core_padding_40px"
+            android:layout_marginLeft="55px"
+            android:drawablePadding="10px"
+            android:drawableTop="@mipmap/icon_ticket_launcher"
+            android:text="工作票预约"
+            android:textColor="@color/color_626262"
+            android:textSize="34px" />
     </LinearLayout>
 </layout>

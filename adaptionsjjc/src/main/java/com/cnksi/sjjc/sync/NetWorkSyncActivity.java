@@ -246,7 +246,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         } else {
             return new SyncInfo(s, KSync.SYNC_INFO);
         }
-        key.trim();
+        key = key.trim();
         if (TextUtils.isEmpty(key)) {
             return new SyncInfo(s, KSync.SYNC_INFO);
         } else {

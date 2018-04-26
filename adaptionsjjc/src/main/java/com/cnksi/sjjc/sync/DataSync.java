@@ -61,10 +61,8 @@ public class DataSync extends BaseActivity {
             // 清除所有的缓存文件
             FileUtils.deleteAllCache(getApplicationContext());
             // 删除一周之前的备份文件
-            long oneWeekAgoTime = Long.valueOf(((long) 2 * (long) 24 * 60 * 60 * 1000));
+            long oneWeekAgoTime = ((long) 2 * (long) 24 * 60 * 60 * 1000);
             FileUtil.deleteBakFiles(Config.BAK_FOLDER, oneWeekAgoTime);
-            // 拷贝备份文件
-            // FileUtils.copyDirectory(Config.UPLOAD_DATABASE_FOLDER, getApplicationBakFolder(), true);
         });
     }
 

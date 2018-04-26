@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
+
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -90,21 +92,14 @@ public class CopyBaseDataActivity extends BaseActivity {
             if (TextUtils.isEmpty(tempreture) || TextUtils.isEmpty(sd) || weather.isEmpty()) {
                 ToastUtils.showMessageLong("请输入完整信息");
                 return;
-            } else if (TextUtils.isEmpty(StringUtils.getTransformTep(tempreture))) {
-                ToastUtils.showMessage("温度在-99.9℃到99.9℃");
-                return;
-            } else if ((-99.9f > new Float(tempreture) || new Float(tempreture) > 99.99)) {
+            } else if ((TextUtils.isEmpty(StringUtils.getTransformTep(tempreture)))||(-99.9f > Float.valueOf(tempreture) || Float.valueOf(tempreture) > 99.99)) {
                 ToastUtils.showMessage("温度在-99.9℃到99.9℃");
                 return;
             }
-            if (TextUtils.isEmpty(StringUtils.getTransformTep(sd))) {
-                ToastUtils.showMessage("湿度在0到100");
-                return;
-            } else if (0 > new Float(sd) || new Float(sd) > 100) {
+            if ((TextUtils.isEmpty(StringUtils.getTransformTep(sd)))|| (0 > Float.valueOf(sd) || Float.valueOf(sd) > 100) ) {
                 ToastUtils.showMessage("湿度在0到100");
                 return;
             }
-
 
             mReport.tq = weather;
             mReport.temperature = com.cnksi.sjjc.util.StringUtils.getTransformTep(tempreture);
@@ -113,7 +108,7 @@ public class CopyBaseDataActivity extends BaseActivity {
             try {
                 ReportService.getInstance().saveOrUpdate(mReport);
             } catch (DbException e) {
-                e.printStackTrace();
+                Log.i("Tag",e.getMessage());
             }
             startActivity(new Intent(_this, CopyAllValueActivity3.class));
         });

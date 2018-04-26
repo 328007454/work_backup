@@ -7,6 +7,7 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.CopyType;
+import com.cnksi.bdzinspection.model.Report;
 import com.cnksi.bdzinspection.model.Spacing;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.SqlInfo;
@@ -54,18 +55,33 @@ public class CopyItemService {
         return null;
     }
 
-    public List<DbModel> getCopyDeviceList(String bdzId, String deviceType, String inspection,String deviceWay) {
-        String sort = "one".equals(deviceType) ? Spacing.SORT_ONE : "second".equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
+    public List<DbModel> getCopyDeviceList(String bdzId, String deviceType, String inspection, String deviceWay, String reportId) {
 
-        String sql = "select d.name_short name_short ,d.deviceid,d.is_important,d.name,d.latitude,d.spid,d.device_type,d.longitude,sp.name as sname from device d "
+        String devices = "";
+        String sql="";
+        String sort = "one".equals(deviceType) ? Spacing.SORT_ONE : "second".equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
+         sql = "select d.name_short name_short ,d.deviceid,d.is_important,d.name,d.latitude,d.spid,d.device_type,d.longitude,sp.name as sname from device d "
                 + "left join spacing sp on d.spid=sp.spid where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and " + "kind like '%" + inspection
                 + "%' and dlt = '0')  and d.device_type=?";
 
-        if (!TextUtils.isEmpty(deviceWay)&&deviceWay.contains("bigtype_device")){
-            sql =sql+" and d.bigid in ( select bigid from standard_special where kind = '"+inspection+"' and dlt = 0 )";
+        if (!TextUtils.isEmpty(deviceWay) && deviceWay.equalsIgnoreCase("bigtype_device")) {
+            sql = sql + " and d.bigid in ( select bigid from standard_special where kind = '" + inspection + "' and dlt = 0 )";
+        }
+        if (!TextUtils.isEmpty(deviceWay)&&deviceWay.equalsIgnoreCase("select_device")) {
+            Report currentReport = null;
+            try {
+                currentReport = XunshiApplication.getDbUtils().findById(Report.class, reportId);
+            } catch (DbException e) {
+                e.getMessage();
+            }
+            devices = "'" + (currentReport == null ? "" : currentReport.selected_deviceid) + "'";
+            devices = devices.replace(",", "','");
+            sql = "select d.name_short name_short ,d.deviceid,d.is_important,d.name,d.latitude,d.spid,d.device_type,d.longitude,sp.name as sname from device d "
+                    + "left join spacing sp on d.spid=sp.spid where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and " + "kind like '%" + inspection
+                    + "%' and dlt = '0' and deviceid in ("+devices+"))  and d.device_type=?";
         }
 
-        sql = sql + " order by sp."+sort;
+        sql = sql + " order by sp." + sort;
         SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceType);
         try {
             return getDbUtils().findDbModelAll(sqlInfo);

@@ -18,6 +18,7 @@ import com.cnksi.sjjc.activity.NewLauncherActivity;
 import com.cnksi.sjjc.activity.TypeListActivity;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.sync.KSyncConfig;
+import com.cnksi.workticket.activity.TicketDateWorkActivity;
 
 /**
  * Created by lyndon on 2016/9/12.
@@ -99,6 +100,11 @@ public class ActivityUtil {
 
     public static void startDefectControlActivity(BaseActivity activity) {
         Intent intent = new Intent(activity, DefectControlActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void startTicketDateModel(Activity activity) {
+        Intent intent = new Intent(activity, TicketDateWorkActivity.class);
         activity.startActivity(intent);
     }
 }

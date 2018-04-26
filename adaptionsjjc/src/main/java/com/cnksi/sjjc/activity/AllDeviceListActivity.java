@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,15 +40,14 @@ import java.util.Locale;
  */
 public class AllDeviceListActivity extends BaseActivity implements DeviceExpandabelListAdapter.OnAdapterViewClickListener {
 
-    public final static String FUNCTION_MODEL = "fuction";
-    public final static String BDZID = "bdzid";
-    public final static String BIGID = "bigid";
-    public final static String SPCAEID = "spcaeid";
-    private LinkedList<Spacing> groupList = new LinkedList<Spacing>();
-    private HashMap<Spacing, ArrayList<DbModel>> groupHashMap = new HashMap<Spacing, ArrayList<DbModel>>();
+    public static final String FUNCTION_MODEL = "fuction";
+    public static final String BDZID = "bdzid";
+    public static final String BIGID = "bigid";
+    public static final String SPCAEID = "spcaeid";
+    private LinkedList<Spacing> groupList = new LinkedList<>();
+    private HashMap<Spacing, ArrayList<DbModel>> groupHashMap = new HashMap<>();
     private DeviceExpandabelListAdapter mDeviceExpandableAdapater = null;
     private PMSDeviceType currentFunctionModel;
-    private String currentBdzId = "";
     private int currentClickGroupPosition = 0;
 
     private boolean isFinishAnimation = true;
@@ -60,9 +60,9 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         isDefaultTitle = false;
         super.onCreate(savedInstanceState);
         mExpadableListBinding = DataBindingUtil.setContentView(_this, R.layout.activity_devices_expadable_list);
-        setSupportActionBar(mExpadableListBinding.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        setSupportActionBar(mExpadableListBinding.toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
         mExpadableListBinding.toolbar.setTitle(StringUtils.BlankToDefault(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
         initView();
         loadData();
@@ -103,7 +103,6 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         }
         String spid = getIntent().getStringExtra(SPCAEID);
         String bigId = getIntent().getStringExtra(BIGID);
-        boolean secondSpaceAndOneDevice = getIntent().getBooleanExtra(Config.SECOND_SPACE_AND_ONE_DEVICE, false);
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 mSpacingList = SpacingService.getInstance().findSpacingByModel(currentBdzId, currentFunctionModel.name());
@@ -125,22 +124,19 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
                     for (Spacing mSpacing : mSpacingList) {
                         ArrayList<DbModel> dbModels = new ArrayList<>();
                         for (DbModel dbModel : mDeviceList) {
-                            if (secondSpaceAndOneDevice && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid) && mSpacing.deviceType.contains("one")) {
-                                dbModel.add("spaceName", mSpacing.name);
-                                dbModels.add(dbModel);
-                            } else if (!secondSpaceAndOneDevice && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                            if (dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
                                 dbModel.add("spaceName", mSpacing.name);
                                 dbModels.add(dbModel);
                             }
                         }
-                        if (dbModels.size() > 0) {
+                        if (!dbModels.isEmpty()) {
                             groupList.add(mSpacing);
                             groupHashMap.put(mSpacing, dbModels);
                         }
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.d("Tag", e.getMessage());
             }
             mHandler.sendEmptyMessage(LOAD_DATA);
         });
@@ -166,15 +162,9 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         }
     }
 
-//    private void initOnClick() {
-//       mTitleBinding.btnBack.setOnClickListener(view -> {
-//            this.finish();
-//        });
-//    }
 
     @Override
     public void OnAdapterViewClick(View view, DbModel mDevice) {
-        // TODO Auto-generated method stub
         dataMap.put(Config.DEVICE_DATA, mDevice);
         setResult(RESULT_OK);
         _this.finish();
@@ -182,19 +172,16 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
 
     @Override
     public void OnItemViewClick(AdapterView<?> parent, View view, DbModel mDevice, Spacing mCurrentSpacing) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, DbModel mDevice, Spacing mCurrentSpacing) {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean OnGroupItemLongClick(Spacing mSpacing) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -230,7 +217,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
             isSearch = false;
             return false;
         });
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     private void packagingData(String text) {
@@ -239,12 +226,13 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         for (Spacing mSpacing : mSpacingList) {
             ArrayList<DbModel> dbModels = new ArrayList<DbModel>();
             for (DbModel dbModel : mDeviceList) {
-                if (isSearch && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid) && (dbModel.getString("name").contains(text) || dbModel.getString(Device.NAME_PINYIN).contains(text.toUpperCase(Locale.ENGLISH)))) {
-                    dbModel.add("spaceName", mSpacing.name);
-                    dbModels.add(dbModel);
-                } else if (isSearch && (!TextUtils.isEmpty(mSpacing.name) && mSpacing.name.contains(text) || !TextUtils.isEmpty(mSpacing.pinyin) && mSpacing.pinyin.contains(text.toUpperCase(Locale.ENGLISH))) && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
-                    dbModel.add("spaceName", mSpacing.name);
-                    dbModels.add(dbModel);
+                if (isSearch && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
+                    if ((dbModel.getString("name").contains(text) || dbModel.getString(Device.NAME_PINYIN).contains(text.toUpperCase(Locale.ENGLISH)))
+                            || (!TextUtils.isEmpty(mSpacing.name) && mSpacing.name.contains(text)) || (!TextUtils.isEmpty(mSpacing.pinyin) && mSpacing.pinyin.contains(text.toUpperCase(Locale.ENGLISH)))
+                            ) {
+                        dbModel.add("spaceName", mSpacing.name);
+                        dbModels.add(dbModel);
+                    }
                 }
             }
             if (!dbModels.isEmpty()) {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -135,9 +136,8 @@ public class NewLauncherActivity extends BaseActivity {
             @Override
             public void locationSuccess(BDLocation location) {
                 LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                if (currentLocation == null) return;
                 List<DbModel> spacingModels = SpacingService.getInstance().findBdzBySpacing();
-                if (spacingModels != null && spacingModels.size() != 0) {
+                if (spacingModels != null && !spacingModels.isEmpty()) {
                     for (DbModel dbModel : spacingModels) {
 
                         LatLng bdzLocation = LatLng.valueOf(dbModel.getString(Spacing.LATITUDE), dbModel.getString(Spacing.LONGITUDE));
@@ -154,7 +154,7 @@ public class NewLauncherActivity extends BaseActivity {
                                     break;
                                 }
                             } catch (DbException e) {
-                                e.printStackTrace();
+                                Log.d("Tag",e.getMessage());
                             }
                         }
                     }

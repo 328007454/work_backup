@@ -1,7 +1,9 @@
 package com.cnksi.sjjc.util;
 
 
+import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import java.math.BigInteger;
 
@@ -33,6 +35,9 @@ public class AESUtil {
      */
     public static boolean decryptAndValidate(String data, String split) {
         try {
+            if (TextUtils.isEmpty(data) || TextUtils.isEmpty(split)) {
+                return false;
+            }
             String decrypt = aesDecrypt(data); // AES 解密
             String clientMD5Value = decrypt.split(split)[0];
             String originValue = decrypt.split(split)[1]; // 原始密码
@@ -41,7 +46,7 @@ public class AESUtil {
 
             return clientMD5Value.equals(serverMD5Value); // 加密后的数据对比
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("Tag", e.getMessage());
             return false;
         }
     }
@@ -54,6 +59,9 @@ public class AESUtil {
      * @throws Exception
      */
     public static String decode(String data) throws Exception {
+        if (TextUtils.isEmpty(data)) {
+            return "";
+        }
         String regex = "-";
         try {
             String decrypt = aesDecrypt(data); // AES 解密

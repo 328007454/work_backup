@@ -22,6 +22,7 @@ import com.cnksi.sjjc.databinding.ActivityDrawCircleBinding;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -143,8 +144,8 @@ public class DrawCircleImageActivity extends BaseActivity {
         isSavePicture = true;
         CustomerDialog.showProgress(_this, "正在保存图片...");
         ExecutorManager.executeTaskSerially(() -> {
-            mPicturePaintView.saveMark();
-            if (saveEditPicture(binding.rlCirclePicture, currentImagePath, 80)) {
+            PicturePaintView.saveMark();
+            if (saveEditPicture(binding.rlCirclePicture, currentImagePath)) {
                 mPicturePaintView.setBitmapNull();
                 mHandler.sendEmptyMessage(LOAD_DATA);
             }
@@ -167,7 +168,9 @@ public class DrawCircleImageActivity extends BaseActivity {
      *
      * @return
      */
-    public  boolean saveEditPicture(View view, String picturePath, int quality) {
+    int quality = 80;
+
+    public boolean saveEditPicture(View view, String picturePath) {
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
         Bitmap bitmap = view.getDrawingCache();
@@ -175,20 +178,31 @@ public class DrawCircleImageActivity extends BaseActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos);
         byte[] buffer = bos.toByteArray();
         if (buffer != null) {
+            FileOutputStream outputStream = null;
             try {
                 File file = new File(picturePath);
                 if (file.exists()) {
                     file.delete();
                 }
-                OutputStream outputStream = new FileOutputStream(file);
+                outputStream = new FileOutputStream(file);
                 outputStream.write(buffer);
                 outputStream.close();
-                bos.close();
                 return true;
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.d("Tag", e.getMessage());
                 return false;
             } finally {
+                try {
+                    if (outputStream != null)
+                        outputStream.close();
+                } catch (IOException e) {
+                    Log.d("Tag", e.getMessage());
+                }
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    Log.d("Tag", e.getMessage());
+                }
                 view.setDrawingCacheEnabled(false);
             }
         }

@@ -110,7 +110,7 @@ public class CopyValueFragment2 extends BaseFragment {
             public void run() {
                 searchCurrentDeviceType();
                 List<DbModel> deviceList = CopyItemService.getInstance().getCopyDeviceList(currentBdzId,
-                        currentFunctionModel, currentInspectionType,specialMenu.deviceWay);
+                        currentFunctionModel, currentInspectionType,specialMenu.deviceWay,currentReportId);
                 if (null != deviceList && !deviceList.isEmpty()) {
                     data.addAll(deviceList);
                     originModel.addAll(deviceList);

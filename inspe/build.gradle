@@ -62,7 +62,6 @@ dependencies {
     //android引用资源
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile "com.android.support:appcompat-v7:$appcompat_v7_version"
     compile "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     compile "com.android.support:design:$design_version"

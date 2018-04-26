@@ -2,6 +2,7 @@ package com.cnksi.sjjc.sync;
 
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.cnksi.core.utils.CLog;
 import com.cnksi.sjjc.Config;
@@ -11,6 +12,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
@@ -205,6 +207,7 @@ public class SynchronizeThread implements Runnable {
      * @param out
      */
     public void writeFileToOutputStream2(File file, BufferedOutputStream out) {
+        FileInputStream instream = null;
         try {
             int len = 0;
             if (file.exists()) {
@@ -214,7 +217,7 @@ public class SynchronizeThread implements Runnable {
             if (file.exists()) {
                 out.write(("" + len).getBytes());
                 out.write("-".getBytes());
-                FileInputStream instream = new FileInputStream(file);
+                instream = new FileInputStream(file);
                 while (instream.read(tempbuffer) != -1) {
                     out.write(tempbuffer);
                     out.flush();
@@ -222,7 +225,15 @@ public class SynchronizeThread implements Runnable {
                 instream.close();
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Log.d("Tag", ex.getMessage());
+        } finally {
+            if (instream != null) {
+                try {
+                    instream.close();
+                } catch (IOException e) {
+                    Log.d("Tag", e.getMessage());
+                }
+            }
         }
     }
 
@@ -233,6 +244,7 @@ public class SynchronizeThread implements Runnable {
      * @param out
      */
     private void writeFileToOutputStream(File file, BufferedOutputStream out) {
+        FileInputStream instream =null;
         try {
             int len = 0;
             if (file.exists()) {
@@ -241,7 +253,7 @@ public class SynchronizeThread implements Runnable {
 
             byte[] tempbuffer = new byte[len];
             if (file.exists()) {
-                FileInputStream instream = new FileInputStream(file);
+                 instream = new FileInputStream(file);
                 // while(instream.read(tempbuffer)!=-1){
                 // out.write(tempbuffer);
                 // out.flush();
@@ -251,20 +263,27 @@ public class SynchronizeThread implements Runnable {
                 while ((rcvLen = instream.read(tempbuffer, pos, len - pos)) > 0) {
                     pos += rcvLen;
                 }
-                instream.close();
             }
             out.write(("" + len).getBytes());
             out.write("-".getBytes());
             out.write(tempbuffer);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Log.d("Tag",ex.getMessage());
+        }finally {
+            if (instream!=null){
+                try {
+                    instream.close();
+                } catch (IOException e) {
+                    Log.d("Tag",e.getMessage());
+                }
+            }
         }
     }
 
     public String getUploadPath() {
 
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         //上传数据库
         sb.append(Config.UPLOAD_DATABASE_FOLDER.replace(Config.BDZ_INSPECTION_FOLDER, "")).append(",");
         //音频

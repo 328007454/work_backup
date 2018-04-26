@@ -88,7 +88,10 @@ public class UpdateUtils {
     public static File hasUpdateApk(Context context, File file, String appFloder) {
         if (file == null) {
             PackageInfo localPackageInfo = AppUtils.getLocalPackageInfo(context);
-            file = getTheNewApkFile(context, appFloder, localPackageInfo == null ? "" : localPackageInfo.packageName, localPackageInfo.versionCode);
+            if (localPackageInfo==null){
+                return null;
+            }
+            file = getTheNewApkFile(context, appFloder,localPackageInfo.packageName, localPackageInfo.versionCode);
         }
         if (file != null && file.exists()) {
             PackageInfo remotePackageInfo = AppUtils.getAPKPackageInfo(context, file);
@@ -120,6 +123,9 @@ public class UpdateUtils {
         if (file == null) {
 
             PackageInfo localPackageInfo = AppUtils.getLocalPackageInfo(context);
+            if (localPackageInfo==null){
+                return  null;
+            }
             if (isPms) {
                 PackageManager manager = context.getPackageManager();
                 try {

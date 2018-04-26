@@ -3,6 +3,7 @@ package com.cnksi.sjjc.sync;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import com.cnksi.core.utils.CLog;
@@ -106,12 +107,13 @@ public class SyncUtil {
 	public static boolean saveFile(InputStream in, String path, String fileName, int length) {
 
 		String filePath = path.endsWith("/") ? path + fileName : path + "/" + fileName;
+		DataOutputStream fileOut =null;
 		try {
 			File padfile = new File(filePath);
 			int bufferSize = 8192;
 			byte[] buf = new byte[bufferSize];
 			int passedlen = 0;
-			DataOutputStream fileOut = new DataOutputStream(new FileOutputStream(padfile));
+			 fileOut = new DataOutputStream(new FileOutputStream(padfile));
 			while (true) {
 				int read = 0;
 				int diff = length - passedlen;
@@ -130,15 +132,19 @@ public class SyncUtil {
 				}
 			}
 			CLog.d("接收完成，文件存为" + filePath + "\n");
-			fileOut.flush();
-			fileOut.close();
-
-			System.gc();
-
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 
+		}finally {
+			if (null!=fileOut)
+				try {
+					fileOut.flush();
+					fileOut.close();
+					System.gc();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		}
 		return false;
 	}

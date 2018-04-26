@@ -137,6 +137,8 @@
 -libraryjars ../bdzinspection/libs/M100_RFID_API.jar
 -libraryjars ../bdzinspection/libs/httpmime-4.1.3.jar
 
+-keep class android.support.v7.widget.SearchView { *; }
+
 
 
 

@@ -145,6 +145,7 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
             this.mDeviceList = mDeviceList;
             this.mCurrentSpacing = mCurrentSpacing;
         }
+
         private FollowListView mFollowListView;
     }
 
@@ -176,26 +177,20 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
                 mOnAdapterViewClickListener.OnGroupItemClick(group, view, groupPosition);
             }
         });
-//		if (getChildrenCountByGroup(groupPosition) > 1) {
-        if (true && group != null) {
-            holder.mTvDeviceInterval
-                    .setText(TextUtils.isEmpty(group.name) ? "" : group.name + "(" + String.valueOf(getChildrenCountByGroup(groupPosition)) + ")");
-            if (isExpanded) {
-                holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_shrink, 0);
-            } else {
-                holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_open, 0);
-            }
-        } else if (group != null) {
-            holder.mTvDeviceInterval.setText(group.name);
-            holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }
 
+        holder.mTvDeviceInterval
+                .setText(TextUtils.isEmpty(group.name) ? "" : group.name + "(" + String.valueOf(getChildrenCountByGroup(groupPosition)) + ")");
+        if (isExpanded) {
+            holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_shrink, 0);
+        } else {
+            holder.mTvDeviceInterval.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_open, 0);
+        }
         return convertView;
     }
 
     class ViewGroupHolder {
-        public Spacing mSpacing;
-        public int groupPosition;
+        private Spacing mSpacing;
+        private int groupPosition;
         TextView mTvDeviceInterval;
 
     }

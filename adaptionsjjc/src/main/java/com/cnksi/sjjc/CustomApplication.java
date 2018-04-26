@@ -70,7 +70,7 @@ public class CustomApplication extends CoreApplication {
             Config.WWWROOT_FOLDER};
     private HashMap<String, String> copyedMap = new HashMap<>();
     XunshiApplication xunshiApplication;
-    private String innerDateBaseFolder ;
+    private String innerDateBaseFolder;
 
     public static DbManager getPJDbManager() {
         if (PJDbManager == null) {
@@ -145,10 +145,10 @@ public class CustomApplication extends CoreApplication {
     DbManager.DaoConfig config;
 
     public DbManager.DaoConfig getDaoConfig() {
-        int dbVersion = getDbVersion();
+
         innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
         if (config == null) {
-            config = new DbManager.DaoConfig().setDbDir(new File(innerDateBaseFolder)).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(dbVersion)
+            config = new DbManager.DaoConfig().setDbDir(new File(innerDateBaseFolder)).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(100)
                     .setDbOpenListener(db -> {
                         // 开启WAL, 对写入加速提升巨大
                         //db.getDatabase().enableWriteAheadLogging();
@@ -161,7 +161,8 @@ public class CustomApplication extends CoreApplication {
                     })
                     .setUseEncrypt(true)
                     .setKey("com.cnksi")
-                    .setDbUpgradeListener((db, oldVersion, newVersion) -> {}).setAllowTransaction(true);
+                    .setDbUpgradeListener((db, oldVersion, newVersion) -> {
+                    }).setAllowTransaction(true);
             return config;
         } else
             return config;
@@ -214,6 +215,8 @@ public class CustomApplication extends CoreApplication {
     public static boolean copyAssetsToSDCard(Context context, String assetDir, String dir) {
         boolean isSuccess = false;
         String[] files = null;
+        InputStream in = null;
+        OutputStream out = null;
         try {
             files = context.getResources().getAssets().list(assetDir);
         } catch (IOException e1) {
@@ -241,20 +244,19 @@ public class CustomApplication extends CoreApplication {
                     if (outFile.exists()) {
                         outFile.delete();
                     }
-                    InputStream in = null;
+
                     if (0 != assetDir.length()) {
                         in = context.getAssets().open(assetDir + "/" + fileName);
                     } else {
                         in = context.getAssets().open(fileName);
                     }
-                    OutputStream out = new FileOutputStream(outFile);
+                    out = new FileOutputStream(outFile);
                     byte[] buf = new byte[2048];
                     int len;
                     while ((len = in.read(buf)) > 0) {
                         out.write(buf, 0, len);
                     }
-                    in.close();
-                    out.close();
+
                     isSuccess = true;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -262,27 +264,20 @@ public class CustomApplication extends CoreApplication {
                 } catch (IOException e) {
                     e.printStackTrace();
                     isSuccess = false;
+                } finally {
+                    try {
+                        in.close();
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         }
         return isSuccess;
     }
 
-    /**
-     * 从SDcard的配置文件中载入DbVersion  为了避免每次都要同步表结构的问题。
-     *
-     * @return
-     */
-    private static int getDbVersion() {
-        Properties properties = new Properties();
-        try {
-            properties.load(new FileInputStream(Config.DATABASE_FOLDER + "dbVersion.prop"));
-            return Integer.parseInt(properties.getProperty("dbVersion", "1"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return 1;
-        }
-    }
 
     /**
      * 将数据库版本保存到SDCARD上
