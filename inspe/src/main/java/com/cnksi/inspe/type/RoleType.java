@@ -57,7 +57,7 @@ public enum RoleType {
      */
     int level;
 
-    private RoleType(String desc, int level) {
+    RoleType(String desc, int level) {
         this.desc = desc;
         this.level = level;
     }

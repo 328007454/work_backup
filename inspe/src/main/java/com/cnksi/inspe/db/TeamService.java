@@ -430,7 +430,7 @@ public class TeamService extends BaseDbService {
             e.printStackTrace();
         }
 
-        return entity == null ? false : true;
+        return entity != null;
     }
 
     /**

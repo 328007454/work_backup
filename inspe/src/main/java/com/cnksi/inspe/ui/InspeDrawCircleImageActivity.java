@@ -88,7 +88,7 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
             saveMarkAndExit();
         });
         binding.btnAddMark.setOnClickListener(view -> {
-            mPicturePaintView.saveMark();
+            PicturePaintView.saveMark();
         });
         binding.btnClearMark.setOnClickListener(view -> {
             CustomerDialog.showSelectDialog(this, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {
@@ -113,7 +113,7 @@ public class InspeDrawCircleImageActivity extends AppBaseActivity {
         isSavePicture = true;
         CustomerDialog.showProgress(this, "正在保存图片...");
         ExecutorManager.executeTaskSerially(() -> {
-            mPicturePaintView.saveMark();
+            PicturePaintView.saveMark();
             if (saveEditPicture(binding.rlCirclePicture, currentImagePath, 80)) {
                 mPicturePaintView.setBitmapNull();
                 handler.sendEmptyMessage(InspeConfig.LOAD_DATA);

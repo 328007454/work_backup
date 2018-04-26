@@ -22,7 +22,7 @@ public enum TaskType {
 
     String desc;
 
-    private TaskType(String desc) {
+    TaskType(String desc) {
         this.desc = desc;
     }
 

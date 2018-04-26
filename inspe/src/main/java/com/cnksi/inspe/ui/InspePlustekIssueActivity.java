@@ -549,7 +549,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             }
             if (picList.size() < 3) {
                 new PopMenu(context)
-                        .setListAdapter(Arrays.asList(new String[]{"相册", "拍照"}))
+                        .setListAdapter(Arrays.asList("相册", "拍照"))
                         .setCancleListener("取消", null)
                         .setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override

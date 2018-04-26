@@ -274,10 +274,7 @@ public final class UserService extends BaseDbService {
         if (userEntity1 != null && userEntity1.getId().equals(userId)) {
             return true;
         }
-        if (userEntity2 != null && userEntity2.getId().equals(userId)) {
-            return true;
-        }
-        return false;
+        return userEntity2 != null && userEntity2.getId().equals(userId);
     }
 
 
