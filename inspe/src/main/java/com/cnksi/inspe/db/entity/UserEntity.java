@@ -213,7 +213,7 @@ public class UserEntity extends BaseEntity {
 
     public List<RoleType> roleTypes;
 
-·    public List<RoleType> getRoleTypes() {
+    public List<RoleType> getRoleTypes() {
         return roleTypes;
     }
 
