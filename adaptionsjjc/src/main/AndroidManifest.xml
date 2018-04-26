@@ -42,7 +42,7 @@
             android:name=".activity.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/LoginActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +53,6 @@
         <activity
             android:name=".activity.NewLauncherActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -61,11 +60,7 @@
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-
-            android:exported="true"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.TaskRemindActivity"
@@ -82,8 +77,6 @@
         <activity
             android:name=".activity.CopyValueReportActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:exported="true"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
@@ -104,7 +97,6 @@
         <activity
             android:name=".activity.CopyBaseDataActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
@@ -116,13 +108,12 @@
             android:name=".activity.AllDeviceListActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/BatteryDefect"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
             android:name=".activity.CopyAllValueActivity3"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
@@ -245,7 +236,6 @@
         <activity
             android:name=".activity.PreventAnimalActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
@@ -277,7 +267,6 @@
         <activity
             android:name=".activity.batteryactivity.BatteryTestActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
@@ -351,7 +340,6 @@
         <activity
             android:name=".activity.batteryactivity.BatteryTestReportActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 

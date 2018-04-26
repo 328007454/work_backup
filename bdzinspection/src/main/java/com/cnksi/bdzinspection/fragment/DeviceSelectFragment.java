@@ -94,6 +94,7 @@ public class DeviceSelectFragment extends BaseFragment implements QWERKeyBoardUt
         adapter.setDeviceClickListener((v, dbModel, position) -> deviceClickListener.onDeviceClick(v, dbModel, position));
         adapter.setGroupItemClickListenner((v, spaceItem, position) -> mSpaceClickListener.onSpaceClick(v, spaceItem, position));
         adapter.setSelectSpacingDeviceMap(selectSpacingDeviceMap);
+        adapter.setCurrentInspectionType(currentInspectionType);
         recyclerView = rootHolder.getView(R.id.elv_container);
         final GridLayoutManager manager = new GridLayoutManager(currentActivity, "second".equals(currentFunctionModel) ? 2 : 3);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

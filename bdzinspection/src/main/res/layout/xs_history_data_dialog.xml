@@ -35,7 +35,7 @@
                     android:layout_margin="@dimen/xs_global_padding_left_right"
                     android:background="@android:color/transparent"
                     android:contentDescription="@null"
-                    android:src="@drawable/xs_test_historydata" />
+                    />
             </LinearLayout>
         </HorizontalScrollView>
 

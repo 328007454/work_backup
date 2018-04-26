@@ -148,6 +148,10 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
                 groupItemClickListenner.onClick(view, spaceItem, getParentPosition(spaceItem));
             }
         });
+        if (!TextUtils.isEmpty(inspectionType)&&inspectionType.contains("maintenance")){
+            helper.getView(R.id.tv_group_item_select).setVisibility(View.GONE);
+        }
+
     }
 
 
@@ -237,4 +241,9 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
     }
 
 
+    private String inspectionType;
+    public void setCurrentInspectionType(String inspectionType) {
+        this.inspectionType = inspectionType;
+
+    }
 }

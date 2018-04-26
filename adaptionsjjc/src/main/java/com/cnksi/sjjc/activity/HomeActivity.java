@@ -256,7 +256,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         for (TaskType tab : tabs) {
             tab.init();
         }
-
         checkUpdate();
     }
 

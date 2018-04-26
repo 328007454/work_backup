@@ -37,7 +37,7 @@
     </style>
 
 
-    <style name="App.Theme.Launch" parent="AppBaseTheme">
+    <style name="App.Theme.Launch" parent="">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>

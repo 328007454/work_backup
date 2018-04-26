@@ -63,10 +63,11 @@ public class NewLauncherActivity extends BaseActivity {
         public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
             switch (id) {
                 case R.id.menu_record:
-                    Intent homeIntent = new Intent();
-                    homeIntent.setClass(getApplicationContext(), HomeActivity.class);
-                    startActivity(homeIntent);
-                    NewLauncherActivity.this.finish();
+//                    Intent homeIntent = new Intent();
+//                    homeIntent.setClass(getApplicationContext(), HomeActivity.class);
+//                    startActivity(homeIntent);
+//                    NewLauncherActivity.this.finish();
+                    onBackPressed();
                     break;
                 case R.id.menu_tour:
                     launcherBinding.fragmenPager.setCurrentItem(0);

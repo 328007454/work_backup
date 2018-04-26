@@ -229,10 +229,13 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
 
     private void initClick() {
         binding.ibtnCancel.setOnClickListener(v -> {
-            Fragment fragment = mFragmentList.get(mFragmentList.size() - 1);
-            if (fragment instanceof MultipleBackFragment) {
-                ((MultipleBackFragment) fragment).saveData();
-            }
+            mFixedThreadPoolExecutor.execute(() -> {
+                Fragment fragment = mFragmentList.get(mFragmentList.size() - 1);
+                if (fragment instanceof MultipleBackFragment) {
+                    ((MultipleBackFragment) fragment).saveData();
+                }
+
+            });
             onBackPressed();
         });
         if (SystemConfig.isMustVerifyInspectionReady()) {
@@ -359,17 +362,23 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);
                 mReport.pmsJhid = task.pmsJhid;
             }
-            saveReportSign();
             mReport.reportSource = Config.REPORT;
             mReport.inspectionValue = currentInspectionTypeName;
             mReport.departmentId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
-            XunshiApplication.getDbUtils().saveOrUpdate(mReport);
+            mFixedThreadPoolExecutor.execute(() -> {
+                try {
+                    saveReportSign();
+                    XunshiApplication.getDbUtils().saveOrUpdate(mReport);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            });
             PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, mReport.reportid);
             if (mToolsFragment != null) {
                 mToolsFragment.save(mReport.reportid);
             }
             return true;
-        } catch (DbException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

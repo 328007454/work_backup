@@ -14,7 +14,7 @@
             android:adjustViewBounds="true"
             android:background="@android:color/white"
             android:scaleType="fitXY"
-            android:src="@drawable/xs_test_line" />
+            />
 
         <ListView
             android:id="@+id/ltv_spaces"

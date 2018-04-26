@@ -225,7 +225,8 @@ public class InspectionReportActivity extends BaseActivity {
                             : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
                     currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
                     Selector selector = Selector.from(Spacing.class).where(Spacing.BDZID, "=", currentBdzId)
-                            .expr("and  device_type like '%one%' and bdzid = '" + currentBdzId + "')")
+                            .expr("and spid in (select distinct(spid) spid from device where device_type = '" + fucntionModel
+                                    + "' and bdzid = '" + currentBdzId + "' and dlt<>1)")
                             .orderBy(sort, false);
                     try {
                         spacingList = XunshiApplication.getDbUtils().findAll(selector);
@@ -425,7 +426,6 @@ public class InspectionReportActivity extends BaseActivity {
         }
         dataDialogBinding.tvDialogTitle.setText(R.string.xs_playback_str);
         dataDialogBinding.btnCancel.setText(R.string.xs_back_str);
-        dataDialogBinding.ivImage.setImageResource(R.drawable.xs_test_play_back);
         mPlayBackDialog.show();
         dataDialogBinding.btnCancel.setOnClickListener(view -> mPlayBackDialog.dismiss());
     }

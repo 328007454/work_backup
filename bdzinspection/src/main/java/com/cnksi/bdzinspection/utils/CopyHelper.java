@@ -393,13 +393,10 @@ public class CopyHelper {
                     requestEdtits.add(copyValue);
                     copyItems.add(childItem);
                     copyValue.addTextChangedListener(new CopyTextWatcher(childItem));
-                    copyValue.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            CopyResult copyResult = copyResultMap.get(childItem.id);
-                            keyBordListener.onViewFocus((EditText) v, childItem, copyResult, requestEdtits, copyItems);
-                            return false;
-                        }
+                    copyValue.setOnTouchListener((v, event) -> {
+                        CopyResult copyResult = copyResultMap.get(childItem.id);
+                        keyBordListener.onViewFocus((EditText) v, childItem, copyResult, requestEdtits, copyItems);
+                        return false;
                     });
                     copyValue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override

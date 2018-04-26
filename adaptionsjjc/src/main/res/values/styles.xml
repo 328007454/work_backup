@@ -51,6 +51,13 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="LoginActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 
     <style name="BatteryDefect" parent="@android:style/Theme.Light">
         <item name="windowNoTitle">true</item>

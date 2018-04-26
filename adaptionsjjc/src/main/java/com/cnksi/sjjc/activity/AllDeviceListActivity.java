@@ -60,9 +60,9 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         isDefaultTitle = false;
         super.onCreate(savedInstanceState);
         mExpadableListBinding = DataBindingUtil.setContentView(_this, R.layout.activity_devices_expadable_list);
-//        setSupportActionBar(mExpadableListBinding.toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
+        setSupportActionBar(mExpadableListBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         mExpadableListBinding.toolbar.setTitle(StringUtils.BlankToDefault(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
         initView();
         loadData();
