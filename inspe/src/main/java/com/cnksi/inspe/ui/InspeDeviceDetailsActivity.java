@@ -1,5 +1,7 @@
 package com.cnksi.inspe.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -269,5 +271,21 @@ public class InspeDeviceDetailsActivity extends AppBaseActivity implements Devic
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(0xFFFD5F54);
         builder.setSpan(colorSpan, 6, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         detailsBinding.tvAddNewDefect.setText(builder);
+
+        //如果未新增设备会执行删除
+        if (deviceIssueTotal == 0 && taskId.equals(deviceDbModel.type)) {
+            deviceDbModel.setType(null);
+            service.update(deviceDbModel);
+            new AlertDialog.Builder(context)
+                    .setTitle("删除新增设备提示").setMessage("新增设备【" + deviceDbModel.name + "】已被删除，如需记录问题请重新添加设备\n")
+                    .setPositiveButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            })
+                    .show();
+        }
     }
 }

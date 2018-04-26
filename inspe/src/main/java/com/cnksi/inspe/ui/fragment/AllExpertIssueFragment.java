@@ -12,8 +12,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.base.AppBaseFragment;
 import com.cnksi.inspe.databinding.FragmentInspeIssueBinding;
+import com.cnksi.inspe.db.DeviceService;
 import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.TeamService;
+import com.cnksi.inspe.db.entity.DeviceEntity;
 import com.cnksi.inspe.db.entity.DeviceTypeEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
 import com.cnksi.inspe.db.entity.UserEntity;
@@ -34,6 +36,7 @@ public class AllExpertIssueFragment extends AppBaseFragment implements View.OnCl
 
     private PlustekService plustekService = new PlustekService();
     private TeamService teamService = new TeamService();
+    private DeviceService deviceService = new DeviceService();
 
     @Override
     public int getFragmentLayout() {
@@ -51,6 +54,7 @@ public class AllExpertIssueFragment extends AppBaseFragment implements View.OnCl
     protected void lazyLoad() {
 
     }
+
     @Override
     protected void initUI() {
         super.initUI();
@@ -90,6 +94,23 @@ public class AllExpertIssueFragment extends AppBaseFragment implements View.OnCl
                                             list.remove(position);
                                             adapter.notifyDataSetChanged();
                                             showToast("删除成功");
+                                            int error = plustekService.getIssueTotal(entity.task_id, entity.device_id);
+                                            if (error == 0) {
+                                                DeviceEntity deviceEntity = deviceService.getDeviceById(entity.device_id);
+                                                if (deviceEntity != null && entity.task_id.equals(deviceEntity.type)) {
+                                                    deviceEntity.setType(null);
+                                                    deviceService.update(deviceEntity);
+                                                    new AlertDialog.Builder(getActivity())
+                                                            .setTitle("删除新增设备提示").setMessage("新增设备【" + deviceEntity.name + "】已被删除，如需记录问题请重新添加设备\n")
+                                                            .setPositiveButton("确定",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                        }
+                                                                    })
+                                                            .show();
+                                                }
+                                            }
                                         } else {
                                             showToast("删除失败！");
                                         }
