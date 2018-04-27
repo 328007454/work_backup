@@ -111,10 +111,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         changedStatusColor();
-        checkIsNeedSync();
-        inUI();
+//        checkIsNeedSync();
+//        inUI();
         initTabs();
-        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
+//        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
         ExecutorManager.executeTaskSerially(() -> {
             DeviceService.getInstance().refreshDeviceHasCopy();
             try {
@@ -129,7 +129,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 e.printStackTrace();
             }
         });
-
     }
 
     @Override
@@ -244,19 +243,25 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     }
 
+    boolean isFirstLoad = true;
+
     @Override
     protected void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, ""))) {
-            currentSelectBdzId = PreferencesUtils.get(Config.LOCATION_BDZID, "");
-            String locationBdzName = PreferencesUtils.get(Config.LOCATION_BDZNAME, "");
-            homePageBinding.bdzName.setText(TextUtils.isEmpty(locationBdzName) ? "" : locationBdzName);
+        if (isFirstLoad) {
+            if (!TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, ""))) {
+                currentSelectBdzId = PreferencesUtils.get(Config.LOCATION_BDZID, "");
+                String locationBdzName = PreferencesUtils.get(Config.LOCATION_BDZNAME, "");
+                homePageBinding.bdzName.setText(TextUtils.isEmpty(locationBdzName) ? "" : locationBdzName);
+            }
+            loadData();
+            for (TaskType tab : tabs) {
+                tab.init();
+            }
+            checkUpdate();
+        }else{
+            isFirstLoad = false;
         }
-        loadData();
-        for (TaskType tab : tabs) {
-            tab.init();
-        }
-        checkUpdate();
     }
 
     @Override

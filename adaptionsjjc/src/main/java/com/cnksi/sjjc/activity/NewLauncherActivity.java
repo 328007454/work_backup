@@ -98,11 +98,11 @@ public class NewLauncherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         changedStatusColor();
         launcherBinding = DataBindingUtil.setContentView(this, R.layout.activity_launcher_new);
-        inUI();
-        initFragments();
-        setFragmentToHomePager();
-        initBaseData();
-
+//        inUI();
+//        initFragments();
+//        setFragmentToHomePager();
+//        initBaseData();
+        launcherBinding.mainRadioGroup.setOnCheckedChangeListener(checkedChangeListener);
     }
 
     @Override
@@ -230,24 +230,24 @@ public class NewLauncherActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        if (getIntent() != null && isFromHomeActivity) {
-            currentSelectPosition = getIntent().getIntExtra("position", 0);
-            isFromHomeActivity = false;
-        }
+//        if (getIntent() != null && isFromHomeActivity) {
+//            currentSelectPosition = getIntent().getIntExtra("position", 0);
+//            isFromHomeActivity = false;
+//        }
         super.onResume();
-        switch (currentSelectPosition) {
-            case 0:
-                launcherBinding.fragmenPager.setCurrentItem(0);
-                launcherBinding.menuTour.setChecked(true);
-                break;
-            case 1:
-                launcherBinding.fragmenPager.setCurrentItem(1);
-                launcherBinding.menuMaintenance.setChecked(true);
-                break;
-            default:
-                break;
-        }
-        locationHelper.resume();
+//        switch (currentSelectPosition) {
+//            case 0:
+//                launcherBinding.fragmenPager.setCurrentItem(0);
+//                launcherBinding.menuTour.setChecked(true);
+//                break;
+//            case 1:
+//                launcherBinding.fragmenPager.setCurrentItem(1);
+//                launcherBinding.menuMaintenance.setChecked(true);
+//                break;
+//            default:
+//                break;
+//        }
+//        locationHelper.resume();
     }
 
     private void initBDZDialog() {
@@ -281,21 +281,21 @@ public class NewLauncherActivity extends BaseActivity {
         mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationHelper.pause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        locationHelper.stop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        locationHelper.destory();
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        locationHelper.pause();
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        locationHelper.stop();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        locationHelper.destory();
+//    }
 }

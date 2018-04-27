@@ -140,9 +140,13 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isFirstEnter){
-            initData();
-        }else{
+        if (!isFirstEnter) {
+            if (currentInspectionType.equalsIgnoreCase(Config.InspectionType.routine.name()) || currentInspectionType.equalsIgnoreCase(Config.InspectionType.full.name())) {
+                copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
+                totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
+                binding.tvCopyResult.setText(String.valueOf(copyCount) + "/" + String.valueOf(totalCount));
+            }
+        } else {
             isFirstEnter = false;
         }
 
@@ -346,7 +350,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             startActivityForResult(intent, LOAD_DATA);
         });
         binding.llNewDefectCount.setOnClickListener(view -> {
-           showDefectDialog(mNewDefectList,R.string.xs_new_defect_count_str);
+            showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str);
         });
 
         initOnLongClick();
@@ -457,7 +461,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
             int dialogHeight = LayoutParams.WRAP_CONTENT;
             signViewBinding = XsDialogSignViewBinding.inflate(getLayoutInflater());
-            mSignDetailDialog = DialogUtils.createDialog(currentActivity,signViewBinding.getRoot(),dialogWidth,dialogHeight);
+            mSignDetailDialog = DialogUtils.createDialog(currentActivity, signViewBinding.getRoot(), dialogWidth, dialogHeight);
         }
         if (isShowDelete) {
             signViewBinding.btnResign.setVisibility(View.VISIBLE);
@@ -616,7 +620,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
-        if (currentSign==null) return;
+        if (currentSign == null) return;
         switch (requestCode) {
             case 0x300:
                 currentSign.setImg(currentHeadPath);

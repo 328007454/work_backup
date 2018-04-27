@@ -148,7 +148,7 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
                 groupItemClickListenner.onClick(view, spaceItem, getParentPosition(spaceItem));
             }
         });
-        if (!TextUtils.isEmpty(inspectionType)&&inspectionType.contains("maintenance")){
+        if (!TextUtils.isEmpty(inspectionType)&&(inspectionType.contains("maintenance")||inspectionType.contains("switchover"))){
             helper.getView(R.id.tv_group_item_select).setVisibility(View.GONE);
         }
 
