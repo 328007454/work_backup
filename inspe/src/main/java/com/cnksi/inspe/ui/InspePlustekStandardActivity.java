@@ -5,30 +5,24 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.PlustekStandardAdapter;
 import com.cnksi.inspe.adapter.TeamRoleAdapter;
 import com.cnksi.inspe.adapter.entity.PlustekRule0Entity;
 import com.cnksi.inspe.adapter.entity.PlustekRule1Entity;
-import com.cnksi.inspe.adapter.entity.TeamRole0Entity;
-import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspePlustekstandardBinding;
 import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.PlusteRuleEntity;
-import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.type.PlustekType;
-import com.cnksi.inspe.type.RecordType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 精益化评价-显示设备基本信息，及相关评判标准
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/21 09:31
@@ -95,7 +89,7 @@ public class InspePlustekStandardActivity extends AppBaseActivity {
     }
 
     private void searchData() {
-        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(null, null);
+        List<PlusteRuleEntity> ruleList = plustekService.getPlusteRule(null, null, plustekType);
 
         if (ruleList == null) {
             return;
@@ -105,7 +99,7 @@ public class InspePlustekStandardActivity extends AppBaseActivity {
             PlusteRuleEntity entity = ruleList.get(i);
             PlustekRule0Entity rule0 = new PlustekRule0Entity(entity);
 
-            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(null, null, entity.getPid());
+            List<PlusteRuleEntity> ruleItemList = plustekService.getPlusteRule(null, null, null, entity.getPid());
             for (PlusteRuleEntity e : ruleItemList) {
                 PlustekRule1Entity rule = new PlustekRule1Entity(e);
                 rule0.addSubItem(rule);

@@ -59,7 +59,7 @@ public class BaseDbService {
         return true;
     }
 
-    public boolean delete(Object object) {
+    public boolean delete(BaseDBEntity object) {
         try {
             dbManager.delete(object);
         } catch (DbException e) {

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/core_bg_white_ffffff"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name_num"
+            android:layout_width="@dimen/inspe_48px"
+            android:layout_height="@dimen/inspe_48px"
+            android:layout_marginRight="21px"
+            android:layout_marginStart="@dimen/inspe_30px"
+            android:layout_marginTop="@dimen/inspe_38px"
+            android:background="@drawable/inspe_numcircle_green_shape"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/core_bg_white_ffffff"
+            android:textSize="33px"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="21px"
+            android:layout_marginTop="40px"
+            android:gravity="center_vertical"
+            android:text="设备名称:"
+            android:textColor="#ff3c4950"
+            android:textSize="33px"
+            app:layout_constraintStart_toEndOf="@+id/name_num"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_device_name"
+            android:layout_width="0px"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/include_inspe_title"
+            android:layout_marginTop="30px"
+            android:background="@color/core_bg_white_ffffff"
+            android:hint="请输入设备名称"
+            android:text=""
+            android:textColor="#ff3c4950"
+            android:textSize="40px"
+            app:layout_constraintLeft_toLeftOf="@+id/name_title"
+            app:layout_constraintTop_toBottomOf="@+id/name_title" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0px"
+            android:layout_height="1px"
+            android:layout_marginTop="25px"
+            android:background="@color/color_98a21"
+            app:layout_constraintStart_toStartOf="@+id/et_device_name"
+            app:layout_constraintTop_toBottomOf="@+id/et_device_name" />
+
+        <TextView
+            android:id="@+id/name_space_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/core_margin_70px"
+            android:gravity="center_vertical"
+            android:text="间隔名称:"
+            android:textSize="33px"
+            app:layout_constraintStart_toStartOf="@+id/et_device_name"
+            app:layout_constraintTop_toBottomOf="@+id/et_device_name" />
+
+        <TextView
+            android:id="@+id/et_space_name"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/include_inspe_title"
+            android:layout_marginRight="@dimen/inspe_30px"
+            android:layout_marginTop="@dimen/inspe_36px"
+            android:background="@color/core_bg_white_ffffff"
+            android:drawableRight="@mipmap/inspe_arrow_down"
+            android:hint="请选择间隔名称"
+            android:text=""
+            android:textColor="#ff3c4950"
+            android:textSize="40px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/name_title"
+            app:layout_constraintTop_toBottomOf="@+id/name_space_title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="@dimen/inspe_36px"
+            android:background="@color/color_98a21"
+            app:layout_constraintStart_toStartOf="@+id/et_device_name"
+            app:layout_constraintTop_toBottomOf="@+id/et_space_name" />
+
+
+        <!--<ImageView-->
+        <!--android:id="@+id/img_add"-->
+        <!--android:layout_width="100px"-->
+        <!--android:layout_height="80px"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:background="@color/core_bg_white_ffffff"-->
+        <!--android:scaleType="centerInside"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toEndOf="@id/et_space_name"-->
+        <!--app:layout_constraintTop_toTopOf="@id/name_title"-->
+        <!---->
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/img_delete"
+            android:layout_width="100px"
+            android:layout_height="80px"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:background="@color/core_bg_white_ffffff"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/inspe_delete_icon" />
+
+        <FrameLayout
+            android:id="@+id/framelayout"
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:background="@color/color_aa98a21"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

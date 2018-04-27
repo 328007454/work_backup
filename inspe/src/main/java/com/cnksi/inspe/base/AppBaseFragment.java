@@ -3,14 +3,12 @@ package com.cnksi.inspe.base;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.inspe.db.UserService;
 
 /**
@@ -37,7 +35,7 @@ public abstract class AppBaseFragment extends Fragment {
         if (fragmentDataBinding == null) {
             fragmentDataBinding = DataBindingUtil.inflate(inflater, getFragmentLayout(), container, false);
             fragmentRootView = fragmentDataBinding.getRoot();
-            lazyLoad();
+            initUI();
         } else {
             fragmentRootView = fragmentDataBinding.getRoot();
         }
@@ -45,9 +43,13 @@ public abstract class AppBaseFragment extends Fragment {
         return fragmentRootView;
     }
 
+
+    protected void initUI() {
+
+    }
+
     /**
      * fragment布局文件
-     *
      * @return
      */
     public abstract int getFragmentLayout();

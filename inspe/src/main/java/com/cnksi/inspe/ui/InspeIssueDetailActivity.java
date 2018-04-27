@@ -25,7 +25,6 @@ import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.utils.FileUtils;
 import com.cnksi.inspe.utils.ImageUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

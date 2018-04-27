@@ -23,11 +23,9 @@ import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.type.TaskType;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
 import com.cnksi.inspe.utils.DateFormat;
-import com.cnksi.inspe.utils.StringUtils;
 import com.cnksi.inspe.widget.PopItemWindow;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,6 +44,7 @@ import java.util.UUID;
  * @auther Today(张军)
  * @date 2018/3/21 09:19
  */
+@Deprecated
 public class InspeCreateActivity extends AppBaseActivity implements View.OnClickListener {
 
     private ActivityInspeCreateBinding dataBinding;

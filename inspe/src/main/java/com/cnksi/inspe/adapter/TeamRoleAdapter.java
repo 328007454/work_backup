@@ -9,7 +9,6 @@ import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.entity.TeamRole0Entity;
 import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.type.RecordType;
-import com.cnksi.inspe.type.RoleType;
 
 import java.util.List;
 

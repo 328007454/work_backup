@@ -1,23 +1,21 @@
 package com.cnksi.inspe.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cnksi.core.activity.BaseCoreActivity;
-import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.db.UserService;
+import com.cnksi.inspe.ui.InspeDrawCircleImageActivity;
+import com.cnksi.inspe.utils.InspeConfig;
 
 /**
  * @version v1.0
@@ -31,13 +29,9 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     protected ViewDataBinding rootDataBinding;
     private UserService userService;// = UserService.getInstance();
 
-    protected UserService getUserService() {
+    protected synchronized UserService getUserService() {
         if (userService == null) {
-            synchronized (this) {
-                if (userService == null) {
-                    userService = UserService.getInstance();
-                }
-            }
+            userService = UserService.getInstance();
         }
 
         return userService;
@@ -56,7 +50,7 @@ public abstract class AppBaseActivity extends AppCompatActivity {
     protected ImageButton toolbar_back_btn, toolbar_menu_btn;
 
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//强制竖屏
         context = this;
@@ -145,5 +139,16 @@ public abstract class AppBaseActivity extends AppCompatActivity {
 
     public void showToast(String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 可以标记图片
+     */
+
+    public void drawCircle(String pictureName, String pictureContent) {
+        Intent intent = new Intent(this, InspeDrawCircleImageActivity.class);
+        intent.putExtra(InspeConfig.CURRENT_IMAGE_NAME, pictureName);
+        intent.putExtra(InspeConfig.PICTURE_CONTENT, pictureContent);
+        startActivityForResult(intent, InspeConfig.LOAD_DATA);
     }
 }

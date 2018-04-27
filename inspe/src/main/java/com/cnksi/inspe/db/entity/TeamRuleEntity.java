@@ -1,14 +1,9 @@
 package com.cnksi.inspe.db.entity;
 
-import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.inspe.base.BaseDBEntity;
 
-import org.xutils.DbManager;
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
-import org.xutils.ex.DbException;
-
-import java.util.Map;
 
 /**
  * 班组检查规则表

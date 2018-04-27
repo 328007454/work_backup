@@ -9,6 +9,7 @@
         <activity android:name=".ui.InspeMainActivity" />
         <activity android:name=".ui.InspePlustekActivity" />
         <activity android:name=".ui.InspePlustekIssueListActivity" />
+        <activity android:name=".ui.InspePlustekSimilarIssueActivity" />
         <activity android:name=".ui.InspePlustekIssueActivity" />
         <activity android:name=".ui.InspePlustekStandardActivity" />
         <activity android:name=".ui.InspeTeamActivity" />
@@ -21,6 +22,13 @@
         <activity
             android:name=".ui.InspeLoadingActivity"
             android:exported="true" />
+        <activity
+            android:name=".ui.AddDeviceAtivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".ui.InspeModifyActivity" />
+        <activity
+            android:name=".ui.InspeDrawCircleImageActivity"
+            android:screenOrientation="portrait"></activity><!--screenOrientation必须配置，否则在横屏时启动会导致启动2次-->
     </application>
 
 </manifest>

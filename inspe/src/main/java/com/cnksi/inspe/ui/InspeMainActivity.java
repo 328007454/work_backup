@@ -2,6 +2,7 @@ package com.cnksi.inspe.ui;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,6 +19,7 @@ import com.cnksi.inspe.databinding.ActivityInspeMainBinding;
 import com.cnksi.inspe.db.PlustekService;
 import com.cnksi.inspe.db.entity.UserEntity;
 import com.cnksi.inspe.type.RoleType;
+import com.cnksi.inspe.ui.fragment.AllExpertIssueFragment;
 import com.cnksi.inspe.ui.fragment.AllIssueFragment;
 import com.cnksi.inspe.ui.fragment.InspectionFragment;
 import com.cnksi.inspe.ui.fragment.MyIssueFragment;
@@ -25,7 +27,6 @@ import com.cnksi.inspe.ui.fragment.MyIssueFragment;
 
 /**
  * 检查任务模块首页
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/20 13:41
@@ -129,6 +130,11 @@ public class InspeMainActivity extends AppBaseActivity {
             }
 
             @Override
+            public Parcelable saveState() {
+                return super.saveState();
+            }
+
+            @Override
             public Fragment getItem(int position) {
 
                 return createMainFragment(position);
@@ -195,7 +201,6 @@ public class InspeMainActivity extends AppBaseActivity {
 
     /**
      * 创建Fragment
-     *
      * @param postion
      * @return
      * @throws NullPointerException postion 超过2会抛异常
@@ -212,7 +217,11 @@ public class InspeMainActivity extends AppBaseActivity {
                     fragments[postion] = new MyIssueFragment();
                     break;
                 case 2:
-                    fragments[postion] = new AllIssueFragment();
+                    if (expertUser == null) {
+                        fragments[postion] = new AllIssueFragment();
+                    } else {
+                        fragments[postion] = new AllExpertIssueFragment();
+                    }
                     break;
                 default:
                     throw new NullPointerException("你创建的Fragment不在设计内,fragments=" + fragments.length + ",positon=" + postion);
@@ -226,20 +235,24 @@ public class InspeMainActivity extends AppBaseActivity {
     protected void onMenu(View view) {
         super.onMenu(view);
         //启动同步，仅专家可用
-        Intent intent = new Intent();
-        if (PreferencesUtils.get("SYNC_WAY", true)) {//默认网络，配置变量为sjjc私有，BuildConfig.USE_NETWORK_SYNC
-            //网络同步
-            PreferencesUtils.put("SYNC_WAY", true);
-            intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
-            ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.NetWorkSyncActivity");
-            intent.setComponent(componentName);
-        } else {
-            //USB同步
-            PreferencesUtils.put("SYNC_WAY", false);
-            intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
-            ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.UsbSyncActivity");
-            intent.setComponent(componentName);
+        try {
+            Intent intent = new Intent();
+            if (PreferencesUtils.get("SYNC_WAY", true)) {//默认网络，配置变量为sjjc私有，BuildConfig.USE_NETWORK_SYNC
+                //网络同步
+                PreferencesUtils.put("SYNC_WAY", true);
+                intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
+                ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.NetWorkSyncActivity");
+                intent.setComponent(componentName);
+            } else {
+                //USB同步
+                PreferencesUtils.put("SYNC_WAY", false);
+                intent.putExtra("dept_id", PreferencesUtils.get("dept_id", "-1"));
+                ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.sjjc.sync.UsbSyncActivity");
+                intent.setComponent(componentName);
+            }
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        startActivity(intent);
     }
 }

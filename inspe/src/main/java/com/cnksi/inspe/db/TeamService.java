@@ -1,20 +1,12 @@
 package com.cnksi.inspe.db;
 
-import android.os.DropBoxManager;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.cnksi.inspe.adapter.entity.TeamRoleEntity;
 import com.cnksi.inspe.base.BaseDbService;
 import com.cnksi.inspe.db.entity.DbLogEntity;
-import com.cnksi.inspe.db.entity.InspecteTaskEntity;
 import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.TeamRuleResultEntity;
-import com.cnksi.inspe.entity.InspectePlustekEntity;
-import com.cnksi.inspe.type.ProgressType;
 import com.cnksi.inspe.type.RecordType;
-import com.cnksi.inspe.type.TaskProgressType;
-import com.cnksi.inspe.ui.InspePlustekActivity;
 import com.cnksi.inspe.utils.DBUtils;
 import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.utils.StringUtils;
@@ -24,9 +16,6 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,13 +28,12 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取Levenl=1数据
-     *
      * @return
      */
     public List<TeamRuleEntity> getRoleList() {
         String sql = "SELECT * FROM xj_group_con_rule WHERE level='1' AND dlt='0';";
         try {
-            return parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleEntity.class);
+            return DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleEntity.class);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -54,14 +42,13 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取建设项目(获取Level=2数据)
-     *
      * @param levle1Id {@link #getRoleList()}查询出的对象id
      * @return
      */
     public List<TeamRuleEntity> getRoleList(String levle1Id, String taskId) {
         String sql = "SELECT * FROM xj_group_con_rule WHERE pid='" + levle1Id + "' AND dlt='0';";
         try {
-            List<TeamRuleEntity> list = parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleEntity.class);
+            List<TeamRuleEntity> list = DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleEntity.class);
 
             for (TeamRuleEntity trn : list) {
                 //获取总分
@@ -79,14 +66,13 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取资料规范(在查看标准页面使用)
-     *
      * @param level2Id {@link #getRoleList(String, String)}查询出的对象id
      * @return
      */
     public List<TeamRuleEntity> getRoleDoc(String level2Id) {
         String sql = "SELECT * FROM xj_group_con_rule WHERE pid='" + level2Id + "' AND dlt='0';";
         try {
-            List<TeamRuleEntity> list = parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleEntity.class);
+            List<TeamRuleEntity> list = DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleEntity.class);
 
             //统计总分
 //            for (TeamRuleEntity entity : list) {
@@ -103,7 +89,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取规范标准文件名
-     *
      * @param level2Id
      * @return
      */
@@ -174,7 +159,7 @@ public class TeamService extends BaseDbService {
                     .where("id", "=", entity4.getPid())
                     .and("dlt", "=", "0")
                     .findFirst();
-            if (entity4 == null) {
+            if (entity2 == null) {
                 return null;
             }
             String level2Id = entity2.getPid();
@@ -197,7 +182,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取资料规范(在检查标准页面使用)
-     *
      * @param levle2Id {{@link #getRoleDoc(String)}}集合中的id
      * @return
      */
@@ -211,7 +195,7 @@ public class TeamService extends BaseDbService {
         String sql = "SELECT xj_group_con_rule.*,result_tab.record_type,result_tab.deduct_score FROM xj_group_con_rule LEFT JOIN " + sql_result_tab + " ON xj_group_con_rule.id=result_tab.rule_id WHERE xj_group_con_rule.pid IN(" + sql_doc + ") AND xj_group_con_rule.dlt='0'";
 
         try {
-            List<TeamRuleEntity> list = parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleEntity.class);
+            List<TeamRuleEntity> list = DBUtils.parseObjectList(dbManager.findDbModelAll(new SqlInfo(sql)), TeamRuleEntity.class);
 
             return list;
         } catch (DbException e) {
@@ -224,7 +208,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取资料规范(模块)总分
-     *
      * @return
      */
     public TeamRuleEntity getRoleScore(TeamRuleEntity entityLevel4, String taskId) {
@@ -258,7 +241,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取资料规范(模块)总分
-     *
      * @return
      */
     private void getRoleRecord(TeamRuleEntity entity, String taskId) {
@@ -281,7 +263,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 解析统计
-     *
      * @param entity
      * @param moble
      */
@@ -323,7 +304,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 保存班组建设记录
-     *
      * @return
      */
     public boolean saveRuleResult(TeamRuleResultEntity data) {
@@ -340,13 +320,12 @@ public class TeamService extends BaseDbService {
 
     /**
      * 保存班组建设记录
-     *
      * @return
      */
     public TeamRuleResultEntity getRuleResult(String id) {
         try {
             String sql = "SELECT * FROM xj_group_con_rule_result WHERE id='" + id + "' AND dlt='0';";
-            TeamRuleResultEntity entity = parseObject(dbManager.findDbModelFirst(new SqlInfo(sql)), TeamRuleResultEntity.class);
+            TeamRuleResultEntity entity = DBUtils.parseObject(dbManager.findDbModelFirst(new SqlInfo(sql)), TeamRuleResultEntity.class);
             return entity;
         } catch (DbException e) {
             e.printStackTrace();
@@ -357,13 +336,17 @@ public class TeamService extends BaseDbService {
 
     /**
      * 保存班组建设记录
-     *
      * @return
      */
-    public TeamRuleResultEntity getRuleResult(String ruleId, String taskId) {
+    public TeamRuleResultEntity getRuleResult(String ruleId, String deviceId, String taskId) {
         try {
-            String sql = "SELECT * FROM xj_group_con_rule_result WHERE rule_id='" + ruleId + "' AND task_id='" + taskId + "' AND dlt='0';";
-            TeamRuleResultEntity entity = parseObject(dbManager.findDbModelFirst(new SqlInfo(sql)), TeamRuleResultEntity.class);
+            String sql = "SELECT * FROM xj_group_con_rule_result WHERE rule_id='" + ruleId + "' AND task_id='" + taskId + "' AND dlt='0'";
+            if (deviceId != null) {
+                sql += "AND device_id='" + deviceId + "'";
+            }
+            sql += ";";
+
+            TeamRuleResultEntity entity = DBUtils.parseObject(dbManager.findDbModelFirst(new SqlInfo(sql)), TeamRuleResultEntity.class);
             return entity;
         } catch (DbException e) {
             e.printStackTrace();
@@ -375,7 +358,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 获取问题记录
-     *
      * @return
      */
     public List<TeamRuleResultEntity> getIssueList() {
@@ -393,8 +375,7 @@ public class TeamService extends BaseDbService {
 
     /**
      * 根据用户ID和状态查看问题
-     *
-     * @param userIds  用户IDS
+     * @param userIds 用户IDS
      * @param progress 问题状态
      * @return
      */
@@ -428,7 +409,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 判断该问题是否已经分享
-     *
      * @param taskId
      * @param ruleId
      * @return
@@ -450,12 +430,11 @@ public class TeamService extends BaseDbService {
             e.printStackTrace();
         }
 
-        return entity == null ? false : true;
+        return entity != null;
     }
 
     /**
      * 班组长，我处理的问题
-     *
      * @param groupIds
      * @param taskType
      * @param bdzId
@@ -469,7 +448,7 @@ public class TeamService extends BaseDbService {
         String sql = "SELECT * FROM xj_group_con_rule_result WHERE record_type = 'answer' AND dept_id = '" + groupIds + "' OR (`improve_person_id` IN (" + StringUtils.getArrayToDbIn(progress) + ") AND `progress` = 'wzg') AND `dlt` = '0'";
         try {
             List<DbModel> listTemp = dbManager.findDbModelAll(new SqlInfo(sql));
-            return parseObjectList(listTemp, TeamRuleResultEntity.class);
+            return DBUtils.parseObjectList(listTemp, TeamRuleResultEntity.class);
 
         } catch (DbException e) {
             e.printStackTrace();
@@ -479,7 +458,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 根据组和状态查询问题
-     *
      * @param groupIds
      * @param progress
      * @return
@@ -514,7 +492,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 保存数据库记录日志
-     *
      * @param data
      * @return
      */
@@ -531,7 +508,6 @@ public class TeamService extends BaseDbService {
 
     /**
      * 清除数据
-     *
      * @param cls
      * @param <T>
      * @return
@@ -545,95 +521,9 @@ public class TeamService extends BaseDbService {
         return true;
     }
 
-    /**
-     * DB Array对象解析
-     *
-     * @param modles
-     * @param cls
-     * @param <T>
-     * @return
-     */
-    private <T> List<T> parseObjectList(List<DbModel> modles, Class<T> cls) {
-        List<T> list = new ArrayList<>();
-        if (modles != null) {
-            for (DbModel model : modles) {
-                list.add(parseObject(model, cls));
-            }
-        }
-
-        return list;
-    }
-
-    /**
-     * DB Object解析
-     *
-     * @param model
-     * @param cls
-     * @param <T>
-     * @return
-     */
-    private <T> T parseObject(DbModel model, Class<T> cls) {
-        if (model == null) {
-            return null;
-        }
-
-        Field[] fields = cls.getDeclaredFields();
-        try {
-            T entity = cls.newInstance();
-
-            //以空间换时间
-            int length = fields.length;
-            //属性
-            Field field;
-            //属性
-            String name;
-            //类型
-            String type;
-            for (int i = 0; i < length; i++) {
-                field = fields[i];
-                //属性
-                name = field.getName();
-                //类型
-                type = field.getType().getName();
-
-                field.setAccessible(true);
-
-                if (model.isEmpty(name)) {
-                    continue;
-                }
-
-                if (type.contains("String")) {
-                    field.set(entity, model.getString(name));
-                } else if (type.contains("int") || type.contains("Integer")) {
-                    field.set(entity, model.getInt(name));
-                } else if (type.contains("short") || type.contains("Short")) {
-                    field.set(entity, model.getInt(name));
-                } else if (type.contains("float") || type.contains("Float")) {
-                    field.set(entity, model.getFloat(name));
-                } else if (type.contains("Double") || type.contains("Double")) {
-                    field.set(entity, model.getDouble(name));
-                } else if (type.contains("boolean") || type.contains("Boolean")) {
-                    field.set(entity, model.getBoolean(name));
-                } else {
-                    Log.w("TeamService", "未定义");
-                }
-
-
-            }
-
-            return entity;
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
     /**
      * 获取资料规范(模块)总分
-     *
      * @return
      */
     private float getRoleScore(String pid) {

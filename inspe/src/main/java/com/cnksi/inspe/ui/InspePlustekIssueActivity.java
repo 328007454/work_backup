@@ -1,9 +1,12 @@
 package com.cnksi.inspe.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -32,18 +35,17 @@ import com.cnksi.inspe.type.RecordType;
 import com.cnksi.inspe.type.RoleType;
 import com.cnksi.inspe.type.TaskProgressType;
 import com.cnksi.inspe.utils.ArrayInspeUtils;
-import com.cnksi.inspe.utils.Config;
 import com.cnksi.inspe.utils.DateFormat;
 import com.cnksi.inspe.utils.FileUtils;
-import com.cnksi.inspe.utils.FunctionUtil;
 import com.cnksi.inspe.utils.FunctionUtils;
 import com.cnksi.inspe.utils.ImageUtils;
+import com.cnksi.inspe.utils.InspeConfig;
+import com.cnksi.inspe.utils.ScoreUtils;
+import com.cnksi.inspe.widget.KeyBoadWordDialog;
 import com.cnksi.inspe.widget.PopItemWindow;
-
-import org.w3c.dom.Text;
+import com.cnksi.inspe.widget.PopMenu;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -53,60 +55,59 @@ import java.util.UUID;
 
 /**
  * 精益化评价-根据标准检查相关事项，并填写相关检查结果或扣分等
- * <p/>
+ * <br/>
  * 特殊说明
  * <ol>
  * 责任班组
  * <li>选择检修，责任单位为（"检修"、供电公司）</li>
  * <li>选择运维，责任单位为("供电公司")</li>
  * </ol>
- *
+ * <ol>
+ * 启动参数包含{@link IntentKey}
+ * <li>{@link IntentKey#TASK_ID}:任务ID</li>
+ * <li>{@link IntentKey#PLUSTEK_TYPE}:检查类型</li>
+ * <li>{@link IntentKey#DEVICE_ID}:设备ID</li>
+ * <li>{@link IntentKey#RULE_ID_3}:标准ID3</li>
+ * <li>{@link IntentKey#RULE_RESULT_ID}:问题ID</li>
+ * <li>{@link IntentKey#CONTENT}:说明内容</li>
+ * </ol>
+ * <ol>
+ * 启动模式及参数{@link StartMode}
+ * <li>{@link StartMode#DEFAULT}:问题创建(默认)，参数:{任务ID、设备ID、标准ID3}</li>
+ * <li>{@link StartMode#MODIFY}:问题修改，参数:{任务ID、设备ID、问题ID、说明内容}</li>
+ * <li>{@link StartMode#COPY}:问题拷贝，参数:{任务ID、设备ID、问题ID、说明内容}</li>
+ * <li>{@link StartMode#NOPMS}:无设备信息(台账))，参数:{任务ID、设备ID}</li>
+ * </ol>
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/21 09:25
  */
 public class InspePlustekIssueActivity extends AppBaseActivity implements View.OnClickListener {
+    private Set<String> noPmsIds = new HashSet<>();
+    private ActivityInspePlustekissueBinding dataBinding;
+    private ScoreUtils scoreUtils = null;
+
     private DictionaryService dictionaryService = new DictionaryService();
     private DeviceService deviceService = new DeviceService();
     private PlustekService plustekService = new PlustekService();
     private TeamService teamService = new TeamService();
     private TaskService taskService = new TaskService();
 
-    private SubStationEntity subStationEntity;
-    private DeviceEntity deviceEntity;
-    private UserEntity expertEntity = getUserService().getUserExpert(RoleType.expert);
-
-    private static final int TAKEPIC_REQUEST = 100;
-    private ActivityInspePlustekissueBinding dataBinding;
+    private static final int TAKE_PIC_REQUEST = 100;
+    private static final int TAKE_ALBUM_REQUEST = 101;
     private List<DictionaryEntity> natureList;
     private List<DictionaryEntity> reasonList;
     private List<String> natureArray;
     private List<String> reasonArray;
-    //检查项
-    private PlusteRuleEntity teamRule;//Intent
-    private PlusteRuleEntity checkRuleEntity;//选择
-    //任务
-    private InspecteTaskEntity task;
-    //最大扣分值
-    private float maxMinus;
-    private int maxIntentMinus;//最大扣分会随着选择扣分项不同而动态变化，intent传递过来的扣分为大项可扣总分
-    //当前扣分项(单位扣分)(将扣分的float转为int后处理，避免float计算误差导致不正确的数引入)
-    private int scoreEntity;
-    //当前扣分/
-    private int minusScore;
+
+    final int SCAN_NUM = 100;//扣分放大倍数
+    private float maxIntentMinus = 0;
 
     private GalleryAdapter galleryAdapte;
-    //**拍照临时图片地址*/
-    private String picTempPath;
-    //**拍照保存的地址*/
-    private List<String> picList = new ArrayList<>();
-    //**删除的地址的图片统一处理*/
-    private Set<String> picDeleteList = new HashSet<>();
+    private String picTempPath;  //**拍照临时图片地址*/
+    private List<String> picList = new ArrayList<>();  //**拍照保存的地址*/
+    private Set<String> picDeleteList = new HashSet<>(); //**删除的地址的图片统一处理*/
     private boolean isSave = false;//是否保存项目
-
-    //检查记录
-    private TeamRuleResultEntity teamRuleResult;
-    private PlustekType plustekType;
 
     @Override
     public int getLayoutResId() {
@@ -116,6 +117,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     @Override
     public void initUI() {
         dataBinding = (ActivityInspePlustekissueBinding) rootDataBinding;
+        scoreUtils = new ScoreUtils(dataBinding.addBtn, dataBinding.minuxBtn, SCAN_NUM);
         setTitle("问题记录", R.drawable.inspe_left_black_24dp);
 
         dataBinding.addBtn.setOnClickListener(this);
@@ -125,7 +127,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         dataBinding.cameraBtn.setOnClickListener(this);
         dataBinding.issueInfoTxt.setOnClickListener(this);
         dataBinding.okBtn.setOnClickListener(this);
-        //
+        dataBinding.issueEdit.setOnClickListener(this);
         dataBinding.issueNatureTxt.setOnClickListener(this);
         dataBinding.blameTeamTxt.setOnClickListener(this);
         dataBinding.blameBranchTxt.setOnClickListener(this);
@@ -157,28 +159,151 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         dataBinding.galleryView.setAdapter(galleryAdapte);
     }
 
-    private List<PlusteRuleEntity> list;
+
     private List<String> listArray;
-    //责任部门
-    private List<String> listBranchArray = new ArrayList<>();
-    //责任班组
-    private List<String> listTeamArray = new ArrayList<>();
+    private List<String> listBranchArray = new ArrayList<>(); //责任部门
+    private List<String> listTeamArray = new ArrayList<>(); //责任班组
 
-    private String deviceId;
 
-    final int SCAN_NUM = 100;//扣分放大倍数
+    private int startMode = StartMode.DEFAULT; //页面启动模式 */
+    private String taskId;//任务ID
+    private String deviceId;//设备ID
+    private String ruleId3;//标准ID(level=3)
+    private String ruleResultId;//错误
+    private String content;//描述内容
+
+    private UserEntity expertEntity = getUserService().getUserExpert(RoleType.expert);
+    private PlustekType plustekType;//精益化检查类型
+
+    private InspecteTaskEntity taskEntity;//任务
+    private DeviceEntity deviceEntity;//设备
+    private SubStationEntity subStationEntity;//变电站
+
+    private TeamRuleResultEntity ruleResultEntity; //问题记录
+    private PlusteRuleEntity rule3Entity;// //检查项 Intent
+    private List<PlusteRuleEntity> list;
+    private PlusteRuleEntity rule4Entity;//选择
 
     @Override
     public void initData() {
-        teamRuleResult = (TeamRuleResultEntity) getIntent().getSerializableExtra("edit_data");
+        startMode = getIntent().getIntExtra(IntentKey.START_MODE, StartMode.DEFAULT);
+        taskId = getIntent().getStringExtra(IntentKey.TASK_ID);
+        plustekType = (PlustekType) getIntent().getSerializableExtra(IntentKey.PLUSTEK_TYPE);
+        deviceId = getIntent().getStringExtra(IntentKey.DEVICE_ID);
+        ruleId3 = getIntent().getStringExtra(IntentKey.RULE_ID_3);
+        ruleResultId = getIntent().getStringExtra(IntentKey.RULE_RESULT_ID);
+        content = getIntent().getStringExtra(IntentKey.CONTENT);
+        if (expertEntity == null) {
+            showToast("非法权限!");
+            finish();
+            return;
+        }
 
-        //初始化功能部分
-        natureList = dictionaryService.getDictonaryIssueNature();
-        reasonList = dictionaryService.getDictonaryIssueReason();
-        if (natureList == null || natureList.size() == 0 || reasonList == null || reasonList.size() == 0) {
+        if (!initDictionary()) {
             showToast("没有查询到字典，请先同步数据!");
             finish();
             return;
+        }
+        if (TextUtils.isEmpty(taskId) || TextUtils.isEmpty(deviceId)) {//公共字段,taskId、deviceId
+            showToast("参数错误!");
+            finish();
+            return;
+        }
+        taskEntity = taskService.getTask(taskId);
+        deviceEntity = deviceService.getDeviceById(deviceId);//设备
+        if (taskEntity == null || deviceEntity == null) {
+            showToast("参数错误!");
+            finish();
+            return;
+        }
+        subStationEntity = deviceService.getSubStation(taskEntity.getBdz_id());//变电站
+        if (subStationEntity == null) {
+            showToast("参数错误!");
+            finish();
+            return;
+        }
+
+//         * <li>{@link StartMode#DEFAULT}:问题创建(默认)，参数:{任务ID、设备ID、标准ID3、说明内容}</li>
+//         * <li>{@link StartMode#MODIFY}:问题修改，参数:{任务ID、设备ID、问题ID、说明内容}</li>
+//         * <li>{@link StartMode#COPY}:问题拷贝，参数:{任务ID、设备ID、问题ID、说明内容}</li>
+//         * <li>{@link StartMode#NOPMS}:无设备信息(台账))，参数:{任务ID、设备ID}</li>
+        switch (startMode) {
+            case StartMode.DEFAULT:
+                if (TextUtils.isEmpty(ruleId3)) {
+                    showToast("参数错误!");
+                    finish();
+                    return;
+                } else {
+                    list = plustekService.getPlusteRule(taskId, deviceEntity.getBigid(), null, ruleId3);
+                    rule3Entity = plustekService.getIssue(ruleId3);
+                    if (list == null || list.size() == 0) {
+                        showToast("参数错误!");
+                        finish();
+                        return;
+                    }
+
+                    maxIntentMinus = plustekService.getStandaredMaxDult(taskId, list.get(0).getId(), deviceId);
+                    listArray = new ArrayList<>();
+                    for (PlusteRuleEntity entity : list) {
+                        listArray.add(entity.getName());
+                    }
+
+                    String[] leve12Name = plustekService.getLeve1_2Name(list.get(0).getId());
+                    if (leve12Name != null && leve12Name.length > 1) {
+                        content = deviceEntity.getName() + " " + leve12Name[0] + "-" + leve12Name[1];
+                    }
+
+                    initCreateIssue(taskId, deviceId, ruleId3);
+                }
+                break;
+            case StartMode.MODIFY:
+                if (TextUtils.isEmpty(ruleResultId) || TextUtils.isEmpty(content)) {
+                    showToast("参数错误!");
+                    finish();
+                    return;
+                }
+                ruleResultEntity = teamService.getRuleResult(ruleResultId);//获取问题
+                if (ruleResultEntity == null) {
+                    showToast("参数错误!");
+                    finish();
+                    return;
+                }
+                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
+                initEditIssue(taskId, deviceId, ruleResultId, content);
+
+                break;
+            case StartMode.COPY:
+                if (TextUtils.isEmpty(ruleResultId) || TextUtils.isEmpty(content)) {
+                    showToast("参数错误!");
+                    finish();
+                    return;
+                }
+                ruleResultEntity = teamService.getRuleResult(ruleResultId);
+                if (ruleResultEntity == null) {
+                    showToast("参数错误!");
+                    finish();
+                    return;
+                }
+                maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
+
+                initCopyIssue(taskId, deviceId, ruleResultId, content);
+                break;
+            case StartMode.NOPMS:
+                initNoPmsIssue(taskId, deviceId);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 字典初始化,初始化失败直接提示并关闭Activity
+     */
+    private boolean initDictionary() {
+        natureList = dictionaryService.getDictonaryIssueNature();//问题性质-字典
+        reasonList = dictionaryService.getDictonaryIssueReason();//问题产生原因-字典
+        if (natureList == null || natureList.size() == 0 || reasonList == null || reasonList.size() == 0) {
+            return false;
         }
         natureArray = new ArrayList<>(natureList.size());
         reasonArray = new ArrayList<>(reasonList.size());
@@ -189,127 +314,158 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
             reasonArray.add(reasonList.get(i).getV());
         }
 
-
-        if (teamRuleResult == null) {
-            initCreateIssue();
-        } else {
-            initEditIssue();
-        }
-        //描述
-        String info = getIntent().getStringExtra("info_txt");
-        if (TextUtils.isEmpty(info) && list != null && list.size() > 0 && deviceEntity != null) {
-            String[] names = plustekService.getLeve1_2Name(list.get(0).getId());
-            if (names != null && names.length > 1) {
-                info = deviceEntity.getName() + " " + names[0] + "-" + names[1];
-            }
-        }
-        dataBinding.contextTxt.setText(info);
-
+        return true;
     }
 
-    private void initEditIssue() {
-        if (checkRuleEntity == null) {//避免重复查询
-            checkRuleEntity = plustekService.getIssue(teamRuleResult.getRule_id());
-        }
+    /**
+     * 问题复制
+     */
+    private void initCopyIssue(String taskId, String deviceId, String ruleResultId, String content) {
+        rule4Entity = plustekService.getIssue(ruleResultEntity.getRule_id());
+        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
+        ruleResultEntity.setId(null);
+        ruleResultEntity.setDevice_name(deviceEntity.getName());
+        ruleResultEntity.setDevice_id(deviceEntity.getDeviceid());
+        ruleResultEntity.setCreate_time(DateFormat.dateToDbString(System.currentTimeMillis()));
 
-        maxIntentMinus = (int) (SCAN_NUM * plustekService.getStandaredMaxDult(teamRuleResult.getId(), deviceId));
-        if (checkRuleEntity == null) {
-            showToast("未查询到相关标准");
-            finish();
-            return;
-        }
         dataBinding.issueInfoTxt.setOnClickListener(null);
-        dataBinding.issueInfoTxt.setText(checkRuleEntity.getName());
-        dataBinding.issueEdit.setText(teamRuleResult.getDescription());
-        dataBinding.issueNatureTxt.setText(teamRuleResult.getProblem_nature());
-        dataBinding.blameTeamTxt.setText(teamRuleResult.getCharge_group());
-        dataBinding.blameBranchTxt.setText(teamRuleResult.getCharge_unit());
-        dataBinding.issueReasonTxt.setText(teamRuleResult.getProduce_reason());
-        dataBinding.suggestEdit.setText(teamRuleResult.getSuggest_deal_way());
+//        dataBinding.issueEdit.setOnClickListener(null);
 
-        if (!TextUtils.isEmpty(teamRuleResult.getImg())) {
-            picList.addAll(Arrays.asList(teamRuleResult.getImg().split(",")));
-            galleryAdapte.notifyDataSetChanged();
-        }
+        dataBinding.issueInfoTxt.setText(rule4Entity.getName());
+        dataBinding.issueEdit.setText(ruleResultEntity.getDescription());
+        dataBinding.issueNatureTxt.setText(ruleResultEntity.getProblem_nature());
+        dataBinding.blameTeamTxt.setText(ruleResultEntity.getCharge_group());
+        dataBinding.blameBranchTxt.setText(ruleResultEntity.getCharge_unit());
+        dataBinding.issueReasonTxt.setText(ruleResultEntity.getProduce_reason());
+        dataBinding.suggestEdit.setText(ruleResultEntity.getSuggest_deal_way());
 
-        //扣分，修改扣分需要加上本身的扣分
-        minusScore = 0;
-        scoreEntity = (int) (teamRuleResult.getDeduct_score() * SCAN_NUM);
-        if (!TextUtils.isEmpty(checkRuleEntity.getScore_content())) {
-            InspeScoreEntity scoreObject = JSON.parseObject(checkRuleEntity.getScore_content(), InspeScoreEntity.class);
-            int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
-            if (maxV > 0) {
-                maxMinus = Math.min(maxIntentMinus, maxV) + scoreEntity;
-            } else {
-                maxMinus = maxIntentMinus + scoreEntity;
-            }
-        } else {
-            maxMinus = maxIntentMinus;
-        }
 
-        setScoreTxt(scoreEntity);
+        scoreUtils.setValue(
+                Math.min(maxIntentMinus, JSON.parseObject(TextUtils.isEmpty(rule4Entity.getScore_content()) ? "{}" : rule4Entity.getScore_content(), InspeScoreEntity.class).max_decuct_score),
+                (float) rule4Entity.getScore(),//扣分单位值
+                Math.max(ruleResultEntity.getDeduct_score(), (float) rule4Entity.getScore()));
+        dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
 
         //责任班组、责任部门
         listTeamArray = new ArrayList<>();
         listBranchArray = new ArrayList<>();
-        subStationEntity = deviceService.getSubStation(teamRuleResult.getBdz_id());
-        task = taskService.getTask(teamRuleResult.getTask_id());
+        subStationEntity = deviceService.getSubStation(ruleResultEntity.getBdz_id());
+        taskEntity = taskService.getTask(ruleResultEntity.getTask_id());
 
-        if (!TextUtils.isEmpty(checkRuleEntity.getScore_charge())) {
-            String[] branchs = checkRuleEntity.getScore_charge().split(",");
+
+        if (!TextUtils.isEmpty(rule4Entity.getScore_charge())) {
+            String[] branchs = rule4Entity.getScore_charge().split(",");
 
             listTeamArray.addAll(Arrays.asList(branchs));
-            String team = teamRuleResult.getCharge_group();
+            String team = ruleResultEntity.getCharge_group();
             if (team.contains("检修")) {
                 listBranchArray.add(subStationEntity.getPower_company());
-                listBranchArray.add(task.getDept_name());
+                listBranchArray.add(taskEntity.getDept_name());
             } else if (team.contains("运维")) {
                 listBranchArray.add(subStationEntity.getPower_company());
             }
 
         }
+        dataBinding.contextTxt.setText(content);
     }
 
-    private void initCreateIssue() {
-        Object teamRuleObject = getIntent().getSerializableExtra("data");
-
-
-        deviceId = getIntent().getStringExtra("device_id");
-        String taskId = getIntent().getStringExtra("task_id");
-        plustekType = (PlustekType) getIntent().getSerializableExtra("plustek_type");
-
-        if (teamRuleObject != null && teamRuleObject instanceof PlusteRuleEntity) {
-            teamRule = (PlusteRuleEntity) teamRuleObject;
-            list = plustekService.getPlusteRule(teamRule.getBigid(), null, teamRule.getId());//检查类型在第1.2.3有用，4级无用
-            if (list != null && list.size() > 0) {
-                listArray = new ArrayList<>(list.size());
-                maxIntentMinus = (int) (SCAN_NUM * plustekService.getStandaredMaxDult(list.get(0).getId(), deviceId));//获取可扣分值
-                for (int i = 0, size = list.size(); i < size; i++) {
-                    listArray.add(list.get(i).getName());
-                }
-            }
-        }
-        if (!TextUtils.isEmpty(taskId)) {
-            task = taskService.getTask(taskId);
-            if (task != null) {
-                subStationEntity = deviceService.getSubStation(task.getBdz_id());
-                deviceEntity = deviceService.getDeviceById(deviceId);
-            }
-        }
-
-        if (teamRule == null || task == null || subStationEntity == null || deviceEntity == null) {
-            showToast("参数错误!");
+    /**
+     * 设备无PMS
+     */
+    private void initNoPmsIssue(String taskId, String deviceId) {
+        rule4Entity = plustekService.getNoPMS4(deviceEntity.getBigid());
+        if (rule4Entity == null) {
+            showToast("未查询到标准！");
             finish();
+            startNoPmsActivity();
             return;
         }
 
+        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
+        maxIntentMinus = plustekService.getStandaredMaxDult(taskId, rule4Entity.id, deviceId);
 
-        if (expertEntity == null) {
-            showToast("非法权限!");
+        String otherDevices = getIntent().getStringExtra(IntentKey.NOPMS_DEVICE_OTHER);
+        if (!TextUtils.isEmpty(otherDevices)) {
+            noPmsIds.addAll(Arrays.asList(otherDevices.split(",")));
+        }
+        list = new ArrayList<>();
+        listArray = new ArrayList<>();
+        list.add(rule4Entity);
+        list.add(rule4Entity);
+        listArray.add(rule4Entity.getName());
+
+        String[] leve12Name = plustekService.getLeve1_2Name(list.get(0).getId());
+        if (leve12Name != null && leve12Name.length > 1) {
+            content = deviceEntity.getName_short() + " " + leve12Name[0] + "-" + leve12Name[1];
+        }
+
+        dataBinding.contextTxt.setText(content);
+        dataBinding.issueEdit.setText("无该项相关描述。");
+        dataBinding.issueNatureTxt.setText(natureArray.get(0));
+        checkCreateUpdateUI(rule4Entity);
+    }
+
+    /**
+     * 问题编辑初始化
+     */
+    private void initEditIssue(String taskId, String deviceId, String ruleResultId, String content) {
+        if (rule4Entity == null) {//避免重复查询
+            rule4Entity = plustekService.getIssue(ruleResultEntity.getRule_id());
+        }
+        if (rule4Entity == null) {
+            showToast("未查询到相关标准");
             finish();
             return;
         }
+        rule3Entity = plustekService.getIssue(rule4Entity.getPid());
 
+        dataBinding.issueInfoTxt.setOnClickListener(null);
+        dataBinding.issueInfoTxt.setText(rule4Entity.getName());
+        dataBinding.issueEdit.setText(ruleResultEntity.getDescription());
+        dataBinding.issueNatureTxt.setText(ruleResultEntity.getProblem_nature());
+        dataBinding.blameTeamTxt.setText(ruleResultEntity.getCharge_group());
+        dataBinding.blameBranchTxt.setText(ruleResultEntity.getCharge_unit());
+        dataBinding.issueReasonTxt.setText(ruleResultEntity.getProduce_reason());
+        dataBinding.suggestEdit.setText(ruleResultEntity.getSuggest_deal_way());
+
+        if (!TextUtils.isEmpty(ruleResultEntity.getImg())) {
+            picList.addAll(Arrays.asList(ruleResultEntity.getImg().split(",")));
+            galleryAdapte.notifyDataSetChanged();
+        }
+
+        //扣分，修改扣分需要加上本身的扣分
+        scoreUtils.showValue(
+                Math.min(maxIntentMinus + ruleResultEntity.getDeduct_score(), JSON.parseObject(TextUtils.isEmpty(rule4Entity.getScore_content()) ? "{}" : rule4Entity.getScore_content(), InspeScoreEntity.class).max_decuct_score),
+                (float) rule4Entity.getScore(),
+                Math.max(ruleResultEntity.getDeduct_score(), ruleResultEntity.getDeduct_score()));
+        dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
+
+        //责任班组、责任部门
+        listTeamArray = new ArrayList<>();
+        listBranchArray = new ArrayList<>();
+        subStationEntity = deviceService.getSubStation(ruleResultEntity.getBdz_id());
+        taskEntity = taskService.getTask(ruleResultEntity.getTask_id());
+
+        if (!TextUtils.isEmpty(rule4Entity.getScore_charge())) {
+            String[] branchs = rule4Entity.getScore_charge().split(",");
+
+            listTeamArray.addAll(Arrays.asList(branchs));
+            String team = ruleResultEntity.getCharge_group();
+            if (team.contains("检修")) {
+                listBranchArray.add(subStationEntity.getPower_company());
+                listBranchArray.add(taskEntity.getDept_name());
+            } else if (team.contains("运维")) {
+                listBranchArray.add(subStationEntity.getPower_company());
+            }
+
+        }
+
+        dataBinding.contextTxt.setText(content);
+    }
+
+    private void initCreateIssue(String taskId, String deviceId, String ruleId3) {
+        //描述
+        dataBinding.contextTxt.setText(content);
         //初始化
         dataBinding.issueNatureTxt.setText(natureArray.get(0));//问题性质，默认一般
     }
@@ -317,9 +473,45 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TAKEPIC_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == TAKE_PIC_REQUEST) {
+                if (picTempPath != null) {
+                    BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4);
+                    startDrawCircle(picTempPath);//相对地址
+                } else {
+                    showToast("图片地址不存在");
+                }
+
+            } else if (requestCode == TAKE_ALBUM_REQUEST) {
+                if (data == null) {
+                    showToast("获取图片失败!");
+                    return;
+                }
+                Uri selectedImage = data.getData();
+                String[] filePathColumns = {MediaStore.Images.Media.DATA};
+                Cursor c = getContentResolver().query(selectedImage, filePathColumns, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePathColumns[0]);
+                String imagePath = c.getString(columnIndex);
+                c.close();
+                //
+                picTempPath = FileUtils.getInpseImgPath(taskEntity) + FileUtils.createInpseImgLongName(taskEntity);//文件相对路径
+                File file = new File(FileUtils.getInpseRootPath() + picTempPath);
+                //文件拷贝
+                if (!com.cnksi.core.utils.FileUtils.copyFile(imagePath, FileUtils.getInpseRootPath() + picTempPath)) {
+                    showToast("获取图片失败!");
+                    if (file.exists()) {//清除产生文件
+                        file.delete();
+                    }
+                    return;
+                }
+
+                if (file.length() > 100 * 1024) {
+                    BitmapUtils.compressImage(FileUtils.getInpseRootPath() + picTempPath, 4); //压缩
+                }
+                startDrawCircle(picTempPath);//相对地址
+
+            } else if (requestCode == InspeConfig.LOAD_DATA) {
                 picList.add(picTempPath);
                 galleryAdapte.notifyDataSetChanged();
             }
@@ -327,76 +519,76 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
     }
 
     /**
-     * 扣分显示<p/>
-     * 根据最大扣分值来作为判断
-     *
-     * @param value
+     * 启动图片水印
+     * @param path 相对地址
      */
+    private void startDrawCircle(String path) {
+        //绘制文本
+        StringBuffer picTxt = new StringBuffer();
+        picTxt.append(deviceEntity.getName()).append("\n")
+                .append(dataBinding.issueEdit.getText().toString().trim()).append("\n")
+                .append(expertEntity.getUsername()).append("\n")
+                .append(DateFormat.dateToDbString(System.currentTimeMillis()));//.append("\n")
 
-    private void setScoreTxt(int value) {
-        boolean isAdd = true;
-        int nextValue = minusScore + value;
-        if (nextValue > maxMinus) {
-            isAdd = false;
-            dataBinding.addBtn.setEnabled(false);
-        } else if (nextValue == maxMinus || scoreEntity == 0) {
-            dataBinding.addBtn.setEnabled(false);
-        } else {
-            dataBinding.addBtn.setEnabled(true);
+        try {
+            drawCircle(FileUtils.getInpseRootPath() + path, picTxt.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            picList.add(picTempPath);
+            galleryAdapte.notifyDataSetChanged();
         }
-
-        if (nextValue < scoreEntity) {
-            isAdd = false;
-            dataBinding.minuxBtn.setEnabled(false);
-        } else if (nextValue == scoreEntity) {
-            dataBinding.minuxBtn.setEnabled(false);
-        } else {
-            dataBinding.minuxBtn.setEnabled(true);
-        }
-
-        if (isAdd) {
-            minusScore = nextValue;
-        }
-
-        dataBinding.minusScoreEdit.setText(String.format("%.2f", (minusScore * 1.0f / SCAN_NUM)));
-
     }
 
     @Override
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.cameraBtn) {//拍照
+            if (TextUtils.isEmpty(dataBinding.issueEdit.getText().toString().trim())) {
+                showToast("请先输入问题描述");
+                return;
+            }
             if (picList.size() < 3) {
-                String picName = FileUtils.createInpseImgLongName(task);//生成图片名称
-                picTempPath = FileUtils.getInpseImgPath(task);
-                FunctionUtils.takePicture(this, picName, FileUtils.getInpseRootPath() + picTempPath, TAKEPIC_REQUEST);
-                //文件相对地址
-                picTempPath = picTempPath + picName;
+                new PopMenu(context)
+                        .setListAdapter(Arrays.asList("相册", "拍照"))
+                        .setCancleListener("取消", null)
+                        .setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                if (position == 0) {//相册
+                                    FunctionUtils.takeAlbum(InspePlustekIssueActivity.this, TAKE_ALBUM_REQUEST);
+                                } else {//拍照
+                                    String picName = FileUtils.createInpseImgLongName(taskEntity);//生成图片名称
+                                    picTempPath = FileUtils.getInpseImgPath(taskEntity);
+                                    FunctionUtils.takePicture(InspePlustekIssueActivity.this, picName, FileUtils.getInpseRootPath() + picTempPath, TAKE_PIC_REQUEST);
+                                    //文件相对地址
+                                    picTempPath = picTempPath + picName;
+                                }
+                            }
+                        })
+                        .show(view);
+
+
             } else {
                 showToast("目前仅支持上传3张图片");
             }
-        } else if (i == R.id.addBtn) {//+扣分
-            setScoreTxt(scoreEntity);
-        } else if (i == R.id.minuxBtn) {//-扣分
-            setScoreTxt(-scoreEntity);
         } else if (i == R.id.issueInfoTxt) {//错误问题
             new PopItemWindow(this).setListAdapter(listArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     PlusteRuleEntity entity = list.get(position);
                     //判断是否为统一选择，同一选择不处理
-                    if (checkRuleEntity == entity) {
+                    if (rule4Entity == entity) {
                         return;
                     }
-                    checkRuleEntity = entity;
+                    rule4Entity = entity;
 
                     //判断上次选择是否有记录问题，如果有需要将图片冲删除列表中移除
-                    if (teamRuleResult != null) {
+                    if (ruleResultEntity != null) {
                         for (String picName : picList) {//先添加后移除，清理新添加的图片
                             picDeleteList.add(picName);
                         }
-                        if (!TextUtils.isEmpty(teamRuleResult.getImg())) {
-                            String[] imsg = teamRuleResult.getImg().split(",");
+                        if (!TextUtils.isEmpty(ruleResultEntity.getImg())) {
+                            String[] imsg = ruleResultEntity.getImg().split(",");
                             for (String pic : imsg) {
                                 picDeleteList.remove(pic);//将删除的图片从列表中移除
                             }
@@ -405,8 +597,8 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         galleryAdapte.notifyDataSetChanged();
                     }
 
-                    teamRuleResult = teamService.getRuleResult(list.get(position).getId(), task.getId());//查询数据库是否对该问题进行过记录
-                    if (teamRuleResult != null) {//初始化修改UI
+                    ruleResultEntity = teamService.getRuleResult(list.get(position).getId(), deviceId, taskEntity.getId());//查询数据库是否对该问题进行过记录
+                    if (ruleResultEntity != null) {//初始化修改UI
                         //对图片进行销毁
                         for (String picName : picList) {//先添加后移除，清理新添加的图片
                             picDeleteList.add(picName);
@@ -414,61 +606,30 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         picDeleteList.clear();
                         galleryAdapte.notifyDataSetChanged();
 
-                        initEditIssue();
+                        maxIntentMinus = plustekService.getStandaredMaxDult(taskId, ruleResultEntity.getRule_id(), deviceId);
+                        initEditIssue(taskId, deviceId, ruleResultId, content);
                         return;
                     }
-                    //问题描述
-                    dataBinding.issueInfoTxt.setText(entity.getName());
-                    dataBinding.issueEdit.setText(entity.getName().replaceAll("的{0,},{0,}，{0,}[扣].*分.*", "").replaceAll("[0-9].]{0,}[a-z)]{0,}[a-z]{0,}", ""));
-
-                    //扣分
-                    minusScore = 0;
-                    scoreEntity = (int) (entity.getScore() * SCAN_NUM);
-                    if (!TextUtils.isEmpty(entity.getScore_content())) {
-                        InspeScoreEntity scoreObject = JSON.parseObject(entity.getScore_content(), InspeScoreEntity.class);
-                        int maxV = (int) (scoreObject.max_decuct_score * SCAN_NUM);
-                        if (maxV > 0) {
-                            maxMinus = Math.min(maxIntentMinus, maxV);
-                        } else {
-                            maxMinus = maxIntentMinus;
-                        }
-                    } else {
-                        maxMinus = maxIntentMinus;
-                    }
-                    setScoreTxt(scoreEntity);
-
-                    //检修班组、检修部门
-                    listTeamArray.clear();
-                    listBranchArray.clear();
-                    if (!TextUtils.isEmpty(entity.getScore_charge())) {
-                        String[] branchs = entity.getScore_charge().split(",");
-
-                        listTeamArray.addAll(Arrays.asList(branchs));
-                        if (branchs.length > 1) {
-                            dataBinding.blameTeamTxt.setText(null);
-                            dataBinding.blameBranchTxt.setText(null);
-                        } else {
-                            String team = branchs[0];
-                            dataBinding.blameTeamTxt.setText(team);
-
-                            if (team.contains("检修")) {
-                                //运维或供电公司
-                                dataBinding.blameBranchTxt.setText(null);
-                                listBranchArray.add(subStationEntity.getPower_company());
-                                listBranchArray.add(task.getDept_name());
-
-                            } else if (team.contains("运维")) {
-                                //供电公司
-                                dataBinding.blameBranchTxt.setText(subStationEntity.getPower_company());
-                                listBranchArray.add(subStationEntity.getPower_company());
-                            }
-
-                        }
-                    } else {
-                        dataBinding.blameBranchTxt.setText(null);
-                    }
+                    checkCreateUpdateUI(entity);
                 }
             }).setPopWindowWidth(view.getWidth()).showAsDropDown(view);
+        } else if (i == R.id.issueEdit) {
+            if (rule4Entity == null || rule3Entity == null) {
+                showToast("请先选择扣分原因");
+                return;
+            }
+            new KeyBoadWordDialog(this).setBreakList(rule3Entity.getName(), rule4Entity.getName(), dataBinding.issueEdit.getText().toString()).setOnCheckListener(new KeyBoadWordDialog.OnCheckedListener() {
+                @Override
+                public void onChecked(String msg) {
+                    dataBinding.issueEdit.setText(msg);
+                }
+            }).show();
+        } else if (i == R.id.addBtn) {//+扣分
+            scoreUtils.add();
+            dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
+        } else if (i == R.id.minuxBtn) {//-扣分
+            scoreUtils.minux();
+            dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
         } else if (i == R.id.issueNatureTxt) {//问题性质(独立),一般、严重、危急
             new PopItemWindow(this).setListAdapter(natureArray).setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -488,7 +649,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                         //运维或供电公司
                         dataBinding.blameBranchTxt.setText(null);
                         listBranchArray.add(subStationEntity.getPower_company());
-                        listBranchArray.add(task.getDept_name());
+                        listBranchArray.add(taskEntity.getDept_name());
                         dataBinding.blameBranchTxt.performClick();
 
                     } else if (team.contains("运维")) {
@@ -522,7 +683,7 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 showToast("请选择扣分原因");
                 return;
             } else if (TextUtils.isEmpty(dataBinding.issueEdit.getText().toString().trim())) {
-                dataBinding.issueEdit.requestFocus();
+                dataBinding.issueEdit.performClick();
                 showToast("请输入问题描述");
                 return;
 //                } else if (TextUtils.isEmpty(dataBinding.dateTxt.getText().toString().trim())) {
@@ -533,22 +694,25 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 showToast("请选择问题性质");
                 dataBinding.issueNatureTxt.performClick();
                 return;
-            } else if (TextUtils.isEmpty(dataBinding.blameTeamTxt.getText())) {
-                showToast("请选择责任班组");
-                dataBinding.blameTeamTxt.performClick();
-                return;
-            } else if (TextUtils.isEmpty(dataBinding.blameBranchTxt.getText())) {
-                showToast("请选择责任单位");
-                dataBinding.blameBranchTxt.performClick();
-                return;
-            } else if (TextUtils.isEmpty(dataBinding.issueReasonTxt.getText())) {
-                showToast("请选择产生原因");
-                dataBinding.issueReasonTxt.performClick();
-                return;
+//            } else if (TextUtils.isEmpty(dataBinding.blameTeamTxt.getText())) {
+//                showToast("请选择责任班组");
+//                dataBinding.blameTeamTxt.performClick();
+//                return;
+//            } else if (TextUtils.isEmpty(dataBinding.blameBranchTxt.getText())) {
+//                showToast("请选择责任单位");
+//                dataBinding.blameBranchTxt.performClick();
+//                return;
+//            } else if (TextUtils.isEmpty(dataBinding.issueReasonTxt.getText())) {
+//                showToast("请选择产生原因");
+//                dataBinding.issueReasonTxt.performClick();
+//                return;
 //                } else if (TextUtils.isEmpty(dataBinding.suggestEdit.getText().toString().trim())) {
 //                    showToast("请输入处理措施");
 //                    dataBinding.suggestEdit.performClick();
 //                    return;
+//            } else if (picList.size() == 0) {
+//                showToast("请对问题拍照处理");
+//                return;
             }
 
             createIssue();//满足输入，创建错误
@@ -556,88 +720,148 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
 
     }
 
+    private void checkCreateUpdateUI(PlusteRuleEntity entity) {
+        //问题描述
+        dataBinding.issueInfoTxt.setText(entity.getName());
+        //dataBinding.issueEdit.setText(entity.getName().replaceAll("的{0,},{0,}，{0,}[扣].*分.*", "").replaceAll("[0-9].]{0,}[a-z)]{0,}[a-z]{0,}", ""));
+
+        //扣分
+        scoreUtils.setValue(
+                Math.min(maxIntentMinus, JSON.parseObject(TextUtils.isEmpty(rule4Entity.getScore_content()) ? "{}" : rule4Entity.getScore_content(), InspeScoreEntity.class).max_decuct_score),
+                (float) rule4Entity.getScore(),//扣分单位
+                (float) rule4Entity.getScore());//值
+        dataBinding.minusScoreEdit.setText(scoreUtils.getValueString());
+
+        //检修班组、检修部门
+        listTeamArray.clear();
+        listBranchArray.clear();
+        if (!TextUtils.isEmpty(entity.getScore_charge())) {
+            String[] branchs = entity.getScore_charge().split(",");
+
+            listTeamArray.addAll(Arrays.asList(branchs));
+            if (branchs.length > 1) {
+                dataBinding.blameTeamTxt.setText(null);
+                dataBinding.blameBranchTxt.setText(null);
+            } else {
+                String team = branchs[0];
+                dataBinding.blameTeamTxt.setText(team);
+
+                if (team.contains("检修")) {
+                    //运维或供电公司
+                    dataBinding.blameBranchTxt.setText(null);
+                    listBranchArray.add(subStationEntity.getPower_company());
+                    listBranchArray.add(taskEntity.getDept_name());
+
+                } else if (team.contains("运维")) {
+                    //供电公司
+                    dataBinding.blameBranchTxt.setText(subStationEntity.getPower_company());
+                    listBranchArray.add(subStationEntity.getPower_company());
+                }
+
+            }
+        } else {
+            dataBinding.blameBranchTxt.setText(null);
+        }
+    }
+
     /**
      * 创建错误
      */
     private void createIssue() {
-        if (teamRuleResult == null) {
-            teamRuleResult = new TeamRuleResultEntity();
+        if (ruleResultEntity == null) {
+            ruleResultEntity = new TeamRuleResultEntity();
         }
         //创建ID
-        if (teamRuleResult.getId() == null) {//创建或覆盖
-            teamRuleResult.setId(UUID.randomUUID().toString().replace("-", ""));
+        if (ruleResultEntity.getId() == null) {//创建或覆盖
+            ruleResultEntity.setId(UUID.randomUUID().toString().replace("-", ""));
         }
         //任务ID
-        teamRuleResult.setTask_id(task.id);
+        ruleResultEntity.setTask_id(taskEntity.id);
         //标准ID
-        teamRuleResult.setRule_id(checkRuleEntity.getId());
-        teamRuleResult.setRule_name(checkRuleEntity.getName());
+        ruleResultEntity.setRule_id(rule4Entity.getId());
+        ruleResultEntity.setRule_name(rule4Entity.getName());
         //被检查班组ID
-        teamRuleResult.setDept_id(task.getDept_id());
-        teamRuleResult.setDept_name(task.getDept_name());
+        ruleResultEntity.setDept_id(taskEntity.getDept_id());
+        ruleResultEntity.setDept_name(taskEntity.getDept_name());
         //检查人ID
-        teamRuleResult.setCheck_person_id(expertEntity.getId());
-        teamRuleResult.setCheck_person_name(expertEntity.getUsername());
-        teamRuleResult.setCheck_type(task.getType());
+        ruleResultEntity.setCheck_person_id(expertEntity.getId());
+        ruleResultEntity.setCheck_person_name(expertEntity.getUsername());
+        ruleResultEntity.setCheck_type(taskEntity.getType());
 
         //精益化评价独有
         //问题性质
-        teamRuleResult.setProblem_nature(dataBinding.issueNatureTxt.getText().toString());
+        ruleResultEntity.setProblem_nature(dataBinding.issueNatureTxt.getText().toString());
         //问题原因
-        teamRuleResult.setProduce_reason(dataBinding.issueReasonTxt.getText().toString());
+        ruleResultEntity.setProduce_reason(dataBinding.issueReasonTxt.getText().toString());
         //责任班组
-        teamRuleResult.setCharge_group(dataBinding.blameTeamTxt.getText().toString());
+        ruleResultEntity.setCharge_group(dataBinding.blameTeamTxt.getText().toString());
         //责任单位
-        teamRuleResult.setCharge_unit(dataBinding.blameBranchTxt.getText().toString());
+        ruleResultEntity.setCharge_unit(dataBinding.blameBranchTxt.getText().toString());
         //建议处理方式
-        teamRuleResult.setSuggest_deal_way(dataBinding.suggestEdit.getText().toString().trim());
+        ruleResultEntity.setSuggest_deal_way(dataBinding.suggestEdit.getText().toString().trim());
 
-        teamRuleResult.setBdz_id(subStationEntity.getBdzid());//变电站ID
-        teamRuleResult.setBdz_name(subStationEntity.getName());//变电站Name
-        if (TextUtils.isEmpty(teamRuleResult.getDevice_id())) {//修改不用设置，因为deviceEntity is null.
-            teamRuleResult.setDevice_id(deviceEntity.getDeviceid());//设备ID
-            teamRuleResult.setDevice_name(deviceEntity.getName());//设备Name
-            teamRuleResult.setDevice_bigtype(deviceEntity.getBigid());//设备大类
+        ruleResultEntity.setBdz_id(subStationEntity.getBdzid());//变电站ID
+        ruleResultEntity.setBdz_name(subStationEntity.getName());//变电站Name
+        if (TextUtils.isEmpty(ruleResultEntity.getDevice_id())) {//修改不用设置，因为deviceEntity is null.
+            ruleResultEntity.setDevice_id(deviceEntity.getDeviceid());//设备ID
+            ruleResultEntity.setDevice_name(deviceEntity.getName());//设备Name
+            ruleResultEntity.setDevice_bigtype(deviceEntity.getBigid());//设备大类
         }
 
         //问题类型(记录类型：问题（answer）、普通记录（normal）)
-        teamRuleResult.setRecord_type(RecordType.answer.name());
+        ruleResultEntity.setRecord_type(RecordType.answer.name());
         //扣分情况
-        teamRuleResult.setDeduct_score(minusScore * 1.0f / SCAN_NUM);//放大数据后对数据进行缩小
+        ruleResultEntity.setDeduct_score(scoreUtils.getValueInt() * 1.f / SCAN_NUM);//放大数据后对数据进行缩小
         //问题描述
-        teamRuleResult.setDescription(dataBinding.issueEdit.getText().toString().trim());
+        ruleResultEntity.setDescription(dataBinding.issueEdit.getText().toString().trim());
         //扣分原因jsonArray
-//                teamRuleResult.setReason(JSON.toJSONString(new InspeScoreEntity[]{scoreBean}));
+//                ruleResultEntity.setReason(JSON.toJSONString(new InspeScoreEntity[]{scoreBean}));
         //状态（问题进度：未分配、未整改、未审核、未审核通过、已闭环）
-        teamRuleResult.setProgress(ProgressType.wfp.name());
+        ruleResultEntity.setProgress(ProgressType.wfp.name());
         //整改期限
-        teamRuleResult.setPlan_improve_time(DateFormat.dateToDbString000(System.currentTimeMillis()));//默认当天
+        ruleResultEntity.setPlan_improve_time(DateFormat.dateToDbString000(System.currentTimeMillis()));//默认当天
 
 
         //图片(疑问？是否需要上传)
-        teamRuleResult.setImg(ArrayInspeUtils.toListString(picList));
+        ruleResultEntity.setImg(ArrayInspeUtils.toListString(picList));
         //检查时间
         String datetime = DateFormat.dateToDbString(System.currentTimeMillis());
-        if (teamRuleResult.getCreate_time() == null) {
-            teamRuleResult.setCreate_time(datetime);
+        if (ruleResultEntity.getCreate_time() == null) {
+            ruleResultEntity.setCreate_time(datetime);
         }
-        if (teamRuleResult.getInsert_time() == null) {
-            teamRuleResult.setInsert_time(datetime);
+        if (ruleResultEntity.getInsert_time() == null) {
+            ruleResultEntity.setInsert_time(datetime);
         }
-        teamRuleResult.setLast_modify_time(datetime);
+        ruleResultEntity.setLast_modify_time(datetime);
 
         //更新任务状态
-        if (task.getProgress() == null || TaskProgressType.valueOf(task.getProgress()) == TaskProgressType.todo) {
-            task.setProgress(TaskProgressType.doing.name());
-            taskService.updateTask(task);
+        if (taskEntity.getProgress() == null || TaskProgressType.valueOf(taskEntity.getProgress()) == TaskProgressType.todo) {
+            taskEntity.setProgress(TaskProgressType.doing.name());
+            taskService.updateTask(taskEntity);
         }
 
-        if (teamService.saveRuleResult(teamRuleResult)) {
+        if (teamService.saveRuleResult(ruleResultEntity)) {
             showToast("操作成功");
             isSave = true;
             finish();
+            startNoPmsActivity();
+
         } else {
             showToast("保存数据库失败！");
+        }
+    }
+
+    private void startNoPmsActivity() {
+
+        if (StartMode.NOPMS == startMode && noPmsIds.size() > 0) {
+            String deviceId = noPmsIds.iterator().next();
+            noPmsIds.remove(deviceId);
+            Intent intent = new Intent(context, InspePlustekIssueActivity.class)
+                    .putExtra(InspePlustekIssueActivity.IntentKey.START_MODE, StartMode.NOPMS)//
+                    .putExtra(InspePlustekIssueActivity.IntentKey.TASK_ID, taskId)//
+                    .putExtra(InspePlustekIssueActivity.IntentKey.DEVICE_ID, deviceId)//
+                    .putExtra(InspePlustekIssueActivity.IntentKey.NOPMS_DEVICE_OTHER, ArrayInspeUtils.toListString(noPmsIds));//
+            startActivity(intent);
         }
     }
 
@@ -649,12 +873,12 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
                 picDeleteList.remove(pic);//移除
             }
         } else {
-            if (teamRuleResult != null) {//重新编辑
+            if (ruleResultEntity != null) {//重新编辑
                 for (String pic : picList) {
                     picDeleteList.add(pic);//添加保存的图片
                 }
-                if (!TextUtils.isEmpty(teamRuleResult.getImg())) {
-                    String[] imsg = teamRuleResult.getImg().split(",");
+                if (!TextUtils.isEmpty(ruleResultEntity.getImg())) {
+                    String[] imsg = ruleResultEntity.getImg().split(",");
                     for (String pic : imsg) {
                         picDeleteList.remove(pic);//将删除的图片从列表中移除
                     }
@@ -675,4 +899,81 @@ public class InspePlustekIssueActivity extends AppBaseActivity implements View.O
         }
 
     }
+
+    @Override
+    protected void onBack(View view) {
+        if (StartMode.NOPMS == startMode) {
+            showToast("添加设备必须，不可取消");
+        } else {
+            super.onBack(view);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBack(toolbar_back_btn);
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+
+    }
+
+    /**
+     * Intent参数KEY
+     */
+    public interface IntentKey {
+        /**
+         * 页面启动模式-KEY
+         */
+        String START_MODE = "start_mode";
+        /**
+         * 检查类型
+         */
+        String PLUSTEK_TYPE = "plustek_type";
+        /**
+         * 任务ID
+         */
+        String TASK_ID = "task_id";
+        /**
+         * 设备ID
+         */
+        String DEVICE_ID = "device_id";
+        /**
+         * 标准ID(level=3)
+         */
+        String RULE_ID_3 = "rule_id_3";
+        /**
+         * 问题ID
+         */
+        String RULE_RESULT_ID = "rule_ruslt_id";
+        /** 描述内容 */
+        String CONTENT = "content";
+        /** NOPMSIDS */
+        String NOPMS_DEVICE_OTHER = "nopms_device_other";
+    }
+
+    /**
+     * 启动模式
+     */
+    public interface StartMode {
+        /**
+         * 默认，创建问题
+         */
+        int DEFAULT = 0;
+        /**
+         * 修改记录的问题
+         */
+        int MODIFY = 1;
+        /**
+         * 复制问题
+         */
+        int COPY = 2;
+        /**
+         * 无PMS台账设备记录
+         */
+        int NOPMS = 3;
+    }
+
 }

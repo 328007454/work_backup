@@ -7,7 +7,6 @@ import org.xutils.db.annotation.Table;
 
 /**
  * 检查任务实体类
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/23 00:31
@@ -112,6 +111,37 @@ public class InspecteTaskEntity extends BaseEntity {
     /***/
     @Column(name = "update_time")
     public String update_time;
+
+    /** 检查人ID */
+    public String person_id;
+    /** 检查人Name */
+    public String person_name;
+    /** 检查项 */
+    public String persion_device_bigid;
+
+    public String getPersion_device_bigid() {
+        return persion_device_bigid;
+    }
+
+    public void setPersion_device_bigid(String persion_device_bigid) {
+        this.persion_device_bigid = persion_device_bigid;
+    }
+
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public void setPerson_id(String person_id) {
+        this.person_id = person_id;
+    }
+
+    public String getPerson_name() {
+        return person_name;
+    }
+
+    public void setPerson_name(String person_name) {
+        this.person_name = person_name;
+    }
 
     public String getId() {
         return this.id;

@@ -1,6 +1,6 @@
 package com.cnksi.inspe.utils;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @version v1.0
@@ -10,21 +10,21 @@ import java.util.List;
 
 public final class ArrayInspeUtils {
 
-    public static String toListString(List<String> list) {
+    public static String toListString(Collection<String> list) {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < list.size(); i++) {
-            sb.append(list.get(i)).append(',');
+        for (String i : list) {
+            sb.append(i).append(',');
         }
 
         return sb.substring(0, sb.length() > 0 ? sb.length() - 1 : 0);
     }
 
-    public static String toListIntegerString(List<Integer> list) {
+    public static String toListIntegerString(Collection<Integer> list) {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < list.size(); i++) {
-            sb.append(list.get(i)).append(',');
+        for (Integer i : list) {
+            sb.append(i).append(',');
         }
 
         return sb.substring(0, sb.length() > 0 ? sb.length() - 1 : 0);

@@ -1,21 +1,14 @@
 package com.cnksi.inspe.ui;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.support.v4.util.ArraySet;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.core.common.ExecutorManager;
-import com.cnksi.core.utils.StringUtils;
-import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.inspe.R;
 import com.cnksi.inspe.adapter.DeviceAdapter;
 import com.cnksi.inspe.base.AppBaseActivity;
@@ -32,7 +25,9 @@ import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -54,7 +49,11 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     private String taskId;
     private String bigIds = "";
     private PlustekType plustekType;
-
+    private String bdzId;
+    private boolean isFirstLoad = true;
+    private InspecteTaskEntity taskEntity;
+    Map<String ,Integer> checkMap = new HashMap<>();
+    List<String> checkDevices = new ArrayList<>();
     @Override
     public int getLayoutResId() {
         return R.layout.activity_inspe_device;
@@ -63,10 +62,9 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
     @Override
     public void initUI() {
         deviceBinding = (ActivityInspeDeviceBinding) rootDataBinding;
-
         deviceBinding.includeInspeTitle.toolbarBackBtn.setVisibility(View.VISIBLE);
         plustekType = (PlustekType) getIntent().getSerializableExtra("plustek_type");
-        deviceBinding.includeInspeTitle.toolbarTitle.setText(plustekType.getDesc());
+
         qwerKeyBoardUtils = new QWERKeyBoardUtils(this);
         qwerKeyBoardUtils.init(deviceBinding.keyboardContainer, this);
 
@@ -86,25 +84,56 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         popItemWindow = new PopItemWindow(this);
         popItemWindow.setOnItemClickListener(this);
         initOnClick();
+
+        taskEntity = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
+        taskId = taskEntity.id;
+        bdzId = taskEntity.bdz_id;
+        String bigId = taskEntity.persion_device_bigid;
+        deviceBinding.includeInspeTitle.toolbarTitle.setText(TextUtils.isEmpty(taskEntity.bdz_name) ? (plustekType.getDesc()) : taskEntity.bdz_name + plustekType.getDesc());
+        bigIds = com.cnksi.inspe.utils.StringUtils.getDeviceStandardsType(bigId);
+
+//        if (TextUtils.equals(plustekType.name(),PlustekType.pmsjc.name())){
+//        deviceBinding.btnAddDevice.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Override
     public void initData() {
-        InspecteTaskEntity taskEntity = (InspecteTaskEntity) getIntent().getSerializableExtra("task");
-        taskId = taskEntity.id;
-        String bdzId = taskEntity.bdz_id;
-        String bigId = taskEntity.checked_device_bigid;
-        bigIds = com.cnksi.inspe.utils.StringUtils.getDeviceStandardsType(bigId);
+
+    }
+
+    private void initDevice() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 bigTypeModels = new DeviceService().getBigTypeModels(bigIds);
                 dbModelList = new DeviceService().getAllDeviceByBigID(bdzId, bigIds);
+                List<DbModel> otherDevice = new DeviceService().getAddDevice(bdzId, taskId);
+                checkMap = new DeviceService().getCheckSpace(taskId, plustekType.name());
+                checkDevices = new DeviceService().getCheckDevices(taskId, plustekType.name());
+                if (otherDevice != null && !otherDevice.isEmpty()) {
+                    for (DbModel model : otherDevice) {
+                        if (TextUtils.isEmpty(model.getString("spid"))) {
+                            model.add("spid", "000000");
+                            model.add("sname", "添加设备");
+                            model.add("dnameshort", model.getString("name_short"));
+                        }
+                        if (TextUtils.isEmpty(model.getString("dnameshort"))) {
+                            model.add("dnameshort", model.getString("name_short"));
+                        }
+                    }
+                    dbModelList.addAll(otherDevice);
+                }
             } catch (DbException e) {
                 e.printStackTrace();
                 dbModelList = new ArrayList<>();
             }
-            loadAdapterData(dbModelList);
+
             runOnUiThread(() -> {
+                deviceAdapter.setListCheck(checkMap);
+                deviceAdapter.setCheckDevice(checkDevices);
+                filterDevice(checkModule);
+
+
                 if (!bigTypeModels.isEmpty()) {
                     List<String> bigTypeNames = new ArrayList<>();
                     for (DbModel model : bigTypeModels) {
@@ -117,9 +146,26 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!isFirstLoad) {
+            expandPosition = deviceAdapter.getExpandPosition();
+        } else {
+            isFirstLoad = !isFirstLoad;
+        }
+        devicesList.clear();
+        deviceAdapter.notifyDataSetChanged();
+        initDevice();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     /**
      * 组装adapter数据
-     *
      */
     private void loadAdapterData(List<DbModel> models) {
         if (!models.isEmpty()) {
@@ -134,10 +180,17 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
             }
         }
         runOnUiThread(() -> {
-            if (devicesList.size() > 0) {
-                deviceAdapter.expand(0);
+            if (expandPosition == -1) {
+                expandPosition = 0;
             }
             deviceAdapter.notifyDataSetChanged();
+            if (!devicesList.isEmpty()) {
+                try {
+                    deviceBinding.inspeRecDevice.scrollToPosition(expandPosition);
+                    deviceAdapter.expand(expandPosition);
+                } catch (Exception e) {
+                }
+            }
         });
     }
 
@@ -148,8 +201,19 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         deviceBinding.txtBigDevice.setOnClickListener(view -> {
             popItemWindow.setPopWindowWidth(deviceBinding.txtBigDevice.getWidth());
             popItemWindow.showAsDropDown(deviceBinding.txtBigDevice);
-        })
-        ;
+        });
+
+        deviceBinding.btnAddDevice.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AddDeviceAtivity.class);
+            intent.putExtra("bdzId", bdzId);
+            intent.putExtra("task_id", taskId);
+            intent.putExtra("bigid", bigIds);
+            startActivity(intent);
+        });
+
+        deviceBinding.btnFinish.setOnClickListener(view -> {
+            finish();
+        });
 
     }
 
@@ -162,6 +226,8 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
      */
     @Override
     public void onChange(View v, String oldKey, String newKey) {
+        devicesList.clear();
+        deviceAdapter.notifyDataSetChanged();
         deviceAdapter.setKeyWord(newKey);
         if (!TextUtils.isEmpty(newKey)) {
             localSearchData(newKey);
@@ -179,10 +245,6 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         devicesList.clear();
         List<DbModel> locaList = new ArrayList<>();
         for (DbModel model : dbModelList) {
-//            if (model.getString("snamepy").toUpperCase().contains(newKey) || model.getString("dshortpinyin").toUpperCase().contains(newKey)) {
-//                locaList.add(model);
-//            }
-
             if (!model.isEmpty("snamepy") && model.getString("snamepy").toUpperCase().contains(newKey)) {
                 locaList.add(model);
             } else if (!model.isEmpty("dshortpinyin") && model.getString("dshortpinyin").toUpperCase().contains(newKey)) {
@@ -197,16 +259,18 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         }
     }
 
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        String name = (String) adapter.getItem(position);
+    private DbModel checkModule;
+
+    private void filterDevice(DbModel bigEntity) {
+        devicesList.clear();
+        deviceAdapter.notifyDataSetChanged();
+        String name = bigEntity == null ? "全部" : bigEntity.getString("name");
         deviceBinding.txtBigDevice.setText(name);
-        if (TextUtils.equals(name, "全部")) {
-            devicesList.clear();
+        if (bigEntity==null||TextUtils.equals(name, "全部")) {
             loadAdapterData(dbModelList);
             return;
         }
-        String bigId = bigTypeModels.get(position).getString("bigid");
+        String bigId = bigEntity.getString("bigid");
         List<DbModel> models = new ArrayList<>();
         for (DbModel model : dbModelList) {
             if (TextUtils.equals(bigId, model.getString("bigid"))) {
@@ -217,6 +281,21 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
             devicesList.clear();
             loadAdapterData(models);
         }
+    }
+
+    int expandPosition = -1;
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        if (position == bigTypeModels.size()) {
+            checkModule = null;
+        } else {
+            checkModule = bigTypeModels.get(position);
+        }
+        expandPosition = -1;
+        deviceAdapter.setExpandablePosition(expandPosition);
+        filterDevice(checkModule);
+
     }
 
     /**
@@ -234,6 +313,7 @@ public class InspeDeviceActivity extends AppBaseActivity implements QWERKeyBoard
         intent.putExtra("taskId", taskId);
         intent.putExtra("deviceName", ((DeviceItem) item).dbModel.getString("dname"));
         intent.putExtra("plustek_type", plustekType);//检查类型
+        intent.putExtra("spid",((DeviceItem) item).dbModel.getString("spid"));
         startActivity(intent);
     }
 }

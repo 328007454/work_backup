@@ -18,12 +18,10 @@ import com.cnksi.inspe.base.AppBaseActivity;
 import com.cnksi.inspe.databinding.ActivityInspeTeamBinding;
 import com.cnksi.inspe.db.TaskService;
 import com.cnksi.inspe.db.TeamService;
-import com.cnksi.inspe.db.entity.TeamRuleEntity;
 import com.cnksi.inspe.db.entity.InspecteTaskEntity;
+import com.cnksi.inspe.db.entity.TeamRuleEntity;
+import com.cnksi.inspe.type.RecordType;
 import com.cnksi.inspe.type.TaskProgressType;
-import com.cnksi.inspe.utils.DateFormat;
-
-import org.xutils.common.util.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,12 +124,12 @@ public class InspeTeamActivity extends AppBaseActivity implements View.OnClickLi
             List<TeamRuleEntity> ruleItemList = teamService.getRoleList(entity.getId(), task.getId());
             for (TeamRuleEntity e : ruleItemList) {
                 //如果状态不为不可用用状态则不处理(第一次有效，展开用户正在操作的项)
-                if (doPosition == -1 && e.getRecord_type() == null) {
+                if (doPosition == -1 && (e.getRecord_type() == null || e.getRecord_type().equals(RecordType.def.name()) || e.getRecord_type().equals(RecordType.ing.name()))) {
                     doPosition = i;
                 }
 
                 //检查是否已经检查完成
-                if (isOk && e.getRecord_type() == null) {
+                if (isOk && (e.getRecord_type() == null || e.getRecord_type().equals(RecordType.def.name()) || e.getRecord_type().equals(RecordType.ing.name()))) {
                     isOk = false;
                 }
 

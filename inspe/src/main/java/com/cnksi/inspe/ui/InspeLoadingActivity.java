@@ -23,7 +23,6 @@ import java.util.List;
 
 /**
  * App启动页面，其他模块启动可以参考本页面启动主模块方式
- *
  * @version v1.0
  * @auther Today(张军)
  * @date 2018/3/20 13:40
@@ -95,7 +94,6 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
 
     /**
      * 根据不同角色启动
-     *
      * @param roleType
      */
     private void startMain(RoleType roleType) {
@@ -106,16 +104,17 @@ public class InspeLoadingActivity extends AppBaseActivity implements PermissionU
                 startMain(null, new String[]{"test2"});
                 break;
             case expert:
-                UserEntity userEntity = getUserService().getUserOnName("test6");
+                String userName = "zj";
+                UserEntity userEntity = getUserService().getUserOnName(userName);
                 if (userEntity != null) {
                     userEntity.setRoleTypes(RoleType.getRoles(userEntity.getType()));
                     if (!(userEntity.getRoleTypes()).contains(RoleType.expert)) {
                         userEntity.setType(userEntity.getType() + "," + RoleType.expert);
                         getUserService().update(userEntity);
                     }
-                    startMain(null, new String[]{"test6"});
+                    startMain(null, new String[]{userName});
                 } else {
-                    showToast("未查询到用户:test6");
+                    showToast("未查询到用户");
                 }
                 break;
             case team_leader:

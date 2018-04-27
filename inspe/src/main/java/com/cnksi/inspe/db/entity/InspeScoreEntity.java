@@ -21,7 +21,7 @@ public class InspeScoreEntity {
     /**
      * 最大扣分值0.001
      */
-    public float max_decuct_score = -1;
+    public float max_decuct_score = 1000;
 
     public InspeScoreEntity() {
     }

@@ -1,3 +1,9 @@
+//
+//include ':cnksicore', ':adaptionsjjc'
+//include ':autolayout'
+////include ":myapplication"
+//=======
+include ':comm',':workticket'
 include ':adaptionsjjc', ':tts', ':bdloc', ':pickerview',':core2.0', ':bdzinspection', ':workticket'
 include ':inspe'
 

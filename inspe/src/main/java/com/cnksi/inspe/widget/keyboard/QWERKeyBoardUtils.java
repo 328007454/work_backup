@@ -74,10 +74,10 @@ final public class QWERKeyBoardUtils {
         int paddingLeft = mActivity.getResources().getDimensionPixelSize(R.dimen.inspe_9px);
         int keyWidth = (screenWidth - 2 * paddingLeft - 9 * paddingLeft) / 10;
         // 添加键盘按键
-        addKey(mActivity.getResources().getStringArray(R.array.Inspe_WordsNumberArray), (LinearLayout) keyBordHolder.getView(R.id.ll_keyboard_num_container), paddingLeft, keyWidth);
-        addKey(mActivity.getResources().getStringArray(R.array.Inspe_WordsOneArray), (LinearLayout) keyBordHolder.getView(R.id.ll_keyboard_words_one_container), paddingLeft, keyWidth);
-        addKey(mActivity.getResources().getStringArray(R.array.Inspe_WordsTwoArray), (LinearLayout) keyBordHolder.getView(R.id.ll_keyboard_words_two_container), paddingLeft, keyWidth);
-        addKey(mActivity.getResources().getStringArray(R.array.Inspe_WordsThreeArray), (LinearLayout) keyBordHolder.getView(R.id.ll_keyboard_words_three_container), paddingLeft, keyWidth);
+        addKey(mActivity.getResources().getStringArray(R.array.Inspe_WordsNumberArray), keyBordHolder.getView(R.id.ll_keyboard_num_container), paddingLeft, keyWidth);
+        addKey(mActivity.getResources().getStringArray(R.array.Inspe_WordsOneArray), keyBordHolder.getView(R.id.ll_keyboard_words_one_container), paddingLeft, keyWidth);
+        addKey(mActivity.getResources().getStringArray(R.array.Inspe_WordsTwoArray), keyBordHolder.getView(R.id.ll_keyboard_words_two_container), paddingLeft, keyWidth);
+        addKey(mActivity.getResources().getStringArray(R.array.Inspe_WordsThreeArray), keyBordHolder.getView(R.id.ll_keyboard_words_three_container), paddingLeft, keyWidth);
         keyBordHolder.getView(R.id.ibtn_keyboard_delete).setOnClickListener(keyClickListener);
         keyBordHolder.getView(R.id.tv_keyboard_words).setOnClickListener(keyClickListener);
     }

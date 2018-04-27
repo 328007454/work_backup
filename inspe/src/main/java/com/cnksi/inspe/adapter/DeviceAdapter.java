@@ -2,7 +2,7 @@ package com.cnksi.inspe.adapter;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.speech.tts.TextToSpeech;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -19,7 +19,9 @@ import com.cnksi.inspe.entity.device.SpaceItem;
 
 import org.xutils.db.table.DbModel;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mr.K on 2018/4/9.
@@ -31,9 +33,24 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     public final static int DEVICE_ITEM = 2;
     private String keyWord;
     private OnDeviceItemClickListerner onItemClickListerner;
+    Map<String ,Integer> checkMap = new HashMap<>();
+    private List<String> checkDevice;
 
     public void setKeyWord(String newKey) {
         this.keyWord = newKey;
+    }
+
+    public void setListCheck(Map<String ,Integer> checkMap) {
+        this.checkMap = checkMap;
+    }
+
+    public void setExpandablePosition(int expandPosition) {
+
+        this.expandPosition = expandPosition;
+    }
+
+    public void setCheckDevice(List<String> checkDevice) {
+        this.checkDevice = checkDevice;
     }
 
     public interface OnDeviceItemClickListerner {
@@ -47,7 +64,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
-     *
      * @param data A new list is created out of this one to avoid mutable list
      */
     public DeviceAdapter(Activity context, List<MultiItemEntity> data) {
@@ -55,6 +71,8 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         addItemType(SPACE_ITEM, R.layout.inspe_device_group_item);
         addItemType(DEVICE_ITEM, R.layout.inspe_device_item);
     }
+
+    private int expandPosition;
 
     @Override
     protected void convert(BaseViewHolder helper, MultiItemEntity item) {
@@ -72,8 +90,15 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                         collapse(helper.getAdapterPosition(), true);
                     } else {
                         expand(helper.getAdapterPosition(), true);
+                        expandPosition = helper.getAdapterPosition();
                     }
                 });
+
+                if (!checkMap.isEmpty()&&null!=checkMap.get(spModel.getString("spid"))&&checkMap.get(spModel.getString("spid"))==spaceItem.getSubSize()){
+                    helper.setTextColor(R.id.tv_group_item,mContext.getResources().getColor(R.color.color_333333));
+                }else{
+                    helper.setTextColor(R.id.tv_group_item,mContext.getResources().getColor(R.color.color_03b9a0));
+                }
                 formatKeyWord(helper, spaceName, spModel.getString("snamepy"));
 
                 break;
@@ -88,6 +113,13 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                     }
                 });
                 formatKeyWord(helper, deviceName, dvModle.getString("dshortpinyin"));
+                if (!checkDevice.isEmpty()&&checkDevice.contains(dvModle.getString("deviceid"))){
+                    helper.setTextColor(R.id.tv_device_name,mContext.getResources().getColor(R.color.color_333333));
+                    helper.getView(R.id.rl_device_container).setBackground(ContextCompat.getDrawable(mContext, R.drawable.inspe_black_line_shape));
+                }else {
+                    helper.setTextColor(R.id.tv_device_name,mContext.getResources().getColor(R.color.color_03b9a0));
+                    helper.getView(R.id.rl_device_container).setBackground(ContextCompat.getDrawable(mContext, R.drawable.inspe_device_green_border_background_selector ));
+                }
                 break;
         }
     }
@@ -110,7 +142,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             }
         }
         lastExpandIndex = entity;
-
         return index;
     }
 
@@ -122,7 +153,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
 
     /**
      * 搜索的内容标红色
-     *
      * @param helper
      * @param name
      */
@@ -130,7 +160,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         if (!TextUtils.isEmpty(keyWord)) {
             SpannableStringBuilder builder = new SpannableStringBuilder(name);
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.RED);
-            if (shortName.toUpperCase().contains(keyWord)) {
+            if (!TextUtils.isEmpty(shortName)&&!TextUtils.isEmpty(keyWord)&&shortName.toUpperCase().contains(keyWord)) {
                 int index = shortName.toUpperCase().indexOf(keyWord);
                 if (index != -1 && name.length() >= (index + keyWord.length())) {
                     builder.setSpan(colorSpan, index, index + keyWord.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -141,6 +171,10 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                 }
             }
         }
+    }
+
+    public int  getExpandPosition(){
+        return expandPosition;
     }
 
 }

@@ -80,11 +80,14 @@
                         android:textColor="#333333"
                         android:textSize="12dp" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/issueEdit"
-                        style="@style/View.EditText"
+                        style="@style/View.TextView"
+                        android:layout_width="match_parent"
                         android:background="@drawable/inspe_edittext_nullbg_shape"
+                        android:drawableRight="@mipmap/inspe_arrow_down"
                         android:hint="请输入问题描述"
+                        android:paddingRight="10dp"
                         android:textSize="14dp" />
                 </LinearLayout>
 

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackgound"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_inspe_title"
+            layout="@layout/include_inspe_title" />
+
+        <LinearLayout
+            android:paddingRight="@dimen/inspe_30px"
+            android:background="@color/core_bg_white_ffffff"
+            android:paddingLeft="@dimen/inspe_30px"
+            android:id="@+id/ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/include_inspe_title"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="@dimen/inspe_36px"
+               android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="所属大类"
+                android:textColor="#ff3c4950"
+                android:textSize="33px" />
+
+            <TextView
+                android:layout_marginBottom="@dimen/inspe_30px"
+                android:layout_marginTop="@dimen/inspe_30px"
+                android:id="@+id/txt_big_device"
+                style="@style/View.TextView"
+                android:layout_width="match_parent"
+                android:drawableRight="@mipmap/inspe_arrow_down"
+                android:hint="请选择设备大类"
+                android:text=""
+                android:textColor="#ff3c4950"
+                android:textSize="33px" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="@dimen/core_text_42px"
+            android:id="@+id/device"
+            android:layout_width="match_parent"
+            android:layout_height="70px"
+            android:layout_below="@id/ll_container"
+            android:background="#ffd0eee9"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="设备"
+            android:textColor="#ff03b9a0"
+            android:textSize="33px"
+            android:drawableRight="@drawable/inspe_device_add"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:descendantFocusability="beforeDescendants"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/device"
+            android:layout_above="@id/btn_save"
+            android:background="@color/core_bg_white_ffffff" />
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/View.Button"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/inspe_btn_green_selector"
+            android:text="保存" />
+
+
+    </RelativeLayout>
+</layout>

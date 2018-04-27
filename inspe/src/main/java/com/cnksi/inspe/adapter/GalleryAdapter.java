@@ -7,8 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.inspe.R;
-import com.cnksi.inspe.adapter.entity.GalleryEntity;
-import com.cnksi.inspe.utils.Config;
 import com.cnksi.inspe.utils.FileUtils;
 
 import java.util.List;

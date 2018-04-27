@@ -19,6 +19,13 @@ public class DeviceTypeCheckEntity {
     public DeviceTypeCheckEntity() {
     }
 
+    public DeviceTypeCheckEntity(DeviceTypeEntity entity, int typeId, String typeName, boolean isChecked) {
+        this.entity = entity;
+        this.typeId = typeId;
+        this.typeName = typeName;
+        this.isChecked = isChecked;
+    }
+
     public DeviceTypeCheckEntity(DeviceTypeEntity entity, int typeId, String typeName) {
         this.entity = entity;
         this.typeId = typeId;
