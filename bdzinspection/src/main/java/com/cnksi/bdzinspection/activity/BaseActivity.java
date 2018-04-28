@@ -204,12 +204,12 @@ public class BaseActivity extends BaseCoreActivity {
     protected KeyboardView mKeyBoardView = null;
     protected WindowManager mWindowManager = null;
     protected WindowManager.LayoutParams mWindowLayoutParams = null;
-    protected Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            onRefresh(msg);
-        }
-    };
+//    protected Handler mHandler = new Handler() {
+//        @Override
+//        public void handleMessage(android.os.Message msg) {
+//            onRefresh(msg);
+//        }
+//    };
 
     public String currentAcounts;
 
@@ -223,7 +223,6 @@ public class BaseActivity extends BaseCoreActivity {
         mWindowManager = (WindowManager) currentActivity.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         mWindowLayoutParams = getWindowManagerParams();
         mVibrator = (Vibrator) currentActivity.getSystemService(Context.VIBRATOR_SERVICE);
-        // Bundle bundle=getIntent().getExtras();
         Intent intent = getIntent();
         if (null != intent) {
             // 获取从数据检测传过来的登陆用户
@@ -415,7 +414,6 @@ public class BaseActivity extends BaseCoreActivity {
         CustomerDialog.dismissProgress();
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(0);
-            mHandler = null;
         }
         DialogUtils.setDialogNull();
         PlaySound.setPlayNull();

@@ -69,7 +69,6 @@ public class AddNewDefectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_add_new_defect);
-//        setContentView(R.layout.xs_activity_add_new_defect);
         initUI();
         initOnClick();
     }

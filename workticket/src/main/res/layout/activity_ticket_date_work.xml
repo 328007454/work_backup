@@ -2,55 +2,76 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-            android:id="@+id/calendar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <com.cnksi.workticket.view.StyleLineLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:padding="@dimen/core_padding_30px"
-            android:orientation="vertical"
-            app:bottom_line_visible="true"
-            app:top_line_visible="true"
-            app:right_line_visible="true"
-            app:right_line_color="@color/colorAccent"
-            app:margin_bottom_line_size="90"
-            app:margin_top_line_size="90"
-            app:margin_left_line_size="100"
-            app:margin_right_line_size="100"
-            app:line_size="5"
-            app:top_line_color="@color/core_bg_red_ff7575"
-            app:bottom_line_color="@color/color_1BBC9B">
+            <include
+                android:id="@+id/include_title"
+                layout="@layout/ticket_title_layout" />
 
-            <Button
-                android:id="@+id/go"
-                android:text="go"
+            <com.cnksi.core.view.PagerSlidingTabStrip
+                android:id="@+id/tab_strip"
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:background="@color/core_bg_white_ffffff" />
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:layout_marginTop="45px"
+                android:id="@+id/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/back"
-                android:text="back"
+            <com.cnksi.workticket.view.StyleLineLinearLayout
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="@dimen/core_padding_30px"
+                app:bottom_line_color="@color/color_1BBC9B"
+                app:bottom_line_visible="true"
+                app:line_size="5"
+                app:margin_bottom_line_size="90"
+                app:margin_left_line_size="100"
+                app:margin_right_line_size="100"
+                app:margin_top_line_size="90"
+                app:right_line_color="@color/colorAccent"
+                app:right_line_visible="true"
+                app:top_line_color="@color/core_bg_red_ff7575"
+                app:top_line_visible="true">
 
-            <Button
-                android:id="@+id/expand"
-                android:text="expand"
+                <Button
+                    android:id="@+id/go"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="go" />
+
+                <Button
+                    android:id="@+id/back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="back" />
+
+                <Button
+                    android:id="@+id/expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="expand" />
+
+            </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rec_work"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </com.cnksi.workticket.view.StyleLineLinearLayout>
+                android:layout_height="wrap_content" />
 
 
-    </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
 </layout>

@@ -3,5 +3,7 @@
     <style name="CustomTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
         <item name="android:textColor">@color/color_1BBC9B</item>
     </style>
-
+    <style name="TabLayoutTextStyle1" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">@dimen/ticket_42px</item>
+    </style>
 </resources>

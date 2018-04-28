@@ -24,4 +24,5 @@ public class Config {
     public static final String EXTERNAL_SDCARD_DIRECTORY = null;
     public static final String BDZ_INSPECTION_FOLDER = (EXTERNAL_SDCARD_DIRECTORY != null ? EXTERNAL_SDCARD_DIRECTORY : ((SDCardUtils.isSDCardEnable() ? SDCARD_DIRECTORY : PHONE_DIRECTORY))) + "/BdzInspection/";
     public static final  String LOG = BDZ_INSPECTION_FOLDER+"log/";
+
 }
