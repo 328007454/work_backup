@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="color_1BBC9B">#1BBC9B</color>>
+    <color name="ticket_color_03B9A0">#03B9A0</color>
+    <color name="ticket_color_A8ABAA">#A8ABAA</color>
 </resources>

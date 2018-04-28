@@ -9,15 +9,15 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application>
-        <activity android:name=".activity.TicketDateWorkActivity"
-
-            >
+        <activity android:name=".activity.TicketDateWorkActivity">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
+
+        <activity android:name=".activity.TicketDateHomeActivity"/>
 
         <meta-data
             android:name="design_width"

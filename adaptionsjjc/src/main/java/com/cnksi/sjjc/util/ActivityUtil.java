@@ -18,6 +18,7 @@ import com.cnksi.sjjc.activity.NewLauncherActivity;
 import com.cnksi.sjjc.activity.TypeListActivity;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.sync.KSyncConfig;
+import com.cnksi.workticket.activity.TicketDateHomeActivity;
 import com.cnksi.workticket.activity.TicketDateWorkActivity;
 
 /**
@@ -104,7 +105,7 @@ public class ActivityUtil {
     }
 
     public static void startTicketDateModel(Activity activity) {
-        Intent intent = new Intent(activity, TicketDateWorkActivity.class);
+        Intent intent = new Intent(activity, TicketDateHomeActivity.class);
         activity.startActivity(intent);
     }
 }
