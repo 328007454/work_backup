@@ -67,7 +67,7 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         final TextView tvClearNum = holder.getView(R.id.tv_clearhole_num);
         holder.setText(R.id.tv_hole, item.location + "_" + item.hole_detail);
         if (listPicXC != null && !listPicXC.isEmpty()) {
-            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + listPicXC.get(0));
+            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + listPicXC.get(0), 1080);
             if (bitmap != null) {
                 ((ImageView) holder.getView(R.id.img_discoverhole_pic)).setImageBitmap(bitmap);
             }

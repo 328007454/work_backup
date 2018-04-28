@@ -64,7 +64,7 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
         if (defectPicArray != null && defectPicArray.length > 0
                 && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
-            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]));
+            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), 280);
             if (bitmap != null)
                 defectImage.setImageBitmap(bitmap);
         } else {

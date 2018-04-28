@@ -63,10 +63,6 @@ public class NewLauncherActivity extends BaseActivity {
         public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
             switch (id) {
                 case R.id.menu_record:
-//                    Intent homeIntent = new Intent();
-//                    homeIntent.setClass(getApplicationContext(), HomeActivity.class);
-//                    startActivity(homeIntent);
-//                    NewLauncherActivity.this.finish();
                     onBackPressed();
                     break;
                 case R.id.menu_tour:
@@ -98,10 +94,10 @@ public class NewLauncherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         changedStatusColor();
         launcherBinding = DataBindingUtil.setContentView(this, R.layout.activity_launcher_new);
-//        inUI();
-//        initFragments();
-//        setFragmentToHomePager();
-//        initBaseData();
+        inUI();
+        initFragments();
+        setFragmentToHomePager();
+        initBaseData();
         launcherBinding.mainRadioGroup.setOnCheckedChangeListener(checkedChangeListener);
     }
 
@@ -151,11 +147,11 @@ public class NewLauncherActivity extends BaseActivity {
                                 if (bdz != null) {
                                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
                                     PreferencesUtils.put(Config.LOCATION_BDZID, bdz.bdzid);
-                                    PreferencesUtils.put( Config.LOCATION_BDZNAME, bdz.name);
+                                    PreferencesUtils.put(Config.LOCATION_BDZNAME, bdz.name);
                                     break;
                                 }
                             } catch (DbException e) {
-                                Log.d("Tag",e.getMessage());
+                                Log.d("Tag", e.getMessage());
                             }
                         }
                     }
@@ -176,7 +172,7 @@ public class NewLauncherActivity extends BaseActivity {
         launcherBinding.lancherTitle.txtTime.setText(date);
         launcherBinding.lancherTitle.txtPerson.setText(PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         ExecutorManager.executeTaskSerially(() -> {
-            String deparmentId = PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, "");
+            String deparmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             try {
                 bdzList = (ArrayList<Bdz>) CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
                 final Department department = CustomApplication.getInstance().getDbManager().selector(Department.class).where(Department.ID, "=", deparmentId).and(Department.DLT, "<>", 1).findFirst();
@@ -188,7 +184,7 @@ public class NewLauncherActivity extends BaseActivity {
                             initBDZDialog();
                             if (!bdzList.isEmpty()) {
                                 launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
-                                PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
+                                PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
                                 PreferencesUtils.put(Config.LOCATION_BDZID, bdzList.get(0).bdzid);
                                 PreferencesUtils.put(Config.LOCATION_BDZNAME, bdzList.get(0).name);
                                 PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, department.name);
@@ -230,24 +226,24 @@ public class NewLauncherActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-//        if (getIntent() != null && isFromHomeActivity) {
-//            currentSelectPosition = getIntent().getIntExtra("position", 0);
-//            isFromHomeActivity = false;
-//        }
+        if (getIntent() != null && isFromHomeActivity) {
+            currentSelectPosition = getIntent().getIntExtra("position", 0);
+            isFromHomeActivity = false;
+        }
         super.onResume();
-//        switch (currentSelectPosition) {
-//            case 0:
-//                launcherBinding.fragmenPager.setCurrentItem(0);
-//                launcherBinding.menuTour.setChecked(true);
-//                break;
-//            case 1:
-//                launcherBinding.fragmenPager.setCurrentItem(1);
-//                launcherBinding.menuMaintenance.setChecked(true);
-//                break;
-//            default:
-//                break;
-//        }
-//        locationHelper.resume();
+        switch (currentSelectPosition) {
+            case 0:
+                launcherBinding.fragmenPager.setCurrentItem(0);
+                launcherBinding.menuTour.setChecked(true);
+                break;
+            case 1:
+                launcherBinding.fragmenPager.setCurrentItem(1);
+                launcherBinding.menuMaintenance.setChecked(true);
+                break;
+            default:
+                break;
+        }
+        locationHelper.resume();
     }
 
     private void initBDZDialog() {
@@ -263,9 +259,9 @@ public class NewLauncherActivity extends BaseActivity {
             public void itemClick(View v, Bdz bdz, int position) {
                 if (!bdz.name.contains("未激活")) {
                     launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
-                    PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
+                    PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
                     PreferencesUtils.put(Config.LOCATION_BDZID, bdz.bdzid);
-                    PreferencesUtils.put( Config.LOCATION_BDZNAME, bdz.name);
+                    PreferencesUtils.put(Config.LOCATION_BDZNAME, bdz.name);
                     mPowerStationDialog.dismiss();
                     locationHelper.stop();
                 } else
@@ -281,21 +277,21 @@ public class NewLauncherActivity extends BaseActivity {
         mPowerStationDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        locationHelper.pause();
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        locationHelper.stop();
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        locationHelper.destory();
-//    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationHelper.pause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        locationHelper.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationHelper.destory();
+    }
 }

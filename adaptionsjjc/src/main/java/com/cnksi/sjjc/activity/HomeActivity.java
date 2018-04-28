@@ -111,10 +111,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         changedStatusColor();
-//        checkIsNeedSync();
-//        inUI();
+        checkIsNeedSync();
+        inUI();
         initTabs();
-//        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
+        TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
         ExecutorManager.executeTaskSerially(() -> {
             DeviceService.getInstance().refreshDeviceHasCopy();
             try {
@@ -141,19 +141,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 transformDefectType();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initBDZDialog();
-                        if (bdzAdapter == null) {
-                            bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
-                            bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
-                        } else
-                            bdzAdapter.setList(bdzList);
-                        if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, "")))
-                            homePageBinding.bdzName.setText(bdzList.get(0).name);
-                        loadDefect();
-                    }
+                runOnUiThread(() -> {
+                    initBDZDialog();
+                    if (bdzAdapter == null) {
+                        bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
+                        bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
+                    } else
+                        bdzAdapter.setList(bdzList);
+                    if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, "")))
+                        homePageBinding.bdzName.setText(bdzList.get(0).name);
+                    loadDefect();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -259,7 +256,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 tab.init();
             }
             checkUpdate();
-        }else{
+        } else {
             isFirstLoad = false;
         }
     }
@@ -274,21 +271,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             //跳转到操作篇
             case R.id.device_operate:
-//                try {
-//                    Intent intent = new Intent();
-//                    ComponentName componentName = new ComponentName(getPackageName(), "com.cnksi.inspe.ui.InspeMainActivity");
-//                    intent.setComponent(componentName);
-//                    //参数设置
-//                    String userAccount = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, (String) null);
-//                    //intent.putExtra("userid_array", );//①传递登录用户ID
-//                    intent.putExtra("username_array", userAccount.split(","));//②传递登录用户用户名,①②任选一种即可
-//
-//                    startActivity(intent);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(HomeActivity.this, "模块暂未开放!", Toast.LENGTH_SHORT).show();
-//                }
-
                 ActivityUtil.startOperateActivity(_this);
                 break;
             //跳转到安全工器具
@@ -397,7 +379,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     currentSelectBdzId = bdzList.get(0).bdzid;
             }
             defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
-            defectAdapter.setItemClickListener(HomeActivity.this);
+            defectAdapter.setItemClickListener(this);
             homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
             homePageBinding.recyDefect.setAdapter(defectAdapter);
         } else {
@@ -436,8 +418,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             this.type = type;
             this.tv = tv;
             tv.setText(type.zhName);
-            //onResume会执行
-            // init();
         }
 
         public void init() {
@@ -569,17 +549,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
         ComponentName componentName;
         if ("workticket".equals(task.inspection))
-//            componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.OperateTaskListActivity");
             intent.setClass(this, OperateTaskListActivity.class);
         else {
-//            componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
             intent.setClass(this, com.cnksi.bdzinspection.activity.TaskRemindActivity.class);
             intent.putExtra(Config.IS_FROM_SJJC, true);
         }
         intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);
         intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, task.inspection.split("_|-")[0]);
         intent.putExtra("task_id", task.taskid);
-//        intent.setComponent(componentName);
         startActivity(intent);
     }
 

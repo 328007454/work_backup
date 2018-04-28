@@ -148,7 +148,7 @@ public class CustomApplication extends CoreApplication {
 
         innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
         if (config == null) {
-            config = new DbManager.DaoConfig().setDbDir(new File(innerDateBaseFolder)).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(100)
+            config = new DbManager.DaoConfig().setDbDir(new File(innerDateBaseFolder)).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(1)
                     .setDbOpenListener(db -> {
                         // 开启WAL, 对写入加速提升巨大
                         //db.getDatabase().enableWriteAheadLogging();
