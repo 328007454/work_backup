@@ -1,31 +1,41 @@
 package com.cnksi.workticket.activity;
 
-import android.support.annotation.NonNull;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.View;
 
-import com.cnksi.core.activity.BaseCoreActivity;
+import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.workticket.R;
-import com.cnksi.workticket.base.*;
+import com.cnksi.workticket.adapter.TicketFragmentPagerAdapter;
 import com.cnksi.workticket.databinding.ActivityTicketDateWorkBinding;
+import com.cnksi.workticket.db.WorkTicketDbManager;
 import com.cnksi.workticket.enum_ticket.TicketEnum;
-import com.cnksi.workticket.view.TicketDateSelectDecorator;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.CalendarMode;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.cnksi.workticket.fragment.TicketDaliyWorkFragment;
+import com.cnksi.workticket.fragment.TicketWorkRecordFragment;
+import com.cnksi.workticket.sync.KSyncConfig;
 
-import java.util.Calendar;
+import android.support.v4.app.FragmentTransaction;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Mr.K on 2018/4/28.
  */
 
-public class TicketDateHomeActivity extends TicketBaseActivity implements OnDateSelectedListener {
+public class TicketDateHomeActivity extends TicketBaseActivity {
 
     ActivityTicketDateWorkBinding binding;
 
     private String[] titleArrays = new String[2];
+    private FragmentPagerAdapter fragmentPagerAdapter;
+    private List<Fragment> mFragmentList;
+
+    private TicketWorkRecordFragment recordFragment;
+    private TicketDaliyWorkFragment daliyWorkFragment;
 
     @Override
     public int getLayoutResId() {
@@ -34,12 +44,33 @@ public class TicketDateHomeActivity extends TicketBaseActivity implements OnDate
 
     @Override
     public void initUI() {
+        getIntentVaule();
         binding = (ActivityTicketDateWorkBinding) rootDataBinding;
-        titleArrays[0] = TicketEnum.GZJL.value;
-        titleArrays[1] = TicketEnum.GZRZ.value;
-        binding.tabStrip.setTitleArray(titleArrays);
+        binding.includeTitle.ticketTxtAdd.setVisibility(View.VISIBLE);
+        titleArrays[1] = TicketEnum.GZJL.value;
+        titleArrays[0] = TicketEnum.GZRZ.value;
+        initFragments();
+        initClick();
+    }
+
+
+    private void initFragments() {
+        if (mFragmentList == null) {
+            mFragmentList = new ArrayList<>();
+        }
+
+        daliyWorkFragment = new TicketDaliyWorkFragment();
+        mFragmentList.add(daliyWorkFragment);
+
+        recordFragment = new TicketWorkRecordFragment();
+        mFragmentList.add(recordFragment);
+
+        fragmentPagerAdapter = new TicketFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArrays));
+        binding.viewpager.setAdapter(fragmentPagerAdapter);
+        binding.tabStrip.setViewPager(binding.viewpager);
         setTabStripStyle(binding.tabStrip);
         binding.tabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -47,7 +78,11 @@ public class TicketDateHomeActivity extends TicketBaseActivity implements OnDate
 
             @Override
             public void onPageSelected(int position) {
+                if (0 == position) {
 
+                } else if (1 == position) {
+
+                }
             }
 
             @Override
@@ -55,67 +90,23 @@ public class TicketDateHomeActivity extends TicketBaseActivity implements OnDate
 
             }
         });
-
-        binding.calendar.state().edit()
-                .setFirstDayOfWeek(Calendar.SUNDAY)
-                .setCalendarDisplayMode(CalendarMode.WEEKS)
-                .commit();
-        binding.calendar.setDateSelected(Calendar.getInstance(), true);
-        binding.calendar.setTileHeightDp(38);
-        binding.calendar.setTopbarVisible(true);
-        binding.calendar.setOnDateChangedListener(this);
-        binding.calendar.addDecorator(new TicketDateSelectDecorator(this));
-        binding.calendar.setWeekDayTextAppearance(R.style.CustomTextAppearance);
-        binding.calendar.setHeaderTextAppearance(R.style.CustomTextAppearance);
-        initClick();
+//        binding.viewpager.setOffscreenPageLimit(2);
     }
 
     @Override
     public void initData() {
-
+        WorkTicketDbManager.getInstance().initDbManager(getApplicationContext());
+        CustomerDialog.showProgress(this, "正在同步数据，请确保网络畅通");
+        KSyncConfig.getInstance().getKNConfig(getApplicationContext()).downLoad();
     }
 
-    String model = CalendarMode.WEEKS.name();
 
     public void initClick() {
+        binding.includeTitle.ticketTxtAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TicketDateWorkActivity.class);
+            startActivity(intent);
 
-        binding.back.setOnClickListener(view -> {
-            binding.calendar.goToPrevious();
-//            Log.i("Tag", binding.calendar.getCurrentDate().getYear() + "--" + binding.calendar.getCurrentDate().getMonth() + "");
-        });
-        binding.go.setOnClickListener(view -> {
-//            Log.i("Tag", binding.calendar.getCurrentDate().getYear() + "--" + binding.calendar.getCurrentDate().getMonth() + "");
-            binding.calendar.goToNext();
-        });
-
-        binding.expand.setOnClickListener(view -> {
-            if (model == CalendarMode.WEEKS.name()) {
-                binding.calendar.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
-                model = CalendarMode.MONTHS.name();
-            } else {
-                model = CalendarMode.WEEKS.name();
-                binding.calendar.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
-            }
-        });
-        binding.calendar.setOnMonthChangedListener((widget, date) -> {
-
-            Log.i("Tag", date.getYear() + "--" + date.getMonth() + "--" + date.getDay() + "month");
-
-        });
-
-        binding.calendar.setOnDateChangedListener((widget, date, selected) -> {
-            Log.i("Tag", date.getYear() + "--" + date.getMonth() + "--" + date.getMonth() + (selected == true ? "true" : "false") + "date");
-        });
-
-        binding.calendar.setOnRangeSelectedListener((widget, dates) -> {
-            Log.i("Tag", dates.get(0).getYear() + dates.get(0).getMonth() + dates.get(0).getMonth() + "range");
         });
     }
 
-    @Override
-    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        if (selected) {
-            widget.invalidateDecorators();
-        }
-    }
 }

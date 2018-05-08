@@ -42,7 +42,7 @@ def branch() {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
 
     defaultConfig {
         applicationId "com.cnksi.sjjc"

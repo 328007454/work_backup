@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply from: 'maven_push.gradle'
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
 
     defaultConfig {
         minSdkVersion 19

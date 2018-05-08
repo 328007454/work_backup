@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <com.cnksi.workticket.view.StyleLineLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F0F0F0"
+            android:drawableLeft="@mipmap/ticket_icon_tips"
+            android:drawablePadding="@dimen/core_padding_30px"
+            android:paddingBottom="48px"
+            android:paddingLeft="@dimen/core_padding_30px"
+            android:paddingRight="@dimen/core_padding_30px"
+            android:paddingTop="51px"
+            android:text="仅查看运维班组相关工作记录，若需查看其它外来班组，请 登录后台查看"
+            android:textColor="#ffb5c8c6"
+            android:textSize="@dimen/ticket_36px" />
+
+        <com.cnksi.workticket.view.StyleLineLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="162px"
+            android:background="@color/core_bg_white_ffffff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/core_padding_30px"
+            android:paddingRight="@dimen/core_padding_30px"
+            app:bottom_line_color="#F0F0F0"
+            app:bottom_line_visible="true"
+            app:line_size="6">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/future"
+                android:layout_width="0px"
+                android:layout_height="80px"
+                android:layout_marginRight="19px"
+                android:layout_weight="1"
+                android:background="@drawable/ticket_05c8b8_10px_corner_shape"
+                android:gravity="center"
+                android:text="未来"
+                android:textColor="@color/core_bg_white_ffffff" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/history"
+                android:layout_width="0px"
+                android:layout_height="80px"
+                android:layout_marginLeft="19px"
+                android:layout_weight="1"
+                android:background="@drawable/ticket_c0bab9_10px_line_shape"
+                android:gravity="center"
+                android:text="历史"
+                android:textColor="#c0bab9" />
+        </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rec_work"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.cnksi.workticket.view.StyleLineLinearLayout>
+</layout>

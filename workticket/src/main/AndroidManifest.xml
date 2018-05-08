@@ -9,15 +9,17 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application>
-        <activity android:name=".activity.TicketDateWorkActivity">
+        <activity
+            android:name=".activity.TicketDateWorkActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".activity.TicketDateHomeActivity"/>
+        <activity android:name=".activity.TicketDateHomeActivity" />
 
         <meta-data
             android:name="design_width"

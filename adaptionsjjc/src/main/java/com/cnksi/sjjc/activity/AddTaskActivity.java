@@ -229,6 +229,8 @@ public class AddTaskActivity extends BaseActivity {
                 }
                 initBDZDialog();
                 break;
+                default:
+                    break;
         }
     }
 

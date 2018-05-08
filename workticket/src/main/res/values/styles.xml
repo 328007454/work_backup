@@ -2,8 +2,39 @@
 <resources>
     <style name="CustomTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
         <item name="android:textColor">@color/color_1BBC9B</item>
+        <item name="android:textSize">@dimen/ticket_36px</item>
+    </style>
+
+    <style name="WeekTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/color_1BBC9B</item>
+        <item name="android:textSize">@dimen/ticket_36px</item>
+        <item name="android:height">@dimen/ticket_222px</item>
+    </style>
+
+    <style name="DateTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/ticket_date_selector</item>
+        <item name="android:textSize">@dimen/ticket_36px</item>
     </style>
     <style name="TabLayoutTextStyle1" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">@dimen/ticket_42px</item>
+    </style>
+
+    <dimen name="ticket_36px">36px</dimen>
+    <dimen name="ticket_222px">222px</dimen>
+    <color name="ticket_626262">#626262</color>
+
+    <!-- Dialog样式 -->
+    <style name="Ticket_DialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 </resources>

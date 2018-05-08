@@ -380,6 +380,8 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(currentActivity, String.valueOf(msg.obj), Toast.LENGTH_SHORT).show();
                     setButtonStyle(true);
                     break;
+                default:
+                    break;
             }
             if (info != null) {
                 mSyncInfos.add(info);

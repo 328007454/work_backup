@@ -131,26 +131,6 @@ public class TaskRemindActivity extends BaseActivity {
         mRemindBinding.viewPager.setOffscreenPageLimit(4);
     }
 
-//    @Event(value = {R.id.btn_back, R.id.btn_right, R.id.add_task})
-//    private void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.btn_back:
-//                this.finish();
-//                break;
-//            case R.id.btn_right:
-//
-//                break;
-//            case R.id.add_task:
-//                Intent intent = new Intent(this, AddTaskActivity.class);
-//                intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
-//                startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
-
-
     public void iniOnClick(){
         mTitleBinding.btnBack.setOnClickListener((view) -> this.finish());
         mRemindBinding.addTask.setOnClickListener((v) -> {

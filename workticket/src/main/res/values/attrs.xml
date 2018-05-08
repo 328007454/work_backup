@@ -2,23 +2,35 @@
 <resources>
 
     <declare-styleable name="StyleLineLinearLayout">
-        <attr name="left_line_color" format="color"/>
-        <attr name="right_line_color" format="color"/>
-        <attr name="top_line_color" format="color"/>
-        <attr name="bottom_line_color" format="color"/>
+        <attr name="left_line_color" format="color" />
+        <attr name="right_line_color" format="color" />
+        <attr name="top_line_color" format="color" />
+        <attr name="bottom_line_color" format="color" />
 
 
-        <attr name="margin_left_line_size" format="integer"/>
-        <attr name="margin_right_line_size" format="integer"/>
-        <attr name="margin_top_line_size" format="integer"/>
-        <attr name="margin_bottom_line_size" format="integer"/>
+        <attr name="margin_left_line_size" format="integer" />
+        <attr name="margin_right_line_size" format="integer" />
+        <attr name="margin_top_line_size" format="integer" />
+        <attr name="margin_bottom_line_size" format="integer" />
+        <attr name="margin_bottom_bottom_line_size" format="integer" />
 
-        <attr name="line_size" format="integer"/>
+        <attr name="line_size" format="integer" />
 
-        <attr name="bottom_line_visible" format="boolean"/>
-        <attr name="top_line_visible" format="boolean"/>
-        <attr name="right_line_visible" format="boolean"/>
-        <attr name="left_line_visible" format="boolean"/>
+        <attr name="bottom_line_visible" format="boolean" />
+        <attr name="top_line_visible" format="boolean" />
+        <attr name="right_line_visible" format="boolean" />
+        <attr name="left_line_visible" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="GroupRecyclerView">
+        <attr name="group_height" format="dimension" />
+        <attr name="group_child_offset" format="dimension" />
+        <attr name="group_background" format="color" />
+        <attr name="group_text_color" format="color" />
+        <attr name="group_text_size" format="dimension" />
+        <attr name="group_center" format="boolean" />
+        <attr name="group_padding_left" format="dimension" />
+        <attr name="group_padding_right" format="dimension" />
+        <attr name="group_has_header" format="boolean" />
     </declare-styleable>
 
 </resources>

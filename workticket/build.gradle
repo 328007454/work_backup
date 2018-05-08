@@ -6,7 +6,7 @@ if (WorkTicketLibrary.toBoolean()) {
 
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
 
 
 
@@ -41,13 +41,22 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile "com.cnksi:core:$ksi_core_version"
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
-    implementation 'com.android.support:design:25.4.0'
+    implementation 'com.android.support:design:26.1.0'
     implementation 'com.cnksi:core:1.2.7.1'
+    implementation ('com.github.MagicMashRoom:SuperCalendar:1.6'){
+            exclude module: 'com.android.support'
+    }
+    implementation 'com.haibin:calendarview:3.3.0'
+    compile("com.cnksi:ksynclib:$ksi_sync_version"){
+        exclude module: 'fastjson'
+        exclude module: 'autolayout'
+    }
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
 }

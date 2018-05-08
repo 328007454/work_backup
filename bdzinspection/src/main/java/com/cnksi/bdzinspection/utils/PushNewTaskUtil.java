@@ -26,7 +26,7 @@ public class PushNewTaskUtil {
 
 
     public void createNewTaskByPeriod(String taskId, String type) {
-        boolean goOn = !TextUtils.isEmpty(type) && (type.contains("maintenance") || type.contains("switchover_581"));
+        boolean goOn = !TextUtils.isEmpty(type) && (type.contains("maintenance") || type.contains("switchover"));
         if (goOn) {
             XunshiApplication.getFixedThreadPoolExecutor().execute(() -> {
                 try {

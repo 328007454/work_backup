@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ticket_bdz_dialog_list_bg"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/ticket_33px">
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:gravity="center"
+            android:text="取消预约"
+            android:textColor="@color/core_bg_white_ffffff"
+            android:textSize="48px" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/img_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="120px"
+            android:layout_marginTop="90px"
+            android:background="@mipmap/ticket_cancel_work" />
+
+        <TextView
+            android:id="@+id/txt_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="110px"
+            android:paddingLeft="30px"
+            android:paddingRight="@dimen/core_padding_30px"
+            android:text="是否取消工作"
+            android:textColor="#242827"
+            android:textSize="@dimen/ticket_33px" />
+
+
+        <com.cnksi.workticket.view.StyleLineLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75px"
+            android:background="@color/core_bg_white_ffffff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/core_padding_30px"
+            android:paddingRight="@dimen/core_padding_30px">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/no"
+                android:layout_width="0px"
+                android:layout_height="80px"
+                android:layout_marginRight="19px"
+
+                android:layout_weight="1"
+                android:background="@drawable/ticket_ff7575_10px_corner_shape"
+                android:gravity="center"
+                android:text="否"
+                android:textColor="@color/core_bg_white_ffffff" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/yes"
+                android:layout_width="0px"
+                android:layout_height="80px"
+                android:layout_marginLeft="19px"
+                android:layout_weight="1"
+                android:background="@drawable/ticket_01ce7f_10px_corner_shape"
+                android:gravity="center"
+                android:text="是"
+                android:textColor="@color/core_bg_white_ffffff" />
+
+
+        </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+
+    </LinearLayout>
+</layout>

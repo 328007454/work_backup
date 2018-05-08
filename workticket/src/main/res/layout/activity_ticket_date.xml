@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/ticket_title_layout" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ticket_color_f0f0f0">
+
+
+                <com.cnksi.workticket.view.StyleLineLinearLayout
+                    android:id="@+id/bdz_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="189px"
+                    android:layout_marginTop="45px"
+                    android:background="@color/core_bg_white_ffffff"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    app:bottom_line_color="@color/ticket_color_eaf2f1"
+                    app:bottom_line_visible="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:line_size="6"
+                    app:margin_left_line_size="30">
+
+                    <TextView
+                        android:id="@+id/txt_select_bdz"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="35px"
+                        android:gravity="start"
+                        android:text="请选择变电站"
+                        android:textColor="#576362"
+                        android:textSize="33px" />
+
+                    <TextView
+                        android:id="@+id/txt_bdz_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="33px"
+                        android:background="@color/core_bg_white_ffffff"
+                        android:drawableRight="@mipmap/ticket_date_right_icon"
+                        android:gravity="left"
+                        android:hint="请选择变电站"
+                        android:textColor="#242827"
+                        android:textSize="39px" />
+
+                </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+                <com.cnksi.workticket.view.StyleLineLinearLayout
+                    android:id="@+id/work_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="309px"
+                    android:background="@color/core_bg_white_ffffff"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    app:bottom_line_color="@color/ticket_color_eaf2f1"
+                    app:bottom_line_visible="true"
+                    app:layout_constraintTop_toBottomOf="@+id/bdz_container"
+                    app:line_size="6"
+                    app:margin_left_line_size="30">
+
+                    <TextView
+                        android:id="@+id/txt_work_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="35px"
+                        android:gravity="start"
+                        android:text="工作类型"
+                        android:textColor="#576362"
+                        android:textSize="33px" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_work_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10px"
+                        android:paddingTop="24px">
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rb_a_typpe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ticket_red_radio_button_selector"
+                            android:drawablePadding="24px"
+                            android:text="A类"
+                            android:textColor="@color/ticket_type_text_red_selector" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rb_b_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="180px"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ticket_red_radio_button_selector"
+                            android:drawablePadding="24px"
+                            android:text="B类"
+                            android:textColor="@color/ticket_type_text_red_selector" />
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/txt_tips"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="45px"
+                        android:gravity="start"
+                        android:text="提示："
+                        android:textColor="#576362"
+                        android:textSize="33px"
+                        android:visibility="gone" />
+
+                </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+                <com.cnksi.workticket.view.StyleLineLinearLayout
+                    android:id="@+id/dept_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="189px"
+                    android:background="@color/core_bg_white_ffffff"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    app:bottom_line_color="@color/ticket_color_eaf2f1"
+                    app:bottom_line_visible="true"
+                    app:layout_constraintTop_toBottomOf="@+id/work_container"
+                    app:line_size="6"
+                    app:margin_left_line_size="30">
+
+                    <TextView
+                        android:id="@+id/txt_select_dept"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="35px"
+                        android:gravity="start"
+                        android:text="工作单位"
+                        android:textColor="#576362"
+                        android:textSize="33px" />
+
+                    <TextView
+                        android:id="@+id/txt_dept_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="33px"
+                        android:background="@color/core_bg_white_ffffff"
+                        android:gravity="left"
+                        android:text="工作单位"
+                        android:textColor="#242827"
+                        android:textSize="39px" />
+
+                </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+
+                <com.cnksi.workticket.view.StyleLineLinearLayout
+                    android:id="@+id/person_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="189px"
+                    android:background="@color/core_bg_white_ffffff"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    app:bottom_line_color="@color/ticket_color_eaf2f1"
+                    app:bottom_line_visible="true"
+                    app:layout_constraintTop_toBottomOf="@+id/dept_container"
+                    app:line_size="6"
+                    app:margin_left_line_size="30">
+
+                    <com.cnksi.workticket.view.StyleLineLinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_select_people"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="35px"
+                            android:gravity="start"
+                            android:text="工作负责人"
+                            android:textColor="#576362"
+                            android:textSize="33px" />
+
+                        <EditText
+                            android:id="@+id/txt_people_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="33px"
+                            android:background="@color/core_bg_white_ffffff"
+                            android:gravity="left"
+                            android:hint="请输入工作负责人"
+                            android:textColor="#242827"
+                            android:textSize="39px" />
+                    </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+                    <View
+                        android:layout_width="3px"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="28px"
+                        android:layout_marginTop="38px"
+                        android:background="@color/ticket_color_eaf2f1" />
+
+                    <com.cnksi.workticket.view.StyleLineLinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="30px">
+
+                        <TextView
+                            android:id="@+id/txt_select_connection"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="35px"
+                            android:gravity="start"
+                            android:text="联系方式"
+                            android:textColor="#576362"
+                            android:textSize="33px" />
+
+                        <EditText
+                            android:inputType="phone"
+                            android:id="@+id/txt_connnection_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="33px"
+                            android:background="@color/core_bg_white_ffffff"
+                            android:gravity="left"
+                            android:hint="请输入联系方式"
+                            android:textColor="#242827"
+                            android:textSize="39px" />
+                    </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+
+                </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+                <com.cnksi.workticket.view.StyleLineLinearLayout
+                    android:id="@+id/content_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/core_bg_white_ffffff"
+                    android:minHeight="288px"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    app:bottom_line_color="@color/ticket_color_eaf2f1"
+                    app:bottom_line_visible="true"
+                    app:layout_constraintTop_toBottomOf="@+id/person_container"
+                    app:line_size="6"
+                    app:margin_left_line_size="30">
+
+                    <TextView
+                        android:id="@+id/txt_select_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="35px"
+                        android:gravity="start"
+                        android:text="工作内容"
+                        android:textColor="#576362"
+                        android:textSize="33px" />
+
+                    <EditText
+                        android:id="@+id/txt_content_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/ticket_36px"
+                        android:layout_marginTop="33px"
+                        android:background="@color/core_bg_white_ffffff"
+                        android:gravity="left"
+                        android:hint="请输入工作内容"
+                        android:text=""
+                        android:textColor="#242827"
+                        android:textSize="39px" />
+
+                </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+
+                <com.cnksi.workticket.view.StyleLineLinearLayout
+                    android:id="@+id/ticket_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="189px"
+                    android:background="@color/core_bg_white_ffffff"
+                    android:orientation="vertical"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    app:bottom_line_color="@color/ticket_color_eaf2f1"
+                    app:bottom_line_visible="true"
+                    app:layout_constraintTop_toBottomOf="@+id/content_container"
+                    app:line_size="6"
+                    app:margin_left_line_size="30"
+                    app:top_line_color="@color/ticket_color_eaf2f1"
+                    app:top_line_visible="true">
+
+                    <TextView
+                        android:id="@+id/txt_ticket_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="45px"
+                        android:gravity="start"
+                        android:text="开票类型"
+                        android:textColor="#576362"
+                        android:textSize="33px" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_ticket_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="24px">
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rb_kai_typpe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ticket_5dbf19_radio_button_selector"
+                            android:drawablePadding="24px"
+                            android:text="开票"
+                            android:textColor="@color/ticket_type_text_selector" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rb_jie_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="180px"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ticket_5dbf19_radio_button_selector"
+                            android:drawablePadding="24px"
+                            android:text="结票"
+                            android:textColor="@color/ticket_type_text_selector" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rb_other_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="180px"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ticket_5dbf19_radio_button_selector"
+                            android:drawablePadding="24px"
+                            android:text="其他工作"
+                            android:textColor="@color/ticket_type_text_selector" />
+                    </RadioGroup>
+
+                </com.cnksi.workticket.view.StyleLineLinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/date_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="250px"
+                    android:background="@color/core_bg_white_ffffff"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    app:layout_constraintTop_toBottomOf="@+id/ticket_container">
+
+                    <TextView
+                        android:id="@+id/txt_select_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="35px"
+                        android:gravity="start"
+                        android:text="时间及日期"
+                        android:textColor="#576362"
+                        android:textSize="33px" />
+
+                    <ImageButton
+                        android:id="@+id/ibtn_select_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="25px"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@null"
+                        android:paddingLeft="200px"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ticket_date_selector" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_select_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ibtn_select_time"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="24px">
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/txt_time1"
+                            android:layout_width="0px"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:text="10:00-11:00"
+                            android:textColor="@color/ticket_type_text_selector" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/txt_time2"
+                            android:layout_width="0px"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:text="11:00-12:00"
+                            android:textColor="@color/ticket_type_text_selector" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/txt_time3"
+                            android:layout_width="0px"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:text="14:00-15:00"
+                            android:textColor="@color/ticket_type_text_selector" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/txt_time4"
+                            android:layout_width="0px"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:text="15:00-16:00"
+                            android:textColor="@color/ticket_type_text_selector" />
+
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/txt_time5"
+                            android:layout_width="0px"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:button="@null"
+                            android:clickable="true"
+                            android:text="16:00-17:00"
+                            android:textColor="@color/ticket_type_text_selector" />
+                    </RadioGroup>
+
+
+                    <TextView
+                        android:layout_marginTop="20px"
+                        android:layout_below="@id/rg_select_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff7f6f6"
+                        android:gravity="start"
+                        android:paddingBottom="10px"
+                        android:paddingTop="10px"
+                        android:text="提示：绿色代表选中，黑色代表可选，灰色代表不可选"
+                        android:textColor="#aaaaaa"
+                        android:textSize="33px" />
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ticket_42px"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/core_padding_30px"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    app:layout_constraintTop_toBottomOf="@+id/date_container">
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/save"
+                        android:layout_width="0px"
+                        android:layout_height="100px"
+                        android:layout_marginRight="19px"
+                        android:layout_weight="1"
+                        android:background="@drawable/ticket_05c8b8_10px_corner_shape"
+                        android:gravity="center"
+                        android:text="保存"
+                        android:textColor="@color/core_bg_white_ffffff" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/goon"
+                        android:layout_width="0px"
+                        android:layout_height="100px"
+                        android:layout_marginLeft="19px"
+                        android:layout_weight="1"
+                        android:background="@drawable/ticket_05c8b8_10px_line_shape"
+                        android:gravity="center"
+                        android:text="继续"
+                        android:textColor="#05C8B8" />
+
+
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

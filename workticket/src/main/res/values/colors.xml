@@ -3,4 +3,21 @@
     <color name="color_1BBC9B">#1BBC9B</color>>
     <color name="ticket_color_03B9A0">#03B9A0</color>
     <color name="ticket_color_A8ABAA">#A8ABAA</color>
+    <color name="ticket_color_f0f0f0">#f0f0f0</color>
+    <color name="ticket_color_e8edec">#E8EDEC</color>
+    <color name="ticket_color_1bbc9b">#1BBC9B</color>
+    <color name="ticket_color_4cbfd8">#4cbfd8</color>
+    <color name="ticket_color_576362">#576362</color>
+    <color name="ticket_color_EAF2F1">#EAF2F1</color>
+
+    <color name="ticket_color_eaf2f1">#EAF2F1</color>
+    <color name="ticket_color_05c8b8">#05c8b8</color>
+    <color name="ticket_color_ff7575">#ff7575</color>
+    <color name="ticket_color_01ce7f">#01CE7F</color>
+    <color name="ticket_color_c0bab9">#c0bab9</color>
+
+
+
+
+
 </resources>

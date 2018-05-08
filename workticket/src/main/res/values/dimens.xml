@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="ticket_42px">42px</dimen>
+    <dimen name="ticket_33px">33px</dimen>
+    <dimen name="ticket_45px">45px</dimen>
+    <dimen name="ticket_39px">39px</dimen>
 </resources>

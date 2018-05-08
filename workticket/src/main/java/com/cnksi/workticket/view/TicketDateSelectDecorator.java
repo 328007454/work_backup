@@ -2,6 +2,7 @@ package com.cnksi.workticket.view;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.text.style.ForegroundColorSpan;
 
 import com.cnksi.workticket.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <com.cnksi.workticket.view.StyleLineLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:orientation="vertical"
+        app:bottom_line_color="@color/global_text_color"
+        app:bottom_line_visible="true"
+        app:line_size="6">
+
+        <TextView
+            android:id="@+id/txt_bdz_name"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/core_padding_30px"
+            android:text="应用变电站"
+            android:textColor="@color/global_text_color"
+            android:textSize="48px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/global_text_color" />
+
+    </com.cnksi.workticket.view.StyleLineLinearLayout>
+</layout>

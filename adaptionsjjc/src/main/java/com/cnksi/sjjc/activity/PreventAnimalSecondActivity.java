@@ -75,6 +75,8 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                 case R.id.radio_mousetrap:
                     preventionRecord.mousetrapStatus = (i == R.id.mousetrap_yes) ? 0 : 1;
                     break;
+                    default:
+                        break;
             }
         }
     };

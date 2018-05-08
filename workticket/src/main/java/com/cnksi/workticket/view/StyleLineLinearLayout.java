@@ -35,6 +35,8 @@ public class StyleLineLinearLayout extends LinearLayout {
     private int marginTop;
     private int lineSize;
 
+    private int bottomLineMarginBottom;
+
     private Path path = new Path();
     private Paint bottomPaint;
 
@@ -61,7 +63,9 @@ public class StyleLineLinearLayout extends LinearLayout {
         marginTop = array.getInt(R.styleable.StyleLineLinearLayout_margin_top_line_size, 0);
         marginRight = array.getInt(R.styleable.StyleLineLinearLayout_margin_right_line_size, 0);
         marginLeft = array.getInt(R.styleable.StyleLineLinearLayout_margin_left_line_size, 0);
-        lineSize = array.getInt(R.styleable.StyleLineLinearLayout_line_size,2);
+        lineSize = array.getInt(R.styleable.StyleLineLinearLayout_line_size, 2);
+
+        bottomLineMarginBottom = array.getInt(R.styleable.StyleLineLinearLayout_margin_bottom_bottom_line_size, 0);
         array.recycle();
         initView();
     }
@@ -81,6 +85,8 @@ public class StyleLineLinearLayout extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int widthSpec = MeasureSpec.getMode(widthMeasureSpec);
+        int heightSpec = MeasureSpec.getMode(heightMeasureSpec);
         height = MeasureSpec.getSize(heightMeasureSpec);
         width = MeasureSpec.getSize(widthMeasureSpec);
     }
@@ -92,38 +98,35 @@ public class StyleLineLinearLayout extends LinearLayout {
             path.reset();
             paint.setStrokeWidth(lineSize);
             paint.setColor(bottomLineColor);
-            path.moveTo(marginLeft, height);
-            path.lineTo(width - marginRight, height);
+            path.moveTo(marginLeft, height - bottomLineMarginBottom);
+            path.lineTo(width - marginRight, height - bottomLineMarginBottom);
             canvas.drawPath(path, paint);
-//            canvas.save();
         }
 
         if (topLineVisible) {
             path.reset();
             paint.setStrokeWidth(lineSize);
             paint.setColor(topLineColor);
-            path.moveTo(0+marginLeft, 0);
-            path.lineTo(width-marginRight, 0);
+            path.moveTo(0 + marginLeft, 0);
+            path.lineTo(width - marginRight, 0);
             canvas.drawPath(path, paint);
-//            canvas.save();
         }
 
         if (leftLineVisible) {
             path.reset();
             paint.setStrokeWidth(lineSize);
             paint.setColor(leftLineColor);
-            path.moveTo(0, 0+marginTop);
-            path.lineTo(0 , height - marginBottom);
+            path.moveTo(0, 0 + marginTop);
+            path.lineTo(0, height - marginBottom);
             canvas.drawPath(path, paint);
-//            canvas.save();
         }
 
         if (rightLineVisible) {
             path.reset();
             paint.setStrokeWidth(lineSize);
             paint.setColor(rightLineColor);
-            path.moveTo(0, 0+marginTop);
-            path.lineTo(0 , height - marginBottom);
+            path.moveTo(0, 0 + marginTop);
+            path.lineTo(0, height - marginBottom);
             canvas.drawPath(path, paint);
         }
     }
