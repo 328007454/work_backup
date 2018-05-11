@@ -1,6 +1,7 @@
 package com.cnksi.workticket.enum_ticket;
 
 /**
+ * @decrption  工作票的预约引导
  * Created by Mr.K on 2018/4/28.
  */
 

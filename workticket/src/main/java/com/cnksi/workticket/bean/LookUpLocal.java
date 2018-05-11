@@ -3,7 +3,8 @@ package com.cnksi.workticket.bean;
 import org.xutils.db.annotation.Column;
 
 /**
- * Created by Mr.K on 2018/5/7.
+ * @decrption 本地配置信息
+ * @author Mr.K  on 2018/5/7.
  */
 
 public class LookUpLocal {

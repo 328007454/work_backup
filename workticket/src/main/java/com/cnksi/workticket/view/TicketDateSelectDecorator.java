@@ -10,7 +10,8 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
 /**
- * Created by Mr.K on 2018/4/23.
+ * @decrption 日历选中时间的装饰
+ * @author Mr.K  on 2018/4/23.
  */
 
 public class TicketDateSelectDecorator implements DayViewDecorator {

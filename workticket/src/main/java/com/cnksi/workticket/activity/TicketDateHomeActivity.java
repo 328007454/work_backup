@@ -4,38 +4,47 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.workticket.Config;
 import com.cnksi.workticket.R;
 import com.cnksi.workticket.adapter.TicketFragmentPagerAdapter;
+import com.cnksi.workticket.base.TicketBaseActivity;
 import com.cnksi.workticket.databinding.ActivityTicketDateWorkBinding;
 import com.cnksi.workticket.db.WorkTicketDbManager;
 import com.cnksi.workticket.enum_ticket.TicketEnum;
-import com.cnksi.workticket.fragment.TicketDaliyWorkFragment;
+import com.cnksi.workticket.fragment.TicketDailyWorkFragment;
 import com.cnksi.workticket.fragment.TicketWorkRecordFragment;
 import com.cnksi.workticket.sync.KSyncConfig;
 
-import android.support.v4.app.FragmentTransaction;
+
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Mr.K on 2018/4/28.
+ * @author Mr.K on 2018/4/28.
+ * @decrption 该类是工作预约模块进入的首页，主要展示工作日志和工作记录
  */
 
 public class TicketDateHomeActivity extends TicketBaseActivity {
 
-    ActivityTicketDateWorkBinding binding;
+    private ActivityTicketDateWorkBinding binding;
 
+    /**
+     * 引导栏标题
+     */
     private String[] titleArrays = new String[2];
-    private FragmentPagerAdapter fragmentPagerAdapter;
+    /**
+     * 承载fragment数量
+     */
     private List<Fragment> mFragmentList;
-
-    private TicketWorkRecordFragment recordFragment;
-    private TicketDaliyWorkFragment daliyWorkFragment;
 
     @Override
     public int getLayoutResId() {
@@ -59,13 +68,13 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
             mFragmentList = new ArrayList<>();
         }
 
-        daliyWorkFragment = new TicketDaliyWorkFragment();
-        mFragmentList.add(daliyWorkFragment);
+        TicketDailyWorkFragment dailyWorkFragment = new TicketDailyWorkFragment();
+        mFragmentList.add(dailyWorkFragment);
 
-        recordFragment = new TicketWorkRecordFragment();
+        TicketWorkRecordFragment recordFragment = new TicketWorkRecordFragment();
         mFragmentList.add(recordFragment);
 
-        fragmentPagerAdapter = new TicketFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArrays));
+        FragmentPagerAdapter fragmentPagerAdapter = new TicketFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArrays));
         binding.viewpager.setAdapter(fragmentPagerAdapter);
         binding.tabStrip.setViewPager(binding.viewpager);
         setTabStripStyle(binding.tabStrip);
@@ -78,11 +87,7 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (0 == position) {
 
-                } else if (1 == position) {
-
-                }
             }
 
             @Override
@@ -90,16 +95,31 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
 
             }
         });
-//        binding.viewpager.setOffscreenPageLimit(2);
     }
 
     @Override
     public void initData() {
-        WorkTicketDbManager.getInstance().initDbManager(getApplicationContext());
         CustomerDialog.showProgress(this, "正在同步数据，请确保网络畅通");
-        KSyncConfig.getInstance().getKNConfig(getApplicationContext()).downLoad();
+        KSyncConfig.getInstance().getKNConfig(getApplicationContext()).setFailListener(syncSuccess -> {
+            if (!TextUtils.isEmpty(Config.otherDeptUser) && Config.OTHER_DEPT_USER.equalsIgnoreCase(Config.otherDeptUser)) {
+                try {
+                    DbModel model = WorkTicketDbManager.getInstance().getTicketManager().findDbModelFirst(new SqlInfo("select * from users where account = '" + Config.userAccount + "' and dlt = 0"));
+                    if (null != model) {
+                        Config.deptName = model.getString("dept_name");
+                    }
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).downLoad();
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        KSyncConfig.getInstance().setCallBackListenerNull();
+    }
 
     public void initClick() {
         binding.includeTitle.ticketTxtAdd.setOnClickListener(v -> {
@@ -107,6 +127,8 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
             startActivity(intent);
 
         });
+
+        binding.includeTitle.ticketBack.setOnClickListener(v -> onBackPressed());
     }
 
 }

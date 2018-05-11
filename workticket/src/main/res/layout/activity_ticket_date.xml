@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="33px"
                         android:background="@color/core_bg_white_ffffff"
-                        android:drawableRight="@mipmap/ticket_date_right_icon"
+                        android:drawableRight="@mipmap/ticket_arrow_right"
                         android:gravity="left"
                         android:hint="请选择变电站"
                         android:textColor="#242827"

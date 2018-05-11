@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="363px"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/ticket_39px"
+    >
+
+
+    <LinearLayout
+        android:layout_marginLeft="99px"
+        android:layout_marginTop="@dimen/core_padding_30px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/date_colorful_shape"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/core_padding_30px">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_bdz_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/core_padding_40px"
+            android:text="应龙变电站"
+            android:textColor="@color/core_bg_white_ffffff"
+            android:textSize="@dimen/ticket_42px" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_dept_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/core_padding_30px"
+            android:text="工作单位"
+            android:textColor="@color/core_bg_white_ffffff"
+            android:textSize="@dimen/ticket_33px" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_work_type_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="工作类型"
+            android:textColor="@color/core_bg_white_ffffff"
+            android:textSize="@dimen/ticket_33px" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_charge_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="工作负责人"
+            android:textColor="@color/core_bg_white_ffffff"
+            android:textSize="@dimen/ticket_33px" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_phone_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="联系方式"
+            android:textColor="@color/core_bg_white_ffffff"
+            android:textSize="@dimen/ticket_33px" />
+    </LinearLayout>
+</LinearLayout>

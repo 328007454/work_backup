@@ -13,7 +13,8 @@ import android.widget.LinearLayout;
 import com.cnksi.workticket.R;
 
 /**
- * Created by Mr.K on 2018/4/24.
+ * @decrption 自定义linearlayout可以画边线
+ * @author Mr.K  on 2018/4/24.
  */
 
 public class StyleLineLinearLayout extends LinearLayout {
@@ -38,7 +39,6 @@ public class StyleLineLinearLayout extends LinearLayout {
     private int bottomLineMarginBottom;
 
     private Path path = new Path();
-    private Paint bottomPaint;
 
     public StyleLineLinearLayout(Context context) {
         this(context, null);
@@ -76,8 +76,6 @@ public class StyleLineLinearLayout extends LinearLayout {
         paint.setAntiAlias(false);
         paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.STROKE);
-        bottomPaint = new Paint();
-        bottomPaint.setStyle(Paint.Style.STROKE);
         setWillNotDraw(false);
 
     }
@@ -85,8 +83,6 @@ public class StyleLineLinearLayout extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int widthSpec = MeasureSpec.getMode(widthMeasureSpec);
-        int heightSpec = MeasureSpec.getMode(heightMeasureSpec);
         height = MeasureSpec.getSize(heightMeasureSpec);
         width = MeasureSpec.getSize(widthMeasureSpec);
     }
@@ -107,7 +103,7 @@ public class StyleLineLinearLayout extends LinearLayout {
             path.reset();
             paint.setStrokeWidth(lineSize);
             paint.setColor(topLineColor);
-            path.moveTo(0 + marginLeft, 0);
+            path.moveTo(marginLeft, 0);
             path.lineTo(width - marginRight, 0);
             canvas.drawPath(path, paint);
         }
@@ -116,7 +112,7 @@ public class StyleLineLinearLayout extends LinearLayout {
             path.reset();
             paint.setStrokeWidth(lineSize);
             paint.setColor(leftLineColor);
-            path.moveTo(0, 0 + marginTop);
+            path.moveTo(0,  marginTop);
             path.lineTo(0, height - marginBottom);
             canvas.drawPath(path, paint);
         }
@@ -125,7 +121,7 @@ public class StyleLineLinearLayout extends LinearLayout {
             path.reset();
             paint.setStrokeWidth(lineSize);
             paint.setColor(rightLineColor);
-            path.moveTo(0, 0 + marginTop);
+            path.moveTo(0,  marginTop);
             path.lineTo(0, height - marginBottom);
             canvas.drawPath(path, paint);
         }

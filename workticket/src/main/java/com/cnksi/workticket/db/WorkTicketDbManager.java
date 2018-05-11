@@ -13,7 +13,8 @@ import org.xutils.x;
 import java.io.File;
 
 /**
- * Created by Mr.K on 2018/5/3.
+ * @author Mr.K   on 2018/5/3.
+ * @decrption 数据库管理
  */
 
 public class WorkTicketDbManager {
@@ -31,9 +32,15 @@ public class WorkTicketDbManager {
     }
 
 
-    public WorkTicketDbManager initDbManager(Context context) {
+    /**
+     * 初始化数据库文件夹
+     *
+     * @param context 上下文
+     * @return 该类对象
+     */
+    public void initDbManagerFolder(Context context) {
         innerDbFolder = context.getFilesDir().getAbsolutePath() + "/database/";
-        return this;
+        Config.DATABASE_FOLDER = innerDbFolder;
     }
 
     public DbManager getTicketManager() {
@@ -47,9 +54,6 @@ public class WorkTicketDbManager {
         if (config == null) {
             config = new DbManager.DaoConfig().setDbDir(new File(innerDbFolder)).setDbName(Config.DATABASE_NAME).setDbVersion(1)
                     .setDbOpenListener(db -> {
-                        // 开启WAL, 对写入加速提升巨大
-                        //db.getDatabase().enableWriteAheadLogging();
-                        //此处不处理数据库版本更新  全权交给同步框架处理。
                     })
                     .setUseEncrypt(true)
                     .setKey("com.cnksi")
@@ -61,6 +65,9 @@ public class WorkTicketDbManager {
         }
     }
 
+    /**
+     * @return 返回数据库文件夹
+     */
     public String getDbFolder() {
         if (TextUtils.isEmpty(innerDbFolder)) {
             throw new RuntimeException("请先调用 initDbManager()方法");

@@ -142,7 +142,8 @@ public class Config extends CoreConfig {
     public static final String ADD_SQL_INDEX = "add_sql_index";
     public static final String SBJC = "sbjc";
     public static final String DEVICE_BIGID = "big_id";
-    public static final String SECOND_SPACE_AND_ONE_DEVICE ="second_space_and_one_device" ;
+    public static final String SECOND_SPACE_AND_ONE_DEVICE = "second_space_and_one_device";
+    public static final String OTHER_DEPT_USER = "other_dept_user";
 
 
     public static String CURRENT_AREA = "lz";

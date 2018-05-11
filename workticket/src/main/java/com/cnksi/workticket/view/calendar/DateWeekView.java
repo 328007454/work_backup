@@ -12,17 +12,16 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
 
 /**
- * Created by Mr.K on 2018/5/3.
+ * @decrption 周定义
+ * @author Mr.K  on 2018/5/3.
  */
 
 public class DateWeekView extends WeekView {
     private int mRadius;
-    Shader mSweepGradient;
-    private Paint weekPaint;
 
     public DateWeekView(Context context) {
         super(context);
-        weekPaint = new Paint();
+        Paint weekPaint = new Paint();
         weekPaint.setAntiAlias(false);
         weekPaint.setStyle(Paint.Style.FILL);
         weekPaint.setColor(Color.RED);

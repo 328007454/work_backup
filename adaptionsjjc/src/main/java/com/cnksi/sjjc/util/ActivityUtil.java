@@ -111,6 +111,7 @@ public class ActivityUtil {
         intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, ""));
         intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
         intent.putExtra(Config.CURRENT_DEPARTMENT_NAME, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, ""));
+        intent.putExtra(Config.OTHER_DEPT_USER,PreferencesUtils.get(Config.OTHER_DEPT_USER,""));
         intent.putExtra(Config.KEY_SYNC_URL, Config.SYNC_URL);
         intent.putExtra(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         activity.startActivity(intent);

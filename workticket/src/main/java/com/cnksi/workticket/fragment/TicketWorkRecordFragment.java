@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Mr.K on 2018/5/8.
+ * @author Mr.K  on 2018/5/8.
+ * @decrption 工作表记录展示
  */
 
 public class TicketWorkRecordFragment extends BaseCoreFragment implements TicketWorkRecordAdapter.OnItemClickListener {
@@ -38,6 +39,8 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
     private List<WorkTicketOrder> historyOrders;
     private List<WorkTicketOrder> futureOrders;
     private boolean isFirstLoad = true;
+    private Dialog cancelDialog;
+    private TicketDialogTipsBinding tipsBinding;
 
     @Override
     public int getFragmentLayout() {
@@ -57,7 +60,7 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
     public void onResume() {
         super.onResume();
         if (isFirstLoad) {
-            isFirstLoad = !isFirstLoad;
+            isFirstLoad = false;
         } else {
             initData();
         }
@@ -153,14 +156,9 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
     }
 
 
-    private Dialog cancelDialog;
-    private TicketDialogTipsBinding tipsBinding;
-
     private void initCancelTicketDialog() {
         tipsBinding = TicketDialogTipsBinding.inflate(LayoutInflater.from(getContext()));
         cancelDialog = new DialogUtil().createDialog(getContext(), tipsBinding.getRoot(), ScreenUtils.getScreenWidth(getContext()) * 7 / 9, ViewGroup.LayoutParams.WRAP_CONTENT);
-        tipsBinding.no.setOnClickListener(v -> {
-            cancelDialog.dismiss();
-        });
+        tipsBinding.no.setOnClickListener(v -> cancelDialog.dismiss());
     }
 }

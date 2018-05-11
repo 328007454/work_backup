@@ -14,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.datepicker.WheelMain;
@@ -28,7 +27,8 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by Mr.K on 2018/5/4.
+ * @author Mr.K  on 2018/5/4.
+ * @decrption dialog 对话框
  */
 
 public class DialogUtil {
@@ -48,6 +48,11 @@ public class DialogUtil {
         this.onItemClickListener = onItemClickListener;
     }
 
+    /**
+     * @param context             上下文
+     * @param models              变电站数据
+     * @param onItemClickListener item点击接口对象
+     */
     public void initBdzDialog(Context context, List<DbModel> models, OnItemClickListener onItemClickListener) {
         if (models.isEmpty()) {
             ToastUtils.showMessage("没有变电站数据，请重新进入");
@@ -75,11 +80,12 @@ public class DialogUtil {
      * 2016/8/10 11:40
      */
 
-    public  Dialog createDialog(Context context, View view, int width, int height) {
+    public Dialog createDialog(Context context, View view, int width, int height) {
         Dialog dialog = new Dialog(context, R.style.Ticket_DialogStyle);
         dialog.setContentView(view);
         dialog.setCanceledOnTouchOutside(true);
         Window dialogWindow = dialog.getWindow();
+        assert dialogWindow != null;
         WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();
         windowParams.width = width;
         windowParams.height = height;
@@ -90,6 +96,12 @@ public class DialogUtil {
 
 
     public interface DialogItemClickListener {
+        /**
+         * 接口为点击后会返回相应的值 时间
+         *
+         * @param result   返回结果
+         * @param position 点击位置
+         */
         void confirm(String result, int position);
     }
 
@@ -100,20 +112,21 @@ public class DialogUtil {
     /**
      * 选时间
      *
-     * @param context
-     * @param dialogClickListener
-     * @return
+     * @param context             上下文
+     * @param dialogClickListener 时间点击接口
+     * @return 返回对话框
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public Dialog showDatePickerDialog(Activity context, boolean hasSelectTime, final DialogItemClickListener dialogClickListener) {
-        if (context != null && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN || !context.isDestroyed())) {
-            View timepickerview = LayoutInflater.from(context).inflate(R.layout.date_picker_layout, new ViewGroup(context) {
+    private Dialog showDatePickerDialog(Activity context, boolean hasSelectTime, final DialogItemClickListener dialogClickListener) {
+        boolean isContinue = (context != null && (!context.isDestroyed()));
+        if (isContinue) {
+            View timePickerView = LayoutInflater.from(context).inflate(R.layout.date_picker_layout, new ViewGroup(context) {
                 @Override
                 protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
                 }
             }, false);
-            final WheelMain wheelMain = new WheelMain(context, timepickerview, hasSelectTime);
+            final WheelMain wheelMain = new WheelMain(context, timePickerView, hasSelectTime);
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
@@ -128,27 +141,19 @@ public class DialogUtil {
 
                 }
             }, false);
-            LinearLayout mLLDateContainer = (LinearLayout) view.findViewById(R.id.ll_date_container);
-            mLLDateContainer.addView(timepickerview);
+            LinearLayout mLLDateContainer = view.findViewById(R.id.ll_date_container);
+            mLLDateContainer.addView(timePickerView);
 
-            view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    datePickerDialog.dismiss();
-                    dialogClickListener.confirm(wheelMain.getTime(), 0);
-                }
+            view.findViewById(R.id.confirm).setOnClickListener(v -> {
+                datePickerDialog.dismiss();
+                dialogClickListener.confirm(wheelMain.getTime(), 0);
             });
-            view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    datePickerDialog.dismiss();
-                }
-            });
+            view.findViewById(R.id.cancel).setOnClickListener(v -> datePickerDialog.dismiss());
             // 设置对话框布局
             datePickerDialog.setContentView(view);
 
             Window mWindow = datePickerDialog.getWindow();
+            assert mWindow != null;
             WindowManager.LayoutParams lp = mWindow.getAttributes();
             lp.width = ScreenUtils.getScreenWidth(context);
             mWindow.setGravity(Gravity.BOTTOM);

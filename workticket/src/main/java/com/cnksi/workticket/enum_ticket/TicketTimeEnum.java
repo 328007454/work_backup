@@ -1,7 +1,8 @@
 package com.cnksi.workticket.enum_ticket;
 
 /**
- * Created by Mr.K on 2018/5/7.
+ * @decrption  工作票选择时间区间
+ * @author Mr.K on 2018/5/7.
  */
 
 public enum TicketTimeEnum {

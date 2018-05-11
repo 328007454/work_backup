@@ -38,22 +38,22 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/txt_date"
                 android:layout_alignTop="@+id/txt_date"
-               android:paddingRight="@dimen/ticket_42px"
                 android:layout_toLeftOf="@+id/txt_date"
                 android:paddingLeft="200px"
-                app:srcCompat="@mipmap/ticket_date_left_icon" />
+                android:paddingRight="@dimen/ticket_42px"
+                app:srcCompat="@mipmap/ticket_arrow_left" />
 
 
             <android.support.v7.widget.AppCompatImageView
-                android:paddingLeft="@dimen/ticket_42px"
                 android:id="@+id/date_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/txt_date"
                 android:layout_alignTop="@+id/txt_date"
                 android:layout_toRightOf="@+id/txt_date"
+                android:paddingLeft="@dimen/ticket_42px"
                 android:paddingRight="80px"
-                app:srcCompat="@mipmap/ticket_date_right_icon" />
+                app:srcCompat="@mipmap/ticket_arrow_right" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/date_today"
@@ -73,7 +73,7 @@
     <com.haibin.calendarview.CalendarLayout
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="1500px"
         android:background="#fff"
         android:orientation="vertical"
         app:calendar_content_view_id="@+id/recyclerView"
@@ -87,25 +87,19 @@
             app:calendar_height="46dp"
             app:day_text_size="@dimen/ticket_33px"
             app:min_year="1900"
-            app:selected_theme_color="@color/ticket_color_4cbfd8"
             app:month_view="com.cnksi.workticket.view.calendar.DateMonthView"
             app:other_month_text_color="#e1e1e1"
             app:selected_text_color="#fff"
+            app:selected_theme_color="@color/ticket_color_4cbfd8"
             app:week_background="@color/core_bg_white_ffffff"
             app:week_text_color="@color/ticket_color_1bbc9b"
             app:week_view="com.cnksi.workticket.view.calendar.DateWeekView" />
 
-        <com.cnksi.workticket.view.recyclerview.GroupRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:group_center="false"
-            app:group_has_header="false"
-            app:group_height="42dp"
-            app:group_padding_left="16dp"
-            app:group_padding_right="16dp"
-            app:group_text_color="#555555"
-            app:group_text_size="14sp" />
+            android:background="#f0f0f0" />
         　
     </com.haibin.calendarview.CalendarLayout>
 

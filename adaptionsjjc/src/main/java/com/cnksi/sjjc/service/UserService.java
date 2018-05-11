@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
+/** y用户相关查询
  * Created by luoxy on 16/4/28.Ø
  */
 public class UserService extends BaseService<Users> {
@@ -23,8 +23,9 @@ public class UserService extends BaseService<Users> {
     }
 
     public static UserService getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new UserService();
+        }
         return instance;
     }
 
@@ -79,7 +80,7 @@ public class UserService extends BaseService<Users> {
     public List<String> searchUsersName(String name) {
         List<String> nameList = new ArrayList<>();
         try {
-            List<Users> usersList =selector().and(Users.ACCOUNT, "like", "%" + name + "%").findAll();
+            List<Users> usersList = selector().and(Users.ACCOUNT, "like", "%" + name + "%").findAll();
             if (usersList != null) {
                 for (Users mUser : usersList) {
                     nameList.add(mUser.account);

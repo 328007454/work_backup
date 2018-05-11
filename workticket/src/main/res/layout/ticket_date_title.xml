@@ -42,7 +42,7 @@
                     android:layout_marginRight="@dimen/ticket_42px"
                     android:layout_toLeftOf="@+id/txt_date"
                     android:paddingLeft="200px"
-                    app:srcCompat="@mipmap/ticket_date_left_icon" />
+                    app:srcCompat="@mipmap/ticket_arrow_left" />
 
 
                 <android.support.v7.widget.AppCompatImageView
@@ -54,7 +54,7 @@
                     android:layout_marginLeft="@dimen/ticket_42px"
                     android:layout_toRightOf="@+id/txt_date"
                     android:paddingRight="80px"
-                    app:srcCompat="@mipmap/ticket_date_right_icon" />
+                    app:srcCompat="@mipmap/ticket_arrow_right" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/date_today"

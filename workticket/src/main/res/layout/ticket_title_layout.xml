@@ -14,6 +14,7 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ticket_back"
+                android:paddingRight="200px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ticket_back_icon" />
