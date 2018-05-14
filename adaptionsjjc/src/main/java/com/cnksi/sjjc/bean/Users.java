@@ -72,4 +72,8 @@ public class Users extends BaseModel{
     @Column(name = CCP_KEY_SUBPWD)
     public String ccp_key_subpwd;
 
+    public static final String DEPT_NAME = "dept_name";
+    @Column(name = DEPT_NAME)
+    public String deptName;
+
 }

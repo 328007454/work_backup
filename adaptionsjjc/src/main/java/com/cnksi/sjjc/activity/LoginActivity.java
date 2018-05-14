@@ -458,7 +458,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         PreferencesUtils.put(Config.CURRENT_LOGIN_USER, username);
         PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
         PreferencesUtils.put(Config.OTHER_DEPT_USER,mCurrentUserOne.type);
-
+        PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, mCurrentUserOne.deptName);
         //保存登录班组和账号
         Intent intent = new Intent(_this, HomeActivity.class);
         startActivity(intent);

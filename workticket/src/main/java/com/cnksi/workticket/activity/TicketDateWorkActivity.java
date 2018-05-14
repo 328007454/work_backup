@@ -21,6 +21,7 @@ import com.cnksi.workticket.databinding.TicketWeekDateBinding;
 import com.cnksi.workticket.db.BdzService;
 import com.cnksi.workticket.db.WorkTicketDbManager;
 import com.cnksi.workticket.db.WorkTicketOrderService;
+import com.cnksi.workticket.enum_ticket.TicketStatusEnum;
 import com.cnksi.workticket.enum_ticket.TicketTimeEnum;
 import com.cnksi.workticket.sync.KSyncConfig;
 import com.cnksi.workticket.util.DialogUtil;
@@ -217,10 +218,12 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
     private void saveData(String button) {
         KSyncConfig.getInstance().setFailListener(syncSuccess -> {
             if (syncSuccess) {
-                caculateDataCanBeSaved();
-                if (!isSelectTimeZone) {
-                    ToastUtils.showMessage("所选时间区冲突，请重新选择");
-                    return;
+                if (TicketStatusEnum.kp.name().equalsIgnoreCase(ticketType)) {
+                    caculateDataCanBeSaved();
+                    if (!isSelectTimeZone) {
+                        ToastUtils.showMessage("所选时间区冲突，请重新选择");
+                        return;
+                    }
                 }
                 WorkTicketOrder order = new WorkTicketOrder(department.id, bdzId, bdzName, selectType, Config.deptName, dateBinding.txtPeopleName.getText().toString(), dateBinding.txtConnnectionName.getText().toString(),
                         dateBinding.txtContentName.getText().toString(), ticketType, selectDate, selectTimeZoneKey, seletTimeZone, Config.userAccount, Config.userName);
@@ -567,8 +570,10 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                 ticketType = "kp";
             } else if (i == R.id.rb_jie_type) {
                 ticketType = "jp";
+                setSelectTimeEnAbled();
             } else if (i == R.id.rb_other_type) {
                 ticketType = "other";
+                setSelectTimeEnAbled();
             }
         } else if (i1 == R.id.rg_work_type) {
             selectType = i == R.id.rb_a_typpe ? a : b;
@@ -577,6 +582,15 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             }
         }
     };
+
+    private void setSelectTimeEnAbled() {
+        dateBinding.txtTime1.setEnabled(true);
+        dateBinding.txtTime2.setEnabled(true);
+        dateBinding.txtTime3.setEnabled(true);
+        dateBinding.txtTime4.setEnabled(true);
+        dateBinding.txtTime5.setEnabled(true);
+        dateBinding.rgSelectTime.clearCheck();
+    }
 
     private void getSelectTimeGroup(int id) {
         isSelectTimeZone = true;

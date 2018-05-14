@@ -70,7 +70,7 @@ public abstract class TicketBaseActivity extends BaseCoreActivity {
         Config.deptID = intent.getStringExtra(Config.CURRENT_DEPARTMENT_ID);
         Config.deptName = intent.getStringExtra(Config.CURRENT_DEPARTMENT_NAME);
         //工作票预约的appid是根据巡检appd+"orderticket"作为标志
-        Config.SYNC_APP_ID_VALUE = intent.getStringExtra(Config.KEY_SYNC_APP_ID) + "orderticket";
+        Config.SYNC_APP_ID_VALUE = intent.getStringExtra(Config.KEY_SYNC_APP_ID);
         Config.SYNC_URL_VALUE = intent.getStringExtra(Config.KEY_SYNC_URL);
         Config.otherDeptUser = intent.getStringExtra(Config.OTHER_DEPT_USER);
     }
