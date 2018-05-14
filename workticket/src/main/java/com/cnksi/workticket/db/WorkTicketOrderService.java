@@ -52,10 +52,14 @@ public class WorkTicketOrderService {
      * @param currentDate 当前时间
      * @return 预约结果
      */
-    public List<WorkTicketOrder> getFutureWorkOverCurrentTime(String deptid, String currentDate) {
+    public List<WorkTicketOrder> getFutureWorkOverCurrentTime(String deptid, String currentDate, String account) {
         List<WorkTicketOrder> orders = new ArrayList<>();
         try {
-            orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            if (Config.otherDeptUser.equalsIgnoreCase("team_leader")) {
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            } else {
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.CREATE_PERSON_ACCOUNT, "=", account).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            }
             return orders;
         } catch (DbException e) {
             e.printStackTrace();
@@ -70,11 +74,15 @@ public class WorkTicketOrderService {
      * @return 获取历史预约时间的预约任务
      */
 
-    public List<WorkTicketOrder> getHistoryWorkOverCurrentTime(String deptid, String currentDate) {
+    public List<WorkTicketOrder> getHistoryWorkOverCurrentTime(String deptid, String currentDate, String account) {
 
         List<WorkTicketOrder> orders = new ArrayList<>();
         try {
-            orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, "<", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            if (Config.otherDeptUser.equalsIgnoreCase("team_leader")) {
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, "<", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            } else {
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.CREATE_PERSON_ACCOUNT, "=", account).and(WorkTicketOrder.WORK_DATE, "<", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            }
             return orders;
         } catch (DbException e) {
             e.printStackTrace();

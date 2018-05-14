@@ -380,7 +380,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                     Report report;
                     try {
                         report = XunshiApplication.getDbUtils()
-                                .findFirst(Selector.from(Report.class).where(Report.PMS_JHID, "=", bdPackage.pmsJhid));
+                                .findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", bdPackage.taskId));
                     } catch (DbException e) {
                         e.printStackTrace();
                         LogUtil.writeLog("Nari", e);
@@ -608,7 +608,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             } else {
                 holder.getView(R.id.layout_start).setVisibility(View.VISIBLE);
 
-                holder.setText(R.id.tv_date_start, TextUtils.isEmpty(item.startTime) ? "" :   DateUtils.formatDateTime(item.startTime, CoreConfig.dateFormat2));
+                holder.setText(R.id.tv_date_start, TextUtils.isEmpty(item.startTime) ? "" : DateUtils.formatDateTime(item.startTime, CoreConfig.dateFormat2));
             }
 
             holder.setText(R.id.tv_date, TextUtils.isEmpty(item.createTime) ? "" : item.createTime);
@@ -675,6 +675,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                             break;
                         case notopt:
                             Toast("暂时不支持" + item.inspectionType + "类型作业计划！");
+                            break;
+                        default:
                             break;
                     }
                 }

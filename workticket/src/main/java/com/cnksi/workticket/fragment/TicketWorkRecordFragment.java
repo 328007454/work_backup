@@ -68,8 +68,8 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
 
     private void initData() {
         ExecutorManager.executeTaskSerially(() -> {
-            futureOrders = WorkTicketOrderService.getInstance().getFutureWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime());
-            historyOrders = WorkTicketOrderService.getInstance().getHistoryWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime());
+            futureOrders = WorkTicketOrderService.getInstance().getFutureWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(),Config.userAccount);
+            historyOrders = WorkTicketOrderService.getInstance().getHistoryWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(),Config.userAccount);
             if (futureOrders != null && !futureOrders.isEmpty()) {
                 orders.clear();
                 orders.addAll(futureOrders);

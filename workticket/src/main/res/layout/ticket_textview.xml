@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:orientation="vertical"
-        app:bottom_line_color="@color/global_text_color"
+        app:bottom_line_color="@color/ticket_color_f0f0f0"
         app:bottom_line_visible="true"
         app:line_size="6">
 

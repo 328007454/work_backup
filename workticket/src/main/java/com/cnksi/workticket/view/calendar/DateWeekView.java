@@ -1,31 +1,30 @@
 package com.cnksi.workticket.view.calendar;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
+import com.cnksi.workticket.R;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
 
 /**
- * @decrption 周定义
  * @author Mr.K  on 2018/5/3.
+ * @decrption 周定义
  */
 
 public class DateWeekView extends WeekView {
     private int mRadius;
-
     public DateWeekView(Context context) {
         super(context);
-        Paint weekPaint = new Paint();
-        weekPaint.setAntiAlias(false);
-        weekPaint.setStyle(Paint.Style.FILL);
-        weekPaint.setColor(Color.RED);
-        weekPaint.setStrokeWidth(10);
     }
 
     @Override
@@ -47,6 +46,7 @@ public class DateWeekView extends WeekView {
         int cx = x + mItemWidth / 2;
         int cy = mItemHeight / 2;
         canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
+
     }
 
     @Override

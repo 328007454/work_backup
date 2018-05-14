@@ -222,7 +222,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                     ToastUtils.showMessage("所选时间区冲突，请重新选择");
                     return;
                 }
-                WorkTicketOrder order = new WorkTicketOrder(department.name, bdzId, bdzName, selectType, department.name, dateBinding.txtPeopleName.getText().toString(), dateBinding.txtConnnectionName.getText().toString(),
+                WorkTicketOrder order = new WorkTicketOrder(department.id, bdzId, bdzName, selectType, Config.deptName, dateBinding.txtPeopleName.getText().toString(), dateBinding.txtConnnectionName.getText().toString(),
                         dateBinding.txtContentName.getText().toString(), ticketType, selectDate, selectTimeZoneKey, seletTimeZone, Config.userAccount, Config.userName);
                 try {
                     WorkTicketDbManager.getInstance().getTicketManager().saveOrUpdate(order);
@@ -581,7 +581,6 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
     private void getSelectTimeGroup(int id) {
         isSelectTimeZone = true;
         if (id == R.id.txt_time1) {
-            ToastUtils.showMessage("10:00-11:00");
             seletTimeZone = TicketTimeEnum.region_10to11.value;
             selectTimeZoneKey = TicketTimeEnum.region_10to11.name();
         } else if (id == R.id.txt_time2) {
@@ -597,6 +596,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             seletTimeZone = TicketTimeEnum.region_16to17.value;
             selectTimeZoneKey = TicketTimeEnum.region_16to17.name();
         }
+        ToastUtils.showMessage(seletTimeZone);
     }
 
 }

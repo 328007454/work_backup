@@ -414,7 +414,7 @@ public class DataUtils {
         //变电站
         setChildE(e, "BDZ", ZNXSJH.getString("BDZ"), false);
         //01:编制02：已发布03：执行中04：已执行
-        setChildE(e, "JHZT", "04", false);
+        setChildE(e, "JHZT", "03", false);
         //负责人名称
         setChildE(e, "FZRMC", ZNXSJH.getString("FZRMC"), false);
         //
