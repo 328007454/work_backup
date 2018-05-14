@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.workticket.Config;
 import com.cnksi.workticket.R;
@@ -111,6 +112,10 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
                     e.printStackTrace();
                 }
             }
+            if (!syncSuccess) {
+                ToastUtils.showMessage("同步失败");
+            }
+            CustomerDialog.dismissProgress();
         }).downLoad();
     }
 

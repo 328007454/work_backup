@@ -596,7 +596,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             seletTimeZone = TicketTimeEnum.region_16to17.value;
             selectTimeZoneKey = TicketTimeEnum.region_16to17.name();
         }
-        ToastUtils.showMessage(seletTimeZone);
+
     }
 
 }
