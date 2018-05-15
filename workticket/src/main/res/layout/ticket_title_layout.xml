@@ -29,14 +29,16 @@
                 android:textSize="51px" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:paddingLeft="@dimen/core_padding_30px"
                 android:id="@+id/ticket_txt_add"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="100px"
+                android:gravity="center"
                 android:layout_gravity="right"
                 android:layout_marginRight="@dimen/core_padding_30px"
                 android:text="预约"
                 android:textColor="@color/core_bg_white_ffffff"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:srcCompat="@drawable/ticket_back_icon" />
 
         </android.support.v7.widget.Toolbar>
