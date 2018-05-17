@@ -3,7 +3,7 @@ package com.cnksi.sjjc.service;
 import android.text.TextUtils;
 
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.SwitchPic;

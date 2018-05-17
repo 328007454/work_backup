@@ -23,7 +23,7 @@ import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
@@ -54,7 +54,6 @@ import com.cnksi.sjjc.util.StringUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
-import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;

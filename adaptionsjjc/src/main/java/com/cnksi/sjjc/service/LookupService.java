@@ -1,6 +1,6 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.bean.Lookup;
 import com.cnksi.sjjc.enmu.LookUpType;
 

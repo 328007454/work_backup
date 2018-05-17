@@ -1,7 +1,7 @@
 package com.cnksi.sjjc.bean;
 
 import com.cnksi.core.utils.FileUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

@@ -9,7 +9,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 
 import com.cnksi.core.utils.UriUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.JSObject;
 import com.cnksi.sjjc.MyWebChromeClient;
 import com.cnksi.sjjc.databinding.ActivityWebviewBinding;

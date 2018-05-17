@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
 import com.cnksi.sjjc.databinding.ActivityTaskRemindBinding;

@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.Report;

@@ -73,13 +73,18 @@ ext {
     //
     BaseRecyclerViewAdapterHelper_version = "2.9.35"
 
-    //ksi引用资源
-    //com.cnksi:core:1.2.4
+ 
     ksi_core_version = "1.2.7.1"
     //com.cnksi:ksynclib:3.3.6-SNAPSHOT
     ksi_ksynclib_version = "3.3.6-SNAPSHOT"
 
     ksi_sync_version = "3.1.8.2-xj-sqlcipher"
+    leakcanary_android="1.5.4"
+    ksi_bdloc="1.1.7-3"
+    sqlcipher_version="3.5.7"
+    multidex_version="1.0.3"
+    SmartRefreshLayout_version="1.0.3"
+    material_calendarview="1.4.3"
 }
 
 

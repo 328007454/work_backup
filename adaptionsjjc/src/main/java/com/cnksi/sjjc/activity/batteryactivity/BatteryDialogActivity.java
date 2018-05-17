@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.DrawCircleImageActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;

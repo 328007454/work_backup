@@ -211,33 +211,7 @@ public class DeviceService extends BaseService<Device> {
 
     }
 
-    /**
-     * 恢复抄录数据 到内存HashMap
-     *
-     * @param bdzid
-     */
-    public void recoverCopyData(String bdzid) {
-        String sql = "select deviceid,standid,val from defect_record where dlt='0' and val <> '' and val is not null and bdzid = '"
-                + bdzid + "' GROUP BY deviceid,standid order by discovered_date desc";
-        SqlInfo sqlInfo = new SqlInfo(sql);
-        try {
-            // if (!PreferencesUtils.getBoolean(XunshiApplication.getInstance(), Config.IS_RECOVER_COPY_DATA + bdzid,
-            // false)) {
-            List<DbModel> dataList = findDbModelAll(sqlInfo);
-            if (dataList != null) {
-                HashMap<String, String> copyMap = CustomApplication.getInstance().getCopyedMap();
-                for (DbModel model : dataList) {
-                    // 标准+设备确保抄录唯一性
-                    String key = model.getString("standid") + "_" + model.getString("deviceid");
-                    String value = model.getString("val");
-                    copyMap.put(key, value);
-                }
-            }
-            // }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
     public String findBigId(String alias) {

@@ -2,7 +2,6 @@ package com.cnksi.sjjc.activity;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -34,21 +33,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.utils.DialogUtil;
 import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
-import com.cnksi.core.common.UpdateInfor;
-import com.cnksi.core.utils.Cst;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.NetWorkUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
-import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.core.view.PagerSlidingTabStrip;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.AppVersion;
@@ -61,7 +56,6 @@ import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.FunctionUtils;
 import com.cnksi.sjjc.util.KeyBoardUtils;
 import com.cnksi.sjjc.util.util.UpdateUtils;
-import com.iflytek.cloud.util.ResourceUtil;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
@@ -69,14 +63,11 @@ import com.zhy.autolayout.AutoRelativeLayout;
 import org.xutils.common.util.DatabaseUtils;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
-import org.xutils.ex.DbException;
-import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 import static com.cnksi.sjjc.activity.LoginActivity.SHOW_UPDATE_LOG_DIALOG;
 

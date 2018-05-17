@@ -6,13 +6,10 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.widget.MediaController;
-import android.widget.VideoView;
 
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ActivityPlayVideoBinding;
-
-import org.xutils.x;
 
 public class PlayVideoActivity extends Activity {
 

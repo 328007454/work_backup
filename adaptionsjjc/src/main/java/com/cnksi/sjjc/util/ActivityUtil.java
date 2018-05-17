@@ -1,16 +1,15 @@
 package com.cnksi.sjjc.util;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.bdzinspection.activity.maintenance.SafetyBdzListActivity;
 import com.cnksi.bdzinspection.activity.maintenance.SafetyToolsRemindActivity;
 import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
+import com.cnksi.common.BuildConfig;
+import com.cnksi.common.Config;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.BuildConfig;
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.DefectControlActivity;
@@ -19,7 +18,6 @@ import com.cnksi.sjjc.activity.TypeListActivity;
 import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.sync.KSyncConfig;
 import com.cnksi.workticket.activity.TicketDateHomeActivity;
-import com.cnksi.workticket.activity.TicketDateWorkActivity;
 
 /**
  * Created by lyndon on 2016/9/12.
@@ -91,7 +89,7 @@ public class ActivityUtil {
 
 
     public static void startSync(Activity activity) {
-        if (PreferencesUtils.get("SYNC_WAY",BuildConfig.USE_NETWORK_SYNC)) {
+        if (PreferencesUtils.get("SYNC_WAY", BuildConfig.USE_NETWORK_SYNC)) {
             KSyncConfig.getInstance().startNetWorkSync(activity);
         } else {
             KSyncConfig.getInstance().startUsbWorkSync(activity);

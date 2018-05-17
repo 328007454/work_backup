@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 
 public class NetWorkDisableReceiver extends BroadcastReceiver {
 

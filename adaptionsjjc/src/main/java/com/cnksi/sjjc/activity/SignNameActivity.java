@@ -7,17 +7,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.cnksi.core.view.LinePathView;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ActivityHandWriteBinding;
 import com.cnksi.sjjc.util.FunctionUtils;
-
-import org.xutils.x;
 
 import java.io.IOException;
 

@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.cnksi.common.utils.ThreadPool;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -27,7 +28,6 @@ import com.cnksi.ksynclib.adapter.PopMenuAdapter;
 import com.cnksi.ksynclib.utils.CommonUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.util.FileUtil;
 
 import org.xutils.ex.DbException;
 
@@ -119,7 +119,8 @@ public class SyncMenuUtils {
             });
             Window mWindow = mCustomDialog.getWindow();
             WindowManager.LayoutParams lp = mWindow.getAttributes();
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {// 横屏
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                // 横屏
                 lp.width = getScreenHeight(context) / 10 * 9;
             } else {
                 lp.width = getScreenWidth(context) / 10 * 9;
@@ -140,46 +141,35 @@ public class SyncMenuUtils {
     }
 
     public static void dropDb(final Activity mActivity, final KSync ksync, final Handler handler) {
-        ShowTipsDialog(mActivity, "确认删除数据库么?", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomerDialog.showProgress(mActivity, "删除中...");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            ksync.dropDb();
-                            handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "数据库删除完成"));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
+        ShowTipsDialog(mActivity, "确认删除数据库么?", v -> {
+            CustomerDialog.showProgress(mActivity, "删除中...");
+            ThreadPool.execute(() -> {
+                try {
+                    ksync.dropDb();
+                    handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "数据库删除完成"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         });
     }
 
 
     public static void deleteBakFile(final Activity mActivity, final KSync ksync, final Handler handler) {
-        ShowTipsDialog(mActivity, "确认删除逾期文件么?", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomerDialog.showProgress(mActivity, "删除中...");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 删除两个月之前的备份文件
-                        long time = 60l * 24l * 60l * 60l * 1000l;
-                        Set<String> uploadFolder = KSyncConfig.getInstance().getUploadFolder();
-                        Set<String> downFolder = KSyncConfig.getInstance().getDownFolder();
-                        uploadFolder.removeAll(downFolder);//如果该文件夹是下载文件夹则忽略
-                        for (String s : uploadFolder) {
-                            FileUtil.deleteBakFiles(ksync.getKnConfig().getBaseFolder() + s, time);
-                        }
-                        handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件删除完成"));
-                    }
-                }).start();
-            }
+        ShowTipsDialog(mActivity, "确认删除逾期文件么?", v -> {
+            CustomerDialog.showProgress(mActivity, "删除中...");
+            ThreadPool.execute(() -> {
+                // 删除两个月之前的备份文件
+                long time = 60l * 24l * 60l * 60l * 1000l;
+                Set<String> uploadFolder = KSyncConfig.getInstance().getUploadFolder();
+                Set<String> downFolder = KSyncConfig.getInstance().getDownFolder();
+                //如果该文件夹是下载文件夹则忽略
+                uploadFolder.removeAll(downFolder);
+                for (String s : uploadFolder) {
+                    FileUtils.deleteFileByModifyTime(ksync.getKnConfig().getBaseFolder() + s, time);
+                }
+                handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件删除完成"));
+            });
         });
     }
 
@@ -189,13 +179,13 @@ public class SyncMenuUtils {
             @Override
             public void onClick(View v) {
                 listener.onClick(v);
-                upLoadData(mActivity,ksync,handler);
+                upLoadData(mActivity, ksync, handler);
 
             }
         });
     }
 
-    private static void upLoadData(final  Activity mActivity,final KSync ksync,final Handler handler) {
+    private static void upLoadData(final Activity mActivity, final KSync ksync, final Handler handler) {
         new Thread(new Runnable() {
             @Override
             public void run() {

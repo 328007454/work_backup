@@ -9,15 +9,12 @@ import android.widget.TextView;
 
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.DefectControlActivity;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.DateUtils;
-
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Collection;

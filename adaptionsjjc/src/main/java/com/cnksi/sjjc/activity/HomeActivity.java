@@ -4,8 +4,6 @@ package com.cnksi.sjjc.activity;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -18,16 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cnksi.bdzinspection.activity.*;
 import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BdzAdapter;
@@ -53,9 +49,8 @@ import com.cnksi.sjjc.service.PlacedService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
-import com.cnksi.sjjc.util.AppUtils;
 import com.cnksi.sjjc.util.DialogUtils;
-import com.cnksi.sjjc.util.TTSUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.sjjc.view.Banner;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -543,7 +538,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
      * 跳转到巡视的开始任务界面
      */
     private void startTask(Task task) {
-        CustomApplication.closeDbConnection();
+
         Intent intent = new Intent();
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
