@@ -84,6 +84,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
      * 点击保存时候按钮的预留状态
      */
     private String save = "save";
+    private boolean isSaved = true;
 
     @Override
     public int getLayoutResId() {
@@ -141,14 +142,24 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             if (!checkInputAllInfor()) {
                 return;
             }
-            saveData(save);
+            if (isSaved) {
+                isSaved = false;
+                saveData(save);
+            } else {
+                ToastUtils.showMessage("正在保存");
+            }
         });
 
         dateBinding.goon.setOnClickListener(v -> {
             if (!checkInputAllInfor()) {
                 return;
             }
-            saveData(goOn);
+            if (isSaved) {
+                isSaved = false;
+                saveData(goOn);
+            } else {
+                ToastUtils.showMessage("正在保存");
+            }
         });
 
         dateBinding.includeTitle.ticketBack.setOnClickListener(v -> onBackPressed());
@@ -162,6 +173,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                 selectDate = result;
                 seletTimeZone = "";
                 dateBinding.txtSelectTime.setText("时间及日期:  " + result);
+                dateBinding.rgSelectTime.clearCheck();
                 orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate);
                 caculateDataCanBeSaved();
             });
@@ -198,6 +210,12 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             ToastUtils.showMessage("请选择时间区间");
             return false;
         }
+
+        if (TextUtils.isEmpty(ticketType)) {
+            ToastUtils.showMessage("请选择开票类型");
+            return false;
+        }
+
         return true;
     }
 
@@ -233,10 +251,12 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                     upLoadData();
                 } catch (DbException e) {
                     e.printStackTrace();
+                    isSaved = true;
                 }
 
             } else {
                 ToastUtils.showMessage("同步失败，无法保存本次数据，请确保网络畅通");
+                isSaved = true;
             }
         });
         KSyncConfig.getInstance().getKNConfig(getApplicationContext()).downLoad();
@@ -266,6 +286,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             } else if (TextUtils.equals(button, save)) {
                 finish();
             }
+            isSaved = true;
             successDialog.dismiss();
         });
         successDialog.show();
@@ -451,10 +472,9 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             bTo17B = currentBdzWorkB.get(TicketTimeEnum.region_16to17.name());
         }
         //10:00-11:00按钮  ** department.group 工作组数  A 代表工作量，B 也代表工作量 A=2B 所以取最小工作量B 为单位，班组工作最大量为：工作组数*2，减1 的目的是为了处理 ABA 这种情况
-        /*
-      两种工作类型
-     */
-
+        /**
+         两种工作类型
+         */
         if (department.groupCount * 2 - 1 >= (to11B + to11A * 2)) {
             if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
                 dateBinding.txtTime1.setChecked(false);
