@@ -7,10 +7,9 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.TaskStatus;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
-import com.lidroid.xutils.db.annotation.Transient;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,43 +59,41 @@ public class Task extends BaseModel {
      * 是否作废；0：表示正常 ，1：表示作废
      */
     public static final String IS_INVALID = "is_invalid";
-    @Id(column = TASKID)
+    @Column(name = TASKID,isId = true)
     public String taskid;
-    @Column(column = INSPECTION)
+    @Column(name = INSPECTION)
     public String inspection;
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzid;
-    @Column(column = BDZNAME)
+    @Column(name = BDZNAME)
     public String bdzname;
-    @Column(column = SCHEDULE_TIME)
+    @Column(name = SCHEDULE_TIME)
     public String schedule_time;
-    @Column(column = SCHEDULE_ENDTIME)
+    @Column(name = SCHEDULE_ENDTIME)
     public String schedule_endtime;
-    @Column(column = STATUS)
+    @Column(name = STATUS)
     public String status;
-    @Column(column = INSPECTION_NAME)
+    @Column(name = INSPECTION_NAME)
     public String inspection_name;
-    @Column(column = TYPE)
+    @Column(name = TYPE)
     public String type;
-    @Column(column = PMS_JHID)
+    @Column(name = PMS_JHID)
     public String pmsJhid;
-    @Column(column = PMS_JH_SOURCE)
+    @Column(name = PMS_JH_SOURCE)
     public String pmsJhSource;
-    @Column(column = SELECTED_DEVICEID)
+    @Column(name = SELECTED_DEVICEID)
     public String selected_deviceid;
-    @Column(column = CRAETE_ACCOUNT)
+    @Column(name = CRAETE_ACCOUNT)
     public String createAccount;
-    @Column(column = MEMBERS_ACCOUNT)
+    @Column(name = MEMBERS_ACCOUNT)
     public String membersAccount;
-    @Column(column = IS_INVALID)
+    @Column(name = IS_INVALID)
     public int isInvalid;
 
+    public transient boolean hasNewDefect = false;
 
-    @Transient
-    public boolean hasNewDefect = false;
 
-    @Transient
-    public String isUpload = "Y";
+    public transient String isUpload = "Y";
 
     public Task() {
     }

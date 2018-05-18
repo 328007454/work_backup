@@ -197,15 +197,6 @@ public class IndexService {
                 if (!table.tableIsExist(dbManager)) {
                     SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo(table);
                     dbManager.execNonQuery(sqlInfo);
-//					String execAfterTableCreated = table.getOnCreated();
-//					if (!TextUtils.isEmpty(execAfterTableCreated)) {
-//						execNonQuery(execAfterTableCreated);
-//					}
-//					table.setCheckedDatabase(true);
-//					DbManager.TableCreateListener listener = this.getDaoConfig().getTableCreateListener();
-//					if (listener != null) {
-//						listener.onTableCreated(this, table);
-//					}
                 }
             }
         }

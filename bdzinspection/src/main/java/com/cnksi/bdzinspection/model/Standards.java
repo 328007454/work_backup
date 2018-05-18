@@ -6,9 +6,9 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FileUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 /**
  * 巡检标准
@@ -34,96 +34,96 @@ public class Standards extends BaseModel {
 
 	// 巡检标准序号
 	public static final String STAID = "staid";
-	@Id(column = STAID)
+	@Column(name = STAID,isId = true)
 	public String staid;
 
 	// 设备部件编号
 	public static final String DUID = "duid";
-	@Column(column = DUID)
+	@Column(name = DUID)
 	public String duid;
 
 	// 描述
 	public static final String DESCRIPTION = "description";
-	@Column(column = DESCRIPTION)
+	@Column(name = DESCRIPTION)
 	public String description;
 
 	// 巡检结果类型 0正确与不正确 1手动输入
 	public static final String RESULTTYPE = "resulttype";
-	@Column(column = RESULTTYPE)
+	@Column(name = RESULTTYPE)
 	public String resulttype;
 
 	// 巡检标准图片
 	public static final String PICS = "pic";
-	@Column(column = PICS)
+	@Column(name = PICS)
 	public String pics;
 
 	// 排序
 	public static final String SORT = "sort";
-	@Column(column = SORT)
+	@Column(name = SORT)
 	public String sort;
 
 	// 预警下限
 	public static final String WTLL = "wtll";
-	@Column(column = WTLL)
+	@Column(name = WTLL)
 	public String wtll;
 
 	// 预警上限
 	public static final String WTC = "wtc";
-	@Column(column = WTC)
+	@Column(name = WTC)
 	public String wtc;
 
 	// 单位
 	public static final String UNIT = "unit";
-	@Column(column = UNIT)
+	@Column(name = UNIT)
 	public String unit;
 
 	// 标准类型
 	public static final String KIND = "kind";
-	@Column(column = KIND)
+	@Column(name = KIND)
 	public String kind;
 
 
 
 	// 缺陷来源
 	public static final String ORIGIN = "origin";
-	@Column(column = ORIGIN)
+	@Column(name = ORIGIN)
 	public String origin;
 
 	// 创建时间
 	public static final String CREATETIME = "createtime";
-	@Column(column = CREATETIME)
+	@Column(name = CREATETIME)
 	public String createtime;
 
 	public static final String REPORT_TYPE = "report_type";
-	@Column(column = REPORT_TYPE)
+	@Column(name = REPORT_TYPE)
 	public String report_type;
 
 	public static final String FULL = "full";
-	@Column(column = FULL)
+	@Column(name = FULL)
 	public String full;
 
 	public static final String DAYS = "days";
-	@Column(column = DAYS)
+	@Column(name = DAYS)
 	public String days;
 
 	public static final String NEWCAST = "newcast";
-	@Column(column = NEWCAST)
+	@Column(name = NEWCAST)
 	public String newcast;
 
 	public static final String ACCEPT = "accept";
-	@Column(column = ACCEPT)
+	@Column(name = ACCEPT)
 	public String accept;
 
 	public static final String CREATER = "creater";
-	@Column(column = CREATER)
+	@Column(name = CREATER)
 	public String creater;
 
 	public static final String COPYSTATE = "copystate";
-	@Column(column = COPYSTATE)
+	@Column(name = COPYSTATE)
 	public String copystate;
 
 	public static final String MINIPIC = "minipic";
-	@Column(column = MINIPIC)
+	@Column(name = MINIPIC)
 	public String miniPic;
 
 	// 标准对应的缺陷数量

@@ -3,13 +3,16 @@ package com.cnksi.bdzinspection.daoservice;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.model.BaseModel;
 import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.model.DefectDefine;
 import com.cnksi.bdzinspection.utils.Config;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +24,7 @@ import java.util.List;
  *
  * @author terry
  */
-public class DefectDefineService {
+public class DefectDefineService extends BaseModel {
 
     public static DefectDefineService mInstance;
 
@@ -45,17 +48,18 @@ public class DefectDefineService {
 
         LinkedHashMap<String, ArrayList<DefectDefine>> groupHashMap = new LinkedHashMap<String, ArrayList<DefectDefine>>();
         try {
-            Selector selector = Selector.from(Defect.class).where(Defect.STAID, "=", staid).expr("and dlt <> '1'");
-            List<Defect> defects = XunshiApplication.getDbUtils().findAll(selector);
+            Selector selector = XunshiApplication.getDbUtils().selector(Defect.class);
+            List<Defect> defects = selector.where(Defect.STAID, "=", staid).expr("and dlt <> '1'").findAll();
             List<DefectDefine> ddlist = new ArrayList<DefectDefine>();
             if (null != defects && !defects.isEmpty()) {
                 for (Defect df : defects)
                     ddlist.add(new DefectDefine(df));
             }
-            selector = Selector.from(DefectDefine.class).where(DefectDefine.STAID, "=", staid)
+
+            selector = XunshiApplication.getDbUtils().selector(DefectDefine.class);
+            List<DefectDefine> defectList = selector.where(DefectDefine.STAID, "=", staid)
                     .expr("and (" + DefectDefine.DLT + " is null or " + DefectDefine.DLT + "<>'1')")
-                    .orderBy(DefectDefine.LEVEL);
-            List<DefectDefine> defectList = XunshiApplication.getDbUtils().findAll(selector);
+                    .orderBy(DefectDefine.LEVEL).findAll();
             if (null != defectList)
                 ddlist.addAll(defectList);
             String _tmpLevel = "";
@@ -96,11 +100,10 @@ public class DefectDefineService {
 
         List<DbModel> defectList = findDefectDefineByDeviceIdAndContentFromDB(deviceId, content);
         // TODO: 2017/4/14 device_part 是否弃用
-        SqlInfo sqlInfo = new SqlInfo(
-                "select d.*,dp.duid,dp.name as duname from defect_define d left join device_standards s on d.staid=s.staid left join device_part dp on s.duid=dp.duid left join device de on dp.deviceid=de.deviceid where de.deviceid =? and d.description like '%"
-                        + content + "%'",
-                deviceId);
-
+        String sql = "select d.*,dp.duid,dp.name as duname from defect_define d left join device_standards s on d.staid=s.staid left join device_part dp on s.duid=dp.duid left join device de on dp.deviceid=de.deviceid where de.deviceid =? and d.description like '%"
+                + content + "%'";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", deviceId));
         List<DbModel> defectModel = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         if (defectList == null)
             defectList = new ArrayList<DbModel>();
@@ -112,9 +115,10 @@ public class DefectDefineService {
 
     public List<DbModel> findDefectDefineByDeviceIdAndContentFromDB(String deviceId, String content)
             throws DbException {
-        SqlInfo sqlInfo = new SqlInfo(
-                "SELECT dn.duid, dn.duname, d.* FROM defect d LEFT JOIN standards s ON d.staid = s.staid LEFT JOIN device_unit dn ON dn.duid = s.duid LEFT JOIN device dv ON dv.dtid = dn.dtid WHERE dv.deviceid = ? AND d.description LIKE ?",
-                deviceId, "%" + content + "%");
+        String sql = "SELECT dn.duid, dn.duname, d.* FROM defect d LEFT JOIN standards s ON d.staid = s.staid LEFT JOIN device_unit dn ON dn.duid = s.duid LEFT JOIN device dv ON dv.dtid = dn.dtid WHERE dv.deviceid = ? AND d.description LIKE ?";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", deviceId));
+        sqlInfo.addBindArg(new KeyValue("", "%" + content + "%"));
 
         return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
     }

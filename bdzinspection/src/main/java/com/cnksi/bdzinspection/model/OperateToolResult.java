@@ -1,9 +1,10 @@
 package com.cnksi.bdzinspection.model;
 
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -15,73 +16,73 @@ import java.util.UUID;
 public class OperateToolResult {
     // 报告ID
     public static final String ID = "id";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     public String id;
 
     public static final String GQJ_ID = "gqj_id";
-    @Column(column = GQJ_ID)
+    @Column(name = GQJ_ID)
     public String gqjId;
 
     public static final String BDZID = "bdz_id";
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzId;
 
     public static final String BDZNAME = "bdz_name";
-    @Column(column = BDZNAME)
+    @Column(name = BDZNAME)
     public String bdzName;
 
     public static final String REPORTID = "report_id";
-    @Column(column = REPORTID)
+    @Column(name = REPORTID)
     public String reportId;
 
 
     public static final String GQJ_NAME = "gqj_name";
-    @Column(column = GQJ_NAME)
+    @Column(name = GQJ_NAME)
     public String gqjName;
 
 
     public static final String OPERATION = "operation";
-    @Column(column = OPERATION)
+    @Column(name = OPERATION)
     public String operation;
 
     public static final String OPER_TIME = "oper_time";
-    @Column(column = OPER_TIME)
+    @Column(name = OPER_TIME)
     public String operTime;
 
     public static final String RESULT = "result";
-    @Column(column = RESULT)
+    @Column(name = RESULT)
     public String result;
 
     public static final String DESCRIPTION = "description";
-    @Column(column = DESCRIPTION)
+    @Column(name = DESCRIPTION)
     public String description;
 
     public static final String PERSONS = "persons";
-    @Column(column = PERSONS)
+    @Column(name = PERSONS)
     public String persons;
 
     public static final String PIC = "pic";
-    @Column(column = PIC)
+    @Column(name = PIC)
     public String pic;
 
     public static final String DLT = "dlt";
-    @Column(column = DLT)
+    @Column(name = DLT)
     public int dlt;
 
     public static final String LASTMODIFYTIME = "last_modify_time";
-    @Column(column = LASTMODIFYTIME)
+    @Column(name = LASTMODIFYTIME)
     public String lastModifyTime;
 
     public static final String INSERTTIME = "insert_time";
-    @Column(column = INSERTTIME)
+    @Column(name = INSERTTIME)
     public String insertTime;
 
     public static final String UPDATETIME = "update_time";
-    @Column(column = UPDATETIME)
+    @Column(name = UPDATETIME)
     public String updateTime;
 
     public static final String CREATETIME = "create_time";
-    @Column(column = CREATETIME)
+    @Column(name = CREATETIME)
     public String creatTime;
 
 

@@ -52,4 +52,5 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
     implementation files('libs/M100_RFID_API.jar')
     compile project(':tts')
+    implementation 'com.cnksi:core:1.2.7.3'
 }

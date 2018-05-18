@@ -14,11 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.xscore.xsutils.BitmapHelp;
-import com.lidroid.xutils.BitmapUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.lidroid.xutils.bitmap.core.BitmapSize;
-import com.lidroid.xutils.task.Priority;
+import com.cnksi.core.utils.BitmapUtils;
 
 @SuppressWarnings("deprecation")
 public abstract class BaseMapListExpandableAdapter<E, T> extends BaseExpandableListAdapter {
@@ -29,8 +25,6 @@ public abstract class BaseMapListExpandableAdapter<E, T> extends BaseExpandableL
 	protected Context mContext;
 
 	protected BitmapUtils mBitmapUtils;
-	protected BitmapDisplayConfig mBitmapConfig;
-	protected BitmapSize bitmapSize;
 	protected int width = 0;
 	protected int height = 0;
 
@@ -45,36 +39,8 @@ public abstract class BaseMapListExpandableAdapter<E, T> extends BaseExpandableL
 	 * @param context
 	 */
 	public void initBitmapUtils(Context context) {
-		mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(context);
-		mBitmapUtils.configDefaultLoadingImage(R.drawable.xs_ic_app);
-		mBitmapUtils.configDefaultLoadFailedImage(R.drawable.xs_ic_app);
-		mBitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
-		mBitmapUtils.configMemoryCacheEnabled(true);
 	}
 
-	/**
-	 * @param context
-	 * @param widthScale
-	 *            缩放比例
-	 * @param heightScale
-	 *            缩放比例
-	 */
-
-	public void setScaleDownBitmapSize(int scaleDown) {
-		mBitmapConfig = new BitmapDisplayConfig();
-		bitmapSize = new BitmapSize(width, height).scaleDown(scaleDown);
-		mBitmapConfig.setBitmapMaxSize(bitmapSize);
-		mBitmapConfig.setPriority(Priority.UI_TOP);
-		mBitmapConfig.setLoadFailedDrawable(mContext.getResources().getDrawable(R.drawable.xs_ic_app));
-	}
-
-	public void setBitmapSize(int width, int height) {
-		mBitmapConfig = new BitmapDisplayConfig();
-		bitmapSize = new BitmapSize(width, height);
-		mBitmapConfig.setBitmapMaxSize(bitmapSize);
-		mBitmapConfig.setPriority(Priority.UI_TOP);
-		mBitmapConfig.setLoadFailedDrawable(mContext.getResources().getDrawable(R.drawable.xs_ic_app));
-	}
 
 	@Override
 	public T getChild(int groupPosition, int childPosition) {

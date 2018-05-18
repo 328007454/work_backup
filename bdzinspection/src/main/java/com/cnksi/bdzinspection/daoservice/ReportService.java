@@ -3,10 +3,11 @@ package com.cnksi.bdzinspection.daoservice;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +32,17 @@ public class ReportService {
     }
 
     public void saveSignName(List<ReportSignname> list) throws DbException {
-        XunshiApplication.getDbUtils().saveOrUpdateAll(list);
+        XunshiApplication.getDbUtils().saveOrUpdate(list);
     }
 
     public void saveBatteryGroup(List<BatteryGroup> list) throws DbException {
-        XunshiApplication.getDbUtils().saveOrUpdateAll(list);
+        XunshiApplication.getDbUtils().saveOrUpdate(list);
     }
 
     public List<ReportSignname> getSignNamesForReportAndRole(String reportId, String rolo) throws DbException {
-        return XunshiApplication.getDbUtils().findAll(Selector.from(ReportSignname.class).where(ReportSignname.DLT, "=", "0")
-                .and(ReportSignname.REPORTID, "=", reportId).and(ReportSignname.SIGNERROLE, "=", rolo).expr("and account is not null"));
+        Selector selector = XunshiApplication.getDbUtils().selector(ReportSignname.class).where(ReportSignname.DLT, "=", "0")
+                .and(ReportSignname.REPORTID, "=", reportId).and(ReportSignname.SIGNERROLE, "=", rolo).expr("and account is not null");
+        return selector.findAll();
     }
 
     public List<DbModel> findBatteryGroup(String currentBdzId) throws DbException {
@@ -49,7 +51,6 @@ public class ReportService {
         dbModelList = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
         return dbModelList;
     }
-
 
 
     public DbModel findAllBatteryCodeCount(String currentBdzId, String currentReportId) {
@@ -68,7 +69,7 @@ public class ReportService {
     public List<BatteryGroup> findAllBatteryGroup(String currentBdzID, String currentReportId) {
         List<BatteryGroup> batteryGroups = new ArrayList<>();
         try {
-            batteryGroups = XunshiApplication.getDbUtils().findAll(Selector.from(BatteryGroup.class).where(BatteryGroup.REPORTID, "=", currentReportId).and(BatteryGroup.BDZID, "=", currentBdzID).and(BatteryGroup.DLT, "<>", "1"));
+            batteryGroups = XunshiApplication.getDbUtils().selector(BatteryGroup.class).where(BatteryGroup.REPORTID, "=", currentReportId).and(BatteryGroup.BDZID, "=", currentBdzID).and(BatteryGroup.DLT, "<>", "1").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }

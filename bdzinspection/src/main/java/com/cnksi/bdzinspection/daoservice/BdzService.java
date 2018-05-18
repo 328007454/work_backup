@@ -1,11 +1,14 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.databinding.XsNewDeviceImageLayoutBinding;
 import com.cnksi.bdzinspection.model.Bdz;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ public class BdzService extends BaseService {
     public static BdzService mInstance;
 
     private BdzService() {
+        super();
     }
 
     public static BdzService getInstance() {
@@ -47,7 +51,7 @@ public class BdzService extends BaseService {
     }
 
     public Bdz findByPmsId(String pms_id) throws DbException {
-        return XunshiApplication.getDbUtils().findFirst(Selector.from(Bdz.class).where("pms_id", "=", pms_id));
+        return  XunshiApplication.getDbUtils().selector(Bdz.class).where("pms_id", "=", pms_id).and(Bdz.DLT,"=","0").findFirst();
     }
 
     /**
@@ -87,7 +91,7 @@ public class BdzService extends BaseService {
 
     public List<Bdz> findAllBdzByDp(String dept_id) {
         try {
-            return XunshiApplication.getDbUtils().findAll(from(Bdz.class).and(Bdz.DEPTID, "=", dept_id));
+          return   XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.DLT,"=","0").and(Bdz.DEPTID, "=", dept_id).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }

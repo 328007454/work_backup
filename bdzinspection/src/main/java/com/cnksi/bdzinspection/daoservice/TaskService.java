@@ -9,11 +9,13 @@ import com.cnksi.bdzinspection.model.Task;
 import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.Config.TaskStatus;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,8 +124,8 @@ public class TaskService {
         boolean isSuccess = false;
         try {
 //            getDbUtils().deleteById(Task.class, idValue);
-            getDbUtils().update(Task.class, WhereBuilder.b(Task.TASKID, "=", idValue), new String[]{Task.DLT}, new String[]{"1"});
-            Report mReport = getDbUtils().findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", idValue));
+            getDbUtils().update(Task.class, WhereBuilder.b(Task.TASKID, "=", idValue), new KeyValue(Task.DLT, "1"));
+            Report mReport = getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", idValue).findFirst();
             if (mReport != null) {
                 for (int i = 0, count = tableClassArray.length; i < count; i++) {
                     getDbUtils().delete(tableClassArray[i], WhereBuilder.b(tableClassId[i], "=", mReport.reportid));
@@ -141,7 +143,7 @@ public class TaskService {
      */
     public void isUploadCurrentTask(Task mTask, boolean IsUpload) {
         try {
-            getDbUtils().update(Report.class, WhereBuilder.b(Report.TASK_ID, "=", mTask.taskid), new String[]{Report.IS_UPLOAD}, new String[]{(mTask.isUpload = (IsUpload ? "Y" : "N"))});
+            getDbUtils().update(Report.class, WhereBuilder.b(Report.TASK_ID, "=", mTask.taskid), new KeyValue(Report.IS_UPLOAD, (mTask.isUpload = (IsUpload ? "Y" : "N"))));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -153,8 +155,8 @@ public class TaskService {
     public long queryCopyData(String currentReportId) {
         long count = 0;
         try {
-            Selector selector = Selector.from(DefectRecord.class).expr(DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId);
-            count = getDbUtils().count(selector);
+            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).expr(DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId);
+            count = selector.count();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -180,7 +182,9 @@ public class TaskService {
 
     public long queryCopuDataTotalDB(String bdzId) {
         long count = 0;
-        SqlInfo sqlInfo = new SqlInfo("SELECT count(1) as allCopyCount FROM device d LEFT JOIN device_unit du ON d.dtid = du.dtid LEFT JOIN standards s ON s.duid = du.duid WHERE d.bdzid = ? AND s.resulttype = 1 AND d.dlt <> 1 AND du.dlt <> 1 AND s.dlt <> 1", bdzId);
+        String sql = "SELECT count(1) as allCopyCount FROM device d LEFT JOIN device_unit du ON d.dtid = du.dtid LEFT JOIN standards s ON s.duid = du.duid WHERE d.bdzid = ? AND s.resulttype = 1 AND d.dlt <> 1 AND du.dlt <> 1 AND s.dlt <> 1";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
             DbModel mDbModel = getDbUtils().findDbModelFirst(sqlInfo);
             if (mDbModel != null) {
@@ -219,7 +223,7 @@ public class TaskService {
         long total = 0;
         List<StandardSwitchover> standardSwitchOvers = null;
         try {
-            standardSwitchOvers = getDbUtils().findAll(Selector.from(StandardSwitchover.class).where(StandardSwitchover.BDZID, "=", bdzId).and(StandardSwitchover.KIND, "=", type).and(StandardSwitchover.ISCOPY, "=", "1").and(StandardSwitchover.DLT, "!=", "1"));
+            standardSwitchOvers = getDbUtils().selector(StandardSwitchover.class).where(StandardSwitchover.BDZID, "=", bdzId).and(StandardSwitchover.KIND, "=", type).and(StandardSwitchover.ISCOPY, "=", "1").and(StandardSwitchover.DLT, "!=", "1").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -246,12 +250,12 @@ public class TaskService {
         List<Task> tasks = null;
         if (accounts.length > 0) {
             extraSql = " and " + CommonUtils.buildWhereTaskContainMe(accounts);
-         } else {
+        } else {
             extraSql = "";
         }
         try {
-            tasks = XunshiApplication.getDbUtils().findAll(Selector.from(Task.class).where(Task.DLT, "=", "0").and(Task.INSPECTION, "=", name).and(Task.STATUS, "=", "undo").and(Task.BDZID, "=", bdzId)
-                    .expr(extraSql + " and (select datetime('" + chooseTime + "','+24 hour'))> schedule_time and schedule_time >= (select datetime('" + chooseTime + "'))"));
+            tasks = XunshiApplication.getDbUtils().selector(Task.class).where(Task.DLT, "=", "0").and(Task.INSPECTION, "=", name).and(Task.STATUS, "=", "undo").and(Task.BDZID, "=", bdzId)
+                    .expr(extraSql + " and (select datetime('" + chooseTime + "','+24 hour'))> schedule_time and schedule_time >= (select datetime('" + chooseTime + "'))").findAll();
             if (null == tasks)
                 return new ArrayList<Task>();
             return tasks;

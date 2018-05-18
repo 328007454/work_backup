@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 public class CopyMapCache {
 	final static HashMap<String, String> mCopyMap = new HashMap<>();
@@ -19,7 +21,9 @@ public class CopyMapCache {
 	public static void initData(String bdzid, String reportId) {
 		mCopyMap.clear();
 		String sql = "select deviceid,standid,val from defect_record where val <> '' and reportId<>? and val is not null and bdzid =?  GROUP BY deviceid,standid order by discovered_date desc";
-		SqlInfo sqlInfo = new SqlInfo(sql, reportId, bdzid);
+		SqlInfo sqlInfo = new SqlInfo(sql);
+		sqlInfo.addBindArg(new KeyValue("",reportId));
+		sqlInfo.addBindArg(new KeyValue("",bdzid));
 		try {
 			List<DbModel> dataList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
 			if (dataList != null) {

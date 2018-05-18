@@ -51,17 +51,15 @@ import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.view.RadiusSpan;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.xscore.xsactivity.BaseCoreActivity;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.BitmapHelp;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 import com.cnksi.xscore.xsview.PagerSlidingTabStrip;
-import com.lidroid.xutils.BitmapUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.zhy.core.AutoFrameLayout;
 import com.zhy.core.AutoLinearLayout;
 import com.zhy.core.AutoRelativeLayout;
@@ -107,10 +105,7 @@ public class BaseActivity extends BaseCoreActivity {
      * 图片显示工具类
      */
     protected BitmapUtils mBitmapUtils = null;
-    /**
-     * 图片显示参数
-     */
-    protected BitmapDisplayConfig mBitmapConfig = null;
+
     /**
      * 是否是特殊巡检
      */
@@ -439,7 +434,6 @@ public class BaseActivity extends BaseCoreActivity {
     @Override
     protected void compeletlyExitSystem() {
         // 退出
-        BitmapHelp.clearDiskCache();
         ScreenManager.getInstance().popAllActivityExceptOne(null);
         android.os.Process.killProcess(android.os.Process.myPid());
         // PreferencesUtils.clear(currentActivity);

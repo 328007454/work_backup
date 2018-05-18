@@ -1,8 +1,8 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -11,22 +11,22 @@ public class SwitchPic extends BaseModel{
 
 	// ID
 	public static final String ID = "id";
-	@Id(column = ID)
+	@Column(name = ID)
 	public String id = UUID.randomUUID().toString();
 
 	// 报告编号
 	public static final String REPORTID = "reportid";
-	@Column(column = REPORTID)
+	@Column(name = REPORTID)
 	public String reportid;
 
 	// 图片
 	public static final String PIC = "pic";
-	@Column(column = PIC)
+	@Column(name = PIC)
 	public String pic;
 
 	// 录音文件
 	public static final String VOICE = "voice";
-	@Column(column = VOICE)
+	@Column(name = VOICE)
 	public String voice;
 
 	// 录音文件长度
@@ -34,17 +34,17 @@ public class SwitchPic extends BaseModel{
 
 	// 标准id
 	public static final String STANDID = "standid";
-	@Column(column = STANDID)
+	@Column(name = STANDID)
 	public String standid;
 
 	// 变电站编号
 	public static final String BDZID = "bdzid";
-	@Column(column = BDZID)
+	@Column(name = BDZID)
 	public String bdzid;
 
 	// 定期维护巡视标准Id
 	public static final String STADIDSWICHERID = "stand_switch_id";
-	@Column(column = STADIDSWICHERID)
+	@Column(name = STADIDSWICHERID)
 	public String standSwitchId;
 
 	public SwitchPic() {

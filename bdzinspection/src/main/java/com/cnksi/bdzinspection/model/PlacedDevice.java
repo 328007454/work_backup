@@ -7,10 +7,11 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+import org.xutils.db.table.DbModel;
+
 
 /**
  * @version 1.0
@@ -37,35 +38,35 @@ public class PlacedDevice {
     public final static String LAST_MODIFY_TIME = "last_modify_time";
     public final static String INSERT_TIME = "insert_time";
     public final static String UPDATE_TIME = "update_time";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     public String id;
-    @Column(column = REPORTID)
+    @Column(name = REPORTID)
     public String reportid;
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzid;
-    @Column(column = DEVICEID)
+    @Column(name = DEVICEID)
     public String deviceid;
-    @Column(column = DEVICE_NAME)
+    @Column(name = DEVICE_NAME)
     public String device_name;
-    @Column(column = PERSON)
+    @Column(name = PERSON)
     public String person;
-    @Column(column = PLACED_WAY)
+    @Column(name = PLACED_WAY)
     public String placed_way;
-    @Column(column = PIC)
+    @Column(name = PIC)
     public String pic;
-    @Column(column = LATITUDE)
+    @Column(name = LATITUDE)
     public String latitude;
-    @Column(column = LONGTITUDE)
+    @Column(name = LONGTITUDE)
     public String longtitude;
-    @Column(column = CREATE_TIME)
+    @Column(name = CREATE_TIME)
     public String create_time;
-    @Column(column = DLT)
+    @Column(name = DLT)
     public String dlt = "0";
-    @Column(column = LAST_MODIFY_TIME)
+    @Column(name = LAST_MODIFY_TIME)
     public String last_modify_time;
-    @Column(column = INSERT_TIME)
+    @Column(name = INSERT_TIME)
     public String insert_time;
-    @Column(column = UPDATE_TIME)
+    @Column(name = UPDATE_TIME)
     public String update_time;
 
     public static PlacedDevice create(Device device, String reportid) {

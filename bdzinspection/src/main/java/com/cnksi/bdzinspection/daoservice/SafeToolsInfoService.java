@@ -5,10 +5,12 @@ import android.text.TextUtils;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.OperateToolResult;
 import com.cnksi.bdzinspection.utils.Config;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +36,7 @@ public class SafeToolsInfoService extends BaseService {
     }
 
     public List<DbModel> findAllTools(String dept, String keyWord, String bdzId) {
-        List<DbModel> toolsInfors=null;
+        List<DbModel> toolsInfors = null;
         List<DbModel> inTestList;
         String sql = "SELECT gi.id,gi.name,gi.bdz_name,gi.dept_name,gi.bdz_id,gi.dept_id,gi.num,gi.lastly_check_time,gi.period,gi.next_check_time,gi.isnormal,gi.status,gi.remark FROM gqj_info gi  WHERE gi.dlt = '0' and dept_id = '" + dept + "' and bdz_id = '" + bdzId + "' and (gi.status <> '" + Config.ToolStatus.stop.name() + "' or gi.status is null ) ";
         if (!TextUtils.isEmpty(keyWord))
@@ -43,8 +45,8 @@ public class SafeToolsInfoService extends BaseService {
         try {
             toolsInfors = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
             inTestList = new ArrayList<>();
-            for (DbModel dbModel : toolsInfors){
-                if(Config.ToolStatus.inTest.name().equalsIgnoreCase(dbModel.getString("status"))){
+            for (DbModel dbModel : toolsInfors) {
+                if (Config.ToolStatus.inTest.name().equalsIgnoreCase(dbModel.getString("status"))) {
                     inTestList.add(dbModel);
                     continue;
                 }
@@ -62,7 +64,9 @@ public class SafeToolsInfoService extends BaseService {
         String sql = "SELECT id,num,name,short_name,name_pinyin,status,bdz_id,bdz_name,next_check_time FROM gqj_info where dept_id=? and dlt=0 and status not in('" + Config.ToolStatus.inTest
                 + "','" + Config.ToolStatus.stop + "') and  datetime(next_check_time, '-1 month') <= datetime('now', 'localtime', 'start of day')  ORDER BY next_check_time;";
         try {
-            return XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql, dept));
+            SqlInfo sqlInfo = new SqlInfo(sql);
+            sqlInfo.addBindArg(new KeyValue("", dept));
+            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -127,7 +131,8 @@ public class SafeToolsInfoService extends BaseService {
 
     public List<OperateToolResult> finAllResults(String deptId, String toolId, String bdzId) {
         try {
-            return XunshiApplication.getDbUtils().findAll(Selector.from(OperateToolResult.class).where(OperateToolResult.GQJ_ID, "=", toolId).and(OperateToolResult.DLT, "=", "0").and(OperateToolResult.OPERATION, "=", Config.ToolStatus.test.name()).orderBy(OperateToolResult.CREATETIME, true));
+            Selector selector = XunshiApplication.getDbUtils().selector(OperateToolResult.class).where(OperateToolResult.GQJ_ID, "=", toolId).and(OperateToolResult.DLT, "=", "0").and(OperateToolResult.OPERATION, "=", Config.ToolStatus.test.name()).orderBy(OperateToolResult.CREATETIME, true);
+            return selector.findAll();
         } catch (DbException e) {
             e.printStackTrace();
             return new ArrayList<OperateToolResult>();
@@ -137,8 +142,12 @@ public class SafeToolsInfoService extends BaseService {
     public Map<String, String> countRemindGroupByBdz(String deptId) {
         Map<String, String> rs = new HashMap<>();
         try {
-            List<DbModel> models = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo("SELECT bdz_id,bdz_name,count(*) AS c  FROM gqj_info where dept_id=? and dlt=0 and status not in('"
-                    + Config.ToolStatus.stop + "','" + Config.ToolStatus.inTest + "')  and  datetime(next_check_time, '-1 month') <= datetime('now', 'localtime', 'start of day') GROUP BY bdz_id;", deptId));
+
+            String sql = "SELECT bdz_id,bdz_name,count(*) AS c  FROM gqj_info where dept_id=? and dlt=0 and status not in('"
+                    + Config.ToolStatus.stop + "','" + Config.ToolStatus.inTest + "')  and  datetime(next_check_time, '-1 month') <= datetime('now', 'localtime', 'start of day') GROUP BY bdz_id";
+            SqlInfo sqlInfo = new SqlInfo(sql);
+            sqlInfo.addBindArg(new KeyValue("", deptId));
+            List<DbModel> models = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (models != null)
                 for (DbModel model : models) {
                     rs.put(model.getString("bdz_id"), model.getString("c"));
@@ -150,10 +159,10 @@ public class SafeToolsInfoService extends BaseService {
     }
 
     public DbModel findToolCity() {
-        DbModel dbModel =null;
-        String sql ="select * from city where dlt = 0";
+        DbModel dbModel = null;
+        String sql = "select * from city where dlt = 0";
         try {
-            dbModel = XunshiApplication.getDbUtils().findDbModelFirst( new SqlInfo(sql));
+            dbModel = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }

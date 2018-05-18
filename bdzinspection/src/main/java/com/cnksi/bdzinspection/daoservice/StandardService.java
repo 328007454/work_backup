@@ -6,11 +6,13 @@ import com.cnksi.bdzinspection.model.DeviceStandards;
 import com.cnksi.bdzinspection.model.DeviceStandardsOper;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.FileUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +49,11 @@ public class StandardService {
         try {
             String sql = "SELECT 	ds.staid staid,ds.duid duid,ds.description description,ds.resulttype resulttype,ds.dlt dlt,ds.report_type report_type,ds.kind kind,ds.origin origin FROM device_standards ds " +
                     " WHERE ds.kind LIKE '%" + inspectionType + "%' AND ( ds.report_type = '0' OR ds.report_type IS NULL) AND ds.dlt <> '1' and ds.duid = ? and ds.device_id=? ORDER BY ds.sort,ds.staid DESC";
-            return XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql, devicePartId, deviceId));
+            SqlInfo sqlInfo = new SqlInfo(sql);
+            sqlInfo.addBindArg(new KeyValue("", devicePartId));
+            sqlInfo.addBindArg(new KeyValue("", deviceId));
+
+            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
 
         } catch (DbException e) {
             e.printStackTrace();
@@ -79,9 +85,9 @@ public class StandardService {
     public HashMap<String, DeviceStandardsOper> findStandardMark(String bdzId, String deviceId) {
         HashMap<String, DeviceStandardsOper> staidMap = new HashMap<>();
         try {
-            Selector selector = Selector.from(DeviceStandardsOper.class).where(BaseModel.DLT, "=", "0")
+            Selector selector = XunshiApplication.getDbUtils().selector(DeviceStandardsOper.class).where(BaseModel.DLT, "=", "0")
                     .and(DeviceStandardsOper.BDZID, "=", bdzId).and(DeviceStandardsOper.DEVICEID, "=", deviceId);
-            List<DeviceStandardsOper> list = XunshiApplication.getDbUtils().findAll(selector);
+            List<DeviceStandardsOper> list = selector.findAll();
             if (list != null) {
                 for (DeviceStandardsOper oper : list) {
                     staidMap.put(oper.staid, oper);
@@ -129,7 +135,7 @@ public class StandardService {
      */
     public boolean deleteStandardById(String standardId) {
         try {
-            XunshiApplication.getDbUtils().update(DeviceStandards.class, WhereBuilder.b(DeviceStandards.STAID, "=", standardId), new String[]{DeviceStandards.DLT}, new String[]{Config.DELETED});
+            XunshiApplication.getDbUtils().update(DeviceStandards.class, WhereBuilder.b(DeviceStandards.STAID, "=", standardId), new KeyValue(DeviceStandards.DLT, Config.DELETED));
             return true;
         } catch (DbException e) {
             e.printStackTrace();

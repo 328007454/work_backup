@@ -5,12 +5,13 @@ import android.text.TextUtils;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.CalcUtils;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.UUID;
 
@@ -70,59 +71,59 @@ public class CopyResult extends BaseModel {
     //
     public static final String UPDATE_TIME = "update_time";
     public static final String VAL_SPECIAL = "val_special";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     public String id = UUID.randomUUID().toString();
-    @Column(column = REPORTID)
+    @Column(name = REPORTID)
     public String reportid;
-    @Column(column = ITEM_ID)
+    @Column(name = ITEM_ID)
     public String item_id;
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzid;
-    @Column(column = DEVICEID)
+    @Column(name = DEVICEID)
     public String deviceid;
-    @Column(column = DEVICE_NAME)
+    @Column(name = DEVICE_NAME)
     public String device_name;
-    @Column(column = TYPE_KEY)
+    @Column(name = TYPE_KEY)
     public String type_key;
-    @Column(column = DESCRIPTION)
+    @Column(name = DESCRIPTION)
     public String description;
-    @Column(column = UNIT)
+    @Column(name = UNIT)
     public String unit;
-    @Column(column = INSTALL_PLACE)
+    @Column(name = INSTALL_PLACE)
     public String install_place;
-    @Column(column = VAL)
+    @Column(name = VAL)
     public String val;
-    @Column(column = VAL_OLD)
+    @Column(name = VAL_OLD)
     public String val_old;
-    @Column(column = VAL_A)
+    @Column(name = VAL_A)
     public String val_a;
-    @Column(column = VAL_A_OLD)
+    @Column(name = VAL_A_OLD)
     public String val_a_old;
-    @Column(column = VAL_B)
+    @Column(name = VAL_B)
     public String val_b;
-    @Column(column = VAL_B_OLD)
+    @Column(name = VAL_B_OLD)
     public String val_b_old;
-    @Column(column = VAL_C)
+    @Column(name = VAL_C)
     public String val_c;
-    @Column(column = VAL_C_OLD)
+    @Column(name = VAL_C_OLD)
     public String val_c_old;
-    @Column(column = VAL_O)
+    @Column(name = VAL_O)
     public String val_o;
-    @Column(column = VAL_O_OLD)
+    @Column(name = VAL_O_OLD)
     public String val_o_old;
-    @Column(column = DZCS)
+    @Column(name = DZCS)
     public String dzcs;
-    @Column(column = DZCS_OLD)
+    @Column(name = DZCS_OLD)
     public String dzcs_old;
-    @Column(column = DZCS_TOTAL)
+    @Column(name = DZCS_TOTAL)
     public String dzcs_total;
-    @Column(column = REMARK)
+    @Column(name = REMARK)
     public String remark;
-    @Column(column = CREATE_TIME)
+    @Column(name = CREATE_TIME)
     public String create_time;
-    @Column(column = UPDATE_TIME)
+    @Column(name = UPDATE_TIME)
     public String update_time;
-    @Column(column = VAL_SPECIAL)
+    @Column(name = VAL_SPECIAL)
     public String valSpecial;
 
     public CopyResult() {
@@ -159,11 +160,14 @@ public class CopyResult extends BaseModel {
     public void initArresterActionValue() {
         if ("blqdzcs_dzcs".contains(type_key)) {
             this.dzcs = CalcUtils.sub(val, val_old);
-            SqlInfo sql = new SqlInfo(
-                    "SELECT dzcs FROM copy_result where item_id=? and type_key=? and dlt<>1 AND  deviceid=? order by update_time DESC ",
-                    item_id, type_key, deviceid);
+            String sql = "SELECT dzcs FROM copy_result where item_id=? and type_key=? and dlt<>1 AND  deviceid=? order by update_time DESC ";
+            SqlInfo sqlInfo = new SqlInfo(sql);
+            sqlInfo.addBindArg(new KeyValue("",item_id));
+            sqlInfo.addBindArg(new KeyValue("",type_key));
+            sqlInfo.addBindArg(new KeyValue("",deviceid));
+
             try {
-                DbModel data = XunshiApplication.getDbUtils().findDbModelFirst(sql);
+                DbModel data = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
                 this.dzcs_old = data != null ? data.getString(DZCS) : null;
             } catch (DbException e) {
                 e.printStackTrace();

@@ -14,7 +14,8 @@ import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.xscore.xsutils.*;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.List;

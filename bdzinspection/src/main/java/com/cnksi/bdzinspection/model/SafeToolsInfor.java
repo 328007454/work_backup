@@ -1,8 +1,8 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 /**
  * 工器具台账信息
@@ -12,124 +12,124 @@ import com.lidroid.xutils.db.annotation.Table;
 public class SafeToolsInfor {
     // 报告ID
     public static final String ID = "id";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     public String id;
     //工器具编号
     public static final String NUM = "num";
-    @Column(column = NUM)
+    @Column(name = NUM)
     public String num;
 
     /**
      * 类型
      */
     public static final String TYPE = "type";
-    @Column(column = TYPE)
+    @Column(name = TYPE)
     public String type;
 
     //工器具名字
     public static final String NAME = "name";
-    @Column(column = NAME)
+    @Column(name = NAME)
     public String name;
 
     /**
      * 变电站ID
      */
     public static final String BDZID = "bdz_id";
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzId;
 
     /**
      * 变电站名称
      */
     public static final String BDZNAME = "bdz_name";
-    @Column(column = BDZNAME)
+    @Column(name = BDZNAME)
     public String bdzName;
 
     //简称
     public static final String SHORTNAME = "short_name";
-    @Column(column = SHORTNAME)
+    @Column(name = SHORTNAME)
     public String shorName;
 
     //拼音搜索
     public static final String PINYIN = "name_pinyin";
-    @Column(column = PINYIN)
+    @Column(name = PINYIN)
     public String pinYin;
 
     public static final String MODEL = "model";
-    @Column(column = MODEL)
+    @Column(name = MODEL)
     public String model;
 
     public static final String DEPTID = "dept_id";
-    @Column(column = DEPTID)
+    @Column(name = DEPTID)
     public String deptID;
 
     public static final String DEPTNAME = "dept_name";
-    @Column(column = DEPTNAME)
+    @Column(name = DEPTNAME)
     public String deptName;
 
 
     public static final String PRODUCETIME = "produce_time";
-    @Column(column = PRODUCETIME)
+    @Column(name = PRODUCETIME)
     public String produceTime;
 
 
     public static final String PRODUCEFACTORY = "produce_factory";
-    @Column(column = PRODUCEFACTORY)
+    @Column(name = PRODUCEFACTORY)
     public String produceFactory;
 
 
     public static final String CREATTIME = "create_time";
-    @Column(column = CREATTIME)
+    @Column(name = CREATTIME)
     public String createTime;
 
 
     public static final String ISNORMAL = "isnormal";
-    @Column(column = ISNORMAL)
+    @Column(name = ISNORMAL)
     public String isNormal;
 
     public static final String PERIOD = "period";
-    @Column(column = PERIOD)
+    @Column(name = PERIOD)
     public String period;
 
     public static final String LAST_CHECK_TIME = "lastly_check_time";
-    @Column(column = LAST_CHECK_TIME)
+    @Column(name = LAST_CHECK_TIME)
     public String LastCheckTime;
 
     public static final String REARK = "remark";
-    @Column(column = REARK)
+    @Column(name = REARK)
     public String remark;
 
     public static final String NEXTCHECKTIME = "next_check_time";
-    @Column(column = NEXTCHECKTIME)
+    @Column(name = NEXTCHECKTIME)
     public String nextCheckTime;
 
     public static final String STATUS = "status";
-    @Column(column = STATUS)
+    @Column(name = STATUS)
     public String status;
 
     public static final String DLT = "dlt";
-    @Column(column = DLT)
+    @Column(name = DLT)
     public int dlt;
 
     public static final String LASTMODIFYTIME = "last_modify_time";
-    @Column(column = LASTMODIFYTIME)
+    @Column(name = LASTMODIFYTIME)
     public String lastModifyTime;
 
     public static final String INSERTTIME = "insert_time";
-    @Column(column = INSERTTIME)
+    @Column(name = INSERTTIME)
     public String insertTime;
 
     public static final String UPDATETIME = "update_time";
-    @Column(column = UPDATETIME)
+    @Column(name = UPDATETIME)
     public String updateTime;
 
 
     public static final String LOCATION = "location";
-    @Column(column = LOCATION)
+    @Column(name = LOCATION)
     public String location;
 
     public static final String UNUSEINFO = "unuse_info";
-    @Column(column = UNUSEINFO)
+    @Column(name = UNUSEINFO)
     public String unUseInfo;
 
 

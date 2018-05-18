@@ -7,9 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.xscore.xsapplication.CoreApplication;
-import com.lidroid.xutils.BitmapUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.ExecutorService;
@@ -60,8 +59,6 @@ public class BaseCoreFragment extends Fragment {
 	protected FragmentManager mFManager = null;
 	/** 图片显示工具类 */
 	protected BitmapUtils mBitmapUtils = null;
-	/** 图片显示参数 */
-	protected BitmapDisplayConfig mBitmapConfig = null;
 	protected LayoutInflater mInflater = null;
 
 	@Override

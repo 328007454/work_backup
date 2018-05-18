@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,8 +31,9 @@ import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.xscore.xsutils.GPSUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.lidroid.xutils.db.table.DbModel;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

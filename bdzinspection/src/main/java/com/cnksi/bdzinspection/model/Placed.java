@@ -1,9 +1,10 @@
 package com.cnksi.bdzinspection.model;
 
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -19,60 +20,60 @@ public class Placed extends BaseModel {
      * id
      */
     public final static String ID = "id";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     public String id = UUID.randomUUID().toString();
 
     /**
      * 报告id
      */
     public final static String REPORTID = "report_id";
-    @Column(column = REPORTID)
+    @Column(name = REPORTID)
     public String reportId;
 
     /**
      * 变电站id
      */
     public final static String BDZID = "bdzid";
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzId;
 
     /**
      * 间隔id
      */
     public final static String SPID = "spid";
-    @Column(column = SPID)
+    @Column(name = SPID)
     public String spId;
 
     /**
      * 间隔名称
      */
     public final static String SPACENAME = "space_name";
-    @Column(column = SPACENAME)
+    @Column(name = SPACENAME)
     public String spaceName;
 
     /**
      * 是否到位
      */
     public final static String PLACED = "placed";
-    @Column(column = PLACED)
+    @Column(name = PLACED)
     public int placed;
 
     /**
      * 维度
      */
     public final static String LATITUDE = "latitude";
-    @Column(column = LATITUDE)
+    @Column(name = LATITUDE)
     public double latitude;
 
     /**
      * 经度
      */
     public final static String LONGTITUDE = "longtitude";
-    @Column(column = LONGTITUDE)
+    @Column(name = LONGTITUDE)
     public double longtitude;
 
     public final static String CREATETIME = "create_time";
-    @Column(column = CREATETIME)
+    @Column(name = CREATETIME)
     public String createTime;
 
     public Placed() {

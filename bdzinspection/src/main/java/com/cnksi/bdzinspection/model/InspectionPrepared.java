@@ -3,9 +3,10 @@ package com.cnksi.bdzinspection.model;
 import android.text.TextUtils;
 
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -27,17 +28,17 @@ public class InspectionPrepared {
     public static final String ACCOUNT = "account";
     //
     public static final String LAST_MODIFY_TIME = "last_modify_time";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     public String id = UUID.randomUUID().toString();
-    @Column(column = REPORTID)
+    @Column(name = REPORTID)
     public String reportID;
-    @Column(column = TASKID)
+    @Column(name = TASKID)
     public String taskID;
-    @Column(column = DLT)
+    @Column(name = DLT)
     public int dlt;
-    @Column(column = ACCOUNT)
+    @Column(name = ACCOUNT)
     public String account;
-    @Column(column = LAST_MODIFY_TIME)
+    @Column(name = LAST_MODIFY_TIME)
     public String lastModifyTime;
 
     public InspectionPrepared() {

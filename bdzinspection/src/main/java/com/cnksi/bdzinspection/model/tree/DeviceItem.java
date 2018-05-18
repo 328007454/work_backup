@@ -2,7 +2,8 @@ package com.cnksi.bdzinspection.model.tree;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 /**
  * @version 1.0
@@ -15,7 +16,7 @@ public class DeviceItem extends DbModel implements MultiItemEntity, LinkItem<Spa
     SpaceItem parent = null;
 
     public DeviceItem(DbModel model) {
-        this.dataMap = model.dataMap;
+        setDataMap(model.getDataMap());
     }
 
     @Override

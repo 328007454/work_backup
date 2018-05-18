@@ -1,50 +1,50 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
-import com.lidroid.xutils.db.annotation.Transient;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+
+import java.lang.annotation.Retention;
 
 @Table(name = "battery_details")
 public class BatteryDetails extends BaseModel {
 
 	// 蓄电池id
 	public static final String ID = "id";
-	@Id(column = ID)
+	@Column(name = ID,isId = true)
 	public String id;
 
 	// 关联的报告id
 	public static final String REPORTID = "reportid";
-	@Column(column = REPORTID)
+	@Column(name = REPORTID)
 	public String reportid;
 
 	// 电池组id
 	public static final String BATTERYID = "batteryid";
-	@Column(column = BATTERYID)
+	@Column(name = BATTERYID)
 	public String batteryid;
 
 	// 电池编号
 	public static final String BATTERY_NUMBER = "battery_number";
-	@Column(column = BATTERY_NUMBER)
+	@Column(name = BATTERY_NUMBER)
 	public String battery_number;
 
 	// 抄录的电压
 	public static final String VOLTAGE = "voltage";
-	@Column(column = VOLTAGE)
+	@Column(name = VOLTAGE)
 	public String voltage;
 
 	// 抄录的内阻
 	public static final String RESISTANCE = "resistance";
-	@Column(column = RESISTANCE)
+	@Column(name = RESISTANCE)
 	public String resistance;
 
 	// 最高缺陷级别
-	@Transient
-	public String defectLevel;
+	public transient String defectLevel;
 
 	// 是否抄录了数据
-	@Transient
-	public boolean hasCopyed = false;
+
+	public transient boolean hasCopyed = false;
 
 	public BatteryDetails(String batteryNumber) {
 		this.battery_number = batteryNumber;

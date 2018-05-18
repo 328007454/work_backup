@@ -1,9 +1,10 @@
 package com.cnksi.bdzinspection.model;
 
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -13,54 +14,54 @@ import java.util.UUID;
 @Table(name = "logs")
 public class Logs {
 
-    @Id(column = "id")
+    @Column(name = "id",isId = true)
     public String id;
 
     public static final String DEVICEID = "device_id";
-    @Column(column = DEVICEID)
+    @Column(name = DEVICEID)
     public String deviceId;
 
     public static final String EDIT_FROM = "edit_from";
-    @Column(column = EDIT_FROM)
+    @Column(name = EDIT_FROM)
     public String editForm;
 
     /**
      * add update delte
      */
     public static final String TYPE = "type";
-    @Column(column = TYPE)
+    @Column(name = TYPE)
     public String type;
 
     public static final String USER_ID = "user_id";
-    @Column(column = USER_ID)
+    @Column(name = USER_ID)
     public String userId;
 
     public static final String USER_NAME = "user_name";
-    @Column(column = USER_NAME)
+    @Column(name = USER_NAME)
     public String userName;
 
     public static final String DEVICE_NAME = "device_name";
-    @Column(column = DEVICE_NAME)
+    @Column(name = DEVICE_NAME)
     public String deviceName;
 
     public static final String CONTENT = "content";
-    @Column(column = CONTENT)
+    @Column(name = CONTENT)
     public String content;
 
     public static final String CREATE_TIME = "create_time";
-    @Column(column = CREATE_TIME)
+    @Column(name = CREATE_TIME)
     public String createTime;
 
     public static final String LAST_MODIFY_TIME = "last_modify_time";
-    @Column(column = LAST_MODIFY_TIME)
+    @Column(name = LAST_MODIFY_TIME)
     public String lastModifyTime;
 
     public static final String DLT = "dlt";
-    @Column(column = DLT)
+    @Column(name = DLT)
     public int dlt;
 
     public static final String REMARK = "remark";
-    @Column(column = REMARK)
+    @Column(name = REMARK)
     public String remark;
 
     public void setCurrentMessage(String currentDeviceId, String currentDeviceName, String currentPersonId, String currentUserName, String modify, String copyItem) {

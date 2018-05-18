@@ -1,8 +1,9 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -13,36 +14,36 @@ import java.util.UUID;
 public class SpacingLastly {
     //
     public static final String ID = "id";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     public String id = UUID.randomUUID().toString();
 
     //
     public static final String REPORTID = "reportid";
-    @Column(column = REPORTID)
+    @Column(name = REPORTID)
     public String reportID;
 
     public static final String SPID = "spid";
-    @Column(column = SPID)
+    @Column(name = SPID)
     public String spid;
 
     //
     public static final String DLT = "dlt";
-    @Column(column = DLT)
+    @Column(name = DLT)
     public int dlt;
 
     //
     public static final String ACCOUNT = "account";
-    @Column(column = ACCOUNT)
+    @Column(name = ACCOUNT)
     public String account;
 
     //
     public static final String LAST_MODIFY_TIME = "last_modify_time";
-    @Column(column = LAST_MODIFY_TIME)
+    @Column(name = LAST_MODIFY_TIME)
     public String lastModifyTime;
 
     //
     public static final String DEVICE_TYPE = "devicetype";
-    @Column(column = DEVICE_TYPE)
+    @Column(name = DEVICE_TYPE)
     public String deviceType;
 
     public SpacingLastly() {

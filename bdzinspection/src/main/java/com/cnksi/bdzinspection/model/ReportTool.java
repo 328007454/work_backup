@@ -1,7 +1,7 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
+
+import org.xutils.db.annotation.Column;
 
 import java.util.UUID;
 
@@ -14,17 +14,17 @@ import java.util.UUID;
  */
 public class ReportTool extends BaseModel {
     public final static String ID = "id";
-    @Id(column = "id")
+    @Column(name = "id",isId = true)
     public String id = UUID.randomUUID().toString();
     ;
     public final static String REPORTID = "reportId";
-    @Column(column = REPORTID)
+    @Column(name = REPORTID)
     public String reportId;
     public final static String TOOLID = "toolid";
-    @Column(column = TOOLID)
+    @Column(name = TOOLID)
     public String toolId;
     public final static String NUM = "num";
-    @Column(column = NUM)
+    @Column(name = NUM)
     public String num;
 
     public ReportTool() {

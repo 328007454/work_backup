@@ -1,6 +1,7 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Id;
+
+import org.xutils.db.annotation.Column;
 
 import java.io.Serializable;
 
@@ -15,7 +16,7 @@ import java.io.Serializable;
 public class BaseModel implements Serializable {
     //用于 同步的字段  仅用来支持Xutils自动插入。
     public static final String DLT = "dlt";
-    @Id(column = DLT)
+    @Column(name = DLT,isId = true)
     public String dlt = "0";
 
 }

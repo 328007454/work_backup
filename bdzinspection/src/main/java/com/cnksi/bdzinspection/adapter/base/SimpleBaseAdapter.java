@@ -10,11 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.xscore.xsutils.BitmapHelp;
-import com.lidroid.xutils.BitmapUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.lidroid.xutils.bitmap.core.BitmapSize;
-import com.lidroid.xutils.task.Priority;
+import com.cnksi.core.utils.BitmapUtils;
 
 import java.util.List;
 
@@ -24,8 +20,6 @@ public abstract class SimpleBaseAdapter extends BaseAdapter {
     protected LayoutInflater mInflater = null;
     protected List<? extends Object> dataList = null;
     protected BitmapUtils mBitmapUtils;
-    protected BitmapDisplayConfig mBitmapConfig;
-    protected BitmapSize bitmapSize;
     protected int width = 0;
     protected int height = 0;
 
@@ -45,21 +39,11 @@ public abstract class SimpleBaseAdapter extends BaseAdapter {
      * @param context
      */
     public void initBitmapUtils(Context context) {
-        mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(context);
-        mBitmapUtils.configDefaultLoadingImage(R.drawable.xs_ic_app);
-        mBitmapUtils.configDefaultLoadFailedImage(R.drawable.xs_ic_app);
-        mBitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
-        mBitmapUtils.configMemoryCacheEnabled(true);
     }
 
     /**
      */
     public void setScaleDownBitmapSize(int scaleDown) {
-        mBitmapConfig = new BitmapDisplayConfig();
-        bitmapSize = new BitmapSize(width, height).scaleDown(scaleDown);
-        mBitmapConfig.setBitmapMaxSize(bitmapSize);
-        mBitmapConfig.setPriority(Priority.UI_TOP);
-        mBitmapConfig.setLoadFailedDrawable(mContext.getResources().getDrawable(R.drawable.xs_ic_app));
     }
 
     /**
@@ -69,12 +53,6 @@ public abstract class SimpleBaseAdapter extends BaseAdapter {
      * @param height
      */
     public void setBitmapSize(int width, int height) {
-        mBitmapConfig = new BitmapDisplayConfig();
-        bitmapSize = new BitmapSize(width, height);
-        mBitmapConfig.setBitmapMaxSize(bitmapSize);
-        mBitmapConfig.setAutoRotation(true);
-        mBitmapConfig.setPriority(Priority.UI_TOP);
-        mBitmapConfig.setLoadFailedDrawable(mContext.getResources().getDrawable(R.drawable.xs_ic_app));
     }
 
     public void setList(List<? extends Object> dataList) {

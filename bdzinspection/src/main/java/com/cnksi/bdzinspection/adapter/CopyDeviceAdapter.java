@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.lidroid.xutils.db.table.DbModel;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -78,20 +78,20 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
         holder.getRootView().setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.onItemClick(v, item, position);
+                itemClickListener.onClick(v, item, position);
             }
         });
     }
 
     public void pre() {
         if (currentSelectedPosition > 0)
-            itemClickListener.onItemClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
+            itemClickListener.onClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
                     currentSelectedPosition - 1);
     }
 
     public void next() {
         if (currentSelectedPosition < data.size() - 1)
-            itemClickListener.onItemClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
+            itemClickListener.onClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
                     currentSelectedPosition + 1);
     }
 

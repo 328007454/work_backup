@@ -3,10 +3,12 @@ package com.cnksi.bdzinspection.daoservice;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.bdzinspection.model.SwitchPic;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +29,14 @@ public class StandardSwitchOverService extends BaseService {
      *
      * @throws DbException
      */
-    public List<DbModel> getAllType(String currentInspectionType, String currentBdzId, String currentReportId,String reportSwitchId) throws DbException {
+    public List<DbModel> getAllType(String currentInspectionType, String currentBdzId, String currentReportId, String reportSwitchId) throws DbException {
 
         String sql = " SELECT ss.id,ss.level,ss.code,ss.sort,ss.pid,ss.description,ss.unit,ss.is_copy,spic.pic,spic.voice,dr.val,dr.stand_switch_id,dr.defectlevel,dr.oldval,dr.deviceid,dr.confirm_date"
                 + " FROM standard_switchover ss"
                 + " LEFT JOIN (SELECT * FROM switch_pic sp WHERE sp.reportid = '" + currentReportId + "') spic ON ss.id = spic.stand_switch_id"
                 + " LEFT JOIN (SELECT stand_switch_id,group_concat(val) val,max(defectlevel) defectlevel,group_concat(oldval) oldval,deviceid,group_concat(confirm_date) confirm_date FROM defect_record WHERE reportid = '" + currentReportId + "' AND DLT = '0' AND has_remove = 'N' AND has_track = 'N' GROUP BY stand_switch_id)"
                 + " dr ON ss.id = dr.stand_switch_id"
-                + " WHERE ss.kind = '" + currentInspectionType + "'AND ss.bdzid = '" + currentBdzId + "' and ss.rep_swithover_id = '"+reportSwitchId+"' and ss.dlt=0 order by ss.sort,ss.code";
+                + " WHERE ss.kind = '" + currentInspectionType + "'AND ss.bdzid = '" + currentBdzId + "' and ss.rep_swithover_id = '" + reportSwitchId + "' and ss.dlt=0 order by ss.sort,ss.code";
         List<DbModel> dbModleList = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
 
         return repeatSort(dbModleList);
@@ -78,28 +80,38 @@ public class StandardSwitchOverService extends BaseService {
      *
      * @throws DbException
      */
-    public List<DbModel> getAllTypeNew(String currentInspectionType, String currentBdzId, String currentReportId,String reportSwitchId) throws DbException {
+    public List<DbModel> getAllTypeNew(String currentInspectionType, String currentBdzId, String currentReportId, String reportSwitchId) throws DbException {
         String sql = " SELECT ss.id,ss.level,ss.code,ss.sort,ss.description,ss.unit,ss.pid,ss.is_copy,spic.pic,spic.voice,dr.val,dr.stand_switch_id,dr.defectlevel,dr.oldval,dr.deviceid,stc.confirm_date"
                 + " FROM standard_switchover ss"
                 + " LEFT JOIN (SELECT * FROM switch_pic sp WHERE sp.reportid = ? ) spic ON ss.id = spic.stand_switch_id"
                 + " LEFT JOIN (SELECT stand_switch_id,group_concat(val) val,max(defectlevel) defectlevel,group_concat(oldval) oldval,deviceid FROM defect_record WHERE reportid = ? AND has_remove = 'N' AND has_track = 'N' GROUP BY stand_switch_id)"
                 + " dr ON ss.id = dr.stand_switch_id "
                 + " LEFT JOIN (select standid,confirm_date from standard_step_confirm where bdzid=?  and reportid=?) stc on stc.standid=ss.id "
-                + " WHERE ss.kind =  ? AND ss.bdzid = ?  and ss.rep_swithover_id = '"+reportSwitchId+"' and ss.dlt=0 order by ss.sort ,ss.code";
-        SqlInfo sqlInfo = new SqlInfo(sql, currentReportId, currentReportId, currentBdzId, currentReportId, currentInspectionType, currentBdzId);
+                + " WHERE ss.kind =  ? AND ss.bdzid = ?  and ss.rep_swithover_id = '" + reportSwitchId + "' and ss.dlt=0 order by ss.sort ,ss.code";
+
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", currentReportId));
+        sqlInfo.addBindArg(new KeyValue("", currentReportId));
+        sqlInfo.addBindArg(new KeyValue("", currentBdzId));
+        sqlInfo.addBindArg(new KeyValue("", currentReportId));
+        sqlInfo.addBindArg(new KeyValue("", currentInspectionType));
+        sqlInfo.addBindArg(new KeyValue("", currentBdzId));
         List<DbModel> dbModleList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         return repeatSort(dbModleList);
     }
 
     public SwitchPic findFirstPic(String currentReportId, String standId) throws DbException {
-        SwitchPic pic = XunshiApplication.getDbUtils().findFirst(Selector.from(SwitchPic.class).where(SwitchPic.REPORTID, "=", currentReportId).and(SwitchPic.STADIDSWICHERID, "=", standId));
+        SwitchPic pic = XunshiApplication.getDbUtils().selector(SwitchPic.class).where(SwitchPic.REPORTID, "=", currentReportId).and(SwitchPic.STADIDSWICHERID, "=", standId).findFirst();
         return pic;
     }
 
 
     public String getStandardMaxLevel(String standardId, String reportId) throws DbException {
-        SqlInfo sqlInfo = new SqlInfo(" SELECT  max(defectlevel) maxdefect FROM defect_record dr where dr.reportid =? AND has_remove = 'N' " +
-                "AND has_track = 'N' and  dr.stand_switch_id =? and dr.dlt = '0'", reportId, standardId);
+        String sql = " SELECT  max(defectlevel) maxdefect FROM defect_record dr where dr.reportid =? AND has_remove = 'N' " +
+                "AND has_track = 'N' and  dr.stand_switch_id =? and dr.dlt = '0'";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", reportId));
+        sqlInfo.addBindArg(new KeyValue("", standardId));
         DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
         return model.getString("maxdefect");
     }

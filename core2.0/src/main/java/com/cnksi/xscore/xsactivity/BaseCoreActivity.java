@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.cnksi.xscore.R;
 import com.cnksi.xscore.xsapplication.CoreApplication;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.BitmapHelp;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.FileUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
@@ -245,7 +244,6 @@ public abstract class BaseCoreActivity extends AppCompatActivity {
      */
     protected void compeletlyExitSystem() {
         // 退出
-        BitmapHelp.clearDiskCache();
         ScreenManager.getInstance().popAllActivityExceptOne(null);
         android.os.Process.killProcess(android.os.Process.myPid());
         CoreApplication.getFixedThreadPoolExecutor().shutdownNow();

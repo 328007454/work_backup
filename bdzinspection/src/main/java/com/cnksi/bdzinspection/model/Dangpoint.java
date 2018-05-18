@@ -1,8 +1,8 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 @Table(name = "dangpoint")
 public class Dangpoint extends BaseModel {
@@ -10,51 +10,51 @@ public class Dangpoint extends BaseModel {
 	
 	//
 	public static final String DPID = "dpid";
-	@Id(column = DPID)
+	@Column(name = DPID,isId = true)
 	public String dpid;
 
 	// 危险点
 	public static final String DPNAME = "dpname";
-	@Column(column = DPNAME)
+	@Column(name = DPNAME)
 	public String dpname;
 
 	// 控制措施
 	public static final String MEASURES = "measures";
-	@Column(column = MEASURES)
+	@Column(name = MEASURES)
 	public String measures;
 
 	//
 	public static final String INSPECTION = "inspection";
-	@Column(column = INSPECTION)
+	@Column(name = INSPECTION)
 	public String inspection;
 
 	// 变电站ID
 	public static final String BDZID = "bdzid";
-	@Column(column = BDZID)
+	@Column(name = BDZID)
 	public String bdzid;
 
 	// 设备编号
 	public static final String DEVICEID = "deviceid";
-	@Column(column = DEVICEID)
+	@Column(name = DEVICEID)
 	public String deviceid;
 
 	// 排序序号
 	public static final String SORT = "sort";
-	@Column(column = SORT)
+	@Column(name = SORT)
 	public String sort;
 
 
 	public static final String INSTID = "instid";
-	@Column(column = INSTID)
+	@Column(name = INSTID)
 	public String instid;
 
 	// 危险类型
 	public static final String AVOID_TYPE = "avoid_type";
-	@Column(column = AVOID_TYPE)
+	@Column(name = AVOID_TYPE)
 	public String avoid_type;
 
 	public static final String AFFIRM = "affirm";
-	@Column(column = AFFIRM)
+	@Column(name = AFFIRM)
 	public String affirm;
 
 	public Dangpoint() {

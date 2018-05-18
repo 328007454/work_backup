@@ -7,9 +7,10 @@ import com.cnksi.bdzinspection.utils.SystemConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+
 
 @Table(name = "report")
 public class Report extends BaseModel {
@@ -74,67 +75,67 @@ public class Report extends BaseModel {
      * 0/普，1/抽
      */
     public static final String CSLX = "cslx";
-    @Id(column = REPORTID)
+    @Column(name = REPORTID,isId = true)
     public String reportid;
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzid;
-    @Column(column = BDZ)
+    @Column(name = BDZ)
     public String bdz;
-    @Column(column = INSPECTION)
+    @Column(name = INSPECTION)
     public String inspection;
-    @Column(column = PERSONS)
+    @Column(name = PERSONS)
     public String persons;
-    @Column(column = TEMPERATURE)
+    @Column(name = TEMPERATURE)
     public String temperature;
-    @Column(column = HUMIDITY)
+    @Column(name = HUMIDITY)
     public String humidity;
-    @Column(column = TOOLS)
+    @Column(name = TOOLS)
     public String tools;
-    @Column(column = STARTTIME)
+    @Column(name = STARTTIME)
     public String starttime;
-    @Column(column = ENDTIME)
+    @Column(name = ENDTIME)
     public String endtime;
-    @Column(column = SUBMITTIME)
+    @Column(name = SUBMITTIME)
     public String submittime;
-    @Column(column = TASK_ID)
+    @Column(name = TASK_ID)
     public String taskid;
-    @Column(column = IS_UPLOAD)
+    @Column(name = IS_UPLOAD)
     public String is_upload = "Y";
-    @Column(column = PLACED_WAY)
+    @Column(name = PLACED_WAY)
     public String placedWay;
-    @Column(column = REMAIN_PROBLEMS)
+    @Column(name = REMAIN_PROBLEMS)
     public String remain_problems;
-    @Column(column = TQ)
+    @Column(name = TQ)
     public String tq;
-    @Column(column = PMS_JHID)
+    @Column(name = PMS_JHID)
     public String pmsJhid;
-    @Column(column = INSPECTIONCONTENT)
+    @Column(name = INSPECTIONCONTENT)
     public String inspectionContent;
-    @Column(column = INSPECTIONREMARK)
+    @Column(name = INSPECTIONREMARK)
     public String inspectionRemark;
-    @Column(column = JCQK)
+    @Column(name = JCQK)
     public String jcqk;
-    @Column(column = INSERT_TIME)
+    @Column(name = INSERT_TIME)
     public String insertTime;
-    @Column(column = SELECTED_DEVICEID)
+    @Column(name = SELECTED_DEVICEID)
     public String selected_deviceid;
-    @Column(column = REPSWITCHOVERID)
+    @Column(name = REPSWITCHOVERID)
     public String repSwithoverId;
-    @Column(column = INSPECTION_VALUE)
+    @Column(name = INSPECTION_VALUE)
     public String inspectionValue;
-    @Column(column = REPORT_SOURCE)
+    @Column(name = REPORT_SOURCE)
     public String reportSource;
-    @Column(column = DEPARTMENTID)
+    @Column(name = DEPARTMENTID)
     public String departmentId;
-    @Column(column = CSLX)
+    @Column(name = CSLX)
     public int checkType;
     /**
      * 试验维护整个任务录音文件地址
      */
-    @Column(column = AUDIO_URL)
+    @Column(name = AUDIO_URL)
     public String audioUrl;
     public static final String INSPECTION_RESULT = "inspection_result";
-    @Column(column = INSPECTION_RESULT)
+    @Column(name = INSPECTION_RESULT)
     public String inspectionResult;
 
     public Report() {

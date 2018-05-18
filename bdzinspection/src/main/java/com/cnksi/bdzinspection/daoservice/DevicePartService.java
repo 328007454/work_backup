@@ -3,10 +3,13 @@ package com.cnksi.bdzinspection.daoservice;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.DevicePart;
 import com.cnksi.bdzinspection.utils.Config;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,10 +41,11 @@ public class DevicePartService {
      * @return
      */
     public List<DevicePart> getDevicePartList(String deviceid) {
-        Selector selector = Selector.from(DevicePart.class).where(DevicePart.DEVICEID, "=", deviceid)
-                .and(DevicePart.DLT, "!=", "1");
         try {
-            return XunshiApplication.getDbUtils().findAll(selector);
+            Selector selector = XunshiApplication.getDbUtils().selector(DevicePart.class).where(DevicePart.DEVICEID, "=", deviceid)
+                    .and(DevicePart.DLT, "!=", "1");
+
+            return selector.findAll();
         } catch (DbException e) {
             e.printStackTrace();
             return null;
@@ -59,7 +63,8 @@ public class DevicePartService {
         String sql = "select d.*,d.name as duname,count(1) as defect_count_key from (select d.*,dr.defectlevel from device_part d left join (select * from defect_record where has_track='N' and has_remove='N' AND (val='' OR val IS NULL) and bdzid='"
                 + bdzId + "') dr on d.duid = dr.duid where d.deviceid=? and d.dlt<>'" + Config.DELETED
                 + "' order by dr.duid,dr.defectlevel asc) d  group by d.duid";
-        SqlInfo sqlInfo = new SqlInfo(sql, deviceid);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", deviceid));
         try {
             datas = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -92,8 +97,8 @@ public class DevicePartService {
                 "WHERE s.duid IN (SELECT duid FROM device_unit WHERE dtid = ? and dlt=0)" +
                 " and s.dlt=0 and " +
                 "s.kind like '%" + inspectionType + "%' AND ( s.report_type = '0' OR s.report_type IS NULL) and ifnull(oper,'') != 'deleted' GROUP BY s.duid");
-        info.addBindArgs(deviceid);
-        info.addBindArgs(dtid);
+        info.addBindArg(new KeyValue("", deviceid));
+        info.addBindArg(new KeyValue("", dtid));
         HashSet<String> hashSet = new HashSet<>();
         try {
             List<DbModel> standard = XunshiApplication.getDbUtils().findDbModelAll(info);
@@ -103,7 +108,7 @@ public class DevicePartService {
                 }
             }
             info = new SqlInfo("Select DISTINCT duid from device_standards where device_id=? and dlt=0 and kind like '%" + inspectionType + "%'");
-            info.addBindArgs(deviceid);
+            info.addBindArg(new KeyValue("",deviceid));
             standard = XunshiApplication.getDbUtils().findDbModelAll(info);
             if (standard != null) {
                 for (DbModel model : standard) {
@@ -146,7 +151,10 @@ public class DevicePartService {
                 "LEFT JOIN (SELECT *,count(1) as defect_count_key FROM (" +
                 "SELECT dr.duid,dr.defectlevel from defect_record dr where dr.bdzid=?  and dr.deviceid=? AND has_track='N' and has_remove='N' AND (val='' OR val IS NULL) AND (dlt='0' OR dlt IS NULL) ORDER BY duid,dr.defectlevel ASC )GROUP BY duid) t on t.duid=du.duid" +
                 " where du.dtid=? and du.dlt<>'1' order by sort";
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceid, dtid);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("",bdzId));
+        sqlInfo.addBindArg(new KeyValue("",deviceid));
+        sqlInfo.addBindArg(new KeyValue("",dtid));
         try {
             datas = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {

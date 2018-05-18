@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyDeviceAdapter;
+import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.databinding.XsFragmentGridlistBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.SpecialMenu;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -83,12 +84,7 @@ public class CopyValueFragment2 extends BaseFragment {
         data = new ArrayList<>();
         adapter = new CopyDeviceAdapter(currentActivity, data, R.layout.xs_device_item);
         adapter.setCopyDeviceModel(copyDeviceIds);
-        adapter.setItemClickListener(new ItemClickListener<DbModel>() {
-            @Override
-            public void onItemClick(View v, DbModel t, int position) {
-                itemClickerListener.onItemClick(currentFunctionModel, t, position);
-            }
-        });
+        adapter.setItemClickListener((v, data, position) -> itemClickerListener.onItemClick(currentFunctionModel, data, position));
         binding.gvContainer.setAdapter(adapter);
     }
 

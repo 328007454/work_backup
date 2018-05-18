@@ -44,9 +44,10 @@ import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 import com.cnksi.xscore.xsview.CustomerDialog.DialogItemClickListener;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -177,11 +178,9 @@ public class AddTaskActivity extends BaseActivity {
         try {
             String bdzId = PreferencesUtils.getString(currentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, "");
             if (!TextUtils.isEmpty(bdzId)) {
-                mCurrentBdz = XunshiApplication.getDbUtils()
-                        .findFirst(Selector.from(Bdz.class).where(Bdz.BDZID, "=", bdzId).and(Bdz.DLT, "=", 0));
+                mCurrentBdz = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.BDZID, "=", bdzId).and(Bdz.DLT, "=", 0).findFirst();
             }
-            mBdzList = XunshiApplication.getDbUtils()
-                    .findAll(Selector.from(Bdz.class).where(Bdz.DLT, "=", "0"));
+            mBdzList = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.DLT, "=", "0").findAll();
             mHandler.sendEmptyMessage(LOAD_BDZ_DATA);
             currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
             allPersons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts);

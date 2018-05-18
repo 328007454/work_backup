@@ -45,9 +45,10 @@ import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
-import com.lidroid.xutils.db.table.DbModel;
 import com.zhy.core.AutoLinearLayout;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,9 +2,9 @@ package com.cnksi.bdzinspection.model;
 
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 /**
  * @version 1.0
@@ -17,46 +17,46 @@ import com.lidroid.xutils.db.annotation.Table;
 public class DeviceStandardsOper extends BaseModel {
 
     public static final String ID = "id";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     public String id;
     /**
      * LIb 库里面的标准ID
      */
     public static final String STAID = "staid";
-    @Column(column = STAID)
+    @Column(name = STAID)
     public String staid;
 
     /**
      * 设备的变电站ID
      */
     public static final String BDZID = "bdzid";
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzid;
     /**
      * 设备ID
      */
     public static final String DEVICEID = "deviceid";
-    @Column(column = DEVICEID)
+    @Column(name = DEVICEID)
     public String deviceid;
     /**
      * 标注（tag）、已删除（deleted）
      */
     public static final String OPER = "oper";
-    @Column(column = OPER)
+    @Column(name = OPER)
     public String oper;
 
     /**
      * 标注时间
      */
     public static final String CREATE_TIME = "create_time";
-    @Column(column = CREATE_TIME)
+    @Column(name = CREATE_TIME)
     public String createTime;
 
     /**
      * 标注人
      */
     public static final String CREATE_PERSON = "create_person";
-    @Column(column = CREATE_PERSON)
+    @Column(name = CREATE_PERSON)
     public String createPerson;
 
     public boolean isMarkStandard() {

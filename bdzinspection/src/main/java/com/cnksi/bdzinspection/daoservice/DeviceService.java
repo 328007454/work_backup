@@ -8,11 +8,13 @@ import com.cnksi.bdzinspection.model.Device;
 import com.cnksi.bdzinspection.model.Report;
 import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,14 +47,17 @@ public class DeviceService {
      * @return
      */
     public HashMap<String, DefectInfo> findDeviceDefect(String bdzid) {
-        SqlInfo sql = new SqlInfo("SELECT" + "	*,count(1) as defect_count_key  FROM(SELECT "
+        String sql = "SELECT" + "	*,count(1) as defect_count_key  FROM(SELECT "
                 + "deviceid,defectlevel	FROM	defect_record		WHERE 		bdzid = ?"
                 + "		AND has_track = 'N'"
                 + "		AND has_remove = 'N'	AND (val = '' OR val IS NULL)  AND (dlt = '0' OR dlt is NULL)	ORDER BY"
-                + "			deviceid,	defectlevel ASC) t GROUP BY 	t.deviceid", bdzid);
+                + "			deviceid,	defectlevel ASC) t GROUP BY 	t.deviceid";
+
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzid));
         HashMap<String, DefectInfo> map = new HashMap<String, DefectInfo>();
         try {
-            List<DbModel> mDeviceList = XunshiApplication.getDbUtils().findDbModelAll(sql);
+            List<DbModel> mDeviceList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (mDeviceList != null && !mDeviceList.isEmpty()) {
                 for (DbModel model : mDeviceList) {
                     map.put(model.getString(DefectRecord.DEVICEID),
@@ -75,8 +80,7 @@ public class DeviceService {
      * @throws DbException
      */
     public List<Device> findDeviceBySpacing(Spacing mSpacing, String deviceType) throws DbException {
-        Selector selector = BaseService.from(Device.class).and(Device.SPID, "=", mSpacing.spid).and(Device.DEVICE_TYPE, "=", deviceType);
-        List<Device> mDeviceList = XunshiApplication.getDbUtils().findAll(selector);
+        List<Device> mDeviceList = XunshiApplication.getDbUtils().selector(Device.class).where(Device.DLT, "=", "0").and(Device.SPID, "=", mSpacing.spid).and(Device.DEVICE_TYPE, "=", deviceType).findAll();
         return mDeviceList;
     }
 
@@ -93,12 +97,12 @@ public class DeviceService {
         try {
             if ("left".equals(direction)) {
                 device = XunshiApplication.getDbUtils()
-                        .findFirst(Selector.from(Device.class).expr(Device.SPID, "=", spid).and(Device.SORT, ">", sort)
-                                .and(Device.DLT, "<>", Config.DELETED).orderBy(Device.SORT, false));
+                        .selector(Device.class).expr("spid = '" + spid + "'").and(Device.SORT, ">", sort)
+                        .and(Device.DLT, "<>", Config.DELETED).orderBy(Device.SORT, false).findFirst();
             } else {
                 device = XunshiApplication.getDbUtils()
-                        .findFirst(Selector.from(Device.class).expr(Device.SPID, "=", spid).and(Device.SORT, "<", sort)
-                                .and(Device.DLT, "<>", Config.DELETED).orderBy(Device.SORT, true));
+                        .selector(Device.class).expr("spid = '" + spid + "'").and(Device.SORT, "<", sort)
+                        .and(Device.DLT, "<>", Config.DELETED).orderBy(Device.SORT, true).findFirst();
             }
         } catch (DbException e) {
             e.printStackTrace();
@@ -143,9 +147,7 @@ public class DeviceService {
     public boolean updateDeviceLocationInfo(String spid, String lat, String lng) {
         boolean isSuccess = false;
         try {
-            XunshiApplication.getDbUtils().update(Device.class, WhereBuilder.b(Device.SPID, "=", spid),
-                    new String[]{Device.LATITUDE, Device.LONGITUDE},
-                    new String[]{lat, lng});
+            XunshiApplication.getDbUtils().update(Device.class, WhereBuilder.b(Device.SPID, "=", spid), new KeyValue(Device.LATITUDE, lat), new KeyValue(Device.LONGITUDE, lng));
             isSuccess = true;
         } catch (DbException e) {
             e.printStackTrace();
@@ -155,34 +157,16 @@ public class DeviceService {
 
     public DbModel findDeviceById(String deviceId) {
         try {
-            return XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from device where deviceid=?", deviceId));
+            String sql = "select * from device where deviceid=? and dlt = 0";
+            SqlInfo sqlInfo = new SqlInfo(sql);
+            sqlInfo.addBindArg(new KeyValue("", deviceId));
+            return XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<DbModel> findSpaceDeviceByBigType(String bdzId, String deviceType, String... bigtypes) {
-        StringBuffer sb = new StringBuffer("(");
-        for (String bigId : bigtypes) {
-            sb.append("'").append(bigId).append("',");
-        }
-        if (sb.length() > 0)
-            sb.deleteCharAt(sb.length() - 1);
-        sb.append(")");
-        String spacingSort = (deviceType.equals("one")) ? Spacing.SORT_ONE
-                : (deviceType.equals("second")) ? Spacing.SORT_SECOND : Spacing.SORT;
-
-        String sql = "select d.deviceid as deviceId,d.name as deviceName,s.spid,s.name as spacingName from device d left join spacing s on d.spid=s.spid where d.bdzid=? and d.dlt=0 and d.device_type=? and d.bigid in "
-                .concat(sb.toString()).concat(" order by s." + spacingSort + ",d.sort;");
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceType);
-        try {
-            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public List<DbModel> findSpaceDeviceByKeyWord(String bdzId, String keyWord, String deviceType, String... bigtypes) {
         StringBuffer sb = new StringBuffer("(");
@@ -196,7 +180,8 @@ public class DeviceService {
         String sql = "select * from (select s.name_pinyin||' '||d." + pinyin + " as search_key,d.deviceid as deviceId,d.name as deviceName,s.type as spaceType,s.group_id,s.spid,s.name as spacingName  from device d LEFT JOIN spacing s on d.spid=s.spid where d.bdzid=? and d.dlt=0 and d.bigid in "
                 .concat(sb.toString())
                 .concat(" order by s.sort,d.sort ) as t where t.search_key like '%" + keyWord + "%'");
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
             return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -217,7 +202,9 @@ public class DeviceService {
         if (!TextUtils.isEmpty(keyWord)) {
             sql = "select * from (" + sql + ") as t where t.search_key like '%" + keyWord + "%'";
         }
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceType);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("",bdzId));
+        sqlInfo.addBindArg(new KeyValue("",deviceType));
         try {
             return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -244,7 +231,9 @@ public class DeviceService {
     }
 
     public List<DbModel> findDeviceHasCopyValueBySelector(String selector, String bdzId) throws DbException {
-        SqlInfo sqlInfo = new SqlInfo(" SELECT * from device d left join spacing s on d.spid = s.spid  WHERE  d.bdzid=? " + selector + " order by s.sort_one", bdzId);
+        String sql = " SELECT * from device d left join spacing s on d.spid = s.spid  WHERE  d.bdzid=? " + selector + " order by s.sort_one";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("",bdzId));
         List<DbModel> dbModelList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         return dbModelList;
     }
@@ -270,7 +259,9 @@ public class DeviceService {
         if (!TextUtils.isEmpty(keyWord)) {
             sql = "select * from (" + sql + ") as t where t.search_key like '%" + keyWord + "%'";
         }
-        sqlInfo = new SqlInfo(sql, bdzId, deviceType);
+        sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("",bdzId));
+        sqlInfo.addBindArg(new KeyValue("",deviceType));
         try {
             return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -311,7 +302,9 @@ public class DeviceService {
         if (!TextUtils.isEmpty(keyWord)) {
             sql = "select * from (" + sql + ") as t where t.search_key like '%" + keyWord + "%'";
         }
-        sqlInfo = new SqlInfo(sql, bdzId, deviceType);
+        sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("",bdzId));
+        sqlInfo.addBindArg(new KeyValue("",deviceType));
         try {
             return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -321,9 +314,8 @@ public class DeviceService {
     }
 
     public List<Device> findDeviceByType(String currentBdzId, String deviceType) {
-        Selector selector = BaseService.from(Device.class).and(Device.BDZID, "=", currentBdzId).and(Device.DEVICE_TYPE, "=", deviceType);
         try {
-            return XunshiApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().selector(Device.class).where(Device.DLT,"=",0).and(Device.BDZID, "=", currentBdzId).and(Device.DEVICE_TYPE, "=", deviceType).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -334,7 +326,8 @@ public class DeviceService {
         SqlInfo sqlInfo = new SqlInfo("SELECT COUNT(*) as ic,COUNT(pd.id) c FROM device d " +
                 "LEFT JOIN (SELECT * FROM placed_device where reportid=? and dlt=0 and placed_way='photo') pd on pd.deviceid =d.deviceid " +
                 " where is_important='Y' and d.bdzid=? ;");
-        sqlInfo.addBindArgs(reportId, bdzId);
+        sqlInfo.addBindArg(new KeyValue("",reportId));
+        sqlInfo.addBindArg(new KeyValue("",bdzId));
         try {
             DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
             return model.getString("c") + "/" + model.getString("ic");

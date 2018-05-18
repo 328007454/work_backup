@@ -3,10 +3,11 @@ package com.cnksi.bdzinspection.model;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.utils.Config;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
-import com.lidroid.xutils.db.table.DbModel;
+
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+import org.xutils.db.table.DbModel;
 
 import java.io.File;
 
@@ -89,67 +90,67 @@ public class Device extends BaseModel {
     public static final String LAST_TRACK_TIME = "last_track_time";
     // 任务id
     public static final String TASK_ID = "taskid";
-    @Id(column = DEVICEID)
+    @Column(name = DEVICEID,isId = true)
     public String deviceid;
-    @Column(column = SPID)
+    @Column(name = SPID)
     public String spid;
-    @Column(column = NAME)
+    @Column(name = NAME)
     public String name;
-    @Column(column = SORT)
+    @Column(name = SORT)
     public Integer sort;
-    @Column(column = TYPE)
+    @Column(name = TYPE)
     public String type;
-    @Column(column = KIND)
+    @Column(name = KIND)
     public String kind;
-    @Column(column = MODEL)
+    @Column(name = MODEL)
     public String model;
-    @Column(column = MANUFACTURER)
+    @Column(name = MANUFACTURER)
     public String manufacturer;
-    @Column(column = IS_IMPORTANT)
+    @Column(name = IS_IMPORTANT)
     public String isImportant;
-    @Column(column = PIC)
+    @Column(name = PIC)
     public String pic;
-    @Column(column = CHANGE_PIC)
+    @Column(name = CHANGE_PIC)
     public String change_pic;
-    @Column(column = VOLTAGE)
+    @Column(name = VOLTAGE)
     public String voltage;
-    @Column(column = COMMISSIONING_DATE)
+    @Column(name = COMMISSIONING_DATE)
     public String commissioning_date;
-    @Column(column = HAS_YB)
+    @Column(name = HAS_YB)
     public String has_yb;
-    @Column(column = CHK)
+    @Column(name = CHK)
     public String chk;
-    @Column(column = Y)
+    @Column(name = Y)
     public String y;
-    @Column(column = LONGITUDE)
+    @Column(name = LONGITUDE)
     public String longitude;
-    @Column(column = LATITUDE)
+    @Column(name = LATITUDE)
     public String latitude;
-    @Column(column = DTID)
+    @Column(name = DTID)
     public String dtid;
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bdzid;
-    @Column(column = INSTID)
+    @Column(name = INSTID)
     public String instid;
-    @Column(column = HAS_COPY)
+    @Column(name = HAS_COPY)
     public String has_copy;
-    @Column(column = NAME_PINYIN)
+    @Column(name = NAME_PINYIN)
     public String name_pinyin;
-    @Column(column = NAME_SHORT_PINYIN)
+    @Column(name = NAME_SHORT_PINYIN)
     public String name_short_pinyin;
-    @Column(column = NAME_SHORT)
+    @Column(name = NAME_SHORT)
     public String name_short;
-    @Column(column = CREATETIME)
+    @Column(name = CREATETIME)
     public String createtime;
-    @Column(column = CREATER)
+    @Column(name = CREATER)
     public String creater;
-    @Column(column = INSTER_TIME)
+    @Column(name = INSTER_TIME)
     public String insert_time;
-    @Column(column = UPDATE_TIME)
+    @Column(name = UPDATE_TIME)
     public String update_time;
-    @Column(column = DEVICE_TYPE)
+    @Column(name = DEVICE_TYPE)
     public String device_type;
-    @Column(column = BIGID)
+    @Column(name = BIGID)
     public String bigid;
     // 缺陷数量
     public int defectCount = 0;

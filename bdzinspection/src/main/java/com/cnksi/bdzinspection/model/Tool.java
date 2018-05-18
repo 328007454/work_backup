@@ -1,45 +1,43 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
-import com.lidroid.xutils.db.annotation.Transient;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 @Table(name = "tool")
 public class Tool extends BaseModel{
 	
 	//工器具ID
 	public static final String TOOLID = "toolid";
-	@Id(column = TOOLID)
+	@Column(name = TOOLID,isId = true)
 	public String toolid;
 	
 	//工器具名称
 	public static final String NAME = "name";
-	@Column(column = NAME)
+	@Column(name = NAME)
 	public String name;
 	
 	//单位
 	public static final String UNIT = "unit";
-	@Column(column = UNIT)
+	@Column(name = UNIT)
 	public String unit;
 	
 	//注意提示
 	public static final String TIPS = "tips";
-	@Column(column = TIPS)
+	@Column(name = TIPS)
 	public String tips;
 	
 	//检查标准
 	public static final String CHECK_STANDARD = "check_standard";
-	@Column(column = CHECK_STANDARD)
+	@Column(name = CHECK_STANDARD)
 	public String check_standard;
 	
 	//巡检类型
 	public static final String INSPECTION = "inspection";
-	@Column(column = INSPECTION)
+	@Column(name = INSPECTION)
 	public String inspection;
 	
 	//工器具数量
-	@Transient
-	public String toolCount;
+	public transient  String toolCount;
 	
 }

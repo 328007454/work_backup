@@ -4,10 +4,11 @@ import android.text.TextUtils;
 
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FunctionUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+import org.xutils.db.table.DbModel;
+
 
 /**
  * @author Wastrel
@@ -17,46 +18,46 @@ import com.lidroid.xutils.db.table.DbModel;
 public class ReportSignname extends BaseModel {
     // ID
     public static final String ID = "id";
-    @Id(column = ID)
+    @Column(name = ID,isId = true)
     private String id;
     // 报告ID
     public static final String REPORTID = "report_id";
-    @Column(column = REPORTID)
+    @Column(name = REPORTID)
     private String reportId;
     // 部门ID
     public static final String DEPTID = "dept_id";
-    @Column(column = DEPTID)
+    @Column(name = DEPTID)
     private String dpetId;
     // 部门名字
     public static final String DEPTNAME = "dept_name";
-    @Column(column = DEPTNAME)
+    @Column(name = DEPTNAME)
     private String dpetName;
     // 姓名
     public static final String NAME = "name";
-    @Column(column = NAME)
+    @Column(name = NAME)
     private String name;
 
     // 签名角色
     public static final String SIGNERROLE = "signer_role";
-    @Column(column = SIGNERROLE)
+    @Column(name = SIGNERROLE)
     private String signerRole;
 
     // 签名
     public static final String SIGNNAME = "sign_name";
-    @Column(column = SIGNNAME)
+    @Column(name = SIGNNAME)
     private String signName;
     // 头像
     public static final String IMG = "img";
-    @Column(column = IMG)
+    @Column(name = IMG)
     private String img;
     //
     public static final String CREATETIME = "create_time";
-    @Column(column = CREATETIME)
+    @Column(name = CREATETIME)
     private String createTime;
 
     //
     public static final String ACCOUNT = "account";
-    @Column(column = ACCOUNT)
+    @Column(name = ACCOUNT)
     private String account;
 
 

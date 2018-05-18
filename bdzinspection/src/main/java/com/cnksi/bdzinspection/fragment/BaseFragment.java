@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,13 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.ImageDetailsActivity;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.xscore.xsfragment.BaseCoreFragment;
-import com.cnksi.xscore.xsutils.BitmapHelp;
 import com.cnksi.xscore.xsutils.CLog;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 
@@ -251,10 +248,7 @@ public abstract class BaseFragment extends BaseCoreFragment {
      * @param context
      */
     public void initBitmapUtils(Context context) {
-        mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(context);
-        mBitmapUtils.configDefaultLoadingImage(R.drawable.xs_ic_launcher);
-        mBitmapUtils.configDefaultLoadFailedImage(R.drawable.xs_ic_launcher);
-        mBitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
+
     }
 
     /**

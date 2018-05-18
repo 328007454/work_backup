@@ -46,7 +46,7 @@ android {
 
     defaultConfig {
         applicationId "com.cnksi.sjjc"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode VERSION_CODE as int
         versionName VERSION_NAME
@@ -160,7 +160,7 @@ dependencies {
     }
     compile 'com.cnksi:bdloc:1.1.7-3'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    implementation 'com.cnksi:core:1.2.7.1'
+    implementation 'com.cnksi:core:1.2.7.3'
     compile 'com.android.support:multidex:1.0.3'
     implementation files('libs/commons-codec-1.11.jar')
     api "com.cnksi:core:$ksi_core_version"

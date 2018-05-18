@@ -1,8 +1,8 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 /**
  * Created by kkk on 2018/2/22.
@@ -12,50 +12,50 @@ import com.lidroid.xutils.db.annotation.Table;
 public class InspectionDefine {
 
     public static final String ID = "id";
-    @Id(column = "id")
+    @Column(name = "id",isId = true)
     public String id;
 
     public static final String BDZID = "bdzid";
-    @Column(column = BDZID)
+    @Column(name = BDZID)
     public String bzdid;
 
     public static final String  K = "k";
-    @Column(column = K)
+    @Column(name = K)
     public String k ;
 
     public static final String V="v";
-    @Column(column = V)
+    @Column(name = V)
     public String v;
 
     public static final String SORT = "sort";
-    @Column(column = SORT)
+    @Column(name = SORT)
     public String sort;
 
     public static final String  XJNR = "xjnr";
-    @Column(column = XJNR)
+    @Column(name = XJNR)
     public String xjnr ;
 
     public static final String TYPE="type";
-    @Column(column = TYPE)
+    @Column(name = TYPE)
     public String type;
 
     public static final String REMARK = "remark";
-    @Column(column = REMARK)
+    @Column(name = REMARK)
     public String remark;
 
     public static final String  INSERTTIME = "insert_time";
-    @Column(column = INSERTTIME)
+    @Column(name = INSERTTIME)
     public String insertTime ;
 
     public static final String UPDATETIME="update_time";
-    @Column(column = UPDATETIME)
+    @Column(name = UPDATETIME)
     public String updateTime;
 
     public static final String  LASTMODIFYTIME = "last_modify_time";
-    @Column(column = LASTMODIFYTIME)
+    @Column(name = LASTMODIFYTIME)
     public String lastModifyTime ;
 
     public static final String DLT="dlt";
-    @Column(column = DLT)
+    @Column(name = DLT)
     public String dlt;
 }

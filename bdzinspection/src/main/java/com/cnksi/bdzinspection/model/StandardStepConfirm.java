@@ -1,9 +1,10 @@
 package com.cnksi.bdzinspection.model;
 
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -12,36 +13,36 @@ public class StandardStepConfirm  extends BaseModel{
 
 	// ID
 	public static final String ID = "id";
-	@Id(column = ID)
+	@Column(name = ID,isId = true)
 	public String id = UUID.randomUUID().toString();
 
 
 
 	// 标准id
 	public static final String STANDID = "standid";
-	@Column(column = STANDID)
+	@Column(name = STANDID)
 	public String standid;
 
 	// 变电站编号
 	public static final String BDZID = "bdzid";
-	@Column(column = BDZID)
+	@Column(name = BDZID)
 	public String bdzid;
 
 	// 报告编号
 	public static final String REPORTID = "reportid";
-	@Column(column = REPORTID)
+	@Column(name = REPORTID)
 	public String reportid;
 
 
 	// 提交时间
 	public static final String CONFIRMDATE = "confirm_date";
-	@Column(column = CONFIRMDATE)
+	@Column(name = CONFIRMDATE)
 	public String confirm_date;
 
 
 
 	public static final String CREATETIME = "create_time";
-	@Column(column = CREATETIME)
+	@Column(name = CREATETIME)
 	public String createtime;
 
 

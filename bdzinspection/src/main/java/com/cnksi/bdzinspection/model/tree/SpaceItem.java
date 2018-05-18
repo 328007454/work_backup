@@ -3,7 +3,9 @@ package com.cnksi.bdzinspection.model.tree;
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
-import com.lidroid.xutils.db.table.DbModel;
+
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,9 @@ public class SpaceItem extends AbstractExpandableItem<DeviceItem> implements Mul
     List<DbModel> deviceDbModels = new ArrayList<>();
 
     public SpaceItem(DbModel spacing) {
-        this.spacing = new DbModel(spacing.dataMap);
+        DbModel dbModel = new DbModel();
+        dbModel.setDataMap(spacing.getDataMap());
+        this.spacing = dbModel;
     }
 
     @Override

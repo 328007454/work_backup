@@ -9,11 +9,13 @@ import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.CopyType;
 import com.cnksi.bdzinspection.model.Report;
 import com.cnksi.bdzinspection.model.Spacing;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +48,8 @@ public class CopyItemService {
      */
     public List<CopyItem> getDeviceCopyItem(String bdzId, String deviceId, String inspection) {
         try {
-            Selector selector = Selector.from(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
-                    and(CopyItem.KIND, "like", "%" + inspection + "%").and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID);
-            return getDbUtils().findAll(selector);
+            return getDbUtils().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
+                    and(CopyItem.KIND, "like", "%" + inspection + "%").and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -58,16 +59,16 @@ public class CopyItemService {
     public List<DbModel> getCopyDeviceList(String bdzId, String deviceType, String inspection, String deviceWay, String reportId) {
 
         String devices = "";
-        String sql="";
+        String sql = "";
         String sort = "one".equals(deviceType) ? Spacing.SORT_ONE : "second".equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
-         sql = "select d.name_short name_short ,d.deviceid,d.is_important,d.name,d.latitude,d.spid,d.device_type,d.longitude,sp.name as sname from device d "
+        sql = "select d.name_short name_short ,d.deviceid,d.is_important,d.name,d.latitude,d.spid,d.device_type,d.longitude,sp.name as sname from device d "
                 + "left join spacing sp on d.spid=sp.spid where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and " + "kind like '%" + inspection
                 + "%' and dlt = '0')  and d.device_type=?";
 
         if (!TextUtils.isEmpty(deviceWay) && deviceWay.equalsIgnoreCase("bigtype_device")) {
             sql = sql + " and d.bigid in ( select bigid from standard_special where kind = '" + inspection + "' and dlt = 0 )";
         }
-        if (!TextUtils.isEmpty(deviceWay)&&deviceWay.equalsIgnoreCase("select_device")) {
+        if (!TextUtils.isEmpty(deviceWay) && deviceWay.equalsIgnoreCase("select_device")) {
             Report currentReport = null;
             try {
                 currentReport = XunshiApplication.getDbUtils().findById(Report.class, reportId);
@@ -78,11 +79,13 @@ public class CopyItemService {
             devices = devices.replace(",", "','");
             sql = "select d.name_short name_short ,d.deviceid,d.is_important,d.name,d.latitude,d.spid,d.device_type,d.longitude,sp.name as sname from device d "
                     + "left join spacing sp on d.spid=sp.spid where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and " + "kind like '%" + inspection
-                    + "%' and dlt = '0' and deviceid in ("+devices+"))  and d.device_type=?";
+                    + "%' and dlt = '0' and deviceid in (" + devices + "))  and d.device_type=?";
         }
 
         sql = sql + " order by sp." + sort;
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceType);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
+        sqlInfo.addBindArg(new KeyValue("", deviceType));
         try {
             return getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -97,7 +100,9 @@ public class CopyItemService {
         String sql = "select d.deviceid,d.name,d.is_important,d.latitude,d.spid,d.device_type,d.longitude,sp.name as sname from device d "
                 + "left join spacing sp on d.spid=sp.spid where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and " + "kind like '%" + inspection
                 + "%' and dlt = '0') and  d.spid = '" + spid + "' and d.device_type=? order by sp." + sort;
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId, deviceType);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
+        sqlInfo.addBindArg(new KeyValue("", deviceType));
         try {
             return getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -124,7 +129,8 @@ public class CopyItemService {
     public long getCopyItemCount(String bdzId, String inspection) {
 //		String sql = cptSql + "where item.bdzid=? and kind like '%" + inspection + "%'";
         String sql = "select count(1) AS copyCount from copy_item item where item.bdzid=? and kind like '%" + inspection + "%' and dlt = '0'";
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
             DbModel dbModel = getDbUtils().findDbModelFirst(sqlInfo);
             return dbModel.getLong("copyCount");
@@ -143,7 +149,8 @@ public class CopyItemService {
     public long getCopyItemCount1(String bdzId, String inspection) {
 //		String sql = cptSql + "where item.bdzid=? and type_key in ('" + inspection + "')";
         String sql = "select count(1) AS copyCount from copy_item item where item.bdzid=? and type_key in ('" + inspection + "') ";
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
             DbModel dbModel = getDbUtils().findDbModelFirst(sqlInfo);
             return dbModel.getLong("copyCount");
@@ -177,9 +184,8 @@ public class CopyItemService {
      */
     public List<CopyItem> getDeviceCopyItem1(String bdzId, String deviceId, String inspection) {
         try {
-            Selector selector = Selector.from(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).expr("and " + CopyItem.TYPE_KEY + " in ('" + inspection + "')")
-                    .and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID);
-            return getDbUtils().findAll(selector);
+            return getDbUtils().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).expr("and " + CopyItem.TYPE_KEY + " in ('" + inspection + "')")
+                    .and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -196,7 +202,8 @@ public class CopyItemService {
     public List<DbModel> findCopyDeviceId(String bdzId, String inspection) {
         List<DbModel> dbModelList = new ArrayList<>();
         String sql = "SELECT DISTINCT(d.deviceid),d.spid FROM	copy_item item LEFT JOIN device d ON item.deviceid=d.deviceid WHERE	item.bdzid = ? AND item.kind LIKE '%" + inspection + "%' AND item.dlt = '0' ";
-        SqlInfo sqlInfo = new SqlInfo(sql, bdzId);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
             dbModelList = getDbUtils().findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -214,9 +221,8 @@ public class CopyItemService {
      */
     public List<CopyItem> getDeviceALLCopyItem(String bdzId, String deviceId) {
         try {
-            Selector selector = Selector.from(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
-                    and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID);
-            return getDbUtils().findAll(selector);
+            return getDbUtils().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
+                    and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -226,7 +232,7 @@ public class CopyItemService {
 
     public List<CopyType> findAllCopyType() {
         try {
-            List<CopyType> types = XunshiApplication.getDbUtils().findAll(Selector.from(CopyType.class).where(CopyType.SELECTED_ABLE, "=", "Y"));
+            List<CopyType> types = XunshiApplication.getDbUtils().selector(CopyType.class).where(CopyType.SELECTED_ABLE, "=", "Y").findAll();
             return types;
         } catch (DbException e) {
             e.printStackTrace();
@@ -240,7 +246,7 @@ public class CopyItemService {
             public void run() {
                 if (!objects.isEmpty()) {
                     try {
-                        getDbUtils().saveOrUpdateAll(objects);
+                        getDbUtils().saveOrUpdate(objects);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
@@ -272,14 +278,14 @@ public class CopyItemService {
 
 
     public List<CopyItem> findAllMaintenanceHasCopyValue(String currentInspectionType, String currentBdzId) throws DbException {
-        return XunshiApplication.getDbUtils().findAll(Selector.from(CopyItem.class).where(CopyItem.BDZID, "=", currentBdzId).and(CopyItem.KIND, "=", currentInspectionType)
-                .and(CopyItem.DLT, "=", "0"));
+
+        return getDbUtils().selector(CopyItem.class).where(CopyItem.BDZID, "=", currentBdzId).and(CopyItem.KIND, "=", currentInspectionType)
+                .and(CopyItem.DLT, "=", "0").findAll();
     }
 
     public List<CopyItem> findAllBySpace(String spid) {
-        Selector selector = BaseService.from(CopyItem.class).and(CopyItem.SPID, "=", spid);
         try {
-            return XunshiApplication.getDbUtils().findAll(selector);
+            return XunshiApplication.getDbUtils().selector(CopyItem.class).where(CopyItem.DLT, "=", "0").and(CopyItem.SPID, "=", spid).findAll();
         } catch (DbException e) {
             e.printStackTrace();
             return new ArrayList<>();

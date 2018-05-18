@@ -5,9 +5,9 @@ import android.text.TextUtils;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.io.File;
 
@@ -62,51 +62,51 @@ public class DeviceStandards extends BaseModel {
     public static final String DEFECT_COUNT = "defect_count";
     // 是否已记录缺陷
     public static final String HAS_RECORD_DEFECT = "has_record_defect";
-    @Id(column = STAID)
+    @Column(name = STAID,isId = true)
     public String staid;
-    @Column(column = DUID)
+    @Column(name = DUID)
     public String duid;
-    @Column(column = DEVICEID)
+    @Column(name = DEVICEID)
     public String deviceId;
-    @Column(column = DESCRIPTION)
+    @Column(name = DESCRIPTION)
     public String description;
-    @Column(column = RESULTTYPE)
+    @Column(name = RESULTTYPE)
     public String resulttype;
-    @Column(column = PICS)
+    @Column(name = PICS)
     public String pics;
-    @Column(column = CHANGE_PIC)
+    @Column(name = CHANGE_PIC)
     public String change_pic;
-    @Column(column = SORT)
+    @Column(name = SORT)
     public String sort;
-    @Column(column = REFERENCE)
+    @Column(name = REFERENCE)
     public String reference;
-    @Column(column = WTLL)
+    @Column(name = WTLL)
     public String wtll;
-    @Column(column = WTC)
+    @Column(name = WTC)
     public String wtc;
-    @Column(column = UNIT)
+    @Column(name = UNIT)
     public String unit;
-    @Column(column = KIND)
+    @Column(name = KIND)
     public String kind;
-    @Column(column = ISDZ)
+    @Column(name = ISDZ)
     public String isdz;
-    @Column(column = ORIGIN)
+    @Column(name = ORIGIN)
     public String origin;
-    @Column(column = CREATETIME)
+    @Column(name = CREATETIME)
     public String createtime;
-    @Column(column = REPORT_TYPE)
+    @Column(name = REPORT_TYPE)
     public String report_type;
-    @Column(column = FULL)
+    @Column(name = FULL)
     public String full;
-    @Column(column = DAYS)
+    @Column(name = DAYS)
     public String days;
-    @Column(column = NEWCAST)
+    @Column(name = NEWCAST)
     public String newcast;
-    @Column(column = ACCEPT)
+    @Column(name = ACCEPT)
     public String accept;
-    @Column(column = CREATER)
+    @Column(name = CREATER)
     public String creater;
-    @Column(column = COPYSTATE)
+    @Column(name = COPYSTATE)
     public String copystate;
 
     public DeviceStandards() {

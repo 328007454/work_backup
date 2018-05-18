@@ -1,8 +1,9 @@
 package com.cnksi.bdzinspection.model;
 
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.io.Serializable;
 
@@ -21,47 +22,47 @@ public class PlanProcessStatus extends BaseModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// 工器具id
 	public static final String ID = "id";
-	@Id(column = ID)
+	@Column(name = ID,isId = true)
 	public String id;
 
 	/**
 	 * 计划id
 	 */
 	public static final String TASK_ID = "task_id";
-	@Column(column = TASK_ID)
+	@Column(name = TASK_ID)
 	public String task_id;
 
 	/**
 	 * 工艺流程Id
 	 */
 	public static final String PROCESS_ID = "process_id";
-	@Column(column = PROCESS_ID)
+	@Column(name = PROCESS_ID)
 	public String process_id;
 	/**
 	 * 选中状态
 	 */
 	public static final String IS_SELETED = "is_seleted";
-	@Column(column = IS_SELETED)
+	@Column(name = IS_SELETED)
 	public String is_selected;
 
 	/**
 	 * 视频
 	 */
 	public static final String VIDEO = "video";
-	@Column(column = VIDEO)
+	@Column(name = VIDEO)
 	public String video;
 
 	/**
 	 * 音频
 	 */
 	public static final String AUDIO = "audio";
-	@Column(column = AUDIO)
+	@Column(name = AUDIO)
 	public String audio;
 	/**
 	 * 选中状态
 	 */
 	public static final String PICTURE = "picture";
-	@Column(column = PICTURE)
+	@Column(name = PICTURE)
 	public String picture;
 
 	/**

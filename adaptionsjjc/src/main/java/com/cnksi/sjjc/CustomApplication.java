@@ -98,6 +98,8 @@ public class CustomApplication extends CoreApplication {
 
 
     public static void closeDbConnection() {
+
+
 //        if (mDbManager != null) {
 //            try {
 //                FileUtils.deleteAllFiles(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME + "-journal"));
@@ -333,6 +335,11 @@ public class CustomApplication extends CoreApplication {
             @Override
             public String getDbName() {
                 return getDaoConfig().getDbName();
+            }
+
+            @Override
+            public DbManager getDbManager() {
+                return getDbManager();
             }
         });
     }
