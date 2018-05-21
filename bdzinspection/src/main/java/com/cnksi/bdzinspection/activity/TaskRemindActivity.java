@@ -38,9 +38,10 @@ import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.FileUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,8 +100,8 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                 CToast.showShort(currentActivity, "没有找到对应的任务！！");
             }
         }
-        
-        binding = DataBindingUtil.setContentView(this,R.layout.xs_activity_inspection_task_remind);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_inspection_task_remind);
 //        setContentView(R.layout.xs_activity_inspection_task_remind);
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, Config.permissions);
         initUI();
@@ -149,7 +150,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
 
     }
 
-    public void initOnClick(){
+    public void initOnClick() {
         binding.includeTitle.ibtnCancel.setOnClickListener(v -> {
             onBackPressed();
         });
@@ -294,7 +295,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
     public void startTask(Task mTask) {
         Bdz bdz = null;
         try {
-            bdz = XunshiApplication.getDbUtils().findFirst(Selector.from(Bdz.class).where(Bdz.BDZID, "=", mTask.bdzid));
+            bdz = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.BDZID, "=", mTask.bdzid).findFirst();
             // 创建变电站下目录
             if (!FileUtils.isFileExists(Config.BDZ_INSPECTION_FOLDER + bdz.folder)) {
                 FileUtils.initFile(new String[]{Config.BDZ_INSPECTION_FOLDER + bdz.folder});
@@ -307,7 +308,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         if (mTask.isFinish()) {
             Report mReport = null;
             try {
-                mReport = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", mTask.taskid));
+                mReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", mTask.taskid).findFirst();
                 if (mReport == null) {
                     CToast.showShort(currentActivity, "异常任务，找不到对应的报告！");
                     return;
@@ -362,7 +363,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                     String reportId = null;
                     List<InspectionPrepared> prepareds = null;
                     try {
-                        prepareds = XunshiApplication.getDbUtils().findAll(Selector.from(InspectionPrepared.class).where(InspectionPrepared.TASKID, "=", mTask.taskid));
+                        prepareds = XunshiApplication.getDbUtils().selector(InspectionPrepared.class).where(InspectionPrepared.TASKID, "=", mTask.taskid).findAll();
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
@@ -407,7 +408,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
      */
     private void generateReport(Task mTask) {
         try {
-            Report mReport = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", mTask.taskid));
+            Report mReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", mTask.taskid).findFirst();
             String loginPerson = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_USER, "");
             if (mReport == null) {
                 mReport = new Report(mTask.taskid, mTask.bdzid, mTask.bdzname, mTask.inspection, loginPerson);
@@ -420,7 +421,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             mReport.departmentId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
             XunshiApplication.getDbUtils().saveOrUpdate(mReport);
 
-            ReportSignname reportSignname = XunshiApplication.getDbUtils().findFirst(Selector.from(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid));
+            ReportSignname reportSignname = XunshiApplication.getDbUtils().selector(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid).findFirst();
             if (reportSignname == null) {
                 String currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
                 List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);

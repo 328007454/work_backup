@@ -11,14 +11,14 @@ import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.nari.model.BDPackage;
 import com.cnksi.nari.utils.GuidUtil;
 import com.cnksi.nari.utils.NariDataManager;
-import com.lidroid.xutils.DbUtils;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.xutils.DbManager;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -43,7 +43,7 @@ import static java.util.Calendar.DAY_OF_WEEK;
 public class DataUtils {
 
 
-    private DbUtils dbUtils;
+    private DbManager dbUtils;
 
     private BDPackage bdPackage;
 

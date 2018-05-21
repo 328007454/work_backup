@@ -8,7 +8,8 @@ import com.cnksi.bdzinspection.adapter.base.BaseRecyclerDataBindingAdapter;
 import com.cnksi.bdzinspection.adapter.holder.ItemHolder;
 import com.cnksi.bdzinspection.databinding.XsItemTaskUserBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.Collection;
 

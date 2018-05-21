@@ -2,6 +2,7 @@ package com.cnksi.bdzinspection.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsItemSignBinding;
 import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.bdzinspection.utils.ScreenUtils;
+import com.cnksi.core.utils.BitmapUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.List;
@@ -55,7 +58,10 @@ public class SignNameAdapter extends SimpleBaseAdapter {
            itemBinding.tvCzrSign.setVisibility(View.GONE);
             itemBinding.signImg.setVisibility(View.VISIBLE);
             itemBinding.llContainerSign.setVisibility(View.GONE);
-            mBitmapUtils.display(itemBinding.signImg, Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName());
+            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName(), ScreenUtils.getScreenWidth(mContext));
+            if (bitmap !=null){
+                itemBinding.signImg.setImageBitmap(bitmap);
+            }
         }
         if (position < totoalUserCount) {
            itemBinding.del.setVisibility(View.GONE);

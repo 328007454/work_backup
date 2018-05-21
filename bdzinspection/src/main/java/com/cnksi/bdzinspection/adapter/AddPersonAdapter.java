@@ -10,8 +10,9 @@ import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsAddPersonItemBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.Users;
-import com.lidroid.xutils.db.table.DbModel;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.List;
 

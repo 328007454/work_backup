@@ -35,7 +35,8 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.view.keyboard.QWERKeyBoardUtils;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

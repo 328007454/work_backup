@@ -10,7 +10,8 @@ import com.cnksi.bdzinspection.adapter.base.BaseRecyclerAdapter;
 import com.cnksi.bdzinspection.model.DefectRecord;
 import com.cnksi.bdzinspection.model.DevicePart;
 import com.cnksi.bdzinspection.utils.Config;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.Collection;
 

@@ -41,9 +41,11 @@ import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -505,17 +507,18 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                         OperateToolResult toolResult = null;
                         if (stopBinding.rbUnqualify.isChecked()) {
                             toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name(), reason, stopPerson);
-                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new String[]{"status"}, new String[]{Config.ToolStatus.stop.name()});
+                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", Config.ToolStatus.stop.name()));
                         } else {
                             toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, Config.ToolStatus.stop.name(), Config.ToolStatus.normal.name(), reason, stopPerson);
-                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new String[]{"status"}, new String[]{Config.ToolStatus.inTest.name()});
+                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", Config.ToolStatus.inTest.name()));
                         }
                         resultList.add(toolResult);
+                        SafeToolsInfoService.getInstance().saveOrUpdate(resultList);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
                 }
-                SafeToolsInfoService.getInstance().saveOrUpdateAll(resultList);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -565,17 +568,19 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                                 nextTime = null;
                             else
                                 nextTime = DateUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
-                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new String[]{"status", "isnormal", "lastly_check_time", "next_check_time"}, new String[]{Config.ToolStatus.normal.name(), Config.ToolStatus.normal.name(), lastTime, nextTime});
+                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status", Config.ToolStatus.normal.name()), new KeyValue("isnormal", Config.ToolStatus.normal.name()),
+                                    new KeyValue("lastly_check_time", lastTime), new KeyValue("next_check_time", nextTime));
                         } else if (testBinding.rbUnnormal.isChecked()) {
                             toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, Config.ToolStatus.unNormal.name(), pics, person, Config.ToolStatus.test.name());
-                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id), new String[]{"status", "isnormal"}, new String[]{Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name()});
+                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id),new KeyValue("status", Config.ToolStatus.stop.name()), new KeyValue("isnormal", Config.ToolStatus.unNormal.name()));
                         }
                         resultList.add(toolResult);
+                        SafeToolsInfoService.getInstance().saveOrUpdate(resultList);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
                 }
-                SafeToolsInfoService.getInstance().saveOrUpdateAll(resultList);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

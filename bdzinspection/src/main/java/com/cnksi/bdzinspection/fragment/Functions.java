@@ -12,7 +12,8 @@ import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.CToast;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.Collections;
 import java.util.Comparator;

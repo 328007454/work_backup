@@ -17,6 +17,8 @@ import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
+import org.xutils.ex.DbException;
+
 /**
  * 操作票任务详细界面
  *
@@ -154,7 +156,12 @@ public class OperateTaskDetailsActivity extends BaseActivity {
         mCurrentOperateTick.time_fl = flTime;
         mCurrentOperateTick.code = code;
 
-        boolean isSuccess = OperateTicketService.getInstance().saveOrUpdate(mCurrentOperateTick);
+        boolean isSuccess = false;
+        try {
+            isSuccess = OperateTicketService.getInstance().saveOrUpdate(mCurrentOperateTick);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
         if (isSuccess) {
             // TODO:跳转到操作票工作界面
             Intent intent = new Intent(currentActivity, OperateWorkActivity.class);

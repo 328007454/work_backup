@@ -19,14 +19,17 @@ import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
+import com.cnksi.core.utils.SqliteUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.DbUtils;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.DbManager;
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -160,11 +163,14 @@ public class SpaceSplitActivity extends TitleActivity {
                 copyItemIds.append("'").append(item.id).append("',");
             }
         }
-        DbUtils dbUtils = XunshiApplication.getDbUtils();
+        DbManager manager = XunshiApplication.getDbUtils();
         try {
-            dbUtils.beginTransaction();
+            manager.beginTransaction();
             //复制一个新间隔
-            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from spacing where spid=?", spacing.pid));
+            String sql = "select * from spacing where spid=?";
+            SqlInfo sqlInfo = new SqlInfo(sql);
+            sqlInfo.addBindArg(new KeyValue("", spacing.pid));
+            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
             StringBuilder insertSql = new StringBuilder("INSERT INTO spacing( ");
             StringBuilder values = new StringBuilder();
             for (Map.Entry<String, String> entry : model.getDataMap().entrySet()) {
@@ -185,23 +191,23 @@ public class SpaceSplitActivity extends TitleActivity {
             }
             insertSql.deleteCharAt(insertSql.length() - 1).append(") VALUES(").append(values.deleteCharAt(values.length() - 1).toString()).append(");");
             //保存一个新间隔
-            dbUtils.execNonQuery(insertSql.toString());
+            manager.execNonQuery(insertSql.toString());
 
             //更新设备表的SPID
-            String sql = "update device set spid='" + newSpid + "' where deviceid in(" + deviceIds.toString() + ")";
-            dbUtils.execNonQuery(sql);
+             sql = "update device set spid='" + newSpid + "' where deviceid in(" + deviceIds.toString() + ")";
+            manager.execNonQuery(sql);
             //更新抄录表的SPID
             if (copyItemIds.length() > 0) {
                 copyItemIds.deleteCharAt(copyItemIds.length() - 1);
                 sql = "update copy_item set spid='" + newSpid + "' where id in(" + copyItemIds.toString() + ")";
-                dbUtils.execNonQuery(sql);
+                manager.execNonQuery(sql);
             }
-            dbUtils.setTransactionSuccessful();
+            manager.setTransactionSuccessful();
             return true;
         } catch (DbException e) {
             e.printStackTrace();
         } finally {
-            dbUtils.endTransaction();
+            manager.endTransaction();
         }
         return false;
     }

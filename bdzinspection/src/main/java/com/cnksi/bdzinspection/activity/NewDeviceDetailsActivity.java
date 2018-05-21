@@ -62,10 +62,11 @@ import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -382,14 +383,11 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             case LOAD_DATA:
                 //把标记的标准放在最后
                 if (mStandardList != null)
-                    Collections.sort(mStandardList, new Comparator<DbModel>() {
-                        @Override
-                        public int compare(DbModel o1, DbModel o2) {
-                            String s1 = o1.getString("isMark");
-                            String s2 = o2.getString("isMark");
-                            if (TextUtils.equals(s1, s2)) return 0;
-                            return "Y".equals(s1) ? 1 : -1;
-                        }
+                    Collections.sort(mStandardList, (o1, o2) -> {
+                        String s1 = o1.getString("isMark");
+                        String s2 = o2.getString("isMark");
+                        if (TextUtils.equals(s1, s2)) return 0;
+                        return "Y".equals(s1) ? 1 : -1;
                     });
                 if (mInspectionStandardAdapter == null) {
                     mInspectionStandardAdapter = new StandardAdapter(currentActivity, mStandardList);

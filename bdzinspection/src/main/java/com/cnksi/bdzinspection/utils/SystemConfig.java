@@ -5,9 +5,10 @@ import android.util.Log;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.HashMap;
 import java.util.List;

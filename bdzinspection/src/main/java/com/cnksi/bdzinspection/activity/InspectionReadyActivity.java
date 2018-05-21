@@ -35,9 +35,12 @@ import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.sqlite.SqlInfoBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -220,8 +223,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             binding.tabStrip.setShouldExpand(false);
         }
         try {
-            mReport = XunshiApplication.getDbUtils()
-                    .findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", currentTaskId));
+            mReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", currentTaskId).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -307,7 +309,8 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         mFixedThreadPoolExecutor.execute(() -> {
             InspectionPrepared prepared = new InspectionPrepared(mReport.reportid, task.taskid, PreferencesUtils.getString(Config.CURRENT_LOGIN_ACCOUNT, ""));
             try {
-                XunshiApplication.getDbUtils().createTableIfNotExist(InspectionPrepared.class, true);
+                SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo(XunshiApplication.getDbUtils().getTable(InspectionPrepared.class));
+                XunshiApplication.getDbUtils().execNonQuery(sqlInfo);
                 XunshiApplication.getDbUtils().saveOrUpdate(prepared);
             } catch (DbException e) {
                 e.printStackTrace();
@@ -385,7 +388,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     }
 
     private void saveReportSign() throws DbException {
-        List<ReportSignname> reportSignnames = XunshiApplication.getDbUtils().findAll(Selector.from(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid));
+        List<ReportSignname> reportSignnames = XunshiApplication.getDbUtils().selector(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid).findAll();
         String currentAccounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
         List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAccounts);
         if (reportSignnames == null || reportSignnames.isEmpty()) {

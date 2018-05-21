@@ -31,7 +31,8 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

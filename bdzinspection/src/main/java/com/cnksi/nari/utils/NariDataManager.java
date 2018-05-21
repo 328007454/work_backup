@@ -5,12 +5,15 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.nari.model.BDPackage;
 import com.cnksi.nari.model.XSJH;
 import com.cnksi.nari.type.PackageStatus;
-import com.lidroid.xutils.DbUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.DbManager;
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
+import org.xutils.x;
 
 import java.io.File;
 import java.util.HashMap;
@@ -26,30 +29,30 @@ import java.util.List;
  * @since 1.0
  */
 public class NariDataManager {
-    static HashMap<String, DbUtils.DaoConfig> PATHMAP = new HashMap<>();
+    static HashMap<String, DbManager.DaoConfig> PATHMAP = new HashMap<>();
     private static String BASEFOLDER;
 
     public static void init(String baseFolder) {
         BASEFOLDER = baseFolder;
     }
 
-    public static DbUtils getDbManager(File file) {
-        DbUtils.DaoConfig daoConfig = PATHMAP.get(file.getAbsolutePath());
+    public static DbManager getDbManager(File file) {
+        DbManager.DaoConfig daoConfig = PATHMAP.get(file.getAbsolutePath());
         if (daoConfig == null) {
             daoConfig = buildConfig(file.getParent(), file.getName());
             PATHMAP.put(file.getAbsolutePath(), daoConfig);
         }
-        return DbUtils.create(daoConfig);
+        return x.getDb(daoConfig);
     }
 
-    public static DbUtils getPackageManager() {
+    public static DbManager getPackageManager() {
         return XunshiApplication.getDbUtils();
     }
 
     public static HashMap<String, BDPackage> getPackageByUser(String user) {
         HashMap<String, BDPackage> map = new HashMap<>();
         try {
-            List<BDPackage> rs = getPackageManager().findAll(Selector.from(BDPackage.class).where("user", "=", user).and(BDPackage.PACKAGESTATUS, "<>", PackageStatus.upload.name()));
+            List<BDPackage> rs = getPackageManager().selector(BDPackage.class).where("user", "=", user).and(BDPackage.PACKAGESTATUS, "<>", PackageStatus.upload.name()).findAll();
             if (rs != null)
                 for (BDPackage r : rs) {
                     map.put(r.packageID, r);
@@ -61,22 +64,21 @@ public class NariDataManager {
     }
 
     public static void markBdPackageStatus(String pmsJhId, PackageStatus status) throws DbException {
-        getPackageManager().update(BDPackage.class, WhereBuilder.b("pms_jhid", "=", pmsJhId), new String[]{"status"}, new String[]{status.name()});
+        getPackageManager().update(BDPackage.class, WhereBuilder.b("pms_jhid", "=", pmsJhId),new KeyValue("status",status.name()));
     }
 
 
     public static void unBindingTask(String taskid) throws DbException {
-        getPackageManager().update(BDPackage.class, WhereBuilder.b("taskId", "=", taskid), new String[]{"status", "taskId"}, new String[]{PackageStatus.undo.name(), null});
+        getPackageManager().update(BDPackage.class, WhereBuilder.b("taskId", "=", taskid),new KeyValue("status",PackageStatus.undo.name()),new KeyValue("taskId",null));
     }
-
 
     public static BDPackage getPackageByTaskId(String taskId) throws DbException {
-        return getPackageManager().findFirst(Selector.from(BDPackage.class).expr(" taskId like '" + taskId + "'"));
+        return getPackageManager().selector(BDPackage.class).expr(" taskId like '" + taskId + "'").findFirst();
     }
 
-    private static DbUtils.DaoConfig buildConfig(String parent, String name) {
-        DbUtils.DaoConfig daoConfig = new DbUtils.DaoConfig(XunshiApplication.getAppContext());
-        daoConfig.setDbDir(parent);
+    private static DbManager.DaoConfig buildConfig(String parent, String name) {
+        DbManager.DaoConfig daoConfig = XunshiApplication.getDbUtils().getDaoConfig();
+        daoConfig.setDbDir(new File(parent));
         daoConfig.setDbName(name);
         return daoConfig;
     }
@@ -89,7 +91,7 @@ public class NariDataManager {
      * @throws DbException
      */
     public static XSJH parseDb3(File dbFile) throws DbException {
-        DbUtils dma = NariDataManager.getDbManager(dbFile);
+        DbManager dma = NariDataManager.getDbManager(dbFile);
         DbModel model = dma.findDbModelFirst(new SqlInfo("SELECT * FROM 'T_YJ_DWYJ_XS_ZNXSJH';"));
         XSJH xsjh = new XSJH();
         xsjh.OBJ_ID = model.getString("OBJ_ID");

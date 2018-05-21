@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityTitlebaseBinding;
-import com.cnksi.xscore.xsutils.BitmapHelp;
 
 public abstract class TitleActivity extends BaseActivity {
 	public ImageView back;
@@ -28,7 +27,6 @@ public abstract class TitleActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		_this = this;
 		titlebaseBinding = DataBindingUtil.setContentView(this,R.layout.xs_activity_titlebase);
-		mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(currentActivity);
 		content = (FrameLayout) findViewById(R.id.mh);
 		back = (ImageView) findViewById(R.id.ibtn_cancel);
 		back.setOnClickListener(v -> {

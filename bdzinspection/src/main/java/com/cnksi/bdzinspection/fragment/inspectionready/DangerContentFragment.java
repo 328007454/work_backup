@@ -12,11 +12,12 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Dangpoint;
-import com.lidroid.xutils.db.sqlite.DbModelSelector;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.DbModelSelector;
+import org.xutils.db.Selector;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,12 +83,12 @@ public class DangerContentFragment extends BaseFragment {
      */
     private void searchData() {
         try {
-            DbModelSelector avoidSelector = Selector.from(Dangpoint.class).groupBy(Dangpoint.AVOID_TYPE).orderBy(Dangpoint.SORT, false);
-            List<DbModel> dangPoints = XunshiApplication.getDbUtils().findDbModelAll(avoidSelector);
+            DbModelSelector avoidSelector =XunshiApplication.getDbUtils().selector(Dangpoint.class).groupBy(Dangpoint.AVOID_TYPE).orderBy(Dangpoint.SORT, false);
+            List<DbModel> dangPoints = avoidSelector.findAll();
             for (DbModel dbModel : dangPoints) {
-                Selector selector = Selector.from(Dangpoint.class).where(Dangpoint.AVOID_TYPE, "=", dbModel.getString("avoid_type"));
+                Selector selector = XunshiApplication.getDbUtils().selector(Dangpoint.class).where(Dangpoint.AVOID_TYPE, "=", dbModel.getString("avoid_type"));
                 //添加行头
-                List<Dangpoint> points = XunshiApplication.getDbUtils().findAll(selector);
+                List<Dangpoint> points = selector.findAll();
                 mDangerPointList.add(new Dangpoint(dbModel.getString("avoid_type")));
                 mDangerPointList.addAll(points);
             }

@@ -24,8 +24,9 @@ import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
-import com.lidroid.xutils.exception.DbException;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

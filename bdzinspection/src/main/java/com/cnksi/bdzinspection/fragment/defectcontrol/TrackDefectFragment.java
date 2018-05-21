@@ -50,9 +50,11 @@ import com.cnksi.xscore.xsutils.KeyBoardUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -149,7 +151,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
     public void setOnFunctionButtonClickListener(OnFunctionButtonClickListener mOnFunctionButtonClickListener) {
         this.mOnFunctionButtonClickListener = mOnFunctionButtonClickListener;
     }
-    
+
     XsFragmentTrackDefectBinding binding;
 
     @Override
@@ -162,7 +164,6 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
         return binding.getRoot();
     }
 
-   
 
     private void initUI() {
 
@@ -172,13 +173,13 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
         }
         isFromBattery = bundle.getBoolean(Config.IS_FROM_BATTERY, false);
         mTrackDefectRecordId = bundle.getString(Config.TRACK_DEFECT_RECORD_ID);
-         binding.includeAdd.tvSelectDevicePart.setVisibility(View.GONE);
-         binding.includeAdd.tvSelectDevicePart.setVisibility(View.GONE);
-         binding.tvDefectDeal.setText(R.string.xs_track_defect_str);
-         binding.include.lvContainer.setParentScrollView( binding.scvRootContainer);
-         binding.include.lvContainer.setMaxHeight(Integer.MAX_VALUE);
-         binding.lvTrackContainer.setParentScrollView( binding.scvRootContainer);
-         binding.lvTrackContainer.setMaxHeight(Integer.MAX_VALUE);
+        binding.includeAdd.tvSelectDevicePart.setVisibility(View.GONE);
+        binding.includeAdd.tvSelectDevicePart.setVisibility(View.GONE);
+        binding.tvDefectDeal.setText(R.string.xs_track_defect_str);
+        binding.include.lvContainer.setParentScrollView(binding.scvRootContainer);
+        binding.include.lvContainer.setMaxHeight(Integer.MAX_VALUE);
+        binding.lvTrackContainer.setParentScrollView(binding.scvRootContainer);
+        binding.lvTrackContainer.setMaxHeight(Integer.MAX_VALUE);
 
         setOnTouchListener();
 
@@ -194,20 +195,21 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
 
         });
     }
+
     private void initOnClick() {
-        binding.includeAdd.rbGeneralDefect.setOnClickListener(view ->     mCurrentClickDefectLevel = Config.GENERAL_LEVEL_CODE);
-        binding.includeAdd.rbCrisisDefect.setOnClickListener(view ->  mCurrentClickDefectLevel = Config.CRISIS_LEVEL_CODE);
+        binding.includeAdd.rbGeneralDefect.setOnClickListener(view -> mCurrentClickDefectLevel = Config.GENERAL_LEVEL_CODE);
+        binding.includeAdd.rbCrisisDefect.setOnClickListener(view -> mCurrentClickDefectLevel = Config.CRISIS_LEVEL_CODE);
         binding.includeAdd.rbSeriousDefect.setOnClickListener(view -> mCurrentClickDefectLevel = Config.SERIOUS_LEVEL_CODE);
         binding.btnConfirm.setOnClickListener(view -> save());
         binding.includeAdd.ibtnTakePicture.setOnClickListener(view -> {
-            currentPictureContent =  binding.includeAdd.etInputDefectContent.getText().toString().trim();
+            currentPictureContent = binding.includeAdd.etInputDefectContent.getText().toString().trim();
             if (!TextUtils.isEmpty(currentPictureContent)) {
                 if (mOnFunctionButtonClickListener != null) {
                     mOnFunctionButtonClickListener.takePicture(currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
                 }
             } else {
                 CToast.showShort(currentActivity, "请先填写缺陷内容！");
-            } 
+            }
         });
         binding.includeAdd.ivNewDefectPhoto.setOnClickListener(view -> {
             if (mDefectImageList != null && !mDefectImageList.isEmpty()) {
@@ -216,15 +218,15 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                     mImageUrlList.add(Config.RESULT_PICTURES_FOLDER + string);
                 }
                 showImageDetails(this, mImageUrlList, true);
-            } 
+            }
         });
-        
+
         binding.includeAdd.etInputDefectContent.setOnClickListener(view -> {
-            if (!TextUtils.isEmpty(mTrackDefectStandardId) && TextUtils.isEmpty( binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
+            if (!TextUtils.isEmpty(mTrackDefectStandardId) && TextUtils.isEmpty(binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
                 showDefectContentDialog(mTrackDefectStandardId);
-            }  
+            }
         });
-        
+
 
     }
 
@@ -238,7 +240,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
             }
         }
         PlaySound.getIntance(currentActivity).play(R.raw.track);
-        if (!TextUtils.isEmpty( binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
+        if (!TextUtils.isEmpty(binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
             if (mCurrentTrackDefect == null) {
                 for (DefectRecord mDefectRecord : dataList) {
                     if (currentSelectDefectRecordId.equalsIgnoreCase(mDefectRecord.defectid)) {
@@ -252,13 +254,12 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
 
                     String defectId = DefectRecord.getDefectId();
                     XunshiApplication.getDbUtils().update(DefectRecord.class,
-                            WhereBuilder.b(DefectRecord.DEFECTID, "=", mCurrentTrackDefect.defectid),
-                            new String[]{DefectRecord.DEFECTID, DefectRecord.REPORTID, DefectRecord.HAS_TRACK}, new String[]{defectId, currentReportId, "Y"});
+                            WhereBuilder.b(DefectRecord.DEFECTID, "=", mCurrentTrackDefect.defectid), new KeyValue(DefectRecord.DEFECTID, defectId), new KeyValue(DefectRecord.REPORTID, currentReportId), new KeyValue(DefectRecord.HAS_TRACK, "Y"));
                     // 2、更新原有缺陷信息。
                     mCurrentTrackDefect.has_track = "N"; // 新缺陷没有被跟踪
                     mCurrentTrackDefect.has_remove = "N";
                     mCurrentTrackDefect.discovered_date = DateUtils.getCurrentLongTime();
-                    mCurrentTrackDefect.description =  binding.includeAdd.etInputDefectContent.getText().toString(); // 保存新缺陷描述
+                    mCurrentTrackDefect.description = binding.includeAdd.etInputDefectContent.getText().toString(); // 保存新缺陷描述
                     mCurrentTrackDefect.defectlevel = mCurrentClickDefectLevel; // 保存跟踪缺陷的级别
                     if (mDefectImageList != null && !mDefectImageList.isEmpty()) {
                         mCurrentTrackDefect.pics = StringUtils.ArrayListToString(mDefectImageList);// 跟踪缺陷图片
@@ -296,14 +297,14 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
     private void setOnTouchListener() {
         // EditText有焦点阻止输入法弹出
         if (!TextUtils.isEmpty(mTrackDefectStandardId)) {
-             binding.includeAdd.etInputDefectContent.setOnTouchListener(new OnTouchListener() {
+            binding.includeAdd.etInputDefectContent.setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if (TextUtils.isEmpty( binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
-                        int inType =  binding.includeAdd.etInputDefectContent.getInputType(); // backup the input type
-                         binding.includeAdd.etInputDefectContent.setInputType(InputType.TYPE_NULL); // disable soft input
-                         binding.includeAdd.etInputDefectContent.onTouchEvent(event); // call native handler
-                         binding.includeAdd.etInputDefectContent.setInputType(inType); // restore input type
+                    if (TextUtils.isEmpty(binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
+                        int inType = binding.includeAdd.etInputDefectContent.getInputType(); // backup the input type
+                        binding.includeAdd.etInputDefectContent.setInputType(InputType.TYPE_NULL); // disable soft input
+                        binding.includeAdd.etInputDefectContent.onTouchEvent(event); // call native handler
+                        binding.includeAdd.etInputDefectContent.setInputType(inType); // restore input type
                         return true;
                     }
                     return false;
@@ -311,7 +312,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
             });
         }
 
-         binding.includeAdd.etInputDefectContent.setOnFocusChangeListener(new OnFocusChangeListener() {
+        binding.includeAdd.etInputDefectContent.setOnFocusChangeListener(new OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -332,7 +333,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                     mHistoryDefectAdapter.setOnAdapterViewClickListener(this);
                     mHistoryDefectAdapter.setCurrentClickedPosition(currentSelectDefectRecordId);
                     mHistoryDefectAdapter.setCurrentFunctionModel(Config.TRACK_DEFECT_MODEL);
-                     binding.include.lvContainer.setAdapter(mHistoryDefectAdapter);
+                    binding.include.lvContainer.setAdapter(mHistoryDefectAdapter);
                 } else {
                     mHistoryDefectAdapter.setList(dataList);
                 }
@@ -354,14 +355,14 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                     mTrackDefectAdapter = new HistoryDefectAdapter(currentActivity, trackDefectList);
                     mTrackDefectAdapter.setTrackHistory(true);
                     mTrackDefectAdapter.setOnAdapterViewClickListener(this);
-                     binding.lvTrackContainer.setAdapter(mTrackDefectAdapter);
+                    binding.lvTrackContainer.setAdapter(mTrackDefectAdapter);
                 } else {
                     mTrackDefectAdapter.setList(trackDefectList);
                 }
                 if (trackDefectList != null && !trackDefectList.isEmpty()) {
-                     binding.tvTrackHistoryCount.setVisibility(View.VISIBLE);
+                    binding.tvTrackHistoryCount.setVisibility(View.VISIBLE);
                 } else {
-                     binding.tvTrackHistoryCount.setVisibility(View.GONE);
+                    binding.tvTrackHistoryCount.setVisibility(View.GONE);
                 }
 
                 break;
@@ -379,10 +380,10 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
      * 缺陷消除后 跟踪缺陷信息设置为空
      */
     private void setTrackInforNull() {
-         binding.includeAdd.etInputDefectContent.setText("");
-         binding.includeAdd.ivNewDefectPhoto.setImageBitmap(null);
-         binding.includeAdd.tvDefectCount.setText("");
-         binding.includeAdd.tvDefectCount.setVisibility(View.GONE);
+        binding.includeAdd.etInputDefectContent.setText("");
+        binding.includeAdd.ivNewDefectPhoto.setImageBitmap(null);
+        binding.includeAdd.tvDefectCount.setText("");
+        binding.includeAdd.tvDefectCount.setVisibility(View.GONE);
         // 跟踪缺陷后为当前跟踪的缺陷赋空
         mCurrentTrackDefect = null;
     }
@@ -407,6 +408,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
      * 显示缺陷内容的dialog
      */
     XsFragmentRecordDefectContentDialogBinding contentDialogBinding;
+
     private void showDefectContentDialog(String standardId) {
         HashMap<String, ArrayList<DefectDefine>> dataMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
         contentDialogBinding = XsFragmentRecordDefectContentDialogBinding.inflate(getActivity().getLayoutInflater());
@@ -414,30 +416,30 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
             if (mDefectContentDialog == null) {
                 int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
                 int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) * 2 / 3;
-                mDefectContentDialog = DialogUtils.createDialog(currentActivity,contentDialogBinding.getRoot(),dialogWidth,dialogHeight);
+                mDefectContentDialog = DialogUtils.createDialog(currentActivity, contentDialogBinding.getRoot(), dialogWidth, dialogHeight);
             }
             if (mDialogContentAdapter == null) {
                 mDialogContentAdapter = new DefectContentAdapter(currentActivity);
             }
             mDialogContentAdapter.setGroupList(dataMap.keySet());
             mDialogContentAdapter.setGroupMap(dataMap);
-           contentDialogBinding.elvContainer.setAdapter(mDialogContentAdapter);
+            contentDialogBinding.elvContainer.setAdapter(mDialogContentAdapter);
             for (int i = 0, count = mDialogContentAdapter.getGroupCount(); i < count; i++) {
                 contentDialogBinding.elvContainer.expandGroup(i);
             }
             mDefectContentDialog.show();
-            KeyBoardUtils.closeKeybord( binding.includeAdd.etInputDefectContent, currentActivity);
+            KeyBoardUtils.closeKeybord(binding.includeAdd.etInputDefectContent, currentActivity);
         } else {
-            KeyBoardUtils.openKeybord( binding.includeAdd.etInputDefectContent, currentActivity);
+            KeyBoardUtils.openKeybord(binding.includeAdd.etInputDefectContent, currentActivity);
         }
-        
+
         contentDialogBinding.btnCustomDefect.setOnClickListener(view -> {
             mDefectContentDialog.dismiss();
-             binding.includeAdd.etInputDefectContent.setText("");
-             binding.includeAdd.rbGeneralDefect.setChecked(true);
-            KeyBoardUtils.openKeybord( binding.includeAdd.etInputDefectContent, currentActivity);
+            binding.includeAdd.etInputDefectContent.setText("");
+            binding.includeAdd.rbGeneralDefect.setChecked(true);
+            KeyBoardUtils.openKeybord(binding.includeAdd.etInputDefectContent, currentActivity);
         });
-        
+
         contentDialogBinding.elvContainer.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, l) -> {
             String group = "";
             String clickDefectContent = "";
@@ -445,37 +447,38 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
             clickDefectContent = mDialogContentAdapter.getChild(groupPosition, childPosition).description;
             mDefectContentDialog.dismiss();
             if (Config.CRISIS_LEVEL.equalsIgnoreCase(group)) {
-                 binding.includeAdd.rbCrisisDefect.setChecked(true);
+                binding.includeAdd.rbCrisisDefect.setChecked(true);
                 mCurrentClickDefectLevel = Config.CRISIS_LEVEL_CODE;
             } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(group)) {
-                 binding.includeAdd.rbSeriousDefect.setChecked(true);
+                binding.includeAdd.rbSeriousDefect.setChecked(true);
                 mCurrentClickDefectLevel = Config.SERIOUS_LEVEL_CODE;
             } else {
-                 binding.includeAdd.rbGeneralDefect.setChecked(true);
+                binding.includeAdd.rbGeneralDefect.setChecked(true);
                 mCurrentClickDefectLevel = Config.GENERAL_LEVEL_CODE;
             }
-             binding.includeAdd.etInputDefectContent.setText(clickDefectContent);
-            Selection.setSelection( binding.includeAdd.etInputDefectContent.getEditableText(),  binding.includeAdd.etInputDefectContent.getEditableText().length());
+            binding.includeAdd.etInputDefectContent.setText(clickDefectContent);
+            Selection.setSelection(binding.includeAdd.etInputDefectContent.getEditableText(), binding.includeAdd.etInputDefectContent.getEditableText().length());
             return false;
         });
     }
-    
+
     /**
      * 缺陷定义来源dialog
      */
     XsDialogDefectSourceBinding sourceBinding;
+
     private void showDefectSource(String source) {
         if (mDefectContentSourceDialog == null) {
             int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
             int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) / 3;// LinearLayout.LayoutParams.WRAP_CONTENT
             sourceBinding = XsDialogDefectSourceBinding.inflate(getActivity().getLayoutInflater());
-            mDefectContentSourceDialog = DialogUtils.createDialog(currentActivity,sourceBinding.getRoot(),dialogWidth,dialogHeight);
+            mDefectContentSourceDialog = DialogUtils.createDialog(currentActivity, sourceBinding.getRoot(), dialogWidth, dialogHeight);
         }
         sourceBinding.tvDialogTitle.setText(R.string.xs_defect_source_str);
         sourceBinding.tvSourceName.setText(source);
         mDefectContentSourceDialog.show();
     }
-    
+
     @Override
     protected void lazyLoad() {
         if (isPrepared && isVisible && isFirstLoad) {
@@ -563,13 +566,13 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
         // 查询当前选中缺陷的历史记录
         trackDefectList = DefectRecordService.getInstance().queryDefectHistoryByDefectCode(mDefect.defectcode);
         mHandler.sendEmptyMessage(TRACK_DEFECT);
-         binding.includeAdd.etInputDefectContent.setText(mDefect.description);
+        binding.includeAdd.etInputDefectContent.setText(mDefect.description);
         if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(mDefect.defectlevel)) {
-             binding.includeAdd.rbCrisisDefect.setChecked(true);
+            binding.includeAdd.rbCrisisDefect.setChecked(true);
         } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(mDefect.defectlevel)) {
-             binding.includeAdd.rbSeriousDefect.setChecked(true);
+            binding.includeAdd.rbSeriousDefect.setChecked(true);
         } else {
-             binding.includeAdd.rbGeneralDefect.setChecked(true);
+            binding.includeAdd.rbGeneralDefect.setChecked(true);
         }
         mCurrentClickDefectLevel = mDefect.defectlevel;
         if (mHistoryDefectAdapter != null) {
@@ -586,7 +589,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
 
                     if (mOnFunctionButtonClickListener != null) {
                         mDefectImageList.add(currentImageName);
-                        String pictureContent =  binding.includeAdd.etInputDefectContent.getText().toString() + "\n" + DateUtils.getFormatterTime(new Date(), "yyyy-MM-dd HH:mm");
+                        String pictureContent = binding.includeAdd.etInputDefectContent.getText().toString() + "\n" + DateUtils.getFormatterTime(new Date(), "yyyy-MM-dd HH:mm");
                         mOnFunctionButtonClickListener.drawCircle(Config.RESULT_PICTURES_FOLDER + currentImageName, pictureContent);
                     }
 
@@ -599,13 +602,13 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                     }
                 case LOAD_DATA:
                     if (mDefectImageList != null && mDefectImageList.size() > 1) {
-                         binding.includeAdd.tvDefectCount.setVisibility(View.VISIBLE);
-                         binding.includeAdd.tvDefectCount.setText(String.valueOf(mDefectImageList.size()));
+                        binding.includeAdd.tvDefectCount.setVisibility(View.VISIBLE);
+                        binding.includeAdd.tvDefectCount.setText(String.valueOf(mDefectImageList.size()));
                     } else {
-                         binding.includeAdd.tvDefectCount.setVisibility(View.GONE);
+                        binding.includeAdd.tvDefectCount.setVisibility(View.GONE);
                     }
                     int newWidth = getResources().getDimensionPixelSize(R.dimen.xs_new_defect_photo_height);
-                     binding.includeAdd.ivNewDefectPhoto.setImageBitmap(BitmapUtil.getImageThumbnail(Config.RESULT_PICTURES_FOLDER + currentImageName, newWidth, newWidth));
+                    binding.includeAdd.ivNewDefectPhoto.setImageBitmap(BitmapUtil.getImageThumbnail(Config.RESULT_PICTURES_FOLDER + currentImageName, newWidth, newWidth));
 
                     break;
                 default:

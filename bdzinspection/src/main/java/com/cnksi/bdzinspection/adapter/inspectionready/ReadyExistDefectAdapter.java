@@ -2,6 +2,7 @@ package com.cnksi.bdzinspection.adapter.inspectionready;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.cnksi.bdzinspection.databinding.XsReadyExistDefectItemBinding;
 import com.cnksi.bdzinspection.model.DefectRecord;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DefectUtils;
+import com.cnksi.bdzinspection.utils.ScreenUtils;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
@@ -59,8 +62,10 @@ public class ReadyExistDefectAdapter extends PinnedHeaderSectionedAdapter<String
         String[] defectPicArray = StringUtils.cleanString(mDefect.pics).split(CoreConfig.COMMA_SEPARATOR);
         if (defectPicArray != null && defectPicArray.length > 0
                 && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
-            mBitmapUtils.display(itemBinding.ivDefectImage,
-                    Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), mBitmapConfig);
+            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(  Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), 280);
+            if (bitmap!=null){
+                itemBinding.ivDefectImage.setImageBitmap(bitmap);
+            }
         } else {
             itemBinding.ivDefectImage.setImageResource(R.mipmap.icon_nodefect);
         }

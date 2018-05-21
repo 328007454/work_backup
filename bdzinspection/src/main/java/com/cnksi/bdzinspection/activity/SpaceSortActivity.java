@@ -17,9 +17,10 @@ import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.DbUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.DbManager;
+import org.xutils.db.Selector;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,8 +41,8 @@ public class SpaceSortActivity extends TitleActivity {
     private String functionMode = "";
     private int currentPosition = 0;
     private XsActivitySpacesortBinding binding;
-    
-    
+
+
     @Override
     protected int setLayout() {
         return R.layout.xs_activity_spacesort;
@@ -69,58 +70,49 @@ public class SpaceSortActivity extends TitleActivity {
                 : "second".equals(functionMode) ? Spacing.SORT_SECOND : Spacing.SORT;
         currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
         // TODO: 2017/3/22
-        Selector selector = BaseService.from(Spacing.class).and(Spacing.BDZID, "=", currentBdzId).
-                expr("and spid in (select distinct(spid) spid from device where device_type = '" + functionMode
-                        + "' and bdzid = '" + currentBdzId + "'  and dlt=0)")
-                .orderBy(sort, false);
         try {
-            mData = XunshiApplication.getDbUtils().findAll(selector);
+            Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.DLT, "=", 0).and(Spacing.BDZID, "=", currentBdzId).
+                    expr("and spid in (select distinct(spid) spid from device where device_type = '" + functionMode
+                            + "' and bdzid = '" + currentBdzId + "'  and dlt=0)")
+                    .orderBy(sort, false);
+            mData = selector.findAll();
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         deviceCountMap = SpacingService.getInstance().groupBySpacingCount(currentBdzId, functionMode);
         spaceAdapter = new SpaceSortAdapter(currentActivity, mData, deviceCountMap);
-        spaceAdapter.setClickListener(new ItemClickListener<Spacing>() {
-            @Override
-            public void onClick(View v, final Spacing data, int position) {
-                if (data.isSubPlace()) {
-                    DialogUtils.showSureTipsDialog(currentActivity, null, "是否恢复设备到原间隔？", new OnViewClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            CustomerDialog.showProgress(currentActivity, "恢复中...");
-                            mFixedThreadPoolExecutor.execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    final boolean rs = restore(data);
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            CustomerDialog.dismissProgress();
-                                            if (rs) {
-                                                CToast.showShort(currentActivity, "恢复间隔操作成功");
-                                                Integer count = deviceCountMap.get(data.pid);
-                                                count = count + deviceCountMap.get(data.spid);
-                                                deviceCountMap.put(data.pid, count);
-                                                mData.remove(data);
-                                                spaceAdapter.notifyDataSetChanged();
-                                            } else {
-                                                CToast.showShort(currentActivity, "更新数据库失败，请检查数据库！");
-                                            }
-                                        }
-                                    });
+        spaceAdapter.setClickListener((v, data, position) -> {
+            if (data.isSubPlace()) {
+                DialogUtils.showSureTipsDialog(currentActivity, null, "是否恢复设备到原间隔？", new OnViewClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CustomerDialog.showProgress(currentActivity, "恢复中...");
+                        mFixedThreadPoolExecutor.execute(() -> {
+                            final boolean rs = restore(data);
+                            runOnUiThread(() -> {
+                                CustomerDialog.dismissProgress();
+                                if (rs) {
+                                    CToast.showShort(currentActivity, "恢复间隔操作成功");
+                                    Integer count = deviceCountMap.get(data.pid);
+                                    count = count + deviceCountMap.get(data.spid);
+                                    deviceCountMap.put(data.pid, count);
+                                    mData.remove(data);
+                                    spaceAdapter.notifyDataSetChanged();
+                                } else {
+                                    CToast.showShort(currentActivity, "更新数据库失败，请检查数据库！");
                                 }
                             });
-                            restore(data);
-                        }
-                    });
-                } else {
-                    currentPosition = position;
-                    Intent intent = new Intent(currentActivity, SpaceSplitActivity.class);
-                    intent.putExtra("space", data);
-                    intent.putExtra("mode", functionMode);
-                    startActivityForResult(intent, LOAD_DATA);
-                }
+                        });
+                        restore(data);
+                    }
+                });
+            } else {
+                currentPosition = position;
+                Intent intent = new Intent(currentActivity, SpaceSplitActivity.class);
+                intent.putExtra("space", data);
+                intent.putExtra("mode", functionMode);
+                startActivityForResult(intent, LOAD_DATA);
             }
         });
         spaceAdapter.setSortListener(new ItemClickListener<Spacing>() {
@@ -138,18 +130,18 @@ public class SpaceSortActivity extends TitleActivity {
     private boolean restore(Spacing spacing) {
         String sqlDevice = "update device set spid='" + spacing.pid + "' where spid='" + spacing.spid + "'";
         String sqlCopyItem = "update copy_item set spid='" + spacing.pid + "' where spid='" + spacing.spid + "'";
-        DbUtils dbUtils = XunshiApplication.getDbUtils();
+       DbManager manager= XunshiApplication.getDbUtils();
         try {
-            dbUtils.beginTransaction();
-            dbUtils.execNonQuery(sqlDevice);
-            dbUtils.execNonQuery(sqlCopyItem);
-            dbUtils.execNonQuery("update spacing set dlt=1 where spid='" + spacing.spid + "'");
-            dbUtils.setTransactionSuccessful();
+            manager.beginTransaction();
+            manager.execNonQuery(sqlDevice);
+            manager.execNonQuery(sqlCopyItem);
+            manager.execNonQuery("update spacing set dlt=1 where spid='" + spacing.spid + "'");
+            manager.setTransactionSuccessful();
             return true;
         } catch (DbException e) {
             e.printStackTrace();
         } finally {
-            dbUtils.endTransaction();
+            manager.endTransaction();
         }
         return false;
 
@@ -181,7 +173,7 @@ public class SpaceSortActivity extends TitleActivity {
             updateColumnNames = "sort";
         }
         try {
-            XunshiApplication.getDbUtils().updateAll(mData, updateColumnNames);
+            XunshiApplication.getDbUtils().update(mData, updateColumnNames);
             PreferencesUtils.put(this, "RELOAD_DATA", true);
         } catch (DbException e) {
             // TODO Auto-generated catch block

@@ -2,7 +2,8 @@ package com.cnksi.bdzinspection.utils;
 
 import android.text.TextUtils;
 
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.HashMap;
 import java.util.List;

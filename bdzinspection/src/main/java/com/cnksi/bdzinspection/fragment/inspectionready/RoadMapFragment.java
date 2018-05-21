@@ -16,9 +16,10 @@ import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.exception.DbException;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.Selector;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +36,9 @@ public class RoadMapFragment extends BaseFragment {
     private String fucntionModel = "one";
 
     private RoadMapAdapter spaceRoadMapAdapter;
-    
+
     XsFragmentRoadmapBinding binding;
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentRoadmapBinding.inflate(getActivity().getLayoutInflater());
@@ -101,21 +102,16 @@ public class RoadMapFragment extends BaseFragment {
         String sort = "one".equals(fucntionModel) ? Spacing.SORT_ONE
                 : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
         currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
-        Selector selector = BaseService.from(Spacing.class).and(Spacing.BDZID, "=", currentBdzId)
-                .expr("and spid in (select distinct(spid) spid from device where device_type = '" + fucntionModel
-                        + "' and bdzid = '" + currentBdzId + "' and dlt<>1)")
-                .orderBy(sort, false);
         try {
-            spaceList = XunshiApplication.getDbUtils().findAll(selector);
+            Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.DLT, "=", "0").and(Spacing.BDZID, "=", currentBdzId)
+                    .expr("and spid in (select distinct(spid) spid from device where device_type = '" + fucntionModel
+                            + "' and bdzid = '" + currentBdzId + "' and dlt<>1)")
+                    .orderBy(sort, false);
+            spaceList = selector.findAll();
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-//		try {
-//			bdz = XunshiApplication.getDbUtils().findById(Bdz.class, currentBdzId);
-//		} catch (DbException e) {
-//			e.printStackTrace();
-//		}
         mHandler.sendEmptyMessage(LOAD_DATA);
     }
 

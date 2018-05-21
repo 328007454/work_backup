@@ -3,6 +3,7 @@ package com.cnksi.bdzinspection.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -32,13 +33,14 @@ import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.BitmapHelp;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.Date;
 import java.util.List;
@@ -87,13 +89,11 @@ public class NewRegularReportActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_inspection_report);
-        mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(currentActivity);
         initUI();
         initData();
         initOnClick();
 
     }
-
 
 
     private void initUI() {
@@ -227,8 +227,10 @@ public class NewRegularReportActivity extends BaseActivity {
                 v.setLayoutParams(new LayoutParams((int) (scale * 90), (int) (scale * 40)));
                 v.setPadding((int) (scale * 5), (int) (scale * 5), (int) (scale * 5), (int) (scale * 5));
                 v.setScaleType(ScaleType.FIT_CENTER);
-                mBitmapUtils.display(v, Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName());
-                binding.llSignContainer.addView(v);
+                Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName(), (int) (scale * 90));
+                if (bitmap != null) {
+                    v.setImageBitmap(bitmap);
+                }
             }
         }
         if (mReportSignnameListFzr != null) {
@@ -237,7 +239,10 @@ public class NewRegularReportActivity extends BaseActivity {
                 v.setLayoutParams(new LayoutParams((int) (scale * 90), (int) (scale * 40)));
                 v.setPadding((int) (scale * 5), (int) (scale * 5), (int) (scale * 5), (int) (scale * 5));
                 v.setScaleType(ScaleType.FIT_CENTER);
-                mBitmapUtils.display(v, Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName());
+                Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName(), (int) (scale * 90));
+                if (bitmap != null) {
+                    v.setImageBitmap(bitmap);
+                }
                 binding.llSignContainer1.addView(v);
             }
         }
@@ -247,14 +252,14 @@ public class NewRegularReportActivity extends BaseActivity {
 
         binding.ibtnCancel.setOnClickListener(view -> onBackPressed());
 
-        binding.tvEliminateDefectCount.setOnClickListener(view ->    showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
-        binding.llEliminateDefectCount.setOnClickListener(view ->    showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.tvEliminateDefectCount.setOnClickListener(view -> showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.llEliminateDefectCount.setOnClickListener(view -> showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
 
-        binding.tvTrackDefectCount.setOnClickListener(view ->  showDefectDialog(mTrackDefectList, R.string.xs_track_count_str) );
-        binding.llTrackDefectCount.setOnClickListener(view ->   showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.tvTrackDefectCount.setOnClickListener(view -> showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.llTrackDefectCount.setOnClickListener(view -> showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
 
-        binding.tvNewDefectCount.setOnClickListener(view ->   showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
-        binding.llNewDefectCount.setOnClickListener(view ->   showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.tvNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.llNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
 
         binding.ibtnExit.setOnClickListener(view -> ExitThisAndGoLauncher());
 

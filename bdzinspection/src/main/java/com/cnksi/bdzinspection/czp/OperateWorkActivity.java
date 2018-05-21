@@ -38,6 +38,8 @@ import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 
+import org.xutils.ex.DbException;
+
 import java.util.List;
 
 @SuppressLint("ClickableViewAccessibility")
@@ -105,7 +107,11 @@ public class OperateWorkActivity extends BaseActivity {
                 }
                 if (TextUtils.isEmpty(mCurrentOperateTick.time_operate_start)) {
                     mCurrentOperateTick.time_operate_start = currentTime;
-                    OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.TIME_OPERATE_START);
+                    try {
+                        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.TIME_OPERATE_START);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
                 }
                 mHandler.sendEmptyMessage(LOAD_DATA);
             }
@@ -225,13 +231,21 @@ public class OperateWorkActivity extends BaseActivity {
             // TODO:保存改操作项目的耗时并开始下一条操作项目
             item.time_end = DateUtils.getCurrentLongTime();
             item.spend_time = CommonUtils.getTimeDifference(item.time_start, item.time_end);
-            OperateItemService.getInstance().update(item, OperateItem.TIME_END, OperateItem.SPEND_TIME,
-                    OperateItem.TIME_START);
+            try {
+                OperateItemService.getInstance().update(item, OperateItem.TIME_END, OperateItem.SPEND_TIME,
+                        OperateItem.TIME_START);
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
             currentOperateItemPosition++;
             if (currentOperateItemPosition < dataList.size()) {
                 OperateItem nextItem = dataList.get(currentOperateItemPosition);
                 nextItem.time_start = item.time_end;
-                OperateItemService.getInstance().update(nextItem, OperateItem.TIME_START);
+                try {
+                    OperateItemService.getInstance().update(nextItem, OperateItem.TIME_START);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
             } else {
                 // TODO:最后一个
                 binding.btnConfirm.setEnabled(true);
@@ -319,7 +333,11 @@ public class OperateWorkActivity extends BaseActivity {
         } else if (!mCurrentOperateTick.voice.contains(audioFileName)) {
             mCurrentOperateTick.voice += (CoreConfig.COMMA_SEPARATOR + audioFileName);
         }
-        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.VOICE);
+        try {
+            OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.VOICE);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -334,7 +352,11 @@ public class OperateWorkActivity extends BaseActivity {
         } else if (!mCurrentOperateTick.video.contains(videoFileName)) {
             mCurrentOperateTick.video += (CoreConfig.COMMA_SEPARATOR + videoFileName);
         }
-        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.VIDEO);
+        try {
+            OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.VIDEO);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -348,8 +370,12 @@ public class OperateWorkActivity extends BaseActivity {
             recordVideo(false);
         }
         mCurrentOperateTick.status = OperateTaskStatus.ytz.name();
-        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS, OperateTick.VOICE,
-                OperateTick.VIDEO);
+        try {
+            OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS, OperateTick.VOICE,
+                    OperateTick.VIDEO);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
         intent.putExtra(Config.IS_FROM_BATTERY, true);
         startActivity(intent);
@@ -370,12 +396,20 @@ public class OperateWorkActivity extends BaseActivity {
             recordVideo(false);
         }
         mCurrentOperateTick.status = OperateTaskStatus.yzt.name();
-        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS, OperateTick.VOICE,
-                OperateTick.VIDEO);
+        try {
+            OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS, OperateTick.VOICE,
+                    OperateTick.VIDEO);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
         // 暂停状态记录结束时间
         OperateItem mOperateItem = dataList.get(currentOperateItemPosition);
         mOperateItem.time_end = DateUtils.getCurrentLongTime();
-        OperateItemService.getInstance().update(mOperateItem, OperateItem.TIME_END);
+        try {
+            OperateItemService.getInstance().update(mOperateItem, OperateItem.TIME_END);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -389,13 +423,21 @@ public class OperateWorkActivity extends BaseActivity {
         recordAudio(true);
         if (!OperateTaskStatus.wwc.name().equalsIgnoreCase(mCurrentOperateTick.status)) {
             mCurrentOperateTick.status = OperateTaskStatus.wwc.name();
-            OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS, OperateTick.VOICE,
-                    OperateTick.VIDEO);
+            try {
+                OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS, OperateTick.VOICE,
+                        OperateTick.VIDEO);
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
         }
         // 重新开始（继续）记录开始时间
         OperateItem mOperateItem = dataList.get(currentOperateItemPosition);
         mOperateItem.time_start = DateUtils.getCurrentLongTime();
-        OperateItemService.getInstance().update(mOperateItem, OperateItem.TIME_START);
+        try {
+            OperateItemService.getInstance().update(mOperateItem, OperateItem.TIME_START);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -410,8 +452,12 @@ public class OperateWorkActivity extends BaseActivity {
         }
         mCurrentOperateTick.time_operate_end = DateUtils.getCurrentLongTime();
         mCurrentOperateTick.status = OperateTaskStatus.ywc.name();
-        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS,
-                OperateTick.TIME_OPERATE_END);
+        try {
+            OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS,
+                    OperateTick.TIME_OPERATE_END);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
         // TODO:完成操作
         Intent intent = new Intent(currentActivity, OperateTicketReportActivity.class);
         intent.putExtra(Config.CURRENT_TASK_ID, currentOperateId);

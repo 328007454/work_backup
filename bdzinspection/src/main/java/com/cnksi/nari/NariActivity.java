@@ -58,12 +58,13 @@ import com.cnksi.nari.utils.LogUtil;
 import com.cnksi.nari.utils.NariDataManager;
 import com.cnksi.nari.utils.PMSException;
 import com.cnksi.nari.utils.ResultSet;
-//import com.cnksi.sjjc.UpDataToReportManager;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.io.File;
 import java.io.IOException;
@@ -218,63 +219,59 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             CToast.showShort(currentActivity, "初始化失败。请确认是正常操作流程!");
             return;
         }
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, BDPackage> packageHashMap = NariDataManager.getPackageByUser(account);
-                try {
-                    List<BDPackage> bdPackages = NARIHelper.getPackage(Regulation.XS);
-                    String tips = "没有新的离线作业包！";
-                    if (bdPackages != null && bdPackages.size() > 0) {
-                        List<BDPackage> saveList = new ArrayList<>();
-                        for (BDPackage bdPackage : bdPackages) {
-                            BDPackage t = packageHashMap.get(bdPackage.packageID);
-                            if (t == null) {
-                                bdPackage.user = account;
-                                saveList.add(bdPackage);
-                                packageHashMap.put(bdPackage.packageID, bdPackage);
-                            } else {
-                                if (PackageStatus.upload.equals(t.status)) {
-                                    t.status = PackageStatus.upload_error.name();
-                                    NariDataManager.getPackageManager().saveOrUpdate(t);
-                                }
+        mFixedThreadPoolExecutor.execute(() -> {
+            HashMap<String, BDPackage> packageHashMap = NariDataManager.getPackageByUser(account);
+            try {
+                List<BDPackage> bdPackages = NARIHelper.getPackage(Regulation.XS);
+                String tips = "没有新的离线作业包！";
+                if (bdPackages != null && bdPackages.size() > 0) {
+                    List<BDPackage> saveList = new ArrayList<>();
+                    for (BDPackage bdPackage : bdPackages) {
+                        BDPackage t = packageHashMap.get(bdPackage.packageID);
+                        if (t == null) {
+                            bdPackage.user = account;
+                            saveList.add(bdPackage);
+                            packageHashMap.put(bdPackage.packageID, bdPackage);
+                        } else {
+                            if (PackageStatus.upload.equals(t.status)) {
+                                t.status = PackageStatus.upload_error.name();
+                                NariDataManager.getPackageManager().saveOrUpdate(t);
                             }
                         }
-                        if (saveList.size() > 0) {
-                            tips = "获取到" + saveList.size() + "个新的离线作业包";
-                            NariDataManager.getPackageManager().saveOrUpdateAll(saveList);
-                        }
                     }
-                    if (!isRefreshStatus)
-                        Toast(tips);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    if (NARIHelper.isNetWorkException(e)) {
-                        Toast("网络错误!参考错误代码：" + e.getMessage());
-                    } else Toast("请求发生错误：" + e.getMessage());
-                    LogUtil.writeLog("Nari", e);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                    LogUtil.writeLog("Nari", e);
-                    Toast("数据错误！参考错误代码：" + e.getClass().getSimpleName());
-                } catch (PMSException e) {
-                    e.printStackTrace();
-                    LogUtil.writeLog("Nari", e);
-                    Toast("PMS异常：" + e.getMessage());
+                    if (saveList.size() > 0) {
+                        tips = "获取到" + saveList.size() + "个新的离线作业包";
+                        NariDataManager.getPackageManager().saveOrUpdate(saveList);
+                    }
                 }
-                final List<BDPackage> result = new ArrayList<>(packageHashMap.values());
-
-                Collections.sort(result, new Comparator<BDPackage>() {
-                    @Override
-                    public int compare(BDPackage o1, BDPackage o2) {
-                        return o1.createTime.compareTo(o2.createTime);
-                    }
-                });
-                runOnUiThread(() -> {
-                    adapter.setList(result);
-                    binding.swipeRefreshLayout.setRefreshing(false);
-                });
+                if (!isRefreshStatus)
+                    Toast(tips);
+            } catch (IOException e) {
+                e.printStackTrace();
+                if (NARIHelper.isNetWorkException(e)) {
+                    Toast("网络错误!参考错误代码：" + e.getMessage());
+                } else Toast("请求发生错误：" + e.getMessage());
+                LogUtil.writeLog("Nari", e);
+                e.printStackTrace();
+                LogUtil.writeLog("Nari", e);
+                Toast("数据错误！参考错误代码：" + e.getClass().getSimpleName());
+            } catch (PMSException e) {
+                e.printStackTrace();
+                LogUtil.writeLog("Nari", e);
+                Toast("PMS异常：" + e.getMessage());
             }
+            final List<BDPackage> result = new ArrayList<>(packageHashMap.values());
+
+            Collections.sort(result, new Comparator<BDPackage>() {
+                @Override
+                public int compare(BDPackage o1, BDPackage o2) {
+                    return o1.createTime.compareTo(o2.createTime);
+                }
+            });
+            runOnUiThread(() -> {
+                adapter.setList(result);
+                binding.swipeRefreshLayout.setRefreshing(false);
+            });
         });
     }
 
@@ -324,7 +321,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 //查询巡视人员的IDS 和Name
             SqlInfo sqlInfo = new SqlInfo("SELECT distinct u.account  account ,rs.name,u.pms_id FROM report_signname rs " +
                     "LEFT JOIN (SELECT * from users where dept_id=?) u ON rs.name = u.username WHERE report_id = ? ;");
-            sqlInfo.addBindArgs(model.getString("dept_id"), report.reportid);
+            sqlInfo.addBindArg(new KeyValue("", model.getString("dept_id")));
+            sqlInfo.addBindArg(new KeyValue("", model.getString(report.reportid)));
             List<DbModel> users = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             String ids = "";
             String names = "";
@@ -379,8 +377,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 for (BDPackage bdPackage : bdPackages) {
                     Report report;
                     try {
-                        report = XunshiApplication.getDbUtils()
-                                .findFirst(Selector.from(Report.class).where(Report.TASK_ID, "=", bdPackage.taskId));
+                        report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", bdPackage.taskId).findFirst();
                     } catch (DbException e) {
                         e.printStackTrace();
                         LogUtil.writeLog("Nari", e);
@@ -517,7 +514,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 return false;
             }
             if (t != null) {
-                XunshiApplication.getDbUtils().addColumn(Task.class, Task.PMS_JHID, "TEXT");
+                XunshiApplication.getDbUtils().addColumn(Task.class, Task.PMS_JHID);
                 try {
                     XunshiApplication.getDbUtils().save(t);
                     bdPackage.taskId = tid;
@@ -717,8 +714,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         try {
             XunshiApplication.getDbUtils().deleteById(BDPackage.class, item.packageID);
             if (!TextUtils.isEmpty(item.status) && PackageStatus.undo.name().equalsIgnoreCase(item.status)) {
-                XunshiApplication.getDbUtils().update(Task.class, WhereBuilder.b(Task.PMS_JHID, "=", item.pmsJhid), new String[]{"dlt"}, new String[]{"1"});
-                XunshiApplication.getDbUtils().update(Report.class, WhereBuilder.b(Report.PMS_JHID, "=", item.pmsJhid), new String[]{"dlt"}, new String[]{"1"});
+                XunshiApplication.getDbUtils().update(Task.class, WhereBuilder.b(Task.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
+                XunshiApplication.getDbUtils().update(Report.class, WhereBuilder.b(Report.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
             }
         } catch (DbException e) {
             e.printStackTrace();

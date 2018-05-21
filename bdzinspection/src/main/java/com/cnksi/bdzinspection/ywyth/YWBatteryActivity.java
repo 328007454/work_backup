@@ -41,9 +41,10 @@ import com.cnksi.xscore.xsutils.KeyBoardUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -119,21 +120,18 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     }
 
     private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // 查询已选择的电池组
-                    mCurrentBatteryReport = XunshiApplication.getDbUtils().findFirst(Selector.from(BatteryReport.class).where(BatteryReport.REPORTID, "=", currentReportId));
-                    if (mCurrentBatteryReport == null) {
-                        mCurrentBatteryReport = new BatteryReport(currentReportId);
-                    }
-                    XunshiApplication.getDbUtils().saveOrUpdate(mCurrentBatteryReport);
-                    initBatteryDetails();
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                // 查询已选择的电池组
+                mCurrentBatteryReport = XunshiApplication.getDbUtils().selector(BatteryReport.class).where(BatteryReport.REPORTID, "=", currentReportId).findFirst();
+                if (mCurrentBatteryReport == null) {
+                    mCurrentBatteryReport = new BatteryReport(currentReportId);
                 }
+                XunshiApplication.getDbUtils().saveOrUpdate(mCurrentBatteryReport);
+                initBatteryDetails();
+                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }

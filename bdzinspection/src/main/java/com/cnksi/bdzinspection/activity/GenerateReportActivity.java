@@ -41,6 +41,7 @@ import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
 import com.cnksi.bdzinspection.utils.SystemConfig;
 import com.cnksi.bdzinspection.utils.TimePickerUtils;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.nari.NariActivity;
 import com.cnksi.nari.type.PackageStatus;
 import com.cnksi.nari.utils.NariDataManager;
@@ -51,11 +52,12 @@ import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,7 +181,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
         mFixedThreadPoolExecutor.execute(() -> {
             try {
-                currentReport = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId));
+                currentReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
                 inspectionMark = currentReport.inspectionRemark;
                 inspectionResult = currentReport.inspectionResult;
                 if ((!isParticularInspection()) && (!isRoutineNotCopy())) {
@@ -233,8 +235,10 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
             try {
 //                    DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT inspection_content FROM 'lookup' where k=?;", currentInspectionType));
-
-                DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;", currentInspectionType));
+                String sql = "SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;";
+                SqlInfo sqlInfo = new SqlInfo(sql);
+                sqlInfo.addBindArg(new KeyValue("",currentInspectionType));
+                DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
                 inspectionContent = TextUtils.isEmpty(currentReport.inspectionContent) ? model == null ? "" : model.getString("xjnr") : currentReport.inspectionContent;
                 if (model != null) {
                     inspectionMark = TextUtils.isEmpty(inspectionMark) ? model.getString("remark") : inspectionMark;
@@ -471,9 +475,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             signViewBinding.btnDelete.setText("确认");
         }
         signViewBinding.tvName.setText(bean.getName());
-        mBitmapUtils.display(signViewBinding.imgHead, Config.CUSTOMER_PICTURES_FOLDER + bean.getImg(),
-                new BitmapDisplayConfig());
-        mBitmapUtils.display(signViewBinding.imgSign, Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName());
+        signViewBinding.imgHead.setImageBitmap(BitmapUtils.getImageThumbnailByWidth( Config.CUSTOMER_PICTURES_FOLDER + bean.getImg(),600));
+        signViewBinding.imgSign.setImageBitmap(BitmapUtils.getImageThumbnailByWidth( Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName(),600));
+
         mSignDetailDialog.show();
 
         signViewBinding.btnDelete.setOnClickListener(view -> {

@@ -22,7 +22,8 @@ import com.cnksi.bdzinspection.model.StandardSpecial;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.bdzinspection.view.keyboard.QWERKeyBoardUtils;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -23,7 +23,8 @@ import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.cnksi.bdzinspection.model.zzht.ZzhtResult;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.HashMap;
 import java.util.List;

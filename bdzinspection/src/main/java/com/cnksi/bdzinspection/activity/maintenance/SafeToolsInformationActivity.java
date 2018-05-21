@@ -38,9 +38,11 @@ import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -380,13 +382,13 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             if (stopBinding.rbUnqualify.isChecked()) {//选择不合格
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name(), reason, stopPerson);
                 dbModel.add("status", Config.ToolStatus.stop.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new String[]{"status"}, new String[]{Config.ToolStatus.stop.name()});
+                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", Config.ToolStatus.stop.name()));
                 informationBinding.btnTest.setVisibility(View.GONE);
                 informationBinding.btnStop.setVisibility(View.GONE);
             } else {
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, Config.ToolStatus.stop.name(), Config.ToolStatus.normal.name(), reason, stopPerson);
                 dbModel.add("status", Config.ToolStatus.inTest.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new String[]{"status"}, new String[]{Config.ToolStatus.inTest.name()});
+                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", Config.ToolStatus.inTest.name()));
                 informationBinding.txtToolStatus.setText(Config.ToolStatus.inTest.value);
                 informationBinding.btnStop.setVisibility(View.GONE);
                 informationBinding.btnTest.setVisibility(View.VISIBLE);
@@ -424,22 +426,27 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             if (testBinding.rbNormal.isChecked()) {
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, Config.ToolStatus.normal.name(), pics, person, Config.ToolStatus.test.name());
                 updateToolInfo(Config.ToolStatus.normal.name(), Config.ToolStatus.normal.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new String[]{"status", "isnormal", "lastly_check_time", "next_check_time"}, new String[]{Config.ToolStatus.normal.name(), Config.ToolStatus.normal.name(), lastTime, nextTime});
+                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status", Config.ToolStatus.normal.name()), new KeyValue("isnormal", Config.ToolStatus.normal.name()),
+                        new KeyValue("lastly_check_time", lastTime), new KeyValue("next_check_time", nextTime));
                 informationBinding.btnStop.setVisibility(View.VISIBLE);
                 informationBinding.btnTest.setVisibility(View.VISIBLE);
+
             } else if (testBinding.rbUnnormal.isChecked()) {
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, Config.ToolStatus.unNormal.name(), pics, person, Config.ToolStatus.test.name());
                 updateToolInfo(Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id), new String[]{"status", "isnormal"}, new String[]{Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name()});
+                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id), new KeyValue("status", Config.ToolStatus.stop.name()), new KeyValue("isnormal", Config.ToolStatus.unNormal.name()));
                 informationBinding.btnStop.setVisibility(View.GONE);
                 informationBinding.btnTest.setVisibility(View.GONE);
             }
             XunshiApplication.getDbUtils().saveOrUpdate(toolResult);
             resultList.add(toolResult);
             addResutUI();
-        } catch (DbException e) {
+        } catch (DbException e)
+
+        {
             e.printStackTrace();
         }
+
     }
 
     private void updateToolInfo(String status, String isnormal) {

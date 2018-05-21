@@ -2,6 +2,7 @@ package com.cnksi.bdzinspection.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsImgAdapterBinding;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.core.utils.BitmapUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.List;
@@ -38,7 +40,10 @@ public class ImageAdapter extends SimpleBaseAdapter {
 		} else {
 			itemBingding = DataBindingUtil.findBinding(convertView);
 		}
-		mBitmapUtils.display(itemBingding.img, Config.CUSTOMER_PICTURES_FOLDER + (String) getItem(position));
+		Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + (String) getItem(position),300);
+		if (bitmap !=null){
+			itemBingding.img.setImageBitmap(bitmap);
+		}
 		return itemBingding.getRoot();
 	}
 

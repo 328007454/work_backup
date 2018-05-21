@@ -32,7 +32,8 @@ import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.sync.KSyncConfig;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -289,14 +290,11 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                 else saveList.add(lastly);
             }
             if (saveList.size() > 0) {
-                mFixedThreadPoolExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            XunshiApplication.getDbUtils().saveOrUpdateAll(saveList);
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
+                mFixedThreadPoolExecutor.execute(() -> {
+                    try {
+                        XunshiApplication.getDbUtils().saveOrUpdate(saveList);
+                    } catch (DbException e) {
+                        e.printStackTrace();
                     }
                 });
             }

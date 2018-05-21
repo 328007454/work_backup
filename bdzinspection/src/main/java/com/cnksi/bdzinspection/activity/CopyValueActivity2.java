@@ -38,7 +38,8 @@ import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.GPSUtils;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,12 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.xscore.xsutils.BitmapHelp;
 import com.cnksi.xscore.xsview.SectionedBaseAdapter;
-import com.lidroid.xutils.BitmapUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.lidroid.xutils.bitmap.core.BitmapSize;
-import com.lidroid.xutils.task.Priority;
 
 @SuppressWarnings("deprecation")
 public abstract class PinnedHeaderSectionedAdapter<E, T> extends SectionedBaseAdapter {
@@ -28,9 +23,6 @@ public abstract class PinnedHeaderSectionedAdapter<E, T> extends SectionedBaseAd
 	protected LayoutInflater mInflater;
 	protected Context mContext;
 
-	protected BitmapUtils mBitmapUtils;
-	protected BitmapDisplayConfig mBitmapConfig;
-	protected BitmapSize bitmapSize;
 	protected int width = 0;
 	protected int height = 0;
 
@@ -45,11 +37,6 @@ public abstract class PinnedHeaderSectionedAdapter<E, T> extends SectionedBaseAd
 	 * @param context
 	 */
 	public void initBitmapUtils(Context context) {
-		mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(context);
-		mBitmapUtils.configDefaultLoadingImage(R.drawable.xs_ic_app);
-		mBitmapUtils.configDefaultLoadFailedImage(R.drawable.xs_ic_app);
-		mBitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
-		mBitmapUtils.configMemoryCacheEnabled(true);
 	}
 
 	/**
@@ -60,11 +47,6 @@ public abstract class PinnedHeaderSectionedAdapter<E, T> extends SectionedBaseAd
 	 *            缩放比例
 	 */
 	public void setScaleDownBitmapSize(int scaleDown) {
-		mBitmapConfig = new BitmapDisplayConfig();
-		bitmapSize = new BitmapSize(width, height).scaleDown(scaleDown);
-		mBitmapConfig.setBitmapMaxSize(bitmapSize);
-		mBitmapConfig.setPriority(Priority.UI_TOP);
-		mBitmapConfig.setLoadFailedDrawable(mContext.getResources().getDrawable(R.drawable.xs_ic_app));
 	}
 
 	/**
@@ -74,11 +56,6 @@ public abstract class PinnedHeaderSectionedAdapter<E, T> extends SectionedBaseAd
 	 * @param height
 	 */
 	public void setBitmapSize(int width, int height) {
-		mBitmapConfig = new BitmapDisplayConfig();
-		bitmapSize = new BitmapSize(width, height);
-		mBitmapConfig.setBitmapMaxSize(bitmapSize);
-		mBitmapConfig.setPriority(Priority.UI_TOP);
-		mBitmapConfig.setLoadFailedDrawable(mContext.getResources().getDrawable(R.drawable.xs_ic_app));
 	}
 
 	public void setGroupList(Set<E> set) {

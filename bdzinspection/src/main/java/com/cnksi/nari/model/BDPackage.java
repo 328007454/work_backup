@@ -3,9 +3,9 @@ package com.cnksi.nari.model;
 
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.nari.type.PackageStatus;
-import com.lidroid.xutils.db.annotation.Column;
-import com.lidroid.xutils.db.annotation.Id;
-import com.lidroid.xutils.db.annotation.Table;
+
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 /**
  * Nari Package数据实体类
@@ -18,43 +18,43 @@ import com.lidroid.xutils.db.annotation.Table;
 @Table(name = "bd_package")
 public class BDPackage {
 
-    @Column(column = "appurl")
+    @Column(name = "appurl")
     public String appurl;
-    @Column(column = "createTime")
+    @Column(name = "createTime")
     public String createTime;
-    @Column(column = "packageType")
+    @Column(name = "packageType")
     public String packageType;
-    @Column(column = "packageName")
+    @Column(name = "packageName")
     public String packageName;
 
-    @Column(column = "databaseProvider")
+    @Column(name = "databaseProvider")
     public String databaseProvider;
-    @Id(column = "packageID")
+    @Column(name = "packageID",isId = true)
     public String packageID;
-    @Column(column = "regulationID")
+    @Column(name = "regulationID")
     public String regulationID;
-    @Column(column = "database")
+    @Column(name = "database")
     public String database;
-    @Column(column = "downloadTime")
+    @Column(name = "downloadTime")
     public String downloadTime;
 
     public static final  String PACKAGESTATUS="status";
-    @Column(column = PACKAGESTATUS)
+    @Column(name = PACKAGESTATUS)
     public String status = PackageStatus.nodown.name();
 
-    @Column(column = "taskId")
+    @Column(name = "taskId")
     public String taskId;
-    @Column(column = "user")
+    @Column(name = "user")
     public String user;
-    @Column(column = "inspection_type")
+    @Column(name = "inspection_type")
     public String inspectionType;
-    @Column(column = "pms_jhid")
+    @Column(name = "pms_jhid")
     public String pmsJhid;
 
-    @Column(column = "start_time")
+    @Column(name = "start_time")
     public String startTime;
     // public static final String DLT = "dlt";
-    // @Id(column = DLT)
+    // @Id(name = DLT)
     // public String dlt="0";
 
     public String bulidString() {

@@ -23,6 +23,8 @@ import com.cnksi.bdzinspection.utils.OperateTick;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 
+import org.xutils.ex.DbException;
+
 import java.util.ArrayList;
 
 /**
@@ -121,14 +123,24 @@ public class DownloadOperationTickActivity extends TitleActivity {
                 if (operateTick != null) {
                     mOperateTick = new com.cnksi.bdzinspection.model.OperateTick(operateTick.getTaskName(),
                             operateTick.getCode(), operateTick.getUnit());
-                    isSuccess = OperateTicketService.getInstance().saveOrUpdate(mOperateTick);
+                    try {
+                        isSuccess = OperateTicketService.getInstance().saveOrUpdate(mOperateTick);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                        isSuccess = false;
+                    }
                     if (isSuccess && operateTick.getOpears() != null && operateTick.getOpears().size() > 0) {
                         ArrayList<OperateItem> operateItemList = new ArrayList<OperateItem>();
                         for (int i = 0, count = operateTick.getOpears().size(); i < count; i++) {
                             operateItemList.add(new OperateItem(mOperateTick.id, String.valueOf(i + 1),
                                     operateTick.getOpears().get(i)));
                         }
-                        isSuccess = OperateItemService.getInstance().saveOrUpdateAll(operateItemList);
+                        try {
+                            isSuccess = OperateItemService.getInstance().saveOrUpdate(operateItemList);
+                        } catch (DbException e) {
+                            e.printStackTrace();
+                            isSuccess = false;
+                        }
                     }
                     if (isSuccess) {
                         mHandler.sendEmptyMessage(LOAD_DATA);

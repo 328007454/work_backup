@@ -25,9 +25,10 @@ import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.exception.DbException;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.Selector;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,45 +77,36 @@ public class ToolFragment extends BaseFragment {
     @Override
     protected void lazyLoad() {
         if (!isPrepared)
-            mFixedThreadPoolExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    Selector selector = BaseService.from(Tool.class).and(Tool.INSPECTION, "=", currentInspectionType);
+            mFixedThreadPoolExecutor.execute(() -> {
+                Selector selector;
+                try {
+                    selector = XunshiApplication.getDbUtils().selector(Tool.class).where(Tool.DLT, "=", 0).and(Tool.INSPECTION, "=", currentInspectionType);
+                    mToolsList = selector.findAll();
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                if (!TextUtils.isEmpty(currentReportId)) {
+
                     try {
-                        mToolsList = XunshiApplication.getDbUtils().findAll(selector);
+                        selector = XunshiApplication.getDbUtils().selector(ReportTool.class).and(ReportTool.REPORTID, "=", currentReportId);
+                        List<ReportTool> reportTools = selector.findAll();
+                        if (null == reportTools)
+                            reportTools = new ArrayList<ReportTool>();
+                        if (reportTools.size() > 0) {
+                            for (ReportTool tool : reportTools) {
+                                toolHashMap.put(tool.toolId, tool);
+                            }
+                        }
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
-                    if (!TextUtils.isEmpty(currentReportId)) {
-                        selector = BaseService.from(ReportTool.class).and(ReportTool.REPORTID, "=", currentReportId);
-                        try {
-                            List<ReportTool> reportTools = XunshiApplication.getDbUtils().findAll(selector);
-                            if (null == reportTools)
-                                reportTools = new ArrayList<ReportTool>();
-                            if (reportTools.size() > 0) {
-                                for (ReportTool tool : reportTools) {
-                                    toolHashMap.put(tool.toolId, tool);
-                                }
-                            }
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            toolsAdapter = new ToolsAdapter(currentActivity, mToolsList, linearLayout, new ItemClickListener<Tool>() {
-                                @Override
-                                public void onItemClick(View v, Tool o, int position) {
-                                    showToolStandardDialog(o);
-                                }
-                            });
-                            toolsAdapter.setToolMap(toolHashMap);
-                            toolsAdapter.notifyDataSetChanged();
-                            isPrepared = true;
-                        }
-                    });
                 }
+                getActivity().runOnUiThread(() -> {
+                    toolsAdapter = new ToolsAdapter(currentActivity, mToolsList, linearLayout, (v, o, position) -> showToolStandardDialog((Tool) o));
+                    toolsAdapter.setToolMap(toolHashMap);
+                    toolsAdapter.notifyDataSetChanged();
+                    isPrepared = true;
+                });
             });
     }
 
@@ -142,14 +134,11 @@ public class ToolFragment extends BaseFragment {
             }
             saveList.add(reportTool);
         }
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    XunshiApplication.getDbUtils().saveAll(saveList);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                XunshiApplication.getDbUtils().saveOrUpdate(saveList);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
     }

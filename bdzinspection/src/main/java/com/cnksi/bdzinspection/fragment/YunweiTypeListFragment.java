@@ -15,8 +15,9 @@ import com.cnksi.bdzinspection.databinding.XsFragmentExpadableListBinding;
 import com.cnksi.bdzinspection.model.Project;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.ywyth.adapter.YunweiTypeAdapter;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,13 +92,13 @@ public class YunweiTypeListFragment extends BaseFragment {
 			@Override
 			public void run() {
 				try {
-					Selector selector = Selector.from(Project.class).where(Project.LOOKUP_TYPE, "=", currentFunctionModel);
-					List<Project> projectList = XunshiApplication.getDbUtils().findAll(selector);
+					Selector selector = XunshiApplication.getDbUtils().selector(Project.class).where(Project.LOOKUP_TYPE, "=", currentFunctionModel);
+					List<Project> projectList = selector.findAll();
 					groupList = new LinkedList<Project>(projectList);
 					if (groupList != null && !groupList.isEmpty()) {
 						for (Project mProject : groupList) {
-							selector = Selector.from(Project.class).where(Project.PARENT_ID, "=", mProject.id);
-							List<Project> childProjectList = XunshiApplication.getDbUtils().findAll(selector);
+							selector = XunshiApplication.getDbUtils().selector(Project.class).where(Project.PARENT_ID, "=", mProject.id);
+							List<Project> childProjectList = selector.findAll();
 							ArrayList<Project> childList = null;
 							if (childProjectList == null || childProjectList.isEmpty()) {
 								childList = new ArrayList<Project>();

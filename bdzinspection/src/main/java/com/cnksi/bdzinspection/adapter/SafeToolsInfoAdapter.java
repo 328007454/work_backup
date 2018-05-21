@@ -13,7 +13,8 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.view.SwipeMenuLayout;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.Collection;
 import java.util.HashMap;

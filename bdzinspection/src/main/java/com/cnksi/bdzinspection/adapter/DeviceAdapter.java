@@ -30,8 +30,9 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.SystemConfig;
 import com.cnksi.bdzinspection.view.UnderLineLinearLayout;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.db.table.DbModel;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -15,7 +15,8 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.databinding.XsRecyclerviewBinding;
 import com.cnksi.bdzinspection.model.Users;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;

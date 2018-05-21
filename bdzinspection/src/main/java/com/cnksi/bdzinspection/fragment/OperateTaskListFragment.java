@@ -14,8 +14,9 @@ import com.cnksi.bdzinspection.czp.adapter.OperateTaskListAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
 import com.cnksi.bdzinspection.model.OperateTick;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.List;
 

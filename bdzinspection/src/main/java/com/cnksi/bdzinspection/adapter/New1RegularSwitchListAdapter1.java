@@ -25,7 +25,8 @@ import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.HashMap;
 import java.util.List;

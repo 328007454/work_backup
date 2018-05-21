@@ -23,7 +23,8 @@ import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.ex.DbException;
 
 import java.util.Date;
 

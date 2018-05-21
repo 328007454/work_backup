@@ -8,6 +8,7 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -42,8 +43,8 @@ import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.BitmapHelp;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
@@ -51,8 +52,9 @@ import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.nari.NariActivity;
 
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -124,7 +126,6 @@ public class InspectionReportActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_inspection_report);
-        mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(currentActivity);
         initUI();
         initData();
         initOnClick();
@@ -224,12 +225,13 @@ public class InspectionReportActivity extends BaseActivity {
                     String sort = "one".equals(fucntionModel) ? Spacing.SORT_ONE
                             : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
                     currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
-                    Selector selector = Selector.from(Spacing.class).where(Spacing.BDZID, "=", currentBdzId)
-                            .expr("and spid in (select distinct(spid) spid from device where device_type = '" + fucntionModel
-                                    + "' and bdzid = '" + currentBdzId + "' and dlt<>1)")
-                            .orderBy(sort, false);
+
                     try {
-                        spacingList = XunshiApplication.getDbUtils().findAll(selector);
+                        Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.BDZID, "=", currentBdzId)
+                                .expr("and spid in (select distinct(spid) spid from device where device_type = '" + fucntionModel
+                                        + "' and bdzid = '" + currentBdzId + "' and dlt<>1)")
+                                .orderBy(sort, false);
+                        spacingList = selector.findAll();
                     } catch (DbException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -250,7 +252,10 @@ public class InspectionReportActivity extends BaseActivity {
                 v.setLayoutParams(new LayoutParams((int) (scale * 90), (int) (scale * 40)));
                 v.setPadding((int) (scale * 5), (int) (scale * 5), (int) (scale * 5), (int) (scale * 5));
                 v.setScaleType(ScaleType.FIT_CENTER);
-                mBitmapUtils.display(v, Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName());
+                Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName(), (int) (scale * 90));
+                if (bitmap != null) {
+                    v.setImageBitmap(bitmap);
+                }
                 binding.llSignContainer.addView(v);
             }
         }
@@ -260,7 +265,10 @@ public class InspectionReportActivity extends BaseActivity {
                 v.setLayoutParams(new LayoutParams((int) (scale * 90), (int) (scale * 40)));
                 v.setPadding((int) (scale * 5), (int) (scale * 5), (int) (scale * 5), (int) (scale * 5));
                 v.setScaleType(ScaleType.FIT_CENTER);
-                mBitmapUtils.display(v, Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName());
+                Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName(), (int) (scale * 90));
+                if (bitmap != null) {
+                    v.setImageBitmap(bitmap);
+                }
                 binding.llSignContainer1.addView(v);
             }
         }
@@ -285,7 +293,8 @@ public class InspectionReportActivity extends BaseActivity {
     /**
      * 展示巡检路线对话框
      */
-    private  XsContentListDialogBinding dialogBinding;
+    private XsContentListDialogBinding dialogBinding;
+
     private void showXunJianLineDialog() {
         if (!spacingList.isEmpty()) {
             int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 4 / 5;
@@ -298,7 +307,7 @@ public class InspectionReportActivity extends BaseActivity {
             roadMapAdapter.setSpacingRecord(placedSpacing);
             roadMapAdapter.setIsReport(true);
             dialogBinding = XsContentListDialogBinding.inflate(getLayoutInflater());
-            mDefectDialog = DialogUtils.createDialog(currentActivity,dialogBinding.getRoot(),dialogWidth,dialogHeight);
+            mDefectDialog = DialogUtils.createDialog(currentActivity, dialogBinding.getRoot(), dialogWidth, dialogHeight);
             dialogBinding.lvContainer.setAdapter(roadMapAdapter);
             dialogBinding.tvDialogTitle.setText("巡检路线");
             mDefectDialog.show();
@@ -418,11 +427,12 @@ public class InspectionReportActivity extends BaseActivity {
     }
 
     private XsHistoryDataDialogBinding dataDialogBinding;
+
     private void showPlaybackDialog() {
         int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
         if (mPlayBackDialog == null) {
             dataDialogBinding = XsHistoryDataDialogBinding.inflate(getLayoutInflater());
-            mPlayBackDialog = DialogUtils.createDialog(currentActivity,dataDialogBinding.getRoot(),dialogWidth,LinearLayout.LayoutParams.WRAP_CONTENT);
+            mPlayBackDialog = DialogUtils.createDialog(currentActivity, dataDialogBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
         dataDialogBinding.tvDialogTitle.setText(R.string.xs_playback_str);
         dataDialogBinding.btnCancel.setText(R.string.xs_back_str);

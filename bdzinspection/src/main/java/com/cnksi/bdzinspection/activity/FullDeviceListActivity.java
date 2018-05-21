@@ -45,8 +45,9 @@ import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,12 +94,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
 
 
     private void initData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                currentTask = TaskService.getInstance().findById(currentTaskId);
-            }
-        });
+        mFixedThreadPoolExecutor.execute(() -> currentTask = TaskService.getInstance().findById(currentTaskId));
     }
 
     private void initUI() {
@@ -106,12 +102,9 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         shakeListener.setOnShakeListener(this);
         binding.ibtnAdd.setVisibility(View.VISIBLE);
         binding.ibtnAdd.setImageResource(R.drawable.xs_copy_button_background);
-        binding.ibtnAdd.setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                showChangeDistanceDialog();
-                return false;
-            }
+        binding.ibtnAdd.setOnLongClickListener(v -> {
+            showChangeDistanceDialog();
+            return false;
         });
 
         binding.btnStartInspection.setText(R.string.xs_finish_inspection_str);
@@ -408,7 +401,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                     @Override
                     public void run() {
                         try {
-                            XunshiApplication.getDbUtils().saveOrUpdateAll(saveList);
+                            XunshiApplication.getDbUtils().saveOrUpdate(saveList);
                         } catch (DbException e) {
                             e.printStackTrace();
                         }

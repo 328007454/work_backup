@@ -20,14 +20,10 @@ import com.cnksi.bdzinspection.databinding.XsActivityImageDetailsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.xscore.xsutils.BitmapHelp;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsview.photo.PhotoView;
-import com.lidroid.xutils.bitmap.BitmapCommonUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
-import com.lidroid.xutils.bitmap.callback.DefaultBitmapLoadCallBack;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,9 +59,9 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(currentActivity);
-        mBitmapConfig = new BitmapDisplayConfig();
-        mBitmapConfig.setBitmapMaxSize(BitmapCommonUtils.getScreenSize(getApplicationContext()));
+//        mBitmapUtils = BitmapHelp.getInstance().getBitmapUtils(currentActivity);
+//        mBitmapConfig = new BitmapDisplayConfig();
+//        mBitmapConfig.setBitmapMaxSize(BitmapCommonUtils.getScreenSize(getApplicationContext()));
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_image_details);
 
         imageList = getIntent().getStringArrayListExtra(Config.IMAGEURL_LIST);
@@ -170,27 +166,13 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
             final ProgressBar progress = (ProgressBar) view.findViewById(R.id.loading);
             String imageUrl = imageList.get(position);
 
-            mBitmapUtils.display(zoomImageView, imageUrl, mBitmapConfig, new DefaultBitmapLoadCallBack<PhotoView>() {
-                @Override
-                public void onLoadStarted(PhotoView container, String uri, BitmapDisplayConfig config) {
-                    super.onLoadStarted(container, uri, config);
-                    progress.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onLoadCompleted(PhotoView container, String uri, Bitmap bitmap, BitmapDisplayConfig config, BitmapLoadFrom from) {
-                    super.onLoadCompleted(container, uri, bitmap, config, from);
-                    progress.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onLoadFailed(PhotoView container, String uri, Drawable drawable) {
-                    super.onLoadFailed(container, uri, drawable);
-                    progress.setVisibility(View.GONE);
-                    CToast.showShort(getApplicationContext(), "加载失败");
-                }
-            });
-
+            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(imageUrl,ScreenUtils.getScreenWidth(container.getContext()));
+            if (bitmap!=null){
+                zoomImageView.setImageBitmap(bitmap);
+            }else{
+                CToast.showShort(getApplicationContext(), "加载失败");
+            }
+            progress.setVisibility(View.GONE);
             ((ViewPager) container).addView(view, 0);
             return view;
         }

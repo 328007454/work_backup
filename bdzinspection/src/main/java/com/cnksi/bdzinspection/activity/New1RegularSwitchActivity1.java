@@ -53,9 +53,10 @@ import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -233,7 +234,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
         super.onResume();
         if (!isFirstLoad) {
             try {
-                report = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId));
+                report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId).findFirst();
                 report.inspection = currentInspectionType;
             } catch (DbException e) {
                 e.printStackTrace();
@@ -245,7 +246,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
     private void initData() {
         mFixedThreadPoolExecutor.execute(() -> {
             try {
-                report = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId));
+                report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId).findFirst();
                 String repSwitchId = report.repSwithoverId;
                 dbModelList = StandardSwitchOverService.getInstance().getAllType(currentInspectionType, currentBdzId, currentReportId, repSwitchId);
                 boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));

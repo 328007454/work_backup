@@ -15,7 +15,9 @@ import com.cnksi.bdzinspection.databinding.XsFragmentMultipleBackBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.zzht.ZzhtResult;
-import com.lidroid.xutils.db.table.DbModel;
+
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +92,10 @@ public class MultipleBackFragment extends BaseFragment implements ItemClickListe
             ZzhtResult result = new ZzhtResult(model, currentReportId);
             modelList.add(result);
         }
-        ZzhtService.getService().saveOrUpdateAll(modelList);
+        try {
+            ZzhtService.getService().saveOrUpdate(modelList);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 }

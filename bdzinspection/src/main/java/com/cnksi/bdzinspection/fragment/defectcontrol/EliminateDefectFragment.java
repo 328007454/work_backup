@@ -45,8 +45,9 @@ import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.exception.DbException;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Date;

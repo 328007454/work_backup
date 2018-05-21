@@ -21,8 +21,9 @@ import com.cnksi.bdzinspection.model.tree.DeviceItem;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.bdzinspection.view.UnderLineLinearLayout;
-import com.lidroid.xutils.db.table.DbModel;
 import com.zhy.core.utils.AutoUtils;
+
+import org.xutils.db.table.DbModel;
 
 import java.util.HashMap;
 import java.util.List;

@@ -40,24 +40,27 @@ public class BaseService<T> {
 
     protected Class<T> clz;
 
-    public BaseService(){}
+    public BaseService() {
+    }
 
     protected BaseService(Class<T> clz) {
         this.clz = clz;
     }
 
-    public void saveOrUpdate(T t) throws DbException {
+    public boolean saveOrUpdate(T t) throws DbException {
         try {
             getDbManager().saveOrUpdate(t);
+            return true;
         } catch (DbException e) {
             RecordException(e);
             throw e;
         }
     }
 
-    public void saveOrUpdate(List<T> t) throws DbException {
+    public boolean saveOrUpdate(List<T> t) throws DbException {
         try {
             getDbManager().saveOrUpdate(t);
+            return true;
         } catch (DbException e) {
             RecordException(e);
             throw e;
@@ -136,9 +139,10 @@ public class BaseService<T> {
         }
     }
 
-    public void update(Object entity, String... updateColumnNames) throws DbException {
+    public boolean update(Object entity, String... updateColumnNames) throws DbException {
         try {
             getDbManager().update(entity, updateColumnNames);
+            return true;
         } catch (DbException e) {
             RecordException(e);
             throw e;

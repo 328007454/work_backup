@@ -26,6 +26,8 @@ import com.cnksi.xscore.xsutils.FileUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 
+import org.xutils.ex.DbException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -245,17 +247,29 @@ public class OperateTaskCheckedActivity extends BaseActivity {
                     // 删除之前的签名图片
                     FileUtils.deleteFile(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr);
                     mCurrentOperateTick.person_czr = initSignPicture(data, binding.ivCzrSign);
-                    OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_CZR);
+                    try {
+                        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_CZR);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case CZFZR_SIGN_CODE:
                     FileUtils.deleteFile(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr);
                     mCurrentOperateTick.person_jhr = initSignPicture(data, binding.ivCzfzrSign);
-                    OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_JHR);
+                    try {
+                        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_JHR);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case ZBFZR_SIGN_CODE:
                     FileUtils.deleteFile(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr);
                     mCurrentOperateTick.person_ywfzr = initSignPicture(data, binding.ivZbfzrSign);
-                    OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_YWFZR);
+                    try {
+                        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_YWFZR);
+                    } catch (DbException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     break;
@@ -264,7 +278,12 @@ public class OperateTaskCheckedActivity extends BaseActivity {
                 binding.btnConfirm.setEnabled(true);
                 binding.btnConfirm.setBackgroundResource(R.drawable.xs_red_button_background_selector);
                 mCurrentOperateTick.status = OperateTaskStatus.wwc.name();
-                isUpdateStatus = OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS);
+                try {
+                    isUpdateStatus = OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                    isUpdateStatus = false;
+                }
             }
         }
     }

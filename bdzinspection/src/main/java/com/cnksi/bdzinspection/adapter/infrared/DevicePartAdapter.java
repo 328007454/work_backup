@@ -2,6 +2,7 @@ package com.cnksi.bdzinspection.adapter.infrared;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsDevicePartItemBinding;
 import com.cnksi.bdzinspection.model.DevicePart;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.core.utils.BitmapUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.List;
@@ -36,7 +38,10 @@ public class DevicePartAdapter extends SimpleBaseAdapter {
             itemBinding = DataBindingUtil.findBinding(convertView);
         }
         itemBinding.tvDevicePartName.setText(mDevicePart.name);
-        mBitmapUtils.display(itemBinding.ivDevicePart, Config.PICTURES_FOLDER + mDevicePart.pic, mBitmapConfig);
+        Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.PICTURES_FOLDER + mDevicePart.pic,135);
+        if (bitmap !=null){
+            itemBinding.ivDevicePart.setImageBitmap(bitmap);
+        }
         return itemBinding.getRoot();
     }
 }

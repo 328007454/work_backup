@@ -62,9 +62,10 @@ import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,12 +171,9 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
             if (MediaRecorderUtils.getInstance().isPlaying()) {
                 MediaRecorderUtils.getInstance().stopPlayAudio();
             } else {
-                MediaRecorderUtils.getInstance().startPlayAudio(Config.AUDIO_FOLDER + voice, new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        CToast.showShort(currentActivity, "播放完毕...");
-                        MediaRecorderUtils.getInstance().setPlaying(false);
-                    }
+                MediaRecorderUtils.getInstance().startPlayAudio(Config.AUDIO_FOLDER + voice, mp -> {
+                    CToast.showShort(currentActivity, "播放完毕...");
+                    MediaRecorderUtils.getInstance().setPlaying(false);
                 });
             }
         }
@@ -287,7 +285,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         super.onResume();
         if (!isFirstLoad) {
             try {
-                report = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId));
+                report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId).findFirst();
                 report.inspection = currentInspectionType;
             } catch (DbException e) {
                 e.printStackTrace();
@@ -302,7 +300,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
             @Override
             public void run() {
                 try {
-                    report = XunshiApplication.getDbUtils().findFirst(Selector.from(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId));
+                    report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId).findFirst();
                     String repSwitchId = report.repSwithoverId;
                     dbModelList = StandardSwitchOverService.getInstance().getAllTypeNew(currentInspectionType, currentBdzId, currentReportId, repSwitchId);
                     boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
@@ -380,8 +378,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         String standId = model.getString(StandardSwitchover.ID);
         StandardStepConfirm item = null;
         try {
-            item = XunshiApplication.getDbUtils().findFirst(
-                    Selector.from(StandardStepConfirm.class).where(StandardStepConfirm.BDZID, "=", currentBdzId).and(StandardStepConfirm.REPORTID, "=", currentReportId).and(StandardStepConfirm.STANDID, "=", standId));
+            item = XunshiApplication.getDbUtils().selector(StandardStepConfirm.class).where(StandardStepConfirm.BDZID, "=", currentBdzId).and(StandardStepConfirm.REPORTID, "=", currentReportId).and(StandardStepConfirm.STANDID, "=", standId).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
         }

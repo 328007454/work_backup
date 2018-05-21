@@ -10,8 +10,9 @@ import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsview.swipemenulist.SwipeMenuDragSortListView.DragListener;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +62,9 @@ public class DeviceSortActivity extends TitleActivity {
         functionMode = getIntent().getStringExtra(Config.CURRENT_FUNCTION_MODEL);
         currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
         // TODO: 2017/3/22
-        Selector selector = BaseService.from(Device.class).and(Device.SPID, "=", spacing.spid).and(Device.DEVICE_TYPE, "=", functionMode).orderBy(Device.SORT);
         try {
-            mData = XunshiApplication.getDbUtils().findAll(selector);
+            Selector selector = XunshiApplication.getDbUtils().selector(Device.class).where(Device.DLT, "=", "0").and(Device.SPID, "=", spacing.spid).and(Device.DEVICE_TYPE, "=", functionMode).orderBy(Device.SORT);
+            mData = selector.findAll();
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -85,7 +86,7 @@ public class DeviceSortActivity extends TitleActivity {
             mData.get(i).sort = i + 1;
         }
         try {
-            XunshiApplication.getDbUtils().updateAll(mData, "sort");
+            XunshiApplication.getDbUtils().update(mData, "sort");
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -16,9 +16,11 @@ import com.cnksi.bdzinspection.view.ChartDialog;
 import com.cnksi.bdzinspection.view.ChartDialog.LineSet;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,20 +37,24 @@ public class ShowHistroyDialogUtils {
 
     private static List<DbModel> findStardHistoryRecordHaveT(String deviceId, String standId, String bdzId)
             throws DbException {
-        SqlInfo sqlInfo = new SqlInfo(
-                "SELECT dr.val,dr.discovered_date,rp.temperature from defect_record dr "
-                        + "LEFT JOIN report rp on dr.reportid=rp.reportid "
-                        + " where dr.dlt<>'1'  AND  rp.temperature is not null and dr.deviceid=? and dr.standid=? and dr.bdzid=? and dr.is_copy='Y' order by dr.discovered_date DESC limit 20",
-                deviceId, standId, bdzId);
+        String sql = "SELECT dr.val,dr.discovered_date,rp.temperature from defect_record dr "
+                + "LEFT JOIN report rp on dr.reportid=rp.reportid "
+                + " where dr.dlt<>'1'  AND  rp.temperature is not null and dr.deviceid=? and dr.standid=? and dr.bdzid=? and dr.is_copy='Y' order by dr.discovered_date DESC limit 20";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("",deviceId));
+        sqlInfo.addBindArg(new KeyValue("",standId));
+        sqlInfo.addBindArg(new KeyValue("",bdzId));
         return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
     }
 
     private static List<DbModel> findStardHistoryRecord(String deviceId, String standId, String bdzId)
             throws DbException {
-        SqlInfo sqlInfo = new SqlInfo(
-                "SELECT dr.val,dr.discovered_date from defect_record dr "
-                        + " where dr.dlt<>'1'  AND dr.deviceid=? and dr.standid=? and dr.bdzid=? and dr.is_copy='Y' order by dr.discovered_date desc limit 20",
-                deviceId, standId, bdzId);
+        String sql ="SELECT dr.val,dr.discovered_date from defect_record dr "
+                + " where dr.dlt<>'1'  AND dr.deviceid=? and dr.standid=? and dr.bdzid=? and dr.is_copy='Y' order by dr.discovered_date desc limit 20";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("",deviceId));
+        sqlInfo.addBindArg(new KeyValue("",standId));
+        sqlInfo.addBindArg(new KeyValue("",bdzId));
         return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
     }
 
@@ -155,7 +161,10 @@ public class ShowHistroyDialogUtils {
                 + " copy_result result LEFT JOIN report report ON result.reportid = report.reportid WHERE result.bdzid = ? "
                 + " AND report.reportid NOT IN(SELECT DISTINCT(reportid) FROM report rp WHERE rp.taskid in (SELECT DISTINCT(taskid) FROM task tk WHERE tk.STATUS='undo'))"
                 + " AND result.deviceid = ? AND result.item_id=?" + " ORDER BY time";
-        SqlInfo sqlInfo = new SqlInfo(sql, item.bdzid, item.deviceid, item.id);
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("",item.bdzid));
+        sqlInfo.addBindArg(new KeyValue("",item.deviceid));
+        sqlInfo.addBindArg(new KeyValue("",item.id));
         try {
             List<DbModel> resultModel = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (resultModel == null || resultModel.size() < 1) {

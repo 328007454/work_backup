@@ -22,13 +22,14 @@ import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.core.utils.SqliteUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.SqliteUtils;
-import com.lidroid.xutils.db.sqlite.Selector;
-import com.lidroid.xutils.db.sqlite.WhereBuilder;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.Selector;
+import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.ex.DbException;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -143,7 +144,7 @@ public class TaskRemindFragment extends BaseFragment {
                     deptId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
                 }
                 String[] accoutArray = currentAcounts.split(",");
-                Selector selector = Selector.from(Task.class).expr(" bdzid in (select bdzid  from bdz where dept_id = '" + deptId + "' )");
+                Selector selector =XunshiApplication.getDbUtils().selector(Task.class).expr(" bdzid in (select bdzid  from bdz where dept_id = '" + deptId + "' )");
                 selector.expr("and (pms_jh_source ='pms_pc' or " + CommonUtils.buildWhereTaskContainMe(accoutArray) + " or create_account is NULL or create_account = '')");
                 // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                 if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
@@ -192,9 +193,9 @@ public class TaskRemindFragment extends BaseFragment {
                 }
                 selector = selector.and(Task.DLT, "=", "0").orderBy(Task.SCHEDULE_TIME);
 
-                mDataList = XunshiApplication.getDbUtils().findAll(selector);
+                mDataList =selector.findAll();
 
-                List<Users> users = XunshiApplication.getDbUtils().findAll(Selector.from(Users.class).where(Users.DLT, "=", "0"));
+                List<Users> users = XunshiApplication.getDbUtils().selector(Users.class).where(Users.DLT, "=", "0").findAll();
                 for (Users user : users) {
                     userMap.put(user.account, user.username);
                 }

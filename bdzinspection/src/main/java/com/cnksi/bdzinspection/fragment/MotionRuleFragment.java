@@ -15,9 +15,11 @@ import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentMotionRuleBinding;
-import com.lidroid.xutils.db.sqlite.SqlInfo;
-import com.lidroid.xutils.db.table.DbModel;
-import com.lidroid.xutils.exception.DbException;
+
+import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
+
 /**
  * 运行规定界面展示   采用webview加载后台同步的数据库的html字段
  * */
