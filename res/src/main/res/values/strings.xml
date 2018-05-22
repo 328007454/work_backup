@@ -2,7 +2,7 @@
 <resources>
     <string name="gp_remark">备注</string>
     <string name="cannot_see_copyvalue">看不清</string>
-    <string name="app_name">变电运维智能移动作业平台</string>
+    <string name="app_bdyw">变电运维智能移动作业平台</string>
     <string name="app_tips">五通一措版</string>
     <string name="weather">当前天气</string>
     <!-- MainMenuActivity -->

@@ -104,7 +104,7 @@ android {
             jniLibs.srcDirs = ['libs']
             java.srcDirs = ['src/main/java']
             aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
-
+            res.srcDirs = ['src/main/res', 'src/main/res-gztz']
             if ("ture" == HAS_WEB_ASSETS)
                 assets.srcDirs = ['src/main/assets', 'src/main/assets-web']
             else assets.srcDirs = ['src/main/assets']
@@ -140,9 +140,7 @@ android {
 repositories { flatDir { dirs 'libs' } }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    if (InspeIsLibrary.toBoolean()) {
-        compile project(path: ':inspe')
-    }
+
     implementation "com.android.support:cardview-v7:${appcompat_v7_version}"
    
     compile project(':common')

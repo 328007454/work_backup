@@ -27,4 +27,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    testApi "junit:junit:$junit_version"
+    androidTestApi "com.android.support.test:runner:$runner_version"
+    androidTestApi "com.android.support.test.espresso:espresso-core:$espresso_core_version"
 }

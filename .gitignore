@@ -8,4 +8,7 @@ automodel/
 out/
 adaptionsjjc/release
 .settings
+.vscode
+.project
+.classpath
 

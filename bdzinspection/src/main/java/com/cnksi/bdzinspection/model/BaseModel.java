@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class BaseModel implements Serializable {
     //用于 同步的字段  仅用来支持Xutils自动插入。
     public static final String DLT = "dlt";
-    @Column(name = DLT,isId = true)
+    @Column(name = DLT)
     public String dlt = "0";
 
 }
