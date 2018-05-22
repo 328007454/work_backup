@@ -44,8 +44,9 @@ public class DefectRecordService {
             if (!TextUtils.isEmpty(bdzId)) {
                 selector.and(DefectRecord.BDZID, "=", bdzId);
             }
-            if (level > 0)
+            if (level > 0) {
                 selector.and(DefectRecord.DEFECTLEVEL, "=", level);
+            }
             selector.expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
                     .orderBy(DefectRecord.DISCOVERED_DATE, true);
             return selector.findAll();

@@ -58,10 +58,12 @@ public class JZLFenJieKaiGuanContentAdapter extends com.cnksi.core.adapter.BaseA
             binding.llDzcsContainer.setVisibility(View.VISIBLE);
             binding.cdbhReportContainer.setVisibility(View.GONE);
             binding.jzlTitle.setText(model.getString(ReportJzlbyqfjkg.DEVICE_NAME));
-            if (TextUtils.isEmpty(model.getString(ReportJzlbyqfjkg.BCDS)))
+            if (TextUtils.isEmpty(model.getString(ReportJzlbyqfjkg.BCDS))) {
                 binding.llBcdsContainer.setVisibility(View.GONE);
-            if (TextUtils.isEmpty(model.getString(ReportJzlbyqfjkg.DZCS)))
+            }
+            if (TextUtils.isEmpty(model.getString(ReportJzlbyqfjkg.DZCS))) {
                 binding.llDzcsContainer.setVisibility(View.GONE);
+            }
             binding.copyPartTwo.setText("分接开关动作次数");
             binding.copyPartOne.setText("分接开关调整后档位");
             binding.tvPutDzcs.setText(model.getString(ReportJzlbyqfjkg.DZCS));

@@ -52,27 +52,34 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         if (watcherLocation == null) {
             etLocation.addTextChangedListener(watcherLocation = new MyTextWatcher(etLocation, position, ReportSnwsd.LOCATION));
             etLocation.setTag(watcherLocation);
-        } else watcherLocation.update(position, ReportSnwsd.LOCATION);
+        } else {
+            watcherLocation.update(position, ReportSnwsd.LOCATION);
+        }
 
 
         MyTextWatcher watcherTempreture = (MyTextWatcher) etTempreture.getTag();
         if (watcherTempreture == null) {
             etTempreture.addTextChangedListener(watcherTempreture = new MyTextWatcher(etTempreture, position, ReportSnwsd.WD));
             etTempreture.setTag(watcherTempreture);
-        } else watcherTempreture.update(position, ReportSnwsd.WD);
+        } else {
+            watcherTempreture.update(position, ReportSnwsd.WD);
+        }
 
 
         MyTextWatcher watcherHumidity = (MyTextWatcher) etHumidity.getTag();
         if (watcherHumidity == null) {
             etHumidity.addTextChangedListener(watcherHumidity = new MyTextWatcher(etHumidity, position, ReportSnwsd.SD));
             etHumidity.setTag(watcherHumidity);
-        } else watcherHumidity.update(position, ReportSnwsd.SD);
+        } else {
+            watcherHumidity.update(position, ReportSnwsd.SD);
+        }
 
 
-        if (position == getCount() - 1)
+        if (position == getCount() - 1) {
             imageButton.setVisibility(View.VISIBLE);
-        else
+        } else {
             imageButton.setVisibility(View.GONE);
+        }
 
         if (0 == position) {
             etLocation.setText(TextUtils.isEmpty(item.location) ? getLocation() : item.location);
@@ -88,15 +95,17 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != itemClickListener)
+                if (null != itemClickListener) {
                     itemClickListener.itemClick(v, item, position);
+                }
             }
         });
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (null != itemClickListener)
+                if (null != itemClickListener) {
                     itemClickListener.itemClick(view, item, position);
+                }
             }
         });
 
@@ -130,12 +139,15 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         @Override
         public void afterTextChanged(Editable s) {
             ReportSnwsd reportSnwsd = getItem(position);
-            if (ReportSnwsd.LOCATION.equalsIgnoreCase(tag))
+            if (ReportSnwsd.LOCATION.equalsIgnoreCase(tag)) {
                 reportSnwsd.location = s.toString();
-            if (ReportSnwsd.WD.equalsIgnoreCase(tag))
+            }
+            if (ReportSnwsd.WD.equalsIgnoreCase(tag)) {
                 reportSnwsd.wd = StringUtils.getTransformTep(s.toString());
-            if (ReportSnwsd.SD.equalsIgnoreCase(tag))
+            }
+            if (ReportSnwsd.SD.equalsIgnoreCase(tag)) {
                 reportSnwsd.sd = StringUtils.getTransformTep(s.toString());
+            }
         }
     }
 

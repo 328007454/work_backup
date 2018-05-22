@@ -255,8 +255,9 @@ public class UpdateUtils {
 
             @Override
             public void cancel() {
-                if (!isPms)
+                if (!isPms) {
                     PreferencesUtils.put(AppUtils.IS_SJJC_AREADY_UPDATE, false);
+                }
                 if (isPms && PreferencesUtils.get(AppUtils.IS_SJJC_AREADY_UPDATE, false)) {
                     System.exit(0);
                 }

@@ -70,8 +70,9 @@ public class BhdzjlGroup {
         binding.bhdzpj.setValueStr(record.bhdzpj);
         if (!TextUtils.isEmpty(record.bhyjlxjdzsj)) {
             List<BhyjBean> bhyjBeans = JSON.parseArray(record.bhyjlxjdzsj, BhyjBean.class);
-            if (!bhyjBeans.isEmpty())
+            if (!bhyjBeans.isEmpty()) {
                 lists.get(0).setBhyjBean(bhyjBeans.get(0));
+            }
             for (int i = 1; i < bhyjBeans.size(); i++) {
                 addOtherYJLX().setBhyjBean(bhyjBeans.get(i));
             }
@@ -86,17 +87,23 @@ public class BhdzjlGroup {
         List<BhyjBean> list = new ArrayList<>();
         for (BhdzjlYjGroup group : lists) {
             BhyjBean t = group.getBhyjBean();
-            if (t != null) list.add(t);
+            if (t != null) {
+                list.add(t);
+            }
         }
         String yjlx = JSON.toJSONString(list);
         if (sbmc == null && bhsbmc == null && TextUtils.isEmpty(yjlx)) {
-            if (record != null) record.dlt = 1;
+            if (record != null) {
+                record.dlt = 1;
+            }
             return record;
         }
         sbmc = nullTo(sbmc);
         bhsbmc = nullTo(bhsbmc);
 
-        if (record == null) record = SbjcGztzjlBhdzjl.create();
+        if (record == null) {
+            record = SbjcGztzjlBhdzjl.create();
+        }
         record.sbmc = sbmc.getValueStr();
         record.sbmcK = sbmc.key;
         record.bhSbmc = bhsbmc.getValueStr();
@@ -108,8 +115,11 @@ public class BhdzjlGroup {
     }
 
     private KeyValue nullTo(KeyValue keyValue) {
-        if (keyValue == null) return NULL;
-        else return keyValue;
+        if (keyValue == null) {
+            return NULL;
+        } else {
+            return keyValue;
+        }
     }
 
     public BhdzjlYjGroup addOtherYJLX() {
@@ -151,6 +161,7 @@ public class BhdzjlGroup {
         void onSelectListener(BhdzjlGroup group, boolean isBhsb);
     }
 
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         String bhxh = binding.bhsbmc.getValueStr();

@@ -95,7 +95,7 @@ public class DrawCircleImageActivity extends BaseActivity {
             saveMarkAndExit();
         });
         binding.btnAddMark.setOnClickListener(view -> {
-            mPicturePaintView.saveMark();
+            PicturePaintView.saveMark();
         });
         binding.btnClearMark.setOnClickListener(view -> {
             CustomerDialog.showSelectDialog(_this, "确认要清除所有标记吗?", new DialogClickListener() {
@@ -189,8 +189,9 @@ public class DrawCircleImageActivity extends BaseActivity {
                 return false;
             } finally {
                 try {
-                    if (outputStream != null)
+                    if (outputStream != null) {
                         outputStream.close();
+                    }
                 } catch (IOException e) {
                     Log.d("Tag", e.getMessage());
                 }

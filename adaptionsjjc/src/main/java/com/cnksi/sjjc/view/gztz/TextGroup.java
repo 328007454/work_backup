@@ -59,7 +59,9 @@ public class TextGroup extends UnderLineLinearLayout {
     }
 
     public void setValueStr(String s) {
-        if (s == null) return;
+        if (s == null) {
+            return;
+        }
         editText.setText(s);
     }
 

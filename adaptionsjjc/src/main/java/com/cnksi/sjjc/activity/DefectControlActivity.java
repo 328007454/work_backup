@@ -153,8 +153,9 @@ public class DefectControlActivity extends BaseActivity {
                     search();
                     defectControlBinding.bdzName.setText(bdz.name);
                     mPowerStationDialog.dismiss();
-                } else
+                } else {
                     ToastUtils.showMessage("该变电站未激活");
+                }
             }
 
             @Override

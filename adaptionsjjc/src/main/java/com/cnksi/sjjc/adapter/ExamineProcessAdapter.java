@@ -110,8 +110,9 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
         ivShowPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (null != itemClickListener)
+                if (null != itemClickListener) {
                     itemClickListener.itemClick(view, record, position);
+                }
             }
         });
     }

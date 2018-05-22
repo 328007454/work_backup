@@ -105,8 +105,9 @@ public abstract class TreeAdapter extends BaseAdapter<TreeNode> {
 				int expandSize = expandNodes.size();
 				for (int i = 0; i < expandSize; i++) {
 					TreeNode node = expandNodes.get(i);
-					if (node.isParent() && expandAll)
-						node.isExpanded = true;
+					if (node.isParent() && expandAll) {
+                        node.isExpanded = true;
+                    }
 					dataConnection.add(position + 1 + i, node);
 				}
 				// 只展示一个

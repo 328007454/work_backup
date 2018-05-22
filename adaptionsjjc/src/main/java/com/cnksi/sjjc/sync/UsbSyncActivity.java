@@ -57,8 +57,9 @@ public class UsbSyncActivity extends AppCompatActivity implements View.OnClickLi
         String deptName = "无";
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
-            if (department != null)
+            if (department != null) {
                 deptName = StringUtils.BlankToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+            }
         }
         binding.tvDept.setText("当前班组： " + deptName);
     }

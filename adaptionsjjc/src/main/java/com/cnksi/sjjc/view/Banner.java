@@ -302,10 +302,12 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         viewPager.setFocusable(true);
         viewPager.setCurrentItem(1);
         viewPager.addOnPageChangeListener(this);
-        if (gravity != -1)
+        if (gravity != -1) {
             indicator.setGravity(gravity);
-        if (isAutoPlay)
+        }
+        if (isAutoPlay) {
             startAutoPlay();
+        }
         new BannerPagerAdapter().notifyDataSetChanged();
     }
 
@@ -404,25 +406,35 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         indicatorImages.get((lastPosition - 1 + count) % count).setImageResource(mIndicatorUnselectedResId);
         indicatorImages.get((position - 1 + count) % count).setImageResource(mIndicatorSelectedResId);
         lastPosition = position;
-        if (position == 0) position = 1;
+        if (position == 0) {
+            position = 1;
+        }
         switch (bannerStyle) {
             case BannerConfig.CIRCLE_INDICATOR:
                 break;
             case BannerConfig.NUM_INDICATOR:
-                if (position > count) position = count;
+                if (position > count) {
+                    position = count;
+                }
                 numIndicator.setText(position + "/" + count);
                 break;
             case BannerConfig.NUM_INDICATOR_TITLE:
-                if (position > count) position = count;
+                if (position > count) {
+                    position = count;
+                }
                 numIndicator.setText(position + "/" + count);
                 if (titles != null && titles.length > 0) {
-                    if (position > titles.length) position = titles.length;
+                    if (position > titles.length) {
+                        position = titles.length;
+                    }
                     bannerTitle.setText(titles[position - 1]);
                 }
                 break;
             case BannerConfig.CIRCLE_INDICATOR_TITLE:
                 if (titles != null && titles.length > 0) {
-                    if (position > titles.length) position = titles.length;
+                    if (position > titles.length) {
+                        position = titles.length;
+                    }
                     bannerTitle.setText(titles[position - 1]);
                 }
                 break;

@@ -32,7 +32,9 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
     }
 
     public static CharSequence calculateRemindTime(DefectRecord defectRecord) {
-        if (defectRecord == null || TextUtils.isEmpty(defectRecord.discovered_date)) return "";
+        if (defectRecord == null || TextUtils.isEmpty(defectRecord.discovered_date)) {
+            return "";
+        }
         int day;
         if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(defectRecord.defectlevel) || Config.CRISIS_LEVEL.equals(defectRecord.defectlevel)) {
             day = 1;
@@ -45,7 +47,9 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         String s = "到期时间：" +d ;
         if (d.compareTo(DateUtils.getAfterTime(3)) > 0) {
             return s;
-        } else return StringUtils.changeTextColor(s, Color.RED);
+        } else {
+            return StringUtils.changeTextColor(s, Color.RED);
+        }
     }
 
     @Override
@@ -57,8 +61,9 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         final ArrayList<String> listPicDis = com.cnksi.core.utils.StringUtils.stringToList(item.pics);
         if (listPicDis.size() > 0 && !TextUtils.isEmpty(listPicDis.get(0))) {
             Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)));
-            if (bitmap!=null)
+            if (bitmap!=null) {
                 defectImage.setImageBitmap(bitmap);
+            }
             defectImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

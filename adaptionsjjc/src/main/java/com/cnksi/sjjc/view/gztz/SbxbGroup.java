@@ -42,22 +42,42 @@ public class SbxbGroup extends UnderLineLinearLayout {
 
     public String getValueStr() {
         StringBuilder builder = new StringBuilder();
-        if (a.isChecked()) builder.append("A,");
-        if (b.isChecked()) builder.append("B,");
-        if (c.isChecked()) builder.append("C,");
-        if (o.isChecked()) builder.append("O,");
-        if (builder.length() > 0) builder.deleteCharAt(builder.length() - 1);
+        if (a.isChecked()) {
+            builder.append("A,");
+        }
+        if (b.isChecked()) {
+            builder.append("B,");
+        }
+        if (c.isChecked()) {
+            builder.append("C,");
+        }
+        if (o.isChecked()) {
+            builder.append("O,");
+        }
+        if (builder.length() > 0) {
+            builder.deleteCharAt(builder.length() - 1);
+        }
         return builder.toString();
     }
 
     public void setValueStr(String s) {
-        if (TextUtils.isEmpty(s)) return;
+        if (TextUtils.isEmpty(s)) {
+            return;
+        }
         String[] strings = s.split(",");
         for (String k : strings) {
-            if ("A".equals(k)) a.setChecked(true);
-            if ("B".equals(k)) b.setChecked(true);
-            if ("C".equals(k)) c.setChecked(true);
-            if ("O".equals(k)) o.setChecked(true);
+            if ("A".equals(k)) {
+                a.setChecked(true);
+            }
+            if ("B".equals(k)) {
+                b.setChecked(true);
+            }
+            if ("C".equals(k)) {
+                c.setChecked(true);
+            }
+            if ("O".equals(k)) {
+                o.setChecked(true);
+            }
         }
     }
 }

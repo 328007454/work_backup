@@ -90,7 +90,8 @@ public class UnderLineTextView extends AppCompatTextView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (isSelected())
-            canvas.drawLine(AutoUtils.getPercentWidthSize(20), getHeight() - dividerWidth, getWidth()-AutoUtils.getPercentWidthSize(20), getHeight() - dividerWidth, dividerPaint);
+        if (isSelected()) {
+            canvas.drawLine(AutoUtils.getPercentWidthSize(20), getHeight() - dividerWidth, getWidth() - AutoUtils.getPercentWidthSize(20), getHeight() - dividerWidth, dividerPaint);
+        }
     }
 }

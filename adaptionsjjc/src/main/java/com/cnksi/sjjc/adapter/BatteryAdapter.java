@@ -76,7 +76,9 @@ public class BatteryAdapter extends BaseAdapter<String> {
         holder.getView(R.id.rl_battery_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (null != itemClickListener) itemClickListener.itemClick(view, item, position);
+                if (null != itemClickListener) {
+                    itemClickListener.itemClick(view, item, position);
+                }
             }
         });
 

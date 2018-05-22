@@ -65,8 +65,9 @@ public class SingleRadioGroup extends UnderLineLinearLayout {
         if (buttonA.isChecked()) {
             return buttonA.getText().toString();
         }
-        if (buttonB.isChecked())
+        if (buttonB.isChecked()) {
             return buttonB.getText().toString();
+        }
         return null;
     }
 
@@ -80,9 +81,11 @@ public class SingleRadioGroup extends UnderLineLinearLayout {
     }
 
     public void setOnCheckChangeListener(CompoundButton.OnCheckedChangeListener listener, boolean isA) {
-        if (isA)
+        if (isA) {
             buttonA.setOnCheckedChangeListener(listener);
-        else buttonB.setOnCheckedChangeListener(listener);
+        } else {
+            buttonB.setOnCheckedChangeListener(listener);
+        }
     }
 
 }

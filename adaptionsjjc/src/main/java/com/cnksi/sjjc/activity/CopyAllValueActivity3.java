@@ -189,8 +189,9 @@ public class CopyAllValueActivity3 extends BaseActivity {
      */
     public boolean showShadom() {
         long mCurrentTime = System.currentTimeMillis();
-        if (0 == clickIndex)
+        if (0 == clickIndex) {
             mAfterTime = mCurrentTime;
+        }
         long diffTime = mCurrentTime - mAfterTime;
         clickIndex++;
         if (1000 >= diffTime && 3 <= clickIndex) {
@@ -236,8 +237,9 @@ public class CopyAllValueActivity3 extends BaseActivity {
             reportResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, true, processor.getCopyType());
             Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
             if (null != reportResultList && !reportResultList.isEmpty()) {
-                for (CopyResult result : reportResultList)
+                for (CopyResult result : reportResultList) {
                     reportCopyResultMap.put(result.item_id, result);
+                }
             }
             // 历史抄录值
             List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false, processor.getCopyType());
@@ -263,30 +265,40 @@ public class CopyAllValueActivity3 extends BaseActivity {
                         result = new CopyResult(currentReportId, item.id, item.bdzid, item.deviceid, item.device_name, item.type_key, item.description, item.unit, item.install_place);
                         // 赋值历史数据
                         if (null != historyResult) {
-                            if ("Y".equalsIgnoreCase(item.val))
+                            if ("Y".equalsIgnoreCase(item.val)) {
                                 result.val = "-1".equalsIgnoreCase(historyResult.val) ? "" : historyResult.val;
-                            if ("Y".equalsIgnoreCase(item.val_a))
+                            }
+                            if ("Y".equalsIgnoreCase(item.val_a)) {
                                 result.val_a = "-1".equalsIgnoreCase(historyResult.val_a) ? "" : historyResult.val_a;
-                            if ("Y".equalsIgnoreCase(item.val_b))
+                            }
+                            if ("Y".equalsIgnoreCase(item.val_b)) {
                                 result.val_b = "-1".equalsIgnoreCase(historyResult.val_b) ? "" : historyResult.val_b;
-                            if ("Y".equalsIgnoreCase(item.val_c))
+                            }
+                            if ("Y".equalsIgnoreCase(item.val_c)) {
                                 result.val_c = "-1".equalsIgnoreCase(historyResult.val_c) ? "" : historyResult.val_c;
-                            if ("Y".equalsIgnoreCase(item.val_o))
+                            }
+                            if ("Y".equalsIgnoreCase(item.val_o)) {
                                 result.val_o = "-1".equalsIgnoreCase(historyResult.val_o) ? "" : historyResult.val_o;
+                            }
                         }
                     }
                     // 上次抄录值
                     if (null != historyResult) {
-                        if ("Y".equalsIgnoreCase(item.val))
+                        if ("Y".equalsIgnoreCase(item.val)) {
                             result.val_old = historyResult.val;
-                        if ("Y".equalsIgnoreCase(item.val_a))
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_a)) {
                             result.val_a_old = historyResult.val_a;
-                        if ("Y".equalsIgnoreCase(item.val_b))
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_b)) {
                             result.val_b_old = historyResult.val_b;
-                        if ("Y".equalsIgnoreCase(item.val_c))
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_c)) {
                             result.val_c_old = historyResult.val_c;
-                        if ("Y".equalsIgnoreCase(item.val_o))
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_o)) {
                             result.val_o_old = historyResult.val_o;
+                        }
                     }
                     copyResultMap.put(item.id, result);
                     if (typeCopyItemMap.keySet().contains(item.type_key)) {
@@ -394,8 +406,9 @@ public class CopyAllValueActivity3 extends BaseActivity {
         });
         binding.btnPre.setOnClickListener(view -> {
             saveAll();
-            if (!deviceAdapter.isFirst())
+            if (!deviceAdapter.isFirst()) {
                 deviceAdapter.pre();
+            }
             if (isFinish) {
                 isFinish = false;
                 binding.btnNext.setText(R.string.next);
@@ -472,39 +485,47 @@ public class CopyAllValueActivity3 extends BaseActivity {
             return;
         }
         for (CopyResult result : copyResultMap.values()) {
-            if (TextUtils.isEmpty(result.val))
+            if (TextUtils.isEmpty(result.val)) {
                 result.val = null;
-            if (TextUtils.isEmpty(result.val_a))
+            }
+            if (TextUtils.isEmpty(result.val_a)) {
                 result.val_a = null;
-            if (TextUtils.isEmpty(result.val_b))
+            }
+            if (TextUtils.isEmpty(result.val_b)) {
                 result.val_b = null;
-            if (TextUtils.isEmpty(result.val_c))
+            }
+            if (TextUtils.isEmpty(result.val_c)) {
                 result.val_c = null;
-            if (TextUtils.isEmpty(result.val_o))
+            }
+            if (TextUtils.isEmpty(result.val_o)) {
                 result.val_o = null;
+            }
             // 初始化动作次数等值
             result.initArresterActionValue();
             //如果当前报告抄录有该项或者该项的抄录字段值都不为空时进行保存或者更新
-            if (reportResultList.contains(result) || !TextUtils.isEmpty(result.val) || !TextUtils.isEmpty(result.val_a) || !TextUtils.isEmpty(result.val_b) || !TextUtils.isEmpty(result.val_c) || !TextUtils.isEmpty(result.val_o))
+            if (reportResultList.contains(result) || !TextUtils.isEmpty(result.val) || !TextUtils.isEmpty(result.val_a) || !TextUtils.isEmpty(result.val_b) || !TextUtils.isEmpty(result.val_c) || !TextUtils.isEmpty(result.val_o)) {
                 CopyResultService.getInstance().saveOrUpdate(result);
+            }
         }
 
     }
 
     private void saveNotClearCopyInfo(CopyResult result, View v, CopyItem item) {
         EditText etInput = (EditText) v;
-        if ("youwei".equalsIgnoreCase(item.type_key))
+        if ("youwei".equalsIgnoreCase(item.type_key)) {
             result.valSpecial = null;
-        if ("Y".equals(item.val))
+        }
+        if ("Y".equals(item.val)) {
             result.val = "-1";
-        else if ("Y".equals(item.val_a))
+        } else if ("Y".equals(item.val_a)) {
             result.val_a = "-1";
-        else if ("Y".equals(item.val_b))
+        } else if ("Y".equals(item.val_b)) {
             result.val_b = "-1";
-        else if ("Y".equals(item.val_c))
+        } else if ("Y".equals(item.val_c)) {
             result.val_c = "-1";
-        else if ("Y".equals(item.val_o))
+        } else if ("Y".equals(item.val_o)) {
             result.val_o = "-1";
+        }
         result.remark = TextUtils.isEmpty(etInput.getText().toString()) ? "" : (TextUtils.isEmpty(result.remark) ? etInput.getText().toString() + "," : etInput.getText().toString());
         dialog.dismiss();
         copyViewUtil.createCopyView(_this, data, binding.copyContainer);

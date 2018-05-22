@@ -78,7 +78,7 @@
             dslv:drag_handle_id="@id/drag_handle"
             dslv:drag_scroll_start="0.3"
             dslv:float_alpha="0.6"
-            dslv:xs_drag_start_mode="onDown" />
+            dslv:drag_start_mode="onDown" />
 
 
         <!-- </LinearLayout>

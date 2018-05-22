@@ -103,8 +103,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         dept_id = KSyncConfig.getInstance().getDept_id();
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
-            if (department != null)
+            if (department != null) {
                 deptName = StringUtils.BlankToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+            }
         }
         binding.tvDept.setText("当前班组： " + deptName);
         String url = config.getUrl();
@@ -239,8 +240,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         String key;
         if (s.startsWith("[")) {
             key = s.replaceAll("^\\[[\\d]*%\\]", "");
-            if (s.startsWith("[成功]"))
+            if (s.startsWith("[成功]")) {
                 key = s.substring(4);
+            }
         } else if (s.startsWith("下载文件")) {
             key = s.substring(4);
         } else {
@@ -315,7 +317,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void ping(final String cmdLine, final Handler handler) {
-        if (pinging == true) return;
+        if (pinging == true) {
+            return;
+        }
         pinging = true;
         new Thread(() -> {
             try {

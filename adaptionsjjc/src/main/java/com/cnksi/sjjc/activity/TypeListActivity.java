@@ -241,9 +241,11 @@ public class TypeListActivity extends BaseActivity {
 //                        else return;
 //                        break;
                     case GZP:
-                        if (position == 0)
+                        if (position == 0) {
                             intent.setClass(_this, WorkPlanInformationActivity.class);
-                        else return;
+                        } else {
+                            return;
+                        }
                         break;
                     case TJWT: //图解五通
                         intent.setClass(_this, TJWTActivity.class);

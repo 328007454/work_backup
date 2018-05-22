@@ -163,10 +163,12 @@ public class HttpUtilsProxy extends KOkHttpUtil {
                 throw new RuntimeException(e.getMessage());
             } finally {
                 try {
-                    if (caInputStream != null)
+                    if (caInputStream != null) {
                         caInputStream.close();
-                    if (bksInputStream != null)
+                    }
+                    if (bksInputStream != null) {
                         bksInputStream.close();
+                    }
                 } catch (IOException e) {
                     Log.d("Tag", e.getMessage());
                 }

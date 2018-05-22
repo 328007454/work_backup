@@ -42,9 +42,9 @@ public class TaskRemindAdapter extends BaseAdapter<Task> {
         ImageView imageUpload = holder.getView(R.id.iv_upload);
         if (item.isFinish()) {
             imageUpload.setVisibility(View.VISIBLE);
-            if ("Y".equalsIgnoreCase(item.isUpload))
+            if ("Y".equalsIgnoreCase(item.isUpload)) {
                 imageUpload.setImageResource(R.drawable.ic_upload);
-            else {
+            } else {
                 imageUpload.setImageResource(R.drawable.ic_no_upload);
             }
         } else {
@@ -66,8 +66,9 @@ public class TaskRemindAdapter extends BaseAdapter<Task> {
         holder.setText(R.id.tv_inspection_time, DateUtils.getFormatterTime(item.schedule_time, CoreConfig.dateFormat1));
 
         holder.getRootView().setOnClickListener(v -> {
-            if (null != itemClickListener)
+            if (null != itemClickListener) {
                 itemClickListener.itemClick(v, item, position);
+            }
         });
         holder.getRootView().setOnLongClickListener(view -> {
             if (null != itemClickListener) {
@@ -80,14 +81,13 @@ public class TaskRemindAdapter extends BaseAdapter<Task> {
 
     String getFirstChineseChar(String str)
     {
-        if (TextUtils.isEmpty(str))
+        if (TextUtils.isEmpty(str)) {
             return "";
-        else
-            for (int i=0,length=str.length();i<length;i++)
-        {
-            if (str.charAt(i)>0x4e00&&str.charAt(i)<0x9fa5)
-            {
-                return String.valueOf( str.charAt(i));
+        } else {
+            for (int i = 0, length = str.length(); i < length; i++) {
+                if (str.charAt(i) > 0x4e00 && str.charAt(i) < 0x9fa5) {
+                    return String.valueOf(str.charAt(i));
+                }
             }
         }
         return "";

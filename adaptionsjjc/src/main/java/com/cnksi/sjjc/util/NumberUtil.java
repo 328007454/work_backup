@@ -95,8 +95,9 @@ public class NumberUtil {
             for (int i = 0; i < publicKey.length; i++) {
                 String appendString = Integer.toHexString(0xFF & publicKey[i])
                         .toUpperCase(Locale.US);
-                if (appendString.length() == 1)
+                if (appendString.length() == 1) {
                     hexString.append("0");
+                }
                 hexString.append(appendString);
                 hexString.append(":");
             }

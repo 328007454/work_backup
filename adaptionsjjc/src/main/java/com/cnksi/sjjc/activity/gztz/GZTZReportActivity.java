@@ -63,8 +63,9 @@ public class GZTZReportActivity extends BaseReportActivity {
                     sbjcGztzjl = Cache.GZTZJL;
                 }
             }
-            if (sbjcGztzjl == null)
+            if (sbjcGztzjl == null) {
                 sbjcGztzjl = GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }

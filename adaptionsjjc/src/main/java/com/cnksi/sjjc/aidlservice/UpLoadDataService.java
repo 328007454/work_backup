@@ -72,8 +72,9 @@ public class UpLoadDataService extends Service {
         dept_id = KSyncConfig.getInstance().getDept_id();
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
-            if (department != null)
+            if (department != null) {
                 deptName = StringUtils.BlankToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+            }
         }
         String url = config.getUrl();
         url = url.replace("http://", "").replace("https://", "");

@@ -88,7 +88,9 @@ public class TZQKActivity extends BaseActivity {
                 String rs;
                 if (s1 != null && s2 != null) {
                     rs = s1 + "," + s2;
-                } else rs = StringUtils.BlankToDefault(s1, s2);
+                } else {
+                    rs = StringUtils.BlankToDefault(s1, s2);
+                }
                 intentDevices.putExtra(AllDeviceListActivity.BIGID, rs);
                 intentDevices.putExtra(Config.TITLE_NAME, "请选择变压器");
             }
@@ -119,14 +121,18 @@ public class TZQKActivity extends BaseActivity {
             if ("全站".equals(v.getValueStr())) {
                 binding.gztysb.setKeyValue(new KeyValue("", ""));
                 binding.gztysb.setMustInput(false);
-            } else binding.gztysb.setMustInput(true);
+            } else {
+                binding.gztysb.setMustInput(true);
+            }
         });
         binding.gzxl.setDataProvider(() -> PmsXianluService.getInstance().findXianluByBdz(currentBdzId));
     }
 
     public void loadData() {
         sbgzjl = GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
-        if (sbgzjl == null) sbgzjl = SbjcGztzjl.create(currentReportId, currentBdzId);
+        if (sbgzjl == null) {
+            sbgzjl = SbjcGztzjl.create(currentReportId, currentBdzId);
+        }
         binding.kgdlqbh.setKeyValue(new KeyValue(sbgzjl.dlqbh, sbgzjl.dlqmc));
         binding.dlqtzqk.setValueStr(sbgzjl.bhDlqtzqk);
         binding.yyjjcqk.setValueStr(sbgzjl.bhYyjjcqk);
@@ -142,8 +148,9 @@ public class TZQKActivity extends BaseActivity {
         binding.gzsfyj.setValueStr(sbgzjl.gzsfyj);
         if (TextUtils.isEmpty(sbgzjl.gzlb)) {
             binding.gzlb.setKeyValue(new KeyValue("01", "交流故障"));
-        } else
+        } else {
             binding.gzlb.setKeyValue(new KeyValue(sbgzjl.gzlbK, sbgzjl.gzlb));
+        }
         binding.sftz.setValueStr(sbgzjl.sftz);
         binding.sfty.setValueStr(sbgzjl.sfty);
         binding.tyfw.setKeyValue(new KeyValue(sbgzjl.tyfwK, sbgzjl.tyfw));
@@ -268,8 +275,11 @@ public class TZQKActivity extends BaseActivity {
     }
 
     private KeyValue nullTo(KeyValue keyValue) {
-        if (keyValue == null) return NULL;
-        else return keyValue;
+        if (keyValue == null) {
+            return NULL;
+        } else {
+            return keyValue;
+        }
     }
 
     @Override

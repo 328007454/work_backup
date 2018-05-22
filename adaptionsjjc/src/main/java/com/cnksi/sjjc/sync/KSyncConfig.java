@@ -97,7 +97,9 @@ public class KSyncConfig {
     }
 
     private String getFolderString(Set<String> strings) {
-        if (strings.size() == 0) return "";
+        if (strings.size() == 0) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
         for (String string : strings) {
             sb.append(string).append(",");

@@ -38,8 +38,9 @@ public class DevicePartService extends BaseService<DeviceUnit> {
 			List<DeviceUnit> list = selector().and(DeviceUnit.DTID, "=", dtid).and(DeviceUnit.DLT, "!=",
 					"1").findAll();
             if (null != list && !list.isEmpty()) {
-                for (DeviceUnit unit : list)
+                for (DeviceUnit unit : list) {
                     devicePart.add(new DevicePart(unit));
+                }
             }
 		} catch (DbException e) {
 			e.printStackTrace();

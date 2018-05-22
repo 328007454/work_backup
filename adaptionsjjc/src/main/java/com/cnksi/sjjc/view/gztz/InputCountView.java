@@ -49,12 +49,16 @@ public class InputCountView extends LinearLayout {
     }
 
     public void setMax(float mMax) {
-        if (mMax < mMin) throw new RuntimeException("max value can't <= min value");
+        if (mMax < mMin) {
+            throw new RuntimeException("max value can't <= min value");
+        }
         this.mMax = mMax;
     }
 
     public void setMin(float mMin) {
-        if (mMin > mMax) throw new RuntimeException("min value can't >= max value");
+        if (mMin > mMax) {
+            throw new RuntimeException("min value can't >= max value");
+        }
         this.mMin = mMin;
     }
 

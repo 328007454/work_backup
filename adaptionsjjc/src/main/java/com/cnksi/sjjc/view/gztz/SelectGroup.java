@@ -88,9 +88,11 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
     }
 
     public void setKeyValue(KeyValue keyValue) {
-        if (!TextUtils.isEmpty(keyValue.key))
+        if (!TextUtils.isEmpty(keyValue.key)) {
             this.keyValue = keyValue;
-        else this.keyValue = null;
+        } else {
+            this.keyValue = null;
+        }
         tvValue.setText(keyValue.getValueStr());
     }
 
@@ -112,7 +114,9 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         //设置adapter的listView点击事件
         lv.setOnItemClickListener((parent, view, position, id) -> {
             setKeyValue((KeyValue) adapter.getItem(position));
-            if (listener != null) listener.onselect(keyValue);
+            if (listener != null) {
+                listener.onselect(keyValue);
+            }
             selectDialog.dismiss();
         });
         lv.setAdapter(adapter);
