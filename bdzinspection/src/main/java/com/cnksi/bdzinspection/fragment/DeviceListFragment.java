@@ -47,8 +47,8 @@ import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.GPSUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
-import com.zhy.core.utils.AutoUtils;
+import com.cnksi.core.view.CustomerDialog;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

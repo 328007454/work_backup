@@ -14,8 +14,8 @@ import com.cnksi.bdzinspection.databinding.XsActivityAccidentExceptionBinding;
 import com.cnksi.bdzinspection.fragment.AccidentDealFragment;
 import com.cnksi.bdzinspection.fragment.MotionRuleFragment;
 import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.xscore.xsview.PagerSlidingTabStrip;
-import com.zhy.core.utils.AutoUtils;
+import com.cnksi.core.view.PagerSlidingTabStrip;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

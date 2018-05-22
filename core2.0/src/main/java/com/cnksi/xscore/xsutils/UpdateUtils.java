@@ -10,11 +10,10 @@ import android.net.Uri;
 import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
 
+import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.xscore.R;
 import com.cnksi.xscore.xscommon.DeviceInfor;
 import com.cnksi.xscore.xscommon.DeviceUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
-import com.cnksi.xscore.xsview.CustomerDialog.DialogClickListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -146,7 +145,7 @@ public class UpdateUtils {
 	 * @param file
 	 */
 	public static Dialog showInstallNewApkDialog(final Activity mContext, final File file) {
-		Dialog mDialog = CustomerDialog.showSelectDialog(mContext, R.string.xs_find_newversion_str, new DialogClickListener() {
+		Dialog mDialog = CustomerDialog.showSelectDialog(mContext, R.string.xs_find_newversion_str, new CustomerDialog.DialogClickListener() {
 			@Override
 			public void confirm() {
 				UpdateUtils.installNewApk(mContext, file);

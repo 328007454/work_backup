@@ -45,7 +45,7 @@ import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.nari.NariActivity;
 import com.cnksi.nari.type.PackageStatus;
 import com.cnksi.nari.utils.NariDataManager;
-import com.cnksi.xscore.xscommon.ScreenManager;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
@@ -411,7 +411,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 intent = new Intent(currentActivity, InspectionReportActivity.class);
             }
             PushNewTaskUtil.getTaskUtilInstance().createNewTaskByPeriod(currentTaskId, currentInspectionType);
-            ScreenManager.getInstance().popAllActivityExceptOne(null);
+            ScreenManager.getScreenManager().popAllActivityExceptOne(null);
             startActivity(intent);
         } catch (DbException e) {
             e.printStackTrace();

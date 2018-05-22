@@ -40,7 +40,7 @@ import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

@@ -44,8 +44,8 @@ import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
-import com.zhy.core.utils.AutoUtils;
+import com.cnksi.core.view.CustomerDialog;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 

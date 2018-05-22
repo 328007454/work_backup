@@ -15,7 +15,7 @@ import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
+import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.DbManager;
 import org.xutils.db.Selector;

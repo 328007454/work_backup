@@ -13,7 +13,7 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.ywyth.VideoPlayer;
 import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 

@@ -11,7 +11,7 @@ import com.cnksi.bdzinspection.databinding.XsAudioAdapterBinding;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.xscore.xsutils.CToast;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 

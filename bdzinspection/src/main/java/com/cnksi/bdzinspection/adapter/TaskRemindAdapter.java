@@ -16,7 +16,7 @@ import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.Calendar;
 import java.util.Date;

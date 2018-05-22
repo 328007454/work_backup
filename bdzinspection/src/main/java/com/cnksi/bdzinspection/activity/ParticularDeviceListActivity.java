@@ -31,7 +31,7 @@ import com.cnksi.common.SystemConfig;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.sync.KSyncConfig;
 import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsview.CustomerDialog;
+import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.ex.DbException;
 

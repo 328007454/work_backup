@@ -32,7 +32,7 @@ import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
-import com.cnksi.xscore.xscommon.ScreenManager;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
@@ -464,7 +464,7 @@ public class OperateWorkActivity extends BaseActivity {
         Intent intent = new Intent(currentActivity, OperateTicketReportActivity.class);
         intent.putExtra(Config.CURRENT_TASK_ID, currentOperateId);
         startActivity(intent);
-        ScreenManager.getInstance().popActivity(OperateTaskDetailsActivity.class);
+        ScreenManager.getScreenManager().popActivity(OperateTaskDetailsActivity.class);
         this.finish();
 
     }

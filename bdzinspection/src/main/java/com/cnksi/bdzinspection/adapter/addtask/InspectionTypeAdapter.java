@@ -11,7 +11,7 @@ import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogContentChildItemBinding;
 import com.cnksi.bdzinspection.databinding.XsInspectionTypeChildItemBinding;
 import com.cnksi.bdzinspection.model.Lookup;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * 追加巡检任务  --> 选择巡检类型List Adapter

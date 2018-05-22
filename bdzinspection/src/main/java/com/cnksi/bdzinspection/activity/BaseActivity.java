@@ -19,8 +19,6 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -43,24 +41,22 @@ import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.bdzinspection.view.RadiusSpan;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
-import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.activity.BaseCoreActivity;
-import com.cnksi.xscore.xscommon.ScreenManager;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
-import com.cnksi.xscore.xsview.PagerSlidingTabStrip;
-import com.zhy.core.AutoFrameLayout;
-import com.zhy.core.AutoLinearLayout;
-import com.zhy.core.AutoRelativeLayout;
-import com.zhy.core.utils.AutoUtils;
+import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.core.view.PagerSlidingTabStrip;
+import com.zhy.autolayout.AutoFrameLayout;
+import com.zhy.autolayout.AutoLinearLayout;
+import com.zhy.autolayout.AutoRelativeLayout;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -430,7 +426,7 @@ public class BaseActivity extends BaseCoreActivity {
      */
     @Override
     protected void compeletlyExitSystem() {
-        ScreenManager.getInstance().popAllActivityExceptOne(null);
+        ScreenManager.getScreenManager().popAllActivityExceptOne(null);
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }

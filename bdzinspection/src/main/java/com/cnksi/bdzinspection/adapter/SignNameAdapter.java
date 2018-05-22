@@ -14,7 +14,7 @@ import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.core.utils.BitmapUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 

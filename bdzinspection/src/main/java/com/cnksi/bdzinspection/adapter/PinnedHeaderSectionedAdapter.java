@@ -1,19 +1,17 @@
 package com.cnksi.bdzinspection.adapter;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.cnksi.core.view.SectionedBaseAdapter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.cnksi.bdzinspection.R;
-import com.cnksi.xscore.xsview.SectionedBaseAdapter;
 
 @SuppressWarnings("deprecation")
 public abstract class PinnedHeaderSectionedAdapter<E, T> extends SectionedBaseAdapter {

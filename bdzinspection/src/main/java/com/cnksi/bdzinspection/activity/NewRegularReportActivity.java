@@ -34,7 +34,7 @@ import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.xscore.xscommon.ScreenManager;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
@@ -311,7 +311,7 @@ public class NewRegularReportActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        ScreenManager.getInstance().popAllActivityExceptOne(TaskRemindActivity.class);
+        ScreenManager.getScreenManager().popAllActivityExceptOne(TaskRemindActivity.class);
         if (isDefectChanged) {
             setResult(RESULT_OK);
         } else if (!isFromTaskRemind) {

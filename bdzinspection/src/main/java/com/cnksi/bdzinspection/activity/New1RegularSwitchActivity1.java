@@ -52,7 +52,7 @@ import com.cnksi.xscore.xsutils.FileUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
+import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

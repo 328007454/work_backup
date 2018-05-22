@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.widget.RadioButton;
 
 import com.cnksi.bdzinspection.R;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * Created by han on 2017/1/8.

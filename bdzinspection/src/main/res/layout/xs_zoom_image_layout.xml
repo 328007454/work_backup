@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.cnksi.xscore.xsview.photo.PhotoView
+        <com.cnksi.core.view.photo.PhotoView
             android:id="@+id/zoom_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

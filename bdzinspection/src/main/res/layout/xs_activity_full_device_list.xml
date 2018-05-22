@@ -98,7 +98,7 @@
 
         </RelativeLayout>
 
-        <com.cnksi.xscore.xsview.PagerSlidingTabStrip
+        <com.cnksi.core.view.PagerSlidingTabStrip
             android:id="@+id/tab_strip"
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_tab_strip_minheight_px"

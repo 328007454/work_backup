@@ -20,8 +20,8 @@ import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsview.PinnedHeaderListView.OnItemClickListener;
-import com.zhy.core.utils.AutoUtils;
+import com.cnksi.core.view.PinnedHeaderListView.OnItemClickListener;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

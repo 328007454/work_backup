@@ -8,11 +8,10 @@ import android.os.Message;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityDrawCircleBinding;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.core.view.PicturePaintView;
 import com.cnksi.xscore.xsutils.BitmapUtil;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
-import com.cnksi.xscore.xsview.CustomerDialog.DialogClickListener;
-import com.cnksi.xscore.xsview.PicturePaintView;
 
 import java.io.File;
 
@@ -83,7 +82,7 @@ public class DrawCircleImageActivity extends BaseActivity {
             mPicturePaintView.saveMark();
         });
         binding.btnClearMark.setOnClickListener(view -> {
-            CustomerDialog.showSelectDialog(currentActivity, "确认要清除所有标记吗?", new DialogClickListener() {
+            CustomerDialog.showSelectDialog(currentActivity, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {
 
                 @Override
                 public void confirm() {
@@ -124,14 +123,11 @@ public class DrawCircleImageActivity extends BaseActivity {
     private void saveMarkAndExit() {
         isSavePicture = true;
         CustomerDialog.showProgress(currentActivity, "正在保存图片...");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mPicturePaintView.saveMark();
-                if (BitmapUtil.saveEditPicture(binding.rlCirclePicture, currentImagePath, 80)) {
-                    mPicturePaintView.setBitmapNull();
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                }
+        mFixedThreadPoolExecutor.execute(() -> {
+            mPicturePaintView.saveMark();
+            if (BitmapUtil.saveEditPicture(binding.rlCirclePicture, currentImagePath, 80)) {
+                mPicturePaintView.setBitmapNull();
+                mHandler.sendEmptyMessage(LOAD_DATA);
             }
         });
     }

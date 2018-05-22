@@ -15,7 +15,7 @@ import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;

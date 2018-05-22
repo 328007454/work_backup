@@ -296,7 +296,7 @@
                         android:layout_marginLeft="60px"
                         android:background="@drawable/xs_shape_round_white_bg">
 
-                        <com.cnksi.xscore.xsview.RoundRectImageView
+                        <com.cnksi.common.view.RoundRectImageView
                             android:id="@+id/iv_device_image"
                             android:layout_width="480px"
                             android:layout_height="330px" />

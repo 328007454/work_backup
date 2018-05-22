@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.cnksi.xscore.xsview.swipemenulist.SwipeMenuDragSortListView
+        <com.cnksi.core.view.swipemenulist.SwipeMenuDragSortListView
             android:id="@+id/swlv_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"

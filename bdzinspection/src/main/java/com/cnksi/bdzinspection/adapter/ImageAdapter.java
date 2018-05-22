@@ -11,7 +11,7 @@ import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsImgAdapterBinding;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.core.utils.BitmapUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 

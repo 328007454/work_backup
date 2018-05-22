@@ -13,7 +13,7 @@ import com.cnksi.bdzinspection.model.DefectDefine;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 

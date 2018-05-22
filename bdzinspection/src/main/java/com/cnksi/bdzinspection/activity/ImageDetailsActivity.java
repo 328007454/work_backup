@@ -3,7 +3,6 @@ package com.cnksi.bdzinspection.activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,9 +20,9 @@ import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.core.view.photo.PhotoView;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsview.photo.PhotoView;
 
 import java.io.File;
 import java.util.ArrayList;

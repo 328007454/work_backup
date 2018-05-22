@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.zhy.core.AutoLinearLayout;
+import com.zhy.autolayout.AutoLinearLayout;
 
 /**
  * Created by han on 2017/1/7.

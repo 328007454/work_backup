@@ -40,15 +40,14 @@ import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.DensityUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.cnksi.xscore.xsview.swipemenulist.SwipeMenu;
-import com.cnksi.xscore.xsview.swipemenulist.SwipeMenuCreator;
-import com.cnksi.xscore.xsview.swipemenulist.SwipeMenuDragSortListView.OnMenuItemClickListener;
-import com.cnksi.xscore.xsview.swipemenulist.SwipeMenuItem;
-import com.cnksi.xscore.xsview.swipemenulist.SwipeMenuLayout;
-import com.zhy.core.utils.AutoUtils;
+import com.cnksi.core.view.swipemenulist.SwipeMenu;
+import com.cnksi.core.view.swipemenulist.SwipeMenuCreator;
+import com.cnksi.core.view.swipemenulist.SwipeMenuDragSortListView.OnMenuItemClickListener;
+import com.cnksi.core.view.swipemenulist.SwipeMenuItem;
+import com.cnksi.core.view.swipemenulist.SwipeMenuLayout;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -310,8 +309,7 @@ public class YWWorkflowActivity extends BaseActivity {
         final SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
-            public void create(SwipeMenu menu, int position) {
-
+            public void create(SwipeMenu menu) {
                 createMenu(menu);
             }
 

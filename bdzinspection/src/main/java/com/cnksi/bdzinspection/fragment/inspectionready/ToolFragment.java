@@ -25,7 +25,7 @@ import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;

@@ -11,12 +11,12 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivitySignNameBinding;
 import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.xscore.xsview.LinePathView;
-import com.zhy.core.AutoFrameLayout;
-import com.zhy.core.AutoLinearLayout;
-import com.zhy.core.AutoRelativeLayout;
+import com.cnksi.core.view.LinePathView;
+import com.cnksi.xscore.xsutils.CToast;
+import com.zhy.autolayout.AutoFrameLayout;
+import com.zhy.autolayout.AutoLinearLayout;
+import com.zhy.autolayout.AutoRelativeLayout;
 
 import java.util.ArrayList;
 

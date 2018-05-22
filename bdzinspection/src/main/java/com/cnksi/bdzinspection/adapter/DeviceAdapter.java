@@ -30,7 +30,7 @@ import com.cnksi.bdzinspection.view.UnderLineLinearLayout;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.model.Device;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 
