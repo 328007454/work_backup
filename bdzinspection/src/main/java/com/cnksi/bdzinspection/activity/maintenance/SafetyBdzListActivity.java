@@ -11,12 +11,12 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.daoservice.BdzService;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyBdzListBinding;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.StringUtils;
@@ -119,12 +119,9 @@ public class SafetyBdzListActivity extends BaseActivity {
             String c = countMap.get(item.bdzid);
             holder.setText(R.id.tv_bdz_name, TextUtils.isEmpty(c) ? item.name : StringUtils.formatPartTextColor(item.name + "%s", Color.RED, "(" + c + ")"));
             holder.setImageResource(R.id.img_check, (currentItem != null && currentItem.bdzid == (item.bdzid)) ? R.drawable.xs_icon_select : R.drawable.xs_icon_unselect);
-            holder.getRootView().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    currentItem = item;
-                    notifyDataSetChanged();
-                }
+            holder.getRootView().setOnClickListener(v -> {
+                currentItem = item;
+                notifyDataSetChanged();
             });
         }
     }

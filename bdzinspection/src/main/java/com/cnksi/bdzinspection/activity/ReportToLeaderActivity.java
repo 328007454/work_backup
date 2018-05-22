@@ -13,16 +13,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.telephony.SmsManager;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityReportToLeaderBinding;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TestPerson;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DefectLevelUtils;

@@ -18,25 +18,26 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.SpacingService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Spacing;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.common.model.Device;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.common.model.Spacing;;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.Transceiver;
 import com.cnksi.sjjc.databinding.ActivityGetSendLetterBinding;
-import com.cnksi.sjjc.service.DeviceService;
-import com.cnksi.sjjc.service.ReportService;
-import com.cnksi.sjjc.service.SpacingService;
-import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.service.TransceiverService;
 import com.cnksi.sjjc.util.FunctionUtil;
 import com.cnksi.sjjc.util.KeyBoardUtils;
@@ -49,6 +50,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+;
 
 /**
  * Created by ironGe on 2016/6/12.
@@ -424,7 +427,7 @@ public class GetSendLetterActivity extends BaseActivity {
                     ReportService.getInstance().saveOrUpdate(report);
                     //2、修改任务
                     Task task = TaskService.getInstance().findById(currentTaskId);
-                    task.status = Task.TaskStatus.done.name();
+                    task.status = TaskStatus.done.name();
                     TaskService.getInstance().saveOrUpdate(task);
                     isNeedUpdateTaskState = true;
                     Intent intent = new Intent(_this, GetSendLetterReportActivity.class);

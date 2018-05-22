@@ -15,7 +15,7 @@ import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.UpDataToReportManager;
 import com.cnksi.common.model.Department;
-import com.cnksi.sjjc.service.DepartmentService;
+import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.sjjc.sync.KSyncConfig;
 
 import java.util.concurrent.ExecutorService;

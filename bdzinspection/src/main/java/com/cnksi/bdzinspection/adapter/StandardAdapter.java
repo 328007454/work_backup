@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsItemStandardBinding;
-import com.cnksi.bdzinspection.model.Standards;
+import com.cnksi.common.model.Standards;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;

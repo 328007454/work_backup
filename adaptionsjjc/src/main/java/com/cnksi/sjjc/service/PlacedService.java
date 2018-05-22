@@ -1,6 +1,8 @@
 package com.cnksi.sjjc.service;
 
 
+import com.cnksi.common.daoservice.BaseService;
+import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.sjjc.bean.Placed;
 
 import org.xutils.db.table.DbModel;

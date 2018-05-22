@@ -1,6 +1,6 @@
 package com.cnksi.sjjc.processor;
 
-import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.common.enmu.InspectionType;
 
 /**
  * Created by wastrel on 2016/6/14.

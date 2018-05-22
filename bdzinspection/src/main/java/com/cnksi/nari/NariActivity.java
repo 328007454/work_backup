@@ -24,12 +24,9 @@ import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.BdzService;
-import com.cnksi.bdzinspection.daoservice.UserService;
 import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
-import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.MyUUID;
@@ -37,9 +34,12 @@ import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.PermissionUtil;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.XZip;
+import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.model.Users;
 import com.cnksi.nari.model.BDPackage;
 import com.cnksi.nari.model.XSJH;
 import com.cnksi.nari.type.PackageStatus;
@@ -155,38 +155,32 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
             }
         });
-        binding.btnDownAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final BDPackage[] nodowns = adapter.getStatus(PackageStatus.nodown);
-                if (nodowns.length == 0) {
-                    Toast("没有需要下载的离线作业包！");
-                    return;
-                }
-                DialogUtils.showSureTipsDialog(currentActivity, null, "本次将会下载" + nodowns.length + "个离线作业包！", new OnViewClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        downLoad(nodowns);
-                    }
-                });
+        binding.btnDownAll.setOnClickListener(v -> {
+            final BDPackage[] nodowns = adapter.getStatus(PackageStatus.nodown);
+            if (nodowns.length == 0) {
+                Toast("没有需要下载的离线作业包！");
+                return;
             }
+            DialogUtils.showSureTipsDialog(currentActivity, null, "本次将会下载" + nodowns.length + "个离线作业包！", new OnViewClickListener() {
+                @Override
+                public void onClick(View v) {
+                    downLoad(nodowns);
+                }
+            });
         });
-        binding.btnUploadAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final BDPackage[] dones = adapter.getStatus(PackageStatus.done);
-                bindServiceFun();
-                if (dones.length == 0) {
-                    Toast("没有需要上传的离线作业包！");
-                    return;
-                }
-                DialogUtils.showSureTipsDialog(currentActivity, null, "本次将会有" + dones.length + "个离线作业包上传到PMS！", new OnViewClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        upload(dones);
-                    }
-                });
+        binding.btnUploadAll.setOnClickListener(v -> {
+            final BDPackage[] dones = adapter.getStatus(PackageStatus.done);
+            bindServiceFun();
+            if (dones.length == 0) {
+                Toast("没有需要上传的离线作业包！");
+                return;
             }
+            DialogUtils.showSureTipsDialog(currentActivity, null, "本次将会有" + dones.length + "个离线作业包上传到PMS！", new OnViewClickListener() {
+                @Override
+                public void onClick(View v) {
+                    upload(dones);
+                }
+            });
         });
     }
 
@@ -244,13 +238,16 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                         NariDataManager.getPackageManager().saveOrUpdate(saveList);
                     }
                 }
-                if (!isRefreshStatus)
+                if (!isRefreshStatus) {
                     Toast(tips);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 if (NARIHelper.isNetWorkException(e)) {
                     Toast("网络错误!参考错误代码：" + e.getMessage());
-                } else Toast("请求发生错误：" + e.getMessage());
+                } else {
+                    Toast("请求发生错误：" + e.getMessage());
+                }
                 LogUtil.writeLog("Nari", e);
                 e.printStackTrace();
                 LogUtil.writeLog("Nari", e);
@@ -262,12 +259,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             }
             final List<BDPackage> result = new ArrayList<>(packageHashMap.values());
 
-            Collections.sort(result, new Comparator<BDPackage>() {
-                @Override
-                public int compare(BDPackage o1, BDPackage o2) {
-                    return o1.createTime.compareTo(o2.createTime);
-                }
-            });
+            Collections.sort(result, (o1, o2) -> o1.createTime.compareTo(o2.createTime));
             runOnUiThread(() -> {
                 adapter.setList(result);
                 binding.swipeRefreshLayout.setRefreshing(false);
@@ -303,13 +295,12 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     }
 
     private void Toast(final String str) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (toast == null) toast = Toast.makeText(currentActivity, "", Toast.LENGTH_LONG);
-                toast.setText(str);
-                toast.show();
+        runOnUiThread(() -> {
+            if (toast == null) {
+                toast = Toast.makeText(currentActivity, "", Toast.LENGTH_LONG);
             }
+            toast.setText(str);
+            toast.show();
         });
     }
 
@@ -331,14 +322,21 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 for (DbModel user : users) {
                     String id = user.getString("pms_id");
                     String name = user.getString("name");
-                    if (!TextUtils.isEmpty(id)) ids = ids + id + ",";
-                    if (!TextUtils.isEmpty(name)) names = names + name + ",";
+                    if (!TextUtils.isEmpty(id)) {
+                        ids = ids + id + ",";
+                    }
+                    if (!TextUtils.isEmpty(name)) {
+                        names = names + name + ",";
+                    }
                 }
             }
-            if (ids.length() > 0) ids = ids.substring(0, ids.length() - 1);
+            if (ids.length() > 0) {
+                ids = ids.substring(0, ids.length() - 1);
+            }
             //如果没有取到当前报告的人员。则取当前登录人的Id和Name。
-            if (names.length() > 0) names = names.substring(0, names.length() - 1);
-            else {
+            if (names.length() > 0) {
+                names = names.substring(0, names.length() - 1);
+            } else {
                 names = model.getString("pms_name");
                 ids = model.getString("pms_id");
             }
@@ -349,7 +347,9 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             dataUtils.Build(fileName);
             CLog.e("生成data.xml成功");
             File f = new File(zipFile);
-            if (f.exists()) f.delete();
+            if (f.exists()) {
+                f.delete();
+            }
             if (!(f = new File(base, "data.json")).exists()) {
                 f.createNewFile();
             }
@@ -425,9 +425,13 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         } catch (Exception e) {
             e.printStackTrace();
             LogUtil.writeLog("Nari", e);
-            if (e.getMessage().contains("1140")) Toast("该任务已经上传过或服务器状态异常，无法上传");
-            else if (NARIHelper.isNetWorkException(e)) Toast("网络错误！参考代码：" + e.getMessage());
-            else Toast("上传错误！参考代码:" + e.getMessage());
+            if (e.getMessage().contains("1140")) {
+                Toast("该任务已经上传过或服务器状态异常，无法上传");
+            } else if (NARIHelper.isNetWorkException(e)) {
+                Toast("网络错误！参考代码：" + e.getMessage());
+            } else {
+                Toast("上传错误！参考代码:" + e.getMessage());
+            }
         }
         return false;
     }
@@ -435,36 +439,34 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     private void downLoad(final BDPackage... bdPackages) {
         final Dialog dialog = CustomerDialog.showProgress(currentActivity, "正在下载第1个,共" + bdPackages.length + "个...");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                int i = 1;
-                for (BDPackage bdPackage : bdPackages) {
-                    File f = new File(bdPackage.getDatabasePath());
-                    if (f.exists() && f.length() > 5 * 1024) {
+        mFixedThreadPoolExecutor.execute(() -> {
+            int i = 1;
+            for (BDPackage bdPackage : bdPackages) {
+                File f = new File(bdPackage.getDatabasePath());
+                if (f.exists() && f.length() > 5 * 1024) {
+                    createTask(bdPackage);
+                } else {
+                    ResultSet<String> rs = NARIHelper.downloadBDPackage(bdPackage);
+                    if (rs.getStatus() == ResultSet.SUCCESS) {
+                        Toast("下载完成！");
+                        bdPackage.downloadTime = DateUtils.getCurrentLongTime();
                         createTask(bdPackage);
                     } else {
-                        ResultSet<String> rs = NARIHelper.downloadBDPackage(bdPackage);
-                        if (rs.getStatus() == ResultSet.SUCCESS) {
-                            Toast("下载完成！");
-                            bdPackage.downloadTime = DateUtils.getCurrentLongTime();
-                            createTask(bdPackage);
+                        if (NARIHelper.isNetWorkException(rs.getException())) {
+                            Toast("网络错误!参考错误异常：" + rs.getException().getMessage());
                         } else {
-                            if (NARIHelper.isNetWorkException(rs.getException())) {
-                                Toast("网络错误!参考错误异常：" + rs.getException().getMessage());
-                            } else
-                                Toast(rs.getDesc() + " 参考错误：" + rs.getException().getMessage());
+                            Toast(rs.getDesc() + " 参考错误：" + rs.getException().getMessage());
                         }
                     }
-                    i++;
-                    if (i <= bdPackages.length) {
-                        final int finalI = i;
-                        runOnUiThread(() -> ((TextView) dialog.findViewById(com.cnksi.xscore.R.id.tv_tips)).setText("正在下载第" + finalI + "个, 共" + bdPackages.length + "个..."));
-                    }
                 }
-                runOnUiThread(() -> adapter.notifyDataSetChanged());
-                dismissLoading();
+                i++;
+                if (i <= bdPackages.length) {
+                    final int finalI = i;
+                    runOnUiThread(() -> ((TextView) dialog.findViewById(com.cnksi.xscore.R.id.tv_tips)).setText("正在下载第" + finalI + "个, 共" + bdPackages.length + "个..."));
+                }
             }
+            runOnUiThread(() -> adapter.notifyDataSetChanged());
+            dismissLoading();
         });
     }
 

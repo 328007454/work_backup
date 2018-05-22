@@ -10,25 +10,26 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.DialogPressAdapter;
 import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.common.model.Bdz;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.databinding.ActivityAddTaskBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.service.BdzService;
 import com.cnksi.sjjc.service.TaskExtendService;
-import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -319,7 +320,7 @@ public class AddTaskActivity extends BaseActivity {
             }
             task = new Task(UUID.randomUUID().toString(), mTaskBDZ.bdzid, mTaskBDZ.name, mPressureDetectionType, mPressureDetectionName,
                     DateUtils.getFormatterTime(inspectionDate + " 00:00:00", DateUtils.yyyy_MM_dd_HH_mm_ss),
-                    Task.TaskStatus.undo.name());
+                    TaskStatus.undo.name());
         } else {
             int todaySameTaskCount = TaskService.getInstance().getCountSameTaks(mInspectionType.name(), mTaskBDZ.bdzid, inspectionDate);
             if (todaySameTaskCount > 0) {
@@ -328,7 +329,7 @@ public class AddTaskActivity extends BaseActivity {
             }
             task = new Task(UUID.randomUUID().toString(), mTaskBDZ.bdzid, mTaskBDZ.name, mInspectionType.name(), mInspectionType.value,
                     DateUtils.getFormatterTime(inspectionDate + " 00:00:00", DateUtils.yyyy_MM_dd_HH_mm_ss),
-                    Task.TaskStatus.undo.name());
+                    TaskStatus.undo.name());
             if (mInspectionType.equals(InspectionType.SBJC_10)) {
                 taskExpand = new TaskExtend(task.taskid);
                 if (mTaskBinding.neizuYes.isChecked()) {

@@ -2,12 +2,13 @@ package com.cnksi.bdzinspection.model;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.Department;
+import com.cnksi.common.model.Users;
 import com.cnksi.xscore.xsutils.DateUtils;
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 import org.xutils.db.table.DbModel;
 
 
@@ -19,7 +20,7 @@ import org.xutils.db.table.DbModel;
 public class ReportSignname extends BaseModel {
     // ID
     public static final String ID = "id";
-    @Column(name = ID,isId = true)
+    @Column(name = ID, isId = true)
     private String id;
     // 报告ID
     public static final String REPORTID = "report_id";
@@ -72,7 +73,7 @@ public class ReportSignname extends BaseModel {
         this.dpetId = model.getString(Users.DEPT_ID);
         this.dpetName = model.getString(Department.NAME);
         this.name = model.getString(Users.USERNAME);
-        this.id = FunctionUtil.getPrimarykey();
+        this.id = getPrimarykey();
         this.createTime = DateUtils.getCurrentLongTime();
         this.account = model.getString("account");
     }
@@ -228,6 +229,6 @@ public class ReportSignname extends BaseModel {
 
     public String getAccount() {
 
-        return  account;
+        return account;
     }
 }

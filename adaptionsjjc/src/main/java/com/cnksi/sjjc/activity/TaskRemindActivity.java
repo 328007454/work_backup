@@ -17,7 +17,7 @@ import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
 import com.cnksi.sjjc.databinding.ActivityTaskRemindBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.sjjc.fragment.TaskRemindFragment;
 import com.cnksi.sjjc.inter.OnFragmentEventListener;
 import com.zhy.autolayout.utils.AutoUtils;

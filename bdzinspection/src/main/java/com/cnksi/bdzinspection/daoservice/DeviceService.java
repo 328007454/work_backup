@@ -3,7 +3,7 @@ package com.cnksi.bdzinspection.daoservice;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Report;

@@ -9,19 +9,19 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.databinding.AnimalLayoutBinding;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;
-import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.ex.DbException;
 
@@ -168,8 +168,9 @@ public class AnimalReportActivity extends BaseReportActivity {
                     jianChaPics = jianChaPics.substring(1, jianChaPics.length());
                 }
                 for (HoleRecord record : mHoleList) {
-                    if (currentReportId.equalsIgnoreCase(record.reportId))
+                    if (currentReportId.equalsIgnoreCase(record.reportId)) {
                         discoverHoleCount++;
+                    }
                     if (!TextUtils.isEmpty(record.hole_images) && currentReportId.equals(record.reportId)) {
                         if (TextUtils.isEmpty(disHolePics)) {
                             disHolePics += record.hole_images;

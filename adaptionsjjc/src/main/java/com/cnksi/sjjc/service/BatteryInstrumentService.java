@@ -1,12 +1,10 @@
 package com.cnksi.sjjc.service;
 
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.sjjc.CustomApplication;
-import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryInstrument;
-import com.cnksi.sjjc.databinding.LauncherIncludeBinding;
 
-import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;

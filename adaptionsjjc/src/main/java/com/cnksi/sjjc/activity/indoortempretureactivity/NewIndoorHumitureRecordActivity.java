@@ -9,20 +9,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.cnksi.common.daoservice.BaseService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.IndoorWeathearAdapter;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.IndoorBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.service.BaseService;
-import com.cnksi.sjjc.service.ReportService;
-import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.StringUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -77,8 +78,9 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 mReport = ReportService.getInstance().findById(currentReportId);
-                if (null != mReport)
+                if (null != mReport) {
                     mReport.starttime = DateUtils.getCurrentLongTime();
+                }
                 mReportList = BaseService.getInstance(ReportSnwsd.class).selector().and(ReportSnwsd.REPORT_ID, "=", currentReportId).findAll();
                 if (null == mReportList || mReportList.isEmpty()) {
                     mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
@@ -145,7 +147,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
 
         try {
             ReportService.getInstance().saveOrUpdate(mReport);
-            TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
         } catch (DbException e) {
             Log.d("Tag", e.getMessage());
         }

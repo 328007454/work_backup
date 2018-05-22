@@ -6,13 +6,14 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.databinding.ActivityCopybasedataBinding;
 import com.cnksi.sjjc.util.StringUtils;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.sjjc.service.ReportService;
+
 import org.xutils.ex.DbException;
 
 /**

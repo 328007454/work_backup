@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.BatteryDetails;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 
 import org.xutils.common.util.KeyValue;

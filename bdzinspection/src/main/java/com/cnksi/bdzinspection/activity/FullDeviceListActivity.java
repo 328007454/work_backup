@@ -19,7 +19,6 @@ import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.TaskService;
@@ -28,7 +27,6 @@ import com.cnksi.bdzinspection.fragment.DeviceListFragment;
 import com.cnksi.bdzinspection.inter.DialogInputClickListener;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.common.model.Task;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.bdzinspection.utils.DialogUtil;
@@ -37,8 +35,10 @@ import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShakeListener;
 import com.cnksi.bdzinspection.utils.ShakeListener.OnShakeListener;
-import com.cnksi.common.SystemConfig;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.model.Task;
 import com.cnksi.sync.KSyncConfig;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
@@ -164,31 +164,25 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     }
 
     private void setHasSortOrSplit() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<DbModel> models = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);
-                    if (models != null) {
-                        for (DbModel model : models) {
-                            if (StringUtils.nullTo(model.getString("type"), "").contains("team_leader")) {
-                                isLeader = true;
-                                break;
-                            }
+        mFixedThreadPoolExecutor.execute(() -> {
+            try {
+                List<DbModel> models = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);
+                if (models != null) {
+                    for (DbModel model : models) {
+                        if (StringUtils.nullTo(model.getString("type"), "").contains("team_leader")) {
+                            isLeader = true;
+                            break;
                         }
                     }
-                    if (isLeader) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (currentPosition < 2)
-                                    binding.ibtnSort.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                } catch (DbException e) {
-                    e.printStackTrace();
                 }
+                if (isLeader) {
+                    runOnUiThread(() -> {
+                        if (currentPosition < 2)
+                            binding.ibtnSort.setVisibility(View.VISIBLE);
+                    });
+                }
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
     }

@@ -7,12 +7,12 @@ import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.activity.BaseReportActivity;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.GztzReportBinding;
-import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 
 import org.xutils.ex.DbException;

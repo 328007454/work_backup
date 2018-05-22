@@ -17,7 +17,7 @@ import com.cnksi.ksynclib.KUsbSync;
 import com.cnksi.sjjc.R;
 import com.cnksi.common.model.Department;
 import com.cnksi.sjjc.databinding.ActivityUsbSyncBinding;
-import com.cnksi.sjjc.service.DepartmentService;
+import com.cnksi.common.daoservice.DepartmentService;
 
 import static com.cnksi.ksynclib.activity.KSyncAJActivity.DELETE_FINISHED;
 

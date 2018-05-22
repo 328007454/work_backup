@@ -8,7 +8,7 @@ import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.service.BaseService;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.util.FunctionUtils;
 

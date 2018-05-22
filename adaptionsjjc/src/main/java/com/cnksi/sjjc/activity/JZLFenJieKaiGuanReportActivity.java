@@ -7,22 +7,22 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.Report;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.JZLFenJieKaiGuanContentAdapter;
 import com.cnksi.sjjc.bean.CdbhclValue;
-import com.cnksi.sjjc.bean.CopyItem;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.databinding.JzlfenjieLayoutBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
-import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportCdbhclService;
 import com.cnksi.sjjc.service.ReportJzlbyqfjkgService;
-import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -35,8 +35,8 @@ import java.util.List;
  * 交直流分接开关、差动保护、室内温湿度报告
  */
 public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
-    public static final int ANIMATION = 0X100;
-    public static final int VIBRATOR = ANIMATION + 1;
+
+
 
 
     /**
@@ -47,10 +47,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
      * 差动保护差流数集
      */
     private List<ReportCdbhcl> exitCdbhclList;
-    /**
-     * 以保存的差留值被清空的集合
-     */
-    private List<ReportCdbhcl> changedCdbhcList = new ArrayList<ReportCdbhcl>();
+
     /**
      * 差动保护设备数集
      */

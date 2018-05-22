@@ -17,11 +17,12 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
-import com.cnksi.common.model.Task;
-import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.model.Task;
+import com.cnksi.common.model.Users;
 import com.cnksi.core.utils.SqliteUtils;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
@@ -196,7 +197,7 @@ public class TaskRemindFragment extends BaseFragment {
 
                 mDataList =selector.findAll();
 
-                List<Users> users = XunshiApplication.getDbUtils().selector(Users.class).where(Users.DLT, "=", "0").findAll();
+                List<Users> users = UserService.getInstance().findAll();
                 for (Users user : users) {
                     userMap.put(user.account, user.username);
                 }
@@ -265,9 +266,9 @@ public class TaskRemindFragment extends BaseFragment {
     private void initOnClick() {
         binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
             Task mTask = (Task) parent.getItemAtPosition(position);
-            if (null != mOnFragmentEventListener)
+            if (null != mOnFragmentEventListener) {
                 mOnFragmentEventListener.startTask(mTask);
-            else {
+            } else {
                 CToast.showShort("数据不完整，请返回重新进入该界面");
             }
         });

@@ -10,7 +10,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsAddDefectDefineItemBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.bdzinspection.model.DevicePart;
+import com.cnksi.common.model.DevicePart;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.zhy.core.utils.AutoUtils;

@@ -2,10 +2,9 @@ package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.bdzinspection.model.SwitchPic;
+import com.cnksi.common.model.SwitchPic;
 
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

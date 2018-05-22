@@ -21,9 +21,9 @@ import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;;
 import com.cnksi.sjjc.databinding.ActivityDevicesExpadableListBinding;
-import com.cnksi.sjjc.enmu.PMSDeviceType;
-import com.cnksi.sjjc.service.DeviceService;
-import com.cnksi.sjjc.service.SpacingService;
+import com.cnksi.common.enmu.PMSDeviceType;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.sjjc.util.StringUtils;
 
 import org.xutils.db.sqlite.SqlInfo;

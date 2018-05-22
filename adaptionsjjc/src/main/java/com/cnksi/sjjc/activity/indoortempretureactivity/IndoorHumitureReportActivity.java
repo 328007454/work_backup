@@ -5,15 +5,15 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 
+import com.cnksi.common.daoservice.BaseService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseReportActivity;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.databinding.ReportIndoorBinding;
 import com.cnksi.sjjc.databinding.ReportIndoorIncludeBinding;
-import com.cnksi.sjjc.service.BaseService;
-import com.cnksi.sjjc.service.ReportService;
 
 import org.xutils.ex.DbException;
 

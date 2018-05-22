@@ -23,7 +23,7 @@ import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityHwcwNewBinding;
 import com.cnksi.sjjc.databinding.ItemHotDeviceHwcwBinding;
-import com.cnksi.sjjc.enmu.PMSDeviceType;
+import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.NewHwcwService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.GsonUtil;

@@ -15,7 +15,7 @@ import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.DefectControlActivity;
 import com.cnksi.sjjc.activity.NewLauncherActivity;
 import com.cnksi.sjjc.activity.TypeListActivity;
-import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.sjjc.sync.KSyncConfig;
 import com.cnksi.workticket.activity.TicketDateHomeActivity;
 

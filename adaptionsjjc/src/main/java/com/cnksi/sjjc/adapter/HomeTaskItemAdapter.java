@@ -9,12 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.HomeTaskItemBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
 
 import java.util.List;
 
@@ -50,20 +51,23 @@ public class HomeTaskItemAdapter extends BaseLinearBindingAdapter<HomeTaskItemBi
     private CharSequence getTaskStatus(Task task) {
         CharSequence status = "";
         if ("workticket".equals(task.inspection)) {
-            if ("wwc".equals(task.status))
+            if ("wwc".equals(task.status)) {
                 status = StringUtils.changeTextColor("未完成", colorUndo);
-            else if ("yzt".equals(task.status))
+            } else if ("yzt".equals(task.status)) {
                 status = StringUtils.changeTextColor("已暂停", colorUndo);
-
-            else if ("ywc".equals(task.status))
+            } else if ("ywc".equals(task.status)) {
                 status = StringUtils.changeTextColor("已完成", colorDone);
-            else if ("ytz".equals(task.status))
+            } else if ("ytz".equals(task.status)) {
                 status = StringUtils.changeTextColor("已停止", colorUndo);
-            else status = StringUtils.changeTextColor("待审核", colorUndo);
+            } else {
+                status = StringUtils.changeTextColor("待审核", colorUndo);
+            }
         } else {
-            if (Task.TaskStatus.done.name().equals(task.status)) {
+            if (TaskStatus.done.name().equals(task.status)) {
                 status = StringUtils.changeTextColor("已完成", colorDone);
-            } else status = StringUtils.changeTextColor("待执行", colorUndo);
+            } else {
+                status = StringUtils.changeTextColor("待执行", colorUndo);
+            }
         }
 
         return status;
@@ -128,7 +132,8 @@ public class HomeTaskItemAdapter extends BaseLinearBindingAdapter<HomeTaskItemBi
     public void notifyDataSetChanged() {
         container.removeView(noDataView);
         super.notifyDataSetChanged();
-        if (container.getChildCount() == 0)
+        if (container.getChildCount() == 0) {
             container.addView(noDataView);
+        }
     }
 }

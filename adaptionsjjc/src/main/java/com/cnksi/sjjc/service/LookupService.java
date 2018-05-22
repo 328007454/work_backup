@@ -1,8 +1,9 @@
 package com.cnksi.sjjc.service;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.sjjc.bean.Lookup;
-import com.cnksi.sjjc.enmu.LookUpType;
+import com.cnksi.common.enmu.LookUpType;
 
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author terry
  *
  */
-public class LookupService extends  BaseService<Lookup> {
+public class LookupService extends BaseService<Lookup> {
 
 	public static LookupService mInstance;
 

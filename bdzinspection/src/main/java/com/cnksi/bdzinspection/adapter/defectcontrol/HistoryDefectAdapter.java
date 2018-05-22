@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsHistoryDefectItemBinding;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.core.utils.BitmapUtils;

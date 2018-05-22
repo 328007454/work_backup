@@ -5,16 +5,16 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.databinding.ReportCopyvalueBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.processor.CopyDataInterface;
 import com.cnksi.sjjc.processor.ProcessorFactory;
-import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.util.CoreConfig;
 
 import org.xutils.ex.DbException;

@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.fragment.launcher;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -13,19 +12,19 @@ import android.widget.ListView;
 
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Task;
+import com.cnksi.common.model.vo.TaskStatistic;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BaseBindingAdapter;
-import com.cnksi.common.model.Task;
-import com.cnksi.sjjc.bean.TaskStatistic;
 import com.cnksi.sjjc.databinding.FragmentMaintenanceBinding;
 import com.cnksi.sjjc.databinding.NewLaunchTaskItemBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
-import com.cnksi.sjjc.service.TaskService;
 
 import java.util.List;
 
@@ -99,8 +98,9 @@ public class MaintenanceFragment extends BaseCoreFragment {
                             @Override
                             public void run() {
                                 maintenanceBinding.progress.setProgress(i <= percent ? i++ : percent);
-                                if (i <= percent)
+                                if (i <= percent) {
                                     mHandler.postDelayed(this, 100);
+                                }
                             }
                         });
                     }
@@ -158,16 +158,11 @@ public class MaintenanceFragment extends BaseCoreFragment {
             binding.tvBdz.setText(item.bdzname);
             binding.tvName.setText(item.inspection_name);
             binding.tvDate.setText(DateUtils.getFormatterTime(item.schedule_time));
-            boolean isDone = Task.TaskStatus.done.name().equals(item.status);
+            boolean isDone = TaskStatus.done.name().equals(item.status);
             binding.tvStatus.setText(isDone ? "已完成" : "未完成");
             binding.tvStatus.setTextColor(isDone ? colorDone : colorUndo);
             binding.ivStatus.setBackground(isDone ? drawableDone : drawableUndo);
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startTask(item);
-                }
-            });
+            binding.getRoot().setOnClickListener(v -> startTask(item));
         }
 
         private void startTask(Task task) {

@@ -4,21 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.enmu.PMSDeviceType;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.DevicePart;
 import com.cnksi.sjjc.bean.DeviceStandards;
 import com.cnksi.sjjc.bean.Lookup;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Standards;
-import com.cnksi.common.model.Task;
-import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.DevicePartService;
-import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.StandardService;
 import com.cnksi.sjjc.util.DateUtils;
 import com.cnksi.sjjc.view.ChartDialog;
@@ -99,12 +100,14 @@ public abstract class CopyDataInterface {
         // 1、从库中查询设备部件
         List<DevicePart> mDevicePartList = DevicePartService.getInstance()
                 .getDevicePartListFromDb(mCurrentDevice.getString("dtid"));
-        if (null == mDevicePartList)
+        if (null == mDevicePartList) {
             mDevicePartList = new ArrayList<DevicePart>();
+        }
         List<DevicePart> modelPartList = DevicePartService.getInstance()
                 .getDevicePartList(mCurrentDevice.getString("deviceid"));
-        if (null != modelPartList)
+        if (null != modelPartList) {
             mDevicePartList.addAll(modelPartList);
+        }
         return mDevicePartList;
     }
 
@@ -138,7 +141,7 @@ public abstract class CopyDataInterface {
      * @throws DbException
      */
     public void finishTask(String taskId, String remark) throws DbException {
-        CustomApplication.getInstance().getDbManager().update(Task.class, WhereBuilder.b(Task.TASKID, "=", taskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+        CustomApplication.getInstance().getDbManager().update(Task.class, WhereBuilder.b(Task.TASKID, "=", taskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
         CustomApplication.getInstance().getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
     }
 
@@ -204,10 +207,11 @@ public abstract class CopyDataInterface {
         HashMap<String, Boolean> copyMap = new HashMap<String, Boolean>();
         try {
             List<DbModel> dataList = DeviceService.getInstance().getCopyDeviceDbModels(reportId, bdzId, type, filter);
-            if (dataList != null)
+            if (dataList != null) {
                 for (DbModel m : dataList) {
                     copyMap.put(m.getString(Device.DEVICEID), true);
                 }
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -289,16 +293,21 @@ public abstract class CopyDataInterface {
             List<Float> tempValues = new ArrayList<>();
             String val="";
             for (DbModel model : resultModel) {
-                if ("Y".equals(item.val))
+                if ("Y".equals(item.val)) {
                     val=model.getString("val");
-                if ("Y".equals(item.val_a))
+                }
+                if ("Y".equals(item.val_a)) {
                     val=model.getString("A");
-                if ("Y".equals(item.val_b))
+                }
+                if ("Y".equals(item.val_b)) {
                     val=model.getString("B");
-                if ("Y".equals(item.val_c))
+                }
+                if ("Y".equals(item.val_c)) {
                     val=model.getString("C");
-                if ("Y".equals(item.val_o))
+                }
+                if ("Y".equals(item.val_o)) {
                     val=model.getString("O");
+                }
                 if (!TextUtils.isEmpty(val)&&!("-1".equalsIgnoreCase(val))){
                     resultValues.add(Float.valueOf(val));
                     xValues.add(DateUtils.formatDateTime(model.getString("time"), "MM/dd"));

@@ -13,8 +13,8 @@ import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
-import com.cnksi.sjjc.enmu.PMSDeviceType;
-import com.cnksi.sjjc.service.DeviceService;
+import com.cnksi.common.enmu.PMSDeviceType;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.service.gztz.PmsXianluService;
 

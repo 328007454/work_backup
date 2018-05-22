@@ -17,7 +17,7 @@ import com.cnksi.bdzinspection.adapter.inspectionready.ReadyExistDefectAdapter.O
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.databinding.XsFragmentPinnedHeaderListBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsview.PinnedHeaderListView.OnItemClickListener;

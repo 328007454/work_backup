@@ -8,12 +8,11 @@ import android.view.View;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.Config;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.TypeAdapter;
 import com.cnksi.sjjc.bean.TJWT;
 import com.cnksi.sjjc.databinding.ActivityTypeListBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.TJWTService;
 

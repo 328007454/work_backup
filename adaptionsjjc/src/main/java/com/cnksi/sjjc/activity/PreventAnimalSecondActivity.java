@@ -7,11 +7,14 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.DateUtils;
@@ -20,14 +23,10 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityPreventSecondAnimalBinding;
 import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;
-import com.cnksi.sjjc.service.ReportService;
-import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -48,7 +47,6 @@ public class PreventAnimalSecondActivity extends BaseActivity {
     //
     private List<HoleRecord> mHoleList;
 
-    private List<HoleRecord> clearHoleList;
 
     private Report report;
 
@@ -164,7 +162,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                 PreventionService.getInstance().saveOrUpdate(preventionRecord);
                 report.endtime = DateUtils.getCurrentLongTime();
                 ReportService.getInstance().saveOrUpdate(report);
-                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
             } catch (DbException e) {
                 e.printStackTrace();
             }
@@ -195,20 +193,35 @@ public class PreventAnimalSecondActivity extends BaseActivity {
 
     private void checkStatus() {
 
-        if (0 == preventionRecord.switchStatus) binding.radioSwitch.check(R.id.switch_yes);
-        else binding.radioSwitch.check(R.id.switch_no);
+        if (0 == preventionRecord.switchStatus) {
+            binding.radioSwitch.check(R.id.switch_yes);
+        } else {
+            binding.radioSwitch.check(R.id.switch_no);
+        }
 
-        if (0 == preventionRecord.inroomStatus) binding.radioIndoor.check(R.id.indoor_yes);
-        else binding.radioIndoor.check(R.id.indoor_no);
+        if (0 == preventionRecord.inroomStatus) {
+            binding.radioIndoor.check(R.id.indoor_yes);
+        } else {
+            binding.radioIndoor.check(R.id.indoor_no);
+        }
 
-        if (0 == preventionRecord.outroomStatus) binding.radioOutdoor.check(R.id.outdoor_yes);
-        else binding.radioOutdoor.check(R.id.outdoor_no);
+        if (0 == preventionRecord.outroomStatus) {
+            binding.radioOutdoor.check(R.id.outdoor_yes);
+        } else {
+            binding.radioOutdoor.check(R.id.outdoor_no);
+        }
 
-        if (0 == preventionRecord.doorWindowStatus) binding.radioWindow.check(R.id.window_yes);
-        else binding.radioWindow.check(R.id.window_no);
+        if (0 == preventionRecord.doorWindowStatus) {
+            binding.radioWindow.check(R.id.window_yes);
+        } else {
+            binding.radioWindow.check(R.id.window_no);
+        }
 
-        if (0 == preventionRecord.ratsbaneStatus) binding.radioRatsbane.check(R.id.ratsbane_yes);
-        else binding.radioRatsbane.check(R.id.ratsbane_no);
+        if (0 == preventionRecord.ratsbaneStatus) {
+            binding.radioRatsbane.check(R.id.ratsbane_yes);
+        } else {
+            binding.radioRatsbane.check(R.id.ratsbane_no);
+        }
 
         if (0 == preventionRecord.mousetrapStatus) {
             binding.radioMousetrap.check(R.id.mousetrap_yes);
@@ -226,17 +239,20 @@ public class PreventAnimalSecondActivity extends BaseActivity {
             int countCurrentReportId = 0;
             for (HoleRecord record : mHoleList) {
                 if (currentReportId.equals(record.reportId)) {
-                    if (countCurrentReportId >= 1)
+                    if (countCurrentReportId >= 1) {
                         problemPosition = problemPosition + "\n";
+                    }
                     problemPosition += ++countCurrentReportId + "、" + record.location + "_" + record.hole_detail + "_" + record.problem;
                 }
                 if (currentReportId.equals(record.clear_reportid) && "1".equals(record.status)) {
-                    if (i >= 1)
+                    if (i >= 1) {
                         morePostion = morePostion + "\n";
+                    }
                     morePostion += ++i + "、" + record.location + "_" + record.hole_detail + "_" + record.problem + "_" + "已清除";
                 }
-                if (null != preventionRecord && !TextUtils.isEmpty(preventionRecord.clearInfo))
+                if (null != preventionRecord && !TextUtils.isEmpty(preventionRecord.clearInfo)) {
                     morePostion = preventionRecord.clearInfo;
+                }
             }
             if (problemPosition.endsWith(",")) {
                 problemPosition = problemPosition.substring(0, problemPosition.length() - 1);

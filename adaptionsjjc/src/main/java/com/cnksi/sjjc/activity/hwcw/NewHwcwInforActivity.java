@@ -10,19 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
 import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
@@ -30,12 +34,9 @@ import com.cnksi.sjjc.databinding.ActivityNewhwcwInforBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.NewHwcwService;
-import com.cnksi.sjjc.service.TaskService;
-import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.GsonUtil;
 import com.cnksi.sjjc.util.OnViewClickListener;
-import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -195,7 +196,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
             CustomApplication.getInstance().getDbManager().saveOrUpdate(mHwcwBaseInfo);
             if (isUpdateReport) {
                 CustomApplication.getInstance().getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", currentReportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
-                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
             }
         } catch (DbException e) {
             e.printStackTrace();

@@ -7,21 +7,22 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.util.StringUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityDifferentialMotionRecordBinding;
-import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportJzlbyqfjkgService;
-import com.cnksi.sjjc.service.ReportService;
-import com.cnksi.sjjc.service.TaskService;
+import com.cnksi.sjjc.util.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -177,7 +178,7 @@ public class NewTransformRecordActivity extends BaseActivity {
                 }
             }
             try {
-                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
                 setResult(RESULT_OK);
             } catch (DbException e) {
                 e.printStackTrace();

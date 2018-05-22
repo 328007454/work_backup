@@ -5,9 +5,9 @@ import android.content.Intent;
 
 import com.cnksi.sjjc.activity.CopyAllValueActivity3;
 import com.cnksi.sjjc.bean.Standards;
-import com.cnksi.sjjc.service.CopyItemService;
-import com.cnksi.sjjc.service.CopyResultService;
-import com.cnksi.sjjc.service.DeviceService;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.DeviceService;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

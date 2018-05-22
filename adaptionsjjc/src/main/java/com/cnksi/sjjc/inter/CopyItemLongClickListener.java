@@ -2,7 +2,7 @@ package com.cnksi.sjjc.inter;
 
 import android.view.View;
 
-import com.cnksi.sjjc.bean.CopyItem;
+import com.cnksi.common.model.CopyItem;
 
 
 public interface  CopyItemLongClickListener<T> {

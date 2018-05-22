@@ -16,7 +16,7 @@ import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment;
 import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment.OnFunctionButtonClickListener;
 import com.cnksi.bdzinspection.fragment.defectcontrol.RecordDefectFragment;
 import com.cnksi.bdzinspection.fragment.defectcontrol.TrackDefectFragment;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;

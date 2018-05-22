@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjlSjly;
-import com.cnksi.sjjc.service.BaseService;
+import com.cnksi.common.daoservice.BaseService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.ex.DbException;

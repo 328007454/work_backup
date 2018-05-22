@@ -1,7 +1,7 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.DeviceStandards;
+import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.bdzinspection.model.DeviceStandardsOper;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.FileUtils;

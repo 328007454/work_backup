@@ -9,12 +9,12 @@ import android.view.View;
 import android.widget.PopupWindow;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.base.BaseRecyclerDataBindingAdapter;
 import com.cnksi.bdzinspection.adapter.PersonAdapter;
+import com.cnksi.bdzinspection.adapter.base.BaseRecyclerDataBindingAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.databinding.XsRecyclerviewBinding;
-import com.cnksi.bdzinspection.model.Users;
+import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.model.Users;
 
 import org.xutils.ex.DbException;
 
@@ -37,8 +37,9 @@ public class PersonListUtils implements BaseRecyclerDataBindingAdapter.OnItemCli
     }
 
     public void disMissPopWindow() {
-        if (null != popupWindow)
+        if (null != popupWindow) {
             popupWindow.dismiss();
+        }
     }
 
     private int height;
@@ -108,7 +109,7 @@ public class PersonListUtils implements BaseRecyclerDataBindingAdapter.OnItemCli
         this.context = context;
         if (popupWindow == null) {
             popupWindow = new PopupWindow(context);
-            XsRecyclerviewBinding = XsRecyclerviewBinding.inflate(context.getLayoutInflater());
+            XsRecyclerviewBinding = com.cnksi.bdzinspection.databinding.XsRecyclerviewBinding.inflate(context.getLayoutInflater());
             personAdapter = new PersonAdapter(XsRecyclerviewBinding.rvPersonList, currentInputPersons, R.layout.xs_item_device_param_type);
             personAdapter.setOnItemClickListener(this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -138,24 +139,16 @@ public class PersonListUtils implements BaseRecyclerDataBindingAdapter.OnItemCli
      *                    查询当前部门所有的成员
      */
     public void initPersonData(final String currentDept) {
-        XunshiApplication.getFixedThreadPoolExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mUserses = DepartmentService.getInstance().getAllUsers(currentDept);
-                    context.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            personAdapter.setList(mUserses);
-                        }
-                    });
-                } catch (DbException e) {
-                    mUserses = new ArrayList<Users>();
-                    e.printStackTrace();
-                }
-                if (mUserses == null) {
-                    mUserses = new ArrayList<Users>();
-                }
+        XunshiApplication.getFixedThreadPoolExecutor().execute(() -> {
+            try {
+                mUserses = DepartmentService.getInstance().getAllUsers(currentDept);
+                context.runOnUiThread(() -> personAdapter.setList(mUserses));
+            } catch (DbException e) {
+                mUserses = new ArrayList<>();
+                e.printStackTrace();
+            }
+            if (mUserses == null) {
+                mUserses = new ArrayList<>();
             }
         });
     }
@@ -168,8 +161,9 @@ public class PersonListUtils implements BaseRecyclerDataBindingAdapter.OnItemCli
 
     public void checkInputPerson(String person) {
         List<Users> mUsers = new ArrayList<>();
-        if (mUserses.isEmpty())
+        if (mUserses.isEmpty()) {
             return;
+        }
         for (Users user : mUserses) {
             if (user.username.contains(person)) {
                 mUsers.add(user);

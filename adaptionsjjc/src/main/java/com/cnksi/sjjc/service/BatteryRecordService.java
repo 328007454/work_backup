@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.service;
 
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.sjjc.bean.BatteryRecord;
 
 import org.xutils.db.Selector;

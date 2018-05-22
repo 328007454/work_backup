@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.utils.StringUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 
@@ -193,7 +194,9 @@ public class Task extends BaseModel {
 
     public boolean isMyCreate() {
         String[] accounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "").split(",");
-        if (TextUtils.isEmpty(createAccount)) return false;
+        if (TextUtils.isEmpty(createAccount)) {
+            return false;
+        }
         List<String> createAccounts = Arrays.asList(createAccount.split(","));
         for (String s : accounts) {
             if (createAccounts.contains(s)) {
@@ -224,20 +227,5 @@ public class Task extends BaseModel {
         return !StringUtils.isEmptys(membersAccount, createAccount);
     }
 
-    /**
-     * 任务状态
-     */
-    public enum TaskStatus {
-        undo("未巡视"), doing("巡视中"), done("已完成");
-        private final String value;
 
-        TaskStatus(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
-    }
 }

@@ -30,7 +30,7 @@ import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.Config;
