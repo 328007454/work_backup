@@ -35,8 +35,9 @@ public class DialogBDZAdapter extends BaseAdapter<Bdz> {
         holder.getRootView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != itemClickListener)
+                if (null != itemClickListener) {
                     itemClickListener.itemClick(v, item, position);
+                }
             }
         });
     }

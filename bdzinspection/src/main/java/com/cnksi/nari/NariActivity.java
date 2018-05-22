@@ -55,7 +55,7 @@ import com.cnksi.nari.utils.LogUtil;
 import com.cnksi.nari.utils.NariDataManager;
 import com.cnksi.nari.utils.PMSException;
 import com.cnksi.nari.utils.ResultSet;
-import com.cnksi.xscore.xsview.CustomerDialog;
+import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;

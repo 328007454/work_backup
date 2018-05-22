@@ -21,6 +21,7 @@ public class SignNameActivity extends Activity {
     String mSignName = "";
     private ActivityHandWriteBinding binding;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_hand_write);

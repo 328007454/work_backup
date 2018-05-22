@@ -19,7 +19,7 @@ import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 public class ReadyExistDefectAdapter extends PinnedHeaderSectionedAdapter<String, DefectRecord> {
 

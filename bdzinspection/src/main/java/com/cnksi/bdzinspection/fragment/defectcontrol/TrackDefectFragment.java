@@ -49,7 +49,8 @@ import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.zhy.core.utils.AutoUtils;
+
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;

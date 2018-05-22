@@ -23,8 +23,9 @@ public class TransceiverService extends BaseService<Transceiver> {
     }
 
     public static TransceiverService getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new TransceiverService();
+        }
         return instance;
     }
 

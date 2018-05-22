@@ -11,7 +11,7 @@ import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogContentChildItemBinding;
 import com.cnksi.bdzinspection.databinding.XsGroupItemBinding;
 import com.cnksi.common.Config;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * 选择缺陷定义Dialog对话框

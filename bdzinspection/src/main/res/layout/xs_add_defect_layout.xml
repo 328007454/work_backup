@@ -116,7 +116,7 @@
         </RelativeLayout>
 
 
-        <com.zhy.core.AutoRadioGroup
+        <com.cnksi.common.view.AutoRadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/xs_bottom_line_background_selector"
@@ -166,7 +166,7 @@
                 android:textSize="@dimen/xs_dialog_title_textsize_px"
                 app:drawableLeft="@drawable/xs_radio_button_selector"
                 app:drawableSize="48px" />
-        </com.zhy.core.AutoRadioGroup>
+        </com.cnksi.common.view.AutoRadioGroup>
 
     </LinearLayout>
 </layout>

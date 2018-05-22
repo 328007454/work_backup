@@ -173,10 +173,11 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                         if (!TextUtils.isEmpty(record.resistanceImages) || !TextUtils.isEmpty(record.voltageImages)) {
                             List<String> imageList = getRecordImageList(record);
                             Map<String, List<String>> imageMap = groupImageList.get(record.battaryGroup);
-                            if (imageMap.keySet().contains(record.battary_code))
+                            if (imageMap.keySet().contains(record.battary_code)) {
                                 imageMap.get(record.battary_code).addAll(imageList);
-                            else
+                            } else {
                                 imageMap.put(record.battary_code, imageList);
+                            }
                         }
                     }
                 }
@@ -252,13 +253,15 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                     holder.getView(R.id.layout_voltage).setVisibility(View.GONE);
                     holder.setText(R.id.voltage_record, resistanceMap.get(battery.bid) + "/" + battery.amount);
                 } else {
-                    if (taskExtend.sbjcResistanceCheck == 0)
+                    if (taskExtend.sbjcResistanceCheck == 0) {
                         holder.getView(R.id.layout_resistance).setVisibility(View.GONE);
+                    }
                 }
                 
                 binding.layoutBattery.addView(holder.getRootView());
-                if (i == size - 1)
+                if (i == size - 1) {
                     holder.getView(R.id.line).setVisibility(View.GONE);
+                }
 
                 Map<String, List<String>> imageList = groupImageList.get(battery.bid);
                 RecyclerView recyclerView = holder.getView(R.id.img_recyclerView);

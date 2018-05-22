@@ -45,8 +45,10 @@ import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
-import com.zhy.core.AutoLinearLayout;
-import com.zhy.core.utils.AutoUtils;
+
+
+import com.zhy.autolayout.AutoLinearLayout;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 

@@ -132,7 +132,9 @@ public class BatteryDialogActivity extends AppCompatActivity {
             view = new AutoRelativeLayout(context, attrs);
         }
 
-        if (view != null) return view;
+        if (view != null) {
+            return view;
+        }
 
         return super.onCreateView(name, context, attrs);
     }
@@ -201,8 +203,9 @@ public class BatteryDialogActivity extends AppCompatActivity {
                 imageStr = batteryRecord.resistanceImages;
             }
 
-            if (TextUtils.isEmpty(imageStr)) binding.layoutImage.setVisibility(View.GONE);
-            else {
+            if (TextUtils.isEmpty(imageStr)) {
+                binding.layoutImage.setVisibility(View.GONE);
+            } else {
                 exitImageList = StringUtils.stringToList(imageStr);
                 showImageThumb();
             }
@@ -283,15 +286,17 @@ public class BatteryDialogActivity extends AppCompatActivity {
     private void setChangedBatteryCode() {
 
         if (batteryCode.startsWith("00")) {
-            if (batteryCode.equalsIgnoreCase("009"))
+            if (batteryCode.equalsIgnoreCase("009")) {
                 batteryCode = "010";
-            else
+            } else {
                 batteryCode = String.valueOf("00" + (Integer.valueOf(batteryCode.substring(batteryCode.length() - 1)) + 1));
+            }
         } else if (batteryCode.startsWith("0")) {
-            if (batteryCode.equalsIgnoreCase("099"))
+            if (batteryCode.equalsIgnoreCase("099")) {
                 batteryCode = "100";
-            else
+            } else {
                 batteryCode = String.valueOf("0" + (Integer.valueOf(batteryCode.substring(batteryCode.length() - 2)) + 1));
+            }
         } else {
             batteryCode = String.valueOf(Integer.valueOf(batteryCode) + 1);
         }
@@ -362,7 +367,9 @@ public class BatteryDialogActivity extends AppCompatActivity {
             if (exitImageList.size() > 1) {
                 binding.imageNum.setVisibility(View.VISIBLE);
                 binding.imageNum.setText(exitImageList.size() + "");
-            } else binding.imageNum.setVisibility(View.GONE);
+            } else {
+                binding.imageNum.setVisibility(View.GONE);
+            }
             binding.imageShow.setImageURI(Uri.fromFile(new File(Config.RESULT_PICTURES_FOLDER + exitImageList.get(0))));
         } else {
             binding.layoutImage.setVisibility(View.GONE);
@@ -373,15 +380,18 @@ public class BatteryDialogActivity extends AppCompatActivity {
         if ("0".equalsIgnoreCase(typeStr)) {
             String value = binding.editVoltage.getText().toString().trim();
             try {
-                if (new Float(value) > 9999)
+                if (new Float(value) > 9999) {
                     return false;
-                if (!TextUtils.isEmpty(value))
+                }
+                if (!TextUtils.isEmpty(value)) {
                     value = String.valueOf(Double.parseDouble(binding.editVoltage.getText().toString().trim()));
+                }
             } catch (NumberFormatException ex) {
                 return false;
             }
-            if (null == batteryRecord && (!TextUtils.isEmpty(value) || !exitImageList.isEmpty()))
+            if (null == batteryRecord && (!TextUtils.isEmpty(value) || !exitImageList.isEmpty())) {
                 batteryRecord = new BatteryRecord(currentReportId, battery.bdzid, bdzName, battery.bid, batteryCode, currentInspectionType, Integer.valueOf(typeStr));
+            }
             try {
                 if (null != batteryRecord) {
                     String imageStr = StringUtils.arrayListToString(exitImageList);

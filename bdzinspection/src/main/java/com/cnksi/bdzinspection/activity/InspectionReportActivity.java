@@ -45,8 +45,7 @@ import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.nari.NariActivity;
-import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.common.Config;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -486,10 +485,10 @@ public class InspectionReportActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (ScreenManager.getInstance().hasActivity(NariActivity.class)) {
-            ScreenManager.getInstance().popAllActivityExceptOne(NariActivity.class);
+        if (ScreenManager.getScreenManager().hasActivity(NariActivity.class)) {
+            ScreenManager.getScreenManager().popAllActivityExceptOne(NariActivity.class);
         } else {
-            ScreenManager.getInstance().popAllActivityExceptOne(TaskRemindActivity.class);
+            ScreenManager.getScreenManager().popAllActivityExceptOne(TaskRemindActivity.class);
         }
         if (isDefectChanged) {
             setResult(RESULT_OK);

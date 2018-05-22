@@ -152,15 +152,17 @@ public class WeatherView extends LinearLayout {
             RadioButton radioButton = holder.getView(R.id.weather);
             radioButton.setChecked(false);
             radioButton.setText(item);
-            if (currentWeather.equals(item))
+            if (currentWeather.equals(item)) {
                 radioButton.setChecked(true);
+            }
             radioButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (currentWeather.equals(item)) {
                         currentWeather = "";
-                    } else
+                    } else {
                         currentWeather = item;
+                    }
                     adapter1.notifyDataSetChanged();
                     if (null != adapter2) {
                         adapter2.notifyDataSetChanged();
@@ -181,10 +183,11 @@ public class WeatherView extends LinearLayout {
             TextView tvWeather = holder.getView(R.id.tv_weather);
             ImageView imgButton = holder.getView(R.id.img_radio_img);
             tvWeather.setText(item);
-            if (currentWeather.equals(item))
+            if (currentWeather.equals(item)) {
                 imgButton.setImageResource(R.drawable.ticket_radiobutton_red_selected);
-            else
+            } else {
                 imgButton.setImageResource(R.drawable.ticket_radiobutton_unselected);
+            }
 
         }
 
@@ -219,8 +222,9 @@ public class WeatherView extends LinearLayout {
                     String item = textView.getText().toString();
                     if (currentWeather.equals(item)) {
                         currentWeather = "";
-                    } else
+                    } else {
                         currentWeather = item;
+                    }
                     adapter1.notifyDataSetChanged();
                     if (null != adapter2) {
                         adapter2.notifyDataSetChanged();
@@ -238,8 +242,9 @@ public class WeatherView extends LinearLayout {
 
         this.currentWeather = currentWeather == null ? "" : currentWeather;
         adapter1.notifyDataSetChanged();
-        if (null != adapter2)
+        if (null != adapter2) {
             adapter2.notifyDataSetChanged();
+        }
     }
 
 //    @Override

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.Arrays;
 import java.util.Collection;

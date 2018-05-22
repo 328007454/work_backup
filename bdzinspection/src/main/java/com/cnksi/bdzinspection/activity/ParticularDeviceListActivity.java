@@ -32,7 +32,7 @@ import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.model.Task;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sync.KSyncConfig;
-import com.cnksi.xscore.xsview.CustomerDialog;
+import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.ex.DbException;
 

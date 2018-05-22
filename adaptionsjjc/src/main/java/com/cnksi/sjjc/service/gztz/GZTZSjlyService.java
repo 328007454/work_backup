@@ -38,7 +38,9 @@ public class GZTZSjlyService extends BaseService<SbjcGztzjlSjly> {
         } catch (DbException e) {
             e.printStackTrace();
         }
-        if (data == null) return keyValues;
+        if (data == null) {
+            return keyValues;
+        }
         JSONArray array = JSON.parseObject(data.jsonV).getJSONArray("values");
         for (int i = 0; i < array.size(); i++) {
             JSONObject object = array.getJSONObject(i);

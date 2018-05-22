@@ -61,8 +61,12 @@ public class BhdzjlYjGroup {
 
         String lx = binding.bhyjlx.getText().toString();
         String sj = binding.bhdzsj.getText().toString();
-        if (TextUtils.isEmpty(lx) && TextUtils.isEmpty(sj)) return null;
-        if (bhyjBean == null) bhyjBean = new BhyjBean();
+        if (TextUtils.isEmpty(lx) && TextUtils.isEmpty(sj)) {
+            return null;
+        }
+        if (bhyjBean == null) {
+            bhyjBean = new BhyjBean();
+        }
         bhyjBean.bhdzsj = sj;
         bhyjBean.bhyjlx = lx;
         return bhyjBean;
@@ -77,7 +81,10 @@ public class BhdzjlYjGroup {
     public String toString() {
         String a = binding.bhdzsj.getText().toString();
         String b = binding.bhyjlx.getText().toString();
-        if (TextUtils.isEmpty(a)) return "";
-        else return a + "ms" + b + ",";
+        if (TextUtils.isEmpty(a)) {
+            return "";
+        } else {
+            return a + "ms" + b + ",";
+        }
     }
 }

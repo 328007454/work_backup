@@ -31,7 +31,7 @@ import com.cnksi.common.SystemConfig;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.StringUtilsExt;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 

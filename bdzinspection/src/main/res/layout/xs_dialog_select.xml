@@ -3,7 +3,7 @@
 
     <data class=""></data>
 
-    <com.zhy.core.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                          android:layout_width="match_parent"
                                          android:layout_height="match_parent"
                                          android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
@@ -114,5 +114,5 @@
                 android:textSize="@dimen/xs_global_text_size_px"/>
         </LinearLayout>
 
-    </com.zhy.core.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 </layout>

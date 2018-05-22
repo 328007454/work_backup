@@ -18,8 +18,9 @@ public class TJWTService extends BaseService<TJWT> {
     }
 
     public static TJWTService getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new TJWTService();
+        }
         return instance;
     }
 

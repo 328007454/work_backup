@@ -38,7 +38,9 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sync.KSyncConfig;
-import com.cnksi.xscore.xsview.CustomerDialog;
+
+import com.cnksi.core.view.CustomerDialog;
+
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

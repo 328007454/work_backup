@@ -50,7 +50,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
+import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

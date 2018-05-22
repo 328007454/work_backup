@@ -39,9 +39,11 @@ import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
+
+import com.zhy.autolayout.utils.AutoUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
-import com.zhy.core.utils.AutoUtils;
+
 
 import org.xutils.db.table.DbModel;
 

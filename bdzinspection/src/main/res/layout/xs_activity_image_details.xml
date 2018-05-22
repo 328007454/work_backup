@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:background="@android:color/white">
 
-            <com.cnksi.xscore.xsview.HackyViewPager
+            <com.cnksi.core.view.HackyViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

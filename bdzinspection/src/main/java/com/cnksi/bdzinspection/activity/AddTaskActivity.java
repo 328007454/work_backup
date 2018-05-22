@@ -41,8 +41,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
-import com.cnksi.xscore.xsview.CustomerDialog.DialogItemClickListener;
+import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -267,13 +266,7 @@ public class AddTaskActivity extends BaseActivity {
         binding.btnCancel.setOnClickListener(view -> finish());
         binding.btnConfirm.setOnClickListener(view -> saveTask());
         binding.ibtnSelectInspectionDate.setOnClickListener(view -> {
-            CustomerDialog.showDatePickerDialog(currentActivity, new DialogItemClickListener() {
-
-                @Override
-                public void confirm(String result, int position) {
-                    binding.tvInspectionDate.setText(result);
-                }
-            });
+            CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> binding.tvInspectionDate.setText(result));
         });
         binding.bdzContanier.setOnClickListener(view -> {
             binding.bdzContanier.setPressed(true);

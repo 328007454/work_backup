@@ -18,7 +18,7 @@ import com.cnksi.bdzinspection.utils.AnimationUtils;
 import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.Config.OperateType;
 import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.xscore.xscommon.ScreenManager;
+import com.cnksi.core.common.ScreenManager;
 
 import static com.cnksi.common.Config.LOAD_DATA;
 
@@ -78,7 +78,7 @@ public class OperateTicketReportActivity extends BaseActivity {
             Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
             intent.putExtra(Config.IS_FROM_BATTERY, isFromWorkPage);
             startActivity(intent);
-            ScreenManager.getInstance().popAllActivityExceptOne(TaskRemindActivity.class);
+            ScreenManager.getScreenManager().popAllActivityExceptOne(TaskRemindActivity.class);
             this.finish();
         });
     }

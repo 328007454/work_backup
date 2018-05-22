@@ -47,8 +47,9 @@ import com.cnksi.common.utils.QWERKeyBoardUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.GPSUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
-import com.zhy.core.utils.AutoUtils;
+
+import com.cnksi.core.view.CustomerDialog;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

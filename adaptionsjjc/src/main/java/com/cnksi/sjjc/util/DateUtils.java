@@ -258,8 +258,11 @@ public class DateUtils {
         calendar1.setTime(date1);
         calendar2.setTime(date2);
         int result = calendar1.compareTo(calendar2);
-        if (result >= 0) return true;
-        else return false;
+        if (result >= 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -14,7 +14,7 @@ import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * a textView that is able to self-adjust its font size depending on the min and max size of the font, and its own size.<br/>

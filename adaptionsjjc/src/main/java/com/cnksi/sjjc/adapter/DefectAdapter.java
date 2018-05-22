@@ -61,8 +61,9 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         if (defectPicArray != null && defectPicArray.length > 0
                 && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
             Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), 280);
-            if (bitmap != null)
+            if (bitmap != null) {
                 defectImage.setImageBitmap(bitmap);
+            }
         } else {
             defectImage.setScaleType(ImageView.ScaleType.CENTER);
             defectImage.setImageResource(R.mipmap.icon_nodefect);
@@ -70,8 +71,9 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         ((TextView) holder.getView(R.id.tv_device_name)).setText(defectRecord.devcie);
         ((TextView) holder.getView(R.id.tv_defect_discover_time)).setText(DateUtils.getFormatterTime(defectRecord.discovered_date));
         defectImage.setOnClickListener(view -> {
-            if (clickListener != null)
+            if (clickListener != null) {
                 clickListener.itemClick(view, defectRecord, position);
+            }
         });
     }
 

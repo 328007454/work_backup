@@ -47,17 +47,19 @@ public class BatteryReportImageAdapter extends BaseRecyclerAdapter<String> {
         if (null != batteryImageMap && !batteryImageMap.isEmpty()) {
             final List<String> batteryImageList = batteryImageMap.get(item);
             holder.setText(R.id.image_num, "" + batteryImageList.size());
-            if (batteryImageList.size() > 1)
+            if (batteryImageList.size() > 1) {
                 holder.getView(R.id.image_num).setVisibility(View.VISIBLE);
-            else
+            } else {
                 holder.getView(R.id.image_num).setVisibility(View.GONE);
+            }
             Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + batteryImageList.get(0));
             ((ImageView) holder.getView(R.id.img_battery)).setImageBitmap(bitmap);
             holder.getView(R.id.img_battery).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (null != itemClickListener)
+                    if (null != itemClickListener) {
                         itemClickListener.itemClick(v, batteryImageList, position);
+                    }
                 }
             });
         }

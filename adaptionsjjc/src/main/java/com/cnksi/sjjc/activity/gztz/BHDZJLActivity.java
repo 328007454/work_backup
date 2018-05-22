@@ -139,7 +139,9 @@ public class BHDZJLActivity extends BaseActivity {
             }
             if (sbjcGztzjl.isTz()) {
                 bhdzqk.append("开关跳闸，").append(sbjcGztzjl.chzdzqk).append(",");
-            } else bhdzqk.append("开关未跳闸，");
+            } else {
+                bhdzqk.append("开关未跳闸，");
+            }
             StringBuilder gzjt = new StringBuilder(bhdzqk.toString());
 
             bhdzqk.append("二次故障电流").append(sbjcGztzjl.ecgzdl).append("A，")
@@ -197,8 +199,9 @@ public class BHDZJLActivity extends BaseActivity {
             }
         }
         if (i == 0) {
-            if (isCheck)
+            if (isCheck) {
                 ToastUtils.showMessage("你至少要选择一组保护设备");
+            }
             return false;
         }
         sbjcGztzjl.bhdzqk = binding.bhdzqk.getValueStr();

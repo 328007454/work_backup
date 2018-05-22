@@ -34,6 +34,9 @@ import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.view.CustomRadioButton;
+
+import com.cnksi.core.view.CustomerDialog;
+import com.zhy.autolayout.utils.AutoUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.BitmapUtil;
@@ -41,8 +44,7 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
-import com.zhy.core.utils.AutoUtils;
+
 
 import org.xutils.ex.DbException;
 

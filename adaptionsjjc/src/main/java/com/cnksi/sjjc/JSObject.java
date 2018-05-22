@@ -25,11 +25,13 @@ public class JSObject {
 
 	@JavascriptInterface
 	public String  callbakpics(String id, String t){
-			if(wvEnventPro != null)
-				if ("c".equalsIgnoreCase(t))
-					wvEnventPro.takePicture(id);
-				else if ("s".equalsIgnoreCase(t))
-					wvEnventPro.signName(id);
+			if(wvEnventPro != null) {
+                if ("c".equalsIgnoreCase(t)) {
+                    wvEnventPro.takePicture(id);
+                } else if ("s".equalsIgnoreCase(t)) {
+                    wvEnventPro.signName(id);
+                }
+            }
 		return "";
 	}
 

@@ -12,7 +12,7 @@ import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsBatteryItemBinding;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.common.Config;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 

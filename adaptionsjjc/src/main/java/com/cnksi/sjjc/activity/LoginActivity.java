@@ -184,18 +184,22 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             binding.ibDelete1.setVisibility(View.INVISIBLE);
             binding.user1Img.setImageResource(R.drawable.ic_portrait_thum);
             binding.txtLogginFirst.setVisibility(View.GONE);
-            if (binding.ibDelete2.getVisibility() == View.INVISIBLE)
+            if (binding.ibDelete2.getVisibility() == View.INVISIBLE) {
                 binding.txtUserLayout.setVisibility(View.INVISIBLE);
-            else binding.txtUserLayout.setVisibility(View.VISIBLE);
+            } else {
+                binding.txtUserLayout.setVisibility(View.VISIBLE);
+            }
         });
         binding.ibDelete2.setOnClickListener(view -> {
             mCurrentUserTwo = null;
             binding.ibDelete2.setVisibility(View.INVISIBLE);
             binding.user2Img.setImageResource(R.drawable.ic_portrait_thum);
             binding.txtLogginSecond.setVisibility(View.GONE);
-            if (binding.ibDelete1.getVisibility() == View.INVISIBLE)
+            if (binding.ibDelete1.getVisibility() == View.INVISIBLE) {
                 binding.txtUserLayout.setVisibility(View.INVISIBLE);
-            else binding.txtUserLayout.setVisibility(View.VISIBLE);
+            } else {
+                binding.txtUserLayout.setVisibility(View.VISIBLE);
+            }
         });
     }
 
@@ -216,7 +220,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             }
             Config.SYNC_URL = url;
             String appId = getText(binding.etAppId);
-            if (!TextUtils.isEmpty(appId)) Config.SYNC_APP_ID = appId;
+            if (!TextUtils.isEmpty(appId)) {
+                Config.SYNC_APP_ID = appId;
+            }
             PreferencesUtils.put(Config.KEY_SYNC_URL, Config.SYNC_URL);
             PreferencesUtils.put(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
             dialog.dismiss();
@@ -234,9 +240,11 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
     private void loginUser(boolean login) {
         //登录系统
         if (login) {
-            if (null != mCurrentUserOne || null != mCurrentUserTwo)
+            if (null != mCurrentUserOne || null != mCurrentUserTwo) {
                 mHandler.sendEmptyMessage(USER_LOGIN_SUCCESS);
-            else mHandler.sendEmptyMessage(NO_LOGIN_USER);
+            } else {
+                mHandler.sendEmptyMessage(NO_LOGIN_USER);
+            }
             return;
         }
         //添加登录人员
@@ -288,9 +296,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 //根据用户名查询
                 tempUser = UserService.getInstance().findUserByAccount(userName);
                 if (null != tempUser) {
-                    if ("未激活".equalsIgnoreCase(tempUser.pwd))
+                    if ("未激活".equalsIgnoreCase(tempUser.pwd)) {
                         mHandler.sendEmptyMessage(USER_COUNT_NOT_ACTIVITE);
-                    else {
+                    } else {
                         mHandler.sendEmptyMessage(PWD_ERROR);
                     }
                 } else {
@@ -391,7 +399,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         if (null != bundle) {
             String account = bundle.getString("account", "");
             String password = bundle.getString("pwd", "");
-            if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) return false;
+            if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
+                return false;
+            }
             Users user = UserService.getInstance().findUserByNameAndPwd(account, password);
             if (null != user) {
                 PreferencesUtils.put(Config.CURRENT_LOGIN_USER, user.username);
@@ -479,7 +489,9 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         CustomApplication.getInstance().initApp();
         copyBdzInspectionDb();
         isGrantPermission = true;
-        if (thirdLogin()) return;
+        if (thirdLogin()) {
+            return;
+        }
         inUI();
         initOnClick();
     }

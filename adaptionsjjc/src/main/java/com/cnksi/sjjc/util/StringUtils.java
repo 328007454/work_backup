@@ -154,8 +154,8 @@ public class StringUtils {
      * emoj表情判断
      */
     public static boolean hasEmoji(String content) {
-
-        Pattern pattern = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]");
+        String str= "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]";
+        Pattern pattern = Pattern.compile(str);
         Matcher matcher = pattern.matcher(content);
         return matcher.find();
     }

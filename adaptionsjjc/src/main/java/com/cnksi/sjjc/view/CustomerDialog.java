@@ -242,10 +242,11 @@ public class CustomerDialog {
             TextView mTvCancel = (TextView) view.findViewById(R.id.tv_cancel);
             TextView mTvSingleConfirm = (TextView) view.findViewById(R.id.tv_confirm);
             TextView mTvMultipleConfirm = (TextView) view.findViewById(R.id.tv_multiple_confirm);
-            if (isPms)
+            if (isPms) {
                 mTvToast.setGravity(Gravity.CENTER);
-            else
+            } else {
                 mTvToast.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+            }
             mTvToast.setText(Html.fromHtml(toast));
             mTvCancel.setText(cancelText);
             mTvSingleConfirm.setText(confirmText);

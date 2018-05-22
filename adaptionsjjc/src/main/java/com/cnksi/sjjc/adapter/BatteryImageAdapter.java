@@ -62,7 +62,9 @@ public class BatteryImageAdapter extends BaseAdapter<BatteryRecord> {
         holder.getView(R.id.img_battery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (itemClickListener != null) itemClickListener.itemClick(v, item, position);
+                if (itemClickListener != null) {
+                    itemClickListener.itemClick(v, item, position);
+                }
             }
         });
     }

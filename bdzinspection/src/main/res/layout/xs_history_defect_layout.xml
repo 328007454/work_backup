@@ -23,7 +23,7 @@
             android:textColor="@color/xs_exist_defect_title_text_color"
             android:textSize="@dimen/xs_global_text_size_px" />
 
-        <com.cnksi.xscore.xsview.InnerListView
+        <com.cnksi.core.view.InnerListView
             android:id="@+id/lv_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -68,10 +68,11 @@ public class ArresterCheckOLProcessor extends CopyDataInterface {
         HashMap<String, Boolean> copyMap = new HashMap<String, Boolean>();
         try {
             List<DbModel> dataList = DeviceService.getInstance().getCopyDeviceDbModels(reportId, bdzId, type, filter);
-            if (dataList != null)
+            if (dataList != null) {
                 for (DbModel m : dataList) {
                     copyMap.put(m.getString(Device.DEVICEID), true);
                 }
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }

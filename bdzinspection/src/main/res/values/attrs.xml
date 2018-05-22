@@ -129,5 +129,4 @@
         <attr name="leftSwipe" format="boolean" />
     </declare-styleable>
 
-
 </resources>

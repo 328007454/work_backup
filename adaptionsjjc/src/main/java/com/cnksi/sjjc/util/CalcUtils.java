@@ -15,8 +15,9 @@ public class CalcUtils {
     }
 
     public static float String2Float(String s) {
-        if (s == null)
+        if (s == null) {
             return 0;
+        }
         try {
             return Float.valueOf(s);
         } catch (NumberFormatException e) {

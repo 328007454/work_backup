@@ -35,7 +35,8 @@ import com.cnksi.common.Config;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.xscore.xscommon.ScreenManager;
+import com.cnksi.core.common.ScreenManager;
+
 
 import org.xutils.ex.DbException;
 
@@ -463,7 +464,7 @@ public class OperateWorkActivity extends BaseActivity {
         Intent intent = new Intent(currentActivity, OperateTicketReportActivity.class);
         intent.putExtra(Config.CURRENT_TASK_ID, currentOperateId);
         startActivity(intent);
-        ScreenManager.getInstance().popActivity(OperateTaskDetailsActivity.class);
+        ScreenManager.getScreenManager().popActivity(OperateTaskDetailsActivity.class);
         this.finish();
 
     }

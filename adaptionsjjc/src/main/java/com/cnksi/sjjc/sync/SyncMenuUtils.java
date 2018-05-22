@@ -134,9 +134,11 @@ public class SyncMenuUtils {
     }
 
     public static void changeSync(Activity mActivity) {
-        if (mActivity instanceof NetWorkSyncActivity)
+        if (mActivity instanceof NetWorkSyncActivity) {
             KSyncConfig.getInstance().startUsbWorkSync(mActivity);
-        else KSyncConfig.getInstance().startNetWorkSync(mActivity);
+        } else {
+            KSyncConfig.getInstance().startNetWorkSync(mActivity);
+        }
         mActivity.finish();
     }
 
@@ -219,7 +221,9 @@ public class SyncMenuUtils {
                 new Thread((new Runnable() {
                     @Override
                     public void run() {
-                        if (tables.size() == 0) initDeleteForDeptId();
+                        if (tables.size() == 0) {
+                            initDeleteForDeptId();
+                        }
                         int delRows = 0;
                         for (DeleteModel model : tables) {
                             try {

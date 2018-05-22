@@ -1,39 +1,31 @@
-package com.zhy.core;
+package com.cnksi.common.view;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
-import com.zhy.core.utils.AutoLayoutHelper;
+import com.zhy.autolayout.AutoLayoutInfo;
+import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 /**
- * Created by zhy on 15/6/30.
+ * 由于core包没有关于AutoRadioGroup适配View所以按照方法重写
+ * Created by hupei on 2016/2/29 9:59.
  */
-public class AutoLinearLayout extends LinearLayout
+public class AutoRadioGroup extends RadioGroup
 {
-
     private AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
 
-    public AutoLinearLayout(Context context) {
+    public AutoRadioGroup(Context context)
+    {
         super(context);
     }
 
-    public AutoLinearLayout(Context context, AttributeSet attrs) {
+    public AutoRadioGroup(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public AutoLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public AutoLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
@@ -43,13 +35,11 @@ public class AutoLinearLayout extends LinearLayout
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
         super.onLayout(changed, l, t, r, b);
     }
-
 
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs)
@@ -57,8 +47,7 @@ public class AutoLinearLayout extends LinearLayout
         return new LayoutParams(getContext(), attrs);
     }
 
-
-    public static class LayoutParams extends LinearLayout.LayoutParams
+    public static class LayoutParams extends RadioGroup.LayoutParams
             implements AutoLayoutHelper.AutoLayoutParams
     {
         private AutoLayoutInfo mAutoLayoutInfo;
@@ -81,7 +70,6 @@ public class AutoLinearLayout extends LinearLayout
             super(width, height);
         }
 
-
         public LayoutParams(ViewGroup.LayoutParams source)
         {
             super(source);
@@ -93,5 +81,4 @@ public class AutoLinearLayout extends LinearLayout
         }
 
     }
-
 }

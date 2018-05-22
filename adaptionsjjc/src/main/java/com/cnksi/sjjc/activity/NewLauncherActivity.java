@@ -138,7 +138,9 @@ public class NewLauncherActivity extends BaseActivity {
                     for (DbModel dbModel : spacingModels) {
 
                         LatLng bdzLocation = LatLng.valueOf(dbModel.getString(Spacing.LATITUDE), dbModel.getString(Spacing.LONGITUDE));
-                        if (bdzLocation == null) continue;
+                        if (bdzLocation == null) {
+                            continue;
+                        }
                         // 200米范围内
                         if (DistanceUtil.getDistance(currentLocation, bdzLocation) < 200) {
                             String bdzid = dbModel.getString(Spacing.BDZID);
@@ -176,7 +178,7 @@ public class NewLauncherActivity extends BaseActivity {
             try {
                 bdzList = (ArrayList<Bdz>) CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
                 final Department department = CustomApplication.getInstance().getDbManager().selector(Department.class).where(Department.ID, "=", deparmentId).and(Department.DLT, "<>", 1).findFirst();
-                if (null != department)
+                if (null != department) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -191,6 +193,7 @@ public class NewLauncherActivity extends BaseActivity {
                             }
                         }
                     });
+                }
             } catch (DbException e) {
             }
         });
@@ -264,8 +267,9 @@ public class NewLauncherActivity extends BaseActivity {
                     PreferencesUtils.put(Config.LOCATION_BDZNAME, bdz.name);
                     mPowerStationDialog.dismiss();
                     locationHelper.stop();
-                } else
+                } else {
                     ToastUtils.showMessage("该变电站未激活");
+                }
             }
 
             @Override

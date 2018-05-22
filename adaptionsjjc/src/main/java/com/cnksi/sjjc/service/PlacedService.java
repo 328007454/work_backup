@@ -22,8 +22,9 @@ public class PlacedService extends BaseService<Placed> {
     }
 
     public static PlacedService getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new PlacedService();
+        }
         return instance;
     }
 

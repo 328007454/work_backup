@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.cnksi.xscore.xsview.swipemenulist.SwipeMenuDragSortListView
+        <com.cnksi.core.view.swipemenulist.SwipeMenuDragSortListView
             android:id="@+id/swlv_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -22,7 +22,7 @@
             dslv:drag_handle_id="@id/drag_handle"
             dslv:drag_scroll_start="0.3"
             dslv:float_alpha="0.6"
-            dslv:xs_drag_start_mode="onDown" />
+            dslv:drag_start_mode="onDown" />
 
 
     </LinearLayout>

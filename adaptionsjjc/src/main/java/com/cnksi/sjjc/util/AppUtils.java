@@ -285,7 +285,9 @@ public class AppUtils {
     }
 
     public static void killRunningAppsExcludeSelf(Context context) {
-        if (context == null) return;
+        if (context == null) {
+            return;
+        }
 
         String selfPackageName = context.getPackageName();
         if (selfPackageName == null) {
@@ -313,15 +315,20 @@ public class AppUtils {
     @SuppressWarnings("deprecation")
     public static void killRunningApps(Context context, String[] excludePkgs) {
         List<String> runningAppPackageList = getRunningAppPackageList(context, excludePkgs);
-        if (runningAppPackageList == null) return;
+        if (runningAppPackageList == null) {
+            return;
+        }
 
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (String runningAppPackage : runningAppPackageList)
+        for (String runningAppPackage : runningAppPackageList) {
             am.restartPackage(runningAppPackage);
+        }
     }
 
     public static void deleteRunningAppCacheDirsExcludeSelf(Context context, boolean isExternalCacheDir) {
-        if (context == null) return;
+        if (context == null) {
+            return;
+        }
 
         String selfPackageName = context.getPackageName();
         if (selfPackageName == null) {
@@ -344,7 +351,9 @@ public class AppUtils {
      */
     public static void deleteRunningAppCacheDirs(Context context, String[] excludePkgs, boolean isExternalCacheDir) {
         List<String> runningAppCacheDirList = getRunningAppCacheDirList(context, excludePkgs, isExternalCacheDir);
-        if (runningAppCacheDirList == null) return;
+        if (runningAppCacheDirList == null) {
+            return;
+        }
 
         for (String runningAppCacheDir : runningAppCacheDirList) {
             FileUtils.deleteAllFiles(runningAppCacheDir);
@@ -352,7 +361,9 @@ public class AppUtils {
     }
 
     public static List<String> getRunningAppCacheDirListExcludeSelf(Context context, boolean isExternalCacheDir) {
-        if (context == null) return null;
+        if (context == null) {
+            return null;
+        }
 
         String selfPackageName = context.getPackageName();
         if (selfPackageName == null) {
@@ -375,27 +386,39 @@ public class AppUtils {
      * @return 缓存目录列表
      */
     public static List<String> getRunningAppCacheDirList(Context context, String[] excludePkgs, boolean isExternalCacheDir) {
-        if (context == null) return null;
+        if (context == null) {
+            return null;
+        }
 
         List<String> runningAppPackageList = getRunningAppPackageList(context, excludePkgs);
-        if (runningAppPackageList == null) return null;
-        if (runningAppPackageList.isEmpty()) return null;
+        if (runningAppPackageList == null) {
+            return null;
+        }
+        if (runningAppPackageList.isEmpty()) {
+            return null;
+        }
 
         String selfPackageName = context.getPackageName();
         File selfCacheDir = isExternalCacheDir ? context.getExternalCacheDir() : context.getCacheDir();
         String selfCacheDirPath = (selfCacheDir != null) ? selfCacheDir.getAbsolutePath() : null;
-        if (selfPackageName == null || selfCacheDirPath == null) return null;
+        if (selfPackageName == null || selfCacheDirPath == null) {
+            return null;
+        }
 
         List<String> runningAppCacheDirList = new LinkedList<String>();
         for (String runningAppPackage : runningAppPackageList) {
             // 替换包名一段字符串
             String runningAppCacheDir = selfCacheDirPath.replaceFirst(selfPackageName, runningAppPackage);
-            if (runningAppCacheDir == null) continue;
+            if (runningAppCacheDir == null) {
+                continue;
+            }
 
             runningAppCacheDirList.add(runningAppCacheDir);
         }
 
-        if (runningAppCacheDirList.isEmpty()) return null;
+        if (runningAppCacheDirList.isEmpty()) {
+            return null;
+        }
         return runningAppCacheDirList;
     }
 
@@ -411,27 +434,38 @@ public class AppUtils {
      * @return 包名列表
      */
     public static List<String> getRunningAppPackageList(Context context, String[] excludePkgs) {
-        if (context == null) return null;
+        if (context == null) {
+            return null;
+        }
 
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<RunningAppProcessInfo> runningAppProcessInfoList = am.getRunningAppProcesses();
-        if (runningAppProcessInfoList == null) return null;
+        if (runningAppProcessInfoList == null) {
+            return null;
+        }
 
         Set<String> runningAppPackageSet = new HashSet<String>();
         List<String> runningAppPackageList = new LinkedList<String>();
         Set<String> excludePkgSet = new HashSet<String>();
         if (excludePkgs != null) {
-            for (String p : excludePkgs)
+            for (String p : excludePkgs) {
                 excludePkgSet.add(p);
+            }
         }
 
         for (RunningAppProcessInfo i : runningAppProcessInfoList) {
             String[] pkgList = i.pkgList;
-            if (pkgList == null) continue;
+            if (pkgList == null) {
+                continue;
+            }
 
             for (String p : pkgList) {
-                if (excludePkgSet.contains(p)) continue;
-                if (runningAppPackageSet.contains(p)) continue;
+                if (excludePkgSet.contains(p)) {
+                    continue;
+                }
+                if (runningAppPackageSet.contains(p)) {
+                    continue;
+                }
 
                 runningAppPackageSet.add(p);
                 runningAppPackageList.add(p);
@@ -445,7 +479,9 @@ public class AppUtils {
         excludePkgSet.clear();
         excludePkgSet = null;
 
-        if (runningAppPackageList.isEmpty()) return null;
+        if (runningAppPackageList.isEmpty()) {
+            return null;
+        }
         return runningAppPackageList;
     }
 
@@ -461,26 +497,37 @@ public class AppUtils {
      * @return 包名列表
      */
     public static List<String> getRunningAppPackageList0(Context context, String[] excludePkgs) {
-        if (context == null) return null;
+        if (context == null) {
+            return null;
+        }
 
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         @SuppressWarnings("deprecation") List<RunningTaskInfo> runningAppProcessInfoList = am.getRunningTasks(Integer.MAX_VALUE);
-        if (runningAppProcessInfoList == null) return null;
+        if (runningAppProcessInfoList == null) {
+            return null;
+        }
 
         Set<String> runningAppPackageSet = new HashSet<String>();
         List<String> runningAppPackageList = new LinkedList<String>();
         Set<String> excludePkgSet = new HashSet<String>();
         if (excludePkgs != null) {
-            for (String p : excludePkgs)
+            for (String p : excludePkgs) {
                 excludePkgSet.add(p);
+            }
         }
 
         for (RunningTaskInfo i : runningAppProcessInfoList) {
-            if (i.topActivity == null) continue;
+            if (i.topActivity == null) {
+                continue;
+            }
 
             String p = i.topActivity.getPackageName();
-            if (excludePkgSet.contains(p)) continue;
-            if (runningAppPackageSet.contains(p)) continue;
+            if (excludePkgSet.contains(p)) {
+                continue;
+            }
+            if (runningAppPackageSet.contains(p)) {
+                continue;
+            }
 
             runningAppPackageSet.add(p);
             runningAppPackageList.add(p);
@@ -493,7 +540,9 @@ public class AppUtils {
         excludePkgSet.clear();
         excludePkgSet = null;
 
-        if (runningAppPackageList.isEmpty()) return null;
+        if (runningAppPackageList.isEmpty()) {
+            return null;
+        }
         return runningAppPackageList;
     }
 

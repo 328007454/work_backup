@@ -98,7 +98,9 @@ public class TzcsGroup extends UnderLineLinearLayout {
     }
 
     public void setValuesStr(String json) {
-        if (TextUtils.isEmpty(json)) return;
+        if (TextUtils.isEmpty(json)) {
+            return;
+        }
         JSONObject jo = JSON.parseObject(json);
         intA = jo.getIntValue("A");
         intB = jo.getIntValue("B");

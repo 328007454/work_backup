@@ -37,8 +37,9 @@ public class ChartDialog {
     private static ChartDialog instance;
 
     public static ChartDialog getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new ChartDialog();
+        }
         return instance;
     }
 
@@ -47,8 +48,9 @@ public class ChartDialog {
             Context context = dialog.getContext();
             if (context instanceof Activity) {
                 Activity activity = (Activity) context;
-                if (!activity.isFinishing())
+                if (!activity.isFinishing()) {
                     dialog.dismiss();
+                }
             }
         }
     }

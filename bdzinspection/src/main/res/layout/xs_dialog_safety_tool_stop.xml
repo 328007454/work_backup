@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.zhy.core.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/xs_fragment_record_defect_content_green_title_white_background"
@@ -33,7 +33,7 @@
             android:layout_height="3px"
             android:background="@color/xs__e1e1e4_color" />
 
-        <com.zhy.core.AutoRadioGroup
+        <com.cnksi.common.view.AutoRadioGroup
             android:id="@+id/rg_stop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                 android:textColorHint="@color/xs__c1d2cf_color"
                 android:textSize="38px"
                 android:visibility="visible" />
-        </com.zhy.core.AutoRadioGroup>
+        </com.cnksi.common.view.AutoRadioGroup>
 
         <View
             android:layout_width="match_parent"
@@ -238,5 +238,5 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/xs_global_text_size_px" />
         </LinearLayout>
-    </com.zhy.core.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 </layout>

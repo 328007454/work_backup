@@ -107,7 +107,6 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             binding.btnRight.setText(getString(R.string.xs_sure_and_next));
             binding.btnRight.setBackgroundResource(R.drawable.xs_green_background_selector);
             binding.viewPager.setNoScroll(true);
-            binding.tabStrip.setNoScroll(true);
         } else {
             binding.btnRight.setText(getString(R.string.xs_start_inspection_button_format_str, currentInspectionTypeName));
         }

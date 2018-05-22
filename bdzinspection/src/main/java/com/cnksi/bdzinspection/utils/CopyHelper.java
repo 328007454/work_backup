@@ -32,7 +32,7 @@ import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.GPSUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 

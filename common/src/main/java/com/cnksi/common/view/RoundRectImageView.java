@@ -1,4 +1,4 @@
-package com.cnksi.xscore.xsview;
+package com.cnksi.common.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;

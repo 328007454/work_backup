@@ -396,8 +396,9 @@ public class DialogUtils {
                 datePickerDialog.dismiss();
                 String mimls = StringUtils.BlankToDefault(wm.getText().toString(), "0");
                 String rs = String.format("%02d", wv_hours.getCurrentItem()) + ":" + String.format("%02d", wv_mins.getCurrentItem()) + ":" + String.format("%02d", wv_second.getCurrentItem());
-                if (hasMills)
+                if (hasMills) {
                     rs = rs + " " + String.format("%03d", Integer.parseInt(mimls));
+                }
                 dialogClickListener.confirm(rs, 0);
             });
             container.findViewById(R.id.cancel).setOnClickListener(v -> datePickerDialog.dismiss());

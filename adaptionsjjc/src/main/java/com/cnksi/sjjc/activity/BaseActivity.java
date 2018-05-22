@@ -517,6 +517,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
     File localUpdateFile;
 
+    @Override
     protected void checkUpdateVersion(final String downloadFolder, String downloadFileName, final String appCode) {
         ExecutorManager.executeTaskSerially(() -> {
             if (localUpdateFile == null) {
@@ -546,6 +547,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      *
      * @param msg
      */
+    @Override
     protected void onRefresh(android.os.Message msg) {
         switch (msg.what) {
             case CoreConfig.INSTALL_APP_CODE:

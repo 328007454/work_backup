@@ -16,7 +16,7 @@ import com.cnksi.bdzinspection.databinding.XsFragmentCopyTemperature2Binding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.utils.CommonUtils;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 

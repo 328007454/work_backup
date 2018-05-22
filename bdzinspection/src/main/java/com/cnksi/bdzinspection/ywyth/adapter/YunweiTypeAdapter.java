@@ -11,7 +11,7 @@ import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogContentChildItemBinding;
 import com.cnksi.bdzinspection.databinding.XsYwTypeChildItemBinding;
 import com.cnksi.bdzinspection.model.Project;
-import com.zhy.core.utils.AutoUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 public class YunweiTypeAdapter extends BaseMapListExpandableAdapter<Project, Project> {
 

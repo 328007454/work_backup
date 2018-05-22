@@ -106,7 +106,7 @@ public class FileUtil {
         if (f.exists()) {
             File[] files = f.listFiles();
             if (files != null) {
-                for (File file : files)
+                for (File file : files) {
                     if (file.isDirectory()) {
                         deleteAllFiles(file);
                         // 删除目录下的所有文件后，该目录变成了空目录，可直接删除
@@ -114,6 +114,7 @@ public class FileUtil {
                     } else if (file.isFile()) {
                         file.delete();
                     }
+                }
             }
             // 删除最外层的目录
             f.delete();
@@ -464,10 +465,14 @@ public class FileUtil {
                 // 复制文件
                 if (file.isFile()) {
                     flag = copyFile(file.getAbsolutePath(), destDirName + file.getName(), isOverlay);
-                    if (!flag) break;
+                    if (!flag) {
+                        break;
+                    }
                 } else if (file.isDirectory()) {
                     flag = copyDirectory(file.getAbsolutePath(), destDirName + file.getName(), isOverlay);
-                    if (!flag) break;
+                    if (!flag) {
+                        break;
+                    }
                 }
             }
         }

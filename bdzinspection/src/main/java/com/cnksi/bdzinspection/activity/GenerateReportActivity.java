@@ -50,7 +50,9 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.nari.NariActivity;
 import com.cnksi.nari.type.PackageStatus;
 import com.cnksi.nari.utils.NariDataManager;
-import com.cnksi.xscore.xscommon.ScreenManager;
+
+import com.cnksi.core.common.ScreenManager;
+
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -412,7 +414,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 intent = new Intent(currentActivity, InspectionReportActivity.class);
             }
             PushNewTaskUtil.getTaskUtilInstance().createNewTaskByPeriod(currentTaskId, currentInspectionType);
-            ScreenManager.getInstance().popAllActivityExceptOne(null);
+            ScreenManager.getScreenManager().popAllActivityExceptOne(null);
             startActivity(intent);
         } catch (DbException e) {
             e.printStackTrace();

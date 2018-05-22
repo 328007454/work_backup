@@ -1,8 +1,5 @@
 package com.cnksi.bdzinspection.view;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -21,16 +18,18 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.adapter.base.BaseRecyclerAdapter;
 import com.cnksi.bdzinspection.adapter.RecyclerHolder;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
+import com.cnksi.bdzinspection.adapter.base.BaseRecyclerAdapter;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.NumberUtil;
 import com.cnksi.bdzinspection.utils.TQEnum;
-import com.zhy.core.utils.AutoLayoutHelper;
+import com.zhy.autolayout.utils.AutoLayoutHelper;
+import com.zhy.autolayout.utils.AutoUtils;
 
-import com.zhy.core.utils.AutoUtils;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @version 1.0

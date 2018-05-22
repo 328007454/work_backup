@@ -47,8 +47,9 @@ public class HomeSafetyToolAdapter extends BaseLinearBindingAdapter<ItemHomeSafe
         holder.tvDate.setText("下次试验时间：" + (TextUtils.isEmpty(date) ? "未知" : date));
         if ("-1".equals(item.getString("bdz_id"))) {
             holder.tvBdzShort.setText("班");
-        } else
+        } else {
             holder.tvBdzShort.setText(getShortName(item.getString("bdz_name")));
+        }
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.OVAL);
         drawable.setColor(Color.parseColor("#fd6067"));
@@ -71,6 +72,8 @@ public class HomeSafetyToolAdapter extends BaseLinearBindingAdapter<ItemHomeSafe
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-        if (getCount() > 0) container.addView(lookMore);
+        if (getCount() > 0) {
+            container.addView(lookMore);
+        }
     }
 }

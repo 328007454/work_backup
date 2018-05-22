@@ -71,7 +71,7 @@
             android:textSize="@dimen/xs_global_text_size_px"
             android:visibility="gone"/>
 
-        <com.cnksi.xscore.xsview.InnerListView
+        <com.cnksi.core.view.InnerListView
             android:id="@+id/lv_track_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -150,9 +150,11 @@ public class BHDZQKActivity extends BaseActivity {
                 }
                 binding.chzdzqk.setVisibility(sbjcGztzjl.isTz() ? View.VISIBLE : View.GONE);
 
-                if (!TextUtils.isEmpty(sbjcGztzjl.dzbhFj))
+                if (!TextUtils.isEmpty(sbjcGztzjl.dzbhFj)) {
                     photos = Arrays.asList(StringUtils.NullToBlank(sbjcGztzjl.dzbhFj).split(","));
-                else photos = new ArrayList<>();
+                } else {
+                    photos = new ArrayList<>();
+                }
                 showPic();
 
                 //处理ABCO 相别
@@ -172,10 +174,12 @@ public class BHDZQKActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(sbjcGztzjl.ljtzcs)) {
                     binding.ljtzcs.setValuesStr(sbjcGztzjl.ljtzcs);
                 }
-                if (!TextUtils.isEmpty(sbjcGztzjl.gzdl))
+                if (!TextUtils.isEmpty(sbjcGztzjl.gzdl)) {
                     binding.gzdl.setGzdl(CalcUtils.String2Float(sbjcGztzjl.gzdl));
-                if (!TextUtils.isEmpty(sbjcGztzjl.ljz))
+                }
+                if (!TextUtils.isEmpty(sbjcGztzjl.ljz)) {
                     binding.gzdl.setLjz(CalcUtils.String2Float(sbjcGztzjl.ljz));
+                }
 
 
                 binding.chzdzqk.setKeyValue(new KeyValue(sbjcGztzjl.chzdzqkK, sbjcGztzjl.chzdzqk));
@@ -309,22 +313,27 @@ public class BHDZQKActivity extends BaseActivity {
         } else if (photos.size() == 1) {
             binding.ivShowPic.setVisibility(View.VISIBLE);
             Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + photos.get(0));
-            if (bitmap != null)
+            if (bitmap != null) {
                 binding.ivShowPic.setImageBitmap(bitmap);
+            }
             binding.tvPicNum.setVisibility(View.INVISIBLE);
         } else {
             binding.ivShowPic.setVisibility(View.VISIBLE);
             Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + photos.get(0));
-            if (bitmap != null)
+            if (bitmap != null) {
                 binding.ivShowPic.setImageBitmap(bitmap);
+            }
             binding.tvPicNum.setVisibility(View.VISIBLE);
             binding.tvPicNum.setText(photos.size() + "");
         }
     }
 
     private KeyValue nullTo(KeyValue keyValue) {
-        if (keyValue == null) return NULL;
-        else return keyValue;
+        if (keyValue == null) {
+            return NULL;
+        } else {
+            return keyValue;
+        }
     }
 
     @Override

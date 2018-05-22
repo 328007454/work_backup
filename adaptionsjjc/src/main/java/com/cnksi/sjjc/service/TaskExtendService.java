@@ -18,8 +18,9 @@ public class TaskExtendService extends BaseService<TaskExtend> {
     }
 
     public static TaskExtendService getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new TaskExtendService();
+        }
         return instance;
     }
 

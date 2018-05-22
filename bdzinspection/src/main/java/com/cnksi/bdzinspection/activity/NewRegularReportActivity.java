@@ -36,7 +36,9 @@ import com.cnksi.common.model.Report;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
-import com.cnksi.xscore.xscommon.ScreenManager;
+
+import com.cnksi.core.common.ScreenManager;
+
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -311,7 +313,7 @@ public class NewRegularReportActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        ScreenManager.getInstance().popAllActivityExceptOne(TaskRemindActivity.class);
+        ScreenManager.getScreenManager().popAllActivityExceptOne(TaskRemindActivity.class);
         if (isDefectChanged) {
             setResult(RESULT_OK);
         } else if (!isFromTaskRemind) {

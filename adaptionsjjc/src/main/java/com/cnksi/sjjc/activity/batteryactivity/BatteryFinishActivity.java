@@ -138,8 +138,9 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
                 }
                 try {
                     batteryGroupList = BatteryGroupService.getInstance().getAllGroup(currentReportId);
-                    if (batteryGroupList.size() > 0)
+                    if (batteryGroupList.size() > 0) {
                         batteryGroup = batteryGroupList.get(0);
+                    }
                     batteryList = BatteryService.getInstance().getAllBattery(currentBdzId);
 
                     dbModelList = UserService.getInstance().getAllUser(account);

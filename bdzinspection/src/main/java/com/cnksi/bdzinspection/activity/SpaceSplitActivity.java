@@ -22,7 +22,7 @@ import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.xscore.xsview.CustomerDialog;
+import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.DbManager;
 import org.xutils.common.util.KeyValue;

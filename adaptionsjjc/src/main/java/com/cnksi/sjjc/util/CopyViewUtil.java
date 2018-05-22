@@ -77,16 +77,17 @@ public class CopyViewUtil {
                     RelativeLayout layoutRoot = (RelativeLayout) childHolder.getRootView();
                     // 构造抄录描述
                     String descript = "";
-                    if ("Y".equals(childItem.val))
+                    if ("Y".equals(childItem.val)) {
                         descript = "抄录" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
-                    else if ("Y".equals(childItem.val_a))
+                    } else if ("Y".equals(childItem.val_a)) {
                         descript = "抄录A相" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
-                    else if ("Y".equals(childItem.val_b))
+                    } else if ("Y".equals(childItem.val_b)) {
                         descript = "抄录B相" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
-                    else if ("Y".equals(childItem.val_c))
+                    } else if ("Y".equals(childItem.val_c)) {
                         descript = "抄录C相" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
-                    else if ("Y".equals(childItem.val_o))
+                    } else if ("Y".equals(childItem.val_o)) {
                         descript = "抄录O相" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
+                    }
 
                     if (!TextUtils.isEmpty(childItem.min) || !TextUtils.isEmpty(childItem.max)) {
                         descript += "(" + (TextUtils.isEmpty(childItem.min) ? "" : childItem.min) + "-" + (TextUtils.isEmpty(childItem.max) ? "" : childItem.max) + ")";
@@ -107,16 +108,21 @@ public class CopyViewUtil {
                     // 显示历史抄录
                     if (copyResultMap.keySet().contains(childItem.id)) {
                         CopyResult copyResult = copyResultMap.get(childItem.id);
-                        if ("Y".equals(childItem.val) && !("-1".equals(copyResult.val)))
+                        if ("Y".equals(childItem.val) && !("-1".equals(copyResult.val))) {
                             copyValue.setText(copyResult.val);
-                        if ("Y".equals(childItem.val_a) && !("-1".equals(copyResult.val_a)))
+                        }
+                        if ("Y".equals(childItem.val_a) && !("-1".equals(copyResult.val_a))) {
                             copyValue.setText(copyResult.val_a);
-                        if ("Y".equals(childItem.val_b) && !("-1".equals(copyResult.val_b)))
+                        }
+                        if ("Y".equals(childItem.val_b) && !("-1".equals(copyResult.val_b))) {
                             copyValue.setText(copyResult.val_b);
-                        if ("Y".equals(childItem.val_c) && !("-1".equals(copyResult.val_c)))
+                        }
+                        if ("Y".equals(childItem.val_c) && !("-1".equals(copyResult.val_c))) {
                             copyValue.setText(copyResult.val_c);
-                        if ("Y".equals(childItem.val_o) && !("-1".equals(copyResult.val_o)))
+                        }
+                        if ("Y".equals(childItem.val_o) && !("-1".equals(copyResult.val_o))) {
                             copyValue.setText(copyResult.val_o);
+                        }
                         if (!TextUtils.isEmpty(copyResult.remark)) {//抄录结果的remar字段是否有看不清的提示。
                             // builder.append(copyResult.remark + "	");
                             remark = copyResult.remark;
@@ -145,10 +151,11 @@ public class CopyViewUtil {
                 }
                 //查看整个抄录项remark字段是否具有看不清的提示，有则在整个item上提示该显示。
                 if (!TextUtils.isEmpty(remark)) {
-                    if (remark.endsWith(","))
+                    if (remark.endsWith(",")) {
                         remark = "(" + remark.substring(0, remark.length() - 1) + ")";
-                    else
+                    } else {
                         remark = "(" + remark.substring(0, remark.length()) + ")";
+                    }
                 }
                 parentHolder.setText(R.id.tv_group_item, parentItem.description + remark);
             }
@@ -176,16 +183,21 @@ public class CopyViewUtil {
             CopyResult copyResult = copyResultMap.get(copyItem.id);
             if (null != copyResult) {
                 String value = StringUtils.getTransformTep(s.toString());
-                if ("Y".equals(copyItem.val))
+                if ("Y".equals(copyItem.val)) {
                     copyResult.val = value;
-                if ("Y".equals(copyItem.val_a))
+                }
+                if ("Y".equals(copyItem.val_a)) {
                     copyResult.val_a = value;
-                if ("Y".equals(copyItem.val_b))
+                }
+                if ("Y".equals(copyItem.val_b)) {
                     copyResult.val_b = value;
-                if ("Y".equals(copyItem.val_c))
+                }
+                if ("Y".equals(copyItem.val_c)) {
                     copyResult.val_c = value;
-                if ("Y".equals(copyItem.val_o))
+                }
+                if ("Y".equals(copyItem.val_o)) {
                     copyResult.val_o = value;
+                }
             }
         }
     }

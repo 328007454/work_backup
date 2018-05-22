@@ -24,7 +24,8 @@ import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
-import com.zhy.core.utils.AutoUtils;
+
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 
