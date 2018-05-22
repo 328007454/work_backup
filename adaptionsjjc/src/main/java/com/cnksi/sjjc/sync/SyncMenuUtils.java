@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.cnksi.common.utils.ThreadPool;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -143,7 +143,7 @@ public class SyncMenuUtils {
     public static void dropDb(final Activity mActivity, final KSync ksync, final Handler handler) {
         ShowTipsDialog(mActivity, "确认删除数据库么?", v -> {
             CustomerDialog.showProgress(mActivity, "删除中...");
-            ThreadPool.execute(() -> {
+            ExecutorManager.executeTask(() -> {
                 try {
                     ksync.dropDb();
                     handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "数据库删除完成"));
@@ -158,9 +158,9 @@ public class SyncMenuUtils {
     public static void deleteBakFile(final Activity mActivity, final KSync ksync, final Handler handler) {
         ShowTipsDialog(mActivity, "确认删除逾期文件么?", v -> {
             CustomerDialog.showProgress(mActivity, "删除中...");
-            ThreadPool.execute(() -> {
+            ExecutorManager.executeTask(() -> {
                 // 删除两个月之前的备份文件
-                long time = 60l * 24l * 60l * 60l * 1000l;
+                long time = 60L * 24L * 60L * 60L * 1000L;
                 Set<String> uploadFolder = KSyncConfig.getInstance().getUploadFolder();
                 Set<String> downFolder = KSyncConfig.getInstance().getDownFolder();
                 //如果该文件夹是下载文件夹则忽略
