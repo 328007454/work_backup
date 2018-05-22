@@ -36,7 +36,7 @@ import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.FunctionUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * 蓄电池组试验的巡检界面
@@ -103,13 +105,13 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_yw_battery);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         taskStatus = TaskService.getInstance().getTaskStatusForBoolean(currentTaskId);
         TTSUtils.getInstance().startSpeaking(getString(R.string.xs_speak_content_format_str, getString(R.string.xs_yw_battery_title)));
@@ -119,7 +121,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         binding.clr.append(StringUtils.changePartTextColor(currentActivity, getUsers().username, R.color.xs_green_color, 0, getUsers().username.length()));
     }
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(() -> {
             try {
                 // 查询已选择的电池组
@@ -336,7 +338,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         // 保存抄录的数量
         try {
             if (TextUtils.isEmpty(mBatteryDetails.id)) {
-                mBatteryDetails.id = FunctionUtils.getPrimarykey();
+                mBatteryDetails.id = FunctionUtil.getPrimarykey();
             }
             mBatteryDetails.reportid = currentReportId;
             XunshiApplication.getDbUtils().saveOrUpdate(mBatteryDetails);

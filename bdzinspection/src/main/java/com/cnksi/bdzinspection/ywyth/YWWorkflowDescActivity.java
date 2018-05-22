@@ -37,7 +37,7 @@ public class YWWorkflowDescActivity extends TitleActivity {
 	}
 
 	@Override
-	protected String initUI() {
+	protected String initialUI() {
 		binding = (XsActivityYwythDescBinding) getDataBinding();
 		bean = (PlanProcessStatus) getIntent().getSerializableExtra(YWWorkflowActivity.PLANDATA);
 		pro = (Process) getIntent().getSerializableExtra(YWWorkflowActivity.PROCESSDATA);
@@ -46,7 +46,7 @@ public class YWWorkflowDescActivity extends TitleActivity {
 	}
 
 	@Override
-	protected void initData() {
+	protected void initialData() {
 		if (bean.picture != null) {
 			imgs = Arrays.asList(bean.picture.split(Config.SPLIT));
 		} else {

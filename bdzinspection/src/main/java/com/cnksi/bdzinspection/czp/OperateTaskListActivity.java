@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 操作票任务列表界面
  *
@@ -68,15 +70,15 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
                 e.printStackTrace();
             }
         }
-        initUI();
+        initialUI();
 
-        initData();
+        initialData();
 
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         if (getIntent().getBooleanExtra("isThird", false)) {
               binding.includeTitle.tvTitle.setText("倒闸操作");
         } else {
@@ -86,7 +88,7 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
           binding.includeTitle.tvBatteryTestStep.setVisibility(View.VISIBLE);
     }
 
-    private void initData() {
+    private void initialData() {
         titleArray = Arrays.asList(getResources().getStringArray(R.array.XS_OperateTaskTitleArray));
         initFragmentList();
         searchTitleArray();
@@ -110,7 +112,7 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
             bundle.putString(Config.CURRENT_FUNCTION_MODEL, functionModelArray[i]);
             mFragmentList.add(OperateTaskListFragment.getInstance(bundle));
         }
-        fragmentPagerAdapter = new FragmentPagerAdapter(fManager, mFragmentList, titleArray);
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, titleArray);
           binding.viewPager.setAdapter(fragmentPagerAdapter);
           binding.tabStrip.setViewPager(  binding.viewPager);
         setPagerTabStripValue(  binding.tabStrip);

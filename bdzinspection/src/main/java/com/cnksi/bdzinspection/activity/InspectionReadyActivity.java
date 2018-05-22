@@ -32,7 +32,7 @@ import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.FunctionUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 
 import org.xutils.db.sqlite.SqlInfo;
@@ -43,6 +43,8 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * 巡检前准备 抄录温湿度 危险点 工器具等
@@ -87,10 +89,10 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         super.onCreate(savedInstanceState);
         binding = XsActivityInspectionReadyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        initUI();
+        initialUI();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         binding.tvTitle.setText(R.string.xs_inspection_ready_str);
         if (!currentInspectionType.contains(InspectionType.special.name())
@@ -204,7 +206,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             mFragmentList.add(backFragment);
         }
 
-        fragmentPagerAdapter = new FragmentPagerAdapter(fManager, mFragmentList, titleArray);
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, titleArray);
         binding.viewPager.setAdapter(fragmentPagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
         binding.tabStrip.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -357,7 +359,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                 mReport = new Report(currentTaskId, currentBdzId, currentBdzName, currentInspectionType, loginPerson,
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);
                 mReport.pmsJhid = task.pmsJhid;
-                mReport.reportid = FunctionUtils.getPrimarykey();
+                mReport.reportid = FunctionUtil.getPrimarykey();
             } else {
                 mReport.setReport(currentBdzId, currentBdzName, currentInspectionType,
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);

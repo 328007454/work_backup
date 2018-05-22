@@ -82,7 +82,7 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
             binding.includeTitle.tvBatteryTestStep.setVisibility(View.VISIBLE);
             binding.includeTitle.tvBatteryTestStep.setText("确认选择");
         }
-        initData();
+        initialData();
 
         initOnClick();
     }
@@ -135,7 +135,7 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
     }
 
     @SuppressWarnings("deprecation")
-    private void initData() {
+    private void initialData() {
 
         viewAdapter = new ViewPagerAdapter();
         binding.viewPager.setAdapter(viewAdapter);

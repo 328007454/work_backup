@@ -82,12 +82,12 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_device_select);
 
-        initUI();
+        initialUI();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         currentInspectionType = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE);
         binding.includeTitle.tvTitle.setText(R.string.xs_device_select);
@@ -112,7 +112,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
                 selectFragment.setSpaceClickListener(this);
                 fragmentList.add(selectFragment);
             }
-            FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(fManager, fragmentList, titleArray);
+            FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titleArray);
             binding.viewPager.setAdapter(pagerAdapter);
             binding.tabStrip.setViewPager(binding.viewPager);
             setPagerTabStripValue(binding.tabStrip);

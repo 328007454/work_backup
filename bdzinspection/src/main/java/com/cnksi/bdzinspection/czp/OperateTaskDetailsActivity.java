@@ -19,6 +19,8 @@ import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.ex.DbException;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 操作票任务详细界面
  *
@@ -40,20 +42,20 @@ public class OperateTaskDetailsActivity extends BaseActivity {
 
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_task_details);
        
-        initUI();
-        initData();
+        initialUI();
+        initialData();
 
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         currentOperateId = getIntent().getStringExtra(Config.CURRENT_TASK_ID);
         isFromCheckedActivity = getIntent().getBooleanExtra(Config.IS_FROM_BATTERY, false);
          binding.includeTitle.tvTitle.setText(R.string.xs_operate_task_str);
     }
 
-    private void initData() {
+    private void initialData() {
 
         mFixedThreadPoolExecutor.execute(new Runnable() {
 

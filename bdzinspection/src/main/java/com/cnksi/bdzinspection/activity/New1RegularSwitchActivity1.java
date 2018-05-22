@@ -30,7 +30,6 @@ import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.PopMenuBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
 import com.cnksi.bdzinspection.model.DefectRecord;
-import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.bdzinspection.model.SwitchPic;
 import com.cnksi.bdzinspection.utils.Config;
@@ -42,13 +41,13 @@ import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.RecordAudioUtils;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.model.Report;
 import com.cnksi.xscore.xsutils.BitmapUtil;
 import com.cnksi.xscore.xsutils.CLog;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
@@ -61,6 +60,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.common.Config.LOAD_MORE_DATA;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
 
 public class New1RegularSwitchActivity1 extends BaseActivity implements KeyboardChangeListener.KeyBoardListener {
 
@@ -188,15 +192,15 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSwitch1Binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_regular_switch1);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         popMenu = new ToolPop();
         new KeyboardChangeListener(this).setKeyBoardListener(this);
 
         initOnClick();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         mSwitch1Binding.includeTitle.tvTitle.setText(currentInspectionTypeName);
         boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
@@ -242,7 +246,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
         isFirstLoad = false;
     }
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(() -> {
             try {
                 report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId).findFirst();
@@ -595,7 +599,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                 dbModel = model;
                 int i = v.getId();
                 if (i == R.id.id_camera) {
-                    FunctionUtils.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER);
+                    FunctionUtil.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER);
 
                 } else if (i == R.id.id_defect) {
                     saveOrUpdateInputValue(0x00);

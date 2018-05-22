@@ -27,6 +27,8 @@ import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * @author ksi-android
  */
@@ -46,7 +48,7 @@ public class DownloadOperationTickActivity extends TitleActivity {
     }
 
     @Override
-    protected String initUI() {
+    protected String initialUI() {
         binding = (XsActivityDownloadOptrTickBinding) getDataBinding();
         final Animation animation1 = AnimationUtils.loadAnimation(currentActivity, R.anim.xs_slide_in_right2);
         final Animation animation2 = AnimationUtils.loadAnimation(currentActivity, R.anim.xs_slide_in_left2);
@@ -92,7 +94,7 @@ public class DownloadOperationTickActivity extends TitleActivity {
 
 
     @Override
-    protected void initData() {
+    protected void initialData() {
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             path = getIntent().getStringExtra("filePath");

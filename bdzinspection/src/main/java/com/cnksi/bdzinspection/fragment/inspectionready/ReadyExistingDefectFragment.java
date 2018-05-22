@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 巡检前准备 现存缺陷Fragment
  *
@@ -57,12 +59,12 @@ public class ReadyExistingDefectFragment extends BaseFragment implements OnAdapt
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentPinnedHeaderListBinding.inflate(getActivity().getLayoutInflater());
         AutoUtils.autoSize(binding.getRoot());
-        initUI();
+        initialUI();
         lazyLoad();
         return binding.getRoot();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         binding.lvPinnedContainer.setOnItemClickListener(new OnItemClickListener() {
             @Override

@@ -34,7 +34,7 @@ import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
@@ -46,6 +46,9 @@ import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
 
 /**
  * 工器具详情列表
@@ -81,13 +84,13 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         super.onCreate(savedInstanceState);
         informationBinding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_safetytool_information);
 
-        initData();
+        initialData();
         creatTestDialog();
         creatStopDialog();
     }
 
 
-    private void initData() {
+    private void initialData() {
         final String toolId = getIntent().getStringExtra(SafeToolsInfor.ID);
         final String dept = getIntent().getStringExtra(Department.DEPT_ID);
         final String bdzId = getIntent().getStringExtra(Bdz.BDZID);
@@ -111,13 +114,13 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    initUI();
+                    initialUI();
                 }
             });
         });
     }
 
-    private void initUI() {
+    private void initialUI() {
         informationBinding.btnStop.setOnClickListener(this);
         informationBinding.btnTest.setOnClickListener(this);
         informationBinding.tvInclude.ibtnCancel.setOnClickListener(new View.OnClickListener() {
@@ -298,8 +301,8 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         testBinding.ibtnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentImageName = toolPicPath + FunctionUtils.getCurrentImageName();
-                FunctionUtils.takePicture(currentActivity, currentImageName, Config.BDZ_INSPECTION_FOLDER);
+                currentImageName = toolPicPath + FunctionUtil.getCurrentImageName();
+                FunctionUtil.takePicture(currentActivity, currentImageName, Config.BDZ_INSPECTION_FOLDER);
             }
         });
         testBinding.ivReportPhoto.setOnClickListener(new View.OnClickListener() {

@@ -68,13 +68,13 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         isFirstLoad = true;
         rootHolder = new ViewHolder(currentActivity, container, R.layout.xs_fragment_expadable_list_1, false);
-        initUI();
+        initialUI();
         initSpacingGroup();
         lazyLoad();
         return rootHolder.getRootView();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         qwerKeyBoardUtils = new QWERKeyBoardUtils(currentActivity);
         qwerKeyBoardUtils.init(rootHolder.getView(R.id.ll_root_container), this);

@@ -24,7 +24,6 @@ import com.cnksi.xscore.xsutils.BitmapUtil;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
@@ -35,6 +34,10 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
 
 /**
  * 增加新缺陷的界面
@@ -70,11 +73,12 @@ public class AddNewDefectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_add_new_defect);
-        initUI();
+        initialUI();
         initOnClick();
     }
 
-    private void initUI() {
+
+    public void initialUI() {
         getIntentValue();
         if (null != getIntent()) {
             defectContentPre = getIntent().getStringExtra(Config.DEFECT_COUNT_KEY);
@@ -129,7 +133,7 @@ public class AddNewDefectActivity extends BaseActivity {
         });
         binding.ibtnTakePicture.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(binding.etInputDefectContent.getText().toString().trim())) {
-                FunctionUtils.takePicture(AddNewDefectActivity.this,
+                FunctionUtil.takePicture(AddNewDefectActivity.this,
                         currentImageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
             } else {
                 CToast.showShort(currentActivity, "请先填写缺陷内容！");

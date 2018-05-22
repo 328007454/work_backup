@@ -40,7 +40,7 @@ import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.DensityUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.swipemenulist.SwipeMenu;
@@ -53,6 +53,8 @@ import com.zhy.core.utils.AutoUtils;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
 
 /**
  * @author wastrel
@@ -360,7 +362,7 @@ public class YWWorkflowActivity extends BaseActivity {
                 selectIndex = position;
                 switch (index) {
                     case 0: // 拍照
-                        FunctionUtils.takePicture(currentActivity,
+                        FunctionUtil.takePicture(currentActivity,
                                 (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
                                 Config.CUSTOMER_PICTURES_FOLDER);
                         break;

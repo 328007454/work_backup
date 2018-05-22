@@ -103,11 +103,11 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_inspection_task_remind);
 //        setContentView(R.layout.xs_activity_inspection_task_remind);
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, Config.permissions);
-        initUI();
+        initialUI();
         initOnClick();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         binding.includeTitle.ibtnExit.setVisibility(View.VISIBLE);
         binding.includeTitle.ibtnExit.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.xs_icon_sync_selector));
@@ -140,7 +140,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             mTaskFragment.setArguments(args);
             mFragmentList.add(mTaskFragment);
         }
-        fragmentPagerAdapter = new FragmentPagerAdapter(fManager, mFragmentList, Arrays.asList(titleArray));
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArray));
         binding.viewPager.setAdapter(fragmentPagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
         binding.tabStrip.setOnPageChangeListener(this);
@@ -207,7 +207,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             }
             if (intent.hasExtra(Config.CURRENT_INSPECTION_TYPE_NAME)) {
                 setIntent(intent);
-                initUI();
+                initialUI();
             }
         }
 

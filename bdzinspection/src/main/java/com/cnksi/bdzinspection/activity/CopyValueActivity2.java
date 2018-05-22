@@ -79,14 +79,14 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_copy2);
 
         initLocation();
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
     private XsActivityCopyDialogBinding copyDialogBinding;
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         creatDefectDialog();
         data = new ArrayList<>();
@@ -172,7 +172,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         copyViewUtil.createCopyView(currentActivity, data, binding.copyContainer);
     }
 
-    private void initData() {
+    private void initialData() {
         // 查询抄录标准
         mFixedThreadPoolExecutor.execute(() -> {
             searchDefect();

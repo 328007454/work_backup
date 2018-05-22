@@ -125,12 +125,12 @@ public class AddTaskActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_add_inspection_task);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
-    private void initUI() {
+    private void initialUI() {
 
         binding.includeTitle.tvTitle.setText(R.string.xs_add_inspection_task_str);
         binding.tvInspectionDate.setText(DateUtils.getCurrentShortTime());
@@ -151,7 +151,7 @@ public class AddTaskActivity extends BaseActivity {
 
     }
 
-    private void initData() {
+    private void initialData() {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

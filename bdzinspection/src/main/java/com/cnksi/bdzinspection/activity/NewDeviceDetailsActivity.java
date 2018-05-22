@@ -57,7 +57,6 @@ import com.cnksi.xscore.xsutils.BitmapUtil;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
@@ -75,6 +74,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
+import static com.cnksi.core.utils.Cst.CROP_PICTURE;
 
 /**
  * @author nothing  on 2017/11/01
@@ -194,13 +198,13 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         changedStatusColor();
         devicedetailsBinding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_new_devicedetails);
         getIntentValue();
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         devicedetailsBinding.devicePartRecy.setVisibility(View.GONE);
         devicedetailsBinding.deviceStandardLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -229,7 +233,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         devicedetailsBinding.btPhotoSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FunctionUtils.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, PHOTO_SIGN_IMAGE);
+                FunctionUtil.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, PHOTO_SIGN_IMAGE);
             }
         });
         devicedetailsBinding.imgArrived.setOnClickListener(new View.OnClickListener() {
@@ -248,7 +252,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
      * 3.查询历史缺陷数量 一般 严重 危机
      */
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(() -> {
             try {
                 specialMenu = SpecialMenuService.getInstance().findCurrentDeviceType(currentInspectionType);
@@ -595,7 +599,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         break;
                     // 更换图片
                     case 1:
-                        FunctionUtils.takePicture(currentActivity, (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)), Config.CUSTOMER_PICTURES_FOLDER);
+                        FunctionUtil.takePicture(currentActivity, (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)), Config.CUSTOMER_PICTURES_FOLDER);
                         break;
                     // 查看大图片
                     case 0:
@@ -898,8 +902,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             if (devicePartRecylerAdapter != null) {
                 devicePartRecylerAdapter.setClickPosition(0);
             }
-            initUI();
-            initData();
+            initialUI();
+            initialData();
         }
     }
 }

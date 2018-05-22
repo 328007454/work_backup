@@ -16,6 +16,9 @@ import com.cnksi.xscore.xsview.PicturePaintView;
 
 import java.io.File;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.common.Config.SAVE_DATA;
+
 /**
  * 缺陷照片标记圆圈的界面
  *
@@ -37,12 +40,12 @@ public class DrawCircleImageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_draw_circle);
-        initUI();
+        initialUI();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         currentImagePath = getIntent().getStringExtra(Config.CURRENT_IMAGE_NAME);
         initBitmap();
     }

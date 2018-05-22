@@ -20,6 +20,8 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 运行规定界面展示   采用webview加载后台同步的数据库的html字段
  * */
@@ -33,14 +35,14 @@ public class MotionRuleFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		binding = XsFragmentMotionRuleBinding.inflate(inflater);
 		getBundleValue();
-		initUi();
-		initData();
+		initialUI();
+		initialData();
 		return binding.getRoot();
 	}
 
 	
 
-	private void initData() {
+	private void initialData() {
 		mFixedThreadPoolExecutor.execute(() -> {
             String sql = " select db.rules,db.exception_deal_methods from device_bigtype db, (SELECT * from device d left join device_type dt on d.dtid= dt.dtid where  d.deviceid='" + currentDeviceId + "') t where db.bigid = t.bigid ";
             try {
@@ -55,7 +57,7 @@ public class MotionRuleFragment extends BaseFragment {
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")
-	private void initUi() {
+	private void initialUI() {
 		webView = new WebView(currentActivity);
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		webView.setLayoutParams(layoutParams);

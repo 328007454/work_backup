@@ -18,13 +18,15 @@ import com.cnksi.bdzinspection.fragment.defectcontrol.RecordDefectFragment;
 import com.cnksi.bdzinspection.fragment.defectcontrol.TrackDefectFragment;
 import com.cnksi.bdzinspection.model.DefectRecord;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.TTSUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * 缺陷管控
@@ -68,12 +70,12 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity,R.layout.xs_activity_defect_control);
         
-        initUI();
+        initialUI();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
          binding.includeTitle.tvTitle.setText(R.string.xs_defect_control_str);
         isFromBattery = getIntent().getBooleanExtra(Config.IS_FROM_BATTERY, false);
@@ -118,7 +120,7 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
         mEliminateFragment.setArguments(args);
         mFragmentList.add(mEliminateFragment);
 
-        fragmentPagerAdapter = new FragmentPagerAdapter(fManager, mFragmentList, Arrays.asList(titleArray));
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArray));
          binding.viewPager.setAdapter(fragmentPagerAdapter);
          binding.tabStrip.setViewPager( binding.viewPager);
          binding.tabStrip.setOnPageChangeListener(this);
@@ -257,6 +259,6 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
 
     @Override
     public void takePicture(String pictureName, String folder, int requestCode) {
-        FunctionUtils.takePicture(DefectControlActivity.this, pictureName, folder, requestCode);
+        FunctionUtil.takePicture(DefectControlActivity.this, pictureName, folder, requestCode);
     }
 }

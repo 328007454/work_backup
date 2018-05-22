@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyDeviceAdapter;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.databinding.XsFragmentGridlistBinding;
@@ -19,6 +18,8 @@ import org.xutils.db.table.DbModel;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * 抄录数据
@@ -72,13 +73,15 @@ public class CopyValueFragment2 extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = XsFragmentGridlistBinding.inflate(inflater);
-        initUI();
+        initialUI();
         isPrepared = true;
         lazyLoad();
         return binding.getRoot();
     }
 
-    private void initUI() {
+
+
+    private void initialUI() {
         getBundleValue();
         binding.gvContainer.setNumColumns(2);
         data = new ArrayList<>();
@@ -101,18 +104,15 @@ public class CopyValueFragment2 extends BaseFragment {
         if (!isPrepared)
             return;
         data.clear();
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                searchCurrentDeviceType();
-                List<DbModel> deviceList = CopyItemService.getInstance().getCopyDeviceList(currentBdzId,
-                        currentFunctionModel, currentInspectionType,specialMenu.deviceWay,currentReportId);
-                if (null != deviceList && !deviceList.isEmpty()) {
-                    data.addAll(deviceList);
-                    originModel.addAll(deviceList);
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+        mFixedThreadPoolExecutor.execute(() -> {
+            searchCurrentDeviceType();
+            List<DbModel> deviceList = CopyItemService.getInstance().getCopyDeviceList(currentBdzId,
+                    currentFunctionModel, currentInspectionType,specialMenu.deviceWay,currentReportId);
+            if (null != deviceList && !deviceList.isEmpty()) {
+                data.addAll(deviceList);
+                originModel.addAll(deviceList);
             }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 

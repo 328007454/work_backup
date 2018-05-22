@@ -59,6 +59,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 全面 日常 特殊巡检（大风 大雾 下雪 高温 夜间 雷雨）巡检报告
  *
@@ -125,13 +127,13 @@ public class InspectionReportActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_inspection_report);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         if (isParticularInspection() || isRoutineNotCopy()) {
             binding.llCopyResult.setVisibility(View.GONE);
@@ -175,7 +177,7 @@ public class InspectionReportActivity extends BaseActivity {
         binding.ibtnCancel.setOnClickListener(view -> ExitThisAndGoLauncher());
     }
 
-    private void initData() {
+    private void initialData() {
 
         mFixedThreadPoolExecutor.execute(new Runnable() {
 
@@ -474,7 +476,7 @@ public class InspectionReportActivity extends BaseActivity {
                 case UPDATE_DEVICE_DEFECT_REQUEST_CODE:
                     // 缺陷更改了之后需要刷新界面
                     isDefectChanged = true;
-                    initData();
+                    initialData();
                     break;
                 default:
                     break;

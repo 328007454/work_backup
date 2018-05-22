@@ -62,7 +62,7 @@ import android.widget.Toast;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.view.AutoFitTextureView;
-import com.cnksi.xscore.xsutils.FunctionUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 
 @SuppressLint("NewApi")
 public class Camera2VideoFragment extends Fragment {
@@ -469,7 +469,7 @@ public class Camera2VideoFragment extends Fragment {
 	}
 
 	private File getVideoFile() {
-		return new File(Config.VIDEO_FOLDER, videoFileName = FunctionUtils.getPrimarykey() + ".mp4");
+		return new File(Config.VIDEO_FOLDER, videoFileName = FunctionUtil.getPrimarykey() + ".mp4");
 	}
 
 	public void startRecordingVideo() {

@@ -53,6 +53,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
+
 /**
  * 消除缺陷
  *
@@ -139,14 +143,14 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentEliminateDefectBinding.inflate(getActivity().getLayoutInflater());
         AutoUtils.autoSize(binding.getRoot());
-        initUI();
+        initialUI();
         lazyLoad();
         initOnClick();
         return binding.getRoot();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
 
         getBundleValue();
 

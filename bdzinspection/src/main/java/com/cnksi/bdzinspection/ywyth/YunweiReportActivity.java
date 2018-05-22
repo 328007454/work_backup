@@ -28,6 +28,8 @@ import org.xutils.ex.DbException;
 
 import java.util.Date;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 运维一体化报告界面
  *
@@ -56,14 +58,14 @@ public class YunweiReportActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		binding = DataBindingUtil.setContentView(currentActivity,R.layout.xs_activity_yunwei_report);
-		initUI();
-		initData();
+		initialUI();
+		initialData();
 		initOnClick();
 
 	}
 
 
-	private void initUI() {
+	private void initialUI() {
 
 		currentDepartmentId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
 		getIntentValue();
@@ -78,7 +80,7 @@ public class YunweiReportActivity extends BaseActivity {
 		binding.includeTitle.ibtnExit.setVisibility(View.GONE);
 	}
 
-	private void initData() {
+	private void initialData() {
 
 		mFixedThreadPoolExecutor.execute(new Runnable() {
 

@@ -48,7 +48,7 @@ public class YWGQJActivity extends TitleActivity {
 	}
 
 	@Override
-	protected String initUI() {
+	protected String initialUI() {
 		binding = (XsActivityYwythGqjBinding) getDataBinding();
 		return getResources().getString(R.string.xs_yw_gqj);
 
@@ -56,10 +56,10 @@ public class YWGQJActivity extends TitleActivity {
 
 	/*
 	 * (non-Javadoc)
-	 * @see com.cnksi.bdzinspection.activity.TitleActivity#initData()
+	 * @see com.cnksi.bdzinspection.activity.TitleActivity#initialData()
 	 */
 	@Override
-	protected void initData() {
+	protected void initialData() {
 		getIntentValue();
 		taskStatus = TaskService.getInstance().getTaskStatusForBoolean(currentTaskId);
 		// TODO Auto-generated method stub

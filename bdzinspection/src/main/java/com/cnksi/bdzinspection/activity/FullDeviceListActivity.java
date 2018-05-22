@@ -85,18 +85,18 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_full_device_list);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         setHasSortOrSplit();
         initOnClick();
     }
 
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(() -> currentTask = TaskService.getInstance().findById(currentTaskId));
     }
 
-    private void initUI() {
+    private void initialUI() {
         shakeListener = new ShakeListener(this);
         shakeListener.setOnShakeListener(this);
         binding.ibtnAdd.setVisibility(View.VISIBLE);
@@ -123,7 +123,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
             fragmentTitleList.add(look.v);
             fragmentList.add(fragment);
         }
-        FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(fManager, fragmentList, fragmentTitleList);
+        FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), fragmentList, fragmentTitleList);
         binding.viewPager.setAdapter(pagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
         setPagerTabStripValue(binding.tabStrip);

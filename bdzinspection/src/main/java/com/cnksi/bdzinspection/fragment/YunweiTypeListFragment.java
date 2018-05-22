@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 运维一体化Fragment
  * 
@@ -39,7 +41,7 @@ public class YunweiTypeListFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		binding = XsFragmentExpadableListBinding.inflate(inflater);
-		initUI();
+		initialUI();
 		lazyLoad();
 		initOnClick();
 		return binding.getRoot();
@@ -47,7 +49,7 @@ public class YunweiTypeListFragment extends BaseFragment {
 
 
 
-	private void initUI() {
+	private void initialUI() {
 		getBundleValue();
 		isPrepared = true;
 	}

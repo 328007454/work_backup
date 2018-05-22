@@ -59,8 +59,8 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(currentActivity,R.layout.xs_activity_location_spacing);
         
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         if (spaceCount >= 1) {
             initLocation();
             // shakeListener = new ShakeListener(this);
@@ -81,7 +81,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
         // binding.listSpacing.setVisibility(View.GONE);
     }
 
-    private void initUI() {
+    private void initialUI() {
         binding.includeTitle.tvTitle.setText(R.string.xs_near_spacing);
         data = new ArrayList<Spacing>();
         adapter = new LocationSpacingAdapter(this, data, R.layout.xs_item_location_spacing);
@@ -99,7 +99,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
 
     private List<LatLng> latLngs = new ArrayList<>();
 
-    private void initData() {
+    private void initialData() {
         getIntentValue();
         LatLng latLng = getIntent().getParcelableExtra(Config.CURRENT_LATLNG);
         if (latLng != null)

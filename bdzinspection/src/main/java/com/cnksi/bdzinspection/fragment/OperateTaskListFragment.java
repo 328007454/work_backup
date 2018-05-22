@@ -20,6 +20,8 @@ import org.xutils.ex.DbException;
 
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 巡检任务提醒
  *
@@ -42,7 +44,7 @@ public class OperateTaskListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentListBinding.inflate(inflater);
 
-        initUI();
+        initialUI();
 
         lazyLoad();
         initOnClick();
@@ -51,7 +53,7 @@ public class OperateTaskListFragment extends BaseFragment {
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         // 设置类型
 

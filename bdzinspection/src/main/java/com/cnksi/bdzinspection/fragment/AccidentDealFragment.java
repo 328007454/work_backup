@@ -20,6 +20,8 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 典型故障和异常处理fragment 采用webview加载后台同步的数据库的html字段
  * */
@@ -33,8 +35,8 @@ public class AccidentDealFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		binding = XsFragmentMotionRuleBinding.inflate(inflater);
 		getBundleValue();
-		initUi();
-		initData();
+		initialUI();
+		initialData();
 		return binding.getRoot();
 	}
 
@@ -42,7 +44,7 @@ public class AccidentDealFragment extends BaseFragment {
 	protected void lazyLoad() {	
 	}
 	
-	private void initData() {
+	private void initialData() {
 		mFixedThreadPoolExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
@@ -60,7 +62,7 @@ public class AccidentDealFragment extends BaseFragment {
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")
-	private void initUi() {
+	private void initialUI() {
 		webView = new WebView(currentActivity);
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		webView.setLayoutParams(layoutParams);

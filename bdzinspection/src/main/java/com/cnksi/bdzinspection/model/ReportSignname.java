@@ -2,9 +2,9 @@ package com.cnksi.bdzinspection.model;
 
 import android.text.TextUtils;
 
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.model.Department;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
@@ -72,7 +72,7 @@ public class ReportSignname extends BaseModel {
         this.dpetId = model.getString(Users.DEPT_ID);
         this.dpetName = model.getString(Department.NAME);
         this.name = model.getString(Users.USERNAME);
-        this.id = FunctionUtils.getPrimarykey();
+        this.id = FunctionUtil.getPrimarykey();
         this.createTime = DateUtils.getCurrentLongTime();
         this.account = model.getString("account");
     }

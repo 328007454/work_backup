@@ -110,14 +110,14 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_copy_all2);
         setDeviceListDisplay();
-        initUI();
+        initialUI();
         initLocation();
-        initData();
+        initialData();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         createDefectDialog();
         copyHelper = new CopyHelper(currentActivity, currentReportId, currentBdzId, currentInspectionType);
@@ -160,7 +160,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         binding.llKeyboardHelpLayout.setVisibility(View.GONE);
     }
 
-    private void initData() {
+    private void initialData() {
         for (CopyValueFragment2 fragment2 : fragmentList) {
             fragment2.setCopyDevice(copyHelper.getCopyDeviceIdList());
         }
@@ -187,7 +187,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
                 fragmentList.add(fragment);
                 fragment.setItemClickerListener(this);
             }
-            FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(fManager, fragmentList, titleArray);
+            FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titleArray);
             binding.viewPager.setAdapter(pagerAdapter);
             binding.tabStrip.setViewPager(  binding.viewPager);
             setPagerTabStripValue(binding.tabStrip);

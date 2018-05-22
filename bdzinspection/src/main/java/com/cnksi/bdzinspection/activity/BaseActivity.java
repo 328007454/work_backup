@@ -49,7 +49,7 @@ import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.view.RadiusSpan;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.xscore.xsactivity.BaseCoreActivity;
+import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.xscore.xscommon.ScreenManager;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
@@ -71,6 +71,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import static android.os.Build.VERSION.SDK_INT;
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
 
 @SuppressLint("HandlerLeak")
 public class BaseActivity extends BaseCoreActivity {
@@ -97,11 +98,6 @@ public class BaseActivity extends BaseCoreActivity {
      * 退出间隔
      */
     protected static final int BACK_PRESSED_INTERVAL = 2000;
-
-    /**
-     * 图片显示工具类
-     */
-    protected BitmapUtils mBitmapUtils = null;
 
     /**
      * 是否是特殊巡检
@@ -196,14 +192,10 @@ public class BaseActivity extends BaseCoreActivity {
     protected KeyboardView mKeyBoardView = null;
     protected WindowManager mWindowManager = null;
     protected WindowManager.LayoutParams mWindowLayoutParams = null;
-//    protected Handler mHandler = new Handler() {
-//        @Override
-//        public void handleMessage(android.os.Message msg) {
-//            onRefresh(msg);
-//        }
-//    };
 
     public String currentAcounts;
+
+    protected BaseActivity currentActivity;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -212,9 +204,10 @@ public class BaseActivity extends BaseCoreActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mWindowManager = (WindowManager) currentActivity.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        currentActivity = this;
+        mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         mWindowLayoutParams = getWindowManagerParams();
-        mVibrator = (Vibrator) currentActivity.getSystemService(Context.VIBRATOR_SERVICE);
+        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Intent intent = getIntent();
         if (null != intent) {
             // 获取从数据检测传过来的登陆用户
@@ -226,6 +219,26 @@ public class BaseActivity extends BaseCoreActivity {
             PreferencesUtils.put(currentActivity, com.cnksi.bdzinspection.utils.Config.CURRENT_LOGIN_ACCOUNT,
                     userAccount);
         }
+    }
+
+    @Override
+    public void getRootDataBinding() {
+
+    }
+
+    @Override
+    public int getLayoutResId() {
+        return 0;
+    }
+
+    @Override
+    public void initUI() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     public WindowManager.LayoutParams getWindowManagerParams() {
@@ -253,19 +266,6 @@ public class BaseActivity extends BaseCoreActivity {
         if (view != null) return view;
 
         return super.onCreateView(name, context, attrs);
-    }
-
-    // 沉浸式状态栏
-    @TargetApi(19)
-    protected void setTranslucentStatus() {
-        // 需要在根元素上加上 android:clipToPadding="true"
-        // android:fitsSystemWindows="true"
-        if (SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // 透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // 透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
     }
 
     /**
@@ -430,10 +430,8 @@ public class BaseActivity extends BaseCoreActivity {
      */
     @Override
     protected void compeletlyExitSystem() {
-        // 退出
         ScreenManager.getInstance().popAllActivityExceptOne(null);
         android.os.Process.killProcess(android.os.Process.myPid());
-        // PreferencesUtils.clear(currentActivity);
         System.exit(0);
     }
 
@@ -444,23 +442,6 @@ public class BaseActivity extends BaseCoreActivity {
         else {
             showTipsDialog(mRootContainer, intent, -1, R.string.xs_dialog_tips_content_str, false);
         }
-    }
-
-    protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, int requestCode) {
-        showTipsDialog(mRootContainer, intent, requestCode, R.string.xs_dialog_tips_content_str, true);
-    }
-
-    protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, int requestCode,
-                                  boolean isFinishInspection) {
-        showTipsDialog(mRootContainer, intent, requestCode, R.string.xs_dialog_tips_content_str, isFinishInspection);
-    }
-
-    protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, boolean isFinishInspection) {
-        showTipsDialog(mRootContainer, intent, -1, R.string.xs_dialog_tips_content_str, isFinishInspection);
-    }
-
-    protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, int requestCode, int dialogContentResId) {
-        showTipsDialog(mRootContainer, intent, requestCode, dialogContentResId, true);
     }
 
     protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, int requestCode, int dialogContentResId,
@@ -520,9 +501,6 @@ public class BaseActivity extends BaseCoreActivity {
             try {
                 Class<EditText> cls = EditText.class;
                 Method setShowSoftInputOnFocus = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
-                // setShowSoftInputOnFocus =
-                // cls.getMethod("setSoftInputShownOnFocus", boolean.class);
-                // 4.0的是setShowSoftInputOnFocus,4.2的是setSoftInputOnFocus
                 setShowSoftInputOnFocus.setAccessible(false);
                 setShowSoftInputOnFocus.invoke(mEditText, false);
             } catch (Exception e) {
@@ -566,11 +544,6 @@ public class BaseActivity extends BaseCoreActivity {
     }
 
     public void ExitThisAndGoLauncher() {
-//        Intent intent = new Intent();
-//        ComponentName componentName = new ComponentName("com.cnksi.sjjc", "com.cnksi.sjjc.activity.HomeActivity");
-//        intent.setComponent(componentName);
-//        startActivity(intent);
-//        ScreenManager.getInstance().popAllActivityExceptOne(null);
         this.finish();
     }
 
@@ -602,12 +575,6 @@ public class BaseActivity extends BaseCoreActivity {
 
     public boolean isRoutineNotCopy() {
         return false;
-        // 放开例行巡视
-        // if (currentInspectionType.contains(InspectionType.routine.name())) {
-        // return true;
-        // } else {
-        // return false;
-        // }
     }
 
     /**
@@ -637,16 +604,12 @@ public class BaseActivity extends BaseCoreActivity {
 
     protected void changedStatusColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //5.0 全透明实现
-            //getWindow.setStatusBarColor(Color.TRANSPARENT);
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //4.4 全透明状态栏
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             Window window = getWindow();
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -671,31 +634,6 @@ public class BaseActivity extends BaseCoreActivity {
         }
     }
 
-    /**
-     * 核心步骤
-     * 主要通过SpannableString来实现标签分组
-     **/
-    public void onSetSpan(EditText mEditText) {
-        String content = mEditText.getText().toString();
-        SpannableString spannable = new SpannableString(content);
-        //通过空格来区分标签
-        String[] m = content.split(" ");
-        int start = 0;
-        int end;
-        for (String str : m) {
-            end = start + str.length();
-            RadiusSpan radiusSpan = new RadiusSpan(Color.BLUE, Color.WHITE, 5);
-            radiusSpan.setPaddingLR(10);
-            radiusSpan.setPaddingTB(5);
-            spannable.setSpan(radiusSpan, start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-//            spannable.setSpan(new BackgroundColorSpan(Color.BLUE), start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-//            spannable.setSpan(new ForegroundColorSpan(Color.WHITE), start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            start = end + 1;
-        }
-        mEditText.setText(spannable);
-        //设置完成后 需要把焦点移动到最后一位
-        mEditText.setSelection(spannable.length());
-    }
 
     private Users one, two;
 

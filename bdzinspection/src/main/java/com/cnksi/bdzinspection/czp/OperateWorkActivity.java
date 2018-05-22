@@ -42,6 +42,8 @@ import org.xutils.ex.DbException;
 
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 @SuppressLint("ClickableViewAccessibility")
 public class OperateWorkActivity extends BaseActivity {
 
@@ -71,12 +73,12 @@ public class OperateWorkActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_work);
 
 
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
-    private void initUI() {
+    private void initialUI() {
         binding.includeTitle.tvTitle.setText(R.string.xs_operate_task_str);
         binding.includeTitle.ibtnExit.setVisibility(View.VISIBLE);
         binding.includeTitle.ibtnExit.setImageResource(R.drawable.xs_ic_pause);
@@ -84,7 +86,7 @@ public class OperateWorkActivity extends BaseActivity {
         mRecordAnimation = (AnimationDrawable) binding.ivRecordAudio.getDrawable();
     }
 
-    private void initData() {
+    private void initialData() {
 
         mFixedThreadPoolExecutor.execute(new Runnable() {
 

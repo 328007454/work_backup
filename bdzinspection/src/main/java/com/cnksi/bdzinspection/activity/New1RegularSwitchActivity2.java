@@ -35,7 +35,6 @@ import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.PopMenuBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
 import com.cnksi.bdzinspection.model.DefectRecord;
-import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.bdzinspection.model.SwitchPic;
@@ -48,15 +47,15 @@ import com.cnksi.bdzinspection.utils.KeyboardChangeListener;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.RecordAudioUtils;
-import com.cnksi.common.SystemConfig;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.SystemConfig;
+import com.cnksi.common.model.Report;
 import com.cnksi.xscore.xsutils.BitmapUtil;
 import com.cnksi.xscore.xsutils.CLog;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
@@ -70,6 +69,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.common.Config.LOAD_MORE_DATA;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
 
 public class New1RegularSwitchActivity2 extends BaseActivity implements KeyboardChangeListener.KeyBoardListener {
 
@@ -238,8 +242,8 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         super.onCreate(savedInstanceState);
         mSwitch1Binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_regular_switch1);
         mSwitch1Binding.btnComplete.setEnabled(false);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         popMenu = new ToolPop();
         new KeyboardChangeListener(this).setKeyBoardListener(this);
 
@@ -247,7 +251,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         mSwitch1Binding.includeTitle.tvTitle.setText(currentInspectionTypeName);
         TTSUtils.getInstance().startSpeaking(getString(R.string.xs_speak_content_format_str1, currentInspectionTypeName));
@@ -293,7 +297,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         mValueAnimator = AnimationUtils.animationSet(mSwitch1Binding.tvTips, 1f, 0.95f);
     }
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -638,7 +642,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                     break;
                 case UPDATE_DEFECT_STATUS_REQUEST_CODE: // 缺陷记录后返回该界面刷新
                     // updateData();
-                    // initData();
+                    // initialData();
                     try {
                         String maxLevel = StandardSwitchOverService.getInstance().getStandardMaxLevel(dbModel.getString(StandardSwitchover.ID), currentReportId);
                         dbModel.add(DefectRecord.DEFECTLEVEL, maxLevel);
@@ -764,7 +768,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                 dbModel = model;
                 int i = v.getId();
                 if (i == R.id.id_camera) {
-                    FunctionUtils.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER);
+                    FunctionUtil.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER);
 
                 } else if (i == R.id.id_defect) {
                     saveOrUpdateInputValue(0x00);

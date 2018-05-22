@@ -23,6 +23,8 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 巡视线路图Fragment
  *
@@ -42,11 +44,11 @@ public class RoadMapFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentRoadmapBinding.inflate(getActivity().getLayoutInflater());
         AutoUtils.autoSize(binding.getRoot());
-        initUI();
+        initialUI();
         return binding.getRoot();
     }
 
-    private void initUI() {
+    private void initialUI() {
 
         getBundleValue();
         binding.zoomImageView.setVisibility(View.GONE);

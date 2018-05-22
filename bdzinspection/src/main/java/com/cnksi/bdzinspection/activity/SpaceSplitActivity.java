@@ -57,7 +57,7 @@ public class SpaceSplitActivity extends TitleActivity {
     }
 
     @Override
-    protected String initUI() {
+    protected String initialUI() {
         binding = (XsActivitySpaceSplitBinding) getDataBinding();
         spacing = (Spacing) getIntent().getSerializableExtra("space");
         mode = getIntent().getStringExtra("mode");
@@ -112,7 +112,7 @@ public class SpaceSplitActivity extends TitleActivity {
 
 
     @Override
-    protected void initData() {
+    protected void initialData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {

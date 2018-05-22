@@ -52,6 +52,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import static com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity.UPDATE_DEVICE_DEFECT_REQUEST_CODE;
+import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * author by kkk
@@ -115,11 +116,11 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         super.onCreate(savedInstanceState);
         mCopyBinding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_single_space_copy);
         setDeviceListDisplay();
-        initUI();
-        initData();
+        initialUI();
+        initialData();
     }
 
-    private void initData() {
+    private void initialData() {
         List<DbModel> deviceList = CopyItemService.getInstance().getCopyDevicebySpidList(currentBdzId, getIntent().getStringExtra(Config.CURRENT_FUNCTION_MODEL), currentInspectionType, spid);
         if (null != deviceList && !deviceList.isEmpty()) {
             deviceData.addAll(deviceList);
@@ -134,7 +135,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         setWindowOverLayPermission();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         copyHelper = new CopyHelper(currentActivity, currentReportId, currentBdzId, currentInspectionType);
         mCopyBinding.llKeyboardHelpLayout.setVisibility(View.GONE);

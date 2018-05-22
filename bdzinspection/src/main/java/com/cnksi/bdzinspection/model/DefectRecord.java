@@ -6,11 +6,11 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyMapCache;
 import com.cnksi.bdzinspection.utils.CalcUtils;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -338,7 +338,7 @@ public class DefectRecord extends BaseModel {
     }
 
     public static String getDefectId() {
-        return FunctionUtils.getPrimarykey();
+        return FunctionUtil.getPrimarykey();
     }
 
     public void initArresterActionValue() {
@@ -385,7 +385,7 @@ public class DefectRecord extends BaseModel {
         this.bdz = currentBdzName;
         this.discovered_date = DateUtils.getCurrentLongTime();
         this.is_copy = "Y";
-        this.defectid = FunctionUtils.getPrimarykey();
+        this.defectid = FunctionUtil.getPrimarykey();
         this.insertTime = DateUtils.getCurrentLongTime();
     }
 }

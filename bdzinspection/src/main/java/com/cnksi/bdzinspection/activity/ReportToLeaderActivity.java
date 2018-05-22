@@ -29,6 +29,8 @@ import com.cnksi.bdzinspection.utils.DefectLevelUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.xscore.xsutils.CToast;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 上报界面
  *
@@ -45,12 +47,12 @@ public class ReportToLeaderActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_report_to_leader);
-        initUI();
+        initialUI();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
 
         getIntentValue();
 

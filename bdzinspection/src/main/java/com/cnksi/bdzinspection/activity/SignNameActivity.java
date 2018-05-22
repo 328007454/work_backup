@@ -12,7 +12,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivitySignNameBinding;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.FunctionUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsview.LinePathView;
 import com.zhy.core.AutoFrameLayout;
 import com.zhy.core.AutoLinearLayout;
@@ -61,7 +61,7 @@ public class SignNameActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_sign_name);
-        initUI();
+        initialUI();
         initOnClick();
     }
 
@@ -89,7 +89,7 @@ public class SignNameActivity extends BaseActivity {
         return super.onCreateView(name, context, attrs);
     }
 
-    protected void initUI() {
+    protected void initialUI() {
         mPersonNameList = getIntent().getStringArrayListExtra(Config.SIGN_NAME_LIST);
         if (mPersonNameList != null) {
             signNameCount = mPersonNameList.size();
@@ -118,7 +118,7 @@ public class SignNameActivity extends BaseActivity {
             return;
         }
         try {
-            mLinePathView.save(Config.SIGN_PICTURE_FOLDER + (mCurrentSignName = FunctionUtils.getCurrentImageName()),
+            mLinePathView.save(Config.SIGN_PICTURE_FOLDER + (mCurrentSignName = FunctionUtil.getCurrentImageName()),
                     false, 10);
 
             currentSignIndex++;

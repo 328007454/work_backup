@@ -20,6 +20,8 @@ import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 抄录温湿度Fragment
  *
@@ -40,12 +42,12 @@ public class CopyTemperatureFragment extends BaseFragment {
                              @Nullable Bundle savedInstanceState) {
         binding = XsFragmentCopyTemperature2Binding .inflate(getActivity().getLayoutInflater());
         AutoUtils.autoSize(binding.getRoot());
-        initUI();
+        initialUI();
         lazyLoad();
         return binding.getRoot();
     }
 
-    private void initUI() {
+    private void initialUI() {
         binding.etTemperature.addTextChangedListener(new TextWatcherListener());
         getBundleValue();
         isPrepared = true;

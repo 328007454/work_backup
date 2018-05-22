@@ -40,12 +40,12 @@ public class MultipleBackFragment extends BaseFragment implements ItemClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBackBinding = XsFragmentMultipleBackBinding.inflate(LayoutInflater.from(container.getContext()));
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         return mBackBinding.getRoot();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         mAdapter = new MultipleBackAdapter(R.layout.xs_item_multiple_back, mBackDataList);
         mAdapter.setClickListener(this);
@@ -53,7 +53,7 @@ public class MultipleBackFragment extends BaseFragment implements ItemClickListe
         mBackBinding.recMultipleback.setAdapter(mAdapter);
     }
 
-    private void initData() {
+    private void initialData() {
         zzhtModels = ZzhtService.getService().getAllZzhtData(currentBdzId, currentReportId);
         for (DbModel model : zzhtModels) {
             if (TextUtils.isEmpty(model.getString("pid"))) {

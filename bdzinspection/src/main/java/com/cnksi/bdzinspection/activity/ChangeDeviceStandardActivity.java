@@ -32,7 +32,6 @@ import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.BitmapUtil;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 
@@ -42,6 +41,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.common.Config.LOAD_MORE_DATA;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
+import static com.cnksi.core.utils.Cst.CROP_PICTURE;
 
 /**
  * 编辑巡检标准（定期试验/全面/日常）
@@ -75,12 +79,12 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_change_standard);
 
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         currentStandardId = getIntent().getStringExtra(Config.CURRENT_STANDARD_ID);
         isAddDeviceStandard = getIntent().getBooleanExtra(Config.IS_ADD_DEVICE_STANDARD, false);
@@ -95,7 +99,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         }
     }
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
 
             @Override
@@ -221,12 +225,12 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         });
 
         binding.rlTakeStandardImage.setOnClickListener(view -> {
-            FunctionUtils.takePicture(currentActivity,
+            FunctionUtil.takePicture(currentActivity,
                     (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
                     Config.CUSTOMER_PICTURES_FOLDER);
         });
         binding.btnTakeStandardImage.setOnClickListener(view -> {
-            FunctionUtils.takePicture(currentActivity,
+            FunctionUtil.takePicture(currentActivity,
                     (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
                     Config.CUSTOMER_PICTURES_FOLDER);
         });
@@ -310,7 +314,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                     break;
                 case 1: // 更换图片
 
-                    FunctionUtils.takePicture(currentActivity,
+                    FunctionUtil.takePicture(currentActivity,
                             (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
                             Config.CUSTOMER_PICTURES_FOLDER);
 

@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * Created by han on 2017/9/1.
  */
@@ -72,13 +74,13 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_copy_all3);
         setDeviceListDisplay();
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         binding.tvTitle.setText(currentInspectionTypeName + "记录");
         binding.tvBatteryTestStep.setVisibility(View.GONE);
@@ -113,7 +115,7 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
 
     private HashMap<String, CopyResult> resultHashMap = new HashMap<>();
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {

@@ -50,10 +50,10 @@ public class SafetyToolsRemindActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_safety_tools_remind);
-        initUI();
+        initialUI();
     }
 
-    public void initUI() {
+    public void initialUI() {
         getIntentValue();
         dept_id = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_ID);
         binding.lvTools.setAdapter(adapter = new SafetyToolAdapter());
@@ -83,7 +83,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
     }
 
 
-    private void initData() {
+    private void initialData() {
         if (dept_id == null) {
             CToast.showShort(currentActivity, "获取班组信息错误！");
             return;
@@ -189,6 +189,6 @@ public class SafetyToolsRemindActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData();
+        initialData();
     }
 }

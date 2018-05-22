@@ -61,6 +61,8 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * @author Wastrel
  * @date 创建时间：2016年8月9日 下午3:05:56 TODO
@@ -125,7 +127,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     }
 
     @Override
-    protected String initUI() {
+    protected String initialUI() {
         binding = (XsActivityGenerateReportBinding) getDataBinding();
         initOnClick();
         TimePickerUtils.getPickerUtils().setTimePickListener(this);
@@ -154,7 +156,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     }
 
     @Override
-    protected void initData() {
+    protected void initialData() {
         getIntentValue();
         if (!TextUtils.isDigitsOnly(currentInspectionType))
             if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {

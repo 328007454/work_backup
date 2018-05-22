@@ -33,19 +33,19 @@ public class YWDeviceListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_yw_device_list);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOncLick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         binding.tvTitle.setText(R.string.xs_yw_function_name);
         binding.btnStartInspection.setVisibility(View.GONE);
     }
 
-    private void initData() {
+    private void initialData() {
         // 从Lookup表中查询电压等级
         lookups = LookupService.getInstance().findLookupByType(LookUpType.proType.name());
         initFragmentList();
@@ -66,7 +66,7 @@ public class YWDeviceListActivity extends BaseActivity {
             mFragmentList.add(mFragment);
             titleArray.add(lookups.get(i).v);
         }
-        fragmentPagerAdapter = new FragmentPagerAdapter(fManager, mFragmentList, titleArray);
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, titleArray);
         binding.viewPager.setAdapter(fragmentPagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
         setPagerTabStripValue(binding.tabStrip);

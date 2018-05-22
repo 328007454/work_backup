@@ -20,6 +20,8 @@ import com.cnksi.bdzinspection.utils.Config.OperateType;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.xscore.xscommon.ScreenManager;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 操作票报告界面
  *
@@ -39,13 +41,13 @@ public class OperateTicketReportActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_ticket_report);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         currentOperateId = getIntent().getStringExtra(Config.CURRENT_TASK_ID);
         isFromWorkPage = getIntent().getBooleanExtra(Config.IS_FROM_BATTERY, true);
           binding.includeTitle.tvTitle.setText(getString(R.string.xs_operate_report_str));
@@ -57,7 +59,7 @@ public class OperateTicketReportActivity extends BaseActivity {
 
     }
 
-    private void initData() {
+    private void initialData() {
 
         mFixedThreadPoolExecutor.execute(new Runnable() {
 

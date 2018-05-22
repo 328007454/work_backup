@@ -68,17 +68,17 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_particular_inspection);
         getIntentValue();
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(() -> currentTask = TaskService.getInstance().findById(currentTaskId));
     }
 
-    private void initUI() {
+    private void initialUI() {
         if (SystemConfig.isSpecialInspectionNeedCopy()) {
             binding.ibtnAdd.setVisibility(View.VISIBLE);
             binding.ibtnAdd.setImageResource(R.drawable.xs_copy_button_background);
@@ -105,7 +105,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
             fragmentTitleList.add(look.v);
             fragmentList.add(fragment);
         }
-        FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(fManager, fragmentList, fragmentTitleList);
+        FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), fragmentList, fragmentTitleList);
         binding.viewPager.setAdapter(pagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
         setPagerTabStripValue(binding.tabStrip);

@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * @author han
  *         <p>
@@ -91,11 +93,11 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         super.onCreate(savedInstanceState);
         settingCopyBinding = DataBindingUtil.setContentView(this, R.layout.xs_activity_setting_copy);
         DisplayUtil.getInstance().init(getApplicationContext());
-        initUI();
-        initData();
+        initialUI();
+        initialData();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         settingCopyBinding.tab.addTab(settingCopyBinding.tab.newTab().setText(Config.InspectionType.full.value));
         settingCopyBinding.tab.addTab(settingCopyBinding.tab.newTab().setText(Config.InspectionType.routine.value));
@@ -138,7 +140,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         });
     }
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {

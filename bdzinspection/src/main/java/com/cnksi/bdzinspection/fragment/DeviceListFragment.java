@@ -92,14 +92,14 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         isFirstLoad = true;
         rootHolder = new ViewHolder(currentActivity, container, R.layout.xs_fragment_expadable_list_1, false);
-        initUI();
+        initialUI();
         initSpacingGroup();
         lazyLoad();
         return rootHolder.getRootView();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         qwerKeyBoardUtils = new QWERKeyBoardUtils(currentActivity);
         qwerKeyBoardUtils.init((LinearLayout) rootHolder.getView(R.id.ll_root_container), this);

@@ -18,6 +18,18 @@ public class Config implements Cst {
     public static final int SUCCESS = 0x100;
 
     public static final int FAILURE = 0x101;
+    /**
+     * 加载更多
+     */
+    public static final int LOAD_MORE_DATA = 0x8;
+    /**
+     * 刷新数据
+     */
+    public static final int REFRESH_DATA = 0x2;
+    /**
+     * 保存数据
+     */
+    public static final int SAVE_DATA = 0x3;
 
     /**
      * 手机存储目录

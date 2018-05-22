@@ -17,7 +17,7 @@ import com.cnksi.bdzinspection.activity.ImageDetailsActivity;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
-import com.cnksi.xscore.xsfragment.BaseCoreFragment;
+import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.xscore.xsutils.CLog;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 
@@ -122,6 +122,7 @@ public abstract class BaseFragment extends BaseCoreFragment {
     public String currentAcounts;
 
     boolean isDetach = false;
+    protected Activity currentActivity;
 
     protected ExecutorService mFixedThreadPoolExecutor = XunshiApplication.getFixedThreadPoolExecutor();
 
@@ -145,6 +146,10 @@ public abstract class BaseFragment extends BaseCoreFragment {
         }
     };
 
+    @Override
+    public int getFragmentLayout() {
+        return 0;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -263,7 +268,7 @@ public abstract class BaseFragment extends BaseCoreFragment {
             intent.putStringArrayListExtra(Config.IMAGEURL_LIST, mImageUrlList);
         }
         intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, isShowDelete);
-        context.getActivity().startActivityForResult(intent, BaseFragment.CANCEL_RESULT_LOAD_IMAGE);
+        context.getActivity().startActivityForResult(intent, com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE);
     }
 
     /**

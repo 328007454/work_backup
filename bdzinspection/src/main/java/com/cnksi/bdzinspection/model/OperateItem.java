@@ -1,6 +1,6 @@
 package com.cnksi.bdzinspection.model;
 
-import com.cnksi.xscore.xsutils.FunctionUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
@@ -48,7 +48,7 @@ public class OperateItem extends BaseModel {
 	}
 
 	public OperateItem(String tid, String order, String content) {
-		this.id = FunctionUtils.getPrimarykey();
+		this.id = FunctionUtil.getPrimarykey();
 		this.tid = tid;
 		this.iorder = order;
 		this.content = content;

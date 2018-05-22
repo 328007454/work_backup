@@ -65,6 +65,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.common.Config.LOAD_MORE_DATA;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
+
 /**
  * 记录缺陷
  *
@@ -135,7 +140,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentRecordDefectBinding.inflate(inflater);
         AutoUtils.autoSize(binding.getRoot());
-        initUI();
+        initialUI();
         lazyLoad();
         initOnClick();
 
@@ -164,7 +169,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
         });
     }
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         isParticularInspection = bundle.getBoolean(Config.IS_DEVICE_PART);
         boolean isShowDeviceWidget = bundle.getBoolean(Config.IS_SHOW_DEVICE_WIDGET);

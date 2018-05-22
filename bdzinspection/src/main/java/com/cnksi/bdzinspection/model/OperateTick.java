@@ -1,10 +1,12 @@
 package com.cnksi.bdzinspection.model;
 
 import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
-import com.cnksi.xscore.xsutils.FunctionUtils;
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
+
+import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.model.BaseModel;
 
 
 @Table(name = "operate_tick")
@@ -124,7 +126,7 @@ public class OperateTick extends BaseModel {
 	}
 
 	public OperateTick(String taskName, String code, String unit) {
-		this.id = FunctionUtils.getPrimarykey();
+		this.id = FunctionUtil.getPrimarykey();
 		this.task = taskName;
 		this.code = code;
 		this.unit = unit;

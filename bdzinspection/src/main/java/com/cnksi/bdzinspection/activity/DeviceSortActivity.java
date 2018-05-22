@@ -37,7 +37,7 @@ public class DeviceSortActivity extends TitleActivity {
     }
 
     @Override
-    protected String initUI() {
+    protected String initialUI() {
         binding = (XsActivitySpacesortBinding) getDataBinding();
         spacing = (Spacing) getIntent().getSerializableExtra("space");
         binding.swlvContainer.setDragListener((from, to) -> {
@@ -53,7 +53,7 @@ public class DeviceSortActivity extends TitleActivity {
     }
 
     @Override
-    protected void initData() {
+    protected void initialData() {
         functionMode = getIntent().getStringExtra(Config.CURRENT_FUNCTION_MODEL);
         currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
         // TODO: 2017/3/22

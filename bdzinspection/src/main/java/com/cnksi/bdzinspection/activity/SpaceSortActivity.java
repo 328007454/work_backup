@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 间隔排序
  *
@@ -48,7 +50,7 @@ public class SpaceSortActivity extends TitleActivity {
     }
 
     @Override
-    protected String initUI() {
+    protected String initialUI() {
         binding = (XsActivitySpacesortBinding) getDataBinding();
         binding.swlvContainer.setDragListener((from, to) -> {
             if (from != to) {
@@ -63,7 +65,7 @@ public class SpaceSortActivity extends TitleActivity {
     }
 
     @Override
-    protected void initData() {
+    protected void initialData() {
         functionMode = getIntent().getStringExtra(Config.CURRENT_FUNCTION_MODEL);
         String sort = "one".equals(functionMode) ? Spacing.SORT_ONE
                 : "second".equals(functionMode) ? Spacing.SORT_SECOND : Spacing.SORT;

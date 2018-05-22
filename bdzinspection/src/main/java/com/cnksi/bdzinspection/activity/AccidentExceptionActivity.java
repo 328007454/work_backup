@@ -36,13 +36,13 @@ public class AccidentExceptionActivity extends BaseActivity implements OnPageCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_accident_exception);
-        initUI();
+        initialUI();
         initFragments();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         binding.includeTitle.tvTitle.setText("运行规定");
     }
@@ -60,7 +60,7 @@ public class AccidentExceptionActivity extends BaseActivity implements OnPageCha
         dealFragment.setArguments(bundle);
         mFragmentList.add(ruleFragment);
         mFragmentList.add(dealFragment);
-        fragmentPagerAdapter = new FragmentPagerAdapter(fManager, mFragmentList, Arrays.asList(titleArray));
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArray));
         binding.viewPager.setAdapter(fragmentPagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
         binding.tabStrip.setOnPageChangeListener(this);

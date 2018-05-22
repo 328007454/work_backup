@@ -70,7 +70,7 @@ public class SafetyBdzListActivity extends BaseActivity {
                 finish();
             }
         });
-        initData();
+        initialData();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class SafetyBdzListActivity extends BaseActivity {
         });
     }
 
-    private void initData() {
+    private void initialData() {
         if (TextUtils.isEmpty(deptId)) {
             CToast.showShort(currentActivity, "没有获取到班组信息！");
         } else {

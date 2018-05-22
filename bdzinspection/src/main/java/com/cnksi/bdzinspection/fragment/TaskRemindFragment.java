@@ -46,6 +46,7 @@ import static com.cnksi.bdzinspection.utils.Config.InspectionType.special;
 import static com.cnksi.bdzinspection.utils.Config.InspectionType.special_nighttime;
 import static com.cnksi.bdzinspection.utils.Config.InspectionType.special_xideng;
 import static com.cnksi.bdzinspection.utils.Config.InspectionType.switchover;
+import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * Created by Mr.K on 2018/4/12.
@@ -89,11 +90,11 @@ public class TaskRemindFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentListBinding.inflate(inflater);
-        initUI();
+        initialUI();
         return binding.getRoot();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         inspectionName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
         currentSelectInspectionType = Config.InspectionType.get(inspectionName);

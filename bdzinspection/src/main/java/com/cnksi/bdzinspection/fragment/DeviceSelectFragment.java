@@ -72,13 +72,13 @@ public class DeviceSelectFragment extends BaseFragment implements QWERKeyBoardUt
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootHolder = new ViewHolder(currentActivity, container, R.layout.xs_fragment_expadable_list_1, false);
-        initUI();
+        initialUI();
         initSpacingGroup();
         lazyLoad();
         return rootHolder.getRootView();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         qwerKeyBoardUtils = new QWERKeyBoardUtils(currentActivity);
         qwerKeyBoardUtils.init(rootHolder.getView(R.id.ll_root_container), this);

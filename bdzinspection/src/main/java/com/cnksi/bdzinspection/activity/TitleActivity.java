@@ -37,8 +37,8 @@ public abstract class TitleActivity extends BaseActivity {
 		right = (TextView) findViewById(R.id.right);
 
 		SetContentView(setLayout());
-		setTitleText(initUI());
-		initData();
+		setTitleText(initialUI());
+		initialData();
 	}
 
 	/**
@@ -53,12 +53,12 @@ public abstract class TitleActivity extends BaseActivity {
 	 *
 	 * @return 返回标题
 	 */
-	protected abstract String initUI();
+	protected abstract String initialUI();
 
 	/**
 	 * 加载数据，该方法调用在initUI之后。
 	 */
-	protected abstract void initData();
+	protected abstract void initialData();
 
 	/**
 	 * 释放资源 在onDestroy中调用 该函数在super.onDestroy()之前调用

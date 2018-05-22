@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity.UPDATE_DEVICE_DEFECT_REQUEST_CODE;
+import static com.cnksi.common.Config.LOAD_DATA;
 
 
 /**
@@ -114,13 +115,13 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_copy_all3);
         setDeviceListDisplay();
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         creatDefectDialog();
         binding.tvTitle.setText(currentInspectionTypeName + "记录");
@@ -212,7 +213,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         copyViewUtil.createCopyView(currentActivity, data, binding.copyContainer);
     }
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {

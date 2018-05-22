@@ -14,6 +14,8 @@ import com.cnksi.bdzinspection.databinding.XsActivityLandsignNameBinding;
 import java.io.File;
 import java.io.IOException;
 
+import static com.cnksi.core.utils.Cst.CROP_PICTURE;
+
 /**
  * @author Wastrel
  * @date 创建时间：2016年8月8日 下午6:28:54 TODO
@@ -40,7 +42,7 @@ public class LandSignNameActivity extends TitleActivity {
     }
 
     @Override
-    protected String initUI() {
+    protected String initialUI() {
         binding = (XsActivityLandsignNameBinding) getDataBinding();
         binding.pathView.clear();
         initOnClick();
@@ -48,7 +50,7 @@ public class LandSignNameActivity extends TitleActivity {
     }
 
     @Override
-    protected void initData() {
+    protected void initialData() {
 
         Intent data = getIntent();
         signHeadPath = data.getStringExtra(HEAD_PATH);

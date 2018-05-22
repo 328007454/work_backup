@@ -37,7 +37,7 @@ import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.FunctionUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
@@ -50,6 +50,9 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
 
 /**
  * 工器具维护管理页面
@@ -189,11 +192,11 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         toolsBinding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_safety_tools);
         deptId = getIntent().getStringExtra(Department.DEPT_ID);
         currentBdzId = getIntent().getStringExtra(Bdz.BDZID);
-        initUI();
+        initialUI();
     }
 
 
-    public void initUI() {
+    public void initialUI() {
         getIntentValue();
         PersonListUtils.getInsance().initPopWindow(currentActivity).initPersonData(deptId);
         PersonListUtils.getInsance().setPersonRatioListener(this);
@@ -419,7 +422,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         testBinding.ibtnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FunctionUtils.takePicture(currentActivity, currentImageName = toolPicPath + FunctionUtils.getCurrentImageName(), Config.BDZ_INSPECTION_FOLDER);
+                FunctionUtil.takePicture(currentActivity, currentImageName = toolPicPath + FunctionUtil.getCurrentImageName(), Config.BDZ_INSPECTION_FOLDER);
             }
         });
         testBinding.ivReportPhoto.setOnClickListener(new View.OnClickListener() {

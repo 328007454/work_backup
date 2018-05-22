@@ -31,6 +31,8 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 审核操作票界面
  *
@@ -62,18 +64,18 @@ public class OperateTaskCheckedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_task_checked);
 
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
     }
 
-    private void initUI() {
+    private void initialUI() {
         currentOperateId = getIntent().getStringExtra(Config.CURRENT_TASK_ID);
         isUpdateStatus = getIntent().getBooleanExtra(Config.IS_FROM_BATTERY, false);
         binding.includeTitle.tvTitle.setText(R.string.xs_check_operate_tickets_str);
     }
 
-    private void initData() {
+    private void initialData() {
         mFixedThreadPoolExecutor.execute(new Runnable() {
 
             @Override

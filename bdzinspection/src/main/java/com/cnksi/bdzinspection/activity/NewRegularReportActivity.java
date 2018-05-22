@@ -45,6 +45,9 @@ import org.xutils.ex.DbException;
 import java.util.Date;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+import static com.cnksi.common.Config.REFRESH_DATA;
+
 public class NewRegularReportActivity extends BaseActivity {
 
     public static final int ANIMATION = 0X100;
@@ -89,14 +92,14 @@ public class NewRegularReportActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_inspection_report);
-        initUI();
-        initData();
+        initialUI();
+        initialData();
         initOnClick();
 
     }
 
 
-    private void initUI() {
+    private void initialUI() {
         getIntentValue();
         if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
             if (currentInspectionType.contains("switchover")) {
@@ -123,7 +126,7 @@ public class NewRegularReportActivity extends BaseActivity {
         mHandler.sendEmptyMessageDelayed(ANIMATION, 2000);
     }
 
-    private void initData() {
+    private void initialData() {
         final boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
         mFixedThreadPoolExecutor.execute(new Runnable() {
 

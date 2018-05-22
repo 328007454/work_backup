@@ -125,11 +125,12 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, Config.permissions);
     }
 
-    public void initUI() {
+
+    public void initialUI() {
         binding.swipeRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData();
+                initialData();
             }
         });
         adapter = new ItemAdapter(null);
@@ -209,7 +210,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         }
     }
 
-    public void initData() {
+    public void initialData() {
         initData(false);
     }
 
@@ -276,9 +277,9 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     @Override
     public void allPermissionsGranted() {
-        initUI();
+        initialUI();
         init();
-        initData();
+        initialData();
     }
 
     public void init() {

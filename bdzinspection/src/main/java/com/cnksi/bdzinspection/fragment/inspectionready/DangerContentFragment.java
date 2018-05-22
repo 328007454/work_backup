@@ -22,6 +22,8 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 包括 危险点 Fragment 工器具Fragment
  *
@@ -39,12 +41,12 @@ public class DangerContentFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = XsFragmentListBinding.inflate(getActivity().getLayoutInflater());
         AutoUtils.autoSize(binding.getRoot());
-        initUI();
+        initialUI();
         lazyLoad();
         return binding.getRoot();
     }
 
-    private void initUI() {
+    private void initialUI() {
         getBundleValue();
         isPrepared = true;
     }
