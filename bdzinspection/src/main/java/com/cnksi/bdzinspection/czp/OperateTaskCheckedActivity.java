@@ -19,12 +19,12 @@ import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskCheckedBinding;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.model.OperateTick;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.utils.FileUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.ex.DbException;
 

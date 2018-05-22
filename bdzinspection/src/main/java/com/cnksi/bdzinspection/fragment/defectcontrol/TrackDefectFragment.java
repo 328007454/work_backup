@@ -35,21 +35,20 @@ import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.DefectDefine;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TreeNode;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -212,7 +211,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                     mOnFunctionButtonClickListener.takePicture(currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
                 }
             } else {
-                CToast.showShort(currentActivity, "请先填写缺陷内容！");
+                ToastUtils.showMessage( "请先填写缺陷内容！");
             }
         });
         binding.includeAdd.ivNewDefectPhoto.setOnClickListener(view -> {
@@ -239,7 +238,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
             copyViewUtil.setSaveCurrentData(true);
             copyViewUtil.valueNullTips(true);
             if (!copyViewUtil.saveAll()) {
-                CToast.showShort("请填写设备数据");
+                ToastUtils.showMessage("请填写设备数据");
                 return;
             }
         }
@@ -266,7 +265,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                     mCurrentTrackDefect.description = binding.includeAdd.etInputDefectContent.getText().toString(); // 保存新缺陷描述
                     mCurrentTrackDefect.defectlevel = mCurrentClickDefectLevel; // 保存跟踪缺陷的级别
                     if (mDefectImageList != null && !mDefectImageList.isEmpty()) {
-                        mCurrentTrackDefect.pics = StringUtils.ArrayListToString(mDefectImageList);// 跟踪缺陷图片
+                        mCurrentTrackDefect.pics = StringUtils.arrayListToString(mDefectImageList);// 跟踪缺陷图片
                         // 恢复状态
                         mDefectImageList.clear();
                     }
@@ -289,7 +288,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                 mHistoryDefectAdapter.setList(dataList);
             }
         } else {
-            CToast.showShort(currentActivity, "请选择要跟踪的缺陷!");
+            ToastUtils.showMessage( "请选择要跟踪的缺陷!");
         }
 
 
@@ -511,7 +510,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                 }
             } else {
                 // 查询电池的缺陷
-                dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.getString(currentActivity, Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
+                dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.get(Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
             }
             mHandler.sendEmptyMessage(LOAD_DATA);
 
@@ -535,7 +534,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
             if (mDefect != null) {
                 if (!TextUtils.isEmpty(mDefect.pics)) {
                     ArrayList<String> defectImageList = new ArrayList<String>();
-                    String[] defectImageArray = mDefect.pics.split(CoreConfig.COMMA_SEPARATOR);
+                    String[] defectImageArray = mDefect.pics.split(Config.COMMA_SEPARATOR);
                     for (int i = 0, count = defectImageArray.length; i < count; i++) {
                         defectImageList.add(Config.RESULT_PICTURES_FOLDER + defectImageArray[i]);
                     }
@@ -627,7 +626,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
         if (i == R.id.img_child_item_bt) {
             String content = define.reference;
             if (TextUtils.isEmpty(content)) {
-                CToast.showLong(currentActivity, R.string.xs_no_source_str);
+                ToastUtils.showMessageLong(R.string.xs_no_source_str);
             } else {
                 showDefectSource(content);
             }

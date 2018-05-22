@@ -6,7 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.util.Log;
 
-import com.cnksi.xscore.xsutils.CLog;
+import com.cnksi.core.utils.CLog;
 
 /**
  * Created by han on 2016/10/27.

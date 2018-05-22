@@ -25,11 +25,12 @@ import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.tree.DeviceItem;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.view.UnderLineLinearLayout;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Device;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
@@ -140,10 +141,11 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         } else {
             imgCopy.setImageResource(R.drawable.xs_ic_green_unfinish);
         }
-        if (!TextUtils.isEmpty(SystemConfig.getCopyInspection()) && SystemConfig.getCopyInspection().contains(currentInspection) && group.copy)
+        if (!TextUtils.isEmpty(SystemConfig.getCopyInspection()) && SystemConfig.getCopyInspection().contains(currentInspection) && group.copy) {
             imgCopy.setVisibility(View.VISIBLE);
-        else
+        } else {
             imgCopy.setVisibility(View.GONE);
+        }
         helper.itemView.setOnClickListener(v -> {
             int pos = helper.getAdapterPosition();
             if (groupItem.isExpanded()) {
@@ -153,8 +155,9 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             }
         });
         imgCopy.setOnClickListener(view -> {
-            if (null != groupItemListener)
+            if (null != groupItemListener) {
                 groupItemListener.onClick(view, group, position);
+            }
         });
     }
 
@@ -185,7 +188,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             txtSpace.setTextColor(context.getResources().getColor(spaceArrived ? R.color.xs_global_text_color : R.color.xs_green_color));
         }
         imgLocation.setVisibility(View.GONE);
-        if (!StringUtils.isEmptys(space.getString("slat"), space.getString("slot"))
+        if (!StringUtilsExt.isEmptys(space.getString("slat"), space.getString("slot"))
                 && isOneDevice) {
             imgLocation.setVisibility(View.VISIBLE);
         }
@@ -201,7 +204,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             imgSpaceCopy.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(inspectionType)&&inspectionType.contains(Config.InspectionType.special.name())&&!SystemConfig.isSpecialInspectionNeedCopy()){
+        if (!TextUtils.isEmpty(inspectionType)&&inspectionType.contains(InspectionType.special.name())&&!SystemConfig.isSpecialInspectionNeedCopy()){
             imgSpaceCopy.setVisibility(View.GONE);
         }
 
@@ -236,14 +239,16 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         });
         // 间隔长按
         helper.itemView.setOnLongClickListener(v -> {
-            if (groupItemLongClickListener != null)
+            if (groupItemLongClickListener != null) {
                 groupItemLongClickListener.onItemLongClick(v, space, position);
+            }
             return false;
         });
         //抄录笔事件
         imgSpaceCopy.setOnClickListener(view -> {
-            if (groupItemClickListener != null)
+            if (groupItemClickListener != null) {
                 groupItemClickListener.onClick(view, space, position);
+            }
         });
     }
 
@@ -295,18 +300,21 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         }
         // 跳转设备详情
         helper.getView(R.id.rl_device_container).setOnClickListener(v -> {
-            if (deviceClickListener != null)
+            if (deviceClickListener != null) {
                 deviceClickListener.onClick(v, item, position);
+            }
         });
         // 跳转设备抄录
         helper.getView(R.id.bt_copy_data).setOnClickListener(v -> {
-            if (copyClickListener != null)
+            if (copyClickListener != null) {
                 copyClickListener.onClick(v, item, position);
+            }
         });
 
         helper.getView(R.id.rl_device_container).setOnLongClickListener(v -> {
-            if (deviceItemLongClickListener != null)
+            if (deviceItemLongClickListener != null) {
                 deviceItemLongClickListener.onItemLongClick(v, item, position);
+            }
             return false;
         });
         txtDevice.setText(Html.fromHtml(TextUtils.isEmpty(deviceName) ? "" : deviceName));
@@ -366,7 +374,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             ibCopy.setVisibility(View.INVISIBLE);
             btCopy.setVisibility(View.GONE);
         }
-        if (!TextUtils.isEmpty(inspectionType)&&inspectionType.contains(Config.InspectionType.special.name())&&!SystemConfig.isSpecialInspectionNeedCopy()){
+        if (!TextUtils.isEmpty(inspectionType)&&inspectionType.contains(InspectionType.special.name())&&!SystemConfig.isSpecialInspectionNeedCopy()){
             ibCopy.setVisibility(View.INVISIBLE);
         }
     }
@@ -409,8 +417,9 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             }
             //重点设备必须拍照才能算到位
             if (Device.isImportant(model)) {
-                if (SystemConfig.isMustPicImportantDevice())
+                if (SystemConfig.isMustPicImportantDevice()) {
                     arrived = arrived && (placed != null && "photo".equals(placed.placed_way));
+                }
                 spaceHasImportant = true;
             }
             //抄录设备必须抄录之后才变黑
@@ -527,23 +536,31 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     @Override
     public int expand(int position) {
         MultiItemEntity t = getData().get(position);
-        if (t instanceof SpaceGroupItem) return super.expand(position);
+        if (t instanceof SpaceGroupItem) {
+            return super.expand(position);
+        }
         int r = super.expand(position);
         if (isOnlyExpandOne) {
-            if (t != lastExpandIndex)
+            if (t != lastExpandIndex) {
                 if (lastExpandIndex != null && ((SpaceItem) lastExpandIndex).isExpanded()) {
                     int p = getData().indexOf(lastExpandIndex);
-                    if (p >= 0)
+                    if (p >= 0) {
                         collapse(p);
+                    }
                 }
-        } else lastExpandIndex = null;
+            }
+        } else {
+            lastExpandIndex = null;
+        }
         lastExpandIndex = t;
         return r;
     }
 
     @Override
     public int collapse(int position) {
-        if (getData().get(position) == lastExpandIndex) lastExpandIndex = null;
+        if (getData().get(position) == lastExpandIndex) {
+            lastExpandIndex = null;
+        }
         return super.collapse(position);
     }
 

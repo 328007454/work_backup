@@ -25,15 +25,15 @@ import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
 import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.bdzinspection.utils.CommonUtils;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
+import com.cnksi.common.Config;
+import  com.cnksi.common.enmu.InspectionType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.FileUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.utils.ScreenUtils;
 
 
 import java.io.File;
@@ -250,7 +250,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     private boolean saveDeviceStandards(boolean isAdd) {
         String description = binding.etContent.getText().toString().trim();
         if (TextUtils.isEmpty(description)) {
-            CToast.showShort(currentActivity, R.string.xs_please_input_inspection_standards_str);
+            ToastUtils.showMessage( R.string.xs_please_input_inspection_standards_str);
             return false;
         }
         mCurrentDeviceStandard.description = description;
@@ -371,7 +371,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                             StandardService.getInstance().updateStandardPic(mCurrentDeviceStandard, currentImageName);
                         }
                     } else {
-                        CToast.showShort(currentActivity, R.string.xs_change_photo_failure_try_again_str);
+                        ToastUtils.showMessage( R.string.xs_change_photo_failure_try_again_str);
                     }
                     break;
                 default:
@@ -480,7 +480,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
             }
             String description = defectDefineBinding.etContent.getText().toString().trim();
             if (TextUtils.isEmpty(description)) {
-                CToast.showShort(currentActivity, R.string.xs_please_input_defect_content_str);
+                ToastUtils.showMessage( R.string.xs_please_input_defect_content_str);
                 return;
             }
             DefectDefine mDefectDefine = null;

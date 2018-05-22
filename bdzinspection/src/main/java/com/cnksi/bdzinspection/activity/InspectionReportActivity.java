@@ -35,8 +35,8 @@ import com.cnksi.bdzinspection.databinding.XsHistoryDataDialogBinding;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
+import com.cnksi.common.Config;
+import  com.cnksi.common.enmu.InspectionType;
 import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
@@ -46,11 +46,11 @@ import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.nari.NariActivity;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
@@ -225,7 +225,7 @@ public class InspectionReportActivity extends BaseActivity {
                         || currentInspectionType.equals(InspectionType.routine.name())) {
                     String sort = "one".equals(fucntionModel) ? Spacing.SORT_ONE
                             : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
-                    currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
+                    currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
 
                     try {
                         Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.BDZID, "=", currentBdzId)
@@ -356,10 +356,10 @@ public class InspectionReportActivity extends BaseActivity {
 
                 // 设置报告的详细信息
                 if (report != null) {
-                    binding.tvInspectionStartTime.setText(TextUtils.isEmpty(report.starttime) ? "" : DateUtils.getFormatterTime(report.starttime, CoreConfig.dateFormat8));
+                    binding.tvInspectionStartTime.setText(TextUtils.isEmpty(report.starttime) ? "" : DateUtils.getFormatterTime(report.starttime, DateUtils.yyyy_MM_dd_HH_mm));
                     binding.tvInspectionEndTime.setText(TextUtils.isEmpty(report.endtime)
-                            ? DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8)
-                            : DateUtils.getFormatterTime(report.endtime, CoreConfig.dateFormat8));
+                            ? DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm)
+                            : DateUtils.getFormatterTime(report.endtime, DateUtils.yyyy_MM_dd_HH_mm));
                     binding.tvInspectionWorker.setText(getName(mReportSignnameListCzr));
                     binding.tvInspectionLeader.setText(getName(mReportSignnameListFzr));
                     binding.tvInspectionTemperature.setText(TextUtils.isEmpty(report.temperature) ? "" : (report.temperature.contains(getString(R.string.xs_temperature_unit_str))

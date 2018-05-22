@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.adapter;
+package com.cnksi.common.model.vo;
 
 import java.util.ArrayList;
 import java.util.List;

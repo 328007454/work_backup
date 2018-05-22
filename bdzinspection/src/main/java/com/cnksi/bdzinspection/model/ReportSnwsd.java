@@ -3,12 +3,12 @@ package com.cnksi.bdzinspection.model;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
-
+import com.cnksi.common.model.BaseModel;
+import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -153,12 +153,12 @@ public class ReportSnwsd extends BaseModel {
     }
 
     public boolean judgeValueNormal(String temp, String sd) {
-        if (TextUtils.isEmpty(StringUtils.getTransformTep(wd))) {
+        if (TextUtils.isEmpty(StringUtilsExt.getTransformTep(wd))) {
             return false;
         } else if ((-99.9f > new Float(wd) || new Float(wd) > 99.99)) {
             return false;
         }
-        if (TextUtils.isEmpty(StringUtils.getTransformTep(sd))) {
+        if (TextUtils.isEmpty(StringUtilsExt.getTransformTep(sd))) {
             return false;
         } else if ((0 > new Float(sd) || new Float(sd) > 100)) {
             return false;

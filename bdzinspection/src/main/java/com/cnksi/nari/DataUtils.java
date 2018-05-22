@@ -6,8 +6,8 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.common.model.Report;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.nari.model.BDPackage;
 import com.cnksi.nari.utils.GuidUtil;
 import com.cnksi.nari.utils.NariDataManager;
@@ -824,7 +824,7 @@ public class DataUtils {
     private void setChildE(Element element, String name, String txt, boolean isEmpty) {
         Element e = element.addElement(name);
         if (TextUtils.isEmpty(txt) && isEmpty) e.addAttribute("isEmpty", "true");
-        else e.setText(StringUtils.EmptyTo(txt, ""));
+        else e.setText(StringUtils.NullToDefault(txt, ""));
     }
 
     private void setChildE(Element element, String name, String txt) {

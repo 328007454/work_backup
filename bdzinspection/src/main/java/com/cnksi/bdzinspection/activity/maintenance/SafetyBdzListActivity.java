@@ -14,12 +14,12 @@ import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyBdzListBinding;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.model.Bdz;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,7 +52,7 @@ public class SafetyBdzListActivity extends BaseActivity {
                 return;
             }
             if (currentItem == null) {
-                CToast.showShort(currentActivity, "请先选择一个变电站！");
+                ToastUtils.showMessage( "请先选择一个变电站！");
                 return;
             }
             TTSUtils.getInstance().startSpeaking("开始" + currentItem.name + "的安全工器具检查作业");
@@ -97,7 +97,7 @@ public class SafetyBdzListActivity extends BaseActivity {
 
     private void initialData() {
         if (TextUtils.isEmpty(deptId)) {
-            CToast.showShort(currentActivity, "没有获取到班组信息！");
+            ToastUtils.showMessage( "没有获取到班组信息！");
         } else {
             bdzList = BdzService.getInstance().findAllBdzByDp(deptId);
             if (bdzList == null) bdzList = new ArrayList<>();

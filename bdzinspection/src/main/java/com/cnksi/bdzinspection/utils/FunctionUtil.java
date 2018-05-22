@@ -1,11 +1,5 @@
 package com.cnksi.bdzinspection.utils;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.UUID;
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,9 +7,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.FileUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  *
@@ -31,25 +32,25 @@ public class FunctionUtil{
 	 * @return yyyyMMddHHmmssSSSadfdfdsfwei.jpg
 	 */
 	public static String getCurrentImageName(Context context) {
-		String prefix = PreferencesUtils.getString(context, Config.PICTURE_PREFIX, "");
-		SimpleDateFormat formatter = new SimpleDateFormat(CoreConfig.dateFormat6, Locale.CHINA);
-		String uuidStr = UUID.randomUUID().toString().replace(CoreConfig.DASH_SEPARATOR, "");
+		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX, "");
+		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyy_MM_dd_HH_mm, Locale.CHINA);
+		String uuidStr = UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
 		if (uuidStr.length() > 8) {
 			uuidStr = uuidStr.substring(0, 8);
 		}
-		String imageName = String.valueOf(formatter.format(new Date()) + uuidStr + CoreConfig.IMAGE_JPG_POSTFIX);
+		String imageName = String.valueOf(formatter.format(new Date()) + uuidStr + Config.IMAGE_JPG_POSTFIX);
 		return prefix + imageName;
 
 	}
 
 	public static String getSignImageName(Context context, String name) {
-		String prefix = PreferencesUtils.getString(context, Config.PICTURE_PREFIX, "");
-		return prefix + "sign" + System.currentTimeMillis() + CoreConfig.IMAGE_PNG_POSTFIX;
+		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX, "");
+		return prefix + "sign" + System.currentTimeMillis() + Config.IMAGE_PNG_POSTFIX;
 	}
 
 	public static String getSignImageHead(Context context, String name) {
-		String prefix = PreferencesUtils.getString(context, Config.PICTURE_PREFIX, "");
-		return prefix + "img" + System.currentTimeMillis() + CoreConfig.IMAGE_JPG_POSTFIX;
+		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX, "");
+		return prefix + "img" + System.currentTimeMillis() + Config.IMAGE_JPG_POSTFIX;
 	}
 
 
@@ -60,12 +61,12 @@ public class FunctionUtil{
 	 * @return yyyyMMddHHmmssSSSadfdfdsfwei.jpg
 	 */
 	public static String getCurrentImageName() {
-		SimpleDateFormat formatter = new SimpleDateFormat(CoreConfig.dateFormat6, Locale.CHINA);
-		String uuidStr = UUID.randomUUID().toString().replace(CoreConfig.DASH_SEPARATOR, "");
+		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyy_MM_dd_HH_mm, Locale.CHINA);
+		String uuidStr = UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
 		if (uuidStr.length() > 8) {
 			uuidStr = uuidStr.substring(0, 8);
 		}
-		return String.valueOf(formatter.format(new Date()) + uuidStr + CoreConfig.IMAGE_JPG_POSTFIX);
+		return String.valueOf(formatter.format(new Date()) + uuidStr + Config.IMAGE_JPG_POSTFIX);
 	}
 
 
@@ -113,7 +114,7 @@ public class FunctionUtil{
 	 * @return String HHmmssSSS+UUID
 	 */
 	public static String getPrimarykey() {
-		SimpleDateFormat formatter = new SimpleDateFormat(CoreConfig.dateFormat10, Locale.CHINA);
-		return formatter.format(new Date()) + UUID.randomUUID().toString().replace(CoreConfig.DASH_SEPARATOR, "");
+		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.ssSSS, Locale.CHINA);
+		return formatter.format(new Date()) + UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
 	}
 }

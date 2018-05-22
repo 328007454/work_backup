@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.common.model.DevicePart;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 
 
 import org.xutils.common.util.KeyValue;

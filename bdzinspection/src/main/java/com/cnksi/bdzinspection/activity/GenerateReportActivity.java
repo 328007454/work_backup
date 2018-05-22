@@ -3,9 +3,8 @@ package com.cnksi.bdzinspection.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.view.ViewPager.LayoutParams;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -27,9 +26,7 @@ import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSignViewBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.BatteryGroup;
-import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
@@ -37,21 +34,23 @@ import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
 import com.cnksi.bdzinspection.utils.TimePickerUtils;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.nari.NariActivity;
 import com.cnksi.nari.type.PackageStatus;
 import com.cnksi.nari.utils.NariDataManager;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -144,7 +143,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     protected void onResume() {
         super.onResume();
         if (!isFirstEnter) {
-            if (currentInspectionType.equalsIgnoreCase(Config.InspectionType.routine.name()) || currentInspectionType.equalsIgnoreCase(Config.InspectionType.full.name())) {
+            if (currentInspectionType.equalsIgnoreCase(InspectionType.routine.name()) || currentInspectionType.equalsIgnoreCase(InspectionType.full.name())) {
                 copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
                 totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
                 binding.tvCopyResult.setText(String.valueOf(copyCount) + "/" + String.valueOf(totalCount));
@@ -158,7 +157,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     @Override
     protected void initialData() {
         getIntentValue();
-        if (!TextUtils.isDigitsOnly(currentInspectionType))
+        if (!TextUtils.isDigitsOnly(currentInspectionType)) {
             if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
                 runOnUiThread(() -> {
                     binding.layoutResult.setVisibility(View.GONE);
@@ -175,6 +174,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                     }
                 });
             }
+        }
         xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
         if (xudianchi) {
             binding.layoutConclusion.setVisibility(View.VISIBLE);
@@ -238,7 +238,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 //                    DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT inspection_content FROM 'lookup' where k=?;", currentInspectionType));
                 String sql = "SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;";
                 SqlInfo sqlInfo = new SqlInfo(sql);
-                sqlInfo.addBindArg(new KeyValue("",currentInspectionType));
+                sqlInfo.addBindArg(new KeyValue("", currentInspectionType));
                 DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
                 inspectionContent = TextUtils.isEmpty(currentReport.inspectionContent) ? model == null ? "" : model.getString("xjnr") : currentReport.inspectionContent;
                 if (model != null) {
@@ -276,7 +276,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                     }
                     czrModelsOrigin.addAll(czrModels);
                 }
-                String userAccount = (String) PreferencesUtils.get(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
+                String userAccount = (String) PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
                 List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(userAccount);
                 totalCountUser = defaultUesrs.size();
                 mList = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
@@ -396,8 +396,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             currentReport.inspectionContent = binding.inspectionContent.getText().toString();
             currentReport.inspectionRemark = binding.etRemark.getText().toString();
             currentReport.inspectionResult = binding.etResult.getText().toString();
-            if (TextUtils.isEmpty(currentReport.endtime))
+            if (TextUtils.isEmpty(currentReport.endtime)) {
                 currentReport.endtime = DateUtils.getCurrentLongTime();
+            }
             XunshiApplication.getDbUtils().saveOrUpdate(currentReport);
             Task mTask = new Task(currentTaskId);
             XunshiApplication.getDbUtils().update(mTask, Task.STATUS);
@@ -441,21 +442,18 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         }
         if (isStartTime) {
             currentReport.starttime = dateString;
-            String formatString = "开始时间：" + dateString;
-            SpannableString spannableString = StringUtils.formStringSpannable(formatString, 5, formatString.length(), "#FFE3E9E8", Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-            binding.txtStartTime.setText(spannableString);
+            binding.txtStartTime.setText(StringUtils.formatPartTextColor("开始时间：%s", Color.parseColor("#FFE3E9E8"), dateString));
         } else {
-            if (DateUtils.compareDate(binding.txtStartTime.getText().toString().replace("开始时间：", ""), dateString, CoreConfig.dateFormat2)) {
-                CToast.showShort(currentActivity, "开始时间不能大于结束时间");
+            if (DateUtils.compareDate(binding.txtStartTime.getText().toString().replace("开始时间：", ""), dateString, DateUtils.yyyy_MM_dd_HH_mm_ss)) {
+                ToastUtils.showMessage("开始时间不能大于结束时间");
                 return;
             }
             currentReport.endtime = dateString;
-            String formatString = "结束时间：" + dateString;
-            SpannableString spannableString = StringUtils.formStringSpannable(formatString, 5, formatString.length(), "#FFE3E9E8", Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-            binding.txtEndTime.setText(spannableString);
+            binding.txtEndTime.setText(StringUtils.formatPartTextColor("结束时间：%s", Color.parseColor("#FFE3E9E8"), dateString));
         }
-        if (null != TimePickerUtils.getPickerUtils().pvCustomTime)
+        if (null != TimePickerUtils.getPickerUtils().pvCustomTime) {
             TimePickerUtils.getPickerUtils().pvCustomTime.dismiss();
+        }
     }
 
     private XsDialogSignViewBinding signViewBinding;
@@ -476,8 +474,8 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             signViewBinding.btnDelete.setText("确认");
         }
         signViewBinding.tvName.setText(bean.getName());
-        signViewBinding.imgHead.setImageBitmap(BitmapUtils.getImageThumbnailByWidth( Config.CUSTOMER_PICTURES_FOLDER + bean.getImg(),600));
-        signViewBinding.imgSign.setImageBitmap(BitmapUtils.getImageThumbnailByWidth( Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName(),600));
+        signViewBinding.imgHead.setImageBitmap(BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + bean.getImg(), 600));
+        signViewBinding.imgSign.setImageBitmap(BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + bean.getSignName(), 600));
 
         mSignDetailDialog.show();
 
@@ -515,7 +513,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             public void onClick(View view) {
                 String name = mPersonBinding.etName.getText().toString();
                 if (TextUtils.isEmpty(name)) {
-                    CToast.showShort(currentActivity, "名字不能为空！");
+                    ToastUtils.showMessage("名字不能为空！");
                     return;
                 }
                 DbModel model = new DbModel();
@@ -537,7 +535,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         boolean hasUser = false;
         if (clickCzr) {
             if (czrModels.contains(model.getString("account"))) {
-                CToast.showShort(getApplicationContext(), "已经添加了该工作人员");
+                ToastUtils.showMessage( "已经添加了该工作人员");
                 return;
             }
             if (!hasUser) {
@@ -547,7 +545,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             czrModelsOrigin.addAll(czrModels);
         } else if (!clickCzr) {
             if (fzrModels.contains(model.getString("account"))) {
-                CToast.showShort(getApplicationContext(), "已经添加了该负责人员");
+                ToastUtils.showMessage( "已经添加了该负责人员");
                 return;
             }
             fzrModels.add(model.getString("account"));
@@ -586,7 +584,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             });
 
         } else {
-            CToast.showLong(currentActivity, "至少有一个工作人员和负责人员");
+            ToastUtils.showMessageLong( "至少有一个工作人员和负责人员");
         }
 
     }
@@ -624,8 +622,12 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) return;
-        if (currentSign == null) return;
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        if (currentSign == null) {
+            return;
+        }
         switch (requestCode) {
             case 0x300:
                 currentSign.setImg(currentHeadPath);

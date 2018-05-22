@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.view.keyboard;
+package com.cnksi.common.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
+import com.cnksi.common.R;
+import com.cnksi.common.databinding.FragmentKeyboardBinding;
+import com.cnksi.common.databinding.KeyboardButtonBinding;
+import com.cnksi.core.utils.ScreenUtils;
+
 
 /**
  * @version 1.0
@@ -23,7 +25,7 @@ import com.cnksi.bdzinspection.utils.ScreenUtils;
 final public class QWERKeyBoardUtils {
     private Activity mActivity;
     private Vibrator mVibrator;
-    private ViewHolder keyBordHolder;
+    private FragmentKeyboardBinding binding;
     private TextView txtKeyWord;
     private boolean isCharMode;
     private keyWordChangeListener listener;
@@ -44,13 +46,17 @@ final public class QWERKeyBoardUtils {
                 return;
                 // 删除字符
             } else if (i == R.id.ibtn_keyboard_delete) {
-                if (TextUtils.isEmpty(oldKey)) return;
-                else newKey = oldKey.substring(0, oldKey.length() - 1);
+                if (TextUtils.isEmpty(oldKey)) {
+                    return;
+                } else {
+                    newKey = oldKey.substring(0, oldKey.length() - 1);
+                }
 
             }
             txtKeyWord.setText(newKey);
-            if (listener != null)
+            if (listener != null) {
                 listener.onChange(v, oldKey, newKey);
+            }
         }
     };
 
@@ -68,20 +74,21 @@ final public class QWERKeyBoardUtils {
     public void init(LinearLayout rootLayout, final keyWordChangeListener listener) {
         this.listener = listener;
         // 添加键盘布局
-        keyBordHolder = new ViewHolder(mActivity, null, R.layout.xs_fragment_keyboard, false);
-        txtKeyWord = keyBordHolder.getView(R.id.tv_keyboard_input);
-        rootLayout.addView(keyBordHolder.getRootView(), 0);
+        binding=FragmentKeyboardBinding.inflate(mActivity.getLayoutInflater());
+
+        txtKeyWord = binding.tvKeyboardInput;
+        rootLayout.addView(binding.getRoot(), 0);
         // 计算键盘宽度
         int screenWidth = ScreenUtils.getScreenWidth(mActivity);
         int paddingLeft = mActivity.getResources().getDimensionPixelSize(R.dimen.xs_keyboard_horizontal_space);
         int keyWidth = (screenWidth - 2 * paddingLeft - 9 * paddingLeft) / 10;
         // 添加键盘按键
-        addKey(mActivity.getResources().getStringArray(R.array.XS_WordsNumberArray), (LinearLayout) keyBordHolder.getView(R.id.ll_keyboard_num_container), paddingLeft, keyWidth);
-        addKey(mActivity.getResources().getStringArray(R.array.XS_WordsOneArray), (LinearLayout) keyBordHolder.getView(R.id.ll_keyboard_words_one_container), paddingLeft, keyWidth);
-        addKey(mActivity.getResources().getStringArray(R.array.XS_WordsTwoArray), (LinearLayout) keyBordHolder.getView(R.id.ll_keyboard_words_two_container), paddingLeft, keyWidth);
-        addKey(mActivity.getResources().getStringArray(R.array.XS_WordsThreeArray), (LinearLayout) keyBordHolder.getView(R.id.ll_keyboard_words_three_container), paddingLeft, keyWidth);
-        keyBordHolder.getView(R.id.ibtn_keyboard_delete).setOnClickListener(keyClickListener);
-        keyBordHolder.getView(R.id.tv_keyboard_words).setOnClickListener(keyClickListener);
+        addKey(mActivity.getResources().getStringArray(R.array.WordsNumberArray), binding.llKeyboardNumContainer, paddingLeft, keyWidth);
+        addKey(mActivity.getResources().getStringArray(R.array.WordsOneArray), binding.llKeyboardWordsOneContainer, paddingLeft, keyWidth);
+        addKey(mActivity.getResources().getStringArray(R.array.WordsTwoArray), binding.llKeyboardWordsTwoContainer, paddingLeft, keyWidth);
+        addKey(mActivity.getResources().getStringArray(R.array.WordsThreeArray), binding.llKeyboardWordsThreeContainer, paddingLeft, keyWidth);
+        binding.ibtnKeyboardDelete.setOnClickListener(keyClickListener);
+        binding.tvKeyboardWords.setOnClickListener(keyClickListener);
     }
 
     public void setListener(keyWordChangeListener listener) {
@@ -95,13 +102,15 @@ final public class QWERKeyBoardUtils {
         keyWordLayout.setGravity(Gravity.CENTER);
         int count = keyWord.length;
         for (int i = 0; i < count; i++) {
-            ViewHolder keyHolder = new ViewHolder(mActivity, null, R.layout.xs_keyboard_button, false);
-            keyHolder.setText(R.id.tv_keyboard_item, keyWord[i]);
+            KeyboardButtonBinding keyBinding=KeyboardButtonBinding.inflate(mActivity.getLayoutInflater());
+            keyBinding.tvKeyboardItem.setText( keyWord[i]);
+
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(keyWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
-            if (0 != i)
+            if (0 != i) {
                 params.setMargins(paddingLeft, 0, 0, 0);
-            keyWordLayout.addView(keyHolder.getRootView(), params);
-            keyHolder.getView(R.id.tv_keyboard_item).setOnClickListener(keyClickListener);
+            }
+            keyWordLayout.addView(keyBinding.getRoot(), params);
+            keyBinding.tvKeyboardItem.setOnClickListener(keyClickListener);
         }
         showAllKeyBord(false);
     }
@@ -110,9 +119,9 @@ final public class QWERKeyBoardUtils {
      * 设置键盘显示全部还是不现实全部
      */
     private void showAllKeyBord(boolean clickCharacter) {
-        keyBordHolder.getView(R.id.ll_keyboard_words_one_container).setVisibility(clickCharacter ? View.VISIBLE : View.GONE);
-        keyBordHolder.getView(R.id.ll_keyboard_words_two_container).setVisibility(clickCharacter ? View.VISIBLE : View.GONE);
-        keyBordHolder.getView(R.id.ll_keyboard_words_three_container).setVisibility(clickCharacter ? View.VISIBLE : View.GONE);
+        binding.llKeyboardWordsOneContainer.setVisibility(clickCharacter ? View.VISIBLE : View.GONE);
+        binding.llKeyboardWordsTwoContainer.setVisibility(clickCharacter ? View.VISIBLE : View.GONE);
+        binding.llKeyboardWordsThreeContainer.setVisibility(clickCharacter ? View.VISIBLE : View.GONE);
         isCharMode = clickCharacter;
     }
 

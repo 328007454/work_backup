@@ -3,7 +3,7 @@ package com.cnksi.bdzinspection.daoservice;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;

@@ -15,7 +15,7 @@ import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTicketReportBinding;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.Config.OperateType;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.xscore.xscommon.ScreenManager;

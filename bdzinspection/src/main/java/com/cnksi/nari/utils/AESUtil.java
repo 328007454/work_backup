@@ -3,7 +3,7 @@ package com.cnksi.nari.utils;
 
 import android.util.Base64;
 
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import java.math.BigInteger;
 

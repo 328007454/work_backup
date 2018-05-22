@@ -21,8 +21,8 @@ import com.cnksi.bdzinspection.databinding.XsItemMultipleContentBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.cnksi.bdzinspection.model.zzht.ZzhtResult;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -80,7 +80,7 @@ public class MultipleBackAdapter extends BaseQuickAdapter<DbModel, MultipleBackA
         }
         imageView.setOnClickListener(view -> {
             if (!checkItemCopy(item.getString(Zzht.ID))) {
-                CToast.showShort("您还有输入框没有填写！");
+                ToastUtils.showMessage("您还有输入框没有填写！");
                 return;
             }
             if (mClickListener != null) {

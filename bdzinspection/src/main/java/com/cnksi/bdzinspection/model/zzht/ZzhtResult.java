@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.model.zzht;
 
 import android.text.TextUtils;
 
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

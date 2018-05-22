@@ -17,8 +17,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
@@ -31,19 +29,18 @@ import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectReasonBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentEliminateDefectBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Lookup;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.view.CustomRadioButton;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 import com.zhy.core.utils.AutoUtils;
 
@@ -280,14 +277,15 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
             });
 
         } else {
-            CToast.showShort(currentActivity, "请选择一个需要消除的缺陷!");
+            ToastUtils.showMessage( "请选择一个需要消除的缺陷!");
         }
     }
 
     @Override
     protected void onRefresh(Message msg) {
-        if (currentActivity.isFinishing())
+        if (currentActivity.isFinishing()) {
             return;
+        }
         switch (msg.what) {
             case LOAD_DATA:
 
@@ -317,14 +315,10 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
                         binding.rgDefectReasonContainer.addView(getDefectReasonItemLayout(mDefectReasonTypeList.get(i), i));
                     }
                 }
-                binding.rgDefectReasonContainer.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        RadioButton mRadioButton = (RadioButton) group.findViewById(checkedId);
-                        if (mRadioButton.isChecked()) {
-                            binding.tvSelectDefectReason.setHint(getResources().getString(R.string.xs_please_select_defect_reason_format_str, mRadioButton.getText().toString()));
-                        }
+                binding.rgDefectReasonContainer.setOnCheckedChangeListener((group, checkedId) -> {
+                    RadioButton mRadioButton = (RadioButton) group.findViewById(checkedId);
+                    if (mRadioButton.isChecked()) {
+                        binding.tvSelectDefectReason.setHint(getResources().getString(R.string.xs_please_select_defect_reason_format_str, mRadioButton.getText().toString()));
                     }
                 });
 
@@ -382,7 +376,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
                     }
                 } else {
                     // 查询电池的缺陷
-                    dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.getString(currentActivity, Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
+                    dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.get(Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
                 }
                 mHandler.sendEmptyMessage(LOAD_DATA);
             }
@@ -553,7 +547,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
             if (mDefect != null) {
                 if (!TextUtils.isEmpty(mDefect.pics)) {
                     ArrayList<String> defectImageList = new ArrayList<String>();
-                    String[] defectImageArray = mDefect.pics.split(CoreConfig.COMMA_SEPARATOR);
+                    String[] defectImageArray = mDefect.pics.split(Config.COMMA_SEPARATOR);
                     for (int i = 0, count = defectImageArray.length; i < count; i++) {
                         defectImageList.add(Config.RESULT_PICTURES_FOLDER + defectImageArray[i]);
                     }

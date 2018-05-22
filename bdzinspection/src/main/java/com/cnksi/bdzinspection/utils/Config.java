@@ -3,9 +3,9 @@ package com.cnksi.bdzinspection.utils;
 import android.Manifest;
 import android.os.Environment;
 
-import com.cnksi.xscore.xsutils.CLog;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.SDCardUtils;
+import com.cnksi.core.utils.CLog;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.SDCardUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -652,20 +652,7 @@ public final class Config {
         }
     }
 
-    public enum SpaceType {
-        spacing("间隔"),
-        spacing_self("自定义间隔"),
-        cabinet("屏柜");
-        String zhName;
 
-        SpaceType(String zhName) {
-            this.zhName = zhName;
-        }
-
-        public static boolean isCabinet(String type) {
-            return cabinet.name().equals(type);
-        }
-    }
 
 
 }

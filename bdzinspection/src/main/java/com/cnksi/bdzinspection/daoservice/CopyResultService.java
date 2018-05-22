@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;

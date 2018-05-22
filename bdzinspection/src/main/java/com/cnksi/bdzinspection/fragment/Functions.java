@@ -9,9 +9,9 @@ import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.enmu.SpaceType;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -33,11 +33,13 @@ public class Functions {
     public static void animationMethodSpace(String spid, List<MultiItemEntity> data, final DeviceAdapter adapter, Handler handler, RecyclerView recyclerView) {
         int[] index = findSpaceIndex(spid, data);
         if (index[1] < 0) {
-            CToast.showShort("没有找到对应的间隔");
+            ToastUtils.showMessage("没有找到对应的间隔");
             return;
         }
         adapter.setShakeAnimation(true, spid);
-        if (index[0] > -1) adapter.expand(index[0]);
+        if (index[0] > -1) {
+            adapter.expand(index[0]);
+        }
         adapter.expand(index[1]);
         if (-1 != index[1]) {
             recyclerView.scrollToPosition(index[1]);
@@ -89,11 +91,13 @@ public class Functions {
         String spid = model.getString(Spacing.SPID);
         int[] index = findSpaceIndex(spid, data);
         if (index[1] < 0) {
-            CToast.showShort("没有找到对应的间隔");
+            ToastUtils.showMessage("没有找到对应的间隔");
             return;
         }
         adapter.setShakeAnimationDevice(true, spid, model.getString("deviceId"));
-        if (index[0] > -1) adapter.expand(index[0]);
+        if (index[0] > -1) {
+            adapter.expand(index[0]);
+        }
         adapter.expand(index[1]);
         handler.postDelayed(new Runnable() {
             @Override
@@ -124,14 +128,18 @@ public class Functions {
             SpaceItem model = (SpaceItem) entity;
             String groupId = model.spacing.getString("group_id");
             if (TextUtils.isEmpty(groupId)) {
-                if (Config.SpaceType.isCabinet(model.spacing.getString("spaceType")))
+                if (SpaceType.isCabinet(model.spacing.getString("spaceType"))) {
                     noGroupPG.addSubItem(model);
-                else
+                } else {
                     noGroupSpace.addSubItem(model);
+                }
             } else {
                 SpaceGroupItem t = spaceGroupMap.get(groupId);
-                if (t == null) continue;
-                else t.addSubItem(model);
+                if (t == null) {
+                    continue;
+                } else {
+                    t.addSubItem(model);
+                }
                 rs.add(t);
             }
         }
@@ -148,8 +156,12 @@ public class Functions {
                 }
             });
         }
-        if (noGroupPG.getSubSize() > 0) data.add(noGroupPG);
-        if (noGroupSpace.getSubSize() > 0) data.add(noGroupSpace);
+        if (noGroupPG.getSubSize() > 0) {
+            data.add(noGroupPG);
+        }
+        if (noGroupSpace.getSubSize() > 0) {
+            data.add(noGroupSpace);
+        }
     }
 
 }

@@ -55,7 +55,7 @@ public class ActivityUtil {
 
     public static void startSafetyToolActivity(Activity activity) {
         Intent intent = new Intent();
-//        ComponentName componentName1 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.maintenance.SafetyBdzListActivity");
+//        ComponentName componentName1 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.safetool.activity.SafetyBdzListActivity");
         intent.setClass(activity, SafetyBdzListActivity.class);
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get( Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
@@ -66,7 +66,7 @@ public class ActivityUtil {
 
     public static void startSafetyRemindActivity(Activity activity) {
         Intent intent = new Intent();
-//        intent.setComponent(new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.maintenance.SafetyToolsRemindActivity"));
+//        intent.setComponent(new ComponentName("com.cnksi.bdzinspection", "com.cnksi.safetool.activity.SafetyToolsRemindActivity"));
         intent.setClass(activity, SafetyToolsRemindActivity.class);
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get( Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get( Config.CURRENT_LOGIN_ACCOUNT, ""));

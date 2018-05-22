@@ -18,11 +18,11 @@ import android.widget.ProgressBar;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityImageDetailsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.xscore.xsview.photo.PhotoView;
 
 import java.io.File;
@@ -170,7 +170,7 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
             if (bitmap!=null){
                 zoomImageView.setImageBitmap(bitmap);
             }else{
-                CToast.showShort(getApplicationContext(), "加载失败");
+                ToastUtils.showMessage( "加载失败");
             }
             progress.setVisibility(View.GONE);
             ((ViewPager) container).addView(view, 0);

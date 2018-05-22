@@ -26,14 +26,15 @@ import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.CopyType;
 import com.cnksi.bdzinspection.model.Logs;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +82,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     private Map<String, List<ChangeCopyItem>> childSpecialMap = new HashMap<>();
 
 
-    private String currentSelectType = Config.InspectionType.full.name();
+    private String currentSelectType = InspectionType.full.name();
 
 
     private Map<String, List<ChangeCopyItem>> childTypeMap = new HashMap<>();
@@ -99,15 +100,15 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
 
     private void initialUI() {
         getIntentValue();
-        settingCopyBinding.tab.addTab(settingCopyBinding.tab.newTab().setText(Config.InspectionType.full.value));
-        settingCopyBinding.tab.addTab(settingCopyBinding.tab.newTab().setText(Config.InspectionType.routine.value));
-        boolean special = SystemConfig.isSpecialInspectionNeedCopy() && currentInspectionType.contains(Config.InspectionType.special.name());
+        settingCopyBinding.tab.addTab(settingCopyBinding.tab.newTab().setText(InspectionType.full.value));
+        settingCopyBinding.tab.addTab(settingCopyBinding.tab.newTab().setText(InspectionType.routine.value));
+        boolean special = SystemConfig.isSpecialInspectionNeedCopy() && currentInspectionType.contains(InspectionType.special.name());
         settingCopyBinding.setSpecial(special);
         if (special) {
             settingCopyBinding.tab.addTab(settingCopyBinding.tab.newTab().setText(currentInspectionTypeName));
         }
-        currentUserName = (String) PreferencesUtils.get(currentActivity, Config.CURRENT_LOGIN_USER, "");
-        currentPersonId = (String) PreferencesUtils.get(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+        currentUserName = (String) PreferencesUtils.get( Config.CURRENT_LOGIN_USER, "");
+        currentPersonId = (String) PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, "");
         settingCopyBinding.tvTitle.setText(TextUtils.isEmpty(currentDeviceName) ? "" : currentDeviceName);
         if (itemParentAdapter == null) {
             itemParentAdapter = new ChangeCopyItemParentAdapter(currentActivity, parentTypes);
@@ -116,11 +117,11 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         settingCopyBinding.tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().toString().equalsIgnoreCase(Config.InspectionType.full.value.toString())) {
-                    currentSelectType = Config.InspectionType.full.name();
+                if (tab.getText().toString().equalsIgnoreCase(InspectionType.full.value.toString())) {
+                    currentSelectType = InspectionType.full.name();
                     mHandler.sendEmptyMessage(LOAD_DATA);
-                } else if (tab.getText().toString().equalsIgnoreCase(Config.InspectionType.routine.value.toString())) {
-                    currentSelectType = Config.InspectionType.routine.name();
+                } else if (tab.getText().toString().equalsIgnoreCase(InspectionType.routine.value.toString())) {
+                    currentSelectType = InspectionType.routine.name();
                     mHandler.sendEmptyMessage(LOAD_DATA);
                 } else if (tab.getText().toString().contains(currentInspectionTypeName)) {
                     currentSelectType = currentInspectionType;
@@ -160,13 +161,13 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 List<String> routineKeys = new ArrayList<>();
                 List<String> specialKeys = new ArrayList<>();
                 for (CopyItem item : copyItemList) {
-                    if (item.kind.contains(Config.InspectionType.full.name())) {
+                    if (item.kind.contains(InspectionType.full.name())) {
                         if (copyTypeHashMap.containsKey(item.type_key) && !fullKeys.contains(item.type_key)) {
                             parentFullTypes.add(copyTypeHashMap.get(item.type_key));
                             fullKeys.add(item.type_key);
                         }
                     }
-                    if (item.kind.contains(Config.InspectionType.routine.name())) {
+                    if (item.kind.contains(InspectionType.routine.name())) {
                         if (copyTypeHashMap.containsKey(item.type_key) && !routineKeys.contains(item.type_key)) {
                             parentRoutineTypes.add(copyTypeHashMap.get(item.type_key));
                             routineKeys.add(item.type_key);
@@ -220,11 +221,11 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
 
     private void initCopyItemData(CopyItem item, CopyResult originResult) {
         List<ChangeCopyItem> changeItems = null;
-        if (item.kind.contains(Config.InspectionType.full.name()) && null == childFullHashMap.get(item.type_key)) {
+        if (item.kind.contains(InspectionType.full.name()) && null == childFullHashMap.get(item.type_key)) {
             changeItems = new ArrayList<>();
             childFullHashMap.put(item.type_key, changeItems);
         }
-        if (item.kind.contains(Config.InspectionType.routine.name()) && null == childRoutineMap.get(item.type_key)) {
+        if (item.kind.contains(InspectionType.routine.name()) && null == childRoutineMap.get(item.type_key)) {
             changeItems = new ArrayList<>();
             childRoutineMap.put(item.type_key, changeItems);
         }
@@ -236,10 +237,10 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
 
         if ("Y".equalsIgnoreCase(item.val)) {
             ChangeCopyItem changeCopyItem = new ChangeCopyItem(originResult, item, "Y", "N", "N", "N", "N");
-            if (item.kind.contains(Config.InspectionType.full.name())) {
+            if (item.kind.contains(InspectionType.full.name())) {
                 childFullHashMap.get(item.type_key).add(changeCopyItem);
             }
-            if (item.kind.contains(Config.InspectionType.routine.name())) {
+            if (item.kind.contains(InspectionType.routine.name())) {
                 childRoutineMap.get(item.type_key).add(changeCopyItem);
             }
             if (item.kind.contains(currentInspectionType)) {
@@ -248,10 +249,10 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         }
         if ("Y".equalsIgnoreCase(item.val_a)) {
             ChangeCopyItem changeCopyItem = new ChangeCopyItem(originResult, item, "N", "Y", "N", "N", "N");
-            if (item.kind.contains(Config.InspectionType.full.name())) {
+            if (item.kind.contains(InspectionType.full.name())) {
                 childFullHashMap.get(item.type_key).add(changeCopyItem);
             }
-            if (item.kind.contains(Config.InspectionType.routine.name())) {
+            if (item.kind.contains(InspectionType.routine.name())) {
                 childRoutineMap.get(item.type_key).add(changeCopyItem);
             }
             if (item.kind.contains(currentInspectionType)) {
@@ -260,10 +261,10 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         }
         if ("Y".equalsIgnoreCase(item.val_b)) {
             ChangeCopyItem changeCopyItem = new ChangeCopyItem(originResult, item, "N", "N", "Y", "N", "N");
-            if (item.kind.contains(Config.InspectionType.full.name())) {
+            if (item.kind.contains(InspectionType.full.name())) {
                 childFullHashMap.get(item.type_key).add(changeCopyItem);
             }
-            if (item.kind.contains(Config.InspectionType.routine.name())) {
+            if (item.kind.contains(InspectionType.routine.name())) {
                 childRoutineMap.get(item.type_key).add(changeCopyItem);
             }
             if (item.kind.contains(currentInspectionType)) {
@@ -272,10 +273,10 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         }
         if ("Y".equalsIgnoreCase(item.val_c)) {
             ChangeCopyItem changeCopyItem = new ChangeCopyItem(originResult, item, "N", "N", "N", "Y", "N");
-            if (item.kind.contains(Config.InspectionType.full.name())) {
+            if (item.kind.contains(InspectionType.full.name())) {
                 childFullHashMap.get(item.type_key).add(changeCopyItem);
             }
-            if (item.kind.contains(Config.InspectionType.routine.name())) {
+            if (item.kind.contains(InspectionType.routine.name())) {
                 childRoutineMap.get(item.type_key).add(changeCopyItem);
             }
             if (item.kind.contains(currentInspectionType)) {
@@ -284,10 +285,10 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         }
         if ("Y".equalsIgnoreCase(item.val_o)) {
             ChangeCopyItem changeCopyItem = new ChangeCopyItem(originResult, item, "N", "N", "N", "N", "Y");
-            if (item.kind.contains(Config.InspectionType.full.name())) {
+            if (item.kind.contains(InspectionType.full.name())) {
                 childFullHashMap.get(item.type_key).add(changeCopyItem);
             }
-            if (item.kind.contains(Config.InspectionType.routine.name())) {
+            if (item.kind.contains(InspectionType.routine.name())) {
                 childRoutineMap.get(item.type_key).add(changeCopyItem);
             }
             if (item.kind.contains(currentInspectionType)) {
@@ -301,10 +302,10 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case LOAD_DATA:
-                if (currentSelectType.equalsIgnoreCase(Config.InspectionType.full.name())) {
+                if (currentSelectType.equalsIgnoreCase(InspectionType.full.name())) {
                     itemParentAdapter.setList(parentFullTypes);
                     itemParentAdapter.setALLCopyType(childFullHashMap);
-                } else if (currentSelectType.equalsIgnoreCase(Config.InspectionType.routine.name())) {
+                } else if (currentSelectType.equalsIgnoreCase(InspectionType.routine.name())) {
                     itemParentAdapter.setALLCopyType(childRoutineMap);
                     itemParentAdapter.setList(parentRoutineTypes);
                 } else if (currentSelectType.equalsIgnoreCase(currentInspectionType)) {
@@ -369,7 +370,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     private void creatAddItemDialog() {
         int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
         itemBinding = XsAddCopyItemBinding.inflate(LayoutInflater.from(getApplicationContext()));
-        boolean specialNeedCopy = currentInspectionType.contains(Config.InspectionType.special.name()) && SystemConfig.isSpecialInspectionNeedCopy();
+        boolean specialNeedCopy = currentInspectionType.contains(InspectionType.special.name()) && SystemConfig.isSpecialInspectionNeedCopy();
         if (specialNeedCopy) {
             itemBinding.radioSpecial.setVisibility(View.VISIBLE);
             itemBinding.radioSpecial.setText(currentInspectionTypeName);
@@ -389,12 +390,12 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             public void onClick(View v) {
                 if (specialNeedCopy) {
                     if (!itemBinding.radioRoutine.isChecked() && !itemBinding.radioFull.isChecked() && !itemBinding.radioSpecial.isChecked()) {
-                        CToast.showShort(currentActivity, "请选择抄录适用的巡检类型");
+                        ToastUtils.showMessage( "请选择抄录适用的巡检类型");
                         return;
                     }
                 } else {
                     if (!itemBinding.radioRoutine.isChecked() && !itemBinding.radioFull.isChecked()) {
-                        CToast.showShort(currentActivity, "请选择抄录适用的巡检类型");
+                        ToastUtils.showMessage( "请选择抄录适用的巡检类型");
                         return;
                     }
                 }
@@ -502,7 +503,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
      * @param copyItem 抄录小类
      */
     public void checkItemExit(CopyType copyType, ChangeCopyItem copyItem) {
-        if (selectKind.contains(Config.InspectionType.routine.name())) {
+        if (selectKind.contains(InspectionType.routine.name())) {
             if (null == childRoutineMap.get(copyType.key) || !childRoutineMap.get(copyType.key).contains(copyItem)) {
                 List<ChangeCopyItem> newCopyItems = new ArrayList<>();
                 newCopyItems.add(copyItem);
@@ -511,7 +512,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                     parentRoutineTypes.add(copyType);
             }
         }
-        if (selectKind.contains(Config.InspectionType.full.name())) {
+        if (selectKind.contains(InspectionType.full.name())) {
             if (null == childFullHashMap.get(copyType.key) || !childFullHashMap.get(copyType.key).contains(copyItem)) {
                 List<ChangeCopyItem> newCopyItems = new ArrayList<>();
                 newCopyItems.add(copyItem);
@@ -573,7 +574,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     }
 
     public void check3ItemExit(CopyType copyType, ChangeCopyItem copyItem, ChangeCopyItem copyItem1, ChangeCopyItem copyItem2) {
-        if (selectKind.contains(Config.InspectionType.routine.name())) {
+        if (selectKind.contains(InspectionType.routine.name())) {
             if (null == childRoutineMap.get(copyType.key) || !childRoutineMap.get(copyType.key).contains(copyItem)) {
                 List<ChangeCopyItem> newCopyItems = new ArrayList<>();
                 newCopyItems.add(copyItem);
@@ -584,7 +585,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                     parentRoutineTypes.add(copyType);
             }
         }
-        if (selectKind.contains(Config.InspectionType.full.name())) {
+        if (selectKind.contains(InspectionType.full.name())) {
             if (null == childFullHashMap.get(copyType.key) || !childFullHashMap.get(copyType.key).contains(copyItem)) {
                 List<ChangeCopyItem> newCopyItems = new ArrayList<>();
                 newCopyItems.add(copyItem);
@@ -699,10 +700,10 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             List<ChangeCopyItem> fullItems;
             List<ChangeCopyItem> routineItems;
             List<ChangeCopyItem> specaialItems;
-            if (currentSelectType.equalsIgnoreCase(Config.InspectionType.full.name())) {
+            if (currentSelectType.equalsIgnoreCase(InspectionType.full.name())) {
                 copyType = parentFullTypes.get(position);
                 copyItems = (ArrayList<ChangeCopyItem>) ((ArrayList<ChangeCopyItem>) childFullHashMap.get(copyType.key)).clone();
-            } else if (currentSelectType.equalsIgnoreCase(Config.InspectionType.routine.name())) {
+            } else if (currentSelectType.equalsIgnoreCase(InspectionType.routine.name())) {
                 copyType = parentRoutineTypes.get(position);
                 copyItems = (ArrayList<ChangeCopyItem>) ((ArrayList<ChangeCopyItem>) childRoutineMap.get(copyType.key)).clone();
             } else if (currentSelectType.equalsIgnoreCase(currentInspectionType)) {
@@ -713,7 +714,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             routineItems = childRoutineMap.get(copyType.key);
             specaialItems = childSpecialMap.get(copyType.key);
             if (copyItems.size() != 1 && copyItems.size() != 3) {
-                CToast.showShort(currentActivity, "当前只能3项转1项或者1项转3项");
+                ToastUtils.showMessage( "当前只能3项转1项或者1项转3项");
                 return;
             }
             for (ChangeCopyItem changeCopyItem : copyItems) {

@@ -11,13 +11,12 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsHistoryDefectItemBinding;
-import com.cnksi.common.model.DefectRecord;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DefectUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.List;
@@ -101,10 +100,10 @@ public class HistoryDefectAdapter extends SimpleBaseAdapter {
         itemBinding.tvDefectDiscoverTime.setText(mContext.getResources().getString(R.string.xs_defect_discover_time_format_str, DateUtils.getFormatterTime(mDefect.discovered_date)));
 
         // 判读图片是否存在，不存在就不显示，或显示默认图片
-        String[] defectPicArray = StringUtils.cleanString(mDefect.pics).split(CoreConfig.COMMA_SEPARATOR);
+        String[] defectPicArray = StringUtils.cleanString(mDefect.pics).split(Config.COMMA_SEPARATOR);
         if (defectPicArray != null && defectPicArray.length > 0 && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
-            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]),280);
-            if (bitmap!=null){
+            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), 280);
+            if (bitmap != null) {
                 itemBinding.ivDefectImage.setImageBitmap(bitmap);
             }
         } else {

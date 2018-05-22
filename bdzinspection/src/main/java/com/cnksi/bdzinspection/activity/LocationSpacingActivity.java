@@ -21,12 +21,12 @@ import com.cnksi.bdzinspection.adapter.LocationSpacingAdapter;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.databinding.XsActivityLocationSpacingBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.view.CircleBar;
 import com.cnksi.bdzinspection.view.CircleBar.OnProgressChangeListener;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.xscore.xsutils.CLog;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.CLog;
+import com.cnksi.core.utils.PreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,7 +107,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
         // 摇一摇只算一次设备
         // currentFunctionModel=getIntent().getStringExtra(Config.CURRENT_FUNCTION_MODEL);
         currentFunctionModel = "one";
-        currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
+        currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         if (isParticularInspection()) {
             spacingData = SpacingService.getInstance().findSpacingByDeviceTypeAndInspection(currentBdzId, currentFunctionModel, "sort", currentInspectionType, currentReportId);
         } else {

@@ -21,16 +21,17 @@ import com.cnksi.bdzinspection.databinding.XsActivityParticularInspectionBinding
 import com.cnksi.bdzinspection.fragment.ParticularDevicesFragment;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.common.model.Task;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShakeListener;
-import com.cnksi.common.SystemConfig;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.SystemConfig;
+import com.cnksi.common.enmu.LookUpType;
+import com.cnksi.common.model.Task;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sync.KSyncConfig;
-import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.ex.DbException;
@@ -89,7 +90,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         binding.tvTitle.setText(currentBdzName + currentInspectionTypeName);
         TTSUtils.getInstance().startSpeaking(getString(R.string.xs_speak_content_format_str, currentInspectionTypeName));
         // 从Lookup表中查询电压等级
-        lookups = LookupService.getInstance().findLookupByType(Config.LookUpType.pmsDeviceType.name(), true);
+        lookups = LookupService.getInstance().findLookupByType(LookUpType.pmsDeviceType.name(), true);
 
         fragmentTitleList = new ArrayList<>();
         fragmentList = new ArrayList<>();
@@ -135,6 +136,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                     case 4:
                         signalIcon = R.drawable.xs_ic_signal4;
                         break;
+                        default:
                 }
                 binding.tvTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, signalIcon, 0);
                 currentFragment.locationSuccess(location);
@@ -164,8 +166,9 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         binding.ibtnCancel.setOnClickListener(view -> onBackPressed());
 
         binding.btnFinishInspection.setOnClickListener(view -> {
-            if (SystemConfig.isDevicePlaced())
+            if (SystemConfig.isDevicePlaced()) {
                 fragmentList.get(0).handleSpaceArrivedData();
+            }
 
             if (currentTask.isMember()) {
                 DialogUtils.showSureTipsDialog(currentActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
@@ -195,7 +198,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
     @Override
     synchronized public void onShake() {
         if (currentPosition != 0) {
-            CToast.showShort(currentActivity, "摇一摇功能只能在一次设备列表使用");
+            ToastUtils.showMessage( "摇一摇功能只能在一次设备列表使用");
         } else {
             if (!shaking) {
                 shaking = true;
@@ -215,7 +218,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                         if (code == -16) {
                             shaking = false;
                             CustomerDialog.dismissProgress();
-                            CToast.showShort(currentActivity, "摇一摇定位失败！");
+                            ToastUtils.showMessage( "摇一摇定位失败！");
                         }
                     }
                 }).setTimeout(10).start();
@@ -257,18 +260,18 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         switch (msg.what) {
             case SYNC_START:
                 String messageStart = (String) msg.obj;
-                CToast.showShort(currentActivity, messageStart);
+                ToastUtils.showMessage( messageStart);
                 break;
             case SYNC_INFO:
                 break;
             case SYNC_SUCCESS:
                 String messageSuccess = (String) msg.obj;
-                CToast.showShort(currentActivity, messageSuccess);
+                ToastUtils.showMessage( messageSuccess);
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;
             case SYNC_ERROR:
-                CToast.showShort(currentActivity, "请检查网络，在主页手动同步");
+                ToastUtils.showMessage( "请检查网络，在主页手动同步");
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;

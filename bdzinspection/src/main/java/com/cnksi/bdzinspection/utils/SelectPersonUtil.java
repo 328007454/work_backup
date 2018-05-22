@@ -12,8 +12,8 @@ import com.cnksi.bdzinspection.adapter.AddPersonAdapter;
 import com.cnksi.bdzinspection.adapter.SelectionPersonAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.xscore.xsutils.*;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.core.utils.*;
+import com.cnksi.core.utils.ScreenUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -79,7 +79,7 @@ public class SelectPersonUtil implements ItemClickListener {
 
     public void showAddPersonDialog() {
         if (mAddPersonDialog == null) {
-            int dialogWidth = com.cnksi.xscore.xsutils.ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            int dialogWidth = com.cnksi.core.utils.ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
             int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 6 / 10;
             addPersonBinding = XsDialogAddPersonBinding.inflate(LayoutInflater.from(mActivity));
             mAddPersonDialog = DialogUtils.createDialog(mActivity, addPersonBinding.getRoot(), dialogWidth, dialogHeight);
@@ -94,7 +94,7 @@ public class SelectPersonUtil implements ItemClickListener {
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(addPersonBinding.etName.getText().toString())) {
-                    CToast.showShort(mActivity, "请输入增加人员姓名");
+                    ToastUtils.showMessage("请输入增加人员姓名");
                 } else {
                     DbModel dbModel = new DbModel();
                     dbModel.add("account", "-1");
@@ -121,7 +121,7 @@ public class SelectPersonUtil implements ItemClickListener {
             boolean isAreadyExist = false;
             for (DbModel seletModel : selecModels) {
                 if (TextUtils.equals(seletModel.getString("account"), userModel.getString("account"))) {
-                    CToast.showShort(mActivity, "已经存在该人员，请勿重复添加");
+                    ToastUtils.showMessage("已经存在该人员，请勿重复添加");
                     isAreadyExist = true;
                     break;
                 }

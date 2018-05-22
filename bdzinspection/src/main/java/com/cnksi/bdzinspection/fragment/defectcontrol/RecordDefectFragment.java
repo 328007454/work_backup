@@ -40,21 +40,20 @@ import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.common.model.DefectRecord;
-import com.cnksi.common.model.DevicePart;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.DevicePart;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
@@ -316,7 +315,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     mOnFunctionButtonClickListener.takePicture(currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
                 }
             } else {
-                CToast.showShort(currentActivity, R.string.xs_please_input_or_select_defect_reason_str);
+                ToastUtils.showMessage( R.string.xs_please_input_or_select_defect_reason_str);
             }
 
         });
@@ -337,7 +336,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
             } else if (!TextUtils.isEmpty(binding.includeDefect.tvSelectDevicePart.getText().toString().trim())) {
                 saveDefect();
             } else {
-                CToast.showShort(currentActivity, "请选择缺陷设备");
+                ToastUtils.showMessage( "请选择缺陷设备");
             }
 
             KeyBoardUtils.closeKeybord(binding.includeDefect.etInputDefectContent, currentActivity);
@@ -362,7 +361,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         public boolean onItemLongClick(AdapterView<?> view, View view1, int position, long l) {
                             deleteRecord = dataList.get(position);
                             if (!TextUtils.equals(currentReportId, deleteRecord.reportid)) {
-                                CToast.showShort(currentActivity, "只能删除本次记录的缺陷");
+                                ToastUtils.showMessage( "只能删除本次记录的缺陷");
                                 return true;
                             } else {
                                 deleteDialog.show();
@@ -375,7 +374,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
                             mofifyDefectRe = (DefectRecord) parent.getItemAtPosition(position);
                             if (!TextUtils.equals(currentReportId, mofifyDefectRe.reportid)) {
-                                CToast.showShort(currentActivity, "只能修改本次记录的缺陷");
+                                ToastUtils.showMessage( "只能修改本次记录的缺陷");
                             } else {
                                 modifyDefectUI();
                             }
@@ -477,7 +476,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     }
                 } else {
                     // 查询电池的缺陷
-                    dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.getString(currentActivity, Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
+                    dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.get(Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
                 }
                 mHandler.sendEmptyMessage(LOAD_DATA);
             }
@@ -683,9 +682,9 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      */
     private void saveDefect() {
         String defectContent = binding.includeDefect.etInputDefectContent.getText().toString().trim();
-        String departmentName = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_NAME, "");
+        String departmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
         if (TextUtils.isEmpty(defectContent)) {
-            CToast.showShort(currentActivity, "请选择或输入缺陷内容");
+            ToastUtils.showMessage( "请选择或输入缺陷内容");
             return;
         }
 
@@ -701,12 +700,12 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
             record = mofifyDefectRe;
             record.defectlevel = currentDefectLevel;
             record.description = defectContent;
-            record.pics = StringUtils.ArrayListToString(mDefectImageList);
+            record.pics = StringUtils.arrayListToString(mDefectImageList);
         }
         if (isFromBattery) {
             // 电池记录的缺陷 间隔id和名称 存的是电池组的id和名称 设备Id和名称 以及 设备部件id和名称 存的都是电池的编号 如 001
-            String batteryId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BATTERY_ID, "");
-            String batteryName = PreferencesUtils.getString(currentActivity, Config.CURRENT_BATTERY_NAME, "");
+            String batteryId = PreferencesUtils.get(Config.CURRENT_BATTERY_ID, "");
+            String batteryName = PreferencesUtils.get(Config.CURRENT_BATTERY_NAME, "");
             record = new DefectRecord(currentReportId, // 报告id
                     currentBdzId, // 变电站id
                     currentBdzName, // 变电站名称
@@ -719,7 +718,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     currentDefectLevel, // 缺陷级别
                     defectContent, // 缺陷描述
                     "1", // 巡视标准id
-                    StringUtils.ArrayListToString(mDefectImageList)// pics图片
+                    StringUtils.arrayListToString(mDefectImageList)// pics图片
             );
         } else if (mofifyDefectRe == null) {
 //            if (currentInspectionType.contains("special")) {
@@ -740,7 +739,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         currentDefectLevel, // 缺陷级别
                         defectContent, // 缺陷描述
                         mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DefectDefine.STAID), // 巡视标准id
-                        StringUtils.ArrayListToString(mDefectImageList)// pics图片
+                        StringUtils.arrayListToString(mDefectImageList)// pics图片
                 );
             else
                 record = new DefectRecord(currentReportId, // 报告id
@@ -755,7 +754,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         currentDefectLevel, // 缺陷级别
                         defectContent, // 缺陷描述
                         currentStandardId, // 巡视标准id
-                        StringUtils.ArrayListToString(mDefectImageList)// pics图片
+                        StringUtils.arrayListToString(mDefectImageList)// pics图片
                 );
         }
         if (binding.rbInflunceNo.isChecked()) {
@@ -813,7 +812,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
             if (mDefect != null) {
                 if (!TextUtils.isEmpty(mDefect.pics)) {
                     ArrayList<String> defectImageList = new ArrayList<String>();
-                    String[] defectImageArray = mDefect.pics.split(CoreConfig.COMMA_SEPARATOR);
+                    String[] defectImageArray = mDefect.pics.split(Config.COMMA_SEPARATOR);
                     for (int i = 0, count = defectImageArray.length; i < count; i++) {
                         defectImageList.add(Config.RESULT_PICTURES_FOLDER + defectImageArray[i]);
                     }
@@ -838,7 +837,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                 case ACTION_IMAGE:
                     if (mOnFunctionButtonClickListener != null) {
                         mDefectImageList.add(currentImageName);
-                        String pictureContent = currentDeviceName + "：" + (TextUtils.isEmpty(currentDevicePartName) ? "" : currentDevicePartName) + "\n" + binding.includeDefect.etInputDefectContent.getText().toString() + "\n" + DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8);
+                        String pictureContent = currentDeviceName + "：" + (TextUtils.isEmpty(currentDevicePartName) ? "" : currentDevicePartName) + "\n" + binding.includeDefect.etInputDefectContent.getText().toString() + "\n" + DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm);
                         mOnFunctionButtonClickListener.drawCircle(Config.RESULT_PICTURES_FOLDER + currentImageName, pictureContent);
                     }
                     break;
@@ -889,7 +888,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
             String defectOrigin = define.origin;
             String dealMethod = define.dealMethod;
             if (TextUtils.isEmpty(defectOrigin) && TextUtils.isEmpty(dealMethod)) {
-                CToast.showLong(currentActivity, R.string.xs_no_defect_source_and_dealmethod_str);
+                ToastUtils.showMessageLong( R.string.xs_no_defect_source_and_dealmethod_str);
             } else {
                 showDefectSource(defectOrigin, dealMethod);
             }

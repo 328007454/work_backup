@@ -4,10 +4,10 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DeviceSortAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.PreferencesUtils;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
@@ -55,7 +55,7 @@ public class DeviceSortActivity extends TitleActivity {
     @Override
     protected void initialData() {
         functionMode = getIntent().getStringExtra(Config.CURRENT_FUNCTION_MODEL);
-        currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
+        currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         // TODO: 2017/3/22
         try {
             Selector selector = XunshiApplication.getDbUtils().selector(Device.class).where(Device.DLT, "=", "0").and(Device.SPID, "=", spacing.spid).and(Device.DEVICE_TYPE, "=", functionMode).orderBy(Device.SORT);

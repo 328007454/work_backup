@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.Department;
 import com.cnksi.common.model.Users;
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

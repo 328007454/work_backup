@@ -24,20 +24,19 @@ import com.cnksi.bdzinspection.daoservice.ReportService;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.common.model.DefectRecord;
-import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.Config;
+import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -116,8 +115,9 @@ public class NewRegularReportActivity extends BaseActivity {
         binding.layoutInspection.setVisibility(View.VISIBLE);
         binding.layoutMark.setVisibility(View.GONE);
         binding.layoutXunshicontent.setVisibility(View.GONE);
-        if (currentInspectionType.contains("maintenance"))
+        if (currentInspectionType.contains("maintenance")) {
             binding.tvInspectionType.setText("维护名称：");
+        }
         binding.tvTitle.setText(getString(R.string.xs_report_title_format_str, currentBdzName + currentInspectionTypeName));
         binding.tvInspectionType.setText(currentInspectionTypeName);
         binding.tvDashLine.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -198,8 +198,8 @@ public class NewRegularReportActivity extends BaseActivity {
             case REFRESH_DATA:
                 // 设置报告的详细信息
                 if (report != null) {
-                    binding.tvInspectionStartTime.setText(DateUtils.getFormatterTime(report.starttime, CoreConfig.dateFormat8));
-                    binding.tvInspectionEndTime.setText(TextUtils.isEmpty(report.endtime) ? DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) : DateUtils.getFormatterTime(report.endtime, CoreConfig.dateFormat8));
+                    binding.tvInspectionStartTime.setText(DateUtils.getFormatterTime(report.starttime, DateUtils.yyyy_MM_dd_HH_mm));
+                    binding.tvInspectionEndTime.setText(TextUtils.isEmpty(report.endtime) ? DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm) : DateUtils.getFormatterTime(report.endtime, DateUtils.yyyy_MM_dd_HH_mm));
                     binding.tvInspectionWorker.setText(getName(mReportSignnameListCzr));
                     binding.tvInspectionLeader.setText(getName(mReportSignnameListFzr));
                 }

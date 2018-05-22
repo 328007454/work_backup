@@ -18,10 +18,10 @@ import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.daoservice.StandardSpecialService;
 import com.cnksi.bdzinspection.model.SpacingGroup;
-import com.cnksi.common.model.StandardSpecial;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.view.keyboard.QWERKeyBoardUtils;
+import com.cnksi.common.model.StandardSpecial;
+import com.cnksi.common.utils.QWERKeyBoardUtils;
 
 import org.xutils.db.table.DbModel;
 

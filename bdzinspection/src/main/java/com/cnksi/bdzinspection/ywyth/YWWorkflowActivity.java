@@ -32,17 +32,17 @@ import com.cnksi.bdzinspection.databinding.XsRecordAudioDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsYunweiliuchengAdapterBinding;
 import com.cnksi.bdzinspection.model.PlanProcessStatus;
 import com.cnksi.bdzinspection.model.Process;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.DensityUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.DensityUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.xscore.xsview.swipemenulist.SwipeMenu;
 import com.cnksi.xscore.xsview.swipemenulist.SwipeMenuCreator;
 import com.cnksi.xscore.xsview.swipemenulist.SwipeMenuDragSortListView.OnMenuItemClickListener;
@@ -164,7 +164,7 @@ public class YWWorkflowActivity extends BaseActivity {
             startActivity(intent);
         });
         binding.gqj.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity,YWGQJActivity.class);
+            Intent intent = new Intent(currentActivity, YWGQJActivity.class);
             intent.putExtra(Config.YWYTHPROTYPE, 5);
             startActivity(intent);
         });
@@ -240,20 +240,16 @@ public class YWWorkflowActivity extends BaseActivity {
             SpannableString spannableString = new SpannableString(str);
             spannableString.setSpan(redSpan, 0, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             itemBinding.textDesc.append(spannableString);
-            itemBinding.check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            itemBinding.check.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                // TODO Auto-generated method stub
 
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    // TODO Auto-generated method stub
+                if (plan.get(position).is_selected == (isChecked ? "1" : "0")) {
 
-                    if (plan.get(position).is_selected == (isChecked ? "1" : "0")) {
-
-                    } else {
-                        plan.get(position).is_selected = isChecked ? "1" : "0";
-                        YthService.getInstance().savePlanProcessStatus(plan.get(position));
-                    }
-
+                } else {
+                    plan.get(position).is_selected = isChecked ? "1" : "0";
+                    YthService.getInstance().savePlanProcessStatus(plan.get(position));
                 }
+
             });
             if ("1".equals(plan.get(position).is_selected)) {
                 itemBinding.check.setChecked(true);
@@ -275,13 +271,13 @@ public class YWWorkflowActivity extends BaseActivity {
 
             int l = 0;
             if (!StringUtils.isEmpty(p.video)) {
-                l = p.video.split(Config.SPLIT).length;
+                l = p.video.split(Config.COMMA_SEPARATOR).length;
             }
             if (!StringUtils.isEmpty(p.picture)) {
-                l += p.picture.split(Config.SPLIT).length;
+                l += p.picture.split(Config.COMMA_SEPARATOR).length;
             }
             if (!StringUtils.isEmpty(p.audio)) {
-                l += p.audio.split(Config.SPLIT).length;
+                l += p.audio.split(Config.COMMA_SEPARATOR).length;
             }
             if (l == 0) {
                 return "";
@@ -370,7 +366,7 @@ public class YWWorkflowActivity extends BaseActivity {
                         // 录音
                         if (!MediaRecorderUtils.getInstance().isRecording()) {
 
-                            currentAudioName = DateUtils.getCurrentTime(CoreConfig.dateFormat6) + Config.AMR_POSTFIX;
+                            currentAudioName = DateUtils.getCurrentTime(DateUtils.yyyyMMddHHmmssSSS) + Config.AMR_POSTFIX;
                             MediaRecorderUtils.getInstance().startRecordAudio(Config.AUDIO_FOLDER + currentAudioName);
                             String str = plan.get(selectIndex).audio;
                             plan.get(selectIndex).audio = StringUtils.isEmpty(str) ? currentAudioName
@@ -384,14 +380,15 @@ public class YWWorkflowActivity extends BaseActivity {
                             showRecordAudioDialog();
 
                         } else {
-                            CToast.showShort(currentActivity, "当前正在录音");
+                            ToastUtils.showMessage("当前正在录音");
                         }
                         break;
                     case 2:// 录像
-                        takeVideo(Config.VIDEO_FOLDER + (currentVideoName = DateUtils.getCurrentTime(CoreConfig.dateFormat6)
+                        takeVideo(Config.VIDEO_FOLDER + (currentVideoName = DateUtils.getCurrentTime(DateUtils.yyyyMMddHHmmssSSS)
                                 + Config.MP4_POSTFIX));
 
                         break;
+                    default:
                 }
 
             }

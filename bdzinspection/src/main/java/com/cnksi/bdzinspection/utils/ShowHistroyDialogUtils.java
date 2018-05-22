@@ -14,8 +14,8 @@ import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Standards;
 import com.cnksi.bdzinspection.view.ChartDialog;
 import com.cnksi.bdzinspection.view.ChartDialog.LineSet;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -67,7 +67,7 @@ public class ShowHistroyDialogUtils {
             e.printStackTrace();
         }
         if (modelList == null || modelList.size() < 1) {
-            CToast.showShort(activity, "当前设备没有历史抄录记录");
+            ToastUtils.showMessage("当前设备没有历史抄录记录");
             return;
         }
         List<String> xLabe = new ArrayList<>();
@@ -111,7 +111,7 @@ public class ShowHistroyDialogUtils {
             e.printStackTrace();
         }
         if (modelList == null || modelList.size() < 1) {
-            CToast.showShort(activity, "当前没有历史抄录记录");
+            ToastUtils.showMessage("当前没有历史抄录记录");
             return;
         }
         List<String> xLabe = new ArrayList<>();
@@ -168,7 +168,7 @@ public class ShowHistroyDialogUtils {
         try {
             List<DbModel> resultModel = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
             if (resultModel == null || resultModel.size() < 1) {
-                CToast.showShort(context, "当前没有历史抄录记录");
+                ToastUtils.showMessage("当前没有历史抄录记录");
                 return;
             }
             String title = context.getString(R.string.xs_data_history_record_format_str,
@@ -178,23 +178,28 @@ public class ShowHistroyDialogUtils {
             List<Float> tempValues = new ArrayList<>();
             boolean isNeedTemperature = item.type_key.contains("sf6yl");
             String key = null;
-            if ("Y".equals(item.val))
+            if ("Y".equals(item.val)) {
                 key = "val";
-            if ("Y".equals(item.val_a))
+            }
+            if ("Y".equals(item.val_a)) {
                 key = "A";
-            if ("Y".equals(item.val_b))
+            }
+            if ("Y".equals(item.val_b)) {
                 key = "B";
-            if ("Y".equals(item.val_c))
+            }
+            if ("Y".equals(item.val_c)) {
                 key = "C";
-            if ("Y".equals(item.val_o))
+            }
+            if ("Y".equals(item.val_o)) {
                 key = "O";
+            }
             for (DbModel model : resultModel) {
                 String val = model.getString(key);
                 String temperature = model.getString("temperature");
                 if (!TextUtils.isEmpty(val) && !("-1".equalsIgnoreCase(val)) && !"0".equals(temperature)) {
                     resultValues.add(Float.valueOf(val));
                     tempValues.add(Float.valueOf(temperature));
-                    xValues.add(DateUtils.formatDateTime(model.getString("time"), "MM/dd"));
+                    xValues.add(DateUtils.getFormatterTime(model.getString("time"), "MM/dd"));
                 }
             }
             List<LineSet> yValues = new ArrayList<>();

@@ -34,13 +34,9 @@ import com.cnksi.bdzinspection.daoservice.ReportService;
 import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.PopMenuBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
-import com.cnksi.common.model.DefectRecord;
-import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.common.model.SwitchPic;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
@@ -49,17 +45,19 @@ import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.RecordAudioUtils;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.CLog;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.model.SwitchPic;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.utils.CLog;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.FileUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.db.table.DbModel;
@@ -135,8 +133,9 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         public void toolClick(View v, DbModel data, int groupPosition, int position) {
             ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(v, "rotation", 0, 360f);
             rotationAnimator.start();
-            if (popMenu.isShowing() && popMenu.model == data)
+            if (popMenu.isShowing() && popMenu.model == data) {
                 return;
+            }
             popMenu.dismiss();
             popMenu.setModel(data);
             currentGroupPosition = groupPosition;
@@ -155,7 +154,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
             }
             if (!TextUtils.isEmpty(pics)) {
                 ArrayList<String> mImageUrlList = new ArrayList<>();
-                String[] mPictureArray = pics.split(CoreConfig.COMMA_SEPARATOR);
+                String[] mPictureArray = pics.split(Config.COMMA_SEPARATOR);
                 if (mPictureArray != null && mPictureArray.length > 0) {
                     for (int i = 0, count = mPictureArray.length; i < count; i++) {
                         mImageUrlList.add(Config.RESULT_PICTURES_FOLDER + mPictureArray[i]);
@@ -175,7 +174,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                 MediaRecorderUtils.getInstance().stopPlayAudio();
             } else {
                 MediaRecorderUtils.getInstance().startPlayAudio(Config.AUDIO_FOLDER + voice, mp -> {
-                    CToast.showShort(currentActivity, "播放完毕...");
+                    ToastUtils.showMessage( "播放完毕...");
                     MediaRecorderUtils.getInstance().setPlaying(false);
                 });
             }
@@ -212,8 +211,9 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                     Map<String, List<EditText>> mapEdittexts = mRegularSwitchAdapter.getAnimationEditexts();
                     editTextList = mapEdittexts.get(models.get(position).getString(StandardSwitchover.ID));
                     for (EditText editText : editTextList) {
-                        if (TextUtils.isEmpty(editText.getText().toString().trim()))
+                        if (TextUtils.isEmpty(editText.getText().toString().trim())) {
                             setEditTextAniamtion(editText);
+                        }
                     }
                 } else {
                     Map<String, EditText> singleEditText = mRegularSwitchAdapter.getSingleEditText();
@@ -406,10 +406,11 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         int rs = -1;
         List<DbModel> models = mRegularSwitchAdapter.getChildList(groupPosition);
         int startPosition = 0;
-        if (isParentCheck)
+        if (isParentCheck) {
             startPosition = childPosition + 1;
-        else
+        } else {
             startPosition = childPosition;
+        }
         if (SystemConfig.EVERY_STEP.equalsIgnoreCase(SystemConfig.getSwitchMenuConfirmStyle())) {
             DbModel model = models.get(childPosition);
             if ("3".equals(model.getString(StandardSwitchover.LEVEL))) {
@@ -467,7 +468,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                 chargeBtnState();
                 if (mAudioAdapter == null) {
                     String audioUrl = report.audioUrl;
-                    audioUrls = StringUtils.stringsToList(audioUrl, ",");
+                    audioUrls = StringUtils.stringToList(audioUrl, ",");
                     mAudioAdapter = new SwitchMenuAudioAdapter(R.layout.xs_item_audio, audioUrls);
                     mSwitch1Binding.recyAudio.setLayoutManager(new GridLayoutManager(currentActivity, 4));
                     mSwitch1Binding.recyAudio.setAdapter(mAudioAdapter);
@@ -477,7 +478,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                             public void onClick(View v) {
                                 FileUtils.deleteFile(Config.AUDIO_FOLDER + audioUrls.get(position));
                                 audioUrls.remove(position);
-                                report.audioUrl = StringUtils.ArrayListToString(audioUrls);
+                                report.audioUrl = StringUtils.arrayListToString(audioUrls);
                                 saveReportAudioFile();
                             }
                         });
@@ -539,8 +540,9 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     protected void onDestroy() {
         recordAudioUtils.onDestory();
         super.onDestroy();
-        if (null != mValueAnimator)
+        if (null != mValueAnimator) {
             mValueAnimator.cancel();
+        }
     }
 
     @Override
@@ -580,7 +582,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                 intent1.putExtra(Config.CURRENT_REPORT_ID, currentReportId);
                 intent1.putExtra(Config.CURRENT_BDZ_NAME, currentBdzName);
                 intent1.putExtra(Config.CURRENT_MAINTANENCE_BATTERY, currentInspectionType);
-                intent1.putExtra(Config.CURRENT_FILENAME, PreferencesUtils.getString(currentActivity, Config.PICTURE_PREFIX, ""));
+                intent1.putExtra(Config.CURRENT_FILENAME, PreferencesUtils.get(Config.PICTURE_PREFIX, ""));
                 intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentInspectionTypeName);
                 intent1.setComponent(componentName);
                 startActivity(intent1);
@@ -593,10 +595,10 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
 
         mSwitch1Binding.tvTips.setOnClickListener(view -> {
             if (!MediaRecorderUtils.getInstance().isRecording()) {
-                audioFileName = DateUtils.getCurrentTime(CoreConfig.dateFormat6) + Config.AMR_POSTFIX;
+                audioFileName = DateUtils.getCurrentTime(DateUtils.yyyyMMddHHmmssSSS) + Config.AMR_POSTFIX;
                 recordAudioUtils.startRecord(Config.AUDIO_FOLDER + audioFileName, () -> saveReportAudioFile());
             } else {
-                CToast.showShort("当前正在录音");
+                ToastUtils.showMessage("当前正在录音");
             }
         });
     }
@@ -606,10 +608,11 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
      * 保存当前的属于报告的录音文件
      */
     private void saveReportAudioFile() {
-        List<String> audioUrlList = StringUtils.stringsToList(report.audioUrl, ",");
-        if (!TextUtils.isEmpty(audioFileName))
+        List<String> audioUrlList = StringUtils.stringToList(report.audioUrl, ",");
+        if (!TextUtils.isEmpty(audioFileName)) {
             audioUrlList.add(audioFileName);
-        String audioUrls = StringUtils.ArrayListToString(audioUrlList);
+        }
+        String audioUrls = StringUtils.arrayListToString(audioUrlList);
         report.audioUrl = audioUrls;
         this.audioUrls.clear();
         this.audioUrls.addAll(audioUrlList);
@@ -636,7 +639,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                         for (String imageUrl : cancelList) {
                             mPictureList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
                         }
-                        String pics = StringUtils.ArrayListToString(mPictureList);
+                        String pics = StringUtils.arrayListToString(mPictureList);
                         dbModel.add(SwitchPic.PIC, pics);
                         saveSwitchPic();
                     }
@@ -660,8 +663,9 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getActionMasked() == ev.ACTION_DOWN && popMenu.isShowing())
+        if (ev.getActionMasked() == MotionEvent.ACTION_DOWN && popMenu.isShowing()) {
             popMenu.dismiss();
+        }
         return super.dispatchTouchEvent(ev);
     }
 
@@ -680,7 +684,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
             @Override
             public void run() {
                 Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.RESULT_PICTURES_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
-                currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(CoreConfig.dateFormat2), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
+                currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
                 BitmapUtil.saveBitmap(currentBitmap, Config.RESULT_PICTURES_FOLDER + currentImageName, 60);
                 String pics = dbModel.getString(SwitchPic.PIC);
                 pics = TextUtils.isEmpty(pics) ? currentImageName : pics + "," + currentImageName;
@@ -710,8 +714,9 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         if (calculateIsCopyFinish(currentGroupPosition, currentChildPosition, true) == -1) {
             saveStepStatus(dbModel);
         }
-        if (!TextUtils.isEmpty(audioFileName))
+        if (!TextUtils.isEmpty(audioFileName)) {
             pic.voice = audioFileName;
+        }
         pic.pic = dbModel.getString(SwitchPic.PIC);
         try {
             audioFileName = "";
@@ -729,8 +734,8 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         mFixedThreadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
-//                if (!TextUtils.isEmpty(PreferencesUtils.getString(currentActivity, SwitchMenu.REPSWITCHOVERID, ""))) {
-//                    report.repSwithoverId = PreferencesUtils.getString(currentActivity, SwitchMenu.REPSWITCHOVERID, "");
+//                if (!TextUtils.isEmpty(PreferencesUtils.get(SwitchMenu.REPSWITCHOVERID, ""))) {
+//                    report.repSwithoverId = PreferencesUtils.get(SwitchMenu.REPSWITCHOVERID, "");
                 try {
                     XunshiApplication.getDbUtils().saveOrUpdate(report);
                 } catch (DbException e) {
@@ -788,7 +793,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                             audioFileName = voice;
                             FileUtils.deleteFile(Config.AUDIO_FOLDER + audioFileName);
                         }
-                        audioFileName = DateUtils.getCurrentTime(CoreConfig.dateFormat6) + Config.AMR_POSTFIX;
+                        audioFileName = DateUtils.getCurrentTime(DateUtils.yyyyMMddHHmmssSSS) + Config.AMR_POSTFIX;
                         recordAudioUtils.startRecord(Config.AUDIO_FOLDER + audioFileName, () -> {
                             String recordTime = recordAudioUtils.getAllRecordTime(Config.AUDIO_FOLDER + audioFileName);
                             dbModel.add(SwitchPic.VOICELENGTH, recordTime);
@@ -796,7 +801,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                             saveSwitchPic();
                         });
                     } else {
-                        CToast.showShort(currentActivity, "当前正在录音");
+                        ToastUtils.showMessage( "当前正在录音");
                     }
 
                 }

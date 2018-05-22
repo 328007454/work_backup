@@ -19,10 +19,10 @@ import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityReportToLeaderBinding;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TestPerson;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DefectLevelUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 
 import static com.cnksi.common.Config.LOAD_DATA;
 
@@ -121,10 +121,10 @@ public class ReportToLeaderActivity extends BaseActivity {
             public void onReceive(Context _context, Intent _intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        CToast.showShort(currentActivity, "短信发送成功");
+                        ToastUtils.showMessage( "短信发送成功");
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        CToast.showShort(currentActivity, "短信发送失败");
+                        ToastUtils.showMessage( "短信发送失败");
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
                         break;
@@ -140,7 +140,7 @@ public class ReportToLeaderActivity extends BaseActivity {
         currentActivity.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context _context, Intent _intent) {
-                CToast.showShort(currentActivity, "收信人已经成功接收");
+                ToastUtils.showMessage( "收信人已经成功接收");
             }
         }, new IntentFilter("SENT_SMS_ACTION"));
 

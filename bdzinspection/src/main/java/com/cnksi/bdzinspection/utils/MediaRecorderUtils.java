@@ -1,8 +1,5 @@
 package com.cnksi.bdzinspection.utils;
 
-import java.io.File;
-import java.io.IOException;
-
 import android.content.Context;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -11,8 +8,10 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.util.Log;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.core.utils.ToastUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MediaRecorderUtils {
 
@@ -101,7 +100,7 @@ public class MediaRecorderUtils {
 			e.printStackTrace();
 		}
 		isPlaying = true;
-		CToast.showShort(XunshiApplication.getInstance(), "正在播放...");
+		ToastUtils.showMessage("正在播放...");
 	}
 
 	public void stopPlayAudio() {

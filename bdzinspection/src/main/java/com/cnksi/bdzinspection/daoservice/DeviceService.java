@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.common.model.DefectRecord;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
@@ -97,11 +96,11 @@ public class DeviceService {
             if ("left".equals(direction)) {
                 device = XunshiApplication.getDbUtils()
                         .selector(Device.class).expr("spid = '" + spid + "'").and(Device.SORT, ">", sort)
-                        .and(Device.DLT, "<>", Config.DELETED).orderBy(Device.SORT, false).findFirst();
+                        .and(Device.DLT, "<>", "1").orderBy(Device.SORT, false).findFirst();
             } else {
                 device = XunshiApplication.getDbUtils()
                         .selector(Device.class).expr("spid = '" + spid + "'").and(Device.SORT, "<", sort)
-                        .and(Device.DLT, "<>", Config.DELETED).orderBy(Device.SORT, true).findFirst();
+                        .and(Device.DLT, "<>", "1").orderBy(Device.SORT, true).findFirst();
             }
         } catch (DbException e) {
             e.printStackTrace();

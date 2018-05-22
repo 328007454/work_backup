@@ -31,7 +31,7 @@ import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TreeNode;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.DefectUtils;
@@ -39,8 +39,8 @@ import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
@@ -520,7 +520,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         if (1000 >= diffTime && 3 <= clickIndex) {
             mCopyBinding.shadomTip.setVisibility(View.VISIBLE);
             mCopyBinding.shadomTip.setTextSize(120);
-            CToast.showLong(currentActivity, "不要作弊哟，5秒后继续操作。");
+            ToastUtils.showMessageLong( "不要作弊哟，5秒后继续操作。");
             timer.start();
             return true;
         } else {

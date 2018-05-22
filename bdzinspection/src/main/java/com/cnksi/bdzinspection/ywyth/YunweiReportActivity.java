@@ -14,15 +14,14 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityYunweiReportBinding;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Department;
 import com.cnksi.common.model.Report;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.ex.DbException;
 
@@ -67,7 +66,7 @@ public class YunweiReportActivity extends BaseActivity {
 
 	private void initialUI() {
 
-		currentDepartmentId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+		currentDepartmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
 		getIntentValue();
 
 		binding.includeTitle.tvTitle.setText(getString(R.string.xs_report_title_format_str, currentBdzName + currentInspectionTypeName));
@@ -130,10 +129,10 @@ public class YunweiReportActivity extends BaseActivity {
 					result.length() - status.length(), result.length()));
 
 			if (report != null) {
-				binding.tvInspectionStartTime.setText(DateUtils.getFormatterTime(report.starttime, CoreConfig.dateFormat8));
+				binding.tvInspectionStartTime.setText(DateUtils.getFormatterTime(report.starttime, DateUtils.yyyy_MM_dd_HH_mm));
 				binding.tvInspectionEndTime.setText(TextUtils.isEmpty(report.endtime)
-						? DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8)
-						: DateUtils.getFormatterTime(report.endtime, CoreConfig.dateFormat8));
+						? DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm)
+						: DateUtils.getFormatterTime(report.endtime, DateUtils.yyyy_MM_dd_HH_mm));
 				binding.tvInspectionPerson.setText(report.persons);
 				binding.tvRemainProblems.setText(TextUtils.isEmpty(report.remain_problems) ? "无" : report.remain_problems);
 			}

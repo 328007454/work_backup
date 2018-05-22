@@ -3,8 +3,8 @@ package com.cnksi.bdzinspection.daoservice;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.bdzinspection.model.DeviceStandardsOper;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.xscore.xsutils.FileUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.FileUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;

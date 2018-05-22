@@ -27,8 +27,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.DateUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -39,7 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static com.cnksi.xscore.xsutils.IOUtils.closeQuietly;
+import static com.cnksi.core.utils.IOUtils.closeQuietly;
 
 /**
  *

@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsInspectionTaskItemBinding;
+import  com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Task;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.Calendar;
@@ -110,7 +109,7 @@ public class TaskRemindAdapter extends SimpleBaseAdapter {
         itemBinding.tvTaskName.setText(StringUtils.changePartTextColor(mContext, taskName, R.color.xs_green_color,
                 taskName.length() - mTask.inspection_name.length() - 2, taskName.length()));
         // 设置巡视时间
-        itemBinding.tvInspectionTime.setText(DateUtils.getFormatterTime(mTask.schedule_time, CoreConfig.dateFormat1));
+        itemBinding.tvInspectionTime.setText(DateUtils.getFormatterTime(mTask.schedule_time, DateUtils.yyyy_MM_dd));
         itemBinding.tvTaskName.append(StringUtils.changeTextColor(mTask.taskOrgin(mTask), Color.RED));
         return itemBinding.getRoot();
     }

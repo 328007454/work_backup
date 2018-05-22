@@ -54,6 +54,7 @@ public class Config implements Cst {
     public static final String LOGFOLDER = BDZ_INSPECTION_FOLDER + "log/";
     public static final String DOWNLOAD_APP_FOLDER = BDZ_INSPECTION_FOLDER + "download/";
     public static final String DEFALUTFOLDER = BDZ_INSPECTION_FOLDER + "default/";
+    public static final String GONG_QI_JU = "admin/";
     public static final String PICTURES_FOLDER = BDZ_INSPECTION_FOLDER + "";
     public static final String WWWROOT_FOLDER = BDZ_INSPECTION_FOLDER + "www/";
     public static final String RESULT_PICTURES_FOLDER = BDZ_INSPECTION_FOLDER + "";
@@ -63,6 +64,7 @@ public class Config implements Cst {
     public static final String NFC_FOLDER = BDZ_INSPECTION_FOLDER + "nfc/";
     public static final String TJWT_FOLDER = BDZ_INSPECTION_FOLDER + "lib/wt/";
     public static final String WORKTICKIT_PIC = WWWROOT_FOLDER + "pic/";
+    public static final String NARI_BASEFOLDER = BDZ_INSPECTION_FOLDER + "package/";
     /**
      * 项目code
      */
@@ -79,6 +81,12 @@ public class Config implements Cst {
     public static final String ENCRYPT_DATABASE_NAME = "bdzinspection-encrypt.db";
     public static final String YANSHOUEDATABASE_NAME = "accept.db";
     public static final String DB_COPY = "dbcopy.db";
+    public static String SYNC_URL_VALUE = "";
+    public static String SYNC_APP_ID_VALUE = "";
+    /**
+     * 运维一体化工具器传递pro_id
+     */
+    public final static String YWYTHPROTYPE = "YWYTHPROTYPE";
 
     /**
      * 名称
@@ -100,6 +108,12 @@ public class Config implements Cst {
      * 开启选择设备code  用于startActivityForResult
      */
     public static final int ACTIVITY_CHOSE_DEVICE = 0x200;
+    public static final int ACTION_SELECT_IMAGE = 0x801;
+
+    /**
+     * 签字的名称
+     */
+    public static final String SIGN_NAME_LIST = "sign_name_list";
     /**
      * 返回温度
      */
@@ -144,6 +158,49 @@ public class Config implements Cst {
      * 取消照片地址
      */
     public static final String CANCEL_IMAGEURL_LIST = "cancelImageUrlList";
+
+    /**
+     * 设备id
+     */
+    public static final String CURRENT_DEVICE_ID = "current_device_id";
+    /**
+     * 设备名称
+     */
+    public static final String CURRENT_DEVICE_NAME = "current_device_name";
+    /**
+     * 任务id
+     */
+    public static final String CURRENT_TASK_ID = "current_task_id";
+    /**
+     * 设备部件id
+     */
+    public static final String CURRENT_DEVICE_PART_ID = "current_device_part_id";
+    /**
+     * 设备部件名称
+     */
+    public static final String CURRENT_DEVICE_PART_NAME = "current_device_part_name";
+    /**
+     * 间隔id
+     */
+    public static final String CURRENT_SPACING_ID = "current_spacing_id";
+    /**
+     * 间隔名称
+     */
+    public static final String CURRENT_SPACING_NAME = "current_spacing_name";
+    /**
+     * 设备标准id
+     */
+    public static final String CURRENT_STANDARD_ID = "current_standard_id";
+    /**
+     * 是否是从电池巡检界面跳转过去的
+     */
+    public static final String IS_FROM_BATTERY = "is_from_battery";
+    public static final String IS_FROM_TASK_REMIND = "is_from_task_remind";
+
+    /**
+     * 是否是特殊巡检
+     */
+    public static final String IS_PARTICULAR_INSPECTION = "is_particular_inspection";
     /**
      * 标题名称
      */
@@ -159,8 +216,30 @@ public class Config implements Cst {
     public static final String SECOND_SPACE_AND_ONE_DEVICE = "second_space_and_one_device";
     public static final String OTHER_DEPT_USER = "other_dept_user";
 
-
+    public static final String SELECT_PERSONS = "select_persons";
     public static String CURRENT_AREA = "lz";
+    public static float COPY_MAX_DISTANCE = 100f;
+    public static final String REPORT = "report";
+    /**
+     * 巡检前准备requestCode
+     */
+    public static final int TURN_SUCCESS = 0x111;
+    // 0代表启动随时设备抄录1代表设备抄录需要和当前定位位置有关
+    public static final int CURRENT_COPY_TYPE = 0;
+
+    /**
+     * 危险点
+     */
+    public static final String DANGER_POINT_MODEL = "danger_point_model";
+    /**
+     * 工器具
+     */
+    public static final String TOOLS_MODEL = "tools_model";
+    public final static boolean PLACED_BY_COPY = true;
+    public final static String CURRENT_LATLNG = "current_latlng";
+    // 设置抄录的判断距离值
+    public final static String COPY_DISTANCE_KEY = "copy_distance";
+    public static final int SHAKE_SPACE = 0x135;
 
     public static final String MASK_WIFI = "MASK_WIFI";
 
@@ -235,7 +314,6 @@ public class Config implements Cst {
     public static final String CURRENT_FUNCTION_MODEL = "current_function_model";
 
 
-    public static final String CURRENT_TASK_ID = "current_task_id";
     public static final String CURRENT_BDZ_ID = "current_bdz_id";
     public static final String CURRENT_BDZ_NAME = "current_bdz_name";
     public static final String CURRENT_REPORT_ID = "current_report_id";
@@ -262,6 +340,18 @@ public class Config implements Cst {
     public static final String VIDEO_PATH = "video_path";
     //设备id
     public static final String DEVICE_ID = "device_id";
+    public static final String CURRENT_POSITION = "current_position";
+    public static final String IS_ADD_DEVICE_STANDARD = "is_add_device_standard";
+    /**
+     * 缺陷数量
+     */
+    public static final String DEFECT_COUNT_KEY = "defect_count_key";
+    // 保存当前所有类型的id
+    public static final String LOO_ID = "loo_id";
+    public static final String AMR_POSTFIX = ".mp3";
+    public static final String MP4_POSTFIX = ".mp4";
+    public static final String IS_DEVICE_PART = "is_device_part";
+    public static final String TASK_SELECT_PERSONS = "task_select_persons";
 
     //验收类型
     public static final String TYPE_NAME = "type_name";
@@ -285,8 +375,59 @@ public class Config implements Cst {
     public static final String CURRENT_TEST_TYPE = "current_test_type";
     public static final String CURRENT_BATTERY_NUM = "current_battery_num";
     public static final String CURRENT_MAINTANENCE_BATTERY = "current_maintanence_battery";
+    /**
+     * 跟踪缺陷
+     */
+    public static final String TRACK_DEFECT_MODEL = "track_defect_model";
+
+    /**
+     * 消除缺陷
+     */
+    public static final String ELIMINATE_DEFECT_MODEL = "eliminate_defect_model";
+    /**
+     * 记录缺陷
+     */
+    public static final String RECORD_DEFECT_MODEL = "record_defect_model";
+    /**
+     * 电池组编号
+     */
+    public static final String CURRENT_BATTERY_ID = "current_battery_id";
+    /**
+     * 电池组名称
+     */
+    public static final String CURRENT_BATTERY_NAME = "current_battery_name";
 
 
+    /**
+     * 保护压板核对
+     */
+    public static final String PROTECT_CLAMP_MODEL = "protect_clamp_model";
+    /**
+     * 定值核对
+     */
+    public static final String CHECK_VALUE_MODEL = "check_value_model";
+    /**
+     * 是否显示缺陷原因
+     */
+    public static final String IS_SHOW_DEFECT_REASON = "is_show_defect_reason";
+    /**
+     * 是否是跟踪缺陷
+     */
+    public static final String IS_TRACK_DEFECT = "is_track_defect";
+    /**
+     * 是否是跟踪缺陷
+     */
+    public static final String IS_NEED_SEARCH_DEFECT_REASON = "is_need_search_defect_reason";
+
+    /**
+     * 是否显示设备控件
+     */
+    public static final String IS_SHOW_DEVICE_WIDGET = "is_show_device_widget";
+    /**
+     * 跟踪缺陷的id
+     */
+    public static final String TRACK_DEFECT_RECORD_ID = "track_defect_record_id";
+    public static final String ADD_NEW_DEFECT_RECORD = "add_new_defect_record";
     /**
      * 取消选择的图片
      */
@@ -335,6 +476,7 @@ public class Config implements Cst {
             Config.BAK_FOLDER,
             Config.NFC_FOLDER,
             Config.WWWROOT_FOLDER};
+    public static Object DELETED="1";
 
     /**
      * Pms设备型号

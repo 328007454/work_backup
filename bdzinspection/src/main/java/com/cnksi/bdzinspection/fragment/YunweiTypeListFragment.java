@@ -13,7 +13,7 @@ import com.cnksi.bdzinspection.activity.AddTaskActivity;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentExpadableListBinding;
 import com.cnksi.bdzinspection.model.Project;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.ywyth.adapter.YunweiTypeAdapter;
 
 import org.xutils.db.Selector;

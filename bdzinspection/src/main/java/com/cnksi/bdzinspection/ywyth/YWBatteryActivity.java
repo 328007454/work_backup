@@ -29,18 +29,18 @@ import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.bdzinspection.model.BatteryReport;
 import com.cnksi.common.model.DefectRecord;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DefectLevelUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -236,8 +236,8 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         }
         // 恢复数据
 
-        String lastV = PreferencesUtils.getString(currentActivity, "V" + mBatteryDetails.battery_number, "");
-        String lastR = PreferencesUtils.getString(currentActivity, "R" + mBatteryDetails.battery_number, "");
+        String lastV = PreferencesUtils.get("V" + mBatteryDetails.battery_number, "");
+        String lastR = PreferencesUtils.get("R" + mBatteryDetails.battery_number, "");
         dialogBinding.etVoltage.setText(TextUtils.isEmpty(lastV) ? (TextUtils.isEmpty(mBatteryDetails.voltage) ? lastVoltage : mBatteryDetails.voltage) : lastV);
         dialogBinding.etResistance.setText(TextUtils.isEmpty(lastR) ? (TextUtils.isEmpty(mBatteryDetails.resistance) ? lastResistance : mBatteryDetails.resistance) : lastR);
         dialogBinding.etVoltage.requestFocus();
@@ -310,8 +310,8 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         String resistance = mEtResistance.getText().toString().trim();
         lastVoltage = mBatteryDetails.voltage = voltage;
         lastResistance = mBatteryDetails.resistance = resistance;
-        PreferencesUtils.put(currentActivity, "V" + mBatteryDetails.battery_number, lastVoltage);
-        PreferencesUtils.put(currentActivity, "R" + mBatteryDetails.battery_number, lastResistance);
+        PreferencesUtils.put( "V" + mBatteryDetails.battery_number, lastVoltage);
+        PreferencesUtils.put( "R" + mBatteryDetails.battery_number, lastResistance);
         // 判断电池数据是否抄录
         if (isCopyInternalResistance) {
             if (!TextUtils.isEmpty(mBatteryDetails.resistance) && !TextUtils.isEmpty(mBatteryDetails.voltage)) {
@@ -319,9 +319,9 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             } else {
                 mBatteryDetails.hasCopyed = false;
                 if (TextUtils.isEmpty(mBatteryDetails.resistance)) {
-                    CToast.showShort(currentActivity, R.string.xs_please_copy_resistance_data_str);
+                    ToastUtils.showMessage( R.string.xs_please_copy_resistance_data_str);
                 } else {
-                    CToast.showShort(currentActivity, R.string.xs_please_copy_voltage_data_str);
+                    ToastUtils.showMessage( R.string.xs_please_copy_voltage_data_str);
                 }
                 return;
             }
@@ -330,7 +330,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                 mBatteryDetails.hasCopyed = true;
             } else {
                 mBatteryDetails.hasCopyed = false;
-                CToast.showShort(currentActivity, R.string.xs_please_copy_voltage_data_str);
+                ToastUtils.showMessage( R.string.xs_please_copy_voltage_data_str);
                 return;
             }
         }
@@ -341,7 +341,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             }
             mBatteryDetails.reportid = currentReportId;
             XunshiApplication.getDbUtils().saveOrUpdate(mBatteryDetails);
-            PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID + currentReportId, true);
+            PreferencesUtils.put( Config.CURRENT_REPORT_ID + currentReportId, true);
         } catch (DbException e1) {
             e1.printStackTrace();
         }
@@ -374,7 +374,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             }
             if (!isValueNormal) {
                 // 保存有缺陷的电压到SharePreference
-                PreferencesUtils.put(currentActivity, mBatteryDetails.battery_number, voltage);
+                PreferencesUtils.put( mBatteryDetails.battery_number, voltage);
                 showBatteryTipsDialog(defectLevel, defectContent);
                 TTSUtils.getInstance().startSpeaking(getString(R.string.xs_found_defect_str));
                 isShowTipsDialog = true;

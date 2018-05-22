@@ -17,11 +17,11 @@ import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment.On
 import com.cnksi.bdzinspection.fragment.defectcontrol.RecordDefectFragment;
 import com.cnksi.bdzinspection.fragment.defectcontrol.TrackDefectFragment;
 import com.cnksi.common.model.DefectRecord;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.TTSUtils;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

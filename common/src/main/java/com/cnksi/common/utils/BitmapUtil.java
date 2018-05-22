@@ -1,4 +1,4 @@
-package com.cnksi.xscore.xsutils;
+package com.cnksi.common.utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -24,6 +24,8 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
+
+import com.cnksi.core.utils.FileUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -525,7 +527,7 @@ public class BitmapUtil {
         bitmap.compress(Bitmap.CompressFormat.JPEG, DEFAULT_QUALITY, bos);
         byte[] buffer = bos.toByteArray();
         if (buffer != null) {
-            fileName = System.currentTimeMillis() + CoreConfig.IMAGE_JPG_POSTFIX;
+            fileName = System.currentTimeMillis() + com.cnksi.common.Config.IMAGE_JPG_POSTFIX;
             if (!filePath.endsWith(File.separator)) {
                 filePath += File.separator;
             }
@@ -576,10 +578,12 @@ public class BitmapUtil {
      * @param quality
      */
     public static void saveBitmap(Bitmap bitmap, String filePath, int quality) {
-        if (bitmap == null)
+        if (bitmap == null) {
             return;
-        if (!(0 < quality && quality <= 100))
+        }
+        if (!(0 < quality && quality <= 100)) {
             quality = 100;
+        }
 
         File f = new File(filePath);
         if (f.exists()) {
@@ -623,10 +627,12 @@ public class BitmapUtil {
      * @return
      */
     public static Bitmap compressImage(Bitmap bitmap, int quality) {
-        if (bitmap == null)
+        if (bitmap == null) {
             return null;
-        if (!(0 < quality && quality <= 100))
+        }
+        if (!(0 < quality && quality <= 100)) {
             quality = 100;
+        }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         // 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
@@ -636,8 +642,9 @@ public class BitmapUtil {
         while (baos.toByteArray().length / 1024 > 100) {
             // 每次都减少10
             options -= 10;
-            if (options <= 0)
+            if (options <= 0) {
                 break;
+            }
 
             // 重置baos即清空baos
             baos.reset();
@@ -724,10 +731,12 @@ public class BitmapUtil {
      * @param pathName
      */
     public static Bitmap getOptimizedBitmap(String pathName, int refWidth, int refHeight) {
-        if (TextUtils.isDigitsOnly(pathName))
+        if (TextUtils.isDigitsOnly(pathName)) {
             return null;
-        if (!(new File(pathName)).exists())
+        }
+        if (!(new File(pathName)).exists()) {
             return null;
+        }
 
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inJustDecodeBounds = true;
@@ -751,10 +760,12 @@ public class BitmapUtil {
      * @return
      */
     public static int calcOptimizedInSampleSize(BitmapFactory.Options opts, int refWidth, int refHeight) {
-        if (opts == null)
+        if (opts == null) {
             return 1;
-        if (!(refWidth > 0 && refHeight > 0))
+        }
+        if (!(refWidth > 0 && refHeight > 0)) {
             return 1;
+        }
 
         // ---------- 以竖屏情境计算（宽 < 高） ----------
         int width = opts.outWidth;
@@ -774,8 +785,9 @@ public class BitmapUtil {
         int widthRatio = Math.round((float) width / rWidth);
         int heightRatio = Math.round((float) height / rHeight);
         int optimizedInSampleSize = Math.max(widthRatio, heightRatio);
-        if (optimizedInSampleSize < 1)
+        if (optimizedInSampleSize < 1) {
             return 1;
+        }
 
         return optimizedInSampleSize;
     }
@@ -996,7 +1008,7 @@ public class BitmapUtil {
      * @param scale   压缩率
      */
     public static void compressImage(String srcPath, int scale) {
-        compressImage(srcPath, scale, 1024l * 1024l);
+        compressImage(srcPath, scale, 1024L * 1024L);
     }
 
     /**

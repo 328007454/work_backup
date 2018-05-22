@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.PermissionBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.core.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;

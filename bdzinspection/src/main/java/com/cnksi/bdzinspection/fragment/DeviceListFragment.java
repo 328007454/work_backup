@@ -37,16 +37,16 @@ import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
-import com.cnksi.bdzinspection.view.keyboard.QWERKeyBoardUtils;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.GPSUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.QWERKeyBoardUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.GPSUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 import com.zhy.core.utils.AutoUtils;
 
@@ -168,7 +168,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
 
     private void requestLocation(final boolean isSpace) {
         if (!GPSUtils.isOPen(currentActivity)) {
-            CToast.showShort(currentActivity, "请打开GPS再进行定位！");
+            ToastUtils.showMessage( "请打开GPS再进行定位！");
         } else {
             CustomerDialog.showProgress(currentActivity, R.string.xs_locating_str);
             LocationUtil.getInstance().getLocalHelper(new LocationListener() {
@@ -182,7 +182,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 public void locationFailure(int code, String message) {
                     if (code == LocationListener.ERROR_TIMEOUT) {
                         CustomerDialog.dismissProgress();
-                        CToast.showShort(currentActivity, "请求定位超时,请确保打开GPS。");
+                        ToastUtils.showMessage( "请求定位超时,请确保打开GPS。");
                     }
                 }
             }).setTimeout(10).start();
@@ -480,7 +480,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                     snwsd = new ReportSnwsd(currentReportId, currentBdzId, currentBdzName, data, wd, sd);
                 }
                 if (!snwsd.judgeValueNormal(wd, sd)) {
-                    CToast.showShort("温度：-99.9-99.9；湿度：0-100");
+                    ToastUtils.showMessage("温度：-99.9-99.9；湿度：0-100");
                     return;
                 }
                 XunshiApplication.getDbUtils().saveOrUpdate(snwsd);

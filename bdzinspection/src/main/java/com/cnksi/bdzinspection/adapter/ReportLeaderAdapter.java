@@ -10,7 +10,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsCheckboxTextListItemBinding;
 import com.cnksi.bdzinspection.model.TestPerson;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.List;

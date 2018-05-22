@@ -26,8 +26,8 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.BluetoothBinding;
 import com.cnksi.bdzinspection.model.bluetooth.BluetoothFileBean;
 import com.cnksi.bdzinspection.reciever.BluetoothBroardCastReceiver;
-import com.cnksi.xscore.xsutils.CLog;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.core.utils.CLog;
+import com.cnksi.core.utils.ToastUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -77,7 +77,7 @@ public class BluetoothFragment extends DialogFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MESSAGE_CONNECT_ERROR://连接失败
-                    CToast.showLong(XunshiApplication.getAppContext(), "通讯失败，请重新发送信息");
+                    ToastUtils.showMessageLong("通讯失败，请重新发送信息");
                     break;
                 case MESSAGE_READ_OBJECT:
                     BluetoothFileBean fileBean = (BluetoothFileBean) msg.obj;
@@ -87,16 +87,18 @@ public class BluetoothFragment extends DialogFragment {
                     }
                     break;
                 case FILE_RECIVE_PERCENT:
-                    if (getDialog() != null)
+                    if (getDialog() != null) {
                         getDialog().show();
+                    }
                     BluetoothFileBean bluetoothFileBean = (BluetoothFileBean) msg.obj;
                     binding.reciveProgress.setProgress(Integer.valueOf(bluetoothFileBean.getUppercent()));
                     Log.d(TAG, "handleMessage: " + Integer.valueOf(bluetoothFileBean.getUppercent()));
                     if (Integer.valueOf(bluetoothFileBean.getUppercent()) == 100) {
                         binding.txtBluttoothState.setText("传输完毕");
                         try {
-                            if (null != socket)
+                            if (null != socket) {
                                 socket.close();
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -114,9 +116,9 @@ public class BluetoothFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
         serverConnThread = new BluetoothServerConnThread();
-        if (null == bluetoothAdapter)
-            CToast.showLong(getActivity(), "该设备没有蓝牙硬件");
-        else {
+        if (null == bluetoothAdapter) {
+            ToastUtils.showMessageLong( "该设备没有蓝牙硬件");
+        } else {
             bluetoothAdapter.enable();
             Intent blueIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
             blueIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
@@ -145,14 +147,12 @@ public class BluetoothFragment extends DialogFragment {
 
         deviceAdapter = new BlueDeviceAdapter(getActivity(), bluetoothDevices, R.layout.xs_device_bound);
         binding.lvDdevice.setAdapter(deviceAdapter);
-        broardCastReceiver.setBluetoothListener(new BluetoothBroardCastReceiver.BluetoothDeviceListener() {
-            @Override
-            public void boundDevice(ArrayList<BluetoothDevice> deviceArrayList) {
-                bluetoothDevices.clear();
-                bluetoothDevices.addAll(deviceArrayList);
-                deviceAdapter.setDeviceList(bluetoothDevices);
-                if (!bluetoothDevices.isEmpty())
-                    binding.txtBluttoothState.setText("蓝牙已连接");
+        broardCastReceiver.setBluetoothListener(deviceArrayList -> {
+            bluetoothDevices.clear();
+            bluetoothDevices.addAll(deviceArrayList);
+            deviceAdapter.setDeviceList(bluetoothDevices);
+            if (!bluetoothDevices.isEmpty()) {
+                binding.txtBluttoothState.setText("蓝牙已连接");
             }
         });
         return binding.getRoot();
@@ -175,8 +175,9 @@ public class BluetoothFragment extends DialogFragment {
 
         @Override
         public void run() {
-            if (bluetoothAdapter == null)
+            if (bluetoothAdapter == null) {
                 return;
+            }
             try {
                 while (!isInterrupted) {
                     socket = serverSocket.accept();
@@ -258,8 +259,9 @@ public class BluetoothFragment extends DialogFragment {
             fileInStream.read(file); //读取文件名
             String fileName = new String(file);
             fileBean.setFilename(fileName);
-            if (!TextUtils.isEmpty(fileName))
+            if (!TextUtils.isEmpty(fileName)) {
                 blueHandler.obtainMessage(MESSAGE_READ_OBJECT, fileBean).sendToTarget();
+            }
             long fileDataLength = sumLength - 6 - file.length;
             String savePath = Environment.getExternalStorageDirectory().getPath() + "/" + fileBean.getFilename();
             fileBean.setFilepath(savePath);
@@ -277,10 +279,11 @@ public class BluetoothFragment extends DialogFragment {
                 Log.i(TAG, progress + "");
                 BluetoothFileBean bluetoothFileBean = new BluetoothFileBean();
                 bluetoothFileBean.setUppercent(String.valueOf(progress));
-                if (i == 1)
+                if (i == 1) {
                     bluetoothFileBean.setShowflag(true);
-                else
+                } else {
                     bluetoothFileBean.setShowflag(false);
+                }
                 blueHandler.obtainMessage(FILE_RECIVE_PERCENT, bluetoothFileBean).sendToTarget();
             }
             fileOutputStream.flush();
@@ -304,10 +307,12 @@ public class BluetoothFragment extends DialogFragment {
         commonThread = null;
         serverConnThread = null;
         try {
-            if (null != socket)
+            if (null != socket) {
                 socket.close();
-            if (null != serverSocket)
+            }
+            if (null != serverSocket) {
                 serverSocket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

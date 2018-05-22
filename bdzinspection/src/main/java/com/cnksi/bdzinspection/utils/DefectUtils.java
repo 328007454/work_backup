@@ -8,8 +8,8 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import java.util.List;
 

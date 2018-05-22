@@ -13,12 +13,12 @@ import com.cnksi.bdzinspection.adapter.PinnedHeaderSectionedAdapter;
 import com.cnksi.bdzinspection.databinding.XsGroupItemBinding;
 import com.cnksi.bdzinspection.databinding.XsReadyExistDefectItemBinding;
 import com.cnksi.common.model.DefectRecord;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.zhy.core.utils.AutoUtils;
 
 public class ReadyExistDefectAdapter extends PinnedHeaderSectionedAdapter<String, DefectRecord> {
@@ -58,7 +58,7 @@ public class ReadyExistDefectAdapter extends PinnedHeaderSectionedAdapter<String
         itemBinding.tvDefectRemindTime.setText(DefectUtils.calculateRemindTime(mDefect));
 
         // 判读图片是否存在，不存在就不显示，或显示默认图片
-        String[] defectPicArray = StringUtils.cleanString(mDefect.pics).split(CoreConfig.COMMA_SEPARATOR);
+        String[] defectPicArray = StringUtils.cleanString(mDefect.pics).split(Config.COMMA_SEPARATOR);
         if (defectPicArray != null && defectPicArray.length > 0
                 && !TextUtils.isEmpty(StringUtils.cleanString(defectPicArray[0]))) {
             Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(  Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(defectPicArray[0]), 280);

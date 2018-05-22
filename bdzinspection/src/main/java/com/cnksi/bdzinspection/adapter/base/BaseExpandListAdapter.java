@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
-import com.cnksi.bdzinspection.adapter.DataWrap;
+import com.cnksi.common.model.vo.DataWrap;
 
 import java.util.List;
 

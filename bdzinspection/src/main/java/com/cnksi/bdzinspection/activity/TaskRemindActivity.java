@@ -23,20 +23,21 @@ import com.cnksi.bdzinspection.fragment.TaskRemindFragment.OnFragmentEventListen
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
 import com.cnksi.bdzinspection.model.InspectionPrepared;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.PermissionUtil;
 import com.cnksi.bdzinspection.ywyth.YWWorkflowActivity;
 import com.cnksi.bdzinspection.ywyth.YunweiReportActivity;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.core.utils.FileUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sync.KSyncConfig;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.db.table.DbModel;
@@ -85,10 +86,8 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         String taskId = getIntent().getStringExtra("task_id");
         String deparmentId = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_ID);
         currentDepartmentName = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_NAME);
-        Config.SYNC_URL_VALUE = getIntent().getStringExtra(Config.KEY_SYNC_URL);
-        Config.SYNC_APP_ID_VALUE = getIntent().getStringExtra(Config.KEY_SYNC_APP_ID);
-        PreferencesUtils.put(currentActivity, Config.CURRENT_DEPARTMENT_ID, deparmentId);
-        PreferencesUtils.put(currentActivity, Config.CURRENT_DEPARTMENT_NAME, currentDepartmentName);
+        PreferencesUtils.put( Config.CURRENT_DEPARTMENT_ID, deparmentId);
+        PreferencesUtils.put( Config.CURRENT_DEPARTMENT_NAME, currentDepartmentName);
         if (!TextUtils.isEmpty(taskId)) {
             Task task = TaskService.getInstance().findById(taskId);
             if (task != null) {
@@ -96,13 +95,11 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                 finish();
                 return;
             } else {
-                CToast.showShort(currentActivity, "没有找到对应的任务！！");
+                ToastUtils.showMessage( "没有找到对应的任务！！");
             }
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_inspection_task_remind);
-//        setContentView(R.layout.xs_activity_inspection_task_remind);
-        PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, Config.permissions);
         initialUI();
         initOnClick();
     }
@@ -114,9 +111,9 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         String inspectionName = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE_NAME);
         // 防止由于系统垃圾回收导致其他界面返回获取不到当前巡检类型报错
         if (!TextUtils.isEmpty(inspectionName)) {
-            PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, inspectionName);
+            PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, inspectionName);
         } else {
-            PreferencesUtils.getString(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, "full");
+            PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE_NAME, "full");
             inspectionName = InspectionType.full.value.toString();
         }
         currentSelectInspectionType = InspectionType.get(inspectionName);
@@ -228,7 +225,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             case SYNC_START://开始同步
                 String messageStart = (String) msg.obj;
                 if (messageStart.contains("开始上传数据")) {
-                    CToast.showShort(currentActivity, "开始同步数据");
+                    ToastUtils.showMessage( "开始同步数据");
                 }
                 break;
             case SYNC_INFO:
@@ -239,7 +236,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                 if (messageSuccess.contains("上传完成")) {
                     KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).downLoad();
                 } else if (messageSuccess.contains("同步完成")) {
-                    CToast.showShort(currentActivity, "数据同步完成");
+                    ToastUtils.showMessage( "数据同步完成");
                     CustomerDialog.dismissProgress();
                     for (TaskRemindFragment taskRemindFragment : mFragmentList) {
                         taskRemindFragment.searchData();
@@ -249,7 +246,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                 break;
             case SYNC_ERROR://同步错误
                 String messageError = (String) msg.obj;
-                CToast.showShort(currentActivity, messageError);
+                ToastUtils.showMessage( messageError);
                 CustomerDialog.dismissProgress();
                 for (TaskRemindFragment taskRemindFragment : mFragmentList) {
                     taskRemindFragment.searchData();
@@ -286,7 +283,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
 
     @Override
     public void allPermissionsGranted() {
-        PreferencesUtils.put(this, Config.PERMISSION_STASTUS, true);
+        PreferencesUtils.put( Config.PERMISSION_STASTUS, true);
         // 检测是否进行版本升级
 //        checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, Config.PCODE);
         SystemConfig.init();
@@ -299,9 +296,9 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             bdz = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.BDZID, "=", mTask.bdzid).findFirst();
             // 创建变电站下目录
             if (!FileUtils.isFileExists(Config.BDZ_INSPECTION_FOLDER + bdz.folder)) {
-                FileUtils.initFile(new String[]{Config.BDZ_INSPECTION_FOLDER + bdz.folder});
+                FileUtils.makeDirectory(new String[]{Config.BDZ_INSPECTION_FOLDER + bdz.folder});
             }
-            PreferencesUtils.put(currentActivity, Config.PICTURE_PREFIX, bdz.folder + "/");
+            PreferencesUtils.put( Config.PICTURE_PREFIX, bdz.folder + "/");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -311,15 +308,15 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             try {
                 mReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", mTask.taskid).findFirst();
                 if (mReport == null) {
-                    CToast.showShort(currentActivity, "异常任务，找不到对应的报告！");
+                    ToastUtils.showMessage( "异常任务，找不到对应的报告！");
                     return;
                 }
-                PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, mReport.reportid);
+                PreferencesUtils.put( Config.CURRENT_REPORT_ID, mReport.reportid);
             } catch (DbException e) {
                 e.printStackTrace();
             }
             intent.putExtra(Config.IS_FROM_TASK_REMIND, true);
-            if (!TextUtils.isEmpty(mTask.type) && Config.InspectionType.operation.name().equalsIgnoreCase(mTask.type)) {
+            if (!TextUtils.isEmpty(mTask.type) && InspectionType.operation.name().equalsIgnoreCase(mTask.type)) {
                 // TODO:跳转到运维一体化报告界面
                 intent.setClass(currentActivity, YunweiReportActivity.class);
             } else {
@@ -332,7 +329,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                     intent.putExtra(Config.CURRENT_REPORT_ID, mReport.reportid);
                     intent.putExtra(Config.CURRENT_BDZ_NAME, mTask.bdzname);
                     intent.putExtra(Config.CURRENT_INSPECTION_TYPE, mTask.inspection);
-                    intent.putExtra(Config.CURRENT_FILENAME, PreferencesUtils.getString(currentActivity, Config.PICTURE_PREFIX, ""));
+                    intent.putExtra(Config.CURRENT_FILENAME, PreferencesUtils.get(Config.PICTURE_PREFIX, ""));
                     intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mTask.inspection_name);
                     intent.putExtra(Config.IS_FROM_SJJC, getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false));
                     intent.setComponent(componentName);
@@ -344,7 +341,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                 }
             }
         } else {
-            if (Config.InspectionType.operation.name().equalsIgnoreCase(mTask.type)) {
+            if (InspectionType.operation.name().equalsIgnoreCase(mTask.type)) {
                 // 运维一体化
                 intent.setClass(currentActivity, YWWorkflowActivity.class);
                 generateReport(mTask);
@@ -369,7 +366,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                         e.printStackTrace();
                     }
                     if (null != prepareds) {
-                        currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
+                        currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
                         String[] accounts = currentAcounts.split(",");
                         for (InspectionPrepared prepared : prepareds) {
                             if (prepared.contains(accounts)) {
@@ -380,7 +377,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                         }
                     }
                     if (containsUser && !TextUtils.isEmpty(reportId)) {
-                        PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, reportId);
+                        PreferencesUtils.put( Config.CURRENT_REPORT_ID, reportId);
                         if (mTask.inspection.contains("special")) {
                             intent.setClass(currentActivity, ParticularDeviceListActivity.class);
                         } else {
@@ -392,13 +389,13 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                 }
             }
         }
-        PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE, mTask.inspection);
-        PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, mTask.inspection_name);
-        PreferencesUtils.put(currentActivity, Config.CURRENT_BDZ_ID, mTask.bdzid);
-        PreferencesUtils.put(currentActivity, Config.CURRENT_BDZ_NAME, mTask.bdzname);
-        PreferencesUtils.put(currentActivity, Config.CURRENT_TASK_ID, mTask.taskid);
-        PreferencesUtils.put(currentActivity, Task.SCHEDULE_TIME, mTask.schedule_time);
-        PreferencesUtils.put(currentActivity, Task.SCHEDULE_ENDTIME, mTask.schedule_endtime);
+        PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE, mTask.inspection);
+        PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, mTask.inspection_name);
+        PreferencesUtils.put( Config.CURRENT_BDZ_ID, mTask.bdzid);
+        PreferencesUtils.put( Config.CURRENT_BDZ_NAME, mTask.bdzname);
+        PreferencesUtils.put( Config.CURRENT_TASK_ID, mTask.taskid);
+        PreferencesUtils.put( Task.SCHEDULE_TIME, mTask.schedule_time);
+        PreferencesUtils.put( Task.SCHEDULE_ENDTIME, mTask.schedule_endtime);
         currentActivity.startActivityForResult(intent, Config.TURN_SUCCESS);
     }
 
@@ -411,29 +408,29 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
     private void generateReport(Task mTask) {
         try {
             Report mReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", mTask.taskid).findFirst();
-            String loginPerson = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_USER, "");
+            String loginPerson = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
             if (mReport == null) {
                 mReport = new Report(mTask.taskid, mTask.bdzid, mTask.bdzname, mTask.inspection, loginPerson);
             }
             mReport.setOtherReport(mTask.bdzid, mTask.bdzname, mTask.inspection, loginPerson);
-            String reportSwitchId = PreferencesUtils.getString(currentActivity, mTask.inspection + "_" + mTask.bdzid, "");
+            String reportSwitchId = PreferencesUtils.get(mTask.inspection + "_" + mTask.bdzid, "");
             mReport.repSwithoverId = reportSwitchId;
             mReport.inspectionValue = mTask.inspection_name;
             mReport.reportSource = Config.REPORT;
-            mReport.departmentId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+            mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             XunshiApplication.getDbUtils().saveOrUpdate(mReport);
 
             ReportSignname reportSignname = XunshiApplication.getDbUtils().selector(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid).findFirst();
             if (reportSignname == null) {
-                String currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
+                String currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
                 List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);
                 for (DbModel dbModel : defaultUesrs) {
-                    reportSignname = new ReportSignname(mReport.reportid, Config.Role.worker.name(), dbModel);
+                    reportSignname = new ReportSignname(mReport.reportid, Role.worker.name(), dbModel);
                     XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
                 }
             }
             if (mReport != null) {
-                PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, mReport.reportid);
+                PreferencesUtils.put( Config.CURRENT_REPORT_ID, mReport.reportid);
             }
         } catch (DbException e) {
             e.printStackTrace();

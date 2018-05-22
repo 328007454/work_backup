@@ -9,19 +9,20 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
-import com.cnksi.bdzinspection.adapter.DataWrap;
 import com.cnksi.bdzinspection.adapter.base.BaseExpandListAdapter;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyToolsRemindBinding;
 import com.cnksi.bdzinspection.databinding.XsItemSafeToolsinfoRemindBinding;
 import com.cnksi.bdzinspection.databinding.XsItemSafetyToolBdzBinding;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.view.keyboard.QWERKeyBoardUtils;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.Bdz;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.model.vo.DataWrap;
+import com.cnksi.common.utils.QWERKeyBoardUtils;
+import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -85,7 +86,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
 
     private void initialData() {
         if (dept_id == null) {
-            CToast.showShort(currentActivity, "获取班组信息错误！");
+            ToastUtils.showMessage( "获取班组信息错误！");
             return;
         }
         dataWraps.clear();
@@ -143,7 +144,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
             remindBinding.tvToolName.setText(item.getString(SafeToolsInfor.NAME));
             String num = item.getString(SafeToolsInfor.NUM);
             remindBinding.tvSerial.setText("编号：" + ("-1".equals(num) ? "" : num));
-            String date = DateUtils.formatDateTime(item.getString(SafeToolsInfor.NEXTCHECKTIME), "yyyy/MM/dd");
+            String date = DateUtils.getFormatterTime(item.getString(SafeToolsInfor.NEXTCHECKTIME), "yyyy/MM/dd");
             remindBinding.tvDate.setText("下次试验时间：" + (TextUtils.isEmpty(date) ? "未知" : date));
             if (isLastChild) {
                 remindBinding.llRoot.setDrawUnderLine(false);
@@ -163,7 +164,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
                 for (DataWrap<Bdz, DbModel> dataWrap : searchSet) {
                     List<DbModel> temp = new ArrayList<>();
                     for (DbModel model : dataWrap.getChildList()) {
-                        if (model.getString(SafeToolsInfor.PINYIN).contains(keyWord) || StringUtils.nullTo(model.getString(SafeToolsInfor.NUM),"").contains(keyWord)) {
+                        if (model.getString(SafeToolsInfor.PINYIN).contains(keyWord) || StringUtilsExt.nullTo(model.getString(SafeToolsInfor.NUM),"").contains(keyWord)) {
                             temp.add(model);
                         }
                     }

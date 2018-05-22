@@ -9,12 +9,12 @@ import com.cnksi.bdzinspection.adapter.SpaceSortAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.DbManager;
@@ -69,7 +69,7 @@ public class SpaceSortActivity extends TitleActivity {
         functionMode = getIntent().getStringExtra(Config.CURRENT_FUNCTION_MODEL);
         String sort = "one".equals(functionMode) ? Spacing.SORT_ONE
                 : "second".equals(functionMode) ? Spacing.SORT_SECOND : Spacing.SORT;
-        currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
+        currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         // TODO: 2017/3/22
         try {
             Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.DLT, "=", 0).and(Spacing.BDZID, "=", currentBdzId).
@@ -94,14 +94,14 @@ public class SpaceSortActivity extends TitleActivity {
                             runOnUiThread(() -> {
                                 CustomerDialog.dismissProgress();
                                 if (rs) {
-                                    CToast.showShort(currentActivity, "恢复间隔操作成功");
+                                    ToastUtils.showMessage( "恢复间隔操作成功");
                                     Integer count = deviceCountMap.get(data.pid);
                                     count = count + deviceCountMap.get(data.spid);
                                     deviceCountMap.put(data.pid, count);
                                     mData.remove(data);
                                     spaceAdapter.notifyDataSetChanged();
                                 } else {
-                                    CToast.showShort(currentActivity, "更新数据库失败，请检查数据库！");
+                                    ToastUtils.showMessage( "更新数据库失败，请检查数据库！");
                                 }
                             });
                         });
@@ -175,7 +175,7 @@ public class SpaceSortActivity extends TitleActivity {
         }
         try {
             XunshiApplication.getDbUtils().update(mData, updateColumnNames);
-            PreferencesUtils.put(this, "RELOAD_DATA", true);
+            PreferencesUtils.put( "RELOAD_DATA", true);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -1,7 +1,7 @@
 package com.cnksi.nari.model;
 
 
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.nari.type.PackageStatus;
 
 import org.xutils.db.annotation.Column;

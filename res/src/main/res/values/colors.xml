@@ -132,5 +132,169 @@
     <color name="sync_orange">#F87F5C</color>
 
 
+    <color name="xs_dark_text">#000000</color>
+    <color name="xs_white_text">#FFFFFF</color>
+    <color name="xs_white">#FFFFFF</color>
+    <!-- 缺陷颜色定义 一般（level_one） 严重（level_two） 危机 (level_three) -->
+    <color name="xs_level_one">#ce0202</color>
+    <color name="xs_level_two">#9b0000</color>
+    <color name="xs_level_three">#680000</color>
+    <color name="xs_yw_grass_color">#03A790</color>
+    <!-- 巡视类型颜色定义 全面巡检（type_color_full） 日常巡视 (type_color_day)  特殊巡视 (type_color_special)  蓄电池测试（type_color_battery） -->
+    <!-- old_type_color -->
+    <!--
+    <color name="type_color_full">#f0b55b</color>
+    <color name="type_color_day">#75b9e6</color>
 
+
+    -->
+    <color name="xs_type_color_special">#b2d35d</color>
+    <color name="xs_type_color_battery">#63d1c3</color>
+    <color name="xs_gray_stroke_color">#d4d4d4</color>
+
+    <!-- new_type_color -->
+    <!-- 颜色一：变电站巡视（全面、日常、夜巡） -->
+    <color name="xs_type_color_day">#75b9e6</color>
+    <!-- 颜色二：定期维护 -->
+    <color name="xs_type_color_regular_maintain">#f0b55b</color>
+    <!-- 颜色三：定期切换、试验 -->
+    <color name="xs_type_color_regular_switch">#71d398</color>
+    <!-- 颜色四：专项巡视 -->
+    <color name="xs_type_color_exclusive">#ff7a7b</color>
+    <!-- 颜色五：其他巡视（特殊、验收、新投） -->
+    <color name="xs_type_color_other">#b2d35d</color>
+    <color name="xs_global_base_color">#03B9A0</color>
+    <color name="xs_delete_menu_pressed_color">#E63B38</color>
+    <color name="xs_delete_menu_unpressed_color">#EB625F</color>
+    <color name="xs_device_information_background_color">#C0EDF1F1</color>
+    <color name="xs_gray_background_color">#DDE9E7</color>
+    <color name="xs_gray_background_pressed_color">#97B3AD</color>
+    <color name="xs_login_person_text_color">#667F7C</color>
+    <color name="xs_main_circle_menu_unpressed_color">#81D8C6</color>
+    <color name="xs_main_circle_menu_pressed_color">#39B99F</color>
+    <color name="xs_comprehensive_inspection_color">#F0B55B</color>
+    <color name="xs_battery_inspection_color">#F0B55B</color>
+    <color name="xs_routine_inspection_color">#75B9E6</color>
+
+    <!-- MainMenuActivity -->
+    <color name="xs_main_background_color">#efefef</color>
+    <color name="xs_main_bottom_menu_text_color">#5D6261</color>
+
+    <!-- InspectionTaskRemindActivity -->
+    <color name="xs_line_color">#D3DFDE</color>
+    <color name="xs_global_gray_text_color">#B1B1B1</color>
+    <color name="xs_gray_task_item_background_color">#A0EFEFEF</color>
+    <color name="xs_red_pressed_color">#D2312D</color>
+    <color name="xs_red_unpressed_color">#D9534F</color>
+    <color name="xs_red_unenabled_color">#F9E0DF</color>
+    <color name="xs_blue_unpressed_color">#6AB84B</color>
+    <color name="xs_blue_pressed_color">#008040</color>
+    <!-- DeviceActivity -->
+    <color name="xs_red_color">#D9534F</color>
+    <color name="xs_red">#FF0000</color>
+    <color name="xs_light_red_color_1">#E3807D</color>
+    <color name="xs_orange_color">#F18815</color>
+    <color name="xs_orange_pressed_color">#DB790D</color>
+    <color name="xs_light_orange_color">#F4A54D</color>
+    <color name="xs_yellow_color">#F1B55B</color>
+    <color name="xs_light_yellow_color">#F4C884</color>
+    <color name="xs_green_color">#03B9A0</color>
+    <color name="xs_green_pressed_color">#2D978A</color>
+    <color name="xs_green_pressed2_color">#026A5A</color>
+    <color name="xs_light_green_color">#65D6C8</color>
+    <color name="xs_grass_green_unpressed_color">#6AB74B</color>
+    <color name="xs_grass_green_pressed_color">#508D38</color>
+    <color name="xs_gray_confirm_color">#d8e1e0</color>
+    <color name="xs_color_fof2f2">#f0f2f2</color>
+
+    <!-- DeviceDetails -->
+    <color name="xs_swipe_menu_record_defect_unpressed_color">#504A4A</color>
+    <color name="xs_swipe_menu_reference_photo_unpressed_color">#474141</color>
+    <color name="xs_swipe_menu_reference_standard_unpressed_color">#393333</color>
+    <color name="xs_swipe_menu_pressed_color">#1D1B1B</color>
+    <color name="xs_report_light_green_background_color">#B3D0CD</color>
+    <color name="xs_exclusive_menu_pressed_color">#7FBAAB</color>
+    <color name="xs_exclusive_menu_unpressed_color">#95C9BC</color>
+    <color name="xs_report_light_green_text_color">#72B0A8</color>
+
+    <!-- DefectControl -->
+    <color name="xs_exist_defect_title_text_color">#AE8762</color>
+    <color name="xs_exist_defect_title_background_color">#E9DFD5</color>
+    <color name="xs_history_defect_item_background_color">#F3EFEB</color>
+    <color name="xs_radio_button_unchecked_color">#677674</color>
+    <!-- WindActivity -->
+    <color name="xs_inspection_standard_title_background_color">#E9DFD5</color>
+    <color name="xs_inspection_standard_title_pressed_background_color">#D8C6B4</color>
+    <color name="xs_inspection_standard_text_color">#AB835C</color>
+    <color name="xs_inspection_standard_list_background_color">#F3EFEB</color>
+    <color name="xs_spread_gray_background_color">#C6D7D2</color>
+    <color name="xs_search_container_background_color">#EFEFEF</color>
+    <color name="xs_new_product_editing_background_color">#03d4b7</color>
+    <color name="xs_clamp_title_background_color">#02AA93</color>
+    <color name="xs_clamp_title_text_color">#57FFE8</color>
+
+    <!-- login -->
+    <color name="xs_app_main_bg_color">#03B9A0</color>
+    <color name="xs_btn_login_bg_color">#D9534F</color>
+    <color name="xs_btn_login_bg_hover_color">#9C2421</color>
+    <color name="xs_sys_copyrights_text_color">#007666</color>
+    <color name="xs_portrait_thum_bg_color">#038674</color>
+    <color name="xs_et_hint_color">#A1B5B2</color>
+    <color name="xs_main_hr_bg_color">#DDE1E4</color>
+    <color name="xs_btn_add_user_bg_color">#4DDAC7</color>
+    <color name="xs_btn_add_user_bg_hover_color">#1D897B</color>
+
+    <!-- keyboard -->
+    <color name="xs_keyboard_border_color">#D1DCDA</color>
+    <color name="xs_keyboard_unpress_color">#E0E9E7</color>
+    <color name="xs_keyboard_press_color">#88AAA3</color>
+    <color name="xs_keyboard_text_color">#98A2A1</color>
+    <color name="xs_keyboard_delete_unpress_bg_color">#FF766C</color>
+    <color name="xs_keyboard_delete_press_bg_color">#FF3F2F</color>
+    <color name="xs_keyboard_words_unpress_bg_color">#F2B83E</color>
+    <color name="xs_keyboard_words_press_bg_color">#E8A20F</color>
+
+    <!-- dialog -->
+    <color name="xs_deep_grey">#7C7C7C</color>
+
+    <!-- KeyBoard -->
+    <color name="xs_keyboard_background_color">#2A2D34</color>
+    <color name="xs_keyboard_key_background_color">#3A3E47</color>
+    <color name="xs_keyboard_key_background_pressed_color">#1C1E22</color>
+    <color name="xs_special_tips_background_color">#EFEFEF</color>
+    <color name="xs_record_audio_backgound_color">#C8262626</color>
+    <color name="xs_operate_audio_color">#F6B52B</color>
+    <color name="xs_operate_audio_pressed_color">#F4A90D</color>
+    <color name="xs_half_translate_color">#a0999999</color>
+
+    <!-- 运维一体化 -->
+    <color name="xs_yw_white_background">#FFFFFF</color>
+    <color name="xs_yw_gqj_gray_text_color">#A1B5B2</color>
+    <color name="xs_yw_gqj_dark_text">#333333</color>
+    <color name="yw_desc_header_text_bg">#DDE9E7</color>
+    <color name="xs_yw_desc_bg">#EFEFEF</color>
+    <color name="xs_yw_video_bg">#50494A4D</color>
+    <color name="xs_color_5dbf19">#5dbf19</color>
+    <!-- 生成巡视报告 -->
+    <color name="xs_gp_white_background">#FFFFFF</color>
+    <color name="xs_gp_gqj_gray_text_color">#A1B5B2</color>
+    <color name="xs_gp_gqj_dark_text">#333333</color>
+    <color name="xs_gp_desc_header_text_bg">#DDE9E7</color>
+    <color name="xs_gp_desc_bg">#EFEFEF</color>
+    <color name="xs_gp_video_bg">#50494A4D</color>
+    <!-- 特殊巡检类型对话框字体颜色 -->
+    <color name="xs_special_type_color">#038977</color>
+    <!-- chartDialog -->
+    <color name="xs_mpchart_asia_color">#97C2B9</color>
+    <color name="xs_mpchart_line_color">#C3D4D2</color>
+    <color name="xs_light_red">#F46A6A</color>
+    <color name="xs_light_red_color">#fd5f54</color>
+    <color name="xs_gray_text_color_new">#c0bab9</color>
+    <color name="xs_light_blue">#05c8b8</color>
+    <color name="xs_light_black">#626262</color>
+    <color name="xs_tab_strip_text_color">#D9534F</color>
+    <color name="xs_tab_strip_background_color">#DDE9E7</color>
+    <color name="xs_spinner_text969f9e">#969f9e</color>
+    <color name="xs__c0bab9_color">#c0bab9</color>
+    <color name="xs__6ab74b_color">#6AB74B</color>
 </resources>

@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.view.NumberSeekBar;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
 
 import java.math.BigDecimal;
 

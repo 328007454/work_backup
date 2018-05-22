@@ -20,23 +20,24 @@ import com.cnksi.bdzinspection.databinding.XsActivitySafetytoolInformationBindin
 import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolStopBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolTestBinding;
 import com.cnksi.bdzinspection.databinding.XsSafetyToolResultItemBinding;
+import com.cnksi.bdzinspection.emnu.ToolStatus;
 import com.cnksi.bdzinspection.model.OperateToolResult;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PersonListUtils;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Department;
 import com.cnksi.common.model.Users;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.common.utils.DateCalcUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.FileUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.common.util.KeyValue;
@@ -123,12 +124,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
     private void initialUI() {
         informationBinding.btnStop.setOnClickListener(this);
         informationBinding.btnTest.setOnClickListener(this);
-        informationBinding.tvInclude.ibtnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentActivity.finish();
-            }
-        });
+        informationBinding.tvInclude.ibtnCancel.setOnClickListener(v -> currentActivity.finish());
         addResutUI();
 
     }
@@ -147,13 +143,13 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         informationBinding.llRecordcontainer.removeAllViews();
         for (OperateToolResult result : resultList) {
             itemBinding = XsSafetyToolResultItemBinding.inflate(getLayoutInflater());
-            String resultValue = Config.ToolStatus.getValue(result.result);
+            String resultValue = ToolStatus.getValue(result.result);
             itemBinding.txtToolQualify.setText(resultValue);
             itemBinding.txtToolQualify.setTextColor(getResources().getColor(R.color.xs__5dbf19_color));
-            itemBinding.txtTestTime.setText(TextUtils.isEmpty(result.operTime) ? "" : DateUtils.getFormatterTime(result.operTime, CoreConfig.dateFormat1));
+            itemBinding.txtTestTime.setText(TextUtils.isEmpty(result.operTime) ? "" : DateUtils.getFormatterTime(result.operTime, DateUtils.yyyy_MM_dd));
             String pics = result.pic;
             if (!TextUtils.isEmpty(pics)) {
-                String[] toolPics = pics.split(CoreConfig.COMMA_SEPARATOR);
+                String[] toolPics = pics.split(Config.COMMA_SEPARATOR);
                 itemBinding.ivReportPhoto.setImageBitmap(BitmapUtil.getImageThumbnail((toolPics == null || toolPics.length == 0) ? "" : Config.BDZ_INSPECTION_FOLDER + toolPics[0], 176, 118));
                 if (toolPics != null && toolPics.length > 1) {
                     itemBinding.txtPicCount.setVisibility(View.VISIBLE);
@@ -168,7 +164,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
                         if (TextUtils.isEmpty(pics)) {
                             return;
                         }
-                        String[] toolPic = pics.split(CoreConfig.COMMA_SEPARATOR);
+                        String[] toolPic = pics.split(Config.COMMA_SEPARATOR);
                         if (null != toolPic && !TextUtils.isEmpty(toolPic[0]) && toolPic.length >= 1) {
                             ArrayList<String> mImageUrlList = new ArrayList<>();
                             for (int i = 0, count = toolPic.length; i < count; i++) {
@@ -206,16 +202,16 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             @Override
             public void onClick(View v) {
                 if (!stopBinding.rbUnqualify.isChecked() && !stopBinding.rbInperiod.isChecked()) {
-                    CToast.showShort(currentActivity, "请选择工器具停用的原因");
+                    ToastUtils.showMessage( "请选择工器具停用的原因");
                     return;
                 }
                 String reason = stopBinding.etInputReason.getText().toString().trim();
                 if (View.VISIBLE == stopBinding.etInputReason.getVisibility() && TextUtils.isEmpty(reason)) {
-                    CToast.showShort(currentActivity, "请填写工器具不合格的原因");
+                    ToastUtils.showMessage( "请填写工器具不合格的原因");
                     return;
                 }
                 if (TextUtils.isEmpty(stopBinding.etInputStopperson.getText().toString())) {
-                    CToast.showShort(currentActivity, "请输入操作人员姓名");
+                    ToastUtils.showMessage( "请输入操作人员姓名");
                     return;
                 }
                 stopDialog.dismiss();
@@ -239,14 +235,14 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
             stopBinding.etInputReason.setVisibility(View.GONE);
             if (checkedId == R.id.rb_inperiod) {
-                stopStatus = Config.ToolStatus.inTest.name();
+                stopStatus = ToolStatus.inTest.name();
                 stopBinding.txtTips.setVisibility(View.GONE);
 
             } else if (checkedId == R.id.rb_overdate) {
                 stopStatus = "overdate";
 
             } else if (checkedId == R.id.rb_unqualify) {
-                stopStatus = Config.ToolStatus.stop.name();
+                stopStatus = ToolStatus.stop.name();
                 stopBinding.etInputReason.setVisibility(View.VISIBLE);
                 stopBinding.txtTips.setVisibility(View.VISIBLE);
 
@@ -275,7 +271,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             @Override
             public void onClick(View v) {
                 if (!testBinding.rbNormal.isChecked() && !testBinding.rbUnnormal.isChecked()) {
-                    CToast.showShort(currentActivity, "请选择试验结果");
+                    ToastUtils.showMessage( "请选择试验结果");
                     return;
                 }
                 testDialog.dismiss();
@@ -289,8 +285,8 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
                     @Override
                     public void confirm(String result, int position) {
                         String productTime = dbModel.getString("produce_time");
-                        if (!TextUtils.isEmpty(productTime) && !DateUtils.compareDate(result, productTime, CoreConfig.dateFormat1)) {
-                            CToast.showShort(currentActivity, "试验时间必须大于出厂时间");
+                        if (!TextUtils.isEmpty(productTime) && !DateUtils.compareDate(result, productTime, DateUtils.yyyy_MM_dd)) {
+                            ToastUtils.showMessage( "试验时间必须大于出厂时间");
                             return;
                         }
                         testBinding.txtTestTime.setText(result);
@@ -354,10 +350,10 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             public void run() {
                 Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
                 if (null == currentBitmap) {
-                    CToast.showShort(currentActivity, "很抱歉，因意外需要您再次拍照。");
+                    ToastUtils.showMessage( "很抱歉，因意外需要您再次拍照。");
                     return;
                 }
-                currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(CoreConfig.dateFormat2), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
+                currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
                 BitmapUtil.saveBitmap(currentBitmap, Config.BDZ_INSPECTION_FOLDER + currentImageName, 60);
                 reportPicList.add(currentImageName);
                 runOnUiThread(new Runnable() {
@@ -382,16 +378,16 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         try {
             OperateToolResult toolResult = null;
             if (stopBinding.rbUnqualify.isChecked()) {//选择不合格
-                toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name(), reason, stopPerson);
-                dbModel.add("status", Config.ToolStatus.stop.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", Config.ToolStatus.stop.name()));
+                toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, ToolStatus.stop.name(), ToolStatus.unNormal.name(), reason, stopPerson);
+                dbModel.add("status", ToolStatus.stop.name());
+                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", ToolStatus.stop.name()));
                 informationBinding.btnTest.setVisibility(View.GONE);
                 informationBinding.btnStop.setVisibility(View.GONE);
             } else {
-                toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, Config.ToolStatus.stop.name(), Config.ToolStatus.normal.name(), reason, stopPerson);
-                dbModel.add("status", Config.ToolStatus.inTest.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", Config.ToolStatus.inTest.name()));
-                informationBinding.txtToolStatus.setText(Config.ToolStatus.inTest.value);
+                toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, ToolStatus.stop.name(), ToolStatus.normal.name(), reason, stopPerson);
+                dbModel.add("status", ToolStatus.inTest.name());
+                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", ToolStatus.inTest.name()));
+                informationBinding.txtToolStatus.setText(ToolStatus.inTest.value);
                 informationBinding.btnStop.setVisibility(View.GONE);
                 informationBinding.btnTest.setVisibility(View.VISIBLE);
             }
@@ -416,7 +412,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         String id = dbModel.getString("id");
         String name = dbModel.getString("name");
         String time = testBinding.txtTestTime.getText().toString().trim();
-        String pics = StringUtils.ArrayListToString(reportPicList);
+        String pics = StringUtils.arrayListToString(reportPicList);
         String person = testBinding.etInputPerson.getText().toString().trim();
         OperateToolResult toolResult = null;
         try {
@@ -424,20 +420,20 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             if (dbModel.getString("period").equalsIgnoreCase("0")) {
                 nextTime = null;
             } else {
-                nextTime = DateUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
+                nextTime = DateCalcUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
             }
             if (testBinding.rbNormal.isChecked()) {
-                toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, Config.ToolStatus.normal.name(), pics, person, Config.ToolStatus.test.name());
-                updateToolInfo(Config.ToolStatus.normal.name(), Config.ToolStatus.normal.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status", Config.ToolStatus.normal.name()), new KeyValue("isnormal", Config.ToolStatus.normal.name()),
+                toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, ToolStatus.normal.name(), pics, person, ToolStatus.test.name());
+                updateToolInfo(ToolStatus.normal.name(), ToolStatus.normal.name());
+                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status", ToolStatus.normal.name()), new KeyValue("isnormal", ToolStatus.normal.name()),
                         new KeyValue("lastly_check_time", lastTime), new KeyValue("next_check_time", nextTime));
                 informationBinding.btnStop.setVisibility(View.VISIBLE);
                 informationBinding.btnTest.setVisibility(View.VISIBLE);
 
             } else if (testBinding.rbUnnormal.isChecked()) {
-                toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, Config.ToolStatus.unNormal.name(), pics, person, Config.ToolStatus.test.name());
-                updateToolInfo(Config.ToolStatus.stop.name(), Config.ToolStatus.unNormal.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id), new KeyValue("status", Config.ToolStatus.stop.name()), new KeyValue("isnormal", Config.ToolStatus.unNormal.name()));
+                toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, ToolStatus.unNormal.name(), pics, person, ToolStatus.test.name());
+                updateToolInfo(ToolStatus.stop.name(), ToolStatus.unNormal.name());
+                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id), new KeyValue("status", ToolStatus.stop.name()), new KeyValue("isnormal", ToolStatus.unNormal.name()));
                 informationBinding.btnStop.setVisibility(View.GONE);
                 informationBinding.btnTest.setVisibility(View.GONE);
             }
@@ -505,7 +501,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        String selectPersons = PreferencesUtils.getString(getApplicationContext(), Config.SELECT_PERSONS, "");
+        String selectPersons = PreferencesUtils.get( Config.SELECT_PERSONS, "");
         int i = v.getId();
         if (i == R.id.btn_stop) {
             String name = dbModel.getString("name");
@@ -546,8 +542,8 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             usersList.add(users.username);
         }
         if (!usersList.isEmpty()) {
-            userName = StringUtils.ArrayListToString(usersList);
-            PreferencesUtils.put(getApplicationContext(), Config.SELECT_PERSONS, userName);
+            userName = StringUtils.arrayListToString(usersList);
+            PreferencesUtils.put( Config.SELECT_PERSONS, userName);
         }
         if (stopClick) {
             stopBinding.etInputStopperson.setText(userName);

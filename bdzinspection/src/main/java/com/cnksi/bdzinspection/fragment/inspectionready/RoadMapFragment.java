@@ -12,9 +12,9 @@ import com.cnksi.bdzinspection.adapter.RoadMapAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentRoadmapBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.PreferencesUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.db.Selector;
@@ -102,7 +102,7 @@ public class RoadMapFragment extends BaseFragment {
     public void searchData(int requestCode) {
         String sort = "one".equals(fucntionModel) ? Spacing.SORT_ONE
                 : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
-        currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
+        currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         try {
             Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.DLT, "=", "0").and(Spacing.BDZID, "=", currentBdzId)
                     .expr("and spid in (select distinct(spid) spid from device where device_type = '" + fucntionModel

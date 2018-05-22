@@ -24,16 +24,17 @@ import com.cnksi.bdzinspection.model.InspectionPrepared;
 import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.cnksi.bdzinspection.utils.CommonUtils;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.SqlInfoBuilder;
@@ -127,11 +128,11 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     @Override
     protected void onResume() {
         super.onResume();
-        boolean needReLoad = PreferencesUtils.getBoolean(InspectionReadyActivity.this, "RELOAD_DATA", false) &&
+        boolean needReLoad = PreferencesUtils.get( "RELOAD_DATA", false) &&
                 (currentInspectionTypeName.equalsIgnoreCase("全面巡视")
                         || currentInspectionTypeName.equalsIgnoreCase(InspectionType.routine.toString()));
         if (needReLoad) {
-            PreferencesUtils.put(InspectionReadyActivity.this, "RELOAD_DATA", false);
+            PreferencesUtils.put("RELOAD_DATA", false);
             if (mFragmentList.size() == 5) {
                 ((RoadMapFragment) mFragmentList.get(3)).reLoadData();
             } else {
@@ -152,19 +153,21 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         boolean hasZzht = null == zzht ? false : true;
         hasZzht = hasZzht && ("full".equals(currentInspectionType));
         if (!task.isMember()) {
-            if (hasZzht)
+            if (hasZzht) {
                 titleArray = Arrays.asList(getResources().getStringArray(R.array.XS_InspectionReadyTitleArrayMore));
-            else
+            } else {
                 titleArray = Arrays.asList(getResources().getStringArray(R.array.XS_InspectionReadyTitleArray));
+            }
             // 抄录温湿度
             mTemperatureFragment = new CopyTemperatureFragment();
             mTemperatureFragment.setArguments(args);
             mFragmentList.add(mTemperatureFragment);
         } else {
-            if (hasZzht)
+            if (hasZzht) {
                 titleArray = Arrays.asList(getResources().getStringArray(R.array.XS_InspectionReadyTitleArrayForMembersMore));
-            else
+            } else {
                 titleArray = Arrays.asList(getResources().getStringArray(R.array.XS_InspectionReadyTitleArrayForMembers));
+            }
         }
         // 危险点
         mDangerpointFragment = new DangerContentFragment();
@@ -247,26 +250,30 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                     String temperature = mTemperatureFragment.getCurrentTemperature();
                     String weather = mTemperatureFragment.getCurrentWeater();
                     if (TextUtils.isEmpty(weather) || TextUtils.isEmpty(temperature)) {
-                        CToast.showShort(currentActivity, "请选择天气和填写温度！");
+                        ToastUtils.showMessage( "请选择天气和填写温度！");
                         return;
                     }
                 }
-                if (currentPosition < mFragmentList.size() - 1)
+                if (currentPosition < mFragmentList.size() - 1) {
                     binding.viewPager.setCurrentItem(++currentPosition, true);
-                else {
+                } else {
                     Fragment fragment = mFragmentList.get(currentPosition);
                     if (fragment instanceof MultipleBackFragment && !((MultipleBackFragment) fragment).getCheckAll()) {
-                        CToast.showShort(currentActivity, "请核实完所有的综自后台步骤");
+                        ToastUtils.showMessage( "请核实完所有的综自后台步骤");
                         return;
                     }
                     startInspection();
                 }
             });
-        } else binding.btnRight.setOnClickListener(v -> startInspection());
+        } else {
+            binding.btnRight.setOnClickListener(v -> startInspection());
+        }
     }
 
     private void handleButtonViewChange() {
-        if (!SystemConfig.isMustVerifyInspectionReady()) return;
+        if (!SystemConfig.isMustVerifyInspectionReady()) {
+            return;
+        }
         if (currentPosition == 0) {
             binding.btnLeft.setVisibility(View.GONE);
             binding.btnRight.setText(R.string.xs_sure_and_next);
@@ -307,7 +314,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
 
     private void saveInspectionAlready() {
         mFixedThreadPoolExecutor.execute(() -> {
-            InspectionPrepared prepared = new InspectionPrepared(mReport.reportid, task.taskid, PreferencesUtils.getString(Config.CURRENT_LOGIN_ACCOUNT, ""));
+            InspectionPrepared prepared = new InspectionPrepared(mReport.reportid, task.taskid, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
             try {
                 SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo(XunshiApplication.getDbUtils().getTable(InspectionPrepared.class));
                 XunshiApplication.getDbUtils().execNonQuery(sqlInfo);
@@ -325,7 +332,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     private boolean generateReport() {
         if (task.isMember()) {
             if (mReport == null) {
-                CToast.showLong(currentActivity, "该任务不是由你创建,但没有获取到报告！请尝试重新同步！");
+                ToastUtils.showMessageLong( "该任务不是由你创建,但没有获取到报告！请尝试重新同步！");
                 return false;
             }
             try {
@@ -333,18 +340,18 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, mReport.reportid);
+            PreferencesUtils.put( Config.CURRENT_REPORT_ID, mReport.reportid);
             return true;
         }
         String temperature = mTemperatureFragment.getCurrentTemperature();
         String weather = mTemperatureFragment.getCurrentWeater();
         if (TextUtils.isEmpty(weather) || TextUtils.isEmpty(temperature)) {
-            CToast.showShort(currentActivity, "请选择天气和填写温度！");
+            ToastUtils.showMessage( "请选择天气和填写温度！");
             return false;
         }
         boolean needTips = !CommonUtils.testTemperature(temperature) || (-99.9f > new Float(temperature) || new Float(temperature) > 99.99);
         if (needTips) {
-            CToast.showShort(currentActivity, "温度在-99.9℃到99.99℃");
+            ToastUtils.showMessage( "温度在-99.9℃到99.99℃");
             return false;
         } else {
             temperature = CommonUtils.getTransformTep(temperature);
@@ -354,7 +361,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             mTemperatureFragment.setCurrentTempert(temperature);
         }
         try {
-            String loginPerson = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_USER, "");
+            String loginPerson = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
             if (mReport == null) {
                 mReport = new Report(currentTaskId, currentBdzId, currentBdzName, currentInspectionType, loginPerson,
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);
@@ -367,7 +374,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             }
             mReport.reportSource = Config.REPORT;
             mReport.inspectionValue = currentInspectionTypeName;
-            mReport.departmentId = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_ID, "");
+            mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             mFixedThreadPoolExecutor.execute(() -> {
                 try {
                     saveReportSign();
@@ -376,7 +383,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                     e.printStackTrace();
                 }
             });
-            PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, mReport.reportid);
+            PreferencesUtils.put( Config.CURRENT_REPORT_ID, mReport.reportid);
             if (mToolsFragment != null) {
                 mToolsFragment.save(mReport.reportid);
             }
@@ -389,11 +396,11 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
 
     private void saveReportSign() throws DbException {
         List<ReportSignname> reportSignnames = XunshiApplication.getDbUtils().selector(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid).findAll();
-        String currentAccounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
+        String currentAccounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAccounts);
         if (reportSignnames == null || reportSignnames.isEmpty()) {
             for (DbModel dbModel : defaultUesrs) {
-                ReportSignname reportSignname = new ReportSignname(mReport.reportid, Config.Role.worker.name(), dbModel);
+                ReportSignname reportSignname = new ReportSignname(mReport.reportid, Role.worker.name(), dbModel);
                 XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
             }
         } else {
@@ -405,7 +412,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                 if (accountBuilder.toString().contains(dbModel.getString("account"))) {
                     continue;
                 } else {
-                    ReportSignname reportSignname = new ReportSignname(mReport.reportid, Config.Role.worker.name(), dbModel);
+                    ReportSignname reportSignname = new ReportSignname(mReport.reportid, Role.worker.name(), dbModel);
                     XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
                 }
             }

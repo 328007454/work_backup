@@ -26,11 +26,11 @@ import com.cnksi.bdzinspection.fragment.DeviceSelectFragment;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment.DeviceClickListener;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.common.model.Device;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.ScreenUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -137,7 +137,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
                     selectDeviceList.addAll(spacingDeviceList);
             }
             if (selectDeviceList.isEmpty()) {
-                CToast.showShort(currentActivity, "请选择设备");
+                ToastUtils.showMessage( "请选择设备");
                 return;
             }
             showConfig(selectDeviceList);

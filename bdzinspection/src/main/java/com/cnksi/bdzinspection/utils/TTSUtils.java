@@ -11,7 +11,7 @@ import android.util.Log;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.tts.ISpeakCallback;
 import com.cnksi.tts.ISpeakInterface;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 
 /**
  * @version 1.0

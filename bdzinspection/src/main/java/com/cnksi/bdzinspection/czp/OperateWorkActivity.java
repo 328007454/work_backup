@@ -26,17 +26,16 @@ import com.cnksi.bdzinspection.fragment.CameraVideoFragment;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.bdzinspection.utils.CommonUtils;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
 
 import org.xutils.ex.DbException;
 
@@ -197,7 +196,7 @@ public class OperateWorkActivity extends BaseActivity {
             if (position == currentOperateItemPosition) {
                 showOperateContentTips(item);
             } else if (TextUtils.isEmpty(item.time_start)) {
-                CToast.showShort(currentActivity, "你正在进行越项操作，请注意!");
+                ToastUtils.showMessage( "你正在进行越项操作，请注意!");
                 TTSUtils.getInstance().startSpeaking("你正在进行越项操作，请注意!");
             }
         });
@@ -264,14 +263,14 @@ public class OperateWorkActivity extends BaseActivity {
      */
     private void recordAudio(boolean isStart) {
         if (isRecordingVideo) {
-            CToast.showShort(currentActivity, "请先停止录像再录音~");
+            ToastUtils.showMessage( "请先停止录像再录音~");
             return;
         }
         if (isStart) {
             isRecordingAudio = true;
             mRecordAnimation.start();
             if (!MediaRecorderUtils.getInstance().isRecording()) {
-                audioFileName = DateUtils.getCurrentTime(CoreConfig.dateFormat6) + Config.AMR_POSTFIX;
+                audioFileName = DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm) + Config.AMR_POSTFIX;
                 MediaRecorderUtils.getInstance().startRecordAudio(Config.AUDIO_FOLDER + audioFileName);
                 binding.tvAudioTime.start();
                 binding.tvAudioTime.setBase(SystemClock.elapsedRealtime());
@@ -329,11 +328,11 @@ public class OperateWorkActivity extends BaseActivity {
     private void saveAudio() {
         if (TextUtils.isEmpty(mCurrentOperateTick.voice)) {
             mCurrentOperateTick.voice = audioFileName;
-        } else if (mCurrentOperateTick.voice.endsWith(CoreConfig.COMMA_SEPARATOR)
+        } else if (mCurrentOperateTick.voice.endsWith(Config.COMMA_SEPARATOR)
                 && !mCurrentOperateTick.voice.contains(audioFileName)) {
             mCurrentOperateTick.voice += audioFileName;
         } else if (!mCurrentOperateTick.voice.contains(audioFileName)) {
-            mCurrentOperateTick.voice += (CoreConfig.COMMA_SEPARATOR + audioFileName);
+            mCurrentOperateTick.voice += (Config.COMMA_SEPARATOR + audioFileName);
         }
         try {
             OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.VOICE);
@@ -348,11 +347,11 @@ public class OperateWorkActivity extends BaseActivity {
     private void saveVideo() {
         if (TextUtils.isEmpty(mCurrentOperateTick.video)) {
             mCurrentOperateTick.video = videoFileName;
-        } else if (mCurrentOperateTick.video.endsWith(CoreConfig.COMMA_SEPARATOR)
+        } else if (mCurrentOperateTick.video.endsWith(Config.COMMA_SEPARATOR)
                 && !mCurrentOperateTick.video.contains(videoFileName)) {
             mCurrentOperateTick.video += videoFileName;
         } else if (!mCurrentOperateTick.video.contains(videoFileName)) {
-            mCurrentOperateTick.video += (CoreConfig.COMMA_SEPARATOR + videoFileName);
+            mCurrentOperateTick.video += (Config.COMMA_SEPARATOR + videoFileName);
         }
         try {
             OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.VIDEO);

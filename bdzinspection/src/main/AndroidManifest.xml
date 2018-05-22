@@ -16,6 +16,8 @@
         <!--android:name="android.hardware.camera.autofocus"-->
         <!--android:required="true"/>-->
 
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application>
 
@@ -39,20 +41,20 @@
             android:exported="true"/>
         <activity
 
-            android:name="com.cnksi.bdzinspection.activity.maintenance.SafetyToolsRemindActivity"
+            android:name="com.cnksi.bdzinspection.com.cnksi.safetool.activity.SafetyToolsRemindActivity"
             android:exported="true"/>
         <activity
 
-            android:name="com.cnksi.bdzinspection.activity.maintenance.SafetyBdzListActivity"
+            android:name="com.cnksi.bdzinspection.com.cnksi.safetool.activity.SafetyBdzListActivity"
             android:exported="true"/>
         <activity
-            android:name="com.cnksi.bdzinspection.activity.maintenance.SafetyToolsControlActivity"
+            android:name="com.cnksi.bdzinspection.com.cnksi.safetool.activity.SafetyToolsControlActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
 
 
         <activity
-            android:name="com.cnksi.bdzinspection.activity.maintenance.SafeToolsInformationActivity"
+            android:name="com.cnksi.bdzinspection.com.cnksi.safetool.activity.SafeToolsInformationActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity

@@ -12,7 +12,7 @@ import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwDeviceListBinding;
 import com.cnksi.bdzinspection.fragment.YunweiTypeListFragment;
 import com.cnksi.bdzinspection.model.Lookup;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
 
 import java.util.ArrayList;

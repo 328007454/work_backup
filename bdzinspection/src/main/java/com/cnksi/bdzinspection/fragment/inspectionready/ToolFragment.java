@@ -24,7 +24,7 @@ import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
 import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.db.Selector;

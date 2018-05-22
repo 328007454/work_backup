@@ -33,7 +33,7 @@ import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.TreeNode;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
@@ -43,8 +43,8 @@ import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
 import com.zhy.core.AutoLinearLayout;
 import com.zhy.core.utils.AutoUtils;
 
@@ -334,7 +334,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         clickIndex++;
         if (1000 >= diffTime && 3 <= clickIndex) {
             binding.shadom1.setVisibility(View.VISIBLE);
-            CToast.showLong(currentActivity, "不要作弊哟，5秒后继续操作。");
+            ToastUtils.showMessageLong( "不要作弊哟，5秒后继续操作。");
             timer.start();
             return true;
         } else {

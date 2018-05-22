@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.bdzinspection.utils.Config;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;
@@ -178,7 +177,7 @@ public class DefectDefineService{
      */
     public boolean deleteDefectDefine(DefectDefine mDefectDefine) {
         try {
-            mDefectDefine.dlt = Config.DELETED;
+            mDefectDefine.dlt ="1";
             XunshiApplication.getDbUtils().saveOrUpdate(mDefectDefine);
             return true;
         } catch (DbException e) {

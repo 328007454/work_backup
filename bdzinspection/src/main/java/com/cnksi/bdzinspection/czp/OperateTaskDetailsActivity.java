@@ -11,10 +11,10 @@ import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskDetailsBinding;
 import com.cnksi.bdzinspection.model.OperateTick;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.Config.OperateType;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.ex.DbException;
@@ -127,19 +127,19 @@ public class OperateTaskDetailsActivity extends BaseActivity {
         String flTime =  binding.tvFlTime.getText().toString().trim();
         String code =  binding.tvCode.getText().toString().trim();
         if (TextUtils.isEmpty(code)) {
-            CToast.showShort(currentActivity, R.string.xs_please_input_code_str);
+            ToastUtils.showMessage( R.string.xs_please_input_code_str);
             return;
         }
         if (TextUtils.isEmpty(flr)) {
-            CToast.showShort(currentActivity, R.string.xs_please_input_flr_str);
+            ToastUtils.showMessage( R.string.xs_please_input_flr_str);
             return;
         }
         if (TextUtils.isEmpty(slr)) {
-            CToast.showShort(currentActivity, R.string.xs_please_input_slr_str);
+            ToastUtils.showMessage( R.string.xs_please_input_slr_str);
             return;
         }
         if (TextUtils.isEmpty(flTime)) {
-            CToast.showShort(currentActivity, R.string.xs_please_select_fl_time_str);
+            ToastUtils.showMessage( R.string.xs_please_select_fl_time_str);
             return;
         }
         // 选择的操作类型

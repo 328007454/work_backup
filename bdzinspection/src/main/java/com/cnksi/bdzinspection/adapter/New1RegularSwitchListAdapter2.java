@@ -18,16 +18,16 @@ import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.SwitchItemChild1;
 import com.cnksi.bdzinspection.databinding.SwitchItemChild2;
 import com.cnksi.bdzinspection.databinding.SwitchItemParentBinding;
-import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.common.model.SwitchPic;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.SwitchPic;
+import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -93,9 +93,11 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
     @Override
     public int getChildType(int groupPosition, int childPosition) {
         DbModel model = getChild(groupPosition, childPosition);
-        if (model.getInt(StandardSwitchover.LEVEL) == 2)
+        if (model.getInt(StandardSwitchover.LEVEL) == 2) {
             return CHILD1;
-        else return CHILD2;
+        } else {
+            return CHILD2;
+        }
     }
 
 
@@ -151,7 +153,7 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
 
                 if (!TextUtils.isEmpty(pics)) {
                     itemBind1.rlPicContainer.setVisibility(View.VISIBLE);
-                    String[] picsArray = pics.split(CoreConfig.COMMA_SEPARATOR);
+                    String[] picsArray = pics.split(Config.COMMA_SEPARATOR);
                     if (picsArray != null && picsArray.length > 1) {
                         itemBind1.tvImgCount.setVisibility(View.VISIBLE);
                         itemBind1.tvImgCount.setText(String.valueOf(picsArray.length));
@@ -280,6 +282,7 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
                 });
                 setAnimationEditexts(mapEdittexts);
                 return itemBind2.getRoot();
+            default:
         }
         return null;
     }
@@ -346,8 +349,9 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
         for (int i = 0; i < getGroupCount(); i++) {
             for (int j = 0; j < getChildrenCount(i); j++) {
                 DbModel model = getChild(i, j);
-                if (SystemConfig.EVERY_STEP.equalsIgnoreCase(SystemConfig.getSwitchMenuConfirmStyle()))
+                if (SystemConfig.EVERY_STEP.equalsIgnoreCase(SystemConfig.getSwitchMenuConfirmStyle())) {
                     level = "3";
+                }
                 if (level.equals(model.getString(StandardSwitchover.LEVEL)) && TextUtils.isEmpty(model.getString(StandardStepConfirm.CONFIRMDATE))) {
                     nextCheckPosition = i << 16 | j;
                     clickListener.onTaskStateChange(false);
@@ -399,9 +403,9 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (StringUtils.hasEmoji(s.toString())) {
+            if (StringUtilsExt.hasEmoji(s.toString())) {
                 mEditText.setText(TextUtils.isEmpty(beforeText) ? "" : beforeText);
-                CToast.showShort(mContext, "请不要输入表情符号");
+                ToastUtils.showMessage( "请不要输入表情符号");
                 return;
             }
             DbModel mDbmodel = getChild(groupPosition, childPosition);

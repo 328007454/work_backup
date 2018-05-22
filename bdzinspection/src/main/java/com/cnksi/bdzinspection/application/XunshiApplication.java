@@ -4,12 +4,11 @@ import android.app.Application;
 import android.content.Context;
 
 import com.cnksi.bdzinspection.inter.XunshiDatabaseProvider;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.nari.utils.NariDataManager;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
 
 import org.xutils.DbManager;
 
@@ -31,12 +30,12 @@ public class XunshiApplication {
         }
         XunshiApplication.xunshiDatabaseProvider = databaseProvider;
 
-        Config.COPY_MAX_DISTANCE = PreferencesUtils.getFloat(mInstance, Config.COPY_DISTANCE_KEY, Config.COPY_MAX_DISTANCE);
+        Config.COPY_MAX_DISTANCE = PreferencesUtils.get(Config.COPY_DISTANCE_KEY, Config.COPY_MAX_DISTANCE);
         NariDataManager.init(Config.NARI_BASEFOLDER);
         PreferencesUtils.init(context);
         DisplayUtil.getInstance().init(context);
         TTSUtils.init(context);
-        CToast.init(context);
+
     }
 
 

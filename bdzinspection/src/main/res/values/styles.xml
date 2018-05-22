@@ -371,9 +371,6 @@
     </style>
 
 
-    <style name="TabLayoutTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-        <item name="android:textSize">@dimen/xs_tab_text_size_px</item>
-    </style>
     <style name="TabLayoutTextStyle1" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">@dimen/xs__42px</item>
     </style>

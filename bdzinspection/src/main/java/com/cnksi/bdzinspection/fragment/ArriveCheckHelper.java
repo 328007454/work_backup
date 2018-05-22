@@ -15,12 +15,12 @@ import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.common.ExecutorManager;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.PreferencesUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -63,7 +63,7 @@ public class ArriveCheckHelper {
         deviceAdapter = adapter;
         currentFunctionModel = mode;
         this.bdzId = bdzId;
-        DISTANCE = PreferencesUtils.getFloat(currentActivity, Config.COPY_DISTANCE_KEY, 100f);
+        DISTANCE = PreferencesUtils.get( Config.COPY_DISTANCE_KEY, 100f);
         if (SystemConfig.isDevicePlaced()) {
             ExecutorManager.executeTask(() -> {
                 List<PlacedDevice> result = PlacedService.getInstance().findPlacedDevice(currentReportId);

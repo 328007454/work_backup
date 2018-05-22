@@ -30,8 +30,8 @@ import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.xscore.xsutils.GPSUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.GPSUtils;
+import com.cnksi.core.utils.PreferencesUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
@@ -321,7 +321,7 @@ public class CopyHelper {
             LatLng location = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             LatLng deviceLocation = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
             // 在范围内不显示遮挡
-            if (DistanceUtil.isInCirle(location, deviceLocation, PreferencesUtils.getFloat(activity, Config.COPY_DISTANCE_KEY, 100f))) {
+            if (DistanceUtil.isInCirle(location, deviceLocation, PreferencesUtils.get( Config.COPY_DISTANCE_KEY, 100f))) {
                 shadomTip.setVisibility(View.GONE);
                 if (SystemConfig.isDevicePlaced()) {
                     if (placedDevice == null) {

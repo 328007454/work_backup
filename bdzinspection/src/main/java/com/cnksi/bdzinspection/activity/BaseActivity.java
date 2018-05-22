@@ -19,8 +19,6 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -38,23 +36,20 @@ import android.widget.Toast;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.bdzinspection.view.RadiusSpan;
+import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
-import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.activity.BaseCoreActivity;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.xscore.xscommon.ScreenManager;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 import com.cnksi.xscore.xsview.PagerSlidingTabStrip;
 import com.zhy.core.AutoFrameLayout;
@@ -211,12 +206,12 @@ public class BaseActivity extends BaseCoreActivity {
         Intent intent = getIntent();
         if (null != intent) {
             // 获取从数据检测传过来的登陆用户
-            String userName = intent.getStringExtra(com.cnksi.bdzinspection.utils.Config.CURRENT_LOGIN_USER);
-            String userAccount = intent.getStringExtra(com.cnksi.bdzinspection.utils.Config.CURRENT_LOGIN_ACCOUNT);
+            String userName = intent.getStringExtra(Config.CURRENT_LOGIN_USER);
+            String userAccount = intent.getStringExtra(Config.CURRENT_LOGIN_ACCOUNT);
             String bdzId = intent.getStringExtra(Config.LASTTIEM_CHOOSE_BDZNAME);
-            PreferencesUtils.put(currentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, bdzId);
-            PreferencesUtils.put(currentActivity, com.cnksi.bdzinspection.utils.Config.CURRENT_LOGIN_USER, userName);
-            PreferencesUtils.put(currentActivity, com.cnksi.bdzinspection.utils.Config.CURRENT_LOGIN_ACCOUNT,
+            PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, bdzId);
+            PreferencesUtils.put( Config.CURRENT_LOGIN_USER, userName);
+            PreferencesUtils.put( Config.CURRENT_LOGIN_ACCOUNT,
                     userAccount);
         }
     }
@@ -263,7 +258,9 @@ public class BaseActivity extends BaseCoreActivity {
             view = new AutoRelativeLayout(context, attrs);
         }
 
-        if (view != null) return view;
+        if (view != null) {
+            return view;
+        }
 
         return super.onCreateView(name, context, attrs);
     }
@@ -284,14 +281,14 @@ public class BaseActivity extends BaseCoreActivity {
         // 是否是从巡检任务提醒界面跳转过去的
         isFromTaskRemind = getIntent().getBooleanExtra(Config.IS_FROM_TASK_REMIND, false);
 
-        currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
-        currentBdzName = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_NAME, "");
-        currentInspectionType = PreferencesUtils.getString(currentActivity, Config.CURRENT_INSPECTION_TYPE, "");
-        currentInspectionTypeName = PreferencesUtils.getString(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME,
+        currentBdzId = PreferencesUtils.get( Config.CURRENT_BDZ_ID, "");
+        currentBdzName = PreferencesUtils.get( Config.CURRENT_BDZ_NAME, "");
+        currentInspectionType = PreferencesUtils.get( Config.CURRENT_INSPECTION_TYPE, "");
+        currentInspectionTypeName = PreferencesUtils.get( Config.CURRENT_INSPECTION_TYPE_NAME,
                 "");
-        currentTaskId = PreferencesUtils.getString(currentActivity, Config.CURRENT_TASK_ID, "");
-        currentReportId = PreferencesUtils.getString(currentActivity, Config.CURRENT_REPORT_ID, "");
-        currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
+        currentTaskId = PreferencesUtils.get( Config.CURRENT_TASK_ID, "");
+        currentReportId = PreferencesUtils.get( Config.CURRENT_REPORT_ID, "");
+        currentAcounts = PreferencesUtils.get( Config.CURRENT_LOGIN_ACCOUNT, "");
     }
 
     /**
@@ -625,7 +622,7 @@ public class BaseActivity extends BaseCoreActivity {
     public void setWindowOverLayPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (!Settings.canDrawOverlays(getApplicationContext())) {
-                CToast.showShort(getApplicationContext(), "没有悬浮窗权限");
+                ToastUtils.showMessage( "没有悬浮窗权限");
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                 intent.setData(uri);
@@ -644,7 +641,7 @@ public class BaseActivity extends BaseCoreActivity {
         if (two != null) {
             return two;
         } else {
-            String[] account = PreferencesUtils.getString(this, Users.ACCOUNT, "").split(CoreConfig.COMMA_SEPARATOR);
+            String[] account = PreferencesUtils.get(Users.ACCOUNT, "").split(Config.COMMA_SEPARATOR);
             for (int i = 0; i < account.length; i++) {
                 Users _t = null;
                 if (!TextUtils.isEmpty(account[i])) {

@@ -25,7 +25,7 @@ import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TreeNode;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
 import com.cnksi.bdzinspection.utils.DefectUtils;
@@ -35,9 +35,9 @@ import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.common.model.Device;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.GPSUtils;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.utils.GPSUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -120,12 +120,12 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         if (Device.isOnceDevice(device)) {
             // 设备没定位直接抄录
             if (!Device.hasGPSInfo(device)) {
-                CToast.showShort(currentActivity, "设备没有定位");
+                ToastUtils.showMessage( "设备没有定位");
             } else {
                 if (GPSUtils.isOPen(currentActivity)) {
                     locationHelper.start();
                 } else {
-                    CToast.showShort(currentActivity, "请开启GPS定位");
+                    ToastUtils.showMessage( "请开启GPS定位");
                 }
             }
         }

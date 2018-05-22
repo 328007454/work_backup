@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baoyz.widget.PullRefreshLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
@@ -27,19 +26,25 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.PermissionUtil;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.XZip;
+import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
+import com.cnksi.core.utils.CLog;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.FileUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.nari.model.BDPackage;
 import com.cnksi.nari.model.XSJH;
 import com.cnksi.nari.type.PackageStatus;
@@ -50,13 +55,6 @@ import com.cnksi.nari.utils.LogUtil;
 import com.cnksi.nari.utils.NariDataManager;
 import com.cnksi.nari.utils.PMSException;
 import com.cnksi.nari.utils.ResultSet;
-import com.cnksi.xscore.xsutils.CLog;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.FileUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.common.util.KeyValue;
@@ -121,39 +119,25 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_nari);
-        account = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "").split(",")[0];
-        PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, Config.permissions);
+        account = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "").split(",")[0];
     }
 
 
     public void initialUI() {
-        binding.swipeRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initialData();
-            }
-        });
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> initialData());
         adapter = new ItemAdapter(null);
-        binding.ibtnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        binding.ibtnCancel.setOnClickListener(v -> finish());
         binding.listZyb.setAdapter(adapter);
-        binding.btnVpn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent();
-                    ComponentName componentName = new ComponentName("com.sgcc.vpn_client", "com.sgcc.vpn_client.MainActivity");
-                    intent.setComponent(componentName);
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    CToast.showShort(currentActivity, "没有安装VPN客户端。");
-                }
-
+        binding.btnVpn.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent();
+                ComponentName componentName = new ComponentName("com.sgcc.vpn_client", "com.sgcc.vpn_client.MainActivity");
+                intent.setComponent(componentName);
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                ToastUtils.showMessage( "没有安装VPN客户端。");
             }
+
         });
         binding.btnDownAll.setOnClickListener(v -> {
             final BDPackage[] nodowns = adapter.getStatus(PackageStatus.nodown);
@@ -210,7 +194,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     public void initData(final boolean isRefreshStatus) {
         if (!isInit) {
-            CToast.showShort(currentActivity, "初始化失败。请确认是正常操作流程!");
+            ToastUtils.showMessage( "初始化失败。请确认是正常操作流程!");
             return;
         }
         mFixedThreadPoolExecutor.execute(() -> {
@@ -287,7 +271,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         try {
             NARIHelper.init(currentActivity, users.account, AESUtil.decode(users.pwd), Config.NARI_BASEFOLDER);
         } catch (Exception e) {
-            CToast.showShort(currentActivity, "密码解密失败！");
+            ToastUtils.showMessage( "密码解密失败！");
             e.printStackTrace();
             return;
         }
@@ -477,7 +461,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             startActivity(intent);
             return;
         } else {
-            CToast.showShort(currentActivity, "数据异常，该离线作业包还未绑定任务！");
+            ToastUtils.showMessage( "数据异常，该离线作业包还未绑定任务！");
         }
     }
 
@@ -507,7 +491,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                     Toast("没有查询到巡视计划的变电站！");
                     return false;
                 }
-                t = new Task(tid, bdz.bdzid, bdz.name, xsType.name(), xsType.zhName, xsjh.JHSJ, Config.TaskStatus.undo.name(), account);
+                t = new Task(tid, bdz.bdzid, bdz.name, xsType.name(), xsType.zhName, xsjh.JHSJ, TaskStatus.undo.name(), account);
                 t.pmsJhSource = "pms_app";
                 t.pmsJhid = xsjh.OBJ_ID;
             } catch (DbException e) {
@@ -607,7 +591,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             } else {
                 holder.getView(R.id.layout_start).setVisibility(View.VISIBLE);
 
-                holder.setText(R.id.tv_date_start, TextUtils.isEmpty(item.startTime) ? "" : DateUtils.formatDateTime(item.startTime, CoreConfig.dateFormat2));
+                holder.setText(R.id.tv_date_start, TextUtils.isEmpty(item.startTime) ? "" : DateUtils.getFormatterTime(item.startTime, DateUtils.yyyy_MM_dd_HH_mm_ss));
             }
 
             holder.setText(R.id.tv_date, TextUtils.isEmpty(item.createTime) ? "" : item.createTime);
@@ -626,7 +610,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                             deltePacage(item, 1, dialog);
                         }
                     } else {
-                        CToast.showShort(currentActivity, "请选择需要删除的范围");
+                        ToastUtils.showMessage( "请选择需要删除的范围");
                     }
 
                 });
@@ -702,7 +686,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 delResult = "任务删除失败,请检查网络，稍后重试。";
             }
             runOnUiThread(() -> {
-                CToast.showShort(currentActivity, delResult);
+                ToastUtils.showMessage( delResult);
                 dialog.dismiss();
                 List<BDPackage> packages = (List<BDPackage>) adapter.getData();
                 packages.remove(item);

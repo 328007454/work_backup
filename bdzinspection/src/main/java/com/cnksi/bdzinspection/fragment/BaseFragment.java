@@ -15,11 +15,11 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.activity.ImageDetailsActivity;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
+import com.cnksi.common.Config;
+import  com.cnksi.common.enmu.InspectionType;
 import com.cnksi.core.fragment.BaseCoreFragment;
-import com.cnksi.xscore.xsutils.CLog;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.CLog;
+import com.cnksi.core.utils.PreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -194,13 +194,13 @@ public abstract class BaseFragment extends BaseCoreFragment {
         currentSpacingId = bundle.getString(Config.CURRENT_SPACING_ID);
         currentSpacingName = bundle.getString(Config.CURRENT_SPACING_NAME);
 
-        currentBdzId = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_ID, "");
-        currentBdzName = PreferencesUtils.getString(currentActivity, Config.CURRENT_BDZ_NAME, "");
-        currentInspectionTypeName = PreferencesUtils.getString(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, "");
-        currentInspectionType = PreferencesUtils.getString(currentActivity, Config.CURRENT_INSPECTION_TYPE, "");
-        currentTaskId = PreferencesUtils.getString(currentActivity, Config.CURRENT_TASK_ID, "");
-        currentReportId = PreferencesUtils.getString(currentActivity, Config.CURRENT_REPORT_ID, "");
-        currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
+        currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
+        currentBdzName = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");
+        currentInspectionTypeName = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE_NAME, "");
+        currentInspectionType = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE, "");
+        currentTaskId = PreferencesUtils.get(Config.CURRENT_TASK_ID, "");
+        currentReportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
+        currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
     }
 
     /**

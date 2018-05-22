@@ -11,7 +11,7 @@ import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.XsGroupItemBinding;
 import com.cnksi.bdzinspection.databinding.XsStandardDefectDefineChildItemBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.zhy.core.utils.AutoUtils;
 
 /**

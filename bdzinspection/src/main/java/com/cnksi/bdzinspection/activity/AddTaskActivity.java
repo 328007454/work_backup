@@ -23,24 +23,24 @@ import com.cnksi.bdzinspection.databinding.XsActivityAddinpsectionTypeDialogBind
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.TaskExtend;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.bdzinspection.utils.SelectPersonUtil;
 import com.cnksi.bdzinspection.ywyth.YWDeviceListActivity;
+import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.ScreenUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 import com.cnksi.xscore.xsview.CustomerDialog.DialogItemClickListener;
 
@@ -174,13 +174,13 @@ public class AddTaskActivity extends BaseActivity {
      */
     private void initBdzData() {
         try {
-            String bdzId = PreferencesUtils.getString(currentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, "");
+            String bdzId = PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, "");
             if (!TextUtils.isEmpty(bdzId)) {
                 mCurrentBdz = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.BDZID, "=", bdzId).and(Bdz.DLT, "=", 0).findFirst();
             }
             mBdzList = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.DLT, "=", "0").findAll();
             mHandler.sendEmptyMessage(LOAD_BDZ_DATA);
-            currentAcounts = PreferencesUtils.getString(currentActivity, Config.CURRENT_LOGIN_ACCOUNT, "");
+            currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
             allPersons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts);
             selectPersons = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);
             mHandler.sendEmptyMessage(INIT_PERSONS);
@@ -291,7 +291,7 @@ public class AddTaskActivity extends BaseActivity {
         if (isInspectionTypeDataPrepared) {
             if (childList == null || childList.size() == 0) {
                 if (TextUtils.isEmpty(binding.tvSelectPowerStation.getText().toString())) {
-                    CToast.showShort(currentActivity, "请先选择变电站");
+                    ToastUtils.showMessage( "请先选择变电站");
                     return;
                 }
                 return;
@@ -299,7 +299,7 @@ public class AddTaskActivity extends BaseActivity {
             if (mCurrentBdz != null) {
                 showInspectionTypeDialog();
             } else {
-                CToast.showShort(currentActivity, "请先选择变电站");
+                ToastUtils.showMessage( "请先选择变电站");
             }
         }
     }
@@ -380,7 +380,7 @@ public class AddTaskActivity extends BaseActivity {
                 binding.btnConfirm.setText(R.string.xs_confirm_str);
             }
 
-            PreferencesUtils.put(currentActivity, mLookup.k + "_" + mCurrentBdz.bdzid, mLookup.repSwitchOverId);
+            PreferencesUtils.put( mLookup.k + "_" + mCurrentBdz.bdzid, mLookup.repSwitchOverId);
             if (currentTypeStr.contains(InspectionType.switchover.name()) || currentTypeStr.contains(InspectionType.maintenance.name())) {
                 StringBuilder builder = new StringBuilder();
                 if (switchMaintenances.contains(mLookup)) {
@@ -409,7 +409,7 @@ public class AddTaskActivity extends BaseActivity {
      * 设置设备列表界面
      */
     private void setNewProductDisplay() {
-        if (Config.InspectionType.operation.name().equalsIgnoreCase(mInspectionType.k)) {
+        if (InspectionType.operation.name().equalsIgnoreCase(mInspectionType.k)) {
             binding.btnConfirm.setText(R.string.xs_next_step_str);
         } else {
             binding.btnConfirm.setText(R.string.xs_confirm_str);
@@ -454,25 +454,25 @@ public class AddTaskActivity extends BaseActivity {
      */
     private void saveTask() {
         if (mCurrentBdz == null) {
-            CToast.showShort(currentActivity, R.string.xs_please_select_power_station_str);
+            ToastUtils.showMessage( R.string.xs_please_select_power_station_str);
             return;
         }
         if (mInspectionType == null) {
-            CToast.showShort(currentActivity, R.string.xs_please_select_inspection_type_str);
+            ToastUtils.showMessage( R.string.xs_please_select_inspection_type_str);
             return;
         }
         if (TextUtils.isEmpty(binding.tvSelectInspectionType.getText().toString())) {
-            CToast.showShort(currentActivity, R.string.xs_please_select_inspection_type_str);
+            ToastUtils.showMessage( R.string.xs_please_select_inspection_type_str);
             return;
         }
         String inspectionDate = binding.tvInspectionDate.getText().toString().trim();
         if (TextUtils.isEmpty(inspectionDate)) {
-            CToast.showShort(currentActivity, R.string.xs_please_select_inspection_date_str);
+            ToastUtils.showMessage( R.string.xs_please_select_inspection_date_str);
             return;
         }
 
-        if (!DateUtils.compareDate(inspectionDate, DateUtils.getCurrentShortTime(), CoreConfig.dateFormat1)) {
-            CToast.showShort(currentActivity, R.string.xs_please_select_after_today_date_str);
+        if (!DateUtils.compareDate(inspectionDate, DateUtils.getCurrentShortTime(), DateUtils.yyyy_MM_dd)) {
+            ToastUtils.showMessage( R.string.xs_please_select_after_today_date_str);
             binding.tvInspectionDate.setText("");
             return;
         }
@@ -494,33 +494,33 @@ public class AddTaskActivity extends BaseActivity {
                 membersUser.append(model.getString("account"));
             }
             nameList.add(model.getString("username"));
-            selectNames = StringUtils.ArrayListToString(nameList);
-            PreferencesUtils.put(currentActivity, Config.TASK_SELECT_PERSONS, selectNames);
+            selectNames = StringUtils.arrayListToString(nameList);
+            PreferencesUtils.put( Config.TASK_SELECT_PERSONS, selectNames);
         }
-        PreferencesUtils.put(currentActivity, Config.CURRENT_BDZ_NAME, mCurrentBdz.name);
-        PreferencesUtils.put(currentActivity, Config.CURRENT_BDZ_ID, mCurrentBdz.bdzid);
+        PreferencesUtils.put( Config.CURRENT_BDZ_NAME, mCurrentBdz.name);
+        PreferencesUtils.put( Config.CURRENT_BDZ_ID, mCurrentBdz.bdzid);
         for (Lookup lookup : switchMaintenances) {
             mInspectionType = lookup;
             List<Task> taskList = TaskService.getInstance().getCountSameTask(mInspectionType.k, mCurrentBdz.bdzid, inspectionDate, currentAcounts);
             int todaySameTaskCount = taskList.size();
             if (todaySameTaskCount > 0) {
-                CToast.showShort(currentActivity, "计划列表中已经有" + mInspectionType.v + "任务了，请返回查看哟！");
+                ToastUtils.showMessage( "计划列表中已经有" + mInspectionType.v + "任务了，请返回查看哟！");
                 return;
             }
             mCurrentTask = new Task(MyUUID.id(4), mCurrentBdz.bdzid, mCurrentBdz.name, mInspectionType.k, mInspectionType.v,
-                    DateUtils.getFormatterTime(inspectionDate + " 00:00:00", CoreConfig.dateFormat2),
-                    Config.TaskStatus.undo.name(), creatUser.toString(), membersUser.toString());
+                    DateUtils.getFormatterTime(inspectionDate + " 00:00:00", DateUtils.yyyy_MM_dd_HH_mm_ss),
+                    TaskStatus.undo.name(), creatUser.toString(), membersUser.toString());
             mReport = new Report();
             mReport.persons = selectNames;
             mReport.bdzid = mCurrentBdz.bdzid;
             mReport.bdz = mCurrentBdz.name;
             mReport.reportid = FunctionUtil.getPrimarykey();
             mReport.taskid = mCurrentTask.taskid;
-            PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, mReport.reportid);
-            PreferencesUtils.put(currentActivity, Config.LOO_ID, mInspectionType.loo_id);
-            PreferencesUtils.put(currentActivity, Config.CURRENT_TASK_ID, mCurrentTask.taskid);
-            PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
-            PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
+            PreferencesUtils.put( Config.CURRENT_REPORT_ID, mReport.reportid);
+            PreferencesUtils.put( Config.LOO_ID, mInspectionType.loo_id);
+            PreferencesUtils.put( Config.CURRENT_TASK_ID, mCurrentTask.taskid);
+            PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
+            PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
             boolean xudianchi = mInspectionType.v.contains(Config.XUDIANCHI) && (mInspectionType.v.contains(Config.DIANYA) || mInspectionType.v.contains(Config.NEIZU));
             try {
                 XunshiApplication.getDbUtils().saveOrUpdate(mReport);
@@ -544,7 +544,7 @@ public class AddTaskActivity extends BaseActivity {
                     XunshiApplication.getDbUtils().save(mCurrentTask);
                     setResult(RESULT_OK);
                     this.finish();
-                } else if (Config.InspectionType.operation.name().equalsIgnoreCase(mInspectionType.k)) {
+                } else if (InspectionType.operation.name().equalsIgnoreCase(mInspectionType.k)) {
                     // 运维一体化
                     Intent intent = new Intent(currentActivity, YWDeviceListActivity.class);
                     startActivityForResult(intent, ADD_YUNWEI_TASK_CODE);
@@ -557,7 +557,7 @@ public class AddTaskActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-        PreferencesUtils.put(currentActivity, Config.LASTTIEM_CHOOSE_BDZNAME, mCurrentBdz.bdzid);
+        PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, mCurrentBdz.bdzid);
     }
 
     @Override
@@ -581,12 +581,12 @@ public class AddTaskActivity extends BaseActivity {
                         if (!TextUtils.isEmpty(inspectionTypeId) && !TextUtils.isEmpty(inspectionTypeName)) {
                             mCurrentTask.inspection = inspectionTypeId;
                             mCurrentTask.inspection_name = inspectionTypeName;
-                            mCurrentTask.type = Config.InspectionType.operation.name();
-                            PreferencesUtils.put(currentActivity, Config.CURRENT_TASK_ID, mCurrentTask.taskid);
-                            PreferencesUtils.put(currentActivity, Config.CURRENT_BDZ_NAME, mCurrentBdz.name);
-                            PreferencesUtils.put(currentActivity, Config.CURRENT_BDZ_ID, mCurrentBdz.bdzid);
-                            PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
-                            PreferencesUtils.put(currentActivity, Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
+                            mCurrentTask.type = InspectionType.operation.name();
+                            PreferencesUtils.put( Config.CURRENT_TASK_ID, mCurrentTask.taskid);
+                            PreferencesUtils.put( Config.CURRENT_BDZ_NAME, mCurrentBdz.name);
+                            PreferencesUtils.put( Config.CURRENT_BDZ_ID, mCurrentBdz.bdzid);
+                            PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
+                            PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
                             try {
                                 XunshiApplication.getDbUtils().save(mCurrentTask);
                                 setResult(RESULT_OK);

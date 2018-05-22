@@ -2,12 +2,11 @@ package com.cnksi.bdzinspection.model;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.Device;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -80,7 +79,7 @@ public class PlacedDevice {
         placedDevice.insert_time = placedDevice.create_time;
         placedDevice.update_time = placedDevice.create_time;
         placedDevice.reportid = reportid;
-        placedDevice.person = PreferencesUtils.getString(XunshiApplication.getAppContext(), Config.CURRENT_LOGIN_USER, "");
+        placedDevice.person = PreferencesUtils.get( Config.CURRENT_LOGIN_USER, "");
         return placedDevice;
     }
 
@@ -94,7 +93,7 @@ public class PlacedDevice {
         placedDevice.insert_time = placedDevice.create_time;
         placedDevice.update_time = placedDevice.create_time;
         placedDevice.reportid = reportid;
-        placedDevice.person = PreferencesUtils.getString(XunshiApplication.getAppContext(), Config.CURRENT_LOGIN_USER, "");
+        placedDevice.person = PreferencesUtils.get( Config.CURRENT_LOGIN_USER, "");
         return placedDevice;
     }
 

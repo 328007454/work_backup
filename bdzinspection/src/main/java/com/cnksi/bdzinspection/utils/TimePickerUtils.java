@@ -12,10 +12,9 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.lib.WheelView;
-import com.bigkoo.pickerview.listener.CustomListener;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
+import com.cnksi.common.utils.DateCalcUtils;
+import com.cnksi.core.utils.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -85,9 +84,9 @@ public class TimePickerUtils implements View.OnClickListener {
 
         if (isStartTime) {
             secondTime = TextUtils.isEmpty(secondTime) ? DateUtils.getCurrentLongTime() : secondTime;
-            mDifferenceTime = DateUtils.getTimeDifference(dateString, secondTime);
+            mDifferenceTime = DateCalcUtils.getTimeDifference(dateString, secondTime);
         } else {
-            mDifferenceTime = DateUtils.getTimeDifference(secondTime, dateString);
+            mDifferenceTime = DateCalcUtils.getTimeDifference(secondTime, dateString);
         }
         SpannableString string = new SpannableString("巡视任务总耗时：" + mDifferenceTime);
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#ff000000"));
@@ -108,7 +107,7 @@ public class TimePickerUtils implements View.OnClickListener {
             initCustomTimePicker();
             initWidget = false;
         } else {
-            Calendar selectedDate = DateUtils.getCalendar(time, CoreConfig.dateFormat2);
+            Calendar selectedDate = DateCalcUtils.getCalendar(time, DateUtils.yyyy_MM_dd_HH_mm_ss);
             dateString = getTime(selectedDate.getTime());
             pvCustomTime.setDate(selectedDate);
         }
@@ -120,7 +119,7 @@ public class TimePickerUtils implements View.OnClickListener {
     private void initCustomTimePicker() {
         Calendar selectedDate = null;//系统当前时间
         if (!TextUtils.isEmpty(time)) {
-            selectedDate = DateUtils.getCalendar(time, CoreConfig.dateFormat2);
+            selectedDate = DateCalcUtils.getCalendar(time, DateUtils.yyyy_MM_dd_HH_mm_ss);
         } else {
             selectedDate = Calendar.getInstance();
         }
@@ -170,27 +169,27 @@ public class TimePickerUtils implements View.OnClickListener {
             }
 
         } else if (i == R.id.btn_reback) {
-            Calendar selectedDate = DateUtils.getCalendar(time, CoreConfig.dateFormat2);
+            Calendar selectedDate = DateCalcUtils.getCalendar(time, DateUtils.yyyy_MM_dd_HH_mm_ss);
             pvCustomTime.setDate(selectedDate);
             pvCustomTime.returnData();
 
         } else if (i == R.id.txt_add_hour) {
-            Calendar date = DateUtils.getAfterDay(dateString, 1, CoreConfig.dateFormat2);
+            Calendar date = DateCalcUtils.getAfterDay(dateString, 1, DateUtils.yyyy_MM_dd_HH_mm_ss);
             pvCustomTime.setDate(date);
             pvCustomTime.returnData();
 
         } else if (i == R.id.txt_minus_hour) {
-            Calendar date1 = DateUtils.getAfterDay(dateString, -1, CoreConfig.dateFormat2);
+            Calendar date1 = DateCalcUtils.getAfterDay(dateString, -1, DateUtils.yyyy_MM_dd_HH_mm_ss);
             pvCustomTime.setDate(date1);
             pvCustomTime.returnData();
 
         } else if (i == R.id.txt_minus_minute) {
-            Calendar date2 = DateUtils.getAfterMinute(dateString, -10, CoreConfig.dateFormat2);
+            Calendar date2 = DateCalcUtils.getAfterMinute(dateString, -10, DateUtils.yyyy_MM_dd_HH_mm_ss);
             pvCustomTime.setDate(date2);
             pvCustomTime.returnData();
 
         } else if (i == R.id.txt_add_minute) {
-            Calendar date3 = DateUtils.getAfterMinute(dateString, 10, CoreConfig.dateFormat2);
+            Calendar date3 = DateCalcUtils.getAfterMinute(dateString, 10, DateUtils.yyyy_MM_dd_HH_mm_ss);
             pvCustomTime.setDate(date3);
             pvCustomTime.returnData();
 

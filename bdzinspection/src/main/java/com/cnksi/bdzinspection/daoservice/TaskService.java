@@ -8,7 +8,7 @@ import com.cnksi.common.model.SwitchPic;
 import com.cnksi.common.model.Task;
 import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.Config.TaskStatus;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;

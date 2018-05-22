@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsAudioAdapterBinding;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class AudioAdapter extends SimpleBaseAdapter {
                 MediaRecorderUtils.getInstance().stopPlayAudio();
             } else {
                 MediaRecorderUtils.getInstance().startPlayAudio(path, mp -> {
-                    CToast.showShort(mContext, "播放完毕...");
+                    ToastUtils.showMessage("播放完毕...");
                     MediaRecorderUtils.getInstance().setPlaying(false);
                 });
             }

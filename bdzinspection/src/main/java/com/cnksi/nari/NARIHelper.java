@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.IOUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.nari.model.BDPackage;
 import com.cnksi.nari.type.Regulation;
 import com.cnksi.nari.utils.DecodeUtils;
@@ -100,7 +100,7 @@ public class NARIHelper {
         if (token == null) {
             Log.e("nari", jsonObject.toString());
             String msg = jsonObject.getString("resultmessage");
-            msg = StringUtils.nullTo(msg, "登录失败！");
+            msg = StringUtilsExt.nullTo(msg, "登录失败！");
             throw new PMSException(msg);
         }
         sp.edit().putString(name, token).apply();

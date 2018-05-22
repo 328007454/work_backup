@@ -33,7 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 
 @SuppressWarnings("deprecation")

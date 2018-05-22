@@ -18,10 +18,10 @@ import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskListBinding;
 import com.cnksi.bdzinspection.fragment.OperateTaskListFragment;
 import com.cnksi.bdzinspection.model.OperateTick;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
 import com.cnksi.bdzinspection.utils.Config.OperateTaskType;
-import com.cnksi.xscore.xsutils.CLog;
+import com.cnksi.core.utils.CLog;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;

@@ -16,17 +16,16 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddNewDefectBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.common.Config;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DevicePart;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.DateUtils;
-import com.cnksi.xscore.xsutils.KeyBoardUtils;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -136,7 +135,7 @@ public class AddNewDefectActivity extends BaseActivity {
                 FunctionUtil.takePicture(AddNewDefectActivity.this,
                         currentImageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
             } else {
-                CToast.showShort(currentActivity, "请先填写缺陷内容！");
+                ToastUtils.showMessage( "请先填写缺陷内容！");
             }
         });
         binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
@@ -172,9 +171,9 @@ public class AddNewDefectActivity extends BaseActivity {
      */
     private void saveDefect() {
         String defectContent = binding.etInputDefectContent.getText().toString().trim();
-        String departmentName = PreferencesUtils.getString(currentActivity, Config.CURRENT_DEPARTMENT_NAME, "");
+        String departmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
         if (TextUtils.isEmpty(defectContent)) {
-            CToast.showShort(currentActivity, R.string.xs_please_input_or_select_defect_reason_str);
+            ToastUtils.showMessage( R.string.xs_please_input_or_select_defect_reason_str);
             return;
         }
         String currentDefectLevel = Config.GENERAL_LEVEL_CODE;
@@ -195,7 +194,7 @@ public class AddNewDefectActivity extends BaseActivity {
                 currentDefectLevel, // 缺陷级别
                 defectContent, // 缺陷描述
                 mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DefectDefine.STAID), // 巡视标准id
-                StringUtils.ArrayListToString(mDefectImageList)// pics图片
+                StringUtils.arrayListToString(mDefectImageList)// pics图片
         );
         record.remark = TextUtils.isEmpty(defectContentPre) ? "" : defectContentPre;
         record.discoverer_unit = departmentName;
@@ -218,8 +217,9 @@ public class AddNewDefectActivity extends BaseActivity {
         binding.ivNewDefectPhoto.setImageBitmap(null);
         // 清空图片数量
         binding.tvDefectCount.setVisibility(View.GONE);
-        if (mDefectImageList != null)
+        if (mDefectImageList != null) {
             mDefectImageList.clear();
+        }
         currentImageName = "";
 
         setResult(RESULT_OK);
@@ -257,7 +257,7 @@ public class AddNewDefectActivity extends BaseActivity {
                     Intent intent = new Intent(currentActivity, DrawCircleImageActivity.class);
                     intent.putExtra(Config.CURRENT_IMAGE_NAME, Config.RESULT_PICTURES_FOLDER + currentImageName);
                     intent.putExtra(Config.PICTURE_CONTENT, currentDeviceName + "\n" + binding.etInputDefectContent.getText().toString() + "\n"
-                            + DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8));
+                            + DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm));
                     startActivityForResult(intent, LOAD_DATA);
 
                     break;

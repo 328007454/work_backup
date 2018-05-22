@@ -3,8 +3,9 @@ package com.cnksi.bdzinspection.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.FileUtils;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.FileUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ public class CommonUtils {
      */
     public static String getChangePicPath(String changePics, String defaultPic) {
         String[] changePicArray = TextUtils.isEmpty(changePics) ? new String[]{}
-                : changePics.split(CoreConfig.COMMA_SEPARATOR);
+                : changePics.split(Config.COMMA_SEPARATOR);
         String changePicPath = "";
         if (changePicArray != null && changePicArray.length > 0) {
             if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + changePicArray[0])) {
@@ -53,7 +54,7 @@ public class CommonUtils {
      */
     public static String getDefaultPicPath(String changePics, String defaultPic) {
         String[] changePicArray = TextUtils.isEmpty(changePics) ? new String[]{}
-                : changePics.split(CoreConfig.COMMA_SEPARATOR);
+                : changePics.split(Config.COMMA_SEPARATOR);
         String changePicPath = "";
         if (changePicArray != null && changePicArray.length > 0) {
             if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + changePicArray[0])) {
@@ -80,7 +81,7 @@ public class CommonUtils {
      * @param endTimeStr
      */
     public static String getTimeDifference(String startTimeStr, String endTimeStr) {
-        SimpleDateFormat formatter = new SimpleDateFormat(CoreConfig.dateFormat2, Locale.CHINA);
+        SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyy_MM_dd_HH_mm_ss, Locale.CHINA);
         String differenceTime = "";
         try {
             differenceTime = getTimeDifference(formatter.parse(startTimeStr), formatter.parse(endTimeStr));

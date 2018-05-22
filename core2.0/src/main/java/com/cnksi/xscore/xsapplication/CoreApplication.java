@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.FileUtils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,7 +25,7 @@ public class CoreApplication extends Application {
 
 	protected void initFileSystem(final String[] filePathArray) {
 		// 创建文件夹
-		FileUtils.initFile(filePathArray);
+	//	FileUtils.initFile(filePathArray);
 	}
 
 	public static ExecutorService getFixedThreadPoolExecutor() {

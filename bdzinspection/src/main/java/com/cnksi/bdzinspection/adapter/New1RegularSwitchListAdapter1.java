@@ -17,14 +17,14 @@ import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.SwitchItemChild1;
 import com.cnksi.bdzinspection.databinding.SwitchItemChild2;
 import com.cnksi.bdzinspection.databinding.SwitchItemParentBinding;
-import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.common.model.SwitchPic;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.CoreConfig;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.SwitchPic;
+import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -77,9 +77,11 @@ public class New1RegularSwitchListAdapter1 extends BaseMapListExpandableAdapter<
     @Override
     public int getChildType(int groupPosition, int childPosition) {
         DbModel model = getChild(groupPosition, childPosition);
-        if (model.getInt(StandardSwitchover.LEVEL) == 2)
+        if (model.getInt(StandardSwitchover.LEVEL) == 2) {
             return CHILD1;
-        else return CHILD2;
+        } else {
+            return CHILD2;
+        }
     }
 
     Map<String, List<EditText>> editMap = new HashMap<>();
@@ -107,7 +109,7 @@ public class New1RegularSwitchListAdapter1 extends BaseMapListExpandableAdapter<
 
                 if (!TextUtils.isEmpty(pics)) {
                     itemBind1.rlPicContainer.setVisibility(View.VISIBLE);
-                    String[] picsArray = pics.split(CoreConfig.COMMA_SEPARATOR);
+                    String[] picsArray = pics.split(Config.COMMA_SEPARATOR);
                     if (picsArray != null && picsArray.length > 1) {
                         itemBind1.tvImgCount.setVisibility(View.VISIBLE);
                         itemBind1.tvImgCount.setText(String.valueOf(picsArray.length));
@@ -208,6 +210,7 @@ public class New1RegularSwitchListAdapter1 extends BaseMapListExpandableAdapter<
 
                 }
                 return itemBind2.getRoot();
+            default:
         }
         return null;
     }
@@ -257,10 +260,11 @@ public class New1RegularSwitchListAdapter1 extends BaseMapListExpandableAdapter<
         private EditText mEditText;
         private DbModel model;
         private String beforeText;
+
         public void setEditTextAndDbModel(EditText mEditText, DbModel model) {
             this.mEditText = mEditText;
             this.model = model;
-            this.beforeText =mEditText.getText().toString();
+            this.beforeText = mEditText.getText().toString();
         }
 
         @Override
@@ -275,9 +279,9 @@ public class New1RegularSwitchListAdapter1 extends BaseMapListExpandableAdapter<
 
         @Override
         public void afterTextChanged(Editable s) {
-            if(StringUtils.hasEmoji(s.toString())){
-                mEditText.setText(TextUtils.isEmpty(beforeText)?"":beforeText);
-                CToast.showShort(mContext,"请不要输入表情符号");
+            if (StringUtilsExt.hasEmoji(s.toString())) {
+                mEditText.setText(TextUtils.isEmpty(beforeText) ? "" : beforeText);
+                ToastUtils.showMessage("请不要输入表情符号");
                 return;
             }
             String value = model.getString(DefectRecord.VAL) == null ? "" : model.getString(DefectRecord.VAL);

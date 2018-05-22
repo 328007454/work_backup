@@ -13,9 +13,9 @@ import com.cnksi.bdzinspection.adapter.ImageAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityYwythDescBinding;
 import com.cnksi.bdzinspection.model.PlanProcessStatus;
 import com.cnksi.bdzinspection.model.Process;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.ywyth.adapter.VideoAdapter;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +48,7 @@ public class YWWorkflowDescActivity extends TitleActivity {
 	@Override
 	protected void initialData() {
 		if (bean.picture != null) {
-			imgs = Arrays.asList(bean.picture.split(Config.SPLIT));
+			imgs = Arrays.asList(bean.picture.split(Config.COMMA_SEPARATOR));
 		} else {
 			imgs = new ArrayList<String>();
 		}
@@ -69,13 +69,13 @@ public class YWWorkflowDescActivity extends TitleActivity {
 			}
 		});
 		if (bean.audio != null) {
-			audios = Arrays.asList(bean.audio.split(Config.SPLIT));
+			audios = Arrays.asList(bean.audio.split(Config.COMMA_SEPARATOR));
 		} else {
 			audios = new ArrayList<String>();
 		}
 		binding.audioList.setAdapter(new AudioAdapter(currentActivity, audios));
 		if (bean.video != null) {
-			videos = Arrays.asList(bean.video.split(Config.SPLIT));
+			videos = Arrays.asList(bean.video.split(Config.COMMA_SEPARATOR));
 		} else {
 			videos = new ArrayList<String>();
 		}

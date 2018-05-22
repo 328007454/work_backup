@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.PreferencesUtils;
 
 import org.xutils.db.annotation.Column;
@@ -224,7 +224,7 @@ public class Task extends BaseModel {
     }
 
     public boolean isGroupTask() {
-        return !StringUtils.isEmptys(membersAccount, createAccount);
+        return !StringUtilsExt.isEmptys(membersAccount, createAccount);
     }
 
 

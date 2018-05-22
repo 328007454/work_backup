@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.base.BaseLinearLayoutAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.bdzinspection.adapter.base.BaseLinearLayoutAdapter;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
-import com.cnksi.xscore.xsutils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +51,7 @@ public class ToolsAdapter extends BaseLinearLayoutAdapter<Tool> {
     private String getNum(String s) {
         ReportTool tool = toolMap.get(s);
         if (tool == null) return "";
-        return StringUtils.nullTo(tool.num, "");
+        return StringUtilsExt.nullTo(tool.num, "");
     }
 
     public void setToolMap(HashMap<String, ReportTool> toolMap) {

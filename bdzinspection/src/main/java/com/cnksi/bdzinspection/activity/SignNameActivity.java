@@ -10,8 +10,8 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivitySignNameBinding;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.common.Config;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.xscore.xsview.LinePathView;
 import com.zhy.core.AutoFrameLayout;
@@ -114,7 +114,7 @@ public class SignNameActivity extends BaseActivity {
 
     private void save() {
         if (!mLinePathView.getTouched()) {
-            CToast.showShort(currentActivity, "请签名!");
+            ToastUtils.showMessage( "请签名!");
             return;
         }
         try {

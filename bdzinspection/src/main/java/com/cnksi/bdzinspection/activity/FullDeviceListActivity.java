@@ -27,7 +27,6 @@ import com.cnksi.bdzinspection.fragment.DeviceListFragment;
 import com.cnksi.bdzinspection.inter.DialogInputClickListener;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.bdzinspection.utils.DialogUtil;
 import com.cnksi.bdzinspection.utils.DialogUtils;
@@ -36,13 +35,14 @@ import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShakeListener;
 import com.cnksi.bdzinspection.utils.ShakeListener.OnShakeListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sync.KSyncConfig;
-import com.cnksi.xscore.xsutils.CToast;
-import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
 import org.xutils.db.table.DbModel;
@@ -169,7 +169,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                 List<DbModel> models = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);
                 if (models != null) {
                     for (DbModel model : models) {
-                        if (StringUtils.nullTo(model.getString("type"), "").contains("team_leader")) {
+                        if (StringUtilsExt.nullTo(model.getString("type"), "").contains("team_leader")) {
                             isLeader = true;
                             break;
                         }
@@ -177,8 +177,9 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                 }
                 if (isLeader) {
                     runOnUiThread(() -> {
-                        if (currentPosition < 2)
+                        if (currentPosition < 2) {
                             binding.ibtnSort.setVisibility(View.VISIBLE);
+                        }
                     });
                 }
             } catch (DbException e) {
@@ -237,8 +238,9 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
 
     private void finishInspection() {
         //设备到位模式下 完成之前处理一次间隔到位情况
-        if (SystemConfig.isDevicePlaced())
+        if (SystemConfig.isDevicePlaced()) {
             fragmentList.get(0).handleSpaceArrivedData();
+        }
         long copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
         long totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
 
@@ -285,7 +287,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     @Override
     public void onShake() {
         if (currentPosition != 0) {
-            CToast.showShort(currentActivity, "摇一摇功能只能在一次设备列表使用");
+            ToastUtils.showMessage( "摇一摇功能只能在一次设备列表使用");
         } else {
             if (!shaking) {
                 shaking = true;
@@ -305,7 +307,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                         if (code == SHAKE_CODE) {
                             shaking = false;
                             CustomerDialog.dismissProgress();
-                            CToast.showShort(currentActivity, "摇一摇定位失败！");
+                            ToastUtils.showMessage( "摇一摇定位失败！");
                         }
                     }
                 }).setTimeout(10).start();
@@ -341,9 +343,9 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                     try {
                         Float distance = Float.valueOf(result);
                         Config.COPY_MAX_DISTANCE = distance;
-                        PreferencesUtils.put(currentActivity, Config.COPY_DISTANCE_KEY, distance);
+                        PreferencesUtils.put( Config.COPY_DISTANCE_KEY, distance);
                     } catch (NumberFormatException e) {
-                        CToast.showLong(currentActivity, "请输入数字");
+                        ToastUtils.showMessageLong( "请输入数字");
                         return;
                     }
                 }
@@ -356,18 +358,18 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case SYNC_START:
-                CToast.showShort(currentActivity, "开始上传数据");
+                ToastUtils.showMessage( "开始上传数据");
                 break;
             case SYNC_INFO:
                 break;
             case SYNC_SUCCESS:
                 String messageSuccess = (String) msg.obj;
-                CToast.showShort(currentActivity, messageSuccess);
+                ToastUtils.showMessage( messageSuccess);
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;
             case SYNC_ERROR:
-                CToast.showShort(currentActivity, "请检查网络，在主页手动同步");
+                ToastUtils.showMessage( "请检查网络，在主页手动同步");
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;
@@ -386,8 +388,11 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
             final List<SpacingLastly> saveList = new ArrayList<>();
             for (DeviceListFragment fragment : fragmentList) {
                 SpacingLastly lastly = fragment.getSpaceLastly();
-                if (lastly == null) continue;
-                else saveList.add(lastly);
+                if (lastly == null) {
+                    continue;
+                } else {
+                    saveList.add(lastly);
+                }
             }
             if (saveList.size() > 0) {
                 mFixedThreadPoolExecutor.execute(new Runnable() {

@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
-import com.cnksi.xscore.xsutils.CToast;
+import com.cnksi.core.utils.ToastUtils;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class SwitchMenuAudioAdapter extends BaseQuickAdapter<String, SwitchMenuA
                 MediaRecorderUtils.getInstance().stopPlayAudio();
             } else {
                 MediaRecorderUtils.getInstance().startPlayAudio(path, mp -> {
-                    CToast.showShort(mContext, "播放完毕...");
+                    ToastUtils.showMessage("播放完毕...");
                     MediaRecorderUtils.getInstance().setPlaying(false);
                 });
             }

@@ -17,9 +17,8 @@ import com.cnksi.bdzinspection.adapter.inspectionready.ReadyExistDefectAdapter.O
 import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.databinding.XsFragmentPinnedHeaderListBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsview.PinnedHeaderListView.OnItemClickListener;
 import com.zhy.core.utils.AutoUtils;
 
@@ -179,7 +178,7 @@ public class ReadyExistingDefectFragment extends BaseFragment implements OnAdapt
             if (mDefect != null) {
                 if (!TextUtils.isEmpty(mDefect.pics)) {
                     ArrayList<String> defectImageList = new ArrayList<String>();
-                    String[] defectImageArray = mDefect.pics.split(CoreConfig.COMMA_SEPARATOR);
+                    String[] defectImageArray = mDefect.pics.split(Config.COMMA_SEPARATOR);
                     for (int i = 0, count = defectImageArray.length; i < count; i++) {
                         defectImageList.add(Config.RESULT_PICTURES_FOLDER + defectImageArray[i]);
                     }

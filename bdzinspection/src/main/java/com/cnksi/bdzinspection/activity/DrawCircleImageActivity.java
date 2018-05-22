@@ -7,9 +7,9 @@ import android.os.Message;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityDrawCircleBinding;
-import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.xscore.xsutils.BitmapUtil;
-import com.cnksi.xscore.xsutils.ScreenUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 import com.cnksi.xscore.xsview.CustomerDialog.DialogClickListener;
 import com.cnksi.xscore.xsview.PicturePaintView;
