@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,16 +12,13 @@ import android.widget.TextView;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.holder.RecyclerViewHolder;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.zhy.autolayout.utils.AutoUtils;
-
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;

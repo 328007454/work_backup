@@ -3,7 +3,7 @@ package com.cnksi.sjjc.util;
 import android.text.TextUtils;
 
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 
 import java.util.ArrayList;
 import java.util.List;

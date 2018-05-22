@@ -14,7 +14,7 @@ import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.bean.Device;
@@ -26,12 +26,10 @@ import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
-import com.iflytek.thirdparty.B;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Arrays;

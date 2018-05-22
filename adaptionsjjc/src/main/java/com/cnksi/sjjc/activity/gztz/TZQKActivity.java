@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.bean.Device;

@@ -345,14 +345,6 @@
             android:windowSoftInputMode="adjustPan" />
 
         <!-- 连接数据线后打开数据同步端口 -->
-        <receiver android:name=".receiver.USBBroardCastReceiver">
-            <intent-filter android:priority="2147483647">
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-
-                <data android:scheme="file" />
-            </intent-filter>
-        </receiver>
 
         <activity android:name=".activity.VideoPlayer" />
         <activity android:name="com.cnksi.core.activity.PermissionActivity" />

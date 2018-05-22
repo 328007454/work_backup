@@ -7,7 +7,7 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.crash.AbstractCrashReportHandler;
 import com.cnksi.core.utils.crash.CrashLogUtil;
 import com.cnksi.sjjc.BuildConfig;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.BaseModel;
 import com.cnksi.sjjc.util.FunctionUtil;

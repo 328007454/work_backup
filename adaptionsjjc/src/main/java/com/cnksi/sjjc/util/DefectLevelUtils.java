@@ -3,7 +3,7 @@ package com.cnksi.sjjc.util;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 
 /**

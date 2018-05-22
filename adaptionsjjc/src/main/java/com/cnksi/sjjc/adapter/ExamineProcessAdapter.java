@@ -9,15 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.util.BitmapUtil;
-
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Collection;

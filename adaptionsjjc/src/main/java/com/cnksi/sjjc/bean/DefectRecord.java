@@ -4,8 +4,7 @@ import android.text.TextUtils;
 
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.service.BaseService;
 import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.util.FunctionUtils;

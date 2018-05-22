@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+              buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "String", "SYNC_APP_ID", "\"${SYNC_APP_ID}\""
+            buildConfigField "String", "SYNC_URL", "\"${SYNC_URL}\""
+        }
+        debug {
+            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "SYNC_APP_ID", "\"pms_fj\""
+            buildConfigField "String", "SYNC_URL", "\"http://172.16.101.254:58888\""
+            resValue("string", "PORT_NUMBER", "8081")
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api "com.android.support:appcompat-v7:$appcompat_v7_version"
+    testApi "junit:junit:$junit_version"
+    androidTestApi "com.android.support.test:runner:$runner_version"
+    androidTestApi "com.android.support.test.espresso:espresso-core:$espresso_core_version"
+    api "com.cnksi:core:$ksi_core_version"
+    api "com.cnksi:bdloc:$ksi_bdloc"
+    api project(":tts")
+    api project(":res")
+    debugApi "com.cnksi:debug-db:1.0.5"
+    releaseApi "com.cnksi:debug-db-release:1.0.0"
+    debugApi "com.squareup.leakcanary:leakcanary-android:$leakcanary_android"
+    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_android"
+}

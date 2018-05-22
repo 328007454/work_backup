@@ -1,6 +1,5 @@
 package com.cnksi.sjjc.activity;
 
-import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
@@ -9,13 +8,11 @@ import android.view.View;
 
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.core.view.CustomerDialog.DialogClickListener;
 import com.cnksi.core.view.PicturePaintView;
-import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.R;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.databinding.ActivityDrawCircleBinding;
 
 
@@ -23,7 +20,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * 缺陷照片标记圆圈的界面

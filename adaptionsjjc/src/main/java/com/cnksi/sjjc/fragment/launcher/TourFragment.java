@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
+import com.cnksi.common.Config;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.nari.NariActivity;
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Task;
@@ -105,7 +105,6 @@ public class TourFragment extends BaseCoreFragment {
      * 跳转到对应的任务列表界面
      */
     public void toTaskPlan(String inspectionType) {
-        CustomApplication.closeDbConnection();
         PreferencesUtils.put(Config.KEY_SYNC_URL, Config.SYNC_URL);
         PreferencesUtils.put(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
         Intent intent = new Intent();

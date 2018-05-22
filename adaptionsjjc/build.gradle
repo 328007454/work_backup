@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: "com.android.application"
 apply plugin: "org.sonarqube"
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
@@ -74,10 +74,6 @@ android {
     }
     buildTypes {
         release {
-            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
-            buildConfigField "boolean", "LOG_DEBUG", "false"
-            buildConfigField "String", "SYNC_APP_ID", "\"${SYNC_APP_ID}\""
-            buildConfigField "String", "SYNC_URL", "\"${SYNC_URL}\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
@@ -98,11 +94,6 @@ android {
             }
         }
         debug {
-            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
-            buildConfigField "boolean", "LOG_DEBUG", "true"
-            buildConfigField "String", "SYNC_APP_ID", "\"pms_fj\""
-            buildConfigField "String", "SYNC_URL", "\"http://172.16.101.254:58888\""
-            resValue("string", "PORT_NUMBER", "8081")
             signingConfig signingConfigs.release
         }
     }
@@ -113,7 +104,7 @@ android {
             jniLibs.srcDirs = ['libs']
             java.srcDirs = ['src/main/java']
             aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
-            res.srcDirs = ['src/main/res', 'src/main/res-gztz']
+
             if ("ture" == HAS_WEB_ASSETS)
                 assets.srcDirs = ['src/main/assets', 'src/main/assets-web']
             else assets.srcDirs = ['src/main/assets']
@@ -153,29 +144,25 @@ dependencies {
         compile project(path: ':inspe')
     }
     implementation "com.android.support:cardview-v7:${appcompat_v7_version}"
-    compile project(':tts')
+   
+    compile project(':common')
     compile project(':bdzinspection')
     if (WorkTicketLibrary.toBoolean()) {
         compile project(path: ':workticket')
     }
-    compile 'com.cnksi:bdloc:1.1.7-3'
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    implementation 'com.cnksi:core:1.2.7.3'
-    compile 'com.android.support:multidex:1.0.3'
-    implementation files('libs/commons-codec-1.11.jar')
-    api "com.cnksi:core:$ksi_core_version"
-    debugCompile 'com.cnksi:debug-db:1.0.5'
-    releaseCompile 'com.cnksi:debug-db-release:1.0.0'
-    compile 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
+    compile "com.scwang.smartrefresh:SmartRefreshLayout:$SmartRefreshLayout_version"
+    compile "com.android.support:multidex:$multidex_version"
+    implementation files("libs/commons-codec-1.11.jar")
+    compile "net.zetetic:android-database-sqlcipher:$sqlcipher_version"
+
     configurations.all {
         resolutionStrategy {
             force "com.android.support:support-v4:$support_v4_version"
             force "com.android.support:appcompat-v7:$appcompat_v7_version"
         }
     }
-    implementation 'com.prolificinteractive:material-calendarview:1.4.3'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    implementation "com.android.support:appcompat-v7:$appcompat_v7_version"
+    implementation "com.prolificinteractive:material-calendarview:$material_calendarview"
+   
+
     implementation "com.android.support:design:$design_version"
 }

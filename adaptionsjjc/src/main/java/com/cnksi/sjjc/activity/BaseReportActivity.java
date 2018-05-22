@@ -10,10 +10,8 @@ import android.widget.TextView;
 
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.util.PlaySound;
+import com.cnksi.common.utils.PlaySound;
 import com.zhy.autolayout.utils.AutoUtils;
-
-import org.xutils.x;
 
 /**
  * @author wastrel

@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.TypeAdapter;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static com.cnksi.sjjc.Config.CURRENT_DEPARTMENT_ID;
+import static com.cnksi.common.Config.CURRENT_DEPARTMENT_ID;
 
 /**
  * 每种类型列表
@@ -154,7 +154,7 @@ public class TypeListActivity extends BaseActivity {
                 ComponentName componentName;
                 switch (mInspectionType) {
                     case SBXS:
-                        CustomApplication.closeDbConnection();
+
                         componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
                         //正常巡视
                         if ("正常巡视".equals(s)) {

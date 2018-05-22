@@ -12,11 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
+import com.cnksi.common.Config;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BaseBindingAdapter;
@@ -69,7 +69,6 @@ public class MaintenanceFragment extends BaseCoreFragment {
      * @param typeName
      */
     public void gotoTaskList(String typeName) {
-        CustomApplication.closeDbConnection();
         Intent intent4 = new Intent();
 //        ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
         intent4.setClass(getActivity(), TaskRemindActivity.class);
@@ -172,13 +171,12 @@ public class MaintenanceFragment extends BaseCoreFragment {
         }
 
         private void startTask(Task task) {
-            CustomApplication.closeDbConnection();
             Intent intent = new Intent();
             intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
             intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
             intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
 //            ComponentName componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
-            intent.setClass(getActivity(),TaskRemindActivity.class);
+            intent.setClass(getActivity(), TaskRemindActivity.class);
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE, task.inspection.split("_|-")[0]);
 //            intent.setComponent(componentName);
             intent.putExtra(Config.IS_FROM_SJJC, true);

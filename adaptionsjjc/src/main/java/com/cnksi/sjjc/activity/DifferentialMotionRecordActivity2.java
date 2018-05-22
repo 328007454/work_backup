@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DifferentialMotionRecordAdapter4;
 import com.cnksi.sjjc.bean.CdbhclValue;

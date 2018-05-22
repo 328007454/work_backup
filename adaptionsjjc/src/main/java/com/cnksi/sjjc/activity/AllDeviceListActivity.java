@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
 import com.cnksi.sjjc.bean.Device;

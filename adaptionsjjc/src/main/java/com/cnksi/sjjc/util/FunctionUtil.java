@@ -3,7 +3,7 @@ package com.cnksi.sjjc.util;
 import android.content.Context;
 
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

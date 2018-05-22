@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="false">
+        <shape android:shape="oval">
+
+            <solid android:color="#9D9D9D"/>
+
+            <stroke android:width="@dimen/sync_button_background_stroke_width" android:color="#82D8D0"/>
+
+            <padding android:bottom="1dp" android:left="2dp" android:right="2dp" android:top="1dp"/>
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+
+            <solid android:color="#F7663C"/>
+
+            <stroke android:width="@dimen/sync_button_background_stroke_width" android:color="#82D8D0"/>
+
+            <padding android:bottom="1dp" android:left="2dp" android:right="2dp" android:top="1dp"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+
+            <solid android:color="#F87f5c"/>
+
+            <stroke android:width="@dimen/sync_button_background_stroke_width" android:color="#82D8D0"/>
+
+            <padding android:bottom="1dp" android:left="2dp" android:right="2dp" android:top="1dp"/>
+        </shape>
+    </item>
+
+</selector>

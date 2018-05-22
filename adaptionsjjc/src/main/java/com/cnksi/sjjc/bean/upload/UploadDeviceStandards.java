@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
-import com.cnksi.sjjc.Config;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.bean.BaseModel;
 import com.cnksi.sjjc.enmu.InspectionType;
 

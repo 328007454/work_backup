@@ -6,13 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.sjjc.Config;
-import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.holder.RecyclerHolder;
 import com.cnksi.sjjc.inter.ItemClickListener;
-
-import org.xutils.x;
 
 import java.util.Collection;
 import java.util.List;
