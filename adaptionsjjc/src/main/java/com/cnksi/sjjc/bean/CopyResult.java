@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.bean;
 
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.sjjc.service.CopyResultService;
 import com.cnksi.sjjc.util.CalcUtils;
 

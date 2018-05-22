@@ -19,7 +19,6 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.inter.ItemLongClickListener;
-import com.cnksi.bdzinspection.model.Device;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
 import com.cnksi.bdzinspection.model.SpacingGroup;
@@ -27,8 +26,9 @@ import com.cnksi.bdzinspection.model.tree.DeviceItem;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.bdzinspection.utils.Config;
-import com.cnksi.bdzinspection.utils.SystemConfig;
 import com.cnksi.bdzinspection.view.UnderLineLinearLayout;
+import com.cnksi.common.SystemConfig;
+import com.cnksi.common.model.Device;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.zhy.core.utils.AutoUtils;
 

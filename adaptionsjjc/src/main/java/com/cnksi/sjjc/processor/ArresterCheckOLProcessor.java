@@ -9,7 +9,7 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.ChartDialog;
 import com.cnksi.sjjc.activity.CopyAllValueActivity3;
 import com.cnksi.sjjc.bean.DefectRecord;
-import com.cnksi.sjjc.bean.Device;
+import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.DeviceStandards;
 import com.cnksi.sjjc.bean.Standards;
 import com.cnksi.sjjc.service.CopyItemService;

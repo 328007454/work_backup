@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.daoservice.PlacedService;
-import com.cnksi.bdzinspection.model.Report;
+import com.cnksi.common.model.Report;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.nari.model.BDPackage;

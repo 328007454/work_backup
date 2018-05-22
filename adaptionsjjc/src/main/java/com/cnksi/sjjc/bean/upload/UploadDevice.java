@@ -1,7 +1,7 @@
 package com.cnksi.sjjc.bean.upload;
 
 
-import com.cnksi.sjjc.bean.BaseModel;
+import com.cnksi.common.model.BaseModel;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

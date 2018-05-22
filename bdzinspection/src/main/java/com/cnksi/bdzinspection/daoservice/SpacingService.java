@@ -1,10 +1,10 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.Report;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Spacing;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;

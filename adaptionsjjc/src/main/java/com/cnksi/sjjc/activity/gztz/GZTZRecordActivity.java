@@ -21,7 +21,7 @@ import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSignname;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzRecordBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;

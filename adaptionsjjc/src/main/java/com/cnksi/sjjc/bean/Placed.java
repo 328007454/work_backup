@@ -1,5 +1,7 @@
 package com.cnksi.sjjc.bean;
 
+import com.cnksi.common.model.BaseModel;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -12,7 +14,7 @@ import java.util.UUID;
  * @author luoxy
  */
 @Table(name = "placed")
-public class Placed extends BaseModel{
+public class Placed extends BaseModel {
 
     /**
      * id

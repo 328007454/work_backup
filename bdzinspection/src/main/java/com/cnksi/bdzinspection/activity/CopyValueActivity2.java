@@ -24,7 +24,6 @@ import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.DefectRecord;
-import com.cnksi.bdzinspection.model.Device;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.CopyHelper;
@@ -35,6 +34,7 @@ import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
+import com.cnksi.common.model.Device;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.GPSUtils;
 import com.cnksi.xscore.xsutils.KeyBoardUtils;
@@ -119,21 +119,23 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         // 判断设备是否是一次设备，一次设备开启定位判断距离
         if (Device.isOnceDevice(device)) {
             // 设备没定位直接抄录
-            if (!Device.hasGPSInfo(device))
+            if (!Device.hasGPSInfo(device)) {
                 CToast.showShort(currentActivity, "设备没有定位");
-            else {
-                if (GPSUtils.isOPen(currentActivity))
+            } else {
+                if (GPSUtils.isOPen(currentActivity)) {
                     locationHelper.start();
-                else
+                } else {
                     CToast.showShort(currentActivity, "请开启GPS定位");
+                }
             }
         }
 
     }
 
     private void saveRemarkData(CopyResult result, TextView etInput, CopyItem item) {
-        if (item.type_key.equalsIgnoreCase("youwei"))
+        if (item.type_key.equalsIgnoreCase("youwei")) {
             result.valSpecial = null;
+        }
         if ("Y".equals(item.val)) {
             if ((!TextUtils.isEmpty(etInput.getText().toString()))) {
                 result.val = "-1";
@@ -307,8 +309,9 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         if (DefectUtils.calcCopyBound(item, copyViewUtil.getCopyResultMap().get(item.id), val, mExistDefectList, rs)) {
             tipsBinding.tvDialogContent.setText(rs.get(1));
             transDefectContent = rs.get(0);
-            if (null != defectDialog)
+            if (null != defectDialog) {
                 defectDialog.show();
+            }
 
         } else {
 
@@ -383,8 +386,9 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (null != mKeyBoardUtil && requestCode == BaseActivity.PERMISSION_WINDOW)
+        if (null != mKeyBoardUtil && requestCode == BaseActivity.PERMISSION_WINDOW) {
             mKeyBoardUtil.showKeyboard();
+        }
         if (requestCode == UPDATE_DEVICE_DEFECT_REQUEST_CODE) {
             searchDefect();
         }

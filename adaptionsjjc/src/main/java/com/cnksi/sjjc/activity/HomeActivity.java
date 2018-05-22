@@ -33,10 +33,10 @@ import com.cnksi.sjjc.adapter.HomeSafetyToolAdapter;
 import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
 import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.AppVersion;
-import com.cnksi.sjjc.bean.Bdz;
+import com.cnksi.common.model.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityHomePageBinding;
 import com.cnksi.sjjc.databinding.BdzPopwindowBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
@@ -466,6 +466,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     case switching:
                         taskList = TaskService.getInstance().findWorkTicketTask();
                         break;
+                    default:
                 }
                 final List<Task> temp = taskList;
                 mHandler.post(new Runnable() {

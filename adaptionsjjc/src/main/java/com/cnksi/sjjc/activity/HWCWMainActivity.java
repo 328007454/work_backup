@@ -25,10 +25,10 @@
 //import com.cnksi.sjjc.Config;
 //import com.cnksi.sjjc.R;
 //import com.cnksi.sjjc.adapter.HWCWAdapter;
-//import com.cnksi.sjjc.bean.Device;
+//import com.cnksi.common.model.Device;
 //import com.cnksi.sjjc.bean.Report;
 //import com.cnksi.sjjc.bean.ReportHwcw;
-//import com.cnksi.sjjc.bean.Task;
+//import com.cnksi.common.model.Task;
 //import com.cnksi.sjjc.databinding.HwcwBinding;
 //import com.cnksi.sjjc.enmu.InspectionType;
 //import com.cnksi.sjjc.enmu.PMSDeviceType;

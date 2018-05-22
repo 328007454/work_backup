@@ -34,24 +34,23 @@ import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsHistoryDataDialogBinding;
 import com.cnksi.bdzinspection.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Placed;
-import com.cnksi.bdzinspection.model.Report;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.nari.NariActivity;
 import com.cnksi.xscore.xscommon.ScreenManager;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
-import com.cnksi.nari.NariActivity;
-
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;

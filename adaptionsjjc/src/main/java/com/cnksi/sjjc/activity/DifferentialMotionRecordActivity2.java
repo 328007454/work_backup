@@ -17,7 +17,7 @@ import com.cnksi.sjjc.bean.CdbhclValue;
 import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityDifferentialMotionRecordBinding;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportCdbhclService;

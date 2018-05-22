@@ -6,11 +6,11 @@ import android.text.TextUtils;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.CToast;
 
 import org.xutils.db.table.DbModel;

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.model.Device;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 

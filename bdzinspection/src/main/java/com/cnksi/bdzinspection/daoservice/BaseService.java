@@ -5,9 +5,9 @@ import android.os.Looper;
 
 import com.cnksi.bdzinspection.BuildConfig;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.BaseModel;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.crash.AbstractCrashReportHandler;
 import com.cnksi.core.utils.crash.CrashLogUtil;

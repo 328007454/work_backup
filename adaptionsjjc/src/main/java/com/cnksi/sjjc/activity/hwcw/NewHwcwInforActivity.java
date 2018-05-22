@@ -22,7 +22,7 @@ import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.Report;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
 import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;

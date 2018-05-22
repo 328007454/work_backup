@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.model.zzht;
 
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
+import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
 
 /**
  * Created by kkk on 2018/3/8.

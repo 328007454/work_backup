@@ -20,8 +20,6 @@ import com.cnksi.bdzinspection.databinding.XsActivitySafetytoolInformationBindin
 import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolStopBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolTestBinding;
 import com.cnksi.bdzinspection.databinding.XsSafetyToolResultItemBinding;
-import com.cnksi.bdzinspection.model.Bdz;
-import com.cnksi.bdzinspection.model.Department;
 import com.cnksi.bdzinspection.model.OperateToolResult;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
 import com.cnksi.bdzinspection.model.Users;
@@ -29,6 +27,8 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.PersonListUtils;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Department;
 import com.cnksi.xscore.xsutils.BitmapUtil;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
@@ -97,25 +97,23 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         PersonListUtils.getInsance().initPopWindow(currentActivity).initPersonData(dept);
         PersonListUtils.getInsance().setPersonRatioListener(this);
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                cityModel = SafeToolsInfoService.getInstance().findToolCity();
-                if (cityModel != null) {
-                    city = cityModel.getString("short_name_pinyin");
-                    toolPicPath = Config.GONG_QI_JU + city + "/gqj/";
-                    if (!FileUtils.isFolderExists(Config.BDZ_INSPECTION_FOLDER + toolPicPath))
-                        FileUtils.makeDirectory(Config.BDZ_INSPECTION_FOLDER + toolPicPath);
+        mFixedThreadPoolExecutor.execute(() -> {
+            cityModel = SafeToolsInfoService.getInstance().findToolCity();
+            if (cityModel != null) {
+                city = cityModel.getString("short_name_pinyin");
+                toolPicPath = Config.GONG_QI_JU + city + "/gqj/";
+                if (!FileUtils.isFolderExists(Config.BDZ_INSPECTION_FOLDER + toolPicPath)) {
+                    FileUtils.makeDirectory(Config.BDZ_INSPECTION_FOLDER + toolPicPath);
                 }
-                dbModel = SafeToolsInfoService.getInstance().findToolInfo(dept, toolId, bdzId);
-                resultList = SafeToolsInfoService.getInstance().finAllResults(dept, toolId, bdzId);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initUI();
-                    }
-                });
             }
+            dbModel = SafeToolsInfoService.getInstance().findToolInfo(dept, toolId, bdzId);
+            resultList = SafeToolsInfoService.getInstance().finAllResults(dept, toolId, bdzId);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    initUI();
+                }
+            });
         });
     }
 
@@ -164,8 +162,9 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
                         int currentPosition = (int) v.getTag();
                         OperateToolResult operateToolResult = resultList.get(currentPosition);
                         String pics = operateToolResult.pic;
-                        if (TextUtils.isEmpty(pics))
+                        if (TextUtils.isEmpty(pics)) {
                             return;
+                        }
                         String[] toolPic = pics.split(CoreConfig.COMMA_SEPARATOR);
                         if (null != toolPic && !TextUtils.isEmpty(toolPic[0]) && toolPic.length >= 1) {
                             ArrayList<String> mImageUrlList = new ArrayList<>();
@@ -419,10 +418,11 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         OperateToolResult toolResult = null;
         try {
             lastTime = testBinding.txtTestTime.getText().toString().trim() + " 00:00:00";
-            if (dbModel.getString("period").equalsIgnoreCase("0"))
+            if (dbModel.getString("period").equalsIgnoreCase("0")) {
                 nextTime = null;
-            else
+            } else {
                 nextTime = DateUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
+            }
             if (testBinding.rbNormal.isChecked()) {
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, Config.ToolStatus.normal.name(), pics, person, Config.ToolStatus.test.name());
                 updateToolInfo(Config.ToolStatus.normal.name(), Config.ToolStatus.normal.name());
@@ -534,8 +534,9 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
 
     @Override
     public void getSelectPersons(List<Users> userses) {
-        if (userses == null)
+        if (userses == null) {
             return;
+        }
         List<String> usersList = new ArrayList<>();
         String userName = "";
         for (Users users : userses) {
@@ -545,10 +546,11 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             userName = StringUtils.ArrayListToString(usersList);
             PreferencesUtils.put(getApplicationContext(), Config.SELECT_PERSONS, userName);
         }
-        if (stopClick)
+        if (stopClick) {
             stopBinding.etInputStopperson.setText(userName);
-        else
+        } else {
             testBinding.etInputPerson.setText(userName);
+        }
 
         PersonListUtils.getInsance().disMissPopWindow();
     }

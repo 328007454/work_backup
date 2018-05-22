@@ -1,6 +1,8 @@
 package com.cnksi.bdzinspection.model;
 
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.model.BaseModel;
+import com.cnksi.common.model.Device;
 import com.cnksi.xscore.xsutils.DateUtils;
 
 import org.xutils.db.annotation.Column;

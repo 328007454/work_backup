@@ -20,7 +20,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BaseBindingAdapter;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.TaskStatistic;
 import com.cnksi.sjjc.databinding.FragmentMaintenanceBinding;
 import com.cnksi.sjjc.databinding.NewLaunchTaskItemBinding;

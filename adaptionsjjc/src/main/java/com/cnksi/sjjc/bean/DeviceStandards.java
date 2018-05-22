@@ -3,6 +3,7 @@ package com.cnksi.sjjc.bean;
 
 import android.text.TextUtils;
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.common.Config;
@@ -17,7 +18,7 @@ import org.xutils.db.annotation.Table;
  * @author Oliver
  */
 @Table(name = "device_standards")
-public class DeviceStandards extends BaseModel{
+public class DeviceStandards extends BaseModel {
 
     public DeviceStandards() {
         this.dlt = "0";

@@ -17,7 +17,7 @@ import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportSnwsd;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.service.BaseService;
 import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskService;

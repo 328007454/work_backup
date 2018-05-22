@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.bean;
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.annotation.Column;
@@ -11,7 +12,7 @@ import java.util.UUID;
  * 差动保护
  */
 @Table(name = "report_cdbhcl")
-public class ReportCdbhcl extends BaseModel{
+public class ReportCdbhcl extends BaseModel {
 
     /***/
     public static final String ID = "id";

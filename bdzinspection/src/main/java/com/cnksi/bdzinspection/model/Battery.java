@@ -1,11 +1,13 @@
 package com.cnksi.bdzinspection.model;
 
 
+import com.cnksi.common.model.BaseModel;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "battery")
-public class Battery extends BaseModel{
+public class Battery extends BaseModel {
 
 	// 蓄电池id
 	public static final String BATTERYID = "battery";

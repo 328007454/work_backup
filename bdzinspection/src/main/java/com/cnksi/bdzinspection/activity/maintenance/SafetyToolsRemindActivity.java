@@ -6,21 +6,19 @@ import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ExpandableListView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
-import com.cnksi.bdzinspection.adapter.base.BaseExpandListAdapter;
 import com.cnksi.bdzinspection.adapter.DataWrap;
+import com.cnksi.bdzinspection.adapter.base.BaseExpandListAdapter;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyToolsRemindBinding;
 import com.cnksi.bdzinspection.databinding.XsItemSafeToolsinfoRemindBinding;
 import com.cnksi.bdzinspection.databinding.XsItemSafetyToolBdzBinding;
-import com.cnksi.bdzinspection.model.Bdz;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.view.keyboard.QWERKeyBoardUtils;
+import com.cnksi.common.model.Bdz;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
@@ -59,45 +57,29 @@ public class SafetyToolsRemindActivity extends BaseActivity {
         getIntentValue();
         dept_id = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_ID);
         binding.lvTools.setAdapter(adapter = new SafetyToolAdapter());
-        binding.ibtnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        binding.ibtnCancel.setOnClickListener(v -> finish());
+        binding.lvTools.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+            DbModel model = adapter.getChild(groupPosition, childPosition);
+            Intent intent = new Intent(currentActivity, SafeToolsInformationActivity.class);
+            intent.putExtra(SafeToolsInfor.ID, model.getString(SafeToolsInfor.ID));
+            intent.putExtra(Bdz.BDZID, model.getString("bdz_id"));
+            String title = model.getString("name");
+            intent.putExtra("title", title);
+            intent.putExtra(SafeToolsInfor.DEPTID, dept_id);
+            startActivity(intent);
+            return false;
         });
-        binding.lvTools.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                DbModel model = adapter.getChild(groupPosition, childPosition);
-                Intent intent = new Intent(currentActivity, SafeToolsInformationActivity.class);
-                intent.putExtra(SafeToolsInfor.ID, model.getString(SafeToolsInfor.ID));
-                intent.putExtra(Bdz.BDZID, model.getString("bdz_id"));
-                String title = model.getString("name");
-                intent.putExtra("title", title);
-                intent.putExtra(SafeToolsInfor.DEPTID, dept_id);
-                startActivity(intent);
-                return false;
-            }
-        });
-        binding.lvTools.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Bdz bdz = adapter.getGroup(groupPosition);
-                Intent intent = new Intent(currentActivity, SafetyToolsControlActivity.class);
-                intent.putExtra(Bdz.BDZID, bdz.bdzid);
-                intent.putExtra(SafeToolsInfor.DEPTID, dept_id);
-                startActivity(intent);
-                return true;
-            }
+        binding.lvTools.setOnGroupClickListener((parent, v, groupPosition, id) -> {
+            Bdz bdz = adapter.getGroup(groupPosition);
+            Intent intent = new Intent(currentActivity, SafetyToolsControlActivity.class);
+            intent.putExtra(Bdz.BDZID, bdz.bdzid);
+            intent.putExtra(SafeToolsInfor.DEPTID, dept_id);
+            startActivity(intent);
+            return true;
         });
         qwerKeyBoardUtils = new QWERKeyBoardUtils(currentActivity);
         qwerKeyBoardUtils.init(binding.keyboardContainer,
-                new QWERKeyBoardUtils.keyWordChangeListener() {
-                    @Override
-                    public void onChange(View view, String oldKey, String newKey) {
-                        adapter.search(newKey);
-                    }
-                });
+                (view, oldKey, newKey) -> adapter.search(newKey));
     }
 
 
@@ -107,41 +89,35 @@ public class SafetyToolsRemindActivity extends BaseActivity {
             return;
         }
         dataWraps.clear();
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                List<DbModel> allTools = SafeToolsInfoService.getInstance().findAllTools(dept_id);
-                if (allTools.size() > 0) {
-                    //根据bdz_id归类。
-                    Map<String, List<DbModel>> tempMap = new HashMap<>(32);
-                    List<DbModel> tempList;
-                    for (DbModel tool : allTools) {
-                        String bdzId = tool.getString("bdz_id");
-                        //没有BdzId表明其存放在班组本部
-                        if (bdzId == null || bdzId.isEmpty()) bdzId = "-1";
-                        if ((tempList = tempMap.get(bdzId)) == null) {
-                            tempList = new ArrayList<>();
-                            tempMap.put(bdzId, tempList);
-                        }
-                        tempList.add(tool);
+        mFixedThreadPoolExecutor.execute(() -> {
+            List<DbModel> allTools = SafeToolsInfoService.getInstance().findAllTools(dept_id);
+            if (allTools.size() > 0) {
+                //根据bdz_id归类。
+                Map<String, List<DbModel>> tempMap = new HashMap<>(32);
+                List<DbModel> tempList;
+                for (DbModel tool : allTools) {
+                    String bdzId = tool.getString("bdz_id");
+                    //没有BdzId表明其存放在班组本部
+                    if (bdzId == null || bdzId.isEmpty()) bdzId = "-1";
+                    if ((tempList = tempMap.get(bdzId)) == null) {
+                        tempList = new ArrayList<>();
+                        tempMap.put(bdzId, tempList);
                     }
-                    for (Map.Entry<String, List<DbModel>> entry : tempMap.entrySet()) {
-                        String key = entry.getKey();
-                        Bdz bdz = new Bdz(key, key.equals("-1") ? "班组本部" : entry.getValue().get(0).getString("bdz_name"));
-                        DataWrap<Bdz, DbModel> dataWrap = new DataWrap<>(bdz);
-                        dataWrap.setChildList(entry.getValue());
-                        dataWraps.add(dataWrap);
-                    }
+                    tempList.add(tool);
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.searchKey = "";
-                        qwerKeyBoardUtils.setKeyWord("");
-                        adapter.setList(dataWraps);
-                    }
-                });
+                for (Map.Entry<String, List<DbModel>> entry : tempMap.entrySet()) {
+                    String key = entry.getKey();
+                    Bdz bdz = new Bdz(key, key.equals("-1") ? "班组本部" : entry.getValue().get(0).getString("bdz_name"));
+                    DataWrap<Bdz, DbModel> dataWrap = new DataWrap<>(bdz);
+                    dataWrap.setChildList(entry.getValue());
+                    dataWraps.add(dataWrap);
+                }
             }
+            runOnUiThread(() -> {
+                adapter.searchKey = "";
+                qwerKeyBoardUtils.setKeyWord("");
+                adapter.setList(dataWraps);
+            });
         });
     }
 
@@ -169,11 +145,15 @@ public class SafetyToolsRemindActivity extends BaseActivity {
             remindBinding.tvSerial.setText("编号：" + ("-1".equals(num) ? "" : num));
             String date = DateUtils.formatDateTime(item.getString(SafeToolsInfor.NEXTCHECKTIME), "yyyy/MM/dd");
             remindBinding.tvDate.setText("下次试验时间：" + (TextUtils.isEmpty(date) ? "未知" : date));
-            if (isLastChild) remindBinding.llRoot.setDrawUnderLine(false);
+            if (isLastChild) {
+                remindBinding.llRoot.setDrawUnderLine(false);
+            }
         }
 
         private void search(String keyWord) {
-            if (searchKey.equals(keyWord)) return;
+            if (searchKey.equals(keyWord)) {
+                return;
+            }
             List<DataWrap<Bdz, DbModel>> result;
             if (TextUtils.isEmpty(keyWord)) {
                 result = dataWraps;

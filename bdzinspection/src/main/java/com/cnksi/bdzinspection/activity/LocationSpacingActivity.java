@@ -21,10 +21,10 @@ import com.cnksi.bdzinspection.adapter.LocationSpacingAdapter;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.databinding.XsActivityLocationSpacingBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.view.CircleBar;
 import com.cnksi.bdzinspection.view.CircleBar.OnProgressChangeListener;
+import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.CLog;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 

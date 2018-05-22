@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.bean;
+package com.cnksi.common.model;
 
 
 import org.xutils.db.annotation.Column;
@@ -9,7 +9,7 @@ import org.xutils.db.annotation.Table;
  */
 
 @Table(name = "department")
-public class Department extends BaseModel{
+public class Department extends BaseModel {
 
 	public static final String ID = "id";
 	@Column(name = ID,isId = true)
@@ -101,12 +101,7 @@ public class Department extends BaseModel{
 	public static final String PMS_NAME = "pms_name";
 	@Column(name = PMS_NAME)
 	public String pms_name;
-	/**
-	 * 工作单位
-	 */
-	public static final String COMP_NAME = "comp_name";
-	@Column(name = COMP_NAME)
-	public String comp_name;
+
 	public final static String LAST_MODIFY_TIME = "last_modify_time";
 	@Column(name = LAST_MODIFY_TIME)
 	public String last_modify_time;
@@ -118,11 +113,8 @@ public class Department extends BaseModel{
 
 	// 是否选择
 	public static final String IS_SELECTED = "is_selected";
-	public boolean isSelected = false;
 
-	// 是否选择
-	public static final String DLT = "dlt";
-	public int dlt;
+	public  transient boolean isSelected = false;
 
 	public String fullName = "";
 }

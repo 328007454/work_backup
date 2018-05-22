@@ -30,7 +30,7 @@ import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.PopMenuBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
 import com.cnksi.bdzinspection.model.DefectRecord;
-import com.cnksi.bdzinspection.model.Report;
+import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.bdzinspection.model.SwitchPic;
 import com.cnksi.bdzinspection.utils.Config;
@@ -54,7 +54,6 @@ import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
-import org.xutils.db.Selector;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.Bdz;
+import com.cnksi.common.model.Bdz;
 
 import java.util.Collection;
 

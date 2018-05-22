@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.bean;
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.annotation.Column;
@@ -11,7 +12,7 @@ import java.util.UUID;
  * Created by han on 2016/6/14.
  */
 @Table(name = "sbjc_hole")
-public class HoleRecord extends BaseModel{
+public class HoleRecord extends BaseModel {
     /**
      * Id
      */

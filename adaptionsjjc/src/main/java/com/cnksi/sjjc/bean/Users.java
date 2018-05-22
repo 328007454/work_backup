@@ -1,11 +1,13 @@
 package com.cnksi.sjjc.bean;
 
 
+import com.cnksi.common.model.BaseModel;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "users")
-public class Users extends BaseModel{
+public class Users extends BaseModel {
 
     // 用户账户
     public static final String ACCOUNT = "account";

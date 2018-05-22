@@ -4,7 +4,7 @@ import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
 import com.cnksi.xscore.xsutils.FunctionUtils;
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
+import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
 
 
 @Table(name = "operate_tick")

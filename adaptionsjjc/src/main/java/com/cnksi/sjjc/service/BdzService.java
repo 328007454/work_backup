@@ -1,6 +1,6 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.bean.Bdz;
+import com.cnksi.common.model.Bdz;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;

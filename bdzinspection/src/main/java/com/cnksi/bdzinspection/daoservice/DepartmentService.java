@@ -1,11 +1,9 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.Department;
+import com.cnksi.common.model.Department;
 import com.cnksi.bdzinspection.model.Users;
-import com.cnksi.xscore.xsutils.StringUtils;
 
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

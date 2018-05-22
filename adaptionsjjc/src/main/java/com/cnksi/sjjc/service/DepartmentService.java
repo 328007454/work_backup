@@ -2,8 +2,8 @@ package com.cnksi.sjjc.service;
 
 import android.text.TextUtils;
 
-import com.cnksi.sjjc.bean.Bdz;
-import com.cnksi.sjjc.bean.Department;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Department;
 import com.cnksi.sjjc.bean.Users;
 
 import org.xutils.db.sqlite.WhereBuilder;

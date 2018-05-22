@@ -8,7 +8,7 @@ import com.cnksi.xscore.xsutils.StringUtils;
 
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
+import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;

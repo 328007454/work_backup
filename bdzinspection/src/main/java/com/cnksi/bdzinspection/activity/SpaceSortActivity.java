@@ -7,13 +7,12 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SpaceSortAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.BaseService;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
+import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
@@ -34,7 +33,7 @@ import java.util.List;
  */
 public class SpaceSortActivity extends TitleActivity {
 
-    List<Spacing> mData = new ArrayList<Spacing>();
+    List<Spacing> mData = new ArrayList<>();
     HashMap<String, Integer> deviceCountMap;
     SpaceSortAdapter spaceAdapter;
     boolean hasUpdate = false;

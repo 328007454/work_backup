@@ -2,6 +2,8 @@ package com.cnksi.sjjc.bean;
 
 import android.text.TextUtils;
 
+import com.cnksi.common.model.BaseModel;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 

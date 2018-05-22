@@ -17,7 +17,7 @@ import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
 import com.cnksi.sjjc.adapter.hwcw.HwcwNewHotPartAdapter;
-import com.cnksi.sjjc.bean.Device;
+import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
 import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;

@@ -1,6 +1,6 @@
 package com.cnksi.sjjc.service;
 
-import com.cnksi.sjjc.bean.Spacing;
+import com.cnksi.common.model.Spacing;;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;

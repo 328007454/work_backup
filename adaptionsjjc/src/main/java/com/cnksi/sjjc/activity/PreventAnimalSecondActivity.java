@@ -21,7 +21,7 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.bean.Report;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityPreventSecondAnimalBinding;
 import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.cnksi.sjjc.service.HoleReportService;

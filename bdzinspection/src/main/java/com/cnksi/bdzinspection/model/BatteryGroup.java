@@ -1,7 +1,7 @@
 package com.cnksi.bdzinspection.model;
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.xscore.xsutils.DateUtils;
-
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

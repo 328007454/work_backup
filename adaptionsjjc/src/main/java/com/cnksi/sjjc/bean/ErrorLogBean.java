@@ -1,6 +1,8 @@
 package com.cnksi.sjjc.bean;
 
 
+import com.cnksi.common.model.BaseModel;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -9,7 +11,7 @@ import org.xutils.db.annotation.Table;
  * @date 创建时间：2016年4月25日 下午1:07:28 TODO
  */
 @Table(name = "error_log")
-public class ErrorLogBean extends BaseModel{
+public class ErrorLogBean extends BaseModel {
 	@Column(isId = true,name = "id")
 	public String id;
 

@@ -24,11 +24,11 @@ import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsActivityDeviceSelectBinding;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment.DeviceClickListener;
-import com.cnksi.bdzinspection.model.Device;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.LookUpType;
+import com.cnksi.common.model.Device;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 

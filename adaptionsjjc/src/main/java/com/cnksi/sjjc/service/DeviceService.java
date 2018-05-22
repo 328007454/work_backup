@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.CopyItem;
-import com.cnksi.sjjc.bean.Device;
-import com.cnksi.sjjc.bean.Spacing;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Spacing;;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;

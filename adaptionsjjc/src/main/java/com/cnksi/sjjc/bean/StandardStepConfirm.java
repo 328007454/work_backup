@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.bean;
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.annotation.Column;
@@ -8,7 +9,7 @@ import org.xutils.db.annotation.Table;
 import java.util.UUID;
 
 @Table(name = "standard_step_confirm")
-public class StandardStepConfirm extends BaseModel{
+public class StandardStepConfirm extends BaseModel {
 
 	// ID
 	public static final String ID = "id";

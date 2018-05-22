@@ -12,10 +12,9 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.GQJ;
 import com.cnksi.bdzinspection.model.PlanProcessStatus;
 import com.cnksi.bdzinspection.model.Process;
-import com.cnksi.bdzinspection.model.Report;
+import com.cnksi.common.model.Report;
 
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;

@@ -41,6 +41,7 @@ public class Config implements Cst {
     public static final String UPLOAD_DATABASE_FOLDER = BDZ_INSPECTION_FOLDER + "upload_database/";
     public static final String LOGFOLDER = BDZ_INSPECTION_FOLDER + "log/";
     public static final String DOWNLOAD_APP_FOLDER = BDZ_INSPECTION_FOLDER + "download/";
+    public static final String DEFALUTFOLDER = BDZ_INSPECTION_FOLDER + "default/";
     public static final String PICTURES_FOLDER = BDZ_INSPECTION_FOLDER + "";
     public static final String WWWROOT_FOLDER = BDZ_INSPECTION_FOLDER + "www/";
     public static final String RESULT_PICTURES_FOLDER = BDZ_INSPECTION_FOLDER + "";
@@ -322,4 +323,21 @@ public class Config implements Cst {
             Config.BAK_FOLDER,
             Config.NFC_FOLDER,
             Config.WWWROOT_FOLDER};
+
+    /**
+     * Pms设备型号
+     */
+    public enum PmsDeviceType {
+        one("一次设备"), second("二次设备"), auto("自动化屏"), secondP("二次屏");
+        private final String value;
+
+        PmsDeviceType(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+    }
 }

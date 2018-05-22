@@ -1,17 +1,15 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import android.text.TextUtils;
-import android.view.TextureView;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.CopyType;
-import com.cnksi.bdzinspection.model.Report;
-import com.cnksi.bdzinspection.model.Spacing;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Spacing;
 
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;

@@ -1,5 +1,6 @@
 package com.cnksi.bdzinspection.model;
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.xscore.xsutils.FunctionUtils;
 
 import org.xutils.db.annotation.Column;

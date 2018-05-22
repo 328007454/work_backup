@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.RoadMapAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.BaseService;
 import com.cnksi.bdzinspection.databinding.XsFragmentRoadmapBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.zhy.core.utils.AutoUtils;
 
@@ -31,7 +30,7 @@ import java.util.List;
  */
 public class RoadMapFragment extends BaseFragment {
     //间隔集合
-    private List<Spacing> spaceList = new ArrayList<Spacing>();
+    private List<Spacing> spaceList = new ArrayList<>();
     //当前设备类型
     private String fucntionModel = "one";
 
@@ -116,8 +115,9 @@ public class RoadMapFragment extends BaseFragment {
     }
 
     public void reLoadData() {
-        if (null == currentActivity || TextUtils.isEmpty(fucntionModel) || TextUtils.isEmpty(currentBdzId))
+        if (null == currentActivity || TextUtils.isEmpty(fucntionModel) || TextUtils.isEmpty(currentBdzId)) {
             return;
+        }
         searchData(0);
     }
 }

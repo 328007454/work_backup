@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.cnksi.core.view.FollowListView;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.Spacing;
+import com.cnksi.common.model.Spacing;;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.x;

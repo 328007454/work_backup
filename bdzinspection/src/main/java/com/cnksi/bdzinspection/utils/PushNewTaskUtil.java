@@ -4,11 +4,9 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.SwitchMenu;
-import com.cnksi.bdzinspection.model.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
-
-import org.xutils.db.Selector;
 
 /**
  * Created by kkk on 2018/3/12.

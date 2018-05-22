@@ -6,7 +6,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseBindingAdapter;
 import com.cnksi.bdzinspection.databinding.XsSpaceSortItemBinding;
-import com.cnksi.bdzinspection.model.Spacing;
+import com.cnksi.common.model.Spacing;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,20 +55,15 @@ public class SpaceSortAdapter extends BaseBindingAdapter<XsSpaceSortItemBinding,
         }
         binding.btnOp.setText(item.isSubPlace() ? "恢复" : "拆分");
         binding.btnOp.setBackgroundResource(item.isSubPlace() ? R.drawable.xs_green_background_selector : R.drawable.xs_red_button_background_selector);
-        binding.btnOp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (clickListener != null)
-                    clickListener.onClick(v, item, position);
+        binding.btnOp.setOnClickListener(v -> {
+            if (clickListener != null) {
+                clickListener.onClick(v, item, position);
             }
         });
         binding.btnSort.setVisibility(deviceCount > 1 ? View.VISIBLE : View.GONE);
-        binding.btnSort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (sortListener != null) {
-                    sortListener.onClick(v, item, position);
-                }
+        binding.btnSort.setOnClickListener(v -> {
+            if (sortListener != null) {
+                sortListener.onClick(v, item, position);
             }
         });
     }

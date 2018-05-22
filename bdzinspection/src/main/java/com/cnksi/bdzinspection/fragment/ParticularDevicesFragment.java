@@ -25,7 +25,6 @@ import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.DeviceService.DefectInfo;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
 import com.cnksi.bdzinspection.model.SpecialMenu;
@@ -35,6 +34,7 @@ import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.view.keyboard.QWERKeyBoardUtils;
+import com.cnksi.common.model.Spacing;
 
 import org.xutils.db.table.DbModel;
 

@@ -10,7 +10,7 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
-import com.cnksi.sjjc.bean.Device;
+import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;

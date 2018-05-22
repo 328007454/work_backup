@@ -1,10 +1,13 @@
-package com.cnksi.sjjc.bean;
+package com.cnksi.common.model;
 
-import com.cnksi.core.utils.FileUtils;
+import android.text.TextUtils;
+
 import com.cnksi.common.Config;
+import com.cnksi.core.utils.FileUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
+import org.xutils.db.table.DbModel;
 
 @Table(name = "device")
 public class Device extends BaseModel {
@@ -114,7 +117,12 @@ public class Device extends BaseModel {
     public static final String INSTID = "instid";
     @Column(name = INSTID)
     public String instid;
-
+    /**
+     * 设备大类
+     */
+    public static final String BIGID = "bigid";
+    @Column(name = BIGID)
+    public String bigid;
     // 是否有抄录数据
     public static final String HAS_COPY = "has_copy";
     @Column(name = HAS_COPY)
@@ -155,7 +163,10 @@ public class Device extends BaseModel {
     public static final String UPDATE_TIME = "update_time";
     @Column(name = UPDATE_TIME)
     public String update_time;
-
+    // 是否是重点关注设备 （Y，N）
+    public static final String IS_IMPORTANT = "is_important";
+    @Column(name = IS_IMPORTANT)
+    public String isImportant;
     /**
      * 设备型号
      */
@@ -219,4 +230,20 @@ public class Device extends BaseModel {
      */
     public String hasInspectionTimes = "0";
 
+    public boolean isImportant() {
+        return "Y".equals(isImportant);
+    }
+
+
+    public static boolean isImportant(DbModel model) {
+        return "Y".equals(model.getString(IS_IMPORTANT));
+    }
+
+    public static boolean isOnceDevice(DbModel model) {
+        return Config.PmsDeviceType.one.name().equals(model.getString(DEVICE_TYPE));
+    }
+
+    public static boolean hasGPSInfo(DbModel model) {
+        return !(TextUtils.isEmpty(model.getString(LATITUDE)) || TextUtils.isEmpty(model.getString(LONGITUDE)));
+    }
 }

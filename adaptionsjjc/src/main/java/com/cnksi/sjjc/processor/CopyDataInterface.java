@@ -2,27 +2,26 @@ package com.cnksi.sjjc.processor;
 
 import android.app.Activity;
 import android.content.Context;
-import android.icu.text.UnicodeSetSpanner;
 import android.text.TextUtils;
 
-import com.cnksi.sjjc.util.DateUtils;
+import com.cnksi.common.model.Device;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.view.ChartDialog;
 import com.cnksi.sjjc.bean.CopyItem;
 import com.cnksi.sjjc.bean.DefectRecord;
-import com.cnksi.sjjc.bean.Device;
 import com.cnksi.sjjc.bean.DevicePart;
 import com.cnksi.sjjc.bean.DeviceStandards;
 import com.cnksi.sjjc.bean.Lookup;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Standards;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.DevicePartService;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.StandardService;
+import com.cnksi.sjjc.util.DateUtils;
+import com.cnksi.sjjc.view.ChartDialog;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;

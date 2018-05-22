@@ -22,7 +22,7 @@ import com.cnksi.ksynclib.model.SyncInfo;
 import com.cnksi.ksynclib.utils.KNetUtil;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.Department;
+import com.cnksi.common.model.Department;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
 import com.cnksi.sjjc.service.DepartmentService;
 

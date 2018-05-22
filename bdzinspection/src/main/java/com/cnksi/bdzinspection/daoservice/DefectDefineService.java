@@ -3,7 +3,6 @@ package com.cnksi.bdzinspection.daoservice;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.BaseModel;
 import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.model.DefectDefine;
 import com.cnksi.bdzinspection.utils.Config;
@@ -24,7 +23,7 @@ import java.util.List;
  *
  * @author terry
  */
-public class DefectDefineService extends BaseModel {
+public class DefectDefineService{
 
     public static DefectDefineService mInstance;
 
@@ -52,16 +51,18 @@ public class DefectDefineService extends BaseModel {
             List<Defect> defects = selector.where(Defect.STAID, "=", staid).expr("and dlt <> '1'").findAll();
             List<DefectDefine> ddlist = new ArrayList<DefectDefine>();
             if (null != defects && !defects.isEmpty()) {
-                for (Defect df : defects)
+                for (Defect df : defects) {
                     ddlist.add(new DefectDefine(df));
+                }
             }
 
             selector = XunshiApplication.getDbUtils().selector(DefectDefine.class);
             List<DefectDefine> defectList = selector.where(DefectDefine.STAID, "=", staid)
                     .expr("and (" + DefectDefine.DLT + " is null or " + DefectDefine.DLT + "<>'1')")
                     .orderBy(DefectDefine.LEVEL).findAll();
-            if (null != defectList)
+            if (null != defectList) {
                 ddlist.addAll(defectList);
+            }
             String _tmpLevel = "";
             ArrayList<DefectDefine> descriptionList = null;
             if (ddlist != null && ddlist.size() > 0) {
@@ -105,10 +106,12 @@ public class DefectDefineService extends BaseModel {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", deviceId));
         List<DbModel> defectModel = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
-        if (defectList == null)
-            defectList = new ArrayList<DbModel>();
-        if (defectModel != null)
+        if (defectList == null) {
+            defectList = new ArrayList<>();
+        }
+        if (defectModel != null) {
             defectList.addAll(defectModel);
+        }
 
         return defectList;
     }

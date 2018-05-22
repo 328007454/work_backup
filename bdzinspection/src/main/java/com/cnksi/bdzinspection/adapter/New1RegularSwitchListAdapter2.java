@@ -24,7 +24,7 @@ import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.bdzinspection.model.SwitchPic;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
-import com.cnksi.bdzinspection.utils.SystemConfig;
+import com.cnksi.common.SystemConfig;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.StringUtils;

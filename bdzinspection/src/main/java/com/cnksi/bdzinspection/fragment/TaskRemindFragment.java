@@ -17,7 +17,7 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
-import com.cnksi.bdzinspection.model.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.Config;

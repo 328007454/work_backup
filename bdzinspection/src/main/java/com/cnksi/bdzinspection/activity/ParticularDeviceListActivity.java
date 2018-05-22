@@ -21,13 +21,13 @@ import com.cnksi.bdzinspection.databinding.XsActivityParticularInspectionBinding
 import com.cnksi.bdzinspection.fragment.ParticularDevicesFragment;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.bdzinspection.model.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShakeListener;
-import com.cnksi.bdzinspection.utils.SystemConfig;
+import com.cnksi.common.SystemConfig;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.sync.KSyncConfig;
 import com.cnksi.xscore.xsutils.CToast;

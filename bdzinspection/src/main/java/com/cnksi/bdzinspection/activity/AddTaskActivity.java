@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -23,10 +22,7 @@ import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddInspectionTaskBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityAddinpsectionTypeDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.bdzinspection.model.Bdz;
 import com.cnksi.bdzinspection.model.Lookup;
-import com.cnksi.bdzinspection.model.Report;
-import com.cnksi.bdzinspection.model.Task;
 import com.cnksi.bdzinspection.model.TaskExtend;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
@@ -36,6 +32,9 @@ import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.bdzinspection.utils.SelectPersonUtil;
 import com.cnksi.bdzinspection.ywyth.YWDeviceListActivity;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
@@ -45,7 +44,6 @@ import com.cnksi.xscore.xsutils.StringUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 import com.cnksi.xscore.xsview.CustomerDialog.DialogItemClickListener;
 
-import org.xutils.db.Selector;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
@@ -311,8 +309,9 @@ public class AddTaskActivity extends BaseActivity {
         super.onRefresh(msg);
         switch (msg.what) {
             case LOAD_BDZ_DATA:
-                if (null != mCurrentBdz)
+                if (null != mCurrentBdz) {
                     binding.tvSelectPowerStation.setText(mCurrentBdz.name);
+                }
                 isBdzDataPrepared = true;
                 break;
             case LOAD_INSPECTION_TYPE_DATA:
@@ -320,8 +319,9 @@ public class AddTaskActivity extends BaseActivity {
                 if (groupList != null && groupList.size() != 0) {
                     mInspectionType = groupList.get(0);
                 }
-                if (childList != null && childList.size() > 0)
+                if (childList != null && childList.size() > 0) {
                     binding.tvSelectInspectionType.setText("");
+                }
                 break;
             case INIT_INSPECTION_TYPE_CODE:
                 binding.tvSelectInspectionType.setCompoundDrawables(null, null, null, null);

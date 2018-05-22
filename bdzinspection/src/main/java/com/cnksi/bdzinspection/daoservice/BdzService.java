@@ -1,11 +1,8 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.databinding.XsNewDeviceImageLayoutBinding;
-import com.cnksi.bdzinspection.model.Bdz;
+import com.cnksi.common.model.Bdz;
 
-
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

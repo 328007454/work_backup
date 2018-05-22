@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.bean;
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.annotation.Column;

@@ -6,7 +6,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseBindingAdapter;
 import com.cnksi.bdzinspection.databinding.XsSpaceSortItemBinding;
-import com.cnksi.bdzinspection.model.Device;
+import com.cnksi.common.model.Device;
 
 import java.util.List;
 

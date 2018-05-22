@@ -1,7 +1,6 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.BaseModel;
 import com.cnksi.bdzinspection.model.DeviceStandards;
 import com.cnksi.bdzinspection.model.DeviceStandardsOper;
 import com.cnksi.bdzinspection.utils.Config;
@@ -85,7 +84,7 @@ public class StandardService {
     public HashMap<String, DeviceStandardsOper> findStandardMark(String bdzId, String deviceId) {
         HashMap<String, DeviceStandardsOper> staidMap = new HashMap<>();
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DeviceStandardsOper.class).where(BaseModel.DLT, "=", "0")
+            Selector selector = XunshiApplication.getDbUtils().selector(DeviceStandardsOper.class).where(DeviceStandardsOper.DLT, "=", "0")
                     .and(DeviceStandardsOper.BDZID, "=", bdzId).and(DeviceStandardsOper.DEVICEID, "=", deviceId);
             List<DeviceStandardsOper> list = selector.findAll();
             if (list != null) {

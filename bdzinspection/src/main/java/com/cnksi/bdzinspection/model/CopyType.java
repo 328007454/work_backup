@@ -1,7 +1,7 @@
 package com.cnksi.bdzinspection.model;
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
+import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
 
 @Table(name = "copy_type")
 public class CopyType extends BaseModel {

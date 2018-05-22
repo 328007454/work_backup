@@ -1,11 +1,13 @@
 package com.cnksi.sjjc.bean;
 
 
+import com.cnksi.common.model.BaseModel;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "lookup")
-public class Lookup extends BaseModel{
+public class Lookup extends BaseModel {
 
 	//
 	public static final String ID = "id";

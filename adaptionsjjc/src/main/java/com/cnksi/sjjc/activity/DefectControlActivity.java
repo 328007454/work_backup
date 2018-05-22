@@ -17,7 +17,7 @@ import com.cnksi.sjjc.adapter.DefectContentAdapter;
 import com.cnksi.sjjc.adapter.DefectTypeAdapter;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.sjjc.bean.Bdz;
+import com.cnksi.common.model.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.databinding.ActivityDefectControlBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;

@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.HomeTaskItemBinding;
 import com.cnksi.sjjc.enmu.InspectionType;
 

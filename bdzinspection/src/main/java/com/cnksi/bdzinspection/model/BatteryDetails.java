@@ -1,10 +1,10 @@
 package com.cnksi.bdzinspection.model;
 
 
+import com.cnksi.common.model.BaseModel;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
-
-import java.lang.annotation.Retention;
 
 @Table(name = "battery_details")
 public class BatteryDetails extends BaseModel {

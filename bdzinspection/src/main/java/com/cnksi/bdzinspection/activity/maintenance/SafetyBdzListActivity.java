@@ -9,15 +9,15 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
-import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.daoservice.BdzService;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyBdzListBinding;
-import com.cnksi.bdzinspection.model.Bdz;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.model.Bdz;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.StringUtils;
 
@@ -47,24 +47,21 @@ public class SafetyBdzListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_safety_bdz_list);
         deptId = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_ID);
-        binding.btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isStart) {
-                    return;
-                }
-                if (currentItem == null) {
-                    CToast.showShort(currentActivity, "请先选择一个变电站！");
-                    return;
-                }
-                TTSUtils.getInstance().startSpeaking("开始" + currentItem.name + "的安全工器具检查作业");
-                Intent intent = new Intent(currentActivity, SafetyToolsControlActivity.class);
-                intent.putExtra(Bdz.BDZID, currentItem.bdzid == null ? "-1" : currentItem.bdzid);
-                intent.putExtra(Config.TITLE_NAME, currentItem.name);
-                intent.putExtra(SafeToolsInfor.DEPTID, deptId);
-                isStart = true;
-                startActivity(intent);
+        binding.btnStart.setOnClickListener(v -> {
+            if (isStart) {
+                return;
             }
+            if (currentItem == null) {
+                CToast.showShort(currentActivity, "请先选择一个变电站！");
+                return;
+            }
+            TTSUtils.getInstance().startSpeaking("开始" + currentItem.name + "的安全工器具检查作业");
+            Intent intent = new Intent(currentActivity, SafetyToolsControlActivity.class);
+            intent.putExtra(Bdz.BDZID, currentItem.bdzid == null ? "-1" : currentItem.bdzid);
+            intent.putExtra(Config.TITLE_NAME, currentItem.name);
+            intent.putExtra(SafeToolsInfor.DEPTID, deptId);
+            isStart = true;
+            startActivity(intent);
         });
 
         binding.ibtnCancel.setOnClickListener(new View.OnClickListener() {

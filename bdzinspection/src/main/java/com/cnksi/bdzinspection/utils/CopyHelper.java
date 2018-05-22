@@ -24,11 +24,12 @@ import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
-import com.cnksi.bdzinspection.model.Device;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.SystemConfig;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.GPSUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.zhy.core.utils.AutoUtils;
@@ -94,8 +95,9 @@ public class CopyHelper {
         saveCurrentData = true;
         if (SystemConfig.isDevicePlaced()) {
             placedDevice = PlacedService.getInstance().findDevicePlaced(currentReportId, device.getString("deviceid"));
-        } else
+        } else {
             placed = PlacedService.getInstance().findPlaced(currentReportId, device.getString("spid"));
+        }
     }
 
     public List<TreeNode> loadItem() {
@@ -135,28 +137,37 @@ public class CopyHelper {
                             result.val = "-1".equalsIgnoreCase(historyResult.val) ? "" : historyResult.val;
                             result.valSpecial = historyResult.valSpecial;
                         }
-                        if ("Y".equalsIgnoreCase(item.val_a))
+                        if ("Y".equalsIgnoreCase(item.val_a)) {
                             result.val_a = "-1".equalsIgnoreCase(historyResult.val_a) ? "" : historyResult.val_a;
-                        if ("Y".equalsIgnoreCase(item.val_b))
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_b)) {
                             result.val_b = "-1".equalsIgnoreCase(historyResult.val_b) ? "" : historyResult.val_b;
-                        if ("Y".equalsIgnoreCase(item.val_c))
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_c)) {
                             result.val_c = "-1".equalsIgnoreCase(historyResult.val_c) ? "" : historyResult.val_c;
-                        if ("Y".equalsIgnoreCase(item.val_o))
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_o)) {
                             result.val_o = "-1".equalsIgnoreCase(historyResult.val_o) ? "" : historyResult.val_o;
+                        }
                     }
                 }
                 // 上次抄录值
                 if (null != historyResult) {
-                    if ("Y".equalsIgnoreCase(item.val))
+                    if ("Y".equalsIgnoreCase(item.val)) {
                         result.val_old = historyResult.val;
-                    if ("Y".equalsIgnoreCase(item.val_a))
+                    }
+                    if ("Y".equalsIgnoreCase(item.val_a)) {
                         result.val_a_old = historyResult.val_a;
-                    if ("Y".equalsIgnoreCase(item.val_b))
+                    }
+                    if ("Y".equalsIgnoreCase(item.val_b)) {
                         result.val_b_old = historyResult.val_b;
-                    if ("Y".equalsIgnoreCase(item.val_c))
+                    }
+                    if ("Y".equalsIgnoreCase(item.val_c)) {
                         result.val_c_old = historyResult.val_c;
-                    if ("Y".equalsIgnoreCase(item.val_o))
+                    }
+                    if ("Y".equalsIgnoreCase(item.val_o)) {
                         result.val_o_old = historyResult.val_o;
+                    }
                 }
                 copyResultMap.put(item.id, result);
                 if (typeCopyItemMap.keySet().contains(item.type_key)) {
@@ -225,18 +236,24 @@ public class CopyHelper {
         boolean savePlaced = false;
         boolean rs = false;
         for (CopyResult result : copyResultMap.values()) {
-            if (TextUtils.isEmpty(result.val))
+            if (TextUtils.isEmpty(result.val)) {
                 result.val = null;
-            if (TextUtils.isEmpty(result.val_a))
+            }
+            if (TextUtils.isEmpty(result.val_a)) {
                 result.val_a = null;
-            if (TextUtils.isEmpty(result.val_b))
+            }
+            if (TextUtils.isEmpty(result.val_b)) {
                 result.val_b = null;
-            if (TextUtils.isEmpty(result.val_c))
+            }
+            if (TextUtils.isEmpty(result.val_c)) {
                 result.val_c = null;
-            if (TextUtils.isEmpty(result.val_o))
+            }
+            if (TextUtils.isEmpty(result.val_o)) {
                 result.val_o = null;
-            if (TextUtils.isEmpty(result.valSpecial))
+            }
+            if (TextUtils.isEmpty(result.valSpecial)) {
                 result.valSpecial = null;
+            }
             if (result.type_key.equalsIgnoreCase("youwei") && !TextUtils.isEmpty(result.valSpecial)) {
                 result.val = null;
             }
@@ -295,8 +312,9 @@ public class CopyHelper {
     }
 
     public void judgeDistance(BDLocation currentLocation, View shadowLayout, TextView shadomTip) {
-        if (null == currentLocation || null == device || !GPSUtils.isOPen(activity))
+        if (null == currentLocation || null == device || !GPSUtils.isOPen(activity)) {
             return;
+        }
         String latitude = device.getString("latitude");
         String longitude = device.getString("longitude");
         if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
@@ -374,16 +392,17 @@ public class CopyHelper {
                     }
                     // 构造抄录描述
                     String descript = "";
-                    if ("Y".equals(childItem.val))
+                    if ("Y".equals(childItem.val)) {
                         descript = "抄录" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
-                    else if ("Y".equals(childItem.val_a))
+                    } else if ("Y".equals(childItem.val_a)) {
                         descript = "抄录A相" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
-                    else if ("Y".equals(childItem.val_b))
+                    } else if ("Y".equals(childItem.val_b)) {
                         descript = "抄录B相" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
-                    else if ("Y".equals(childItem.val_c))
+                    } else if ("Y".equals(childItem.val_c)) {
                         descript = "抄录C相" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
-                    else if ("Y".equals(childItem.val_o))
+                    } else if ("Y".equals(childItem.val_o)) {
                         descript = "抄录O相" + childItem.description + (TextUtils.isEmpty(childItem.unit) ? "" : "(" + childItem.unit + ")");
+                    }
                     final TextView txtDescript = childHolder.getView(R.id.tv_copy_content);
                     if (!TextUtils.isEmpty(childItem.min) || !TextUtils.isEmpty(childItem.max)) {
                         descript += "(" + (TextUtils.isEmpty(childItem.min) ? "" : childItem.min) + "-" + (TextUtils.isEmpty(childItem.max) ? "" : childItem.max) + ")";
@@ -408,20 +427,25 @@ public class CopyHelper {
                     // 显示历史抄录
                     if (copyResultMap.keySet().contains(childItem.id)) {
                         CopyResult copyResult = copyResultMap.get(childItem.id);
-                        if ("Y".equals(childItem.val) && !("-1".equals(copyResult.val)) && "youwei".equalsIgnoreCase(childItem.type_key))
+                        if ("Y".equals(childItem.val) && !("-1".equals(copyResult.val)) && "youwei".equalsIgnoreCase(childItem.type_key)) {
                             copyValue.setText(TextUtils.isEmpty(copyResult.valSpecial) ? "" : copyResult.valSpecial);
-                        else {
-                            if ("Y".equals(childItem.val) && !("-1".equals(copyResult.val)))
+                        } else {
+                            if ("Y".equals(childItem.val) && !("-1".equals(copyResult.val))) {
                                 copyValue.setText(copyResult.val);
+                            }
                         }
-                        if ("Y".equals(childItem.val_a) && !("-1".equals(copyResult.val_a)))
+                        if ("Y".equals(childItem.val_a) && !("-1".equals(copyResult.val_a))) {
                             copyValue.setText(copyResult.val_a);
-                        if ("Y".equals(childItem.val_b) && !("-1".equals(copyResult.val_b)))
+                        }
+                        if ("Y".equals(childItem.val_b) && !("-1".equals(copyResult.val_b))) {
                             copyValue.setText(copyResult.val_b);
-                        if ("Y".equals(childItem.val_c) && !("-1".equals(copyResult.val_c)))
+                        }
+                        if ("Y".equals(childItem.val_c) && !("-1".equals(copyResult.val_c))) {
                             copyValue.setText(copyResult.val_c);
-                        if ("Y".equals(childItem.val_o) && !("-1".equals(copyResult.val_o)))
+                        }
+                        if ("Y".equals(childItem.val_o) && !("-1".equals(copyResult.val_o))) {
                             copyValue.setText(copyResult.val_o);
+                        }
                         if (!TextUtils.isEmpty(copyResult.remark)) {// 抄录结果的remar字段是否有看不清的提示。
                             remark = copyResult.remark;
                         }
@@ -449,10 +473,11 @@ public class CopyHelper {
                 }
                 // 查看整个抄录项remark字段是否具有看不清的提示，有则在整个item上提示该显示。
                 if (!TextUtils.isEmpty(remark)) {
-                    if (remark.endsWith(","))
+                    if (remark.endsWith(",")) {
                         remark = "(" + remark.substring(0, remark.length() - 1) + ")";
-                    else
+                    } else {
                         remark = "(" + remark.substring(0, remark.length()) + ")";
+                    }
                 }
                 parentHolder.setText(R.id.tv_group_item, parentItem.description + remark);
             }
@@ -499,16 +524,21 @@ public class CopyHelper {
                     copyResult.valSpecial = s.toString();
                 } else {
                     String value = CommonUtils.getTransformTep(s.toString());
-                    if ("Y".equals(copyItem.val))
+                    if ("Y".equals(copyItem.val)) {
                         copyResult.val = value;
-                    if ("Y".equals(copyItem.val_a))
+                    }
+                    if ("Y".equals(copyItem.val_a)) {
                         copyResult.val_a = value;
-                    if ("Y".equals(copyItem.val_b))
+                    }
+                    if ("Y".equals(copyItem.val_b)) {
                         copyResult.val_b = value;
-                    if ("Y".equals(copyItem.val_c))
+                    }
+                    if ("Y".equals(copyItem.val_c)) {
                         copyResult.val_c = value;
-                    if ("Y".equals(copyItem.val_o))
+                    }
+                    if ("Y".equals(copyItem.val_o)) {
                         copyResult.val_o = value;
+                    }
                 }
             }
         }

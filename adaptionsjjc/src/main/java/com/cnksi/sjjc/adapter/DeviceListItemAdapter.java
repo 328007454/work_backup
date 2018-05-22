@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.Device;
+import com.cnksi.common.model.Device;
 
 import org.xutils.db.table.DbModel;
 

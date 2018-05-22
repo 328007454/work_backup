@@ -25,7 +25,7 @@ import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.model.DefectRecord;
-import com.cnksi.bdzinspection.model.Report;
+import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
 import com.cnksi.bdzinspection.utils.Config;

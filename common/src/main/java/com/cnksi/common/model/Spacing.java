@@ -1,7 +1,6 @@
-package com.cnksi.bdzinspection.model;
+package com.cnksi.common.model;
 
 import android.text.TextUtils;
-
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -88,8 +87,7 @@ public class Spacing extends BaseModel implements Serializable {
     public String voltage;
 
     // 定位专用
-
-    public transient  double distance;
+    public double distance;
 
     public boolean isSubPlace() {
         return !TextUtils.isEmpty(pid);

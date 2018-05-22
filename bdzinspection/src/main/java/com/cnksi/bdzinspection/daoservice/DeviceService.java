@@ -4,13 +4,12 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.DefectRecord;
-import com.cnksi.bdzinspection.model.Device;
-import com.cnksi.bdzinspection.model.Report;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Spacing;
 
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
@@ -173,8 +172,9 @@ public class DeviceService {
         for (String bigId : bigtypes) {
             sb.append("'").append(bigId).append("',");
         }
-        if (sb.length() > 0)
+        if (sb.length() > 0) {
             sb.deleteCharAt(sb.length() - 1);
+        }
         sb.append(")");
         String pinyin = "second".equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
         String sql = "select * from (select s.name_pinyin||' '||d." + pinyin + " as search_key,d.deviceid as deviceId,d.name as deviceName,s.type as spaceType,s.group_id,s.spid,s.name as spacingName  from device d LEFT JOIN spacing s on d.spid=s.spid where d.bdzid=? and d.dlt=0 and d.bigid in "
@@ -222,10 +222,11 @@ public class DeviceService {
                 + "%' and bdzid = '" + bdzId + "' AND dlt='0' ";
         List<String> deviceIdList = new ArrayList<String>();
         List<DbModel> modelList = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
-        if (null != modelList && !modelList.isEmpty())
+        if (null != modelList && !modelList.isEmpty()) {
             for (DbModel dbModel : modelList) {
                 deviceIdList.add(dbModel.getString(Device.DEVICEID));
             }
+        }
 
         return deviceIdList;
     }

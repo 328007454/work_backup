@@ -14,7 +14,7 @@ import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.UpDataToReportManager;
-import com.cnksi.sjjc.bean.Department;
+import com.cnksi.common.model.Department;
 import com.cnksi.sjjc.service.DepartmentService;
 import com.cnksi.sjjc.sync.KSyncConfig;
 

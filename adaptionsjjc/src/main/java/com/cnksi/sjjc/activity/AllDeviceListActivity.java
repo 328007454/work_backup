@@ -18,8 +18,8 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
-import com.cnksi.sjjc.bean.Device;
-import com.cnksi.sjjc.bean.Spacing;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Spacing;;
 import com.cnksi.sjjc.databinding.ActivityDevicesExpadableListBinding;
 import com.cnksi.sjjc.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.DeviceService;
@@ -228,7 +228,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
             for (DbModel dbModel : mDeviceList) {
                 if (isSearch && dbModel.getString("spid").equalsIgnoreCase(mSpacing.spid)) {
                     if ((dbModel.getString("name").contains(text) || dbModel.getString(Device.NAME_PINYIN).contains(text.toUpperCase(Locale.ENGLISH)))
-                            || (!TextUtils.isEmpty(mSpacing.name) && mSpacing.name.contains(text)) || (!TextUtils.isEmpty(mSpacing.pinyin) && mSpacing.pinyin.contains(text.toUpperCase(Locale.ENGLISH)))
+                            || (!TextUtils.isEmpty(mSpacing.name) && mSpacing.name.contains(text)) || (!TextUtils.isEmpty(mSpacing.name_pinyin) && mSpacing.name_pinyin.contains(text.toUpperCase(Locale.ENGLISH)))
                             ) {
                         dbModel.add("spaceName", mSpacing.name);
                         dbModels.add(dbModel);

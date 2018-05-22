@@ -3,13 +3,11 @@ package com.cnksi.bdzinspection.activity;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DeviceSortAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.BaseService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
-import com.cnksi.bdzinspection.model.Device;
-import com.cnksi.bdzinspection.model.Spacing;
 import com.cnksi.bdzinspection.utils.Config;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Spacing;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
-import com.cnksi.xscore.xsview.swipemenulist.SwipeMenuDragSortListView.DragListener;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
@@ -42,16 +40,13 @@ public class DeviceSortActivity extends TitleActivity {
     protected String initUI() {
         binding = (XsActivitySpacesortBinding) getDataBinding();
         spacing = (Spacing) getIntent().getSerializableExtra("space");
-        binding.swlvContainer.setDragListener(new DragListener() {
-            @Override
-            public void drag(int from, int to) {
-                if (from != to) {
-                    hasUpdate = true;
-                    Device bean = spaceAdapter.getItem(from);
-                    mData.remove(bean);
-                    mData.add(to, bean);
-                    spaceAdapter.notifyDataSetChanged();
-                }
+        binding.swlvContainer.setDragListener((from, to) -> {
+            if (from != to) {
+                hasUpdate = true;
+                Device bean = spaceAdapter.getItem(from);
+                mData.remove(bean);
+                mData.add(to, bean);
+                spaceAdapter.notifyDataSetChanged();
             }
         });
         return getString(R.string.xs_inspection_sort, spacing.name);
@@ -76,8 +71,9 @@ public class DeviceSortActivity extends TitleActivity {
 
     @Override
     protected void releaseResAndSaveData() {
-        if (hasUpdate)
+        if (hasUpdate) {
             updateDeviceSort();
+        }
         setResult(RESULT_OK);
     }
 

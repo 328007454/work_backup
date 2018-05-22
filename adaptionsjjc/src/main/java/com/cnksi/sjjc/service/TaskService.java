@@ -7,7 +7,7 @@ import com.cnksi.common.Config;
 import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.SwitchPic;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.TaskStatistic;
 import com.cnksi.sjjc.enmu.InspectionType;
 

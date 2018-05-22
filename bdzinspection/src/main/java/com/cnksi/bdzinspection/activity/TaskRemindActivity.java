@@ -22,24 +22,23 @@ import com.cnksi.bdzinspection.databinding.XsActivityInspectionTaskRemindBinding
 import com.cnksi.bdzinspection.fragment.TaskRemindFragment;
 import com.cnksi.bdzinspection.fragment.TaskRemindFragment.OnFragmentEventListener;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
-import com.cnksi.bdzinspection.model.Bdz;
 import com.cnksi.bdzinspection.model.InspectionPrepared;
-import com.cnksi.bdzinspection.model.Report;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.bdzinspection.model.Task;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.bdzinspection.utils.PermissionUtil;
-import com.cnksi.bdzinspection.utils.SystemConfig;
 import com.cnksi.bdzinspection.ywyth.YWWorkflowActivity;
 import com.cnksi.bdzinspection.ywyth.YunweiReportActivity;
+import com.cnksi.common.SystemConfig;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.sync.KSyncConfig;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.FileUtils;
 import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsview.CustomerDialog;
 
-import org.xutils.db.Selector;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 

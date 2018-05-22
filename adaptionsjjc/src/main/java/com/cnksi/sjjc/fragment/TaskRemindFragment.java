@@ -39,9 +39,9 @@ import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActi
 import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
 import com.cnksi.sjjc.adapter.TaskRemindAdapter;
-import com.cnksi.sjjc.bean.Bdz;
+import com.cnksi.common.model.Bdz;
 import com.cnksi.sjjc.bean.Report;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ContentListDialogBinding;
 import com.cnksi.sjjc.databinding.FragmentListBinding;
 import com.cnksi.sjjc.enmu.InspectionType;

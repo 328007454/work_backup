@@ -8,7 +8,7 @@ import com.cnksi.xscore.xsutils.DateUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
+import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

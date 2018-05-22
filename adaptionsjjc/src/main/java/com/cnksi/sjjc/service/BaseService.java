@@ -9,7 +9,7 @@ import com.cnksi.core.utils.crash.CrashLogUtil;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
-import com.cnksi.sjjc.bean.BaseModel;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.sjjc.util.FunctionUtil;
 
 import org.xutils.DbManager;

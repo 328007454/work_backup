@@ -7,7 +7,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerDataBindingAdapter;
 import com.cnksi.bdzinspection.adapter.holder.ItemHolder;
 import com.cnksi.bdzinspection.databinding.XsItemSpaceSplitBinding;
-import com.cnksi.bdzinspection.model.Device;
+import com.cnksi.common.model.Device;
 
 import java.util.Collection;
 import java.util.HashSet;

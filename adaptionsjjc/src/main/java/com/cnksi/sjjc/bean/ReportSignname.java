@@ -2,6 +2,7 @@ package com.cnksi.sjjc.bean;
 
 import android.text.TextUtils;
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.sjjc.util.FunctionUtils;
 
@@ -127,14 +128,6 @@ public class ReportSignname extends BaseModel {
         this.createTime = DateUtils.getCurrentLongTime();
     }
 
-    public ReportSignname(String reportId, DbModel model) {
-        this.reportId = reportId;
-        this.dpetId = model.getString(Users.DEPT_ID);
-        this.dpetName = model.getString(Department.NAME);
-        this.name = model.getString(Users.USERNAME);
-        this.id = FunctionUtils.getPrimarykey();
-        this.createTime = DateUtils.getCurrentLongTime();
-    }
 
     /**
      * @return the id

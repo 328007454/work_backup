@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.bean;
 
 
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.common.Config;
 
@@ -9,7 +10,7 @@ import org.xutils.db.annotation.Table;
 
 
 @Table(name = "device_unit")
-public class DeviceUnit extends BaseModel{
+public class DeviceUnit extends BaseModel {
 
 	// 设备部件编号
 	public static final String DUID = "duid";

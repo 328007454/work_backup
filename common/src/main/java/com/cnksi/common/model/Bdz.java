@@ -1,14 +1,15 @@
-package com.cnksi.bdzinspection.model;
+package com.cnksi.common.model;
+
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = "bdz")
-public class Bdz extends BaseModel {
+public class Bdz extends BaseModel{
 
     // 变电站编号
     public static final String BDZID = "bdzid";
-    @Column(name = BDZID,isId = true)
+    @Column(name = BDZID, isId = true)
     public String bdzid;
 
     // 名称
@@ -29,22 +30,24 @@ public class Bdz extends BaseModel {
     public static final String DEPTID = "dept_id";
     @Column(name = DEPTID)
     public String deptId;
-
     // 地址
     public static final String ADDR = "addr";
     @Column(name = ADDR)
     public String addr;
 
 
+
     public static final String FOLDER = "folder_name";
     @Column(name = FOLDER)
     public String folder;
-
+    
+    //定期维护定期实验是否是严格标准
     public static final String FINISH_WAY = "maintenance_finish_way";
     @Column(name = FINISH_WAY)
     public String finishWay;
 
-    public  transient boolean isFinish = false;
+    public boolean isFinish = false;
+
 
     public Bdz() {
     }
@@ -53,4 +56,5 @@ public class Bdz extends BaseModel {
         this.bdzid = bdzid;
         this.name = bdzName;
     }
+
 }

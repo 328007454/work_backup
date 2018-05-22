@@ -24,7 +24,7 @@ import com.cnksi.sjjc.adapter.ShowManagerAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryGroup;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityBatteryFinishBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
 import com.cnksi.sjjc.inter.ItemClickListener;

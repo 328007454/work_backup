@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.cnksi.xscore.xsutils.DateUtils;
 
-
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 import org.xutils.db.table.DbModel;

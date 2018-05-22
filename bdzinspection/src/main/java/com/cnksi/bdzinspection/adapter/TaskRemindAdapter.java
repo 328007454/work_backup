@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsInspectionTaskItemBinding;
-import com.cnksi.bdzinspection.model.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;
 import com.cnksi.xscore.xsutils.CoreConfig;
 import com.cnksi.xscore.xsutils.DateUtils;
@@ -19,7 +19,6 @@ import com.cnksi.xscore.xsutils.StringUtils;
 import com.zhy.core.utils.AutoUtils;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;

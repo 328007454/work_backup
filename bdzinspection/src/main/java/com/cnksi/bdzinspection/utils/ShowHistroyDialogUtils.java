@@ -10,7 +10,7 @@ import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.DefectRecord;
 import com.cnksi.bdzinspection.model.DeviceStandards;
-import com.cnksi.bdzinspection.model.Report;
+import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.model.Standards;
 import com.cnksi.bdzinspection.view.ChartDialog;
 import com.cnksi.bdzinspection.view.ChartDialog.LineSet;

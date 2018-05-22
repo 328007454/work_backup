@@ -8,7 +8,7 @@ import com.cnksi.xscore.xsutils.DateUtils;
 import com.cnksi.xscore.xsutils.FileUtils;
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
+import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
 
 /**
  * 巡检标准

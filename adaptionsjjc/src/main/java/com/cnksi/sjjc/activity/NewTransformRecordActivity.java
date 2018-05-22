@@ -16,7 +16,7 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
-import com.cnksi.sjjc.bean.Task;
+import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityDifferentialMotionRecordBinding;
 import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.ReportJzlbyqfjkgService;
