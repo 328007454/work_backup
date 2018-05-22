@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsAddPersonItemBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.model.Users;
+import com.cnksi.common.model.Users;
 import com.zhy.core.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;

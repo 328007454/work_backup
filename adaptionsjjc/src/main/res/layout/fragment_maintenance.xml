@@ -9,13 +9,13 @@
 
         <variable
             name="maintenance"
-            type="com.cnksi.sjjc.bean.TaskStatistic"/>
+            type="com.cnksi.common.model.vo.TaskStatistic"/>
 
         <variable
             name="switchover"
-            type="com.cnksi.sjjc.bean.TaskStatistic"/>
+            type="com.cnksi.common.model.vo.TaskStatistic"/>
 
-        <import type="com.cnksi.sjjc.enmu.InspectionType"/>
+        <import type="com.cnksi.common.enmu.InspectionType"/>
     </data>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"

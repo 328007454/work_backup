@@ -8,18 +8,17 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DensityUtils;
-import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseReportActivity;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
 import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityNewHwcwReportBinding;
 import com.cnksi.sjjc.service.NewHwcwService;
-import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.util.GsonUtil;
 
 import org.xutils.ex.DbException;

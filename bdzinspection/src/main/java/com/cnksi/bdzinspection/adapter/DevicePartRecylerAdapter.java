@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerAdapter;
-import com.cnksi.bdzinspection.model.DefectRecord;
-import com.cnksi.bdzinspection.model.DevicePart;
+import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.DevicePart;
 import com.cnksi.bdzinspection.utils.Config;
 
 import org.xutils.db.table.DbModel;

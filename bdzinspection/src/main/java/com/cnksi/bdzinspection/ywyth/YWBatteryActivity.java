@@ -28,7 +28,7 @@ import com.cnksi.bdzinspection.databinding.XsBatteryInputValueDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.bdzinspection.model.BatteryReport;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DefectLevelUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
@@ -42,7 +42,6 @@ import com.cnksi.xscore.xsutils.PreferencesUtils;
 import com.cnksi.xscore.xsutils.ScreenUtils;
 import com.cnksi.xscore.xsutils.StringUtils;
 
-import org.xutils.db.Selector;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 

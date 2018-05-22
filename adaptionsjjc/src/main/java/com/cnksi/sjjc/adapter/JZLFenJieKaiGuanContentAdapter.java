@@ -4,17 +4,12 @@ import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.CdbhclValue;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.databinding.JzlfenjiekaiguanAdapterBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
-import com.zhy.autolayout.utils.AutoUtils;
+import com.cnksi.common.enmu.InspectionType;
 
 import org.xutils.db.table.DbModel;
 

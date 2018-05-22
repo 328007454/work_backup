@@ -14,17 +14,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.SpacingService;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Transceiver;
 import com.cnksi.sjjc.databinding.ReportGetSendLetterBinding;
-import com.cnksi.sjjc.service.ReportService;
-import com.cnksi.sjjc.service.SpacingService;
 import com.cnksi.sjjc.service.TransceiverService;
 import com.zhy.autolayout.utils.AutoUtils;
 

@@ -11,12 +11,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
@@ -24,14 +28,11 @@ import com.cnksi.sjjc.adapter.ShowManagerAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryGroup;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityBatteryFinishBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.BatteryGroupService;
 import com.cnksi.sjjc.service.BatteryService;
-import com.cnksi.sjjc.service.TaskService;
-import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.OnViewClickListener;
 
@@ -188,7 +189,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
         binding.btnNext.setOnClickListener(view -> {
             cacheBatteryInfor();
             try {
-                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+                TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
             } catch (DbException e) {
                 e.printStackTrace();
             }

@@ -31,7 +31,7 @@ import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectReasonBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentEliminateDefectBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;

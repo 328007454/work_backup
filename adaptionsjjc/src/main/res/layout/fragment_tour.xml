@@ -10,7 +10,7 @@
 
         <variable
             name="result"
-            type="com.cnksi.sjjc.bean.TaskStatistic"/>
+            type="com.cnksi.common.model.vo.TaskStatistic"/>
 
         <variable
             name="rounteCount"
@@ -32,7 +32,7 @@
             name="professionalCount"
             type="String"/>
 
-        <import type="com.cnksi.sjjc.enmu.InspectionType"/>
+        <import type="com.cnksi.common.enmu.InspectionType"/>
     </data>
 
     <LinearLayout

@@ -18,12 +18,22 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BdzAdapter;
@@ -33,24 +43,14 @@ import com.cnksi.sjjc.adapter.HomeSafetyToolAdapter;
 import com.cnksi.sjjc.adapter.HomeTaskItemAdapter;
 import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.AppVersion;
-import com.cnksi.common.model.Bdz;
 import com.cnksi.sjjc.bean.DefectRecord;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ActivityHomePageBinding;
 import com.cnksi.sjjc.databinding.BdzPopwindowBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.service.CopyItemService;
-import com.cnksi.sjjc.service.CopyResultService;
 import com.cnksi.sjjc.service.DefectRecordService;
-import com.cnksi.sjjc.service.DeviceService;
 import com.cnksi.sjjc.service.PlacedService;
-import com.cnksi.sjjc.service.ReportService;
-import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.DialogUtils;
-import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.sjjc.view.Banner;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -141,10 +141,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     if (bdzAdapter == null) {
                         bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
                         bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
-                    } else
+                    } else {
                         bdzAdapter.setList(bdzList);
-                    if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, "")))
+                    }
+                    if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, ""))) {
                         homePageBinding.bdzName.setText(bdzList.get(0).name);
+                    }
                     loadDefect();
                 });
             } catch (Exception e) {
@@ -353,8 +355,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     homePageBinding.serious.setSelected(false);
                     homePageBinding.crisis.setSelected(false);
                     loadDefect();
-                } else
+                } else {
                     ToastUtils.showMessage("该变电站未激活");
+                }
             }
 
             @Override
@@ -370,16 +373,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         if (defectAdapter == null) {
             homePageBinding.common.setSelected(true);
             if (!bdzList.isEmpty()) {
-                if (TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, "")))
+                if (TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, ""))) {
                     currentSelectBdzId = bdzList.get(0).bdzid;
+                }
             }
             defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
             defectAdapter.setItemClickListener(this);
             homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
             homePageBinding.recyDefect.setAdapter(defectAdapter);
         } else {
-            if (TextUtils.isEmpty(currentSelectBdzId) && !bdzList.isEmpty())
+            if (TextUtils.isEmpty(currentSelectBdzId) && !bdzList.isEmpty()) {
                 currentSelectBdzId = bdzList.get(0).bdzid;
+            }
             defectAdapter.setList(mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId));
         }
         showRecyclerDefect(mCommonMap);
@@ -424,7 +429,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         taskList = TaskService.getInstance().
                                 findTaskListByLimit(3, InspectionType.full.name(), InspectionType.routine.name(), InspectionType.special.name(), InspectionType.professional.name());
                         Log.d("TAG", System.currentTimeMillis() - time0 + "time1");
-                        if (taskList != null && taskList.size() > 0)
+                        if (taskList != null && taskList.size() > 0) {
                             for (Task task : taskList) {
                                 try {
                                     Report report = ReportService.getInstance().getReportByTask(task.taskid);
@@ -438,13 +443,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                                         }
                                     }
                                     String arrivedStr = PlacedService.getInstance().findPlacedSpace(report == null ? "" : report.reportid, task.bdzid);
-                                    if (!TextUtils.isEmpty(arrivedStr) && !task.inspection.contains("special"))
+                                    if (!TextUtils.isEmpty(arrivedStr) && !task.inspection.contains("special")) {
                                         str = str + "   " + "到位  ：" + arrivedStr;
+                                    }
                                     task.remark = str;
                                 } catch (DbException e) {
                                     e.printStackTrace();
                                 }
                             }
+                        }
                         Log.d("TAG", System.currentTimeMillis() - time0 + "");
                         break;
                     case maintenance:
@@ -473,17 +480,21 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     @Override
                     public void run() {
                         tasks.clear();
-                        if (temp != null && temp.size() > 0) tasks.addAll(temp);
-                        if (currentDataType == TaskType.this)
+                        if (temp != null && temp.size() > 0) {
+                            tasks.addAll(temp);
+                        }
+                        if (currentDataType == TaskType.this) {
                             taskItemAdapter.setList(tasks);
+                        }
                     }
                 });
             });
         }
 
         void setSelected(boolean isSelect) {
-            if (tv.isSelected() != isSelect)
+            if (tv.isSelected() != isSelect) {
                 tv.setSelected(isSelect);
+            }
         }
 
         void setOnClickListener(View.OnClickListener listener) {
@@ -522,7 +533,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void select(TaskType dataType) {
-        if (currentDataType == dataType) return;
+        if (currentDataType == dataType) {
+            return;
+        }
         homePageBinding.dataContainer.removeAllViews();
         currentDataType = dataType;
         for (TaskType tab : tabs) {
@@ -531,8 +544,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         if (currentDataType.type == TabType.safetytool) {
             taskItemAdapter.removeAllViews();
             safetyToolAdapter.setList(currentDataType.safetyTools);
-        } else
+        } else {
             taskItemAdapter.setList(currentDataType.tasks);
+        }
     }
 
     /**
@@ -544,9 +558,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
         ComponentName componentName;
-        if ("workticket".equals(task.inspection))
+        if ("workticket".equals(task.inspection)) {
             intent.setClass(this, OperateTaskListActivity.class);
-        else {
+        } else {
             intent.setClass(this, com.cnksi.bdzinspection.activity.TaskRemindActivity.class);
             intent.putExtra(Config.IS_FROM_SJJC, true);
         }

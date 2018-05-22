@@ -6,7 +6,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerDataBindingAdapter;
 import com.cnksi.bdzinspection.adapter.holder.ItemHolder;
 import com.cnksi.bdzinspection.databinding.XsItemDeviceParamTypeBinding;
-import com.cnksi.bdzinspection.model.Users;
+import com.cnksi.common.model.Users;
 
 import java.util.Collection;
 import java.util.List;

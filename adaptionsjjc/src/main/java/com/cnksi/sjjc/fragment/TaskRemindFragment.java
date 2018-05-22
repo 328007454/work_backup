@@ -9,6 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.FileUtils;
@@ -16,7 +25,6 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.SqliteUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.AnimalReportActivity;
 import com.cnksi.sjjc.activity.CopyAllValueActivity3;
@@ -39,18 +47,10 @@ import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActi
 import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
 import com.cnksi.sjjc.adapter.TaskRemindAdapter;
-import com.cnksi.common.model.Bdz;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.databinding.ContentListDialogBinding;
 import com.cnksi.sjjc.databinding.FragmentListBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
-import com.cnksi.sjjc.enmu.TaskStatus;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.inter.OnFragmentEventListener;
-import com.cnksi.sjjc.service.BdzService;
-import com.cnksi.sjjc.service.ReportService;
-import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.DialogUtils;
 
@@ -144,11 +144,11 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     WhereBuilder whereBuilder = WhereBuilder.b().expr("1=1").expr("and bdzid in (select bdzid  from bdz where dept_id = '" + deparmentId + "' ) ");
                     if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
                         // 未完成
-                        whereBuilder = whereBuilder.and(Task.STATUS, "<>", Task.TaskStatus.done.name())
+                        whereBuilder = whereBuilder.and(Task.STATUS, "<>", TaskStatus.done.name())
                                 .expr("AND " + Task.SCHEDULE_TIME + ">=" + SqliteUtils.DATE_TIME_START_OF_DAY);
                     } else if (Config.FINISHED_MODEL.equalsIgnoreCase(currentFunctionModel)) {
                         // 完成
-                        whereBuilder = whereBuilder.and(Task.STATUS, "=", Task.TaskStatus.done.name());
+                        whereBuilder = whereBuilder.and(Task.STATUS, "=", TaskStatus.done.name());
                     } else if (Config.OVER_DUE_MODEL.equalsIgnoreCase(currentFunctionModel)) {
                         // 逾期
                         whereBuilder = whereBuilder.expr("AND " + Task.SCHEDULE_TIME + "< " + SqliteUtils.DATE_TIME_START_OF_DAY
@@ -204,12 +204,13 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     mInspectionTaskAdapter.setList(mDataList);
                 }
                 break;
+            default:
         }
     }
 
     private void deleteReport(Task task) {
 
-        if (Task.TaskStatus.done.name().equalsIgnoreCase(task.status)) {
+        if (TaskStatus.done.name().equalsIgnoreCase(task.status)) {
             // 已完成的长按弹出dialog选择是上传或是删除
             showDefectDialog(task);
         } else {

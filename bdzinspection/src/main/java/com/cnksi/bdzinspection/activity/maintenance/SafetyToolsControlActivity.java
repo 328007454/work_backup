@@ -24,7 +24,6 @@ import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolStopBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolTestBinding;
 import com.cnksi.bdzinspection.model.OperateToolResult;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
-import com.cnksi.bdzinspection.model.Users;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.PersonListUtils;
@@ -32,6 +31,7 @@ import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.view.keyboard.QWERKeyBoardUtils;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Department;
+import com.cnksi.common.model.Users;
 import com.cnksi.xscore.xsutils.BitmapUtil;
 import com.cnksi.xscore.xsutils.CToast;
 import com.cnksi.xscore.xsutils.CoreConfig;
@@ -142,8 +142,9 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
             toolsBinding.btOverdate.setPadding(0, 0, 0, 0);
             toolsBinding.btInmonth.setCompoundDrawables(null, null, null, null);
             toolsBinding.btInmonth.setPadding(0, 0, 0, 0);
-            if (null != toolsInforList && !toolsInforList.isEmpty())
+            if (null != toolsInforList && !toolsInforList.isEmpty()) {
                 toolsInforList.clear();
+            }
             toolsBinding.cbAll.setChecked(false);
             if (infoAdapter != null) {
                 isSelectAll = false;
@@ -236,8 +237,9 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                 if (cityModel != null) {
                     city = cityModel.getString("short_name_pinyin");
                     toolPicPath = Config.GONG_QI_JU + city + "/gqj/";
-                    if (!FileUtils.isFolderExists(Config.BDZ_INSPECTION_FOLDER + toolPicPath))
+                    if (!FileUtils.isFolderExists(Config.BDZ_INSPECTION_FOLDER + toolPicPath)) {
                         FileUtils.makeDirectory(Config.BDZ_INSPECTION_FOLDER + toolPicPath);
+                    }
                 }
             }
         });
@@ -318,8 +320,9 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
             @Override
             public void onClick(View v) {
                 stopDialog.dismiss();
-                if (!isBatchOperate)
+                if (!isBatchOperate) {
                     selectmodels.clear();
+                }
             }
         });
         stopBinding.btnSure.setOnClickListener(new View.OnClickListener() {
@@ -390,8 +393,9 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
             public void onClick(View v) {
                 testBinding.txtTips.setVisibility(View.GONE);
                 testDialog.dismiss();
-                if (!isBatchOperate)
+                if (!isBatchOperate) {
                     selectmodels.clear();
+                }
             }
         });
         testBinding.btnSure.setOnClickListener(new View.OnClickListener() {
@@ -564,10 +568,11 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                                 CToast.showShort(currentActivity, "请配置试验周期");
                                 continue;
                             }
-                            if (dbModel.getString("period").equalsIgnoreCase("0"))
+                            if (dbModel.getString("period").equalsIgnoreCase("0")) {
                                 nextTime = null;
-                            else
+                            } else {
                                 nextTime = DateUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
+                            }
                             XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status", Config.ToolStatus.normal.name()), new KeyValue("isnormal", Config.ToolStatus.normal.name()),
                                     new KeyValue("lastly_check_time", lastTime), new KeyValue("next_check_time", nextTime));
                         } else if (testBinding.rbUnnormal.isChecked()) {
@@ -790,8 +795,9 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
 
     @Override
     public void getSelectPersons(List<Users> userses) {
-        if (userses == null)
+        if (userses == null) {
             return;
+        }
         List<String> usersList = new ArrayList<>();
         String userName = "";
         for (Users users : userses) {
@@ -801,10 +807,11 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
             userName = StringUtils.ArrayListToString(usersList);
             PreferencesUtils.put(getApplicationContext(), Config.SELECT_PERSONS, userName);
         }
-        if (stopClick)
+        if (stopClick) {
             stopBinding.etInputStopperson.setText(userName);
-        else
+        } else {
             testBinding.etInputPerson.setText(userName);
+        }
 
         PersonListUtils.getInsance().disMissPopWindow();
 

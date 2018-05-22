@@ -7,7 +7,7 @@ import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.common.Config;
-import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.common.enmu.InspectionType;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;

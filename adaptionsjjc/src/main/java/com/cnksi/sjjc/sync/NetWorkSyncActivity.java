@@ -24,7 +24,7 @@ import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.common.model.Department;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
-import com.cnksi.sjjc.service.DepartmentService;
+import com.cnksi.common.daoservice.DepartmentService;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;

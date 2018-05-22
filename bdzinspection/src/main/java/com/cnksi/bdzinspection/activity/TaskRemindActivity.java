@@ -16,7 +16,6 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.DepartmentService;
 import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionTaskRemindBinding;
 import com.cnksi.bdzinspection.fragment.TaskRemindFragment;
@@ -30,6 +29,7 @@ import com.cnksi.bdzinspection.utils.PermissionUtil;
 import com.cnksi.bdzinspection.ywyth.YWWorkflowActivity;
 import com.cnksi.bdzinspection.ywyth.YunweiReportActivity;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
@@ -266,7 +266,9 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         for (int i = 0, count = mFragmentList.size(); i < count; i++) {
             if (i == currentSelectedPosition) {
                 mFragmentList.get(i).isRepeatLoad = true;
-            } else mFragmentList.get(i).setIsFirstLoad(true);
+            } else {
+                mFragmentList.get(i).setIsFirstLoad(true);
+            }
             mFragmentList.get(i).updateTask(true);
         }
         isNeedUpdateTaskStatus = false;
@@ -379,10 +381,11 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                     }
                     if (containsUser && !TextUtils.isEmpty(reportId)) {
                         PreferencesUtils.put(currentActivity, Config.CURRENT_REPORT_ID, reportId);
-                        if (mTask.inspection.contains("special"))
+                        if (mTask.inspection.contains("special")) {
                             intent.setClass(currentActivity, ParticularDeviceListActivity.class);
-                        else
+                        } else {
                             intent.setClass(currentActivity, FullDeviceListActivity.class);
+                        }
                     } else {
                         intent.setClass(currentActivity, InspectionReadyActivity.class);
                     }

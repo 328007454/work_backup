@@ -1,10 +1,10 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.bdzinspection.model.SwitchPic;
+import com.cnksi.common.model.SwitchPic;
 import com.cnksi.common.model.Task;
 import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.Config.TaskStatus;

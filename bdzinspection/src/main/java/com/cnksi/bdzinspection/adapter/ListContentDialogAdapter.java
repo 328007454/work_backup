@@ -10,7 +10,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogContentChildItemBinding;
 import com.cnksi.bdzinspection.model.Battery;
-import com.cnksi.bdzinspection.model.DevicePart;
+import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.model.Spacing;
 import com.zhy.core.utils.AutoUtils;
 

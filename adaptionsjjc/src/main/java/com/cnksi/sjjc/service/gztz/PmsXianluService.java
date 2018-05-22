@@ -1,7 +1,7 @@
 package com.cnksi.sjjc.service.gztz;
 
 import com.cnksi.sjjc.bean.gztz.PmsXianlu;
-import com.cnksi.sjjc.service.BaseService;
+import com.cnksi.common.daoservice.BaseService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.ex.DbException;

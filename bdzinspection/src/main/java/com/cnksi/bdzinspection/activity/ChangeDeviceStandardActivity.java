@@ -23,7 +23,7 @@ import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddDefectDefineBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.bdzinspection.model.DeviceStandards;
+import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.Config.InspectionType;

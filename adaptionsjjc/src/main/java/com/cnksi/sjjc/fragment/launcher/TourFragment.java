@@ -1,9 +1,7 @@
 package com.cnksi.sjjc.fragment.launcher;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,13 +14,12 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.nari.NariActivity;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.common.model.Task;
-import com.cnksi.sjjc.bean.TaskStatistic;
+import com.cnksi.common.model.vo.TaskStatistic;
 import com.cnksi.sjjc.databinding.FragmentTourBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
-import com.cnksi.sjjc.service.TaskService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.daoservice.TaskService;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -93,8 +90,9 @@ public class TourFragment extends BaseCoreFragment {
                     @Override
                     public void run() {
                         tourBinding.progress.setProgress(i <= percent ? i++ : percent);
-                        if (i <= percent)
+                        if (i <= percent) {
                             mHandler.postDelayed(this, 100);
+                        }
                     }
                 });
             }

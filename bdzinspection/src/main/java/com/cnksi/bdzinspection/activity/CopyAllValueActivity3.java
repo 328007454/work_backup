@@ -27,7 +27,7 @@ import com.cnksi.bdzinspection.databinding.XsDialogCopyTipsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
-import com.cnksi.bdzinspection.model.DefectRecord;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.Config;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;

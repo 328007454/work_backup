@@ -8,27 +8,28 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.ReportSignname;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.sjjc.bean.ReportSignname;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzRecordBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.service.ReportService;
-import com.cnksi.sjjc.service.TaskService;
-import com.cnksi.sjjc.service.UserService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.util.DialogUtils;
 
@@ -166,13 +167,15 @@ public class GZTZRecordActivity extends BaseActivity {
             }
         }
         person.deleteCharAt(person.length() - 1);
-        if (ids.length() > 0) ids.deleteCharAt(ids.length() - 1);
+        if (ids.length() > 0) {
+            ids.deleteCharAt(ids.length() - 1);
+        }
         sbjcGztzjl.jcr = person.toString();
         sbjcGztzjl.jcrK = ids.toString();
         sbjcGztzjl.jcrq = DateUtils.getCurrentLongTime();
         try {
             GZTZSbgzjlService.getInstance().saveOrUpdate(sbjcGztzjl);
-            TaskService.getInstance().update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, Task.TaskStatus.done.name()));
+            TaskService.getInstance().update(Task.class, WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
             ReportService.getInstance().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", currentReportId),
                     new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()), new KeyValue(Report.PERSONS, person.toString()));
         } catch (DbException e) {

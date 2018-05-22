@@ -86,6 +86,13 @@ public class Report extends BaseModel {
     public String persons;
     @Column(name = TEMPERATURE)
     public String temperature;
+    /**
+     * 是否测试内阻(只适用于蓄电池测试)<br>
+     * 0/不测，1/测试内阻
+     */
+    public static final String NZJC = "nzjc";
+    @Column(name = NZJC)
+    public int resistanceIsCheck;
     @Column(name = HUMIDITY)
     public String humidity;
     @Column(name = TOOLS)

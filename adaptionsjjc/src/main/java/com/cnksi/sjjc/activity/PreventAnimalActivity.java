@@ -16,7 +16,7 @@ import com.cnksi.sjjc.adapter.ExamineProcessAdapter;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.databinding.ActivityPreventAnimalBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;

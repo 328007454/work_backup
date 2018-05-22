@@ -2,6 +2,8 @@ package com.cnksi.sjjc.bean;
 
 import android.text.TextUtils;
 
+import com.cnksi.common.model.CopyItem;
+
 import java.util.List;
 
 /**

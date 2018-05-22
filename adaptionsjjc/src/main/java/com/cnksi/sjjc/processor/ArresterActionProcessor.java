@@ -4,19 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Report;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.view.ChartDialog;
 import com.cnksi.sjjc.activity.CopyAllValueActivity3;
 import com.cnksi.sjjc.bean.DefectRecord;
-import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.DeviceStandards;
-import com.cnksi.sjjc.bean.Report;
 import com.cnksi.sjjc.bean.Standards;
-import com.cnksi.sjjc.service.CopyItemService;
-import com.cnksi.sjjc.service.CopyResultService;
-import com.cnksi.sjjc.service.DeviceService;
+import com.cnksi.sjjc.view.ChartDialog;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -98,10 +98,11 @@ public class ArresterActionProcessor extends CopyDataInterface {
         String unit = mStandardModel.getString(Standards.UNIT);
         unit = TextUtils.isEmpty(unit) ? "数值" : "数值(" + unit + ")";
         String line1 = "";
-        if (mStandardModel.getString(Standards.DESCRIPTION).contains("电流"))
+        if (mStandardModel.getString(Standards.DESCRIPTION).contains("电流")) {
             line1 = "泄露电流";
-        else
+        } else {
             line1 = "指示值";
+        }
         ChartDialog.getInstance().showLineChartDialog(activity, activity.getString(R.string.data_history_record_format_str,
                 mStandardModel.getString(DeviceStandards.DESCRIPTION)), "时间", unit, xLabe, line1, yValues, R.color.global_base_color);
     }
@@ -111,10 +112,11 @@ public class ArresterActionProcessor extends CopyDataInterface {
         HashMap<String, Boolean> copyMap = new HashMap<String, Boolean>();
         try {
             List<DbModel> dataList = DeviceService.getInstance().getCopyDeviceDbModels(reportId, bdzId, type, null);
-            if (dataList != null)
+            if (dataList != null) {
                 for (DbModel m : dataList) {
                     copyMap.put(m.getString(Device.DEVICEID), true);
                 }
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -124,7 +126,7 @@ public class ArresterActionProcessor extends CopyDataInterface {
     @Override
     public void finishTask(String taskId, String remark) throws DbException {
         super.finishTask(taskId, remark);
-        CustomApplication.getInstance().getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.JCQK, remark));
+        ReportService.getInstance().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.JCQK, remark));
     }
 
     @Override

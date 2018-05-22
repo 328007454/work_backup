@@ -17,13 +17,18 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.Report;
+import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
@@ -34,20 +39,15 @@ import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryGroup;
 import com.cnksi.sjjc.bean.BatteryInstrument;
 import com.cnksi.sjjc.bean.BatteryRecord;
-import com.cnksi.sjjc.bean.Report;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.databinding.ActivityBatteryBinding;
 import com.cnksi.sjjc.databinding.DialogTipsBinding;
-import com.cnksi.sjjc.enmu.InspectionType;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.BatteryGroupService;
 import com.cnksi.sjjc.service.BatteryInstrumentService;
 import com.cnksi.sjjc.service.BatteryRecordService;
 import com.cnksi.sjjc.service.BatteryService;
-import com.cnksi.sjjc.service.ReportService;
 import com.cnksi.sjjc.service.TaskExtendService;
-import com.cnksi.sjjc.service.TaskService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.KeyBoardUtils;
 import com.cnksi.sjjc.util.StringUtils;
@@ -435,9 +435,13 @@ public class BatteryTestActivity extends BaseActivity {
         int batteryCodeCount = currentBattery.amount;
         batteryCodeList.clear();
         for (int code = 1; code <= batteryCodeCount; code++) {
-            if (code < 10) batteryCodeList.add("00" + code);
-            else if (code < 100) batteryCodeList.add("0" + code);
-            else batteryCodeList.add("" + code);
+            if (code < 10) {
+                batteryCodeList.add("00" + code);
+            } else if (code < 100) {
+                batteryCodeList.add("0" + code);
+            } else {
+                batteryCodeList.add("" + code);
+            }
         }
         batteryCodeAdapter.notifyDataSetChanged();
         loadCurrentBatteryRecord();
@@ -450,8 +454,9 @@ public class BatteryTestActivity extends BaseActivity {
         BatteryGroup group = batteryGroupList.get(currentBatterId);
         if (null == group) {
             group = BatteryGroupService.getInstance().getBatteryGroup(currentReportId, currentBatterId);
-            if (null == group)
+            if (null == group) {
                 group = new BatteryGroup(currentReportId, currentBdzId, currentBdzName, currentBatterId);
+            }
             batteryGroupList.put(currentBatterId, group);
         }
         binding.etCurrentTempreture.setText(com.cnksi.sjjc.util.StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
@@ -558,7 +563,9 @@ public class BatteryTestActivity extends BaseActivity {
     }
 
     private Double toDouble(String s) {
-        if (TextUtils.isEmpty(s.trim())) return null;
+        if (TextUtils.isEmpty(s.trim())) {
+            return null;
+        }
         try {
             return Double.parseDouble(s);
         } catch (Exception e) {
@@ -629,9 +636,9 @@ public class BatteryTestActivity extends BaseActivity {
 
     private void initOnClick() {
         mTitleBinding.tvRight.setOnClickListener(view -> {
-            if (cacheBatteryInfor())
+            if (cacheBatteryInfor()) {
                 saveOrUpdateReport();
-            else {
+            } else {
                 ToastUtils.showMessage("基本信息输入有误，请核对");
                 return;
             }

@@ -1,5 +1,6 @@
 package com.cnksi.sjjc.service;
 
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.sjjc.bean.DevicePart;
 import com.cnksi.sjjc.bean.DeviceUnit;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @author terry
  *
  */
-public class DevicePartService extends  BaseService<DeviceUnit> {
+public class DevicePartService extends BaseService<DeviceUnit> {
 
 	public static DevicePartService mInstance;
 

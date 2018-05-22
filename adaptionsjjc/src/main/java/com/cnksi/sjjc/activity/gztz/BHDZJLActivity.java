@@ -12,7 +12,7 @@ import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjlBhdzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzjlBinding;
-import com.cnksi.sjjc.enmu.PMSDeviceType;
+import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.gztz.GZTZBhdzjlService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.view.gztz.BhdzjlGroup;
