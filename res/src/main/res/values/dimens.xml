@@ -491,7 +491,6 @@
     <dimen name="xs_czp_download_text_size">23sp</dimen>
     <dimen name="xs_czp_tips_download_padding_bottom">35dp</dimen>
     <dimen name="xs_czp_start_button_width">90dp</dimen>
-    <dimen name="xs_tab_strip_text_size">20sp</dimen>
     <!-- 普通文字大小 -->
     <dimen name="xs_tv_text_size">42px</dimen>
     <dimen name="xs_item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
@@ -594,4 +593,42 @@
     <dimen name="xs__39px">39px</dimen>
     <dimen name="xs__42px">42px</dimen>
     <dimen name="xs__54px">54px</dimen>
+
+
+
+    <!-- 下拉刷新 -->
+    <dimen name="xs_refresh_header_padding">20dp</dimen>
+    <dimen name="xs_refresh_progress_margin_left">60dp</dimen>
+    <dimen name="xs_refresh_text_size">16sp</dimen>
+    <dimen name="xs_refresh_state_icon_margin_right">8dp</dimen>
+    <!-- ZBar -->
+    <dimen name="xs_top_mask_height">100dp</dimen>
+    <dimen name="xs_capture_crop_width_height">200dp</dimen>
+    <dimen name="xs_scan_tips_margin_top">50dp</dimen>
+    <dimen name="xs_scan_tips_text_size">16sp</dimen>
+
+    <!-- New CustomerDialog -->
+    <dimen name="xs_dialog_title_minheight">40dp</dimen>
+    <dimen name="xs_dialog_title_text_size">18sp</dimen>
+    <dimen name="xs_dialog_content_minheight">30dp</dimen>
+    <dimen name="xs_dialog_content_margin">8dp</dimen>
+    <dimen name="xs_dialog_button_minheight">40dp</dimen>
+    <dimen name="xs_dialog_divider_margin_top">8dp</dimen>
+    <dimen name="xs_dialog_list_item_margin_top">4dp</dimen>
+    <dimen name="xs_dialog_button_text_size">16sp</dimen>
+    <dimen name="xs_dialog_content_text_size">18sp</dimen>
+    <dimen name="xs_dialog_progress_bar_minheight">12dp</dimen>
+    <dimen name="xs_progress_bar_textsize">12sp</dimen>
+    <dimen name="xs_tab_strip_text_size">20sp</dimen>
+    <dimen name="xs_tab_strip_text_size_1">52px</dimen>
+    <!-- CustomerDialog -->
+    <dimen name="xs_dialog_content_margin_px">24px</dimen>
+
+    <!-- sidebar 宽度 -->
+    <dimen name="xs_side_bar_width">20dp</dimen>
+    <dimen name="xs_side_bar_text_size">14sp</dimen>
+    <dimen name="xs_dialog_button_minheight_px">120px</dimen>
+    <dimen name="xs_dialog_title_text_size_px">48px</dimen>
+    <dimen name="xs_dialog_divider_margin_top_px">24px</dimen>
+    <dimen name="xs_dialog_button_text_size_px">44px</dimen>
 </resources>

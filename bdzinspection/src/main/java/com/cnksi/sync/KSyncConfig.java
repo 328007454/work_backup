@@ -2,13 +2,12 @@ package com.cnksi.sync;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 
 import com.cnksi.bdzinspection.BuildConfig;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.common.Config;
-import com.cnksi.xscore.xscommon.DeviceUtils;
+import com.cnksi.core.utils.DeviceUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;

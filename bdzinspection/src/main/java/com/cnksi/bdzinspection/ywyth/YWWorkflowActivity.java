@@ -17,8 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -32,18 +30,14 @@ import com.cnksi.bdzinspection.databinding.XsRecordAudioDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsYunweiliuchengAdapterBinding;
 import com.cnksi.bdzinspection.model.PlanProcessStatus;
 import com.cnksi.bdzinspection.model.Process;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
-import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.core.utils.DensityUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
-
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.swipemenulist.SwipeMenu;
 import com.cnksi.core.view.swipemenulist.SwipeMenuCreator;
 import com.cnksi.core.view.swipemenulist.SwipeMenuDragSortListView.OnMenuItemClickListener;
@@ -314,7 +308,7 @@ public class YWWorkflowActivity extends BaseActivity {
             private void createMenu(SwipeMenu menu) {
                 SwipeMenuItem item1 = new SwipeMenuItem(getApplicationContext());
                 item1.setBackground(R.drawable.xs_swipe_menu_record_defect_background_selector);
-                item1.setWidth(DensityUtils.dp2px(currentActivity, 75));
+                item1.setWidth(AutoUtils.getPercentWidthSize( 75));
                 item1.setIcon(R.drawable.xs_icon_paizhao);
                 item1.setTitle(R.string.xs_yw_take_picture);
                 item1.setTitleColor(getResources().getColor(android.R.color.white));
@@ -323,7 +317,7 @@ public class YWWorkflowActivity extends BaseActivity {
 
                 SwipeMenuItem item2 = new SwipeMenuItem(getApplicationContext());
                 item2.setBackground(R.drawable.xs_swipe_menu_reference_photo_background_selector);
-                item2.setWidth(DensityUtils.dp2px(currentActivity, 75));
+                item2.setWidth(AutoUtils.getPercentWidthSize( 75));
                 item2.setIcon(R.drawable.xs_icon_luying);
                 item2.setTitle(R.string.xs_yw_take_voice);
                 item2.setTitleColor(getResources().getColor(android.R.color.white));
@@ -332,7 +326,7 @@ public class YWWorkflowActivity extends BaseActivity {
 
                 SwipeMenuItem item3 = new SwipeMenuItem(getApplicationContext());
                 item3.setBackground(R.drawable.xs_swipe_menu_reference_standard_background_selector);
-                item3.setWidth(DensityUtils.dp2px(currentActivity, 75));
+                item3.setWidth(AutoUtils.getPercentWidthSize( 75));
                 item3.setIcon(R.drawable.xs_icon_luxiang);
                 item3.setTitle(R.string.xs_yw_take_vedio);
                 item3.setTitleColor(getResources().getColor(android.R.color.white));

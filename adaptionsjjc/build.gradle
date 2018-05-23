@@ -151,7 +151,7 @@ dependencies {
     compile "com.scwang.smartrefresh:SmartRefreshLayout:$SmartRefreshLayout_version"
     compile "com.android.support:multidex:$multidex_version"
     implementation files("libs/commons-codec-1.11.jar")
-    compile "net.zetetic:android-database-sqlcipher:$sqlcipher_version"
+
 
     configurations.all {
         resolutionStrategy {

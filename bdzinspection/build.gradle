@@ -37,7 +37,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     compile fileTree(include: '*.jar', dir: 'libs')
-    compile project(':core2.0')
     compile project(':pickerview')
     compile 'com.cnksi:bdloc:1.1.7-3'
     compile 'me.grantland:autofittextview:0.2.1'

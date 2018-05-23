@@ -91,7 +91,9 @@ public class TTSUtils {
 
 
     public boolean isConnect() {
-        if (!isConnect) CToast.showShort(XunshiApplication.getAppContext(),"没有连接到TTS服务。");
+        if (!isConnect) {
+            ToastUtils.showMessage("没有连接到TTS服务。");
+        }
         return isConnect;
     }
 }

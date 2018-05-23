@@ -12,6 +12,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivitySignNameBinding;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.LinePathView;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;

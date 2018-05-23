@@ -47,7 +47,7 @@
                 android:layout_above="@+id/f"
                 android:layout_toEndOf="@+id/ib_change_loginway"
                 android:gravity="center"
-                android:text="@string/app_name"
+                android:text="@string/app_bdyw"
                 android:textColor="@android:color/white"
                 android:textSize="77px"
                 android:textStyle="bold"/>

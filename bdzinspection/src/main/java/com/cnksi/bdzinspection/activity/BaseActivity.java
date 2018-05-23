@@ -595,9 +595,9 @@ public class BaseActivity extends BaseCoreActivity {
         mPagerTabStrip.setTextSize(textSize);
 //        mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, currentActivity.getResources().getDimensionPixelOffset(R.dimen.tab_strip_text_size), mDisplayMetrics));
         // 设置Tab Indicator的颜色
-        mPagerTabStrip.setIndicatorColor(currentActivity.getResources().getColor(com.cnksi.xscore.R.color.xs_tab_strip_text_color));
+        mPagerTabStrip.setIndicatorColor(currentActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-        mPagerTabStrip.setSelectedTextColor(currentActivity.getResources().getColor(com.cnksi.xscore.R.color.xs_tab_strip_text_color));
+        mPagerTabStrip.setSelectedTextColor(currentActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
         // 取消点击Tab时的背景色
         mPagerTabStrip.setTabBackground(0);
     }

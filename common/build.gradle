@@ -48,7 +48,11 @@ dependencies {
     androidTestApi "com.android.support.test:runner:$runner_version"
     androidTestApi "com.android.support.test.espresso:espresso-core:$espresso_core_version"
     api "com.cnksi:core:$ksi_core_version"
+    api "net.zetetic:android-database-sqlcipher:$sqlcipher_version"
     api "com.cnksi:bdloc:$ksi_bdloc"
+    api ("com.cnksi:ksynclib:$ksi_sync_version") {
+        exclude module: 'fastjson'
+    }
     api project(":tts")
     api project(":res")
     debugApi "com.cnksi:debug-db:1.0.5"

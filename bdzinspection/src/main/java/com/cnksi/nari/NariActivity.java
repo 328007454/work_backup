@@ -446,7 +446,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 i++;
                 if (i <= bdPackages.length) {
                     final int finalI = i;
-                    runOnUiThread(() -> ((TextView) dialog.findViewById(com.cnksi.xscore.R.id.tv_tips)).setText("正在下载第" + finalI + "个, 共" + bdPackages.length + "个..."));
+                    runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.tv_tips)).setText("正在下载第" + finalI + "个, 共" + bdPackages.length + "个..."));
                 }
             }
             runOnUiThread(() -> adapter.notifyDataSetChanged());
