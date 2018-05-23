@@ -22,7 +22,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityChangeStandardBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddDefectDefineBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
@@ -62,7 +62,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     private ListContentDialogAdapter mListContentDialogAdapter = null;
     private Dialog mAddDefectDefineDialog = null;
     private String currentStandardId = "";
-    private HashMap<String, ArrayList<DefectDefine>> groupMap = null;
+    private HashMap<String, ArrayList<Defect>> groupMap = null;
     private DeviceStandards mCurrentDeviceStandard;
     private String currentImageName;
     // 是否是删除巡检标准
@@ -70,7 +70,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     // 是否是新增巡检标准
     private boolean isAddDeviceStandard = false;
     private boolean isAddDefectDefine = false;
-    private DefectDefine mCurrentDefectDefine = null;
+    private Defect mCurrentDefectDefine = null;
     private String mCurrentDefectLevel = "";
     private XsActivityChangeStandardBinding binding;
 
@@ -267,7 +267,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
 
 
     @Override
-    public void OnAdapterViewClick(View view, String defectLevel, DefectDefine define) {
+    public void OnAdapterViewClick(View view, String defectLevel, Defect define) {
         // TODO:删除 弹出确认提示框
         isDeleteDeviceStandard = false;
         mCurrentDefectDefine = define;
@@ -416,7 +416,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         } else {
             // TODO:删除缺陷定义
             if (DefectDefineService.getInstance().deleteDefectDefine(mCurrentDefectDefine)) {
-                List<DefectDefine> mDefectDefineList = groupMap.get(mCurrentDefectLevel);
+                List<Defect> mDefectDefineList = groupMap.get(mCurrentDefectLevel);
                 if (mDefectDefineList != null && mDefectDefineList.size() > 0) {
                     int index = -1;
                     for (int i = 0, count = mDefectDefineList.size(); i < count; i++) {
@@ -483,9 +483,9 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                 ToastUtils.showMessage( R.string.xs_please_input_defect_content_str);
                 return;
             }
-            DefectDefine mDefectDefine = null;
+            Defect mDefectDefine = null;
             if (isAddDefectDefine) {
-                mDefectDefine = new DefectDefine();
+                mDefectDefine = new Defect();
                 mDefectDefine.staid = currentStandardId;
                 mDefectDefine.description = description;
                 mDefectDefine.level = defectLevel;

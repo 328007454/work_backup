@@ -9,32 +9,26 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.SpaceSplitAdapter;
 import com.cnksi.bdzinspection.adapter.base.GridSpacingItemDecoration;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.common.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpaceSplitBinding;
-import com.cnksi.common.model.CopyItem;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.SpacingService;
+import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.common.ExecutorManager;
-import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 
-import org.xutils.DbManager;
-import org.xutils.common.util.KeyValue;
-import org.xutils.db.sqlite.SqlInfo;
-import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @version 1.0
@@ -160,65 +154,7 @@ public class SpaceSplitActivity extends TitleActivity {
                 copyItemIds.append("'").append(item.id).append("',");
             }
         }
-        DbManager manager = XunshiApplication.getDbUtils();
-        try {
-            manager.beginTransaction();
-            //复制一个新间隔
-            String sql = "select * from spacing where spid=?";
-            SqlInfo sqlInfo = new SqlInfo(sql);
-            sqlInfo.addBindArg(new KeyValue("", spacing.pid));
-            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
-            StringBuilder insertSql = new StringBuilder("INSERT INTO spacing( ");
-            StringBuilder values = new StringBuilder();
-            for (Map.Entry<String, String> entry : model.getDataMap().entrySet()) {
-                String k = entry.getKey();
-                String v = entry.getValue();
-                insertSql.append(k).append(",");
-                if ("spid".equals(k)) {
-                    v = spacing.spid;
-                }
-                if ("pid".equals(k)) {
-                    v = spacing.pid;
-                }
-                if ("name".equals(k)) {
-                    v = spacing.name;
-                }
-                if ("device_type".equals(k)) {
-                    v = spacing.deviceType;
-                }
-                if ("type".equals(k)) {
-                    v = "spacing_self";
-                }
-                if ("update_time".equals(k) || "create_time".equals(k)) {
-                    v = DateUtils.getCurrentLongTime();
-                }
-                if (v == null) {
-                    values.append("null").append(",");
-                } else {
-                    values.append("'").append(v).append("',");
-                }
-            }
-            insertSql.deleteCharAt(insertSql.length() - 1).append(") VALUES(").append(values.deleteCharAt(values.length() - 1).toString()).append(");");
-            //保存一个新间隔
-            manager.execNonQuery(insertSql.toString());
-
-            //更新设备表的SPID
-             sql = "update device set spid='" + newSpid + "' where deviceid in(" + deviceIds.toString() + ")";
-            manager.execNonQuery(sql);
-            //更新抄录表的SPID
-            if (copyItemIds.length() > 0) {
-                copyItemIds.deleteCharAt(copyItemIds.length() - 1);
-                sql = "update copy_item set spid='" + newSpid + "' where id in(" + copyItemIds.toString() + ")";
-                manager.execNonQuery(sql);
-            }
-            manager.setTransactionSuccessful();
-            return true;
-        } catch (DbException e) {
-            e.printStackTrace();
-        } finally {
-            manager.endTransaction();
-        }
-        return false;
+        return SpacingService.getInstance().copySpacing(spacing,newSpid,copyItemIds,deviceIds);
     }
 
     @Override

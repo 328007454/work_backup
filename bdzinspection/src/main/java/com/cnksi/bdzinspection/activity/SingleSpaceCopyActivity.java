@@ -301,7 +301,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
                 searchDefect();
                 final List<TreeNode> newData = copyHelper.loadItem();
                 // 设置当前抄录设备集合,判断当前设备是否抄录
-                HashSet<String> copyDeviceList = CopyResultService.getInstance().getCopyDeviceIdList(currentReportId, currentInspectionType);
+                HashSet<String> copyDeviceList = CopyResultService.getInstance().getCopyDeviceIdListIds(currentReportId, currentInspectionType);
                 adapter.setCopyDeviceModel(copyDeviceList);
                 mHandler.post(new Runnable() {
                     @Override

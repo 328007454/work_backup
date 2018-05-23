@@ -23,12 +23,12 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.DefectContentAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
-import com.cnksi.bdzinspection.daoservice.DeviceService;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectSourceBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentTrackDefectBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
@@ -413,7 +413,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
     XsFragmentRecordDefectContentDialogBinding contentDialogBinding;
 
     private void showDefectContentDialog(String standardId) {
-        HashMap<String, ArrayList<DefectDefine>> dataMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
+        HashMap<String, ArrayList<Defect>> dataMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
         contentDialogBinding = XsFragmentRecordDefectContentDialogBinding.inflate(getActivity().getLayoutInflater());
         if (dataMap != null && !dataMap.isEmpty()) {
             if (mDefectContentDialog == null) {
@@ -621,7 +621,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
     }
 
     @Override
-    public void OnAdapterViewClick(View view, DefectDefine define) {
+    public void OnAdapterViewClick(View view, Defect define) {
         int i = view.getId();
         if (i == R.id.img_child_item_bt) {
             String content = define.reference;

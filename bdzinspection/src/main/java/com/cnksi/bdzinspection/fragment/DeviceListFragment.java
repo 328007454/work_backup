@@ -25,10 +25,9 @@ import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.daoservice.DeviceService;
-import com.cnksi.bdzinspection.daoservice.DeviceService.DefectInfo;
 import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
-import com.cnksi.bdzinspection.daoservice.SpacingService;
+import com.cnksi.bdzinspection.daoservice.SpacingGroupService;
+import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsDialogCopySnwsdBinding;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
 import com.cnksi.bdzinspection.model.SpacingGroup;
@@ -42,7 +41,9 @@ import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.model.Spacing;
+import com.cnksi.common.model.vo.DefectInfo;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.GPSUtils;
@@ -252,7 +253,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
 
     private void initSpacingGroup() {
         if ("second".equals(currentFunctionModel) && spaceGroupMap == null) {
-            List<SpacingGroup> spacingGroups = SpacingService.getInstance().findSpacingGroup(currentBdzId);
+            List<SpacingGroup> spacingGroups = SpacingGroupService.getInstance().findSpacingGroup(currentBdzId);
             spaceGroupMap = new LinkedHashMap<>();
             for (SpacingGroup spacingGroup : spacingGroups) {
                 spaceGroupMap.put(spacingGroup.id, new SpaceGroupItem(spacingGroup));
@@ -267,7 +268,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         adapter.setKeyWord(keyWord);
         adapter.setCurrentInspection(currentInspectionType);
         if (spacingLastly == null) {
-            spacingLastly = SpacingService.getInstance().findSpacingLastly(currentAcounts, currentReportId, currentFunctionModel);
+            spacingLastly = SpacingLastlyService.getInstance().findSpacingLastly(currentAcounts, currentReportId, currentFunctionModel);
         }
         getSpaceLastly();
         // 查询设备及设备所在间隔

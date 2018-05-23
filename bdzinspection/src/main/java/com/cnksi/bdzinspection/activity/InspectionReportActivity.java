@@ -23,25 +23,27 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.RoadMapAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.common.daoservice.CopyItemService;
-import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
-import com.cnksi.bdzinspection.daoservice.ReportService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsHistoryDataDialogBinding;
 import com.cnksi.bdzinspection.model.Placed;
-import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.ReportSignnameService;
+import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
+import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
@@ -179,68 +181,57 @@ public class InspectionReportActivity extends BaseActivity {
 
     private void initialData() {
 
-        ExecutorManager.executeTask(new Runnable() {
+        ExecutorManager.executeTask(() -> {
+            // 查询report数据
+            report = ReportService.getInstance().getReportById(currentReportId);
 
-            @Override
-            public void run() {
-                // 查询report数据
-                try {
-                    report = XunshiApplication.getDbUtils().findById(Report.class, currentReportId);
-                } catch (DbException e) {
-                    e.printStackTrace(System.out);
-                }
+            // 查询状态
+            status = TaskService.getInstance().getTaskStatus(currentTaskId);
+            // 查询数据抄录数量
 
-                // 查询状态
-                status = TaskService.getInstance().getTaskStatus(currentTaskId);
-                // 查询数据抄录数量
-
-                if (!isParticularInspection()) {
-                    copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-                    totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
-                }
-                // 查询本次发现的缺陷
-                mNewDefectList = DefectRecordService.getInstance().findCurrentTaskNewDefectList(currentBdzId,
-                        currentReportId);
-                // 查询本次跟踪的缺陷
-                mTrackDefectList = DefectRecordService.getInstance().findCurrentTaskTrackDefectList(currentBdzId,
-                        currentReportId);
-                // 查询本次消除的缺陷
-                mEliminateDefectList = DefectRecordService.getInstance()
-                        .findCurrentTaskEliminateDefectList(currentBdzId, currentReportId);
-                try {
-                    mReportSignnameListCzr = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId,
-                            Role.worker.name());
-                    mReportSignnameListFzr = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId,
-                            Role.leader.name());
-                } catch (DbException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
-
-                /** 查询间隔展示巡视路线图 **/
-                if (currentInspectionType.equals(InspectionType.full.name())
-                        || currentInspectionType.equals(InspectionType.day.name())
-                        || currentInspectionType.equalsIgnoreCase(InspectionType.professional.name())
-                        || currentInspectionType.equals(InspectionType.routine.name())) {
-                    String sort = "one".equals(fucntionModel) ? Spacing.SORT_ONE
-                            : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
-                    currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
-
-                    try {
-                        Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.BDZID, "=", currentBdzId)
-                                .expr("and spid in (select distinct(spid) spid from device where device_type = '" + fucntionModel
-                                        + "' and bdzid = '" + currentBdzId + "' and dlt<>1)")
-                                .orderBy(sort, false);
-                        spacingList = selector.findAll();
-                    } catch (DbException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                }
-                placedSpacing();
+            if (!isParticularInspection()) {
+                copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
+                totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
             }
+            // 查询本次发现的缺陷
+            mNewDefectList = DefectRecordService.getInstance().findCurrentTaskNewDefectList(currentBdzId,
+                    currentReportId);
+            // 查询本次跟踪的缺陷
+            mTrackDefectList = DefectRecordService.getInstance().findCurrentTaskTrackDefectList(currentBdzId,
+                    currentReportId);
+            // 查询本次消除的缺陷
+            mEliminateDefectList = DefectRecordService.getInstance()
+                    .findCurrentTaskEliminateDefectList(currentBdzId, currentReportId);
+            try {
+                mReportSignnameListCzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId,
+                        Role.worker.name());
+                mReportSignnameListFzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId,
+                        Role.leader.name());
+            } catch (DbException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
+
+            /** 查询间隔展示巡视路线图 **/
+            if (currentInspectionType.equals(InspectionType.full.name())
+                    || currentInspectionType.equals(InspectionType.day.name())
+                    || currentInspectionType.equalsIgnoreCase(InspectionType.professional.name())
+                    || currentInspectionType.equals(InspectionType.routine.name())) {
+                String sort = "one".equals(fucntionModel) ? Spacing.SORT_ONE
+                        : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
+                currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
+
+                try {
+
+                    spacingList = SpacingService.getInstance().findByFunctionModel(currentBdzId,fucntionModel,sort);
+                } catch (DbException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+            placedSpacing();
         });
 
     }

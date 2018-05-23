@@ -14,8 +14,8 @@ import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.LookupService;
+import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsActivityParticularInspectionBinding;
 import com.cnksi.bdzinspection.fragment.ParticularDevicesFragment;
 import com.cnksi.bdzinspection.model.SpacingLastly;
@@ -299,7 +299,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
             if (saveList.size() > 0) {
                 ExecutorManager.executeTask(() -> {
                     try {
-                        XunshiApplication.getDbUtils().saveOrUpdate(saveList);
+                       SpacingLastlyService.getInstance().saveOrUpdate(saveList);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }

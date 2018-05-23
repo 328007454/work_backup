@@ -16,22 +16,24 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ChangeCopyItemParentAdapter;
 import com.cnksi.bdzinspection.adapter.CopyTypeAdapter;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
-import com.cnksi.common.daoservice.CopyItemService;
-import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.bdzinspection.daoservice.LogsService;
 import com.cnksi.bdzinspection.databinding.XsActivitySettingCopyBinding;
 import com.cnksi.bdzinspection.databinding.XsAddCopyItemBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogInput1Binding;
 import com.cnksi.bdzinspection.model.ChangeCopyItem;
-import com.cnksi.common.model.CopyItem;
-import com.cnksi.common.model.CopyItemsult;
-import com.cnksi.common.model.CopyItem;
 import com.cnksi.bdzinspection.model.Logs;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.CopyTypeService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
+import com.cnksi.common.model.CopyType;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -144,7 +146,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
 
     private void initialData() {
         ExecutorManager.executeTask(() -> {
-            copyTypes = CopyItemService.getInstance().findAllCopyType();
+            copyTypes = CopyTypeService.getInstance().findAllCopyType();
             for (CopyType type : copyTypes) {
                 if (!copyTypeHashMap.containsKey(type.key)) {
                     copyTypeHashMap.put(type.key, type);
@@ -619,7 +621,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     private void saveData() {
         Logs logs = null;
         for (CopyItem copyItem : updateCopyItems) {
-            if (copyItem.dlt == 1) {
+            if (copyItem.dlt.equals(Config.DELETED)) {
                 logs = new Logs();
                 logs.setCurrentMessage(currentDeviceId, currentDeviceName, currentPersonId, currentUserName, "delete", "copy_item");
                 logs.content = "删除抄录项";
@@ -636,7 +638,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             saveCopyItem(parentSpecialTypes, childSpecialMap);
         }
         if (!increaseLogs.isEmpty()) {
-            CopyItemService.getInstance().saveUpdate(increaseLogs);
+            LogsService.getInstance().saveOrUpdateQuiet(increaseLogs);
             CopyItemService.getInstance().saveUpdate(new ArrayList<>(updateCopyItems), currentReportId);
         }
 
@@ -729,7 +731,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             for (ChangeCopyItem changeCopyItem : copyItems) {
                 type = changeCopyItem.getItem().kind;
                 changeCopyItem.getItem().isUpLoad = "N";
-                changeCopyItem.getItem().dlt = 1;
+                changeCopyItem.getItem().dlt = Config.DELETED;
                 if (originCopyItemMap.containsKey(changeCopyItem.getItem().id) && !updateCopyItems.contains(changeCopyItem.getItem())) {
                     updateCopyItems.add(changeCopyItem.getItem());
                 }

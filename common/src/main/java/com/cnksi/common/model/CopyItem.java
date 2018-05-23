@@ -1,7 +1,11 @@
 package com.cnksi.common.model;
 
+import com.cnksi.core.utils.DateUtils;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
+
+import java.util.UUID;
 
 @Table(name = "copy_item")
 public class CopyItem extends BaseModel implements Cloneable {
@@ -104,7 +108,14 @@ public class CopyItem extends BaseModel implements Cloneable {
     public static final String KIND = "kind";
     @Column(name = KIND)
     public String kind;
+    public static final String VERSION = "version";
+    @Column(name = VERSION)
+    public int version;
 
+
+    public static final String IS_UPLOAD = "is_upload";
+    @Column(name = IS_UPLOAD)
+    public String isUpLoad;
     @Override
     public CopyItem clone() {
         try {
@@ -121,6 +132,36 @@ public class CopyItem extends BaseModel implements Cloneable {
         this.val_b = valB;
         this.val_c = valC;
         this.val_o = valO;
+    }
+
+    public CopyItem() {
+    }
+
+    public CopyItem(String bdzid, String device_name, String deviceid, String description, String key, boolean isSingle, String kind) {
+        this.id = UUID.randomUUID().toString();
+        this.bdzid = bdzid;
+        this.device_name = device_name;
+        this.deviceid = deviceid;
+        this.description = description;
+        this.kind = kind;
+        this.create_time = DateUtils.getCurrentLongTime();
+        this.update_time = DateUtils.getCurrentLongTime();
+        if (isSingle) {
+            this.val = "Y";
+            this.val_a = "N";
+            this.val_b = "N";
+            this.val_c = "N";
+        } else {
+            this.val_a = "Y";
+            this.val_b = "Y";
+            this.val_c = "Y";
+            this.val = "N";
+        }
+        this.type_key = key;
+        this.val_o = "N";
+        this.isUpLoad = "N";
+        this.version = -1;
+        this.remark="new";
     }
     public boolean focus = false;
     public void setFocus(boolean focus){

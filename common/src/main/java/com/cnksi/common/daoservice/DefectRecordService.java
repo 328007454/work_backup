@@ -1,5 +1,7 @@
 package com.cnksi.common.daoservice;
 
+import android.text.TextUtils;
+
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 
@@ -320,5 +322,50 @@ public class DefectRecordService extends BaseService<DefectRecord> {
             e.printStackTrace();
         }
         return deRecord;
+    }
+
+    /**
+     * 查询变电站现存的所有缺陷
+     *
+     * @return
+     */
+    public List<DefectRecord> queryCurrentBdzExistDefectList(String bdzId, int level) {
+        List<DefectRecord> defects = null;
+        try {
+            Selector<DefectRecord> selector = selector().and(DefectRecord.HAS_TRACK, "=", "N")
+                    .and(DefectRecord.HAS_REMOVE, "=", "N")
+                    .and(DefectRecord.IS_COPY, "<>", "Y");
+            if (!TextUtils.isEmpty(bdzId)) {
+                selector.and(DefectRecord.BDZID, "=", bdzId);
+            }
+            if (level > 0) {
+                selector.and(DefectRecord.DEFECTLEVEL, "=", level);
+            }
+            selector.expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
+                    .orderBy(DefectRecord.DISCOVERED_DATE, true);
+            return selector.findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return defects;
+    }
+
+    /**
+     * 查询变电站现存的所有缺陷
+     *
+     * @return
+     */
+    public List<DefectRecord> queryCurrentBdzExistDefectList() {
+        List<DefectRecord> defects = null;
+        try {
+            defects =selector().and(DefectRecord.HAS_TRACK, "=", "N")
+                    .and(DefectRecord.HAS_REMOVE, "=", "N")
+                    .and(DefectRecord.IS_COPY, "<>", "Y")
+                    .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
+                    .orderBy(DefectRecord.DISCOVERED_DATE, true).findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return defects;
     }
 }

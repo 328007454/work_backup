@@ -28,6 +28,7 @@ import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
@@ -40,7 +41,6 @@ import com.cnksi.sjjc.bean.Transceiver;
 import com.cnksi.sjjc.databinding.ActivityGetSendLetterBinding;
 import com.cnksi.sjjc.service.TransceiverService;
 import com.cnksi.sjjc.util.FunctionUtil;
-import com.cnksi.sjjc.util.KeyBoardUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
@@ -189,6 +189,7 @@ public class GetSendLetterActivity extends BaseActivity {
             case LOAD_DEVICE_FAILURE:
                 ToastUtils.showMessage("未查询到收发信机设备");
                 break;
+            default:
         }
     }
 

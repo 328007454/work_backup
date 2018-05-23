@@ -59,10 +59,7 @@ public class PressWaterProcessor extends CopyDataInterface {
         return "完成检查";
     }
 
-    @Override
-    public void showHistoryDialog(Activity activity, DbModel mStandardModel, DbModel mCurrentDevice, String currentBdzId) {
-        showPressHistoryDialog(activity, mStandardModel, mCurrentDevice, currentBdzId);
-    }
+
 
     @Override
     public List<DbModel> findCopyStandardListByDevicePartId(String deviceId, String duid) {

@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+import com.cnksi.common.Config;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.holder.RecyclerViewHolder;
-import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.zhy.autolayout.utils.AutoUtils;

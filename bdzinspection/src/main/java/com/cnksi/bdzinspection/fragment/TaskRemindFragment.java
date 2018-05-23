@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.TaskRemindAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
 import com.cnksi.bdzinspection.utils.DialogUtils;
@@ -149,7 +148,7 @@ public class TaskRemindFragment extends BaseFragment {
                     deptId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
                 }
                 String[] accoutArray = currentAcounts.split(",");
-                Selector selector =XunshiApplication.getDbUtils().selector(Task.class).expr(" bdzid in (select bdzid  from bdz where dept_id = '" + deptId + "' )");
+                Selector selector =TaskService.getInstance().selector().expr(" and  bdzid in (select bdzid  from bdz where dept_id = '" + deptId + "' )");
                 selector.expr("and (pms_jh_source ='pms_pc' or " + CommonUtils.buildWhereTaskContainMe(accoutArray) + " or create_account is NULL or create_account = '')");
                 // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                 if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
@@ -196,7 +195,7 @@ public class TaskRemindFragment extends BaseFragment {
                     default:
                         break;
                 }
-                selector = selector.and(Task.DLT, "=", "0").orderBy(Task.SCHEDULE_TIME);
+                selector = selector.orderBy(Task.SCHEDULE_TIME);
 
                 mDataList =selector.findAll();
 

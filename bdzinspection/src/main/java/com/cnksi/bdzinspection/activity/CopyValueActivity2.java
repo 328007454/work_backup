@@ -16,7 +16,7 @@ import com.baidu.location.BDLocation;
 import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.daoservice.DeviceService;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopy2Binding;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;

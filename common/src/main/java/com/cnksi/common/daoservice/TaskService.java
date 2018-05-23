@@ -276,24 +276,8 @@ public class TaskService extends BaseService<Task> {
         return tasks;
     }
 
-    public List<Task> getFinishedTask() {
-        List<Task> tasks = new ArrayList<>();
-        try {
-            tasks = selector().where(Task.STATUS, "=", "undo").findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return tasks;
-    }
 
-    public List<Task> findOperationTaskByLimit(int limit) {
-        try {
-            return selector().and(Task.TYPE, "=", InspectionType.operation.name()).orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     public List<Task> findTaskListByLimit(int limit, String... inspections) {
         StringBuilder expr = new StringBuilder();

@@ -8,20 +8,20 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DefectContentAdapter;
 import com.cnksi.sjjc.adapter.DefectTypeAdapter;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.common.model.Bdz;
-import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.databinding.ActivityDefectControlBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.service.DefectRecordService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -66,12 +66,7 @@ public class DefectControlActivity extends BaseActivity {
     private void search() {
         ExecutorManager.executeTaskSerially(() -> {
             final List<DefectRecord> defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(currentBdz == null ? "" : currentBdz.bdzid, defectLevel);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    defectContentAdapter.setList(defectRecords);
-                }
-            });
+            runOnUiThread(() -> defectContentAdapter.setList(defectRecords));
         });
     }
     public void initView() {
@@ -104,21 +99,18 @@ public class DefectControlActivity extends BaseActivity {
                         R.layout.adapter_defect_type));
         ExecutorManager.executeTaskSerially(() -> {
             try {
-                bdzList = CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
+                bdzList = BdzService.getInstance().findAll();
             } catch (DbException e) {
                 e.printStackTrace();
             }
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    initBDZDialog();
-                    if (bdzList.size() > 0) {
-                        currentBdz = bdzList.get(0);
-                        defectControlBinding.bdzName.setText(currentBdz.name);
-                    }
-                    search();
+            mHandler.post(() -> {
+                initBDZDialog();
+                if (bdzList.size() > 0) {
+                    currentBdz = bdzList.get(0);
+                    defectControlBinding.bdzName.setText(currentBdz.name);
                 }
+                search();
             });
         });
         defectContentAdapter = new DefectContentAdapter(this, null);

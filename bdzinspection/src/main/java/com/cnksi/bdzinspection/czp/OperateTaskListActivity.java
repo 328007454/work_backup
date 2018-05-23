@@ -13,7 +13,6 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.DownloadOperationTickActivity;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskListBinding;
 import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
@@ -60,7 +59,7 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
         String id = getIntent().getStringExtra("task_id");
         if (!TextUtils.isEmpty(id)) {
             try {
-                DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from operate_tick where id='" + id + "'"));
+                DbModel model = OperateTicketService.getInstance().findDbModelFirst(new SqlInfo("select * from operate_tick where id='" + id + "'"));
                 if (model != null) {
                     CLog.e("收到第三方跳转请求，中断加载Activity");
                     startOperateTask(model);

@@ -16,7 +16,8 @@ import android.widget.ScrollView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.inspectionready.ToolsAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.daoservice.ReportToolService;
+import com.cnksi.bdzinspection.daoservice.ToolService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.ReportTool;
@@ -79,18 +80,17 @@ public class ToolFragment extends BaseFragment {
             ExecutorManager.executeTask(() -> {
                 Selector selector;
                 try {
-                    selector = XunshiApplication.getDbUtils().selector(Tool.class).where(Tool.DLT, "=", 0).and(Tool.INSPECTION, "=", currentInspectionType);
-                    mToolsList = selector.findAll();
+
+                    mToolsList = ToolService.getInstance().findByInspectionType(currentInspectionType);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
                 if (!TextUtils.isEmpty(currentReportId)) {
 
                     try {
-                        selector = XunshiApplication.getDbUtils().selector(ReportTool.class).and(ReportTool.REPORTID, "=", currentReportId);
-                        List<ReportTool> reportTools = selector.findAll();
+                        List<ReportTool> reportTools = ReportToolService.getInstance().findByReportId(currentReportId);
                         if (null == reportTools) {
-                            reportTools = new ArrayList<ReportTool>();
+                            reportTools = new ArrayList<>();
                         }
                         if (reportTools.size() > 0) {
                             for (ReportTool tool : reportTools) {
@@ -142,7 +142,7 @@ public class ToolFragment extends BaseFragment {
         }
         ExecutorManager.executeTask(() -> {
             try {
-                XunshiApplication.getDbUtils().saveOrUpdate(saveList);
+                ReportToolService.getInstance().saveOrUpdate(saveList);
             } catch (DbException e) {
                 e.printStackTrace();
             }

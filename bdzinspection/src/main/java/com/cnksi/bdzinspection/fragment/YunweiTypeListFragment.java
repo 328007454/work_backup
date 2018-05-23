@@ -10,14 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.activity.AddTaskActivity;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentExpadableListBinding;
 import com.cnksi.bdzinspection.model.Project;
 import com.cnksi.bdzinspection.ywyth.adapter.YunweiTypeAdapter;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.core.common.ExecutorManager;
 
-import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -94,13 +93,11 @@ public class YunweiTypeListFragment extends BaseFragment {
 
 		ExecutorManager.executeTask(() -> {
             try {
-                Selector selector = XunshiApplication.getDbUtils().selector(Project.class).where(Project.LOOKUP_TYPE, "=", currentFunctionModel);
-                List<Project> projectList = selector.findAll();
+                List<Project> projectList = BaseService.getInstance(Project.class).selector().and(Project.LOOKUP_TYPE, "=", currentFunctionModel).findAll();
                 groupList = new LinkedList<Project>(projectList);
                 if (groupList != null && !groupList.isEmpty()) {
                     for (Project mProject : groupList) {
-                        selector = XunshiApplication.getDbUtils().selector(Project.class).where(Project.PARENT_ID, "=", mProject.id);
-                        List<Project> childProjectList = selector.findAll();
+                        List<Project> childProjectList =  BaseService.getInstance(Project.class).selector().and(Project.PARENT_ID, "=", mProject.id).findAll();
                         ArrayList<Project> childList = null;
                         if (childProjectList == null || childProjectList.isEmpty()) {
                             childList = new ArrayList<Project>();

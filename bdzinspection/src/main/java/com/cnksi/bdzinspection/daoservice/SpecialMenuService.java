@@ -1,6 +1,5 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.SpecialMenu;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.model.Lookup;
@@ -29,7 +28,7 @@ public class SpecialMenuService extends BaseService<SpecialMenu> {
     public SpecialMenu findCurrentDeviceType(String currentType) {
         SpecialMenu menu = null;
         try {
-            menu = XunshiApplication.getDbUtils().selector(SpecialMenu.class).where(SpecialMenu.DLT, "=", "0").and(SpecialMenu.K, "=", currentType).findFirst();
+            menu = selector().and(SpecialMenu.K, "=", currentType).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
             menu = new SpecialMenu();

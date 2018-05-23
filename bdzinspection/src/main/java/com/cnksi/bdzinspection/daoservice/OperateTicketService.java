@@ -3,7 +3,6 @@ package com.cnksi.bdzinspection.daoservice;
 import android.content.Context;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.emnu.OperateTaskType;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.common.daoservice.BaseService;
@@ -70,7 +69,7 @@ public class OperateTicketService extends BaseService<OperateTick> {
     public List<String> getTaskCount(Context mContext) {
         List<String> titleArray = new ArrayList<String>();
         try {
-            boolean isExited = getTable().tableIsExist(XunshiApplication.getDbUtils());
+            boolean isExited = getTable().tableIsExist(getDbManager());
             if (!isExited) {
                 SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo(getTable());
                 execSql(sqlInfo);

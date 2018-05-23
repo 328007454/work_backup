@@ -16,24 +16,25 @@ import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.common.daoservice.CopyItemService;
-import com.cnksi.common.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.daoservice.ReportService;
+import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
+import com.cnksi.common.model.ReportSignname;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.BitmapUtils;
@@ -136,9 +137,9 @@ public class NewRegularReportActivity extends BaseActivity {
             public void run() {
                 // 查询report数据
                 try {
-                    report = XunshiApplication.getDbUtils().findById(Report.class, currentReportId);
-                    mReportSignnameListCzr = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
-                    mReportSignnameListFzr = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
+                    report =ReportService.getInstance().getReportById(currentReportId);
+                    mReportSignnameListCzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
+                    mReportSignnameListFzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
                     mHandler.sendEmptyMessage(REFRESH_DATA);
                 } catch (DbException e) {
                     e.printStackTrace(System.out);
@@ -147,8 +148,9 @@ public class NewRegularReportActivity extends BaseActivity {
                 status = TaskService.getInstance().getTaskStatus(currentTaskId);
                 if (xudianchi) {
                     try {
-                        List<DbModel> batteryDbmodelList = ReportService.getInstance().findBatteryGroup(currentBdzId);
-                        DbModel batteryCopyTotal = ReportService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
+
+                        List<DbModel> batteryDbmodelList = BatteryGroupService.getInstance().findBatteryGroup(currentBdzId);
+                        DbModel batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
                         int sumBatteryCode = 0;
                         for (DbModel dbModel : batteryDbmodelList) {
                             sumBatteryCode = sumBatteryCode + Integer.valueOf(dbModel.getString("amount"));

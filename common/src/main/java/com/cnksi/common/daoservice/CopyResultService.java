@@ -186,4 +186,14 @@ public class CopyResultService extends BaseService<CopyResult> {
         return selector().and(CopyResult.REPORTID, "=", reportId)
                 .and(CopyResult.BDZID, "=", bdzId).orderBy(CopyResult.DEVICEID, false).findAll();
     }
+
+    public void clearNULLData() {
+        String sql = "update copy_result SET  val=(CASE WHEN val='' THEN NULL ELSE val END)," + "val_a=(CASE WHEN val_a='' THEN NULL ELSE val_a END)," + "val_b=(CASE WHEN val_b='' THEN NULL ELSE val_b END)," + "val_c=(CASE WHEN val_c='' THEN NULL ELSE val_c END)," + "val_o=(CASE WHEN val_o='' THEN NULL ELSE val_o END)," + "val_old=(CASE WHEN val_old='' THEN NULL ELSE val_old END)," + "val_a_old=(CASE WHEN val_a_old='' THEN NULL ELSE val_a_old END)," + "val_b_old=(CASE WHEN val_b_old='' THEN NULL ELSE val_b_old END)," + "val_c_old=(CASE WHEN val_c_old='' THEN NULL ELSE val_c_old END)," + "val_o_old=(CASE WHEN val_o_old='' THEN NULL ELSE val_o_old END)," + "dzcs=(CASE WHEN dzcs='' THEN NULL ELSE dzcs END)," + "dzcs_old=(CASE WHEN dzcs_old='' THEN NULL ELSE dzcs_old END),"
+                + "dzcs_total=(CASE WHEN dzcs_total='' THEN NULL ELSE dzcs_total END) where val=''  OR val_a=''" + "OR val_b=''  OR val_c=''  OR val_o='' OR val_old='' OR val_a_old=''" + "OR val_b_old='' OR val_c_old='' OR val_o_old='' OR dzcs='' OR dzcs_old=''" + "OR dzcs_total=''";
+        try {
+           execSql(sql);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
 }

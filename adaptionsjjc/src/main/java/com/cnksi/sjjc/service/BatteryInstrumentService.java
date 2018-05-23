@@ -33,7 +33,7 @@ public class BatteryInstrumentService extends BaseService<BatteryInstrument> {
         List<BatteryInstrument> instruments = new ArrayList<>();
 
         try {
-            instruments = selector().expr("order by select_num  desc , last_modify_time  desc limit " + pagestart + "," + pageEnd).findAll();
+            instruments = selector().expr(" order by select_num  desc , last_modify_time  desc limit " + pagestart + "," + pageEnd).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class BatteryInstrumentService extends BaseService<BatteryInstrument> {
 
 
         try {
-            instruments = selector().expr("and (csyqmc like '%" + name + "%' or  num like '%" + name + "%') order by select_num  desc , last_modify_time desc").findAll();
+            instruments = selector().expr(" and (csyqmc like '%" + name + "%' or  num like '%" + name + "%') order by select_num  desc , last_modify_time desc").findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }

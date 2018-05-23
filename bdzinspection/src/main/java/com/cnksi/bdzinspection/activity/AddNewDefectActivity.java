@@ -14,7 +14,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DefectDefineAdapter;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddNewDefectBinding;
-import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
@@ -151,14 +151,14 @@ public class AddNewDefectActivity extends BaseActivity {
 
         binding.lvContainer.setOnItemClickListener((parent, view, position, l) -> {
             mCurrentDbModel = (DbModel) parent.getItemAtPosition(position);
-            if (Config.CRISIS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(DefectDefine.LEVEL))) {
+            if (Config.CRISIS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(Defect.LEVEL))) {
                 binding.rbCrisisDefect.setChecked(true);
-            } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(DefectDefine.LEVEL))) {
+            } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(Defect.LEVEL))) {
                 binding.rbSeriousDefect.setChecked(true);
             } else {
                 binding.rbGeneralDefect.setChecked(true);
             }
-            binding.etInputDefectContent.setText(mCurrentDbModel.getString(DefectDefine.DESCRIPTION));
+            binding.etInputDefectContent.setText(mCurrentDbModel.getString(Defect.DESCRIPTION));
             KeyBoardUtils.closeKeybord(currentActivity);
         });
     }
@@ -190,7 +190,7 @@ public class AddNewDefectActivity extends BaseActivity {
                 mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DevicePart.NAME), // 设备部件名称
                 currentDefectLevel, // 缺陷级别
                 defectContent, // 缺陷描述
-                mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DefectDefine.STAID), // 巡视标准id
+                mCurrentDbModel == null ? "" : mCurrentDbModel.getString(Defect.STAID), // 巡视标准id
                 StringUtils.arrayListToString(mDefectImageList)// pics图片
         );
         record.remark = TextUtils.isEmpty(defectContentPre) ? "" : defectContentPre;

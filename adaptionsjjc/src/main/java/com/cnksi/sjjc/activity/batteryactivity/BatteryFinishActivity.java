@@ -11,10 +11,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
+import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.model.Battery;
 import com.cnksi.common.model.Task;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
@@ -26,13 +30,9 @@ import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowManagerAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
-import com.cnksi.sjjc.bean.Battery;
-import com.cnksi.sjjc.bean.BatteryGroup;
 import com.cnksi.sjjc.databinding.ActivityBatteryFinishBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.service.BatteryGroupService;
-import com.cnksi.sjjc.service.BatteryService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.OnViewClickListener;
 

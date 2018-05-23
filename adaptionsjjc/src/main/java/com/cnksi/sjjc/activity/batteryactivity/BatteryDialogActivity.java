@@ -22,7 +22,7 @@ import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.DrawCircleImageActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
-import com.cnksi.sjjc.bean.Battery;
+import com.cnksi.common.model.Battery;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.ActivityBatteryItemDialogBinding;
 import com.cnksi.sjjc.service.BatteryRecordService;

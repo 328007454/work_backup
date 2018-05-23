@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.daoservice.InspectionPreparedService;
 import com.cnksi.bdzinspection.daoservice.ZzhtService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReadyBinding;
 import com.cnksi.bdzinspection.fragment.inspectionready.CopyTemperatureFragment;
@@ -21,16 +21,19 @@ import com.cnksi.bdzinspection.fragment.inspectionready.ReadyExistingDefectFragm
 import com.cnksi.bdzinspection.fragment.inspectionready.RoadMapFragment;
 import com.cnksi.bdzinspection.fragment.inspectionready.ToolFragment;
 import com.cnksi.bdzinspection.model.InspectionPrepared;
-import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.ReportSignnameService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.Report;
+import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.core.common.ExecutorManager;
@@ -143,11 +146,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     }
 
     private void initFragmentList() {
-        try {
-            task = XunshiApplication.getDbUtils().findById(Task.class, currentTaskId);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+        task = TaskService.getInstance().findById( currentTaskId);
         mFragmentList = new ArrayList<>();
         Bundle args = new Bundle();
         boolean hasZzht = null == zzht ? false : true;
@@ -225,11 +224,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             binding.tabStrip.setTabPaddingLeftRight(28);
             binding.tabStrip.setShouldExpand(false);
         }
-        try {
-            mReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", currentTaskId).findFirst();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+        mReport= ReportService.getInstance().getReportById(currentReportId);
     }
 
     private void initClick() {
@@ -316,9 +311,9 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         ExecutorManager.executeTask(() -> {
             InspectionPrepared prepared = new InspectionPrepared(mReport.reportid, task.taskid, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
             try {
-                SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo(XunshiApplication.getDbUtils().getTable(InspectionPrepared.class));
-                XunshiApplication.getDbUtils().execNonQuery(sqlInfo);
-                XunshiApplication.getDbUtils().saveOrUpdate(prepared);
+                SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo( InspectionPreparedService.getInstance().getTable());
+                InspectionPreparedService.getInstance().execSql(sqlInfo);
+                InspectionPreparedService.getInstance().saveOrUpdate(prepared);
             } catch (DbException e) {
                 e.printStackTrace();
             }
@@ -378,7 +373,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             ExecutorManager.executeTask(() -> {
                 try {
                     saveReportSign();
-                    XunshiApplication.getDbUtils().saveOrUpdate(mReport);
+                    ReportService.getInstance().saveOrUpdate(mReport);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
@@ -395,13 +390,13 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     }
 
     private void saveReportSign() throws DbException {
-        List<ReportSignname> reportSignnames = XunshiApplication.getDbUtils().selector(ReportSignname.class).where(ReportSignname.REPORTID, "=", mReport.reportid).findAll();
+        List<ReportSignname> reportSignnames = ReportSignnameService.getInstance().getSignNamesForReportAll(mReport.reportid);
         String currentAccounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAccounts);
         if (reportSignnames == null || reportSignnames.isEmpty()) {
             for (DbModel dbModel : defaultUesrs) {
                 ReportSignname reportSignname = new ReportSignname(mReport.reportid, Role.worker.name(), dbModel);
-                XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
+                ReportSignnameService.getInstance().saveOrUpdate(reportSignname);
             }
         } else {
             StringBuilder accountBuilder = new StringBuilder();
@@ -413,7 +408,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                     continue;
                 } else {
                     ReportSignname reportSignname = new ReportSignname(mReport.reportid, Role.worker.name(), dbModel);
-                    XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
+                    ReportSignnameService.getInstance().saveOrUpdate(reportSignname);
                 }
             }
         }

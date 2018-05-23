@@ -26,13 +26,11 @@ import com.cnksi.bdzinspection.adapter.DevicePartRecylerAdapter;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.StandardAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.DevicePartService;
-import com.cnksi.bdzinspection.daoservice.DeviceService;
+import com.cnksi.bdzinspection.daoservice.DeviceStandardOperService;
+import com.cnksi.bdzinspection.daoservice.DeviceStandardsService;
 import com.cnksi.bdzinspection.daoservice.DeviceTypeImageService;
 import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
-import com.cnksi.bdzinspection.daoservice.DeviceStandardsService;
 import com.cnksi.bdzinspection.databinding.XsActivityNewDevicedetailsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogStandardSourceBinding;
 import com.cnksi.bdzinspection.model.DeviceStandardsOper;
@@ -48,7 +46,10 @@ import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.DevicePartService;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
@@ -260,8 +261,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             try {
                 specialMenu = SpecialMenuService.getInstance().findCurrentDeviceType(currentInspectionType);
                 // 1、查询设备
-                mCurrentDevice = XunshiApplication.getDbUtils().findById(Device.class, currentDeviceId);
-                staidMarkMap = DeviceStandardsService.getInstance().findStandardMark(mCurrentDevice.bdzid, mCurrentDevice.deviceid);
+                mCurrentDevice = DeviceService.getInstance().findById(currentDeviceId);
+                staidMarkMap = DeviceStandardOperService.getInstance().findStandardMark(mCurrentDevice.bdzid, mCurrentDevice.deviceid);
                 // 查询设备所属类型
                 dbModel = DevicePartService.getInstance().getDeviceType(mCurrentDevice.dtid);
                 mHandler.sendEmptyMessage(DEVICE_INFORMATION);
@@ -288,7 +289,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 mHandler.sendEmptyMessage(DEVICE_EXIST_DEFECT);
                 //控制点及危险措施
                 SqlInfo sqlInfo = new SqlInfo("select * from device_bigtype where bigid= '" + mCurrentDevice.bigid + "'");
-                bigTypeModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
+                bigTypeModel = DeviceService.getInstance().findDbModelFirst(sqlInfo);
             } catch (DbException e) {
                 e.printStackTrace();
             }
@@ -344,7 +345,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
     protected void onResume() {
         super.onResume();
         try {
-            copyDeviceIdList = DeviceService.getInstance().findAllDeviceInCopyItem(currentInspectionType, currentBdzId);
+            copyDeviceIdList = CopyItemService.getInstance().findAllDeviceInCopyItem(currentInspectionType, currentBdzId);
             mHandler.sendEmptyMessage(DEVICE_INFORMATION);
         } catch (DbException e) {
             e.printStackTrace();
@@ -427,12 +428,9 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         }
         devicedetailsBinding.tvProductDate.setText("投产日期：" + date);
         setDeviceImage();
-        devicedetailsBinding.ivDeviceImage.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                showChangePictureDialog(v);
-                return true;
-            }
+        devicedetailsBinding.ivDeviceImage.setOnLongClickListener(v -> {
+            showChangePictureDialog(v);
+            return true;
         });
     }
 
@@ -547,7 +545,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         @Override
                         public void onClick(View v) {
                             try {
-                                XunshiApplication.getDbUtils().saveOrUpdate(mark);
+                                DeviceStandardOperService.getInstance().saveOrUpdate(mark);
                                 ToastUtils.showMessage( "操作成功");
                                 if ("1".equals(mark.dlt)) {
                                     standard.add("isMark", "N");
@@ -720,11 +718,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         placedDevice.setPlacedWayHighest("photo");
                         imgList.add(currentImageName);
                         placedDevice.pic = StringUtils.arrayListToString(imgList);
-                        try {
-                            XunshiApplication.getDbUtils().saveOrUpdate(placedDevice);
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
+                        PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
                         runOnUiThread(() -> {
                             devicedetailsBinding.setHasSignPhoto(true);
                             CustomerDialog.dismissProgress();
@@ -740,12 +734,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                             imgList.remove(file.replace(Config.RESULT_PICTURES_FOLDER, ""));
                         }
                         refreshDevicePic();
-                        try {
-                            placedDevice.pic = StringUtils.arrayListToString(imgList);
-                            XunshiApplication.getDbUtils().saveOrUpdate(placedDevice);
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
+                        placedDevice.pic = StringUtils.arrayListToString(imgList);
+                        PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
                     }
                     break;
                 default:

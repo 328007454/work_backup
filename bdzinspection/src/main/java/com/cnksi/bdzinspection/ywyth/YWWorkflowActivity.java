@@ -22,7 +22,8 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
-import com.cnksi.bdzinspection.daoservice.YthService;
+import com.cnksi.bdzinspection.daoservice.PlanProcessStatusService;
+import com.cnksi.bdzinspection.daoservice.ProcessService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwythWorkflowBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogInputBinding;
 import com.cnksi.bdzinspection.databinding.XsRecordAudioDialogBinding;
@@ -115,8 +116,8 @@ public class YWWorkflowActivity extends BaseActivity {
         getIntentValue();
         taskStatus = TaskService.getInstance().getTaskStatusForBoolean(currentTaskId);
         binding.tvTitle.setText(currentInspectionTypeName);
-        dlist = YthService.getInstance().findWorkflowById(currentInspectionType);
-        plan = YthService.getInstance().getProcessStatus(currentTaskId, currentInspectionType);
+        dlist = ProcessService.getInstance().findWorkflowById(currentInspectionType);
+        plan = PlanProcessStatusService.getInstance().getProcessStatus(currentTaskId, currentInspectionType);
 
         if (dlist == null) {
             dlist = new ArrayList<>();
@@ -176,7 +177,7 @@ public class YWWorkflowActivity extends BaseActivity {
                 inputBinding.btnSure.setOnClickListener(view1 -> {
                     dialog.dismiss();
                     String str = inputBinding.edit.getText().toString();
-                    YthService.getInstance().saveRemain_Problem(currentTaskId, str);
+                    ProcessService.getInstance().saveRemain_Problem(currentTaskId, str);
                     boolean isfinish = true;
                     for (PlanProcessStatus bean : plan) {
                         if ("0".equals(bean.is_selected)) {
@@ -242,7 +243,7 @@ public class YWWorkflowActivity extends BaseActivity {
 
                 } else {
                     plan.get(position).is_selected = isChecked ? "1" : "0";
-                    YthService.getInstance().savePlanProcessStatus(plan.get(position));
+                    PlanProcessStatusService.getInstance().saveOrUpdate(plan.get(position));
                 }
 
             });
@@ -366,7 +367,7 @@ public class YWWorkflowActivity extends BaseActivity {
                             plan.get(selectIndex).audio = StringUtils.isEmpty(str) ? currentAudioName
                                     : str + "," + currentAudioName;
                             adapter.notifyDataSetChanged();
-                            YthService.getInstance().savePlanProcessStatus(plan.get(selectIndex));
+                            PlanProcessStatusService.getInstance().saveOrUpdate(plan.get(selectIndex));
                             if (mRecorderTimer == null) {
                                 mRecorderTimer = new RecorderTimer(11000, 1000);
                             }
@@ -426,14 +427,14 @@ public class YWWorkflowActivity extends BaseActivity {
                     str = plan.get(selectIndex).picture;
                     plan.get(selectIndex).picture = StringUtils.isEmpty(str) ? currentImageName
                             : str + "," + currentImageName;
-                    YthService.getInstance().savePlanProcessStatus(plan.get(selectIndex));
+                    PlanProcessStatusService.getInstance().saveOrUpdate(plan.get(selectIndex));
                     adapter.notifyDataSetChanged();
                     break;
                 case ACTION_RECORDVIDEO:
                     str = plan.get(selectIndex).video;
                     plan.get(selectIndex).video = StringUtils.isEmpty(str) ? currentVideoName
                             : str + "," + currentVideoName;
-                    YthService.getInstance().savePlanProcessStatus(plan.get(selectIndex));
+                    PlanProcessStatusService.getInstance().saveOrUpdate(plan.get(selectIndex));
                     adapter.notifyDataSetChanged();
                     break;
                 default:

@@ -14,11 +14,8 @@ import com.cnksi.common.model.Task;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.bean.DefectRecord;
 import com.cnksi.sjjc.bean.DevicePart;
-import com.cnksi.sjjc.bean.DeviceStandards;
 import com.cnksi.sjjc.bean.Lookup;
-import com.cnksi.sjjc.bean.Standards;
 import com.cnksi.sjjc.service.DevicePartService;
 import com.cnksi.sjjc.service.StandardService;
 import com.cnksi.sjjc.util.DateUtils;
@@ -30,9 +27,6 @@ import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -79,15 +73,6 @@ public abstract class CopyDataInterface {
      */
     public abstract String getFinishString();
 
-    /**
-     * 显示历史纪录对话框
-     *
-     * @param activity
-     * @param mStandardModel
-     * @param mCurrentDevice
-     * @param currentBdzId
-     */
-    public abstract void showHistoryDialog(Activity activity, DbModel mStandardModel, DbModel mCurrentDevice, String currentBdzId);
 
 
     /**
@@ -216,49 +201,6 @@ public abstract class CopyDataInterface {
             e.printStackTrace();
         }
         return copyMap;
-    }
-
-    /**
-     * 压力检测历史曲线框
-     *
-     * @param activity
-     * @param mStandardModel
-     * @param mCurrentDevice
-     * @param currentBdzId
-     */
-    protected void showPressHistoryDialog(Activity activity, DbModel mStandardModel, DbModel mCurrentDevice, String currentBdzId) {
-        List<DbModel> modelList = null;
-        try {
-            modelList = findStardHistoryRecord(mCurrentDevice.getString(Device.DEVICEID), mStandardModel.getString(Standards.STAID), currentBdzId);
-        } catch (DbException e) {
-            e.printStackTrace();
-
-        }
-        if (modelList == null || modelList.size() < 1) {
-            ToastUtils.showMessage("当前没有历史抄录记录");
-            return;
-        }
-        List<String> xLabe = new ArrayList<>();
-        List<Float> values = new ArrayList<>();
-        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat fmt1 = new SimpleDateFormat("MM/dd");
-        List<Float> temps = new ArrayList<>();
-        for (int i = 0, count = modelList.size(); i < count; i++) {
-            DbModel model = modelList.get(i);
-            try {
-                xLabe.add(fmt1.format(fmt.parse(model.getString(DefectRecord.DISCOVERED_DATE))));
-                values.add(model.getFloat(DefectRecord.VAL));
-                temps.add(model.getFloat(Report.TEMPERATURE));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        List<ChartDialog.LineSet> yList = new ArrayList<>();
-        yList.add(new ChartDialog.LineSet("压力", values));
-        yList.add(new ChartDialog.LineSet("温度", temps));
-
-        ChartDialog.getInstance().showLineChartDialog(activity, activity.getString(R.string.data_history_record_format_str,
-                mStandardModel.getString(DeviceStandards.DESCRIPTION)), "时间", "数值(MPa/℃)", xLabe, yList, Arrays.asList(R.color.global_base_color, R.color.light_red));
     }
 
 

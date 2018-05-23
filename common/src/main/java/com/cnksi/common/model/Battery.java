@@ -1,6 +1,4 @@
-package com.cnksi.sjjc.bean;
-
-import com.cnksi.common.model.BaseModel;
+package com.cnksi.common.model;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -13,6 +11,11 @@ import java.io.Serializable;
  */
 @Table(name = "battery")
 public class Battery extends BaseModel implements Serializable {
+
+    // 蓄电池id
+    public static final String BATTERYID = "battery";
+    @Column(name = BATTERYID,isId = true)
+    public String battery;
     //电池组编号
     public static final String BID = "bid";
     @Column(name = BID)
@@ -77,6 +80,14 @@ public class Battery extends BaseModel implements Serializable {
     @Column(name = HASESS)
     public int hasess;
 
+    // 控制母线电压
+    public static final String KVOLTAGE = "kvoltage";
+    @Column(name = KVOLTAGE)
+    public String kvoltage;
 
+    // 数量
+    public static final String NUMBER = "number";
+    @Column(name = NUMBER)
+    public String number;
 
 }

@@ -35,7 +35,7 @@ public class SwitchMenuService extends BaseService<SwitchMenu> {
         List<SwitchMenu> menus = null;
         List<Lookup> lookups = new ArrayList<Lookup>();
         try {
-            Selector selector = selector().and(SwitchMenu.BDZID, "=", bdzId).and(SwitchMenu.DLT, "<>", "1").expr("and k like  '" + type + "%' ")
+            Selector selector = selector().and(SwitchMenu.BDZID, "=", bdzId).expr("and k like  '" + type + "%' ")
                     .orderBy(Lookup.SORT, false);
             menus = selector.findAll();
             if (null != menus && !menus.isEmpty()) {
@@ -49,6 +49,7 @@ public class SwitchMenuService extends BaseService<SwitchMenu> {
         return lookups;
     }
 
-
-
+    public SwitchMenu findByBdz(String bdzid,String type) throws DbException {
+        return selector().and(SwitchMenu.BDZID, "=", bdzid).and(SwitchMenu.DLT, "=", 0).and(SwitchMenu.K, "=", type).findFirst();
+    }
 }

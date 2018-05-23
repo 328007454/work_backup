@@ -14,12 +14,12 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.adapter.DeviceSelectAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.daoservice.DeviceService;
-import com.cnksi.bdzinspection.daoservice.SpacingService;
+import com.cnksi.bdzinspection.daoservice.SpacingGroupService;
 import com.cnksi.bdzinspection.daoservice.StandardSpecialService;
 import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.model.StandardSpecial;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
 
@@ -112,7 +112,7 @@ public class DeviceSelectFragment extends BaseFragment implements QWERKeyBoardUt
 
     private void initSpacingGroup() {
         if ("second".equals(currentFunctionModel) && spaceGroupMap == null) {
-            List<SpacingGroup> spacingGroups = SpacingService.getInstance().findSpacingGroup(currentBdzId);
+            List<SpacingGroup> spacingGroups = SpacingGroupService.getInstance().findSpacingGroup(currentBdzId);
             spaceGroupMap = new LinkedHashMap<>();
             for (SpacingGroup spacingGroup : spacingGroups) {
                 spaceGroupMap.put(spacingGroup.id, new SpaceGroupItem(spacingGroup));

@@ -30,14 +30,14 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.adapter.infrared.DevicePartAdapter;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
-import com.cnksi.bdzinspection.daoservice.DevicePartService;
+import com.cnksi.common.daoservice.DevicePartService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectSourceBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
@@ -131,7 +131,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
     }
 
     // 缺陷内容
-    private HashMap<String, ArrayList<DefectDefine>> mDefectContentMap = null;
+    private HashMap<String, ArrayList<Defect>> mDefectContentMap = null;
     private DbModel mCurrentDbModel;
     private XsFragmentRecordDefectBinding binding;
 
@@ -267,14 +267,14 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
     private void initOnClick() {
         binding.lvContainerDefect.setOnItemClickListener((parent, view, position, l) -> {
             mCurrentDbModel = (DbModel) parent.getItemAtPosition(position);
-            if (Config.CRISIS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(DefectDefine.LEVEL))) {
+            if (Config.CRISIS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(Defect.LEVEL))) {
                 binding.includeDefect.rbCrisisDefect.setChecked(true);
-            } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(DefectDefine.LEVEL))) {
+            } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(Defect.LEVEL))) {
                 binding.includeDefect.rbSeriousDefect.setChecked(true);
             } else {
                 binding.includeDefect.rbGeneralDefect.setChecked(true);
             }
-            binding.includeDefect.etInputDefectContent.setText(mCurrentDbModel.getString(DefectDefine.DESCRIPTION));
+            binding.includeDefect.etInputDefectContent.setText(mCurrentDbModel.getString(Defect.DESCRIPTION));
             KeyBoardUtils.closeKeybord(currentActivity);
         });
 
@@ -733,7 +733,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DevicePart.NAME), // 设备部件名称
                         currentDefectLevel, // 缺陷级别
                         defectContent, // 缺陷描述
-                        mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DefectDefine.STAID), // 巡视标准id
+                        mCurrentDbModel == null ? "" : mCurrentDbModel.getString(Defect.STAID), // 巡视标准id
                         StringUtils.arrayListToString(mDefectImageList)// pics图片
                 );
             } else {
@@ -878,7 +878,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
     }
 
     @Override
-    public void OnAdapterViewClick(View view, DefectDefine define) {
+    public void OnAdapterViewClick(View view, Defect define) {
         int i = view.getId();
         if (i == R.id.img_child_item_bt) {
             String defectOrigin = define.origin;

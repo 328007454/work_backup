@@ -8,7 +8,7 @@ import android.widget.CheckBox;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.TitleActivity;
-import com.cnksi.bdzinspection.daoservice.YthService;
+import com.cnksi.bdzinspection.daoservice.GQJService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwythGqjBinding;
 import com.cnksi.bdzinspection.model.GQJ;
 import com.cnksi.bdzinspection.ywyth.adapter.YWGQJAdapter;
@@ -64,7 +64,7 @@ public class YWGQJActivity extends TitleActivity {
 		taskStatus = TaskService.getInstance().getTaskStatusForBoolean(currentTaskId);
 		// TODO Auto-generated method stub
 		try {
-			dlist = YthService.getInstance().findGqjById(currentInspectionType);
+			dlist = GQJService.getInstance().findGqjById(currentInspectionType);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

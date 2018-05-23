@@ -20,7 +20,6 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.DefectControlActivity;
 import com.cnksi.bdzinspection.adapter.BatteryDetailsAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.BatteryDetailsService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwBatteryBinding;
 import com.cnksi.bdzinspection.databinding.XsBatteryInputValueDialogBinding;
@@ -34,6 +33,7 @@ import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.model.DefectRecord;
@@ -126,11 +126,11 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         ExecutorManager.executeTask(() -> {
             try {
                 // 查询已选择的电池组
-                mCurrentBatteryReport = XunshiApplication.getDbUtils().selector(BatteryReport.class).where(BatteryReport.REPORTID, "=", currentReportId).findFirst();
+                mCurrentBatteryReport = BaseService.getInstance(BatteryReport.class).selector().and(BatteryReport.REPORTID, "=", currentReportId).findFirst();
                 if (mCurrentBatteryReport == null) {
                     mCurrentBatteryReport = new BatteryReport(currentReportId);
                 }
-                XunshiApplication.getDbUtils().saveOrUpdate(mCurrentBatteryReport);
+                BaseService.getInstance(BatteryReport.class).saveOrUpdate(mCurrentBatteryReport);
                 initBatteryDetails();
                 mHandler.sendEmptyMessage(LOAD_DATA);
             } catch (Exception e) {
@@ -342,7 +342,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                 mBatteryDetails.id = FunctionUtil.getPrimarykey();
             }
             mBatteryDetails.reportid = currentReportId;
-            XunshiApplication.getDbUtils().saveOrUpdate(mBatteryDetails);
+            BatteryDetailsService.getInstance().saveOrUpdate(mBatteryDetails);
             PreferencesUtils.put( Config.CURRENT_REPORT_ID + currentReportId, true);
         } catch (DbException e1) {
             e1.printStackTrace();
@@ -461,7 +461,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                 ""// pics图片
         );
         try {
-            XunshiApplication.getDbUtils().save(record);
+            DefectRecordService.getInstance().saveOrUpdate(record);
         } catch (DbException e) {
             e.printStackTrace();
         }

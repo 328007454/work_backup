@@ -22,7 +22,6 @@ import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
@@ -32,7 +31,10 @@ import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.XZip;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
@@ -136,7 +138,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 intent.setComponent(componentName);
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                ToastUtils.showMessage( "没有安装VPN客户端。");
+                ToastUtils.showMessage("没有安装VPN客户端。");
             }
 
         });
@@ -195,7 +197,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     public void initData(final boolean isRefreshStatus) {
         if (!isInit) {
-            ToastUtils.showMessage( "初始化失败。请确认是正常操作流程!");
+            ToastUtils.showMessage("初始化失败。请确认是正常操作流程!");
             return;
         }
         ExecutorManager.executeTask(() -> {
@@ -272,7 +274,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         try {
             NARIHelper.init(currentActivity, users.account, AESUtil.decode(users.pwd), Config.NARI_BASEFOLDER);
         } catch (Exception e) {
-            ToastUtils.showMessage( "密码解密失败！");
+            ToastUtils.showMessage("密码解密失败！");
             e.printStackTrace();
             return;
         }
@@ -293,13 +295,13 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     private boolean genData(BDPackage bdPackage, Report report) {
         try {
 
-            DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from users where account='" + account + "'"));
+            DbModel model =UserService.getInstance().findDbModelFirst(new SqlInfo("select * from users where account='" + account + "'"));
 //查询巡视人员的IDS 和Name
             SqlInfo sqlInfo = new SqlInfo("SELECT distinct u.account  account ,rs.name,u.pms_id FROM report_signname rs " +
                     "LEFT JOIN (SELECT * from users where dept_id=?) u ON rs.name = u.username WHERE report_id = ? ;");
             sqlInfo.addBindArg(new KeyValue("", model.getString("dept_id")));
             sqlInfo.addBindArg(new KeyValue("", model.getString(report.reportid)));
-            List<DbModel> users = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> users = UserService.getInstance().findDbModelAll(sqlInfo);
             String ids = "";
             String names = "";
             //逗号分隔ID和name
@@ -362,7 +364,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 for (BDPackage bdPackage : bdPackages) {
                     Report report;
                     try {
-                        report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", bdPackage.taskId).findFirst();
+                        report = ReportService.getInstance().getReportByTask(bdPackage.taskId);
                     } catch (DbException e) {
                         e.printStackTrace();
                         LogUtil.writeLog("Nari", e);
@@ -390,7 +392,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                         //更新提交时间
                         report.submittime = DateUtils.getCurrentLongTime();
                         try {
-                            XunshiApplication.getDbUtils().update(report, "submittime");
+                            ReportService.getInstance().update(report, "submittime");
                         } catch (DbException e) {
                             e.printStackTrace();
                         }
@@ -462,7 +464,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             startActivity(intent);
             return;
         } else {
-            ToastUtils.showMessage( "数据异常，该离线作业包还未绑定任务！");
+            ToastUtils.showMessage("数据异常，该离线作业包还未绑定任务！");
         }
     }
 
@@ -501,9 +503,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 return false;
             }
             if (t != null) {
-                XunshiApplication.getDbUtils().addColumn(Task.class, Task.PMS_JHID);
                 try {
-                    XunshiApplication.getDbUtils().save(t);
+                    TaskService.getInstance().saveOrUpdate(t);
                     bdPackage.taskId = tid;
                     bdPackage.status = PackageStatus.undo.name();
                     NariDataManager.getPackageManager().saveOrUpdate(bdPackage);
@@ -611,7 +612,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                             deltePacage(item, 1, dialog);
                         }
                     } else {
-                        ToastUtils.showMessage( "请选择需要删除的范围");
+                        ToastUtils.showMessage("请选择需要删除的范围");
                     }
 
                 });
@@ -687,7 +688,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 delResult = "任务删除失败,请检查网络，稍后重试。";
             }
             runOnUiThread(() -> {
-                ToastUtils.showMessage( delResult);
+                ToastUtils.showMessage(delResult);
                 dialog.dismiss();
                 List<BDPackage> packages = (List<BDPackage>) adapter.getData();
                 packages.remove(item);
@@ -699,10 +700,10 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     public void deleteLocalData(BDPackage item) {
         try {
-            XunshiApplication.getDbUtils().deleteById(BDPackage.class, item.packageID);
+            BaseService.getInstance(BDPackage.class).logicDeleteById(item.packageID);
             if (!TextUtils.isEmpty(item.status) && PackageStatus.undo.name().equalsIgnoreCase(item.status)) {
-                XunshiApplication.getDbUtils().update(Task.class, WhereBuilder.b(Task.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
-                XunshiApplication.getDbUtils().update(Report.class, WhereBuilder.b(Report.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
+                TaskService.getInstance().update(WhereBuilder.b(Task.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
+                ReportService.getInstance().update( WhereBuilder.b(Report.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
             }
         } catch (DbException e) {
             e.printStackTrace();

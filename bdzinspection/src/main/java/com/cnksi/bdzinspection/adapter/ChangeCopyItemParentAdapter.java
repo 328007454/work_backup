@@ -14,7 +14,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsChangeCopyItemParentBinding;
 import com.cnksi.bdzinspection.model.ChangeCopyItem;
-import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyType;
 
 import java.util.HashMap;
 import java.util.List;

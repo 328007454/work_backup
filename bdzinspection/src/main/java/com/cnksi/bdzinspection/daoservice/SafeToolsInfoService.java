@@ -8,6 +8,7 @@ import com.cnksi.common.daoservice.BaseService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
+import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
@@ -159,5 +160,10 @@ public class SafeToolsInfoService extends BaseService<SafeToolsInfor> {
             e.printStackTrace();
         }
         return dbModel;
+    }
+
+    public void updateStatus(String toolId,ToolStatus status) throws DbException {
+        update(WhereBuilder.b("id", "=", toolId), new KeyValue(SafeToolsInfor.STATUS, status.name()));
+
     }
 }

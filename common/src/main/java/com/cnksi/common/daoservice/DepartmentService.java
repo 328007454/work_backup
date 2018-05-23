@@ -98,9 +98,8 @@ public class DepartmentService extends BaseService<Department> {
     }
 
     public List<Users> getAllUsers(String departID) throws DbException {
-        List<Users> userses = new ArrayList<>();
-        userses = UserService.getInstance().selector().where(Users.DEPT_ID, "=", departID).and(Users.DLT, "=", "0").findAll();
-        return userses;
+
+        return UserService.getInstance().selector().and(Users.DEPT_ID, "=", departID).and(Users.DLT, "=", "0").findAll();
     }
 
 }

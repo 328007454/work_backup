@@ -2,6 +2,8 @@ package com.cnksi.common.daoservice;
 
 import com.cnksi.common.model.TaskExtend;
 
+import org.xutils.ex.DbException;
+
 /**
  * @author Wastrel
  * @version 1.0
@@ -17,5 +19,16 @@ public class TaskExtendService extends BaseService<TaskExtend> {
 
     public static TaskExtendService getInstance() {
         return instance;
+    }
+
+    /**
+     * 查询当前任务扩展属性
+     *
+     * @param taskId
+     * @return
+     * @throws DbException
+     */
+    public TaskExtend findTaskExtendByTaskId(String taskId) throws DbException {
+        return selector().and(TaskExtend.TASK_ID, "=", taskId).findFirst();
     }
 }

@@ -2,8 +2,9 @@ package com.cnksi.bdzinspection.utils;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.daoservice.SwitchMenuService;
 import com.cnksi.bdzinspection.model.SwitchMenu;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.DateCalcUtils;
@@ -31,13 +32,13 @@ public class PushNewTaskUtil {
         if (goOn) {
            ExecutorManager.executeTask(() -> {
                 try {
-                    Task task = XunshiApplication.getDbUtils().selector(Task.class).where(Task.TASKID, "=", taskId).and(Task.DLT, "<>", 1).findFirst();
+                    Task task = TaskService.getInstance().findById(taskId);
                     String startTime = null==task ?DateUtils.getCurrentLongTime():(TextUtils.isEmpty(task.schedule_time)?DateUtils.getCurrentLongTime():task.schedule_time);
-                    SwitchMenu menu = XunshiApplication.getDbUtils().selector(SwitchMenu.class).where(SwitchMenu.BDZID, "=", task.bdzid).and(SwitchMenu.DLT, "=", 0).and(SwitchMenu.K, "=", type).findFirst();
+                    SwitchMenu menu = SwitchMenuService.getInstance().findByBdz(task.bdzid,type);
                     if (null != task && menu != null && !TextUtils.isEmpty(menu.cycle)) {
                         String nextTime = DateCalcUtils.getAfterMonth(DateUtils.getFormatterTime(startTime, DateUtils.yyyy_MM_dd_HH_mm_ss), Integer.valueOf(menu.cycle));
                         Task newTask = new Task(MyUUID.id(4), task.bdzid, task.bdzname, task.inspection, task.inspection_name, nextTime, TaskStatus.undo.name(), task.createAccount, null);
-                        XunshiApplication.getDbUtils().saveOrUpdate(newTask);
+                        TaskService.getInstance().saveOrUpdate(newTask);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -377,18 +377,18 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             if (stopBinding.rbUnqualify.isChecked()) {//选择不合格
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, ToolStatus.stop.name(), ToolStatus.unNormal.name(), reason, stopPerson);
                 dbModel.add("status", ToolStatus.stop.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", ToolStatus.stop.name()));
+                SafeToolsInfoService.getInstance().updateStatus(toolId,ToolStatus.stop);
                 informationBinding.btnTest.setVisibility(View.GONE);
                 informationBinding.btnStop.setVisibility(View.GONE);
             } else {
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name, ToolStatus.stop.name(), ToolStatus.normal.name(), reason, stopPerson);
                 dbModel.add("status", ToolStatus.inTest.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status", ToolStatus.inTest.name()));
+                SafeToolsInfoService.getInstance().updateStatus(toolId,ToolStatus.inTest);
                 informationBinding.txtToolStatus.setText(ToolStatus.inTest.value);
                 informationBinding.btnStop.setVisibility(View.GONE);
                 informationBinding.btnTest.setVisibility(View.VISIBLE);
             }
-            XunshiApplication.getDbUtils().saveOrUpdate(toolResult);
+            OperateToolResultService.getInstance().saveOrUpdate(toolResult);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -422,7 +422,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             if (testBinding.rbNormal.isChecked()) {
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, ToolStatus.normal.name(), pics, person, ToolStatus.test.name());
                 updateToolInfo(ToolStatus.normal.name(), ToolStatus.normal.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status", ToolStatus.normal.name()), new KeyValue("isnormal", ToolStatus.normal.name()),
+                SafeToolsInfoService.getInstance().update(WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status", ToolStatus.normal.name()), new KeyValue("isnormal", ToolStatus.normal.name()),
                         new KeyValue("lastly_check_time", lastTime), new KeyValue("next_check_time", nextTime));
                 informationBinding.btnStop.setVisibility(View.VISIBLE);
                 informationBinding.btnTest.setVisibility(View.VISIBLE);
@@ -430,11 +430,11 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             } else if (testBinding.rbUnnormal.isChecked()) {
                 toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time, ToolStatus.unNormal.name(), pics, person, ToolStatus.test.name());
                 updateToolInfo(ToolStatus.stop.name(), ToolStatus.unNormal.name());
-                XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id), new KeyValue("status", ToolStatus.stop.name()), new KeyValue("isnormal", ToolStatus.unNormal.name()));
+                SafeToolsInfoService.getInstance().update(WhereBuilder.b("id", "=", id), new KeyValue("status", ToolStatus.stop.name()), new KeyValue("isnormal", ToolStatus.unNormal.name()));
                 informationBinding.btnStop.setVisibility(View.GONE);
                 informationBinding.btnTest.setVisibility(View.GONE);
             }
-            XunshiApplication.getDbUtils().saveOrUpdate(toolResult);
+           OperateToolResultService.getInstance().saveOrUpdate(toolResult);
             resultList.add(toolResult);
             addResutUI();
         } catch (DbException e)
