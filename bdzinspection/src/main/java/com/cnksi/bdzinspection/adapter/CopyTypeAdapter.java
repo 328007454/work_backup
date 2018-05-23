@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.model.CopyType;
+import com.cnksi.common.model.CopyItem;
 
 import java.util.Collection;
 import java.util.List;

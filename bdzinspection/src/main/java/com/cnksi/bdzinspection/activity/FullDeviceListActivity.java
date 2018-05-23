@@ -16,11 +16,9 @@ import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.LookupService;
+import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsActivityFullDeviceListBinding;
 import com.cnksi.bdzinspection.fragment.DeviceListFragment;
 import com.cnksi.bdzinspection.inter.DialogInputClickListener;
@@ -34,6 +32,8 @@ import com.cnksi.bdzinspection.utils.ShakeListener.OnShakeListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.LookUpType;
@@ -397,14 +397,11 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                 }
             }
             if (saveList.size() > 0) {
-                ExecutorManager.executeTask(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            XunshiApplication.getDbUtils().saveOrUpdate(saveList);
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
+                ExecutorManager.executeTask(() -> {
+                    try {
+                        SpacingLastlyService.getInstance().saveOrUpdate(saveList);
+                    } catch (DbException e) {
+                        e.printStackTrace();
                     }
                 });
             }

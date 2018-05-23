@@ -32,7 +32,7 @@ import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.DeviceTypeImageService;
 import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
-import com.cnksi.bdzinspection.daoservice.StandardService;
+import com.cnksi.bdzinspection.daoservice.DeviceStandardsService;
 import com.cnksi.bdzinspection.databinding.XsActivityNewDevicedetailsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogStandardSourceBinding;
 import com.cnksi.bdzinspection.model.DeviceStandardsOper;
@@ -261,7 +261,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 specialMenu = SpecialMenuService.getInstance().findCurrentDeviceType(currentInspectionType);
                 // 1、查询设备
                 mCurrentDevice = XunshiApplication.getDbUtils().findById(Device.class, currentDeviceId);
-                staidMarkMap = StandardService.getInstance().findStandardMark(mCurrentDevice.bdzid, mCurrentDevice.deviceid);
+                staidMarkMap = DeviceStandardsService.getInstance().findStandardMark(mCurrentDevice.bdzid, mCurrentDevice.deviceid);
                 // 查询设备所属类型
                 dbModel = DevicePartService.getInstance().getDeviceType(mCurrentDevice.dtid);
                 mHandler.sendEmptyMessage(DEVICE_INFORMATION);
@@ -274,7 +274,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         initStandardList(mDevicePartList.get(0).getString(DevicePart.DUID));
                     }
                 } else {
-                    mStandardList = StandardService.getInstance().findStandardsListFromSpecial(mCurrentDevice.bigid, currentInspectionType);
+                    mStandardList = DeviceStandardsService.getInstance().findStandardsListFromSpecial(mCurrentDevice.bigid, currentInspectionType);
                     if (!mStandardList.isEmpty()) {
                         mHandler.sendEmptyMessage(LOAD_DATA);
                     }
@@ -312,7 +312,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         ExecutorManager.executeTask(() -> {
             String inspectionTypeName = currentInspectionType;
             // 1、从库中查询部件巡视标准
-            mStandardList = StandardService.getInstance().findStandardListFromDB(devicePartId, inspectionTypeName);
+            mStandardList = DeviceStandardsService.getInstance().findStandardListFromDB(devicePartId, inspectionTypeName);
             if (mStandardList == null) {
                 mStandardList = new ArrayList<>();
             } else {
@@ -331,7 +331,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 }
             }
             // 2、查询台账部件巡视标准
-            List<DbModel> modelStandardList = StandardService.getInstance().findStandardListByDevicePartId(devicePartId, currentDeviceId, inspectionTypeName);
+            List<DbModel> modelStandardList = DeviceStandardsService.getInstance().findStandardListByDevicePartId(devicePartId, currentDeviceId, inspectionTypeName);
             // 添加
             if (null != modelStandardList) {
                 mStandardList.addAll(modelStandardList);

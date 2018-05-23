@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.model;
+package com.cnksi.common.model;
 
 import com.cnksi.common.model.BaseModel;
 
@@ -7,12 +7,14 @@ import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
+
 @Table(name = "task_extend")
+
 public class TaskExtend extends BaseModel {
 
     // ID
     public static final String ID = "id";
-    @Column(name = ID,isId = true)
+    @Column(name = ID, isId = true)
     public String id = UUID.randomUUID().toString();
 
     // 任务编号
@@ -43,3 +45,5 @@ public class TaskExtend extends BaseModel {
         this.taskId = taskId;
     }
 }
+
+

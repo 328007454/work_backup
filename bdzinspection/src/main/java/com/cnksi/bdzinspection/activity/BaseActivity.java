@@ -34,12 +34,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
@@ -475,9 +476,9 @@ public class BaseActivity extends BaseCoreActivity {
     protected void updateReportStatus() {
         try {
             Report report = new Report(currentReportId);
-            XunshiApplication.getDbUtils().update(report, Report.ENDTIME);
+            ReportService.getInstance().update(report, Report.ENDTIME);
             Task mTask = new Task(currentTaskId);
-            XunshiApplication.getDbUtils().update(mTask, Task.STATUS);
+            TaskService.getInstance().update(mTask, Task.STATUS);
         } catch (Exception e) {
             e.printStackTrace();
         }

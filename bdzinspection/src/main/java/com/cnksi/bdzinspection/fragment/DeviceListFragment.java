@@ -25,10 +25,9 @@ import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.DeviceService.DefectInfo;
+import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.databinding.XsDialogCopySnwsdBinding;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
@@ -41,6 +40,7 @@ import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
@@ -169,7 +169,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
 
     private void requestLocation(final boolean isSpace) {
         if (!GPSUtils.isOPen(currentActivity)) {
-            ToastUtils.showMessage( "请打开GPS再进行定位！");
+            ToastUtils.showMessage("请打开GPS再进行定位！");
         } else {
             CustomerDialog.showProgress(currentActivity, R.string.xs_locating_str);
             LocationUtil.getInstance().getLocalHelper(new LocationListener() {
@@ -183,7 +183,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 public void locationFailure(int code, String message) {
                     if (code == LocationListener.ERROR_TIMEOUT) {
                         CustomerDialog.dismissProgress();
-                        ToastUtils.showMessage( "请求定位超时,请确保打开GPS。");
+                        ToastUtils.showMessage("请求定位超时,请确保打开GPS。");
                     }
                 }
             }).setTimeout(10).start();
@@ -241,14 +241,11 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 }
             }
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.setCopyDeviceIdList(copyDeviceIdList);
-                    adapter.setDefectMap(defectmap);
-                    adapter.setCopyDeviceMap(copyedMap);
-                    adapter.notifyDataSetChanged();
-                }
+            mHandler.post(() -> {
+                adapter.setCopyDeviceIdList(copyDeviceIdList);
+                adapter.setDefectMap(defectmap);
+                adapter.setCopyDeviceMap(copyedMap);
+                adapter.notifyDataSetChanged();
             });
         });
     }
@@ -499,7 +496,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                     ToastUtils.showMessage("温度：-99.9-99.9；湿度：0-100");
                     return;
                 }
-                XunshiApplication.getDbUtils().saveOrUpdate(snwsd);
+                ReportSnwsdService.getInstance().saveOrUpdate(snwsd);
                 reportSnwsds.add(snwsd);
                 dialogCopySNWSD.dismiss();
                 mSnwsdBinding.editTemp.setText("");

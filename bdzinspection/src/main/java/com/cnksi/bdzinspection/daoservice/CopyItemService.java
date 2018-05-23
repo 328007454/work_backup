@@ -2,10 +2,9 @@ package com.cnksi.bdzinspection.daoservice;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
-import com.cnksi.bdzinspection.model.CopyType;
+import com.cnksi.common.daoservice.BaseService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.common.ExecutorManager;
@@ -21,13 +20,14 @@ import java.util.List;
 
 import static com.cnksi.bdzinspection.application.XunshiApplication.getDbUtils;
 
-public class CopyItemService {
+public class CopyItemService extends BaseService<CopyItem> {
     private final static String cptSql = "select count(case when val = 'Y' then 1 else null end)+" + "count(case when val_a = 'Y' then 1 else null end)+"
             + "count(case when val_b = 'Y' then 1 else null end)+" + "count(case when val_c = 'Y' then 1 else null end)+" + "count(case when val_o = 'Y' then 1 else null end)"
             + " as copyCount from copy_item item ";
     public static CopyItemService mInstance;
 
     private CopyItemService() {
+        super(CopyItem.class);
     }
 
     public static CopyItemService getInstance() {
@@ -46,7 +46,7 @@ public class CopyItemService {
      */
     public List<CopyItem> getDeviceCopyItem(String bdzId, String deviceId, String inspection) {
         try {
-            return getDbUtils().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
+            return selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
                     and(CopyItem.KIND, "like", "%" + inspection + "%").and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID).findAll();
         } catch (DbException e) {
             e.printStackTrace();
@@ -69,7 +69,7 @@ public class CopyItemService {
         if (!TextUtils.isEmpty(deviceWay) && "select_device".equalsIgnoreCase(deviceWay)) {
             Report currentReport = null;
             try {
-                currentReport = XunshiApplication.getDbUtils().findById(Report.class, reportId);
+                currentReport = findById(Report.class, reportId);
             } catch (DbException e) {
                 e.getMessage();
             }
@@ -85,7 +85,7 @@ public class CopyItemService {
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         sqlInfo.addBindArg(new KeyValue("", deviceType));
         try {
-            return getDbUtils().findDbModelAll(sqlInfo);
+            return findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -102,7 +102,7 @@ public class CopyItemService {
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         sqlInfo.addBindArg(new KeyValue("", deviceType));
         try {
-            return getDbUtils().findDbModelAll(sqlInfo);
+            return findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -111,7 +111,7 @@ public class CopyItemService {
 
     public CopyItem getItem(String itemId) {
         try {
-            return getDbUtils().findById(CopyItem.class, itemId);
+            return findById(itemId);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -130,7 +130,7 @@ public class CopyItemService {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
-            DbModel dbModel = getDbUtils().findDbModelFirst(sqlInfo);
+            DbModel dbModel = findDbModelFirst(sqlInfo);
             return dbModel.getLong("copyCount");
         } catch (DbException e) {
             e.printStackTrace();
@@ -150,7 +150,7 @@ public class CopyItemService {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
-            DbModel dbModel = getDbUtils().findDbModelFirst(sqlInfo);
+            DbModel dbModel = findDbModelFirst(sqlInfo);
             return dbModel.getLong("copyCount");
         } catch (DbException e) {
             e.printStackTrace();
@@ -182,8 +182,8 @@ public class CopyItemService {
      */
     public List<CopyItem> getDeviceCopyItem1(String bdzId, String deviceId, String inspection) {
         try {
-            return getDbUtils().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).expr("and " + CopyItem.TYPE_KEY + " in ('" + inspection + "')")
-                    .and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID).findAll();
+            return selector().and(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).expr("and " + CopyItem.TYPE_KEY + " in ('" + inspection + "')")
+                    .orderBy(CopyItem.ID).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -203,7 +203,7 @@ public class CopyItemService {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
-            dbModelList = getDbUtils().findDbModelAll(sqlInfo);
+            dbModelList = findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -219,8 +219,8 @@ public class CopyItemService {
      */
     public List<CopyItem> getDeviceALLCopyItem(String bdzId, String deviceId) {
         try {
-            return getDbUtils().selector(CopyItem.class).where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
-                    and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID).findAll();
+            return selector().where(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
+                    orderBy(CopyItem.ID).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -228,21 +228,13 @@ public class CopyItemService {
     }
 
 
-    public List<CopyType> findAllCopyType() {
-        try {
-            List<CopyType> types = XunshiApplication.getDbUtils().selector(CopyType.class).where(CopyType.SELECTED_ABLE, "=", "Y").findAll();
-            return types;
-        } catch (DbException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
+
 
     public void saveUpdate(final List<? extends Object> objects) {
         ExecutorManager.executeTask(() -> {
             if (!objects.isEmpty()) {
                 try {
-                    getDbUtils().saveOrUpdate(objects);
+                    saveOrUpdate(objects);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
@@ -257,8 +249,8 @@ public class CopyItemService {
                 try {
                     for (Object object : objects) {
                         if (object instanceof CopyItem) {
-                            getDbUtils().saveOrUpdate(object);
-                            getDbUtils().delete(CopyResult.class, WhereBuilder.b(CopyResult.ITEM_ID, "=", ((CopyItem) object).id).and(CopyResult.REPORTID, "=", currentReportId));
+                            saveOrUpdate((CopyItem) object);
+                            logicDelete(CopyResult.class, WhereBuilder.b(CopyResult.ITEM_ID, "=", ((CopyItem) object).id).and(CopyResult.REPORTID, "=", currentReportId));
                         }
                     }
                 } catch (DbException e) {
@@ -269,18 +261,5 @@ public class CopyItemService {
     }
 
 
-    public List<CopyItem> findAllMaintenanceHasCopyValue(String currentInspectionType, String currentBdzId) throws DbException {
 
-        return getDbUtils().selector(CopyItem.class).where(CopyItem.BDZID, "=", currentBdzId).and(CopyItem.KIND, "=", currentInspectionType)
-                .and(CopyItem.DLT, "=", "0").findAll();
-    }
-
-    public List<CopyItem> findAllBySpace(String spid) {
-        try {
-            return XunshiApplication.getDbUtils().selector(CopyItem.class).where(CopyItem.DLT, "=", "0").and(CopyItem.SPID, "=", spid).findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
 }

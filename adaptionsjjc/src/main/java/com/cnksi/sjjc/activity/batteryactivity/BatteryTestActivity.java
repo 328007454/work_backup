@@ -39,7 +39,7 @@ import com.cnksi.sjjc.bean.Battery;
 import com.cnksi.sjjc.bean.BatteryGroup;
 import com.cnksi.sjjc.bean.BatteryInstrument;
 import com.cnksi.sjjc.bean.BatteryRecord;
-import com.cnksi.sjjc.bean.TaskExtend;
+import com.cnksi.common.model.TaskExtend;
 import com.cnksi.sjjc.databinding.ActivityBatteryBinding;
 import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;

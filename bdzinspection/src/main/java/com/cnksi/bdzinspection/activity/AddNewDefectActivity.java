@@ -12,12 +12,12 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DefectDefineAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddNewDefectBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.utils.BitmapUtil;
@@ -203,7 +203,7 @@ public class AddNewDefectActivity extends BaseActivity {
             record.hasInfluenceDbz = "不清楚";
         }
         try {
-            XunshiApplication.getDbUtils().save(record);
+            DefectRecordService.getInstance().saveOrUpdate(record);
             isRecordDefect = true;
         } catch (DbException e) {
             e.printStackTrace();

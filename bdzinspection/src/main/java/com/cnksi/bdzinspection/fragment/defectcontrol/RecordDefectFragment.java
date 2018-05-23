@@ -29,7 +29,6 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.DefectContentAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.adapter.infrared.DevicePartAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.daoservice.DevicePartService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
@@ -249,27 +248,19 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
         XsDialogTipsBinding tipsBinding = XsDialogTipsBinding.inflate(currentActivity.getLayoutInflater());
         deleteDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogContent.setText("确认要删除本次缺陷？");
-        tipsBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteRecord.dlt = "1";
-                try {
-                    XunshiApplication.getDbUtils().saveOrUpdate(deleteRecord);
-                    dataList.remove(deleteRecord);
-                    mHistoryDefectAdapter.notifyDataSetChanged();
-                    deleteRecord = null;
-                    deleteDialog.dismiss();
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        tipsBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        tipsBinding.btnSure.setOnClickListener(view -> {
+            deleteRecord.dlt = "1";
+            try {
+                DefectRecordService.getInstance().saveOrUpdate(deleteRecord);
+                dataList.remove(deleteRecord);
+                mHistoryDefectAdapter.notifyDataSetChanged();
+                deleteRecord = null;
                 deleteDialog.dismiss();
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
+        tipsBinding.btnCancel.setOnClickListener(view -> deleteDialog.dismiss());
     }
 
 
@@ -771,7 +762,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
         }
         record.discoverer_unit = departmentName;
         try {
-            XunshiApplication.getDbUtils().saveOrUpdate(record);
+            DefectRecordService.getInstance().saveOrUpdate(record);
             mofifyDefectRe = null;
         } catch (DbException e) {
             e.printStackTrace();

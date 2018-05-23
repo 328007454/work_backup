@@ -1,20 +1,17 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.DeviceStandardsOper;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.core.utils.FileUtils;
 
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,16 +19,17 @@ import java.util.List;
  *
  * @author terry
  */
-public class StandardService {
+public class DeviceStandardsService extends BaseService<DeviceStandards>{
 
-    public static StandardService mInstance;
+    public static DeviceStandardsService mInstance;
 
-    private StandardService() {
+    private DeviceStandardsService() {
+        super(DeviceStandards.class);
     }
 
-    public static StandardService getInstance() {
+    public static DeviceStandardsService getInstance() {
         if (mInstance == null) {
-            mInstance = new StandardService();
+            mInstance = new DeviceStandardsService();
         }
         return mInstance;
     }
@@ -52,7 +50,7 @@ public class StandardService {
             sqlInfo.addBindArg(new KeyValue("", devicePartId));
             sqlInfo.addBindArg(new KeyValue("", deviceId));
 
-            return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
+            return findDbModelAll(sqlInfo);
 
         } catch (DbException e) {
             e.printStackTrace();
@@ -73,7 +71,7 @@ public class StandardService {
         try {
             String sql = "SELECT 1 as islib, s.staid staid,s.duid duid,s.description description,s.resulttype resulttype,s.dlt dlt,s.report_type report_type,s.kind kind,s.origin origin FROM "
                     + " standards s  WHERE " + "s.kind LIKE " + "'%" + inspectionType + "%'" + " AND ( s.report_type = '0' OR s.report_type IS NULL)" + " AND s.dlt <> '1' and s.duid = '" + duid + "' ORDER BY s.sort,s.staid DESC";
-            dataList = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+            dataList = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -81,28 +79,13 @@ public class StandardService {
     }
 
 
-    public HashMap<String, DeviceStandardsOper> findStandardMark(String bdzId, String deviceId) {
-        HashMap<String, DeviceStandardsOper> staidMap = new HashMap<>();
-        try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DeviceStandardsOper.class).where(DeviceStandardsOper.DLT, "=", "0")
-                    .and(DeviceStandardsOper.BDZID, "=", bdzId).and(DeviceStandardsOper.DEVICEID, "=", deviceId);
-            List<DeviceStandardsOper> list = selector.findAll();
-            if (list != null) {
-                for (DeviceStandardsOper oper : list) {
-                    staidMap.put(oper.staid, oper);
-                }
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return staidMap;
-    }
+
 
     public List<DbModel> findStandardsListFromSpecial(String deviceBigId, String inspectionType) {
         List<DbModel> rs = new ArrayList<DbModel>();
         try {
             String sql = "SELECT * from standard_special ss WHERE ss.kind = '" + inspectionType + "' AND ss.dlt <> '1' AND ss.bigid = '" + deviceBigId + "' ORDER BY ss.sort DESC";
-            rs = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+            rs = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -122,8 +105,8 @@ public class StandardService {
             FileUtils.deleteFile(Config.PICTURES_FOLDER + mStandard.change_pic);
 
             mStandard.change_pic = changePicName;
-            XunshiApplication.getDbUtils().update(mStandard, DeviceStandards.CHANGE_PIC);
-            // XunshiApplication.getDbUtils().saveOrUpdate(mStandard);
+            update(mStandard, DeviceStandards.CHANGE_PIC);
+            // saveOrUpdate(mStandard);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -134,7 +117,7 @@ public class StandardService {
      */
     public boolean deleteStandardById(String standardId) {
         try {
-            XunshiApplication.getDbUtils().update(DeviceStandards.class, WhereBuilder.b(DeviceStandards.STAID, "=", standardId), new KeyValue(DeviceStandards.DLT, Config.DELETED));
+            update(DeviceStandards.class, WhereBuilder.b(DeviceStandards.STAID, "=", standardId), new KeyValue(DeviceStandards.DLT, Config.DELETED));
             return true;
         } catch (DbException e) {
             e.printStackTrace();
@@ -148,7 +131,7 @@ public class StandardService {
      */
     public DeviceStandards findDeviceStandardById(String standardId) {
         try {
-            return XunshiApplication.getDbUtils().findById(DeviceStandards.class, standardId);
+            return findById( standardId);
         } catch (DbException e) {
             return null;
         }
@@ -162,7 +145,7 @@ public class StandardService {
      */
     public String saveDeviceStandards(DeviceStandards mStandards, boolean isAdd) {
         try {
-            XunshiApplication.getDbUtils().saveOrUpdate(mStandards);
+            saveOrUpdate(mStandards);
             return String.valueOf(mStandards.staid);
         } catch (DbException e) {
             return "";

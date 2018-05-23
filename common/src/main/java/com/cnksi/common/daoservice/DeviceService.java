@@ -244,7 +244,6 @@ public class DeviceService extends BaseService<Device> {
     }
 
 
-
     /**
      * 交直流分接开关查询方式
      *
@@ -336,13 +335,28 @@ public class DeviceService extends BaseService<Device> {
      */
     public void createTrigger(String tableName, String pk) {
         try {
-            String triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS %s_insert_trigger After insert ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'insert','0',(datetime('now', 'localtime'))); END;", tableName, tableName,"ksync_modify_record", tableName, pk, pk);
+            String triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS %s_insert_trigger After insert ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'insert','0',(datetime('now', 'localtime'))); END;", tableName, tableName, "ksync_modify_record", tableName, pk, pk);
             execSql(triggerSql);
             triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS  %s_update_trigger After update ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'update','0',(datetime('now', 'localtime'))); END;", tableName, tableName, "ksync_modify_record", tableName, pk, pk);
             execSql(triggerSql);
         } catch (DbException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Device> findDeviceBySpidAndType(String spid, String type) throws DbException {
+        return selector().and(Device.SPID, "=", spid).and(Device.DEVICE_TYPE, "=", type).orderBy(Device.SORT).findAll();
+    }
+
+    public DbModel findAccidentDeal(String currentDeviceId) {
+        String sql = " select db.rules,db.exception_deal_methods from device_bigtype db, (SELECT * from device d left join device_type dt on d.dtid= dt.dtid where  d.deviceid='" + currentDeviceId + "') t where db.bigid = t.bigid ";
+        try {
+            return findDbModelFirst(new SqlInfo(sql));
+        } catch (DbException e) {
+            e.printStackTrace();
+
+        }
+        return null;
     }
 
 }

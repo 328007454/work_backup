@@ -15,21 +15,22 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.XunJianTypeAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.BdzDialogAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.InspectionTypeAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.daoservice.SwitchMenuService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddInspectionTaskBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityAddinpsectionTypeDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.bdzinspection.model.TaskExtend;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.bdzinspection.utils.SelectPersonUtil;
 import com.cnksi.bdzinspection.ywyth.YWDeviceListActivity;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.LookUpType;
@@ -38,6 +39,7 @@ import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.model.TaskExtend;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -173,9 +175,9 @@ public class AddTaskActivity extends BaseActivity {
         try {
             String bdzId = PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, "");
             if (!TextUtils.isEmpty(bdzId)) {
-                mCurrentBdz = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.BDZID, "=", bdzId).and(Bdz.DLT, "=", 0).findFirst();
+                mCurrentBdz = BdzService.getInstance().findById(bdzId);
             }
-            mBdzList = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.DLT, "=", "0").findAll();
+            mBdzList = BdzService.getInstance().findAll();
             mHandler.sendEmptyMessage(LOAD_BDZ_DATA);
             currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
             allPersons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts);
@@ -514,7 +516,7 @@ public class AddTaskActivity extends BaseActivity {
             PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
             boolean xudianchi = mInspectionType.v.contains(Config.XUDIANCHI) && (mInspectionType.v.contains(Config.DIANYA) || mInspectionType.v.contains(Config.NEIZU));
             try {
-                XunshiApplication.getDbUtils().saveOrUpdate(mReport);
+                ReportService.getInstance().saveOrUpdate(mReport);
                 if ("select_device".equalsIgnoreCase(mInspectionType.deviceWay)) {
                     // 手动选择设备
                     Intent intent = new Intent(currentActivity, DeviceSelectActivity.class);
@@ -531,8 +533,8 @@ public class AddTaskActivity extends BaseActivity {
                     } else {
                         taskExpand.sbjcIsAllCheck = 1;
                     }
-                    XunshiApplication.getDbUtils().save(taskExpand);
-                    XunshiApplication.getDbUtils().save(mCurrentTask);
+                   TaskExtendService.getInstance().saveOrUpdate(taskExpand);
+                    TaskService.getInstance().saveOrUpdate(mCurrentTask);
                     setResult(RESULT_OK);
                     this.finish();
                 } else if (InspectionType.operation.name().equalsIgnoreCase(mInspectionType.k)) {
@@ -540,7 +542,7 @@ public class AddTaskActivity extends BaseActivity {
                     Intent intent = new Intent(currentActivity, YWDeviceListActivity.class);
                     startActivityForResult(intent, ADD_YUNWEI_TASK_CODE);
                 } else {
-                    XunshiApplication.getDbUtils().save(mCurrentTask);
+                    TaskService.getInstance().saveOrUpdate(mCurrentTask);
                     setResult(RESULT_OK);
                     this.finish();
                 }
@@ -557,7 +559,7 @@ public class AddTaskActivity extends BaseActivity {
             switch (requestCode) {
                 case SAVE_TASK_REQUEST_CODE:
                     try {
-                        XunshiApplication.getDbUtils().save(mCurrentTask);
+                        TaskService.getInstance().saveOrUpdate(mCurrentTask);
                         setResult(RESULT_OK);
                         this.finish();
                     } catch (DbException e) {
@@ -579,7 +581,7 @@ public class AddTaskActivity extends BaseActivity {
                             PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
                             PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
                             try {
-                                XunshiApplication.getDbUtils().save(mCurrentTask);
+                                TaskService.getInstance().saveOrUpdate(mCurrentTask);
                                 setResult(RESULT_OK);
                                 this.finish();
                             } catch (DbException e) {
@@ -593,8 +595,8 @@ public class AddTaskActivity extends BaseActivity {
                     mCurrentTask.selected_deviceid = selectDevice;
                     mReport.selected_deviceid = selectDevice;
                     try {
-                        XunshiApplication.getDbUtils().saveOrUpdate(mReport);
-                        XunshiApplication.getDbUtils().save(mCurrentTask);
+                        ReportService.getInstance().saveOrUpdate(mReport);
+                        TaskService.getInstance().saveOrUpdate(mCurrentTask);
                         setResult(RESULT_OK);
                         this.finish();
                     } catch (DbException e) {

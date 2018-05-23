@@ -6,8 +6,8 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.model.CopyItem;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.model.CopyItem;
 import com.cnksi.bdzinspection.view.ChartDialog;
 import com.cnksi.bdzinspection.view.ChartDialog.LineSet;
 import com.cnksi.common.model.DefectRecord;

@@ -20,6 +20,10 @@ public class CopyItem extends BaseModel implements Cloneable {
     public static final String BDZID = "bdzid";
     @Column(name = BDZID)
     public String bdzid;
+    // 间隔ID
+    public static final String SPID = "spid";
+    @Column(name = SPID)
+    public String spid;
 
     // 设备ID
     public static final String DEVICEID = "deviceid";
@@ -95,6 +99,11 @@ public class CopyItem extends BaseModel implements Cloneable {
     public static final String UPDATE_TIME = "update_time";
     @Column(name = UPDATE_TIME)
     public String update_time;
+
+    //
+    public static final String KIND = "kind";
+    @Column(name = KIND)
+    public String kind;
 
     @Override
     public CopyItem clone() {

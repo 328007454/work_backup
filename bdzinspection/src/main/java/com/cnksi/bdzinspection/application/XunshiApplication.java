@@ -10,8 +10,6 @@ import com.cnksi.common.Config;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.nari.utils.NariDataManager;
 
-import org.xutils.DbManager;
-
 public class XunshiApplication {
 
 
@@ -31,10 +29,6 @@ public class XunshiApplication {
 
     }
 
-
-    public synchronized static DbManager getDbUtils() {
-        return getInstance().getDbManager();
-    }
 
 
     public static Context getAppContext() {

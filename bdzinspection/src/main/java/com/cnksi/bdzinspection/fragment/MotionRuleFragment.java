@@ -13,13 +13,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentMotionRuleBinding;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.core.common.ExecutorManager;
 
-import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
-import org.xutils.ex.DbException;
 
 import static com.cnksi.common.Config.LOAD_DATA;
 
@@ -45,14 +43,8 @@ public class MotionRuleFragment extends BaseFragment {
 
 	private void initialData() {
 		ExecutorManager.executeTask(() -> {
-            String sql = " select db.rules,db.exception_deal_methods from device_bigtype db, (SELECT * from device d left join device_type dt on d.dtid= dt.dtid where  d.deviceid='" + currentDeviceId + "') t where db.bigid = t.bigid ";
-            try {
-                dbModel = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql));
-            } catch (DbException e) {
-                e.printStackTrace();
-
-            }
-            mHandler.sendEmptyMessage(LOAD_DATA);
+			dbModel = DeviceService.getInstance().findAccidentDeal(currentDeviceId);
+			mHandler.sendEmptyMessage(LOAD_DATA);
         });
 
 	}

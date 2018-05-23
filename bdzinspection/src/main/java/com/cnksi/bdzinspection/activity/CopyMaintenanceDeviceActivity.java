@@ -13,15 +13,14 @@ import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyMaintenanceDeviceAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyAll3Binding;
 import com.cnksi.bdzinspection.databinding.XsMaintenanceCopyItemBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
@@ -298,11 +297,7 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
                 result = new CopyResult(currentReportId, currentItem.id, currentBdzId, currentItem.device_name, currentItem.deviceid, currentItem.type_key, currentItem.description, copyHashSet.get(currentItem.id), currentItem.remark, currentItem.unit);
                 resultHashMap.put(currentItem.id, result);
             }
-            try {
-                XunshiApplication.getDbUtils().saveOrUpdate(result);
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
+            CopyResultService.getInstance().saveOrUpdate(result);
         }
     }
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyDeviceAdapter;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.databinding.XsFragmentGridlistBinding;
 import com.cnksi.bdzinspection.model.SpecialMenu;

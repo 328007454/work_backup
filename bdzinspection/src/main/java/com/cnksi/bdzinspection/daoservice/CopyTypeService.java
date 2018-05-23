@@ -1,19 +1,21 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.CopyType;
+import com.cnksi.common.daoservice.BaseService;
+import com.cnksi.common.model.CopyType;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CopyTypeService {
+public class CopyTypeService extends BaseService<CopyType> {
     public static CopyTypeService mInstance;
 
     private CopyTypeService() {
+        super(CopyType.class);
     }
 
     public static CopyTypeService getInstance() {
@@ -26,7 +28,7 @@ public class CopyTypeService {
     public Map<String, String> getAllCopyType() {
         Map<String, String> typeMap = new HashMap<>();
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(CopyType.class).where(CopyType.SELECTED_ABLE, "=", "Y").and(CopyType.DLT, "=", 0);
+            Selector selector = selector().where(CopyType.SELECTED_ABLE, "=", "Y");
             List<CopyType> list = selector.findAll();
             if (null != list && !list.isEmpty()) {
                 for (CopyType type : list) {
@@ -37,6 +39,16 @@ public class CopyTypeService {
             e.printStackTrace();
         }
         return typeMap;
+    }
+
+    public List<CopyType> findAllCopyType() {
+        try {
+            List<CopyType> types = selector().where(CopyType.SELECTED_ABLE, "=", "Y").findAll();
+            return types;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
 }

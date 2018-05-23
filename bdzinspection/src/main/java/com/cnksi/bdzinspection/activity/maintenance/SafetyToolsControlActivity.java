@@ -17,7 +17,6 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SafeToolsInfoAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.OperateToolResultService;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyToolsBinding;
@@ -505,10 +504,10 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                         OperateToolResult toolResult = null;
                         if (stopBinding.rbUnqualify.isChecked()) {
                             toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name,ToolStatus.stop.name(),ToolStatus.unNormal.name(), reason, stopPerson);
-                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status",ToolStatus.stop.name()));
+                           SafeToolsInfoService.getInstance().update( WhereBuilder.b("id", "=", toolId), new KeyValue("status",ToolStatus.stop.name()));
                         } else {
                             toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, toolId, name,ToolStatus.stop.name(),ToolStatus.normal.name(), reason, stopPerson);
-                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status",ToolStatus.inTest.name()));
+                            SafeToolsInfoService.getInstance().update( WhereBuilder.b("id", "=", toolId), new KeyValue("status",ToolStatus.inTest.name()));
                         }
                         resultList.add(toolResult);
                         OperateToolResultService.getInstance().saveOrUpdate(resultList);
@@ -565,11 +564,11 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                         } else {
                             nextTime = DateCalcUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
                         }
-                        XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status",ToolStatus.normal.name()), new KeyValue("isnormal",ToolStatus.normal.name()),
+                        SafeToolsInfoService.getInstance().update(  WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status",ToolStatus.normal.name()), new KeyValue("isnormal",ToolStatus.normal.name()),
                                 new KeyValue("lastly_check_time", lastTime), new KeyValue("next_check_time", nextTime));
                     } else if (testBinding.rbUnnormal.isChecked()) {
                         toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time,ToolStatus.unNormal.name(), pics, person,ToolStatus.test.name());
-                        XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id),new KeyValue("status",ToolStatus.stop.name()), new KeyValue("isnormal",ToolStatus.unNormal.name()));
+                        SafeToolsInfoService.getInstance().update(  WhereBuilder.b("id", "=", id),new KeyValue("status",ToolStatus.stop.name()), new KeyValue("isnormal",ToolStatus.unNormal.name()));
                     }
                     resultList.add(toolResult);
                     OperateToolResultService.getInstance().saveOrUpdate(resultList);

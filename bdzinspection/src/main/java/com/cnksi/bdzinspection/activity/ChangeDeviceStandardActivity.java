@@ -17,7 +17,7 @@ import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.StandardDefectDefineAdapter;
 import com.cnksi.bdzinspection.adapter.StandardDefectDefineAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
-import com.cnksi.bdzinspection.daoservice.StandardService;
+import com.cnksi.bdzinspection.daoservice.DeviceStandardsService;
 import com.cnksi.bdzinspection.databinding.XsActivityChangeStandardBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddDefectDefineBinding;
@@ -105,7 +105,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
             @Override
             public void run() {
                 if (!isAddDeviceStandard) {
-                    mCurrentDeviceStandard = StandardService.getInstance().findDeviceStandardById(currentStandardId);
+                    mCurrentDeviceStandard = DeviceStandardsService.getInstance().findDeviceStandardById(currentStandardId);
                     mHandler.sendEmptyMessage(LOAD_DATA);
                     groupMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
                     mHandler.sendEmptyMessage(LOAD_MORE_DATA);
@@ -261,7 +261,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         if (!TextUtils.isEmpty(currentStandardId)) {
             mCurrentDeviceStandard.staid = currentStandardId;
         }
-        currentStandardId = StandardService.getInstance().saveDeviceStandards(mCurrentDeviceStandard, isAdd);
+        currentStandardId = DeviceStandardsService.getInstance().saveDeviceStandards(mCurrentDeviceStandard, isAdd);
         return TextUtils.isEmpty(currentStandardId) ? false : true;
     }
 
@@ -310,7 +310,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                     } else {
                         binding.ivStandardImage.setImageResource(R.drawable.xs_ic_long_press);
                     }
-                    StandardService.getInstance().updateStandardPic(mCurrentDeviceStandard, "");
+                    DeviceStandardsService.getInstance().updateStandardPic(mCurrentDeviceStandard, "");
                     break;
                 case 1: // 更换图片
 
@@ -368,7 +368,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                         }
                         if (!isAddDeviceStandard) {
                             // 保存到数据
-                            StandardService.getInstance().updateStandardPic(mCurrentDeviceStandard, currentImageName);
+                            DeviceStandardsService.getInstance().updateStandardPic(mCurrentDeviceStandard, currentImageName);
                         }
                     } else {
                         ToastUtils.showMessage( R.string.xs_change_photo_failure_try_again_str);
@@ -406,7 +406,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
 
     private void operateDefect() {
         if (isDeleteDeviceStandard) {
-            boolean isSuccess = StandardService.getInstance().deleteStandardById(currentStandardId);
+            boolean isSuccess = DeviceStandardsService.getInstance().deleteStandardById(currentStandardId);
             if (isSuccess) {
                 Intent intent = getIntent();
                 intent.putExtra(Config.CURRENT_STANDARD_ID, currentStandardId);
@@ -520,7 +520,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     @Override
     public void onBackPressed() {
         if (isAddDeviceStandard) {
-            StandardService.getInstance().deleteStandardById(currentStandardId);
+            DeviceStandardsService.getInstance().deleteStandardById(currentStandardId);
         }
         super.onBackPressed();
     }

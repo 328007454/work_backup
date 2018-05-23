@@ -16,20 +16,20 @@ import com.cnksi.bdloc.DistanceUtil;
 import com.cnksi.bdloc.LatLng;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.daoservice.CopyTypeService;
 import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.CopyTypeService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.utils.CommonUtils;
@@ -77,7 +77,7 @@ public class CopyHelper {
         this.currentBdzId = currentBdzId;
         this.currentInspectionType = inspectionType;
         copyType = CopyTypeService.getInstance().getAllCopyType();
-        copyDeviceIdList = CopyResultService.getInstance().getCopyDeviceIdList(reportId, currentInspectionType);
+        copyDeviceIdList = CopyResultService.getInstance().getCopyDeviceIdListIds(reportId, currentInspectionType);
     }
 
     public Map<String, CopyResult> getCopyResultMap() {
@@ -420,12 +420,9 @@ public class CopyHelper {
                         keyBordListener.onViewFocus((EditText) v, childItem, copyResult, requestEdtits, copyItems);
                         return false;
                     });
-                    copyValue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                        @Override
-                        public void onFocusChange(View v, boolean hasFocus) {
-                            CopyResult copyResult = copyResultMap.get(childItem.id);
-                            keyBordListener.onViewFocusChange((EditText) v, childItem, copyResult, hasFocus, txtDescript.getText().toString(), requestEdtits);
-                        }
+                    copyValue.setOnFocusChangeListener((v, hasFocus) -> {
+                        CopyResult copyResult = copyResultMap.get(childItem.id);
+                        keyBordListener.onViewFocusChange((EditText) v, childItem, copyResult, hasFocus, txtDescript.getText().toString(), requestEdtits);
                     });
                     // 显示历史抄录
                     if (copyResultMap.keySet().contains(childItem.id)) {
