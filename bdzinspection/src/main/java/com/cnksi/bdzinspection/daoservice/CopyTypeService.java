@@ -1,14 +1,14 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyType;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CopyTypeService {
     public static CopyTypeService mInstance;

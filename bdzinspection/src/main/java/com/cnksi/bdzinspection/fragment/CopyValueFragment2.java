@@ -12,6 +12,7 @@ import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.databinding.XsFragmentGridlistBinding;
 import com.cnksi.bdzinspection.model.SpecialMenu;
+import com.cnksi.core.common.ExecutorManager;
 
 import org.xutils.db.table.DbModel;
 
@@ -104,7 +105,7 @@ public class CopyValueFragment2 extends BaseFragment {
         if (!isPrepared)
             return;
         data.clear();
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             searchCurrentDeviceType();
             List<DbModel> deviceList = CopyItemService.getInstance().getCopyDeviceList(currentBdzId,
                     currentFunctionModel, currentInspectionType,specialMenu.deviceWay,currentReportId);

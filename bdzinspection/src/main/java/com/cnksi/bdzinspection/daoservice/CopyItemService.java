@@ -8,6 +8,7 @@ import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.CopyType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
+import com.cnksi.core.common.ExecutorManager;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -17,7 +18,6 @@ import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 import static com.cnksi.bdzinspection.application.XunshiApplication.getDbUtils;
 
@@ -238,37 +238,31 @@ public class CopyItemService {
         }
     }
 
-    public void saveUpdate(final List<? extends Object> objects, ExecutorService mFixedThreadPoolExecutor) {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                if (!objects.isEmpty()) {
-                    try {
-                        getDbUtils().saveOrUpdate(objects);
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
+    public void saveUpdate(final List<? extends Object> objects) {
+        ExecutorManager.executeTask(() -> {
+            if (!objects.isEmpty()) {
+                try {
+                    getDbUtils().saveOrUpdate(objects);
+                } catch (DbException e) {
+                    e.printStackTrace();
                 }
             }
         });
 
     }
 
-    public void saveUpdate(final List<? extends Object> objects, final String currentReportId, ExecutorService mFixedThreadPoolExecutor) {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                if (!objects.isEmpty()) {
-                    try {
-                        for (Object object : objects) {
-                            if (object instanceof CopyItem) {
-                                getDbUtils().saveOrUpdate(object);
-                                getDbUtils().delete(CopyResult.class, WhereBuilder.b(CopyResult.ITEM_ID, "=", ((CopyItem) object).id).and(CopyResult.REPORTID, "=", currentReportId));
-                            }
+    public void saveUpdate(final List<? extends Object> objects, final String currentReportId) {
+        ExecutorManager.executeTask(() -> {
+            if (!objects.isEmpty()) {
+                try {
+                    for (Object object : objects) {
+                        if (object instanceof CopyItem) {
+                            getDbUtils().saveOrUpdate(object);
+                            getDbUtils().delete(CopyResult.class, WhereBuilder.b(CopyResult.ITEM_ID, "=", ((CopyItem) object).id).and(CopyResult.REPORTID, "=", currentReportId));
                         }
-                    } catch (DbException e) {
-                        e.printStackTrace();
                     }
+                } catch (DbException e) {
+                    e.printStackTrace();
                 }
             }
         });

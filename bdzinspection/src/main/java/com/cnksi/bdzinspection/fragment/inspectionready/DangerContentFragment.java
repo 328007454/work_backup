@@ -12,6 +12,7 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Dangpoint;
+import com.cnksi.core.common.ExecutorManager;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.DbModelSelector;
@@ -70,7 +71,7 @@ public class DangerContentFragment extends BaseFragment {
     @Override
     protected void lazyLoad() {
         if (isPrepared && isVisible && isFirstLoad) {
-            mFixedThreadPoolExecutor.execute(new Runnable() {
+            ExecutorManager.executeTask(new Runnable() {
                 @Override
                 public void run() {
                     searchData();

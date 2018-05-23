@@ -31,7 +31,6 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdap
 import com.cnksi.bdzinspection.adapter.infrared.DevicePartAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.DevicePartService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectSourceBinding;
@@ -44,11 +43,13 @@ import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -462,7 +463,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      */
     public void searchData() {
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -489,7 +490,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      * @param content
      */
     private void searchData(final String content) {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -510,7 +511,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      * 查询设备部件对应的常见缺陷内容
      */
     private void searchDefectContent() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {

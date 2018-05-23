@@ -7,6 +7,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -72,7 +73,9 @@ public class DefectUtils {
     }
 
     public static CharSequence calculateRemindTime(DefectRecord defectRecord) {
-        if (defectRecord == null || TextUtils.isEmpty(defectRecord.discovered_date)) return "";
+        if (defectRecord == null || TextUtils.isEmpty(defectRecord.discovered_date)) {
+            return "";
+        }
         int day;
         if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(defectRecord.defectlevel) || Config.CRISIS_LEVEL.equals(defectRecord.defectlevel)) {
             day = 1;
@@ -85,7 +88,9 @@ public class DefectUtils {
         String s ="到期时间："+ d;
         if (d.compareTo(DateUtils.getAfterTime(3)) > 0) {
             return s;
-        } else return StringUtils.changeTextColor(s, Color.RED);
+        } else {
+            return StringUtils.changeTextColor(s, Color.RED);
+        }
     }
 
     public static boolean calcCopyBound(CopyItem item, CopyResult copyResult, String val, List<DefectRecord> mExistDefectList, List<String> result) {
@@ -95,9 +100,13 @@ public class DefectUtils {
         }
         double min, max;
         if (isDZCS) {
-            if (copyResult == null) return false;
+            if (copyResult == null) {
+                return false;
+            }
             min = NumberUtil.parse(copyResult.val_old, -1);
-            if (min == -1) return false;
+            if (min == -1) {
+                return false;
+            }
             max = min + 5;
         } else {
             max = NumberUtil.parse(item.max, 99999d);
@@ -112,7 +121,9 @@ public class DefectUtils {
                 defectContent = descript + "超过上一次记录值（" + min + "）" + String.valueOf(Math.abs(currentValue - max)) + "次";
             } else if (currentValue < min) {
                 defectContent = descript + "低于上一次记录值（" + min + "）" + String.valueOf(Math.abs(currentValue - min)) + "次";
-            } else return false;
+            } else {
+                return false;
+            }
         } else {
             if (currentValue >= max) {
                 defectContent = descript + "大于等于预设最大值" + String.valueOf(Math.abs(currentValue - max) * 100 / max) + "%";

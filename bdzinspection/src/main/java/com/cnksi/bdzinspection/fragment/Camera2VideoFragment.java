@@ -16,15 +16,6 @@
 
 package com.cnksi.bdzinspection.fragment;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -60,9 +51,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.Config;
-import com.cnksi.bdzinspection.view.AutoFitTextureView;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.bdzinspection.view.AutoFitTextureView;
+import com.cnksi.common.Config;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 @SuppressLint("NewApi")
 public class Camera2VideoFragment extends Fragment {

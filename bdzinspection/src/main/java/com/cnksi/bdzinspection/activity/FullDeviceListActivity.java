@@ -21,13 +21,10 @@ import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.LookupService;
-import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityFullDeviceListBinding;
 import com.cnksi.bdzinspection.fragment.DeviceListFragment;
 import com.cnksi.bdzinspection.inter.DialogInputClickListener;
-import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.bdzinspection.utils.DialogUtil;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
@@ -38,13 +35,16 @@ import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.LookUpType;
+import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sync.KSyncConfig;
-
 import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.sync.KSyncConfig;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -94,7 +94,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
 
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(() -> currentTask = TaskService.getInstance().findById(currentTaskId));
+        ExecutorManager.executeTask(() -> currentTask = TaskService.getInstance().findById(currentTaskId));
     }
 
     private void initialUI() {
@@ -165,7 +165,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     }
 
     private void setHasSortOrSplit() {
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 List<DbModel> models = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);
                 if (models != null) {
@@ -396,7 +396,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                 }
             }
             if (saveList.size() > 0) {
-                mFixedThreadPoolExecutor.execute(new Runnable() {
+                ExecutorManager.executeTask(new Runnable() {
                     @Override
                     public void run() {
                         try {

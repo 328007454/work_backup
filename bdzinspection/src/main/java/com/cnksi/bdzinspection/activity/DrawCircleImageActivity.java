@@ -9,10 +9,10 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityDrawCircleBinding;
 import com.cnksi.common.Config;
 import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.core.view.PicturePaintView;
-
 
 import java.io.File;
 
@@ -55,7 +55,7 @@ public class DrawCircleImageActivity extends BaseActivity {
      */
     private void initBitmap() {
         CustomerDialog.showProgress(currentActivity, "正在初始化图片...");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
 
@@ -124,8 +124,8 @@ public class DrawCircleImageActivity extends BaseActivity {
     private void saveMarkAndExit() {
         isSavePicture = true;
         CustomerDialog.showProgress(currentActivity, "正在保存图片...");
-        mFixedThreadPoolExecutor.execute(() -> {
-            mPicturePaintView.saveMark();
+        ExecutorManager.executeTask(() -> {
+            PicturePaintView.saveMark();
             if (BitmapUtil.saveEditPicture(binding.rlCirclePicture, currentImagePath, 80)) {
                 mPicturePaintView.setBitmapNull();
                 mHandler.sendEmptyMessage(LOAD_DATA);

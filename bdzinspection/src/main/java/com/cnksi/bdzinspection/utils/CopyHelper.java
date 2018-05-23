@@ -19,6 +19,7 @@ import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.daoservice.CopyTypeService;
+import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
@@ -27,9 +28,11 @@ import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
+import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.core.utils.GPSUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -94,7 +97,7 @@ public class CopyHelper {
         this.device = device;
         saveCurrentData = true;
         if (SystemConfig.isDevicePlaced()) {
-            placedDevice = PlacedService.getInstance().findDevicePlaced(currentReportId, device.getString("deviceid"));
+            placedDevice = PlacedDeviceService.getInstance().findDevicePlaced(currentReportId, device.getString("deviceid"));
         } else {
             placed = PlacedService.getInstance().findPlaced(currentReportId, device.getString("spid"));
         }
@@ -297,7 +300,7 @@ public class CopyHelper {
                         placedDevice = PlacedDevice.create(device, currentReportId);
                     }
                     placedDevice.setPlacedWayHighest("copy");
-                    PlacedService.getInstance().saveOrUpdate(placedDevice);
+                    PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
                 }
             } else {
                 if (Device.isOnceDevice(device)) {

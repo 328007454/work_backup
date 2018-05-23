@@ -1,7 +1,5 @@
-package com.cnksi.bdzinspection.daoservice;
+package com.cnksi.common.daoservice;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 
@@ -21,11 +19,12 @@ import java.util.Map;
  *
  * @author
  */
-public class DefectRecordService {
+public class DefectRecordService extends BaseService<DefectRecord> {
 
     public static DefectRecordService mInstance;
 
     private DefectRecordService() {
+        super(DefectRecord.class);
     }
 
     public static DefectRecordService getInstance() {
@@ -44,7 +43,7 @@ public class DefectRecordService {
     public List<DefectRecord> queryDefectByDeviceid(String deviceid, String bdzid) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.DEVICEID, "=", deviceid)
+            Selector selector =selector().and(DefectRecord.DEVICEID, "=", deviceid)
                     .and(DefectRecord.HAS_REMOVE, "=", "N").and(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.BDZID, "=", bdzid).and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)  AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
@@ -66,7 +65,7 @@ public class DefectRecordService {
     public List<DefectRecord> queryDefectByDeviceid(String deviceid, String bdzid, String reportId) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.DEVICEID, "=", deviceid).and(DefectRecord.REPORTID, "=", reportId)
+            Selector selector = selector().and(DefectRecord.DEVICEID, "=", deviceid).and(DefectRecord.REPORTID, "=", reportId)
                     .and(DefectRecord.HAS_REMOVE, "=", "N").and(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.BDZID, "=", bdzid).and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)  AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
@@ -87,7 +86,7 @@ public class DefectRecordService {
     public List<DefectRecord> queryDefectHistoryByDefectCode(String defectCode) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.DEFECTCODE, "=", defectCode)
+            Selector selector = selector().and(DefectRecord.DEFECTCODE, "=", defectCode)
                     .and(DefectRecord.HAS_REMOVE, "=", "N").and(DefectRecord.HAS_TRACK, "=", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)")
                     .orderBy(DefectRecord.UPDATE_TIME, true);
@@ -109,7 +108,7 @@ public class DefectRecordService {
     public List<DefectRecord> queryDefectByBatteryId(String batteryId, String batteryNum, String bdzId) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.SPID, "=", batteryId)
+            Selector selector = selector().and(DefectRecord.SPID, "=", batteryId)
                     .and(DefectRecord.DEVICEID, "=", batteryNum).and(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.HAS_REMOVE, "=", "N").and(DefectRecord.BDZID, "=", bdzId)
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)")
@@ -138,29 +137,14 @@ public class DefectRecordService {
                     + "' order by dr.deviceid,dr.defectlevel asc) dr on dr.deviceid=bd.battery_number and dr.reportid=bd.reportid and dr.spid=bd.batteryid where bd.battery_number='"
                     + batteryNum + "' and bd.reportid='" + reportid + "') group by battery_number";
             SqlInfo sqlInfo = new SqlInfo(sql);
-            batteryDbModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
+            batteryDbModel = findDbModelFirst(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
         }
         return batteryDbModel;
     }
 
-    /**
-     * 查询运维一体化电池记录
-     *
-     * @param reportid 报告ID
-     * @return
-     */
-    public List<BatteryDetails> queryAllRecordBattery(String reportid) {
-        List<BatteryDetails> batterys = null;
-        try {
-            batterys = XunshiApplication.getDbUtils().selector(BatteryDetails.class)
-                    .where(BatteryDetails.REPORTID, "=", reportid).orderBy(BatteryDetails.BATTERY_NUMBER, false).findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return batterys;
-    }
+
 
     /**
      * 查询变电站现存的所有缺陷
@@ -170,7 +154,7 @@ public class DefectRecordService {
     public List<DefectRecord> queryCurrentBdzExistDefectList(String bdzId) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.BDZID, "=", bdzId)
+            Selector selector = selector().and(DefectRecord.BDZID, "=", bdzId)
                     .and(DefectRecord.HAS_TRACK, "=", "N").and(DefectRecord.HAS_REMOVE, "=", "N")
                     .and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
@@ -191,7 +175,7 @@ public class DefectRecordService {
     public List<DefectRecord> findCurrentTaskNewDefectList(String bdzId, String reportId) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.BDZID, "=", bdzId)
+            Selector selector = selector().and(DefectRecord.BDZID, "=", bdzId)
                     .and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)")
                     .and(DefectRecord.REPORTID, "=", reportId).and(DefectRecord.HAS_TRACK, "=", "N")
@@ -213,7 +197,7 @@ public class DefectRecordService {
     public List<DefectRecord> findCurrentTaskTrackDefectList(String bdzId, String reportId) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.BDZID, "=", bdzId)
+            Selector selector = selector().and(DefectRecord.BDZID, "=", bdzId)
                     .and(DefectRecord.HAS_TRACK, "=", "Y").and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)")
                     .and(DefectRecord.DLT, "=", "0")
@@ -234,7 +218,7 @@ public class DefectRecordService {
     public List<DefectRecord> findCurrentTaskEliminateDefectList(String bdzId, String reportId) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.BDZID, "=", bdzId)
+            Selector selector = selector().and(DefectRecord.BDZID, "=", bdzId)
                     .and(DefectRecord.HAS_REMOVE, "=", "Y").and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)")
                     .and(DefectRecord.DLT, "=", "0")
@@ -271,18 +255,18 @@ public class DefectRecordService {
         SqlInfo sqlInfo;
         if ("search_device_key".equals(deviceType)) {
             sqlInfo = new SqlInfo(sql);
-            sqlInfo .addBindArg(new KeyValue("",bdzid));
-            sqlInfo .addBindArg(new KeyValue("",reportId));
-            sqlInfo .addBindArg(new KeyValue("",bdzid));
+            sqlInfo.addBindArg(new KeyValue("", bdzid));
+            sqlInfo.addBindArg(new KeyValue("", reportId));
+            sqlInfo.addBindArg(new KeyValue("", bdzid));
         } else {
             sqlInfo = new SqlInfo(sql);
-            sqlInfo .addBindArg(new KeyValue("",bdzid));
-            sqlInfo .addBindArg(new KeyValue("",reportId));
-            sqlInfo .addBindArg(new KeyValue("",bdzid));
-            sqlInfo .addBindArg(new KeyValue("",deviceType));
+            sqlInfo.addBindArg(new KeyValue("", bdzid));
+            sqlInfo.addBindArg(new KeyValue("", reportId));
+            sqlInfo.addBindArg(new KeyValue("", bdzid));
+            sqlInfo.addBindArg(new KeyValue("", deviceType));
         }
         try {
-            List<DbModel> dataList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> dataList = findDbModelAll(sqlInfo);
             if (null != dataList && !dataList.isEmpty()) {
                 for (DbModel dbModel : dataList) {
                     String spid = dbModel.getString(Device.SPID);
@@ -306,7 +290,7 @@ public class DefectRecordService {
     public List<DefectRecord> getReportDefectRecords(String reportId, String bdzId) {
         List<DefectRecord> defectRecords;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.REPORTID, "=", reportId)
+            Selector selector = selector().and(DefectRecord.REPORTID, "=", reportId)
                     .and(DefectRecord.HAS_REMOVE, "=", "N").and(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.BDZID, "=", bdzId).and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
@@ -330,7 +314,7 @@ public class DefectRecordService {
     public DefectRecord findFirstCopyRecord(String currentReportId, String standId) {
         DefectRecord deRecord = null;
         try {
-            deRecord = XunshiApplication.getDbUtils().selector(DefectRecord.class).where(DefectRecord.REPORTID, "=", currentReportId).and(DefectRecord.STADIDSWICHERID, "=", standId).and(DefectRecord.IS_COPY, "=", "Y").findFirst();
+            deRecord = selector().and(DefectRecord.REPORTID, "=", currentReportId).and(DefectRecord.STADIDSWICHERID, "=", standId).and(DefectRecord.IS_COPY, "=", "Y").findFirst();
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

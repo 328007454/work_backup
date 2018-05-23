@@ -16,11 +16,12 @@ import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskListBinding;
+import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
+import com.cnksi.bdzinspection.emnu.OperateTaskType;
 import com.cnksi.bdzinspection.fragment.OperateTaskListFragment;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.common.Config;
-import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
-import com.cnksi.bdzinspection.utils.Config.OperateTaskType;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 
 import org.xutils.db.sqlite.SqlInfo;
@@ -95,13 +96,9 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
     }
 
     private void searchTitleArray() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                List<String> titleList = OperateTicketService.getInstance().getTaskCount(currentActivity);
-                mHandler.sendMessage(mHandler.obtainMessage(LOAD_DATA, titleList));
-            }
+        ExecutorManager.executeTask(() -> {
+            List<String> titleList = OperateTicketService.getInstance().getTaskCount(currentActivity);
+            mHandler.sendMessage(mHandler.obtainMessage(LOAD_DATA, titleList));
         });
 
     }

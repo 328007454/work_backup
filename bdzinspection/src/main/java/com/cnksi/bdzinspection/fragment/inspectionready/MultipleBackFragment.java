@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.MultipleBackAdapter;
+import com.cnksi.bdzinspection.daoservice.ZzhtResultService;
 import com.cnksi.bdzinspection.daoservice.ZzhtService;
 import com.cnksi.bdzinspection.databinding.XsFragmentMultipleBackBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
@@ -54,7 +55,7 @@ public class MultipleBackFragment extends BaseFragment implements ItemClickListe
     }
 
     private void initialData() {
-        zzhtModels = ZzhtService.getService().getAllZzhtData(currentBdzId, currentReportId);
+        zzhtModels = ZzhtService.getInstance().getAllZzhtData(currentBdzId, currentReportId);
         for (DbModel model : zzhtModels) {
             if (TextUtils.isEmpty(model.getString("pid"))) {
                 mBackDataList.add(model);
@@ -93,7 +94,7 @@ public class MultipleBackFragment extends BaseFragment implements ItemClickListe
             modelList.add(result);
         }
         try {
-            ZzhtService.getService().saveOrUpdate(modelList);
+            ZzhtResultService.getInstance().saveOrUpdate(modelList);
         } catch (DbException e) {
             e.printStackTrace();
         }

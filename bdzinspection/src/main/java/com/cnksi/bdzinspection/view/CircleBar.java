@@ -1,7 +1,5 @@
 package com.cnksi.bdzinspection.view;
 
-import java.text.DecimalFormat;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +12,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+
+import java.text.DecimalFormat;
 
 public class CircleBar extends View {
 	public static final String TAG = CircleBar.class.getSimpleName();

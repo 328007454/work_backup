@@ -1,8 +1,10 @@
 package com.cnksi.bdzinspection.model;
 
 
+import com.cnksi.common.model.BaseModel;
+
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 
 @Table(name = "defect_define")
 public class Defect extends BaseModel {

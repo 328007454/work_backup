@@ -17,13 +17,12 @@ import com.cnksi.bdzinspection.adapter.addtask.BdzDialogAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.InspectionTypeAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.LookupService;
-import com.cnksi.bdzinspection.daoservice.TaskService;
+import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
+import com.cnksi.bdzinspection.daoservice.SwitchMenuService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddInspectionTaskBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityAddinpsectionTypeDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.TaskExtend;
-import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.MyUUID;
@@ -31,11 +30,15 @@ import com.cnksi.bdzinspection.utils.SelectPersonUtil;
 import com.cnksi.bdzinspection.ywyth.YWDeviceListActivity;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -151,20 +154,15 @@ public class AddTaskActivity extends BaseActivity {
     }
 
     private void initialData() {
-        mHandler.postDelayed(new Runnable() {
+        mHandler.postDelayed(() -> ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
-                mFixedThreadPoolExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        initBdzData();
-                        initInspectionTypeData();
-                        initInspectionTypeChildData();
+                initBdzData();
+                initInspectionTypeData();
+                initInspectionTypeChildData();
 
-                    }
-                });
             }
-        }, 0);
+        }), 0);
 
     }
 
@@ -216,10 +214,10 @@ public class AddTaskActivity extends BaseActivity {
             if (groupList != null && groupList.size() == 1) {
                 Lookup mGroupLookUp = groupList.get(0);
                 if ((InspectionType.switchover.name().equals(currentTypeStr) || InspectionType.maintenance.name().equals(currentTypeStr)) && null != mCurrentBdz) {
-                    childList = (ArrayList<Lookup>) LookupService.getInstance()
+                    childList = (ArrayList<Lookup>) SwitchMenuService.getInstance()
                             .findSwitchMenu(currentTypeStr, mCurrentBdz.bdzid);
                 } else if (InspectionType.special.name().equals(currentTypeStr)) {
-                    childList = (ArrayList<Lookup>) LookupService.getInstance()
+                    childList = (ArrayList<Lookup>) SpecialMenuService.getInstance()
                             .findSpecialMenu(currentTypeStr);
                 } else {
                     childList = new ArrayList<Lookup>(LookupService.getInstance()
@@ -244,11 +242,11 @@ public class AddTaskActivity extends BaseActivity {
             groupHashMap = new HashMap<>();
             for (Lookup mGroupLookUp : groupList) {
                 if ((InspectionType.switchover.name().equals(currentTypeStr) || InspectionType.maintenance.name().equals(currentTypeStr)) && null != mCurrentBdz) {
-                    childList = (ArrayList<Lookup>) LookupService.getInstance()
+                    childList = (ArrayList<Lookup>) SwitchMenuService.getInstance()
                             .findSwitchMenu(currentTypeStr, mCurrentBdz.bdzid);
                     groupHashMap.put(mGroupLookUp, childList);
                 } else if (InspectionType.special.name().equals(currentTypeStr)) {
-                    childList = (ArrayList<Lookup>) LookupService.getInstance()
+                    childList = (ArrayList<Lookup>) SpecialMenuService.getInstance()
                             .findSpecialMenu(currentTypeStr);
                     groupHashMap.put(mGroupLookUp, childList);
                 } else {

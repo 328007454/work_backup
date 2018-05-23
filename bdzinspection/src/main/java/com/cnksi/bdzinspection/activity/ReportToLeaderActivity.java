@@ -1,8 +1,5 @@
 package com.cnksi.bdzinspection.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -17,12 +14,15 @@ import android.telephony.SmsManager;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityReportToLeaderBinding;
-import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TestPerson;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DefectLevelUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.Config;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.cnksi.common.Config.LOAD_DATA;
 

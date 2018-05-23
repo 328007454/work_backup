@@ -17,7 +17,6 @@ import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
-
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;

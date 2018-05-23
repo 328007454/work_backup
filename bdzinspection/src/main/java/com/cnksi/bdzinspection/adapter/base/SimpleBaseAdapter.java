@@ -1,7 +1,6 @@
 package com.cnksi.bdzinspection.adapter.base;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.cnksi.bdzinspection.R;
 import com.cnksi.core.utils.BitmapUtils;
 
 import java.util.List;

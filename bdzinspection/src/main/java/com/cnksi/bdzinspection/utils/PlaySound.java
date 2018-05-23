@@ -6,7 +6,7 @@ import android.media.SoundPool;
 import android.util.SparseIntArray;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.core.common.ExecutorManager;
 
 public class PlaySound {
 
@@ -25,7 +25,7 @@ public class PlaySound {
         this.context = context;
         mSoundPool = new SoundPool(100, AudioManager.STREAM_MUSIC, 100);
         soundMap = new SparseIntArray();
-        XunshiApplication.getFixedThreadPoolExecutor().execute(() -> initSoundMap(context));
+       ExecutorManager.executeTask(() -> initSoundMap(context));
 
     }
 

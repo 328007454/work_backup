@@ -1,6 +1,5 @@
 package com.cnksi.nari.utils;
 
-import android.app.Service;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;

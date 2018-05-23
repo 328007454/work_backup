@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
-import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.daoservice.YthService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwythWorkflowBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogInputBinding;
@@ -34,6 +33,7 @@ import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -119,7 +119,7 @@ public class YWWorkflowActivity extends BaseActivity {
         plan = YthService.getInstance().getProcessStatus(currentTaskId, currentInspectionType);
 
         if (dlist == null) {
-            dlist = new ArrayList<com.cnksi.bdzinspection.model.Process>();
+            dlist = new ArrayList<>();
         }
         adapter = new YWWorkflowAdapter(currentActivity, dlist);
         binding.list.setAdapter(adapter);

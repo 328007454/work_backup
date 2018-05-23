@@ -11,11 +11,11 @@
             android:id="@+id/include_title"
             layout="@layout/xs_include_title" />
 
-        <com.cnksi.core.view.PagerSlidingTabStrip xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.cnksi.core.view.PagerSlidingTabStrip
             android:id="@+id/tab_strip"
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_tab_strip_minheight"
-            android:background="@color/xs_tab_strip_background_color" />
+            android:background="@color/xs_tab_strip_background_color"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"

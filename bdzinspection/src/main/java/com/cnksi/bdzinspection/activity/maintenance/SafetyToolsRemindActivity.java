@@ -20,6 +20,7 @@ import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.vo.DataWrap;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
 import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -90,7 +91,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
             return;
         }
         dataWraps.clear();
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             List<DbModel> allTools = SafeToolsInfoService.getInstance().findAllTools(dept_id);
             if (allTools.size() > 0) {
                 //根据bdz_id归类。

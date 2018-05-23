@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsDevicePartItemBinding;
-import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.Config;
+import com.cnksi.common.model.DevicePart;
 import com.cnksi.core.utils.BitmapUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 

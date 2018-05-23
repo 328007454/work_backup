@@ -39,12 +39,14 @@ import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.nari.model.BDPackage;
 import com.cnksi.nari.model.XSJH;
 import com.cnksi.nari.type.PackageStatus;
@@ -55,7 +57,6 @@ import com.cnksi.nari.utils.LogUtil;
 import com.cnksi.nari.utils.NariDataManager;
 import com.cnksi.nari.utils.PMSException;
 import com.cnksi.nari.utils.ResultSet;
-import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -197,7 +198,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             ToastUtils.showMessage( "初始化失败。请确认是正常操作流程!");
             return;
         }
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             HashMap<String, BDPackage> packageHashMap = NariDataManager.getPackageByUser(account);
             try {
                 List<BDPackage> bdPackages = NARIHelper.getPackage(Regulation.XS);
@@ -355,7 +356,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     private void upload(final BDPackage... bdPackages) {
         CustomerDialog.showProgress(currentActivity, "正在上传...");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 for (BDPackage bdPackage : bdPackages) {
@@ -423,7 +424,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     private void downLoad(final BDPackage... bdPackages) {
         final Dialog dialog = CustomerDialog.showProgress(currentActivity, "正在下载第1个,共" + bdPackages.length + "个...");
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             int i = 1;
             for (BDPackage bdPackage : bdPackages) {
                 File f = new File(bdPackage.getDatabasePath());
@@ -671,7 +672,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     private void deltePacage(BDPackage item, int delteNum, Dialog dialog) {
         CustomerDialog.showProgress(currentActivity, "正在删除该离线任务，请稍后...");
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 if (delteNum == 1) {
                     deleteLocalData(item);

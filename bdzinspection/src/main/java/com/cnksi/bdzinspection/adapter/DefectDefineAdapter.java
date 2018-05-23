@@ -10,8 +10,8 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsAddDefectDefineItemBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.Config;
+import com.cnksi.common.model.DevicePart;
 import com.cnksi.core.utils.StringUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 

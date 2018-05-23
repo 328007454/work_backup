@@ -27,11 +27,10 @@ import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.StandardAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.DevicePartService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.DeviceTypeImageService;
-import com.cnksi.bdzinspection.daoservice.PlacedService;
+import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.daoservice.StandardService;
 import com.cnksi.bdzinspection.databinding.XsActivityNewDevicedetailsBinding;
@@ -49,6 +48,7 @@ import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
@@ -56,6 +56,7 @@ import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.model.Standards;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -255,7 +256,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
      */
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 specialMenu = SpecialMenuService.getInstance().findCurrentDeviceType(currentInspectionType);
                 // 1、查询设备
@@ -292,8 +293,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 e.printStackTrace();
             }
         });
-        mFixedThreadPoolExecutor.execute(() -> {
-            placedDevice = PlacedService.getInstance().findDevicePlaced(currentReportId, currentDeviceId);
+        ExecutorManager.executeTask(() -> {
+            placedDevice = PlacedDeviceService.getInstance().findDevicePlaced(currentReportId, currentDeviceId);
             if (placedDevice != null && placedDevice.isHasPhoto()) {
                 runOnUiThread(() -> {
                     devicedetailsBinding.setHasSignPhoto(true);
@@ -308,7 +309,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
      * 查询设备部件对应的全面巡视标准
      */
     private void initStandardList(final String devicePartId) {
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             String inspectionTypeName = currentInspectionType;
             // 1、从库中查询部件巡视标准
             mStandardList = StandardService.getInstance().findStandardListFromDB(devicePartId, inspectionTypeName);
@@ -705,7 +706,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     break;
                 case PHOTO_SIGN_IMAGE:
                     CustomerDialog.showProgress(this, "处理水印中...");
-                    mFixedThreadPoolExecutor.execute(() -> {
+                    ExecutorManager.executeTask(() -> {
                         Bitmap bitmap = BitmapUtil.createScaledBitmapByHeight(Config.RESULT_PICTURES_FOLDER + currentImageName, ScreenUtils.getScreenHeight(currentActivity));
                         String tips = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                         tips = tips + "\n" + DateUtils.getCurrentLongTime();
@@ -772,7 +773,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
      * 查询当前设备的历史缺陷
      */
     public void searchCurrentDeviceExistDefect() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @SuppressLint("StringFormatMatches")
             @Override
             public void run() {

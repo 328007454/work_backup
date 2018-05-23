@@ -8,11 +8,11 @@ import android.widget.CheckBox;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.TitleActivity;
-import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.daoservice.YthService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwythGqjBinding;
 import com.cnksi.bdzinspection.model.GQJ;
 import com.cnksi.bdzinspection.ywyth.adapter.YWGQJAdapter;
+import com.cnksi.common.daoservice.TaskService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

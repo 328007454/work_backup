@@ -8,14 +8,14 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.model.CopyItem;
+import com.cnksi.bdzinspection.view.ChartDialog;
+import com.cnksi.bdzinspection.view.ChartDialog.LineSet;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Standards;
-import com.cnksi.bdzinspection.view.ChartDialog;
-import com.cnksi.bdzinspection.view.ChartDialog.LineSet;
-import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;

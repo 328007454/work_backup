@@ -1,12 +1,11 @@
 package com.cnksi.bdzinspection.model;
 
-import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
+import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.model.BaseModel;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
-
-import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.common.model.BaseModel;
 
 
 @Table(name = "operate_tick")

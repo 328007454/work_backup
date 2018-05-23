@@ -23,7 +23,6 @@ import com.cnksi.bdzinspection.fragment.inspectionready.ToolFragment;
 import com.cnksi.bdzinspection.model.InspectionPrepared;
 import com.cnksi.bdzinspection.model.ReportSignname;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
-import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
@@ -33,6 +32,8 @@ import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 
@@ -115,8 +116,8 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     }
 
     private void initZzht() {
-        mFixedThreadPoolExecutor.execute(() -> {
-            zzht = ZzhtService.getService().bdzInZzht(currentBdzId);
+        ExecutorManager.executeTask(() -> {
+            zzht = ZzhtService.getInstance().bdzInZzht(currentBdzId);
             runOnUiThread(() -> {
                 initFragmentList();
             });
@@ -233,7 +234,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
 
     private void initClick() {
         binding.ibtnCancel.setOnClickListener(v -> {
-            mFixedThreadPoolExecutor.execute(() -> {
+            ExecutorManager.executeTask(() -> {
                 Fragment fragment = mFragmentList.get(mFragmentList.size() - 1);
                 if (fragment instanceof MultipleBackFragment) {
                     ((MultipleBackFragment) fragment).saveData();
@@ -312,7 +313,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
 
 
     private void saveInspectionAlready() {
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             InspectionPrepared prepared = new InspectionPrepared(mReport.reportid, task.taskid, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
             try {
                 SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo(XunshiApplication.getDbUtils().getTable(InspectionPrepared.class));
@@ -374,7 +375,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             mReport.reportSource = Config.REPORT;
             mReport.inspectionValue = currentInspectionTypeName;
             mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
-            mFixedThreadPoolExecutor.execute(() -> {
+            ExecutorManager.executeTask(() -> {
                 try {
                     saveReportSign();
                     XunshiApplication.getDbUtils().saveOrUpdate(mReport);

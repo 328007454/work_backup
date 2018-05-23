@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsItemSignBinding;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
+import com.cnksi.common.Config;
 import com.cnksi.core.utils.BitmapUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 

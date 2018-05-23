@@ -16,30 +16,28 @@ import java.util.List;
 import java.util.UUID;
 
 public class CopyResultService extends BaseService<CopyResult> {
-    public static CopyResultService mInstance;
+    final static CopyResultService mInstance = new CopyResultService();
 
     private CopyResultService() {
         super(CopyResult.class);
     }
 
     public static CopyResultService getInstance() {
-        if (mInstance == null) {
-            mInstance = new CopyResultService();
-        }
         return mInstance;
     }
 
     @Override
-    public void saveOrUpdate(CopyResult copyResult) {
+    public boolean saveOrUpdate(CopyResult copyResult) {
         copyResult.update_time = DateUtils.getCurrentTime("yyyy-MM-dd HH:mm:ss");
         try {
             if (TextUtils.isEmpty(copyResult.id)) {
                 copyResult.id = UUID.randomUUID().toString();
                 copyResult.create_time = copyResult.update_time;
             }
-            super.saveOrUpdate(copyResult);
+            return super.saveOrUpdate(copyResult);
         } catch (DbException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -57,12 +55,12 @@ public class CopyResultService extends BaseService<CopyResult> {
     /**
      * 查询设备先最新的抄录项
      */
-    public List<CopyResult> getResultList(String bdzid,String reportId, String deviceId, boolean inReport, String type) {
+    public List<CopyResult> getResultList(String bdzid, String reportId, String deviceId, boolean inReport, String type) {
         try {
             String operate = (inReport) ? "=" : "!=";
-            Selector<CopyResult> selector = selector().and(CopyResult.DEVICEID, "=", deviceId).and(CopyResult.BDZID,"=",bdzid)
+            Selector<CopyResult> selector = selector().and(CopyResult.DEVICEID, "=", deviceId).and(CopyResult.BDZID, "=", bdzid)
                     .and(CopyResult.REPORTID, operate, reportId).
-                            expr(" and " + CopyItem.TYPE_KEY + " in('" + type + "')  and create_time in ( select max(create_time) from copy_result cr where cr.deviceid = '"+deviceId+"' and cr.bdzid = '"+bdzid+"' and cr.dlt='0' group by item_id)  group by " + CopyResult.ITEM_ID + " order by " + CopyResult.UPDATE_TIME + "," + CopyResult.CREATE_TIME);
+                            expr(" and " + CopyItem.TYPE_KEY + " in('" + type + "')  and create_time in ( select max(create_time) from copy_result cr where cr.deviceid = '" + deviceId + "' and cr.bdzid = '" + bdzid + "' and cr.dlt='0' group by item_id)  group by " + CopyResult.ITEM_ID + " order by " + CopyResult.UPDATE_TIME + "," + CopyResult.CREATE_TIME);
             return selector.findAll();
         } catch (DbException e) {
             e.printStackTrace();

@@ -8,7 +8,6 @@ import com.cnksi.nari.type.PackageStatus;
 
 import org.xutils.DbManager;
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;

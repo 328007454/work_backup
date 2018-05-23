@@ -7,6 +7,7 @@ import com.cnksi.bdzinspection.model.SwitchMenu;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.DateCalcUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 
 /**
@@ -28,7 +29,7 @@ public class PushNewTaskUtil {
     public void createNewTaskByPeriod(String taskId, String type) {
         boolean goOn = !TextUtils.isEmpty(type) && (type.contains("maintenance") || type.contains("switchover"));
         if (goOn) {
-            XunshiApplication.getFixedThreadPoolExecutor().execute(() -> {
+           ExecutorManager.executeTask(() -> {
                 try {
                     Task task = XunshiApplication.getDbUtils().selector(Task.class).where(Task.TASKID, "=", taskId).and(Task.DLT, "<>", 1).findFirst();
                     String startTime = null==task ?DateUtils.getCurrentLongTime():(TextUtils.isEmpty(task.schedule_time)?DateUtils.getCurrentLongTime():task.schedule_time);

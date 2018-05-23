@@ -1,9 +1,8 @@
 package com.cnksi.bdzinspection.daoservice;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.Config;
-
+import com.cnksi.common.model.DevicePart;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;

@@ -27,7 +27,6 @@ import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.DeviceService.DefectInfo;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
@@ -37,17 +36,18 @@ import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.GPSUtils;
 import com.cnksi.core.utils.StringUtils;
-
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -212,7 +212,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     }
 
     private void queryInfo() {
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             // 查寻缺陷
             final HashMap<String, DefectInfo> defectmap = DeviceService.getInstance().findDeviceDefect(currentBdzId);
             // 查寻抄录数量

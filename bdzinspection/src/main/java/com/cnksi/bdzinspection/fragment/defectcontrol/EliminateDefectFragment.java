@@ -24,27 +24,26 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.DefectReasonDialogAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectReasonBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentEliminateDefectBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.view.CustomRadioButton;
-
-import com.cnksi.core.view.CustomerDialog;
-import com.zhy.autolayout.utils.AutoUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Lookup;
 import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-
+import com.cnksi.core.view.CustomerDialog;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 
@@ -249,7 +248,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
             PlaySound.getIntance(currentActivity).play(R.raw.clear);
             binding.tvSelectDefectReason.setText("");
             binding.etChargePerson.setText("");
-            mFixedThreadPoolExecutor.execute(new Runnable() {
+            ExecutorManager.executeTask(new Runnable() {
 
                 @Override
                 public void run() {
@@ -365,7 +364,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
      * @param
      */
     public void searchData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -389,7 +388,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
      * 查询缺陷原因
      */
     private void searchDefectReason() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {

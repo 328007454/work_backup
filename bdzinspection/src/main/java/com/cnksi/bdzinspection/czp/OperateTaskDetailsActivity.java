@@ -10,11 +10,12 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskDetailsBinding;
+import com.cnksi.bdzinspection.emnu.OperateType;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.common.Config;
-import com.cnksi.bdzinspection.utils.Config.OperateType;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.ex.DbException;
@@ -41,7 +42,7 @@ public class OperateTaskDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_task_details);
-       
+
         initialUI();
         initialData();
 
@@ -52,18 +53,21 @@ public class OperateTaskDetailsActivity extends BaseActivity {
     private void initialUI() {
         currentOperateId = getIntent().getStringExtra(Config.CURRENT_TASK_ID);
         isFromCheckedActivity = getIntent().getBooleanExtra(Config.IS_FROM_BATTERY, false);
-         binding.includeTitle.tvTitle.setText(R.string.xs_operate_task_str);
+        binding.includeTitle.tvTitle.setText(R.string.xs_operate_task_str);
     }
 
     private void initialData() {
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
+        ExecutorManager.executeTask(() -> {
+            try {
                 mCurrentOperateTick = OperateTicketService.getInstance().findById(currentOperateId);
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            if (mCurrentOperateTick==null){
+                runOnUiThread(()->ToastUtils.showMessage("没有找到操作票!"));
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -86,22 +90,22 @@ public class OperateTaskDetailsActivity extends BaseActivity {
      */
     private void fillContent() {
         if (mCurrentOperateTick != null) {
-             binding.tvOperateContent.setText(mCurrentOperateTick.task);
-             binding.tvDepartment.setText(mCurrentOperateTick.unit);
-             binding.tvCode.setText(mCurrentOperateTick.code);
-             binding.tvFlTime.setText(TextUtils.isEmpty(mCurrentOperateTick.time_fl) ? DateUtils.getCurrentLongTime() : mCurrentOperateTick.time_fl);
-             binding.etFlr.setText(TextUtils.isEmpty(mCurrentOperateTick.person_flr) ? "" : mCurrentOperateTick.person_flr);
-             binding.etSlr.setText(TextUtils.isEmpty(mCurrentOperateTick.person_slr) ? "" : mCurrentOperateTick.person_slr);
+            binding.tvOperateContent.setText(mCurrentOperateTick.task);
+            binding.tvDepartment.setText(mCurrentOperateTick.unit);
+            binding.tvCode.setText(mCurrentOperateTick.code);
+            binding.tvFlTime.setText(TextUtils.isEmpty(mCurrentOperateTick.time_fl) ? DateUtils.getCurrentLongTime() : mCurrentOperateTick.time_fl);
+            binding.etFlr.setText(TextUtils.isEmpty(mCurrentOperateTick.person_flr) ? "" : mCurrentOperateTick.person_flr);
+            binding.etSlr.setText(TextUtils.isEmpty(mCurrentOperateTick.person_slr) ? "" : mCurrentOperateTick.person_slr);
             if (OperateType.jh.name().equalsIgnoreCase(mCurrentOperateTick.operate_type)) {
-                 binding.rbJh.setChecked(true);
+                binding.rbJh.setChecked(true);
             } else if (OperateType.dr.name().equalsIgnoreCase(mCurrentOperateTick.operate_type)) {
-                 binding.rbDr.setChecked(true);
+                binding.rbDr.setChecked(true);
             } else if (OperateType.jx.name().equalsIgnoreCase(mCurrentOperateTick.operate_type)) {
-                 binding.rbJxr.setChecked(true);
+                binding.rbJxr.setChecked(true);
             }
         }
     }
-    
+
     private void initOnClick() {
         binding.tvFlTime.setOnClickListener(view -> showTime());
         binding.tvFlTimeContainer.setOnClickListener(view -> showTime());
@@ -114,7 +118,7 @@ public class OperateTaskDetailsActivity extends BaseActivity {
     }
 
     private void showTime() {
-        CustomerDialog.showDatePickerDialog(currentActivity, true, (result, position) ->  binding.tvFlTime.setText(result));
+        CustomerDialog.showDatePickerDialog(currentActivity, true, (result, position) -> binding.tvFlTime.setText(result));
     }
 
     /**
@@ -122,31 +126,31 @@ public class OperateTaskDetailsActivity extends BaseActivity {
      */
     private void updateOperateTask() {
 
-        String flr =  binding.etFlr.getText().toString().trim();
-        String slr =  binding.etSlr.getText().toString().trim();
-        String flTime =  binding.tvFlTime.getText().toString().trim();
-        String code =  binding.tvCode.getText().toString().trim();
+        String flr = binding.etFlr.getText().toString().trim();
+        String slr = binding.etSlr.getText().toString().trim();
+        String flTime = binding.tvFlTime.getText().toString().trim();
+        String code = binding.tvCode.getText().toString().trim();
         if (TextUtils.isEmpty(code)) {
-            ToastUtils.showMessage( R.string.xs_please_input_code_str);
+            ToastUtils.showMessage(R.string.xs_please_input_code_str);
             return;
         }
         if (TextUtils.isEmpty(flr)) {
-            ToastUtils.showMessage( R.string.xs_please_input_flr_str);
+            ToastUtils.showMessage(R.string.xs_please_input_flr_str);
             return;
         }
         if (TextUtils.isEmpty(slr)) {
-            ToastUtils.showMessage( R.string.xs_please_input_slr_str);
+            ToastUtils.showMessage(R.string.xs_please_input_slr_str);
             return;
         }
         if (TextUtils.isEmpty(flTime)) {
-            ToastUtils.showMessage( R.string.xs_please_select_fl_time_str);
+            ToastUtils.showMessage(R.string.xs_please_select_fl_time_str);
             return;
         }
         // 选择的操作类型
         String operateType = OperateType.jh.name();
-        if ( binding.rbDr.isChecked()) {
+        if (binding.rbDr.isChecked()) {
             operateType = OperateType.dr.name();
-        } else if ( binding.rbJxr.isChecked()) {
+        } else if (binding.rbJxr.isChecked()) {
             operateType = OperateType.jx.name();
         }
         if (mCurrentOperateTick == null) {
@@ -160,7 +164,8 @@ public class OperateTaskDetailsActivity extends BaseActivity {
 
         boolean isSuccess = false;
         try {
-            isSuccess = OperateTicketService.getInstance().saveOrUpdate(mCurrentOperateTick);
+            OperateTicketService.getInstance().saveOrUpdate(mCurrentOperateTick);
+            isSuccess = true;
         } catch (DbException e) {
             e.printStackTrace();
         }

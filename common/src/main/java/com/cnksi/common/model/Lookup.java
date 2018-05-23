@@ -1,8 +1,8 @@
-package com.cnksi.bdzinspection.model;
+package com.cnksi.common.model;
 
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 
 @Table(name = "lookup")
 public class Lookup extends BaseModel {
@@ -65,20 +65,6 @@ public class Lookup extends BaseModel {
         this.type = type;
     }
 
-    public Lookup(SwitchMenu menu) {
-        this.id = menu.id;
-        this.k = menu.k;
-        this.loo_id = menu.loo_id;
-        this.v = menu.v;
-        this.repSwitchOverId = menu.repSwithoverId;
-    }
 
-    public Lookup(SpecialMenu menu) {
-        this.id = menu.id;
-        this.k = menu.k;
-        this.loo_id = menu.loo_id;
-        this.v = menu.v;
-        this.remark = menu.remark;
-        this.deviceWay = menu.deviceWay;
-    }
+
 }

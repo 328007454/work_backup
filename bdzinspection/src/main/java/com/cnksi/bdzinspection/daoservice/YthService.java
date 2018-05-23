@@ -3,11 +3,6 @@
  */
 package com.cnksi.bdzinspection.daoservice;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.GQJ;
 import com.cnksi.bdzinspection.model.PlanProcessStatus;
@@ -18,6 +13,11 @@ import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author ksi-android

@@ -1,10 +1,10 @@
 package com.cnksi.bdzinspection.view;
 
-import java.text.DecimalFormat;
-
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by wastrel on 2016/7/7.

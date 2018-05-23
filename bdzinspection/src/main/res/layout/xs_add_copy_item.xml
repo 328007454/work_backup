@@ -5,7 +5,7 @@
 
     </data>
 
-    <com.zhy.autolayout.AutoLinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/xs_dialog_green_title_background"

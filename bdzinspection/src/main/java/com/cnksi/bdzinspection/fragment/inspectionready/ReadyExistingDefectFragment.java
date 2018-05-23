@@ -14,11 +14,12 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.DefectControlActivity;
 import com.cnksi.bdzinspection.adapter.inspectionready.ReadyExistDefectAdapter;
 import com.cnksi.bdzinspection.adapter.inspectionready.ReadyExistDefectAdapter.OnAdapterViewClickListener;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.databinding.XsFragmentPinnedHeaderListBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.view.PinnedHeaderListView.OnItemClickListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -107,7 +108,7 @@ public class ReadyExistingDefectFragment extends BaseFragment implements OnAdapt
     }
 
     public void searchData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {

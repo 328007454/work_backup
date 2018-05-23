@@ -16,12 +16,13 @@ import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddNewDefectBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -108,21 +109,17 @@ public class AddNewDefectActivity extends BaseActivity {
      * @param content
      */
     private void searchData(final String content) {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    dataList = DefectDefineService.getInstance().findDefectDefineByDeviceIdAndContent(currentDeviceId,
-                            content);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                if (dataList == null) {
-                    dataList = new ArrayList<DbModel>();
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+        ExecutorManager.executeTask(() -> {
+            try {
+                dataList = DefectDefineService.getInstance().findDefectDefineByDeviceIdAndContent(currentDeviceId,
+                        content);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            if (dataList == null) {
+                dataList = new ArrayList<DbModel>();
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 

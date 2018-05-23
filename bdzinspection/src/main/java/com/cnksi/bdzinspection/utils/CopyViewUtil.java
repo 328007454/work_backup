@@ -22,6 +22,7 @@ import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.utils.CommonUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;

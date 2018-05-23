@@ -17,9 +17,8 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.ReportService;
-import com.cnksi.bdzinspection.daoservice.TaskService;
+import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.XsActivityGenerateReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
@@ -27,7 +26,6 @@ import com.cnksi.bdzinspection.databinding.XsDialogSignViewBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
@@ -36,11 +34,16 @@ import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
 import com.cnksi.bdzinspection.utils.TimePickerUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -50,9 +53,6 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.nari.NariActivity;
 import com.cnksi.nari.type.PackageStatus;
 import com.cnksi.nari.utils.NariDataManager;
-
-import com.cnksi.core.common.ScreenManager;
-
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -182,7 +182,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             binding.layoutConclusion.setVisibility(View.VISIBLE);
         }
 
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 currentReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
                 inspectionMark = currentReport.inspectionRemark;
@@ -210,7 +210,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                             totalCount = CopyItemService.getInstance().getCopyItemCount1(currentBdzId, CopyItemService.getInstance().getCopyType());
                         } else {
                             copyCount = TaskService.getInstance().queryCopyData(currentReportId);
-                            totalCount = TaskService.getInstance().getSwitchOverCopyTotal(currentInspectionType, currentBdzId);
+                            totalCount = StandardSwitchOverService.getInstance().getSwitchOverCopyTotal(currentInspectionType, currentBdzId);
                         }
 
                     }
@@ -296,7 +296,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 binding.signList1.setAdapter(adapterFzr);
             });
         });
-        mFixedThreadPoolExecutor.execute(() -> persons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts));
+        ExecutorManager.executeTask(() -> persons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts));
     }
 
     /**

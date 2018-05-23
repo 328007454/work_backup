@@ -1,8 +1,7 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.common.model.SwitchPic;
+import com.cnksi.common.daoservice.BaseService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -12,9 +11,13 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StandardSwitchOverService extends BaseService {
+public class StandardSwitchOverService extends BaseService<StandardSwitchover> {
 
     private static StandardSwitchOverService switchOverServiceInstance;
+
+    protected StandardSwitchOverService() {
+        super(StandardSwitchover.class);
+    }
 
     public static StandardSwitchOverService getInstance() {
         if (switchOverServiceInstance == null) {
@@ -36,7 +39,7 @@ public class StandardSwitchOverService extends BaseService {
                 + " LEFT JOIN (SELECT stand_switch_id,group_concat(val) val,max(defectlevel) defectlevel,group_concat(oldval) oldval,deviceid,group_concat(confirm_date) confirm_date FROM defect_record WHERE reportid = '" + currentReportId + "' AND DLT = '0' AND has_remove = 'N' AND has_track = 'N' GROUP BY stand_switch_id)"
                 + " dr ON ss.id = dr.stand_switch_id"
                 + " WHERE ss.kind = '" + currentInspectionType + "'AND ss.bdzid = '" + currentBdzId + "' and ss.rep_swithover_id = '" + reportSwitchId + "' and ss.dlt=0 order by ss.sort,ss.code";
-        List<DbModel> dbModleList = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+        List<DbModel> dbModleList = findDbModelAll(new SqlInfo(sql));
 
         return repeatSort(dbModleList);
     }
@@ -47,12 +50,13 @@ public class StandardSwitchOverService extends BaseService {
         ArrayList<DbModel> dbModelLevel2 = new ArrayList<>();
         ArrayList<DbModel> dbModelLevel3 = new ArrayList<>();
         for (DbModel dbModel : dbModleList) {
-            if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("1"))
+            if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("1")) {
                 dbModelLevel1.add(dbModel);
-            else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("2"))
+            } else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("2")) {
                 dbModelLevel2.add(dbModel);
-            else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("3"))
+            } else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("3")) {
                 dbModelLevel3.add(dbModel);
+            }
         }
         for (DbModel dbModel1 : dbModelLevel1) {
             newDbmodelList.add(dbModel1);
@@ -60,8 +64,9 @@ public class StandardSwitchOverService extends BaseService {
                 if (dbModel1.getString(StandardSwitchover.ID).equalsIgnoreCase(dbModel2.getString(StandardSwitchover.PID))) {
                     newDbmodelList.add(dbModel2);
                     for (DbModel dbModel3 : dbModelLevel3) {
-                        if (dbModel2.getString(StandardSwitchover.ID).equalsIgnoreCase(dbModel3.getString(StandardSwitchover.PID)))
+                        if (dbModel2.getString(StandardSwitchover.ID).equalsIgnoreCase(dbModel3.getString(StandardSwitchover.PID))) {
                             newDbmodelList.add(dbModel3);
+                        }
                     }
                 }
 
@@ -95,14 +100,10 @@ public class StandardSwitchOverService extends BaseService {
         sqlInfo.addBindArg(new KeyValue("", currentReportId));
         sqlInfo.addBindArg(new KeyValue("", currentInspectionType));
         sqlInfo.addBindArg(new KeyValue("", currentBdzId));
-        List<DbModel> dbModleList = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
+        List<DbModel> dbModleList = findDbModelAll(sqlInfo);
         return repeatSort(dbModleList);
     }
 
-    public SwitchPic findFirstPic(String currentReportId, String standId) throws DbException {
-        SwitchPic pic = XunshiApplication.getDbUtils().selector(SwitchPic.class).where(SwitchPic.REPORTID, "=", currentReportId).and(SwitchPic.STADIDSWICHERID, "=", standId).findFirst();
-        return pic;
-    }
 
 
     public String getStandardMaxLevel(String standardId, String reportId) throws DbException {
@@ -111,8 +112,28 @@ public class StandardSwitchOverService extends BaseService {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", reportId));
         sqlInfo.addBindArg(new KeyValue("", standardId));
-        DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
+        DbModel model = findDbModelFirst(sqlInfo);
         return model.getString("maxdefect");
+    }
+
+
+    /**
+     * 完成任务
+     */
+    public long getSwitchOverCopyTotal(String type, String bdzId) {
+        long total = 0;
+        List<StandardSwitchover> standardSwitchOvers = null;
+        try {
+            standardSwitchOvers =selector().and(StandardSwitchover.BDZID, "=", bdzId).and(StandardSwitchover.KIND, "=", type).and(StandardSwitchover.ISCOPY, "=", "1").findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        if (null == standardSwitchOvers) {
+            total = 0;
+        } else {
+            total = standardSwitchOvers.size();
+        }
+        return total;
     }
 
 }

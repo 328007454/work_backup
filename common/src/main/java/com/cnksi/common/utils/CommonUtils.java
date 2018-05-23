@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.common.utils;
 
 import android.text.TextUtils;
 import android.util.Log;

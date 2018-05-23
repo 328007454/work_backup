@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentMotionRuleBinding;
+import com.cnksi.core.common.ExecutorManager;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
@@ -43,7 +44,7 @@ public class MotionRuleFragment extends BaseFragment {
 	
 
 	private void initialData() {
-		mFixedThreadPoolExecutor.execute(() -> {
+		ExecutorManager.executeTask(() -> {
             String sql = " select db.rules,db.exception_deal_methods from device_bigtype db, (SELECT * from device d left join device_type dt on d.dtid= dt.dtid where  d.deviceid='" + currentDeviceId + "') t where db.bigid = t.bigid ";
             try {
                 dbModel = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo(sql));

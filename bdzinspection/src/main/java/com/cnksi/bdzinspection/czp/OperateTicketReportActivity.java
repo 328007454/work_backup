@@ -13,12 +13,15 @@ import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.bdzinspection.daoservice.OperateItemService;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTicketReportBinding;
+import com.cnksi.bdzinspection.emnu.OperateType;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.common.Config;
-import com.cnksi.bdzinspection.utils.Config.OperateType;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.Config;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
+
+import org.xutils.ex.DbException;
 
 import static com.cnksi.common.Config.LOAD_DATA;
 
@@ -61,15 +64,15 @@ public class OperateTicketReportActivity extends BaseActivity {
 
     private void initialData() {
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                // 查询状态
+        ExecutorManager.executeTask(() -> {
+            // 查询状态
+            try {
                 mCurrentOperateTick = OperateTicketService.getInstance().findById(currentOperateId);
-                operateItemCount = OperateItemService.getInstance().getCountByOperateTick(currentOperateId);
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            operateItemCount = OperateItemService.getInstance().getCountByOperateTick(currentOperateId);
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 

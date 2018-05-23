@@ -23,18 +23,18 @@ import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddDefectDefineBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.common.model.DeviceStandards;
-import com.cnksi.bdzinspection.utils.CommonUtils;
-import com.cnksi.common.Config;
-import  com.cnksi.common.enmu.InspectionType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.Config;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.common.utils.BitmapUtil;
-import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.core.utils.FileUtils;
+import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.ScreenUtils;
-
+import com.cnksi.core.utils.ToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     }
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -504,7 +504,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
      * 更新缺陷定义列表
      */
     private void updateDefectDefineList() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {

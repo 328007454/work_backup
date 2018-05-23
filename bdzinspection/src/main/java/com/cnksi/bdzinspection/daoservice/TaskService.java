@@ -3,11 +3,8 @@ package com.cnksi.bdzinspection.daoservice;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
-import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.common.model.SwitchPic;
 import com.cnksi.common.model.Task;
-import com.cnksi.bdzinspection.utils.CommonUtils;
-import com.cnksi.bdzinspection.utils.Config.TaskStatus;
 import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -16,9 +13,6 @@ import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.cnksi.bdzinspection.application.XunshiApplication.getDbUtils;
 
@@ -73,45 +67,9 @@ public class TaskService {
     }
 
 
-    /**
-     * 查询任务计划的状态
-     *
-     * @param currentTaskId
-     * @return
-     */
-    public String getTaskStatus(String currentTaskId) {
 
-        Task task = null;
-        try {
-            task = getDbUtils().findById(Task.class, currentTaskId);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        if (task != null && TaskStatus.done.name().equalsIgnoreCase(task.status)) {
-            return "已完成";
-        }
-        return "未完成";
-    }
 
-    /**
-     * 查询任务计划的状态
-     *
-     * @param currentTaskId
-     * @return true is finish
-     */
-    public boolean getTaskStatusForBoolean(String currentTaskId) {
 
-        Task task = null;
-        try {
-            task = getDbUtils().findById(Task.class, currentTaskId);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        if (task != null && TaskStatus.done.name().equalsIgnoreCase(task.status)) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * 删除计划任务 和已经巡视的报告数据
@@ -197,73 +155,10 @@ public class TaskService {
     }
 
 
-    /**
-     * 完成任务
-     */
-    public boolean finishTask(String taskid) {
-
-        if (StringUtils.isEmpty(taskid)) {
-            return false;
-        }
-        String sql = "update task set STATUS='done' where taskid='" + taskid + "'";
-        try {
-            getDbUtils().execNonQuery(sql);
-            return true;
-        } catch (Exception e) {
-
-            return false;// TODO: handle exception
-        }
-
-    }
-
-    /**
-     * 完成任务
-     */
-    public long getSwitchOverCopyTotal(String type, String bdzId) {
-        long total = 0;
-        List<StandardSwitchover> standardSwitchOvers = null;
-        try {
-            standardSwitchOvers = getDbUtils().selector(StandardSwitchover.class).where(StandardSwitchover.BDZID, "=", bdzId).and(StandardSwitchover.KIND, "=", type).and(StandardSwitchover.ISCOPY, "=", "1").and(StandardSwitchover.DLT, "!=", "1").findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        if (null == standardSwitchOvers) {
-            total = 0;
-        } else {
-            total = standardSwitchOvers.size();
-        }
-        return total;
-    }
-
-    /**
-     * 查询同一天相同变电站，相同类型下的任务计划个数
-     *
-     * @param bdzId      变电站id
-     * @param chooseTime 任务选择时间
-     * @param name       巡视类型
-     */
 
 
-    public List<Task> getCountSameTask(String name, String bdzId, String chooseTime, String loginCounts) {
-        String[] accounts = loginCounts.split(",");
-        String extraSql = null;
-        List<Task> tasks = null;
-        if (accounts.length > 0) {
-            extraSql = " and " + CommonUtils.buildWhereTaskContainMe(accounts);
-        } else {
-            extraSql = "";
-        }
-        try {
-            tasks = XunshiApplication.getDbUtils().selector(Task.class).where(Task.DLT, "=", "0").and(Task.INSPECTION, "=", name).and(Task.STATUS, "=", "undo").and(Task.BDZID, "=", bdzId)
-                    .expr(extraSql + " and (select datetime('" + chooseTime + "','+24 hour'))> schedule_time and schedule_time >= (select datetime('" + chooseTime + "'))").findAll();
-            if (null == tasks)
-                return new ArrayList<Task>();
-            return tasks;
-        } catch (DbException e) {
-            e.printStackTrace();
-            return new ArrayList<Task>();
-        }
-    }
+
+
 
 }
 

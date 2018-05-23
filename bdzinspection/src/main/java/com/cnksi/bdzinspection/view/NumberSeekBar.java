@@ -1,7 +1,5 @@
 package com.cnksi.bdzinspection.view;
 
-import java.math.BigDecimal;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -18,6 +16,8 @@ import android.view.MotionEvent;
 import android.widget.SeekBar;
 
 import com.cnksi.bdzinspection.R;
+
+import java.math.BigDecimal;
 
 /**
  * @类名: NumberSeekBar

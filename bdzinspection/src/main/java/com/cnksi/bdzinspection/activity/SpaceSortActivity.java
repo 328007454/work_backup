@@ -9,12 +9,13 @@ import com.cnksi.bdzinspection.adapter.SpaceSortAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.DbManager;
@@ -89,7 +90,7 @@ public class SpaceSortActivity extends TitleActivity {
                     @Override
                     public void onClick(View v) {
                         CustomerDialog.showProgress(currentActivity, "恢复中...");
-                        mFixedThreadPoolExecutor.execute(() -> {
+                        ExecutorManager.executeTask(() -> {
                             final boolean rs = restore(data);
                             runOnUiThread(() -> {
                                 CustomerDialog.dismissProgress();

@@ -21,8 +21,8 @@ import com.cnksi.bdzinspection.databinding.XsItemMultipleContentBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.cnksi.bdzinspection.model.zzht.ZzhtResult;
-import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
 

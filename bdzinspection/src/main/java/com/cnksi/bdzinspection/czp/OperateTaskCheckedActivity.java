@@ -17,11 +17,12 @@ import com.cnksi.bdzinspection.czp.adapter.OperateWorkItemAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateItemService;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskCheckedBinding;
+import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.common.Config;
-import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
 import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -76,14 +77,14 @@ public class OperateTaskCheckedActivity extends BaseActivity {
     }
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
+        ExecutorManager.executeTask(() -> {
+            try {
                 mCurrentOperateTick = OperateTicketService.getInstance().findById(currentOperateId);
-                dataList = OperateItemService.getInstance().findAllOperateItemByTaskId(currentOperateId);
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            dataList = OperateItemService.getInstance().findAllOperateItemByTaskId(currentOperateId);
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
         binding.lvContainer.setOnScrollListener(new OnScrollListener() {
 
@@ -109,6 +110,7 @@ public class OperateTaskCheckedActivity extends BaseActivity {
                     case OnScrollListener.SCROLL_STATE_FLING:// 是当用户由于之前划动屏幕并抬起手指，屏幕产生惯性滑动时
                         scrollFlag = false;
                         break;
+                    default:
                 }
             }
 
@@ -281,7 +283,8 @@ public class OperateTaskCheckedActivity extends BaseActivity {
                 binding.btnConfirm.setBackgroundResource(R.drawable.xs_red_button_background_selector);
                 mCurrentOperateTick.status = OperateTaskStatus.wwc.name();
                 try {
-                    isUpdateStatus = OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS);
+                    OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.STATUS);
+                    isUpdateStatus = true;
                 } catch (DbException e) {
                     e.printStackTrace();
                     isUpdateStatus = false;

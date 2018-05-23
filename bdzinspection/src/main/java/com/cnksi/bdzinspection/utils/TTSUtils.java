@@ -9,9 +9,9 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.tts.ISpeakCallback;
 import com.cnksi.tts.ISpeakInterface;
-import com.cnksi.core.utils.ToastUtils;
 
 /**
  * @version 1.0

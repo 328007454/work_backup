@@ -14,9 +14,8 @@ import com.cnksi.bdzinspection.databinding.XsFragmentRoadmapBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.Spacing;
-import com.zhy.autolayout.utils.AutoUtils;
 import com.cnksi.core.utils.PreferencesUtils;
-
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;

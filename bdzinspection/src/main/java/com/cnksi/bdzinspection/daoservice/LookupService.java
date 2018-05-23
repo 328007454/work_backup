@@ -1,10 +1,8 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.Lookup;
-import com.cnksi.bdzinspection.model.SpecialMenu;
-import com.cnksi.bdzinspection.model.SwitchMenu;
-import com.cnksi.bdzinspection.utils.Config.LookUpType;
+import com.cnksi.common.daoservice.BaseService;
+import com.cnksi.common.enmu.LookUpType;
+import com.cnksi.common.model.Lookup;
 
 import org.xutils.db.Selector;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -18,11 +16,12 @@ import java.util.List;
  *
  * @author terry
  */
-public class LookupService {
+public class LookupService extends BaseService<Lookup> {
 
     public static LookupService mInstance;
 
     private LookupService() {
+        super(Lookup.class);
     }
 
     public static LookupService getInstance() {
@@ -55,7 +54,7 @@ public class LookupService {
     public List<Lookup> findLookupByType(String type, boolean hasSearch) {
         List<Lookup> lookups = null;
         try {
-            Selector selector =XunshiApplication.getDbUtils().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+            Selector selector =selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
                     .orderBy(Lookup.SORT, false);
 
             lookups = selector.findAll();
@@ -64,7 +63,7 @@ public class LookupService {
         }
         if (hasSearch) {
             if (lookups == null) {
-                lookups = new ArrayList<Lookup>();
+                lookups = new ArrayList<>();
             }
         }
         return lookups;
@@ -79,7 +78,7 @@ public class LookupService {
     public List<Lookup> findLookupByTypeWithOutLooId(String type) {
         List<Lookup> lookups = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+            Selector selector = selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
                     .expr("AND (" + Lookup.LOO_ID + " IS NULL OR " + Lookup.LOO_ID + "='')")
                     .expr("AND (" + Lookup.K + " NOT LIKE 'exclusive' " + ") AND (" + Lookup.LOO_ID + " IS NULL OR "
                             + Lookup.LOO_ID + "='')")
@@ -102,7 +101,7 @@ public class LookupService {
     public List<Lookup> findLookupByTypeWithOutLooId(String type, String k) {
         List<Lookup> lookups = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+            Selector selector = selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
                     .expr("AND (" + Lookup.K + " = '" + k + "' AND " + Lookup.K + " NOT LIKE 'exclusive' " + ") AND ("
                             + Lookup.LOO_ID + " IS NULL OR " + Lookup.LOO_ID + "='')")
                     .orderBy(Lookup.SORT, false);
@@ -124,7 +123,7 @@ public class LookupService {
     public List<Lookup> findLookupByLooId(String type, String looId) {
         List<Lookup> lookups = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Lookup.class).where(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+            Selector selector = selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
                     .and(Lookup.LOO_ID, "=", looId).and(Lookup.K, "<>", "special_guzhang")
                     .and(Lookup.K, "<>", "special_xideng").and(Lookup.K, "<>", "special_nighttime")
                     .orderBy(Lookup.SORT, false);
@@ -136,29 +135,7 @@ public class LookupService {
         return lookups;
     }
 
-    /**
-     * 按照类型和looid来查询
-     *
-     * @param type
-     * @param bdzId
-     * @return
-     */
-    public List<Lookup> findSwitchMenu(String type, String bdzId) {
-        List<SwitchMenu> menus = null;
-        List<Lookup> lookups = new ArrayList<Lookup>();
-        try {
-            Selector selector = XunshiApplication.getDbUtils().selector(SwitchMenu.class).where(SwitchMenu.BDZID, "=", bdzId).and(SwitchMenu.DLT, "<>", "1").expr("and k like  '" + type + "%' ")
-                    .orderBy(Lookup.SORT, false);
-            menus = selector.findAll();
-            if (null != menus && !menus.isEmpty())
-                for (SwitchMenu menu : menus) {
-                    lookups.add(new Lookup(menu));
-                }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return lookups;
-    }
+
 
 
     /**
@@ -170,7 +147,7 @@ public class LookupService {
     public List<Lookup> getDefectReasonListByParentId(String parentId) {
         List<Lookup> lookupList = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Lookup.class).where(Lookup.TYPE, "=", LookUpType.defect_reason.name())
+            Selector selector = selector().and(Lookup.TYPE, "=", LookUpType.defect_reason.name())
                     .and(Lookup.LOO_ID, "=", parentId);
             lookupList = selector.findAll();
         } catch (Exception e) {
@@ -188,7 +165,7 @@ public class LookupService {
     public List<Lookup> getDefectReasonType() {
         List<Lookup> lookupList = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Lookup.class).where(Lookup.TYPE, "=", LookUpType.defect_reason.name())
+            Selector selector = selector().and(Lookup.TYPE, "=", LookUpType.defect_reason.name())
                     .and(WhereBuilder.b(Lookup.LOO_ID, "=", "").expr("OR " + Lookup.LOO_ID + " IS NULL"));
             lookupList = selector.findAll();
         } catch (Exception e) {
@@ -198,21 +175,5 @@ public class LookupService {
     }
 
 
-    public List<Lookup> findSpecialMenu(String currentTypeStr) {
-        List<SpecialMenu> specialMenus = null;
-        List<Lookup> lookups = new ArrayList<Lookup>();
-        try {
-            Selector selector = XunshiApplication.getDbUtils().selector(SpecialMenu.class).where(SpecialMenu.DLT, "<>", "1").expr("and k like  '" + currentTypeStr + "%' ")
-                    .orderBy(Lookup.SORT, false);
 
-            specialMenus = selector.findAll();
-            if (null != specialMenus && !specialMenus.isEmpty())
-                for (SpecialMenu menu : specialMenus) {
-                    lookups.add(new Lookup(menu));
-                }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return lookups;
-    }
 }

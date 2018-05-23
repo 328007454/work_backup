@@ -24,7 +24,6 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectSourceBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBinding;
@@ -33,23 +32,24 @@ import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.CopyItem;
 import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TreeNode;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.BitmapUtil;
-import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.core.utils.DateUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
-
+import com.cnksi.core.utils.ToastUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -501,7 +501,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
     List<TreeNode> data;
 
     public void searchData() {
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             if (!isFromBattery) {
                 if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
                     dataList = DefectRecordService.getInstance().getReportDefectRecords(currentReportId, currentBdzId);

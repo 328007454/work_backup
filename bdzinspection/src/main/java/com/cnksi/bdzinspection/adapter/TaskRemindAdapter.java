@@ -11,12 +11,10 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsInspectionTaskItemBinding;
-import  com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Task;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
-
-
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.Calendar;

@@ -16,7 +16,6 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionTaskRemindBinding;
 import com.cnksi.bdzinspection.fragment.TaskRemindFragment;
 import com.cnksi.bdzinspection.fragment.TaskRemindFragment.OnFragmentEventListener;
@@ -29,6 +28,7 @@ import com.cnksi.bdzinspection.ywyth.YunweiReportActivity;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.Bdz;
@@ -37,10 +37,8 @@ import com.cnksi.common.model.Task;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sync.KSyncConfig;
-
 import com.cnksi.core.view.CustomerDialog;
-
+import com.cnksi.sync.KSyncConfig;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

@@ -16,11 +16,11 @@ import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityDownloadOptrTickBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.OperateItem;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OpearTickParser;
 import com.cnksi.bdzinspection.utils.OperateTick;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.Config;
 import com.cnksi.core.utils.ScreenUtils;
 
 import org.xutils.ex.DbException;
@@ -98,8 +98,9 @@ public class DownloadOperationTickActivity extends TitleActivity {
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             path = getIntent().getStringExtra("filePath");
-            if (TextUtils.isEmpty(path))
+            if (TextUtils.isEmpty(path)) {
                 path = Config.DATABASE_FOLDER + "print.txt";
+            }
             parseData(0);
         }
 
@@ -109,8 +110,9 @@ public class DownloadOperationTickActivity extends TitleActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         path = intent.getStringExtra("filePath");
-        if (TextUtils.isEmpty(path))
+        if (TextUtils.isEmpty(path)) {
             path = Config.DATABASE_FOLDER + "print.txt";
+        }
         parseData(0);
     }
 

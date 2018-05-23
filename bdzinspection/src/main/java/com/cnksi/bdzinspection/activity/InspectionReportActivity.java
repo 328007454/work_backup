@@ -25,31 +25,32 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.daoservice.ReportService;
-import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsHistoryDataDialogBinding;
-import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.common.Config;
-import  com.cnksi.common.enmu.InspectionType;
-import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.Role;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.nari.NariActivity;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.nari.NariActivity;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
@@ -178,7 +179,7 @@ public class InspectionReportActivity extends BaseActivity {
 
     private void initialData() {
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {

@@ -1,19 +1,26 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import java.util.List;
-
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.DeviceTypeImage;
+import com.cnksi.common.daoservice.BaseService;
 
-import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
-public class DeviceTypeImageService extends BaseService {
+import java.util.List;
+
+/**
+ * @author Wastrel
+ */
+public class DeviceTypeImageService extends BaseService<DeviceTypeImage> {
     private static DeviceTypeImageService instance;
 
+    protected DeviceTypeImageService() {
+        super(DeviceTypeImage.class);
+    }
+
     public static DeviceTypeImageService getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new DeviceTypeImageService();
+        }
         return instance;
     }
 
@@ -24,8 +31,7 @@ public class DeviceTypeImageService extends BaseService {
      * @return
      */
     public List<DeviceTypeImage> queryImage(String deviceType) throws DbException {
-        Selector selector = XunshiApplication.getDbUtils().selector(DeviceTypeImage.class).where(DeviceTypeImage.TYPE_ID, "=", deviceType).orderBy(DeviceTypeImage.ID);
-        return selector.findAll();
+        return selector().and(DeviceTypeImage.TYPE_ID, "=", deviceType).orderBy(DeviceTypeImage.ID).findAll();
     }
 
 

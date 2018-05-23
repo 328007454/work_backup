@@ -13,8 +13,9 @@ import com.cnksi.bdzinspection.activity.AddTaskActivity;
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentExpadableListBinding;
 import com.cnksi.bdzinspection.model.Project;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.ywyth.adapter.YunweiTypeAdapter;
+import com.cnksi.common.Config;
+import com.cnksi.core.common.ExecutorManager;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
@@ -90,32 +91,29 @@ public class YunweiTypeListFragment extends BaseFragment {
 	 */
 	public void searchData() {
 
-		mFixedThreadPoolExecutor.execute(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Selector selector = XunshiApplication.getDbUtils().selector(Project.class).where(Project.LOOKUP_TYPE, "=", currentFunctionModel);
-					List<Project> projectList = selector.findAll();
-					groupList = new LinkedList<Project>(projectList);
-					if (groupList != null && !groupList.isEmpty()) {
-						for (Project mProject : groupList) {
-							selector = XunshiApplication.getDbUtils().selector(Project.class).where(Project.PARENT_ID, "=", mProject.id);
-							List<Project> childProjectList = selector.findAll();
-							ArrayList<Project> childList = null;
-							if (childProjectList == null || childProjectList.isEmpty()) {
-								childList = new ArrayList<Project>();
-							} else {
-								childList = new ArrayList<Project>(childProjectList);
-							}
-							groupHashMap.put(mProject, new ArrayList<Project>(childList));
-						}
-					}
-					mHandler.sendEmptyMessage(LOAD_DATA);
-				} catch (DbException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		ExecutorManager.executeTask(() -> {
+            try {
+                Selector selector = XunshiApplication.getDbUtils().selector(Project.class).where(Project.LOOKUP_TYPE, "=", currentFunctionModel);
+                List<Project> projectList = selector.findAll();
+                groupList = new LinkedList<Project>(projectList);
+                if (groupList != null && !groupList.isEmpty()) {
+                    for (Project mProject : groupList) {
+                        selector = XunshiApplication.getDbUtils().selector(Project.class).where(Project.PARENT_ID, "=", mProject.id);
+                        List<Project> childProjectList = selector.findAll();
+                        ArrayList<Project> childList = null;
+                        if (childProjectList == null || childProjectList.isEmpty()) {
+                            childList = new ArrayList<Project>();
+                        } else {
+                            childList = new ArrayList<Project>(childProjectList);
+                        }
+                        groupHashMap.put(mProject, new ArrayList<Project>(childList));
+                    }
+                }
+                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+        });
 	}
 
 	private void initOnClick() {

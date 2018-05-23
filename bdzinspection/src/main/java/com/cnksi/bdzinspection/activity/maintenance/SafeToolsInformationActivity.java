@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.daoservice.OperateToolResultService;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetytoolInformationBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolStopBinding;
@@ -33,6 +34,7 @@ import com.cnksi.common.model.Department;
 import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.DateCalcUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -101,7 +103,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         PersonListUtils.getInsance().initPopWindow(currentActivity).initPersonData(dept);
         PersonListUtils.getInsance().setPersonRatioListener(this);
 
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             cityModel = SafeToolsInfoService.getInstance().findToolCity();
             if (cityModel != null) {
                 city = cityModel.getString("short_name_pinyin");
@@ -111,13 +113,8 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
                 }
             }
             dbModel = SafeToolsInfoService.getInstance().findToolInfo(dept, toolId, bdzId);
-            resultList = SafeToolsInfoService.getInstance().finAllResults(dept, toolId, bdzId);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    initialUI();
-                }
-            });
+            resultList = OperateToolResultService.getInstance().finAllResults(dept, toolId, bdzId);
+            runOnUiThread(() -> initialUI());
         });
     }
 
@@ -345,7 +342,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
      */
     private void addWaterTextToBitmap() {
         CustomerDialog.showProgress(currentActivity, "正在处理图片...");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));

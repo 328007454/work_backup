@@ -4,11 +4,12 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.utils.CalcUtils;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

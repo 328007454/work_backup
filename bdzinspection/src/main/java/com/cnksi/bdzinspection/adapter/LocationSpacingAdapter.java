@@ -3,8 +3,6 @@ package com.cnksi.bdzinspection.adapter;
 import android.content.Context;
 import android.text.Html;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;

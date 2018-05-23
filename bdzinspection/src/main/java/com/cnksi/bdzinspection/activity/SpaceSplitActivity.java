@@ -19,9 +19,10 @@ import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 
 import org.xutils.DbManager;
@@ -86,7 +87,7 @@ public class SpaceSplitActivity extends TitleActivity {
                 @Override
                 public void onClick(View v) {
                     CustomerDialog.showProgress(currentActivity, "保存数据中...");
-                    mFixedThreadPoolExecutor.execute(() -> {
+                    ExecutorManager.executeTask(() -> {
                         final boolean rs = saveData(new ArrayList<>(selectDevice));
                         runOnUiThread(() -> {
                             CustomerDialog.dismissProgress();
@@ -113,17 +114,14 @@ public class SpaceSplitActivity extends TitleActivity {
 
     @Override
     protected void initialData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    devices = DeviceService.getInstance().findDeviceBySpacing(spacing, mode);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                copyItems = CopyItemService.getInstance().findAllBySpace(spacing.spid);
-                runOnUiThread(() -> initrcv());
+        ExecutorManager.executeTask(() -> {
+            try {
+                devices = DeviceService.getInstance().findDeviceBySpacing(spacing, mode);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            copyItems = CopyItemService.getInstance().findAllBySpace(spacing.spid);
+            runOnUiThread(() -> initrcv());
         });
     }
 

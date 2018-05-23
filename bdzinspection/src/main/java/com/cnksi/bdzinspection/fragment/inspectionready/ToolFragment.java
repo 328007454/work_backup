@@ -17,15 +17,13 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.inspectionready.ToolsAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.BaseService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
 import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
-
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.Selector;
@@ -78,7 +76,7 @@ public class ToolFragment extends BaseFragment {
     @Override
     protected void lazyLoad() {
         if (!isPrepared)
-            mFixedThreadPoolExecutor.execute(() -> {
+            ExecutorManager.executeTask(() -> {
                 Selector selector;
                 try {
                     selector = XunshiApplication.getDbUtils().selector(Tool.class).where(Tool.DLT, "=", 0).and(Tool.INSPECTION, "=", currentInspectionType);
@@ -135,7 +133,7 @@ public class ToolFragment extends BaseFragment {
             }
             saveList.add(reportTool);
         }
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 XunshiApplication.getDbUtils().saveOrUpdate(saveList);
             } catch (DbException e) {

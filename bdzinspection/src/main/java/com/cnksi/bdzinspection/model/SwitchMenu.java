@@ -1,15 +1,18 @@
 package com.cnksi.bdzinspection.model;
 
 
+import com.cnksi.common.model.BaseModel;
+import com.cnksi.common.model.Lookup;
+
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 
 @Table(name = "switch_menu")
-public class SwitchMenu extends BaseModel{
+public class SwitchMenu extends BaseModel {
 
     //
     public static final String ID = "id";
-    @Column(name = ID,isId = true)
+    @Column(name = ID, isId = true)
     public String id;
 
     // 变电站编号
@@ -51,7 +54,7 @@ public class SwitchMenu extends BaseModel{
     @Column(name = CYCLE)
     public String cycle;
 
-    public static  final  String LASTMODIFYTIME = "last_modify_time";
+    public static final String LASTMODIFYTIME = "last_modify_time";
     @Column(name = LASTMODIFYTIME)
     public String modifyTime;
 
@@ -61,5 +64,16 @@ public class SwitchMenu extends BaseModel{
     public static final String REPSWITCHOVERID = "rep_swithover_id";
     @Column(name = REPSWITCHOVERID)
     public String repSwithoverId;
+
+    public static Lookup convertLookup(SwitchMenu menu) {
+        Lookup lookup = new Lookup();
+        lookup.id = menu.id;
+        lookup.k = menu.k;
+        lookup.loo_id = menu.loo_id;
+        lookup.v = menu.v;
+        lookup.repSwitchOverId = menu.repSwithoverId;
+        return lookup;
+    }
+
 
 }

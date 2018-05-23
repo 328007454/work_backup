@@ -14,12 +14,13 @@ import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyBdzListBinding;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.model.Bdz;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,7 +82,7 @@ public class SafetyBdzListActivity extends BaseActivity {
     }
 
     private void reLoadData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 count = SafeToolsInfoService.getInstance().countRemindGroupByBdz(deptId);

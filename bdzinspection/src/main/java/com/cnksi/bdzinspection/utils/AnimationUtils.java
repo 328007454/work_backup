@@ -1,12 +1,9 @@
 package com.cnksi.bdzinspection.utils;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.view.View;
-import android.view.animation.AnimationSet;
 
 public class AnimationUtils {
 

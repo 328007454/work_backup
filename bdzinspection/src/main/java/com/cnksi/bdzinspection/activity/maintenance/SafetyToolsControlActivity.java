@@ -18,6 +18,7 @@ import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SafeToolsInfoAdapter;
 import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.bdzinspection.daoservice.OperateToolResultService;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyToolsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolStopBinding;
@@ -36,6 +37,7 @@ import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.DateCalcUtils;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -234,16 +236,13 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
     }
 
     private void initToolCityData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                cityModel = SafeToolsInfoService.getInstance().findToolCity();
-                if (cityModel != null) {
-                    city = cityModel.getString("short_name_pinyin");
-                    toolPicPath = Config.GONG_QI_JU + city + "/gqj/";
-                    if (!FileUtils.isFolderExists(Config.BDZ_INSPECTION_FOLDER + toolPicPath)) {
-                        FileUtils.makeDirectory(Config.BDZ_INSPECTION_FOLDER + toolPicPath);
-                    }
+        ExecutorManager.executeTask(() -> {
+            cityModel = SafeToolsInfoService.getInstance().findToolCity();
+            if (cityModel != null) {
+                city = cityModel.getString("short_name_pinyin");
+                toolPicPath = Config.GONG_QI_JU + city + "/gqj/";
+                if (!FileUtils.isFolderExists(Config.BDZ_INSPECTION_FOLDER + toolPicPath)) {
+                    FileUtils.makeDirectory(Config.BDZ_INSPECTION_FOLDER + toolPicPath);
                 }
             }
         });
@@ -276,7 +275,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
 
     public void initData(final String keyWord) {
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 if (!TextUtils.isEmpty(keyWord) && String.valueOf(R.id.bt_inmonth).equalsIgnoreCase(keyWord)) {
@@ -470,25 +469,19 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
      */
     private void addWaterTextToBitmap() {
         CustomerDialog.showProgress(currentActivity, "正在处理图片...");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
-                if (null == currentBitmap) {
-                    ToastUtils.showMessage( "很抱歉，因意外需要您再次拍照。");
-                    return;
-                }
-                currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
-                BitmapUtil.saveBitmap(currentBitmap, Config.BDZ_INSPECTION_FOLDER + currentImageName, 60);
-                reportPicList.add(currentImageName);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        CustomerDialog.dismissProgress();
-                        setImage();
-                    }
-                });
+        ExecutorManager.executeTask(() -> {
+            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
+            if (null == currentBitmap) {
+                ToastUtils.showMessage( "很抱歉，因意外需要您再次拍照。");
+                return;
             }
+            currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
+            BitmapUtil.saveBitmap(currentBitmap, Config.BDZ_INSPECTION_FOLDER + currentImageName, 60);
+            reportPicList.add(currentImageName);
+            runOnUiThread(() -> {
+                CustomerDialog.dismissProgress();
+                setImage();
+            });
         });
     }
 
@@ -500,7 +493,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         if (selectmodels.size() > 50) {
             CustomerDialog.showProgress(currentActivity);
         }
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 for (DbModel dbModel : selectmodels) {
@@ -518,7 +511,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                             XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", toolId), new KeyValue("status",ToolStatus.inTest.name()));
                         }
                         resultList.add(toolResult);
-                        SafeToolsInfoService.getInstance().saveOrUpdate(resultList);
+                        OperateToolResultService.getInstance().saveOrUpdate(resultList);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
@@ -554,53 +547,50 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         if (selectmodels.size() > 50) {
             CustomerDialog.showProgress(currentActivity);
         }
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                for (DbModel dbModel : selectmodels) {
-                    String id = dbModel.getString("id");
-                    String name = dbModel.getString("name");
-                    OperateToolResult toolResult = null;
-                    try {
-                        if (testBinding.rbNormal.isChecked()) {
-                            toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time,ToolStatus.normal.name(), pics, person,ToolStatus.test.name());
-                            String lastTime = testBinding.txtTestTime.getText().toString().trim() + " 00:00:00";
-                            if (TextUtils.isEmpty(dbModel.getString("period"))) {
-                                ToastUtils.showMessage( "请配置试验周期");
-                                continue;
-                            }
-                            if (dbModel.getString("period").equalsIgnoreCase("0")) {
-                                nextTime = null;
-                            } else {
-                                nextTime = DateCalcUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
-                            }
-                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status",ToolStatus.normal.name()), new KeyValue("isnormal",ToolStatus.normal.name()),
-                                    new KeyValue("lastly_check_time", lastTime), new KeyValue("next_check_time", nextTime));
-                        } else if (testBinding.rbUnnormal.isChecked()) {
-                            toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time,ToolStatus.unNormal.name(), pics, person,ToolStatus.test.name());
-                            XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id),new KeyValue("status",ToolStatus.stop.name()), new KeyValue("isnormal",ToolStatus.unNormal.name()));
+        ExecutorManager.executeTask(() -> {
+            for (DbModel dbModel : selectmodels) {
+                String id = dbModel.getString("id");
+                String name = dbModel.getString("name");
+                OperateToolResult toolResult = null;
+                try {
+                    if (testBinding.rbNormal.isChecked()) {
+                        toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time,ToolStatus.normal.name(), pics, person,ToolStatus.test.name());
+                        String lastTime = testBinding.txtTestTime.getText().toString().trim() + " 00:00:00";
+                        if (TextUtils.isEmpty(dbModel.getString("period"))) {
+                            ToastUtils.showMessage( "请配置试验周期");
+                            continue;
                         }
-                        resultList.add(toolResult);
-                        SafeToolsInfoService.getInstance().saveOrUpdate(resultList);
-                    } catch (DbException e) {
-                        e.printStackTrace();
+                        if (dbModel.getString("period").equalsIgnoreCase("0")) {
+                            nextTime = null;
+                        } else {
+                            nextTime = DateCalcUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));
+                        }
+                        XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id).and("dlt", "<>", "1"), new KeyValue("status",ToolStatus.normal.name()), new KeyValue("isnormal",ToolStatus.normal.name()),
+                                new KeyValue("lastly_check_time", lastTime), new KeyValue("next_check_time", nextTime));
+                    } else if (testBinding.rbUnnormal.isChecked()) {
+                        toolResult = new OperateToolResult(currentReportId, currentBdzName, currentBdzId, id, name, time,ToolStatus.unNormal.name(), pics, person,ToolStatus.test.name());
+                        XunshiApplication.getDbUtils().update(SafeToolsInfor.class, WhereBuilder.b("id", "=", id),new KeyValue("status",ToolStatus.stop.name()), new KeyValue("isnormal",ToolStatus.unNormal.name()));
                     }
+                    resultList.add(toolResult);
+                    OperateToolResultService.getInstance().saveOrUpdate(resultList);
+                } catch (DbException e) {
+                    e.printStackTrace();
                 }
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        CustomerDialog.dismissProgress();
-                        selectmodels.clear();
-                        infoAdapter.setSelectedAll(false);
-                        infoAdapter.setClearCheckMap();
-                        infoAdapter.notifyDataSetChanged();
-                        isSelectAll = false;
-                        toolsBinding.cbAll.setChecked(isSelectAll);
-                        initData(selectItem);
-                    }
-                });
             }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    CustomerDialog.dismissProgress();
+                    selectmodels.clear();
+                    infoAdapter.setSelectedAll(false);
+                    infoAdapter.setClearCheckMap();
+                    infoAdapter.notifyDataSetChanged();
+                    isSelectAll = false;
+                    toolsBinding.cbAll.setChecked(isSelectAll);
+                    initData(selectItem);
+                }
+            });
         });
 
     }

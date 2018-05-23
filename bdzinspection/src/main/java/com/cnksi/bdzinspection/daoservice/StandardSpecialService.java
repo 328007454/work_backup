@@ -1,12 +1,12 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import java.util.List;
-
 import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.common.model.StandardSpecial;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
+
+import java.util.List;
 
 /**
  * @author lyndon
