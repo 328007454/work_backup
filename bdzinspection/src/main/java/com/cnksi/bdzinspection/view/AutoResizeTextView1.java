@@ -59,7 +59,9 @@ public class AutoResizeTextView1 extends AppCompatTextView {
         _paint = new TextPaint(getPaint());
         if (_maxLines == 0)
             // no value was assigned during construction
+        {
             _maxLines = NO_LINE_LIMIT;
+        }
         // prepare size tester:
         _sizeTester = new SizeTester() {
             final RectF textRect = new RectF();
@@ -70,10 +72,11 @@ public class AutoResizeTextView1 extends AppCompatTextView {
                 _paint.setTextSize(suggestedSize);
                 final TransformationMethod transformationMethod = getTransformationMethod();
                 final String text;
-                if (transformationMethod != null)
+                if (transformationMethod != null) {
                     text = transformationMethod.getTransformation(getText(), AutoResizeTextView1.this).toString();
-                else
+                } else {
                     text = getText().toString();
+                }
                 final boolean singleLine = getMaxLines() == 1;
                 if (singleLine) {
                     textRect.bottom = _paint.getFontSpacing();
@@ -81,17 +84,20 @@ public class AutoResizeTextView1 extends AppCompatTextView {
                 } else {
                     final StaticLayout layout = new StaticLayout(text, _paint, _widthLimit, Alignment.ALIGN_NORMAL, _spacingMult, _spacingAdd, true);
                     // return early if we have more lines
-                    if (getMaxLines() != NO_LINE_LIMIT && layout.getLineCount() > getMaxLines())
+                    if (getMaxLines() != NO_LINE_LIMIT && layout.getLineCount() > getMaxLines()) {
                         return 1;
+                    }
                     textRect.bottom = layout.getHeight();
                     int maxWidth = -1;
                     int lineCount = layout.getLineCount();
                     for (int i = 0; i < lineCount; i++) {
                         int end = layout.getLineEnd(i);
-                        if (i < lineCount - 1 && end > 0 && !isValidWordWrap(text.charAt(end - 1), text.charAt(end)))
+                        if (i < lineCount - 1 && end > 0 && !isValidWordWrap(text.charAt(end - 1), text.charAt(end))) {
                             return 1;
-                        if (maxWidth < layout.getLineRight(i) - layout.getLineLeft(i))
+                        }
+                        if (maxWidth < layout.getLineRight(i) - layout.getLineLeft(i)) {
                             maxWidth = (int) layout.getLineRight(i) - (int) layout.getLineLeft(i);
+                        }
                     }
                     //for (int i = 0; i < layout.getLineCount(); i++)
                     //    if (maxWidth < layout.getLineRight(i) - layout.getLineLeft(i))
@@ -101,7 +107,9 @@ public class AutoResizeTextView1 extends AppCompatTextView {
                 textRect.offsetTo(0, 0);
                 if (availableSpace.contains(textRect))
                     // may be too small, don't worry we will find the best match
+                {
                     return -1;
+                }
                 // else, too big
                 return 1;
             }
@@ -153,9 +161,11 @@ public class AutoResizeTextView1 extends AppCompatTextView {
     @Override
     public void setSingleLine(final boolean singleLine) {
         super.setSingleLine(singleLine);
-        if (singleLine)
+        if (singleLine) {
             _maxLines = 1;
-        else _maxLines = NO_LINE_LIMIT;
+        } else {
+            _maxLines = NO_LINE_LIMIT;
+        }
         adjustTextSize();
     }
 
@@ -170,9 +180,11 @@ public class AutoResizeTextView1 extends AppCompatTextView {
     public void setTextSize(final int unit, final float size) {
         final Context c = getContext();
         Resources r;
-        if (c == null)
+        if (c == null) {
             r = Resources.getSystem();
-        else r = c.getResources();
+        } else {
+            r = c.getResources();
+        }
         _maxTextSize = TypedValue.applyDimension(unit, size, r.getDisplayMetrics());
         adjustTextSize();
     }
@@ -202,13 +214,15 @@ public class AutoResizeTextView1 extends AppCompatTextView {
 //    @Override
 //    public void run()
 //      {
-        if (!_initialized)
+        if (!_initialized) {
             return;
+        }
         final int startSize = (int) _minTextSize;
         final int heightLimit = getMeasuredHeight() - getCompoundPaddingBottom() - getCompoundPaddingTop();
         _widthLimit = getMeasuredWidth() - getCompoundPaddingLeft() - getCompoundPaddingRight();
-        if (_widthLimit <= 0)
+        if (_widthLimit <= 0) {
             return;
+        }
         _paint = new TextPaint(getPaint());
         _availableSpaceRect.right = _widthLimit;
         _availableSpaceRect.bottom = heightLimit;
@@ -233,7 +247,9 @@ public class AutoResizeTextView1 extends AppCompatTextView {
             } else if (midValCmp > 0) {
                 hi = mid - 1;
                 lastBest = hi;
-            } else return mid;
+            } else {
+                return mid;
+            }
         }
         // make sure to return last best
         // this is what should always be returned
@@ -249,7 +265,8 @@ public class AutoResizeTextView1 extends AppCompatTextView {
     @Override
     protected void onSizeChanged(final int width, final int height, final int oldwidth, final int oldheight) {
         super.onSizeChanged(width, height, oldwidth, oldheight);
-        if (width != oldwidth || height != oldheight)
+        if (width != oldwidth || height != oldheight) {
             adjustTextSize();
+        }
     }
 }

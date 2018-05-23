@@ -48,8 +48,9 @@ public class CopyValueFragment2 extends BaseFragment {
         if (checkDevice) {
             data.clear();
             for (DbModel model : originModel) {
-                if (!copyDeviceIds.contains(model.getString("deviceid")))
+                if (!copyDeviceIds.contains(model.getString("deviceid"))) {
                     data.add(model);
+                }
             }
         } else {
             data.clear();
@@ -102,8 +103,9 @@ public class CopyValueFragment2 extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-        if (!isPrepared)
+        if (!isPrepared) {
             return;
+        }
         data.clear();
         ExecutorManager.executeTask(() -> {
             searchCurrentDeviceType();

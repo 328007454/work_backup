@@ -13,18 +13,19 @@ package com.cnksi.bdzinspection.emnu;
         }
 
         public static String getValue(String name) {
-            if (normal.name().equalsIgnoreCase(name))
+            if (normal.name().equalsIgnoreCase(name)) {
                 return normal.value;
-            else if (unNormal.name().equalsIgnoreCase(name))
+            } else if (unNormal.name().equalsIgnoreCase(name)) {
                 return unNormal.value;
-            else if (inTest.name().equalsIgnoreCase(name))
+            } else if (inTest.name().equalsIgnoreCase(name)) {
                 return inTest.value;
-            else if (quarantine.name().equalsIgnoreCase(name))
+            } else if (quarantine.name().equalsIgnoreCase(name)) {
                 return quarantine.value;
-            else if (overdue.name().equalsIgnoreCase(name))
+            } else if (overdue.name().equalsIgnoreCase(name)) {
                 return overdue.value;
-            else
+            } else {
                 return "";
+            }
 
         }
 

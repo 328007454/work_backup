@@ -139,10 +139,11 @@ public class DeviceSelectFragment extends BaseFragment implements QWERKeyBoardUt
         // 根据设备大类查询设备
         // 根据设备查询间隔
         List<DbModel> deviceList;
-        if (currentInspectionType.contains("special_manual"))
+        if (currentInspectionType.contains("special_manual")) {
             deviceList = DeviceService.getInstance().findSpaceDeviceByKeyWord(currentBdzId, keyWord, currentFunctionModel, bigTypes.toArray(new String[]{}));
-        else
+        } else {
             deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel);
+        }
         LinkedHashMap<String, List<DbModel>> spacingDeviceMap = new LinkedHashMap<>();
         if (null != deviceList && !deviceList.isEmpty()) {
             for (DbModel dbModel : deviceList) {
@@ -166,11 +167,13 @@ public class DeviceSelectFragment extends BaseFragment implements QWERKeyBoardUt
                 Functions.buildTreeData(data, spaceGroupMap);
             }
         }
-        if (TextUtils.isEmpty(keyWord))
+        if (TextUtils.isEmpty(keyWord)) {
             adapter.expand(0);
-        else if (!data.isEmpty()) {
+        } else if (!data.isEmpty()) {
             adapter.expandAll();
-        } else adapter.notifyDataSetChanged();
+        } else {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

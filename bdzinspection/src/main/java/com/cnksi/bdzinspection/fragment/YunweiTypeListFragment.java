@@ -82,7 +82,8 @@ public class YunweiTypeListFragment extends BaseFragment {
 		}
 	}
 
-	public void setFirstLoad(boolean isFirstLoad) {
+	@Override
+    public void setFirstLoad(boolean isFirstLoad) {
 		this.isFirstLoad = isFirstLoad;
 	}
 

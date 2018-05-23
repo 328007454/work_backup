@@ -163,8 +163,9 @@ public class SignaturePad extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!isEnabled())
+        if (!isEnabled()) {
             return false;
+        }
 
         float eventX = event.getX();
         float eventY = event.getY();
@@ -173,11 +174,15 @@ public class SignaturePad extends View {
             case MotionEvent.ACTION_DOWN:
                 getParent().requestDisallowInterceptTouchEvent(true);
                 mPoints.clear();
-                if (isDoubleClick()) break;
+                if (isDoubleClick()) {
+                    break;
+                }
                 mLastTouchX = eventX;
                 mLastTouchY = eventY;
                 addPoint(getNewPoint(eventX, eventY));
-                if(mOnSignedListener != null) mOnSignedListener.onStartSigning();
+                if(mOnSignedListener != null) {
+                    mOnSignedListener.onStartSigning();
+                }
 
             case MotionEvent.ACTION_MOVE:
                 resetDirtyRect(eventX, eventY);
@@ -312,13 +317,15 @@ public class SignaturePad extends View {
                     break;
                 }
             }
-            if (stop)
+            if (stop) {
                 break;
+            }
         }
 
         // Image is empty...
-        if (!foundPixel)
+        if (!foundPixel) {
             return null;
+        }
 
         // Find yMin
         for (int y = 0; y < imgHeight; y++) {
@@ -330,8 +337,9 @@ public class SignaturePad extends View {
                     break;
                 }
             }
-            if (stop)
+            if (stop) {
                 break;
+            }
         }
 
         // Find xMax
@@ -344,8 +352,9 @@ public class SignaturePad extends View {
                     break;
                 }
             }
-            if (stop)
+            if (stop) {
                 break;
+            }
         }
 
         // Find yMax
@@ -358,8 +367,9 @@ public class SignaturePad extends View {
                     break;
                 }
             }
-            if (stop)
+            if (stop) {
                 break;
+            }
         }
 
       return Bitmap.createBitmap(mSignatureBitmap, xMin, yMin, xMax - xMin, yMax - yMin);
@@ -507,7 +517,9 @@ public class SignaturePad extends View {
         float dxm = (m1X - m2X);
         float dym = (m1Y - m2Y);
         float k = l2 / (l1 + l2);
-        if (Float.isNaN(k)) k = 0.0f;
+        if (Float.isNaN(k)) {
+            k = 0.0f;
+        }
         float cmX = m2X + dxm * k;
         float cmY = m2Y + dym * k;
 
@@ -735,12 +747,18 @@ public class SignaturePad extends View {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             SvgPoint svgPoint = (SvgPoint) o;
 
-            if (!x.equals(svgPoint.x)) return false;
+            if (!x.equals(svgPoint.x)) {
+                return false;
+            }
             return y.equals(svgPoint.y);
 
         }

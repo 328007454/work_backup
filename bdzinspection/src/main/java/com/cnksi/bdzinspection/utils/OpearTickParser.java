@@ -65,7 +65,9 @@ public class OpearTickParser {
 				row = row.substring(startChar.length());
 				
 				//将前一行的内容添加到list
-				if(currentRowContent.length()>0)opears.add(currentRowContent);
+				if(currentRowContent.length()>0) {
+                    opears.add(currentRowContent);
+                }
 				
 				//num+1
 				currentRowNum ++;
@@ -77,7 +79,9 @@ public class OpearTickParser {
 				currentRowContent = currentRowContent + row;
 			}
 		}
-		if(currentRowContent.length()>0)opears.add(currentRowContent);
+		if(currentRowContent.length()>0) {
+            opears.add(currentRowContent);
+        }
 		return opears;
 	}
 
@@ -91,7 +95,9 @@ public class OpearTickParser {
 			row = row.trim();
 			
 			//去掉空行
-			if(row.length() <= 0) continue;
+			if(row.length() <= 0) {
+                continue;
+            }
 				
 			result.append(row+"\n");
 		}
@@ -110,7 +116,9 @@ public class OpearTickParser {
 		
 		for (String page : pages) {
 			
-			if(page.trim().length() <= 0) continue;
+			if(page.trim().length() <= 0) {
+                continue;
+            }
 			
 			//页面开始内容
 			
@@ -130,7 +138,9 @@ public class OpearTickParser {
 	public static String readTxtFile(String filePath,String encoding) {
 		StringBuilder result = new StringBuilder();
 		try {
-			if(encoding == null)encoding = "iso8859-1";
+			if(encoding == null) {
+                encoding = "iso8859-1";
+            }
 			File file = new File(filePath);
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式

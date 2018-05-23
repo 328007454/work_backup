@@ -34,19 +34,19 @@ public class ChangeCopyItemRecyclerChildAdapter extends BaseRecyclerAdapter {
         final ChangeCopyItem item = copyItems.get(position);
         String content = "";
         String value = "";
-        if (item.getVal().equalsIgnoreCase("Y")) {
+        if ("Y".equalsIgnoreCase(item.getVal())) {
             content = "抄录" + item.getItem().description + (TextUtils.isEmpty(item.getItem().unit) ? "" : "(" + item.getItem().unit + ")");
             value = TextUtils.isEmpty(item.getResult().val) ? "" : item.getResult().val;
-        } else if (item.getVal_a().equalsIgnoreCase("Y")) {
+        } else if ("Y".equalsIgnoreCase(item.getVal_a())) {
             content = "抄录A相" + item.getItem().description + (TextUtils.isEmpty(item.getItem().unit) ? "" : "(" + item.getItem().unit + ")");
             value = TextUtils.isEmpty(item.getResult().val_a) ? "" : item.getResult().val_a;
-        } else if (item.getVal_b().equalsIgnoreCase("Y")) {
+        } else if ("Y".equalsIgnoreCase(item.getVal_b())) {
             content = "抄录B相" + item.getItem().description + (TextUtils.isEmpty(item.getItem().unit) ? "" : "(" + item.getItem().unit + ")");
             value = TextUtils.isEmpty(item.getResult().val_b) ? "" : item.getResult().val_b;
-        } else if (item.getVal_c().equalsIgnoreCase("Y")) {
+        } else if ("Y".equalsIgnoreCase(item.getVal_c())) {
             content = "抄录C相" + item.getItem().description + (TextUtils.isEmpty(item.getItem().unit) ? "" : "(" + item.getItem().unit + ")");
             value = TextUtils.isEmpty(item.getResult().val_c) ? "" : item.getResult().val_c;
-        } else if (item.getVal_o().equalsIgnoreCase("Y")) {
+        } else if ("Y".equalsIgnoreCase(item.getVal_o())) {
             content = "抄录O相" + item.getItem().description + (TextUtils.isEmpty(item.getItem().unit) ? "" : "(" + item.getItem().unit + ")");
             value = TextUtils.isEmpty(item.getResult().val_o) ? "" : item.getResult().val_o;
         }
@@ -59,8 +59,9 @@ public class ChangeCopyItemRecyclerChildAdapter extends BaseRecyclerAdapter {
         itemDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (itemClickListener != null)
+                if (itemClickListener != null) {
                     itemClickListener.onClick(v, item, position);
+                }
             }
         });
 

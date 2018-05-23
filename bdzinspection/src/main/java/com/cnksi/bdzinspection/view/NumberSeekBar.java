@@ -162,7 +162,8 @@ public class NumberSeekBar extends SeekBar {
 		}
 	}
 
-	protected synchronized void onDraw(Canvas canvas) {
+	@Override
+    protected synchronized void onDraw(Canvas canvas) {
 		try {
 			super.onDraw(canvas);
 

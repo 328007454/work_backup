@@ -143,11 +143,12 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
     private void setCurrentDevice(final int position) {
         binding.copyContainer.removeAllViews();
         binding.gvContainer.smoothScrollToPosition(position);
-        if (null != copyItems && !copyItems.isEmpty())
+        if (null != copyItems && !copyItems.isEmpty()) {
             currentItem = copyItems.get(position);
-        else
+        } else {
             return;
-        XsMaintenanceCopyItemBinding = XsMaintenanceCopyItemBinding.inflate(getLayoutInflater());
+        }
+        XsMaintenanceCopyItemBinding = com.cnksi.bdzinspection.databinding.XsMaintenanceCopyItemBinding.inflate(getLayoutInflater());
         binding.copyContainer.addView(XsMaintenanceCopyItemBinding.getRoot());
         if (null != resultHashMap.get(currentItem.id)) {
             String value = resultHashMap.get(currentItem.id).valSpecial;
@@ -207,8 +208,9 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
 
     public boolean showShadom() {
         long mCurrentTime = System.currentTimeMillis();
-        if (0 == clickIndex)
+        if (0 == clickIndex) {
             mAfterTime = mCurrentTime;
+        }
         long diffTime = mCurrentTime - mAfterTime;
         clickIndex++;
         if (1000 >= diffTime && 3 <= clickIndex) {
@@ -258,8 +260,9 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
 
         binding.btnPre.setOnClickListener(view -> {
             saveAll();
-            if (!deviceAdapter.isFirst())
+            if (!deviceAdapter.isFirst()) {
                 deviceAdapter.pre();
+            }
             if (isFinish) {
                 isFinish = false;
                 binding.btnNext.setText(R.string.xs_next);
@@ -306,8 +309,9 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != XsMaintenanceCopyItemBinding)
+        if (null != XsMaintenanceCopyItemBinding) {
             XsMaintenanceCopyItemBinding.etCopyValues.clearFocus();
+        }
         KeyBoardUtils.closeKeybord(currentActivity);
     }
 }

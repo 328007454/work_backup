@@ -87,15 +87,17 @@ public class ChangeCopyItemParentAdapter extends SimpleBaseAdapter {
         parentBinding.addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (itemClickListener != null)
+                if (itemClickListener != null) {
                     itemClickListener.onClick(v, type, position);
+                }
             }
         });
         parentBinding.item3to1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (itemClickListener != null)
+                if (itemClickListener != null) {
                     itemClickListener.onClick(v, type, position);
+                }
             }
         });
         return parentBinding.getRoot();

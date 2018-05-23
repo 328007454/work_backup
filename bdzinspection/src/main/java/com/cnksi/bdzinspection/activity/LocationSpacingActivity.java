@@ -102,8 +102,9 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
     private void initialData() {
         getIntentValue();
         LatLng latLng = getIntent().getParcelableExtra(Config.CURRENT_LATLNG);
-        if (latLng != null)
+        if (latLng != null) {
             latLngs.add(latLng);
+        }
         // 摇一摇只算一次设备
         // currentFunctionModel=getIntent().getStringExtra(Config.CURRENT_FUNCTION_MODEL);
         currentFunctionModel = "one";
@@ -135,8 +136,9 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
     public void avgLatLng() {
         calculateDistance(DistanceUtil.getHighest(latLngs));
         binding.listSpacing.setVisibility(View.VISIBLE);
-        if (locationHelper != null)
+        if (locationHelper != null) {
             locationHelper.stop();
+        }
     }
 
     public void openResult() {
@@ -243,7 +245,8 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != locationHelper)
+        if (null != locationHelper) {
             locationHelper.stop();
+        }
     }
 }

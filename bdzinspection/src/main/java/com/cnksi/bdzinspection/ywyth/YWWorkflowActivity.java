@@ -123,7 +123,7 @@ public class YWWorkflowActivity extends BaseActivity {
         }
         adapter = new YWWorkflowAdapter(currentActivity, dlist);
         binding.list.setAdapter(adapter);
-        if (currentInspectionType.equals("17")) {
+        if ("17".equals(currentInspectionType)) {
             binding.btnReport.setVisibility(View.VISIBLE);
         }
 
@@ -179,7 +179,7 @@ public class YWWorkflowActivity extends BaseActivity {
                     YthService.getInstance().saveRemain_Problem(currentTaskId, str);
                     boolean isfinish = true;
                     for (PlanProcessStatus bean : plan) {
-                        if (bean.is_selected.equals("0")) {
+                        if ("0".equals(bean.is_selected)) {
                             isfinish = false;
                             break;
                         }

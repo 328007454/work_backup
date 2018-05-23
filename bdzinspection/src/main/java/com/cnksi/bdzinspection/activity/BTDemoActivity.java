@@ -72,6 +72,7 @@ public class BTDemoActivity extends BaseActivity {
             return;
         }
         new Thread() {
+            @Override
             public void run() {
                 if (_bluetooth.isEnabled() == false) {
                     _bluetooth.enable();
@@ -114,7 +115,7 @@ public class BTDemoActivity extends BaseActivity {
             toast.show();
             return;
         }
-        if (binding.Timeinterval.getText().toString().equals("")) {
+        if ("".equals(binding.Timeinterval.getText().toString())) {
             System.out.println("Can NOT Get Timeinterval");
             return;
         }
@@ -219,9 +220,9 @@ public class BTDemoActivity extends BaseActivity {
 //            tagall.setText("" + n);
         }
 
-        if (listAdapter1 != null)
+        if (listAdapter1 != null) {
             listAdapter1.notifyDataSetChanged();
-        else {
+        } else {
             listAdapter1 = new RFIDReadDataAdapter(this, list, R.layout.xs_rfid_user,
                     new String[]{"TagData", "CountNum"}, new int[]{
                     R.id.TagData, R.id.CountNum});
@@ -242,6 +243,7 @@ public class BTDemoActivity extends BaseActivity {
     }
 
     // 接收活动结果，响应startActivityForResult()
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CONNECT_DEVICE: // 连接结果，由DeviceListActivity设置返回

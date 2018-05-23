@@ -480,6 +480,8 @@ public class SwipeMenuLayout extends ViewGroup {
                     //add by zhangxutong 2016 11 03 end
 
                     break;
+                default:
+
             }
             //模仿IOS 点击其他区域关闭：
             if (iosInterceptFlag) {

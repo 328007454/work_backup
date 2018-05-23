@@ -52,9 +52,13 @@ public class InspectionPrepared {
     }
 
     public boolean contains(String[] us) {
-        if (TextUtils.isEmpty(account)) return false;
+        if (TextUtils.isEmpty(account)) {
+            return false;
+        }
         for (String s : us) {
-            if (account.contains(s)) return true;
+            if (account.contains(s)) {
+                return true;
+            }
         }
         return false;
     }

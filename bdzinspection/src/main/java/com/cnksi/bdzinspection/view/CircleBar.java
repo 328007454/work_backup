@@ -30,7 +30,7 @@ public class CircleBar extends View {
 	private int stepnumbermax = 12;// 默认最大时间
 	private DecimalFormat fnum = new DecimalFormat("#.0");// 格式为保留小数点后一位
 	private Context context;
-	private int mColors[];
+    private int[] mColors;
 	private OnProgressChangeListener changeListener;
 
 	public interface OnProgressChangeListener {

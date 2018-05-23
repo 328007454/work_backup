@@ -101,7 +101,9 @@ public class SafetyBdzListActivity extends BaseActivity {
             ToastUtils.showMessage( "没有获取到班组信息！");
         } else {
             bdzList = BdzService.getInstance().findAllBdzByDp(deptId);
-            if (bdzList == null) bdzList = new ArrayList<>();
+            if (bdzList == null) {
+                bdzList = new ArrayList<>();
+            }
             bdzList.add(new Bdz("-1", "班组本部"));
         }
     }

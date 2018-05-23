@@ -164,8 +164,9 @@ public class MediaRecorderUtils {
 		}
 		if (d >= 3600) {
 			return String.valueOf(d / 3600) + ":" + String.valueOf((d % 3600) / 60) + ":" + String.valueOf((d % 3600) % 60);
-		} else
-			return "0:00";
+		} else {
+            return "0:00";
+        }
 	}
 
 	public int getVideoDuration(Context context, String path) {
@@ -196,7 +197,8 @@ public class MediaRecorderUtils {
 		}
 		if (d >= 60) {
 			return String.valueOf(d / 60) + "′" + String.valueOf(d % 60) + "″";
-		} else
-			return "0″";
+		} else {
+            return "0″";
+        }
 	}
 }

@@ -70,9 +70,10 @@ public class SpaceItem extends AbstractExpandableItem<DeviceItem> implements Mul
     }
 
     public List<DbModel> getAllSubDevices(){
-        if (null==deviceDbModels)
+        if (null==deviceDbModels) {
             return  new ArrayList<DbModel>();
-        else
+        } else {
             return deviceDbModels;
+        }
     }
 }

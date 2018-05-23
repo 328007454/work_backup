@@ -81,6 +81,7 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
                 final DeviceItem deviceItem = (DeviceItem) item;
                 convertDevice(helper, deviceItem);
                 break;
+            default:
         }
     }
 
@@ -215,20 +216,26 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
         MultiItemEntity t = getData().get(position);
         int r = super.expand(position);
         if (isOnlyExpandOne) {
-            if (t != lastExpandIndex)
+            if (t != lastExpandIndex) {
                 if (lastExpandIndex != null && ((SpaceItem) lastExpandIndex).isExpanded()) {
                     int p = getData().indexOf(lastExpandIndex);
-                    if (p >= 0)
+                    if (p >= 0) {
                         collapse(p);
+                    }
                 }
-        } else lastExpandIndex = null;
+            }
+        } else {
+            lastExpandIndex = null;
+        }
         lastExpandIndex = t;
         return r;
     }
 
     @Override
     public int collapse(int position) {
-        if (getData().get(position) == lastExpandIndex) lastExpandIndex = null;
+        if (getData().get(position) == lastExpandIndex) {
+            lastExpandIndex = null;
+        }
         return super.collapse(position);
     }
 

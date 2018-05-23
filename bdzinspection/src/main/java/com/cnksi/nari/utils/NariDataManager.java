@@ -52,10 +52,11 @@ public class NariDataManager {
         HashMap<String, BDPackage> map = new HashMap<>();
         try {
             List<BDPackage> rs = getPackageManager().selector(BDPackage.class).where("user", "=", user).and(BDPackage.PACKAGESTATUS, "<>", PackageStatus.upload.name()).findAll();
-            if (rs != null)
+            if (rs != null) {
                 for (BDPackage r : rs) {
                     map.put(r.packageID, r);
                 }
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }

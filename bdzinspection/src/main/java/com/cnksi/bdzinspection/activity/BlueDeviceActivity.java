@@ -76,8 +76,9 @@ public class BlueDeviceActivity extends BaseActivity {
     }
 
     private void doDiscovery() {
-        if (D)
+        if (D) {
             Log.d(TAG, "doDiscovery()");
+        }
         binding.titleNewDevices.setVisibility(View.VISIBLE);
         if (mBtAdapter.isDiscovering()) {
             mBtAdapter.cancelDiscovery();
@@ -86,6 +87,7 @@ public class BlueDeviceActivity extends BaseActivity {
     }
 
     private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
+        @Override
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             mBtAdapter.cancelDiscovery();
             String info = ((TextView) v).getText().toString();

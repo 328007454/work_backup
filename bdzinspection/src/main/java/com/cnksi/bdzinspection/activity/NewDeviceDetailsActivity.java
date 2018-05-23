@@ -856,6 +856,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         return true;
                     }
                     work = false;
+                default:
             }
             return work;
         }

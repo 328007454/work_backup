@@ -61,8 +61,9 @@ public class UnderLineLinearLayout extends LinearLayout {
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (drawUnderLine && lineHeight > 0)
+        if (drawUnderLine && lineHeight > 0) {
             canvas.drawLine(marginLeft, getHeight() - lineHeight, getWidth() - marginRight, getHeight() - lineHeight, linePaint);
+        }
 
     }
 

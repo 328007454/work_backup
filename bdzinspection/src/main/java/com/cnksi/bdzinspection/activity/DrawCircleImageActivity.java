@@ -80,7 +80,7 @@ public class DrawCircleImageActivity extends BaseActivity {
             saveMarkAndExit();
         });
         binding.btnAddMark.setOnClickListener(view -> {
-            mPicturePaintView.saveMark();
+            PicturePaintView.saveMark();
         });
         binding.btnClearMark.setOnClickListener(view -> {
             CustomerDialog.showSelectDialog(currentActivity, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {

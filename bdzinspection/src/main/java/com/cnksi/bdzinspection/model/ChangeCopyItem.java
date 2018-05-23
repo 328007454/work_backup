@@ -90,8 +90,9 @@ public class ChangeCopyItem {
             copyItem.dlt = 1;
             if (copyItem.version == -1&&"new".equalsIgnoreCase(copyItem.remark)) {//如果该项是新增的抄录项返回false,代表不需要将该项添加到需要保存的数据中去
                 return false;
-            } else
+            } else {
                 return true;
+            }
         }
         return false;
     }

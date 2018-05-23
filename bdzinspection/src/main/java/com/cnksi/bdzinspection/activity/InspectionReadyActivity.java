@@ -129,7 +129,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     protected void onResume() {
         super.onResume();
         boolean needReLoad = PreferencesUtils.get( "RELOAD_DATA", false) &&
-                (currentInspectionTypeName.equalsIgnoreCase("全面巡视")
+                ("全面巡视".equalsIgnoreCase(currentInspectionTypeName)
                         || currentInspectionTypeName.equalsIgnoreCase(InspectionType.routine.toString()));
         if (needReLoad) {
             PreferencesUtils.put("RELOAD_DATA", false);

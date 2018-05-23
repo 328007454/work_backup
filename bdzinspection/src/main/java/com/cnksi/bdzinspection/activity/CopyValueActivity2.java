@@ -134,7 +134,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     }
 
     private void saveRemarkData(CopyResult result, TextView etInput, CopyItem item) {
-        if (item.type_key.equalsIgnoreCase("youwei")) {
+        if ("youwei".equalsIgnoreCase(item.type_key)) {
             result.valSpecial = null;
         }
         if ("Y".equals(item.val)) {

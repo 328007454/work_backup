@@ -46,19 +46,22 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
 
 
     public void pre() {
-        if (currentSelectedPosition > 0)
+        if (currentSelectedPosition > 0) {
             itemClickListener.onItemClick(null, getData().get(--currentSelectedPosition),
                     currentSelectedPosition);
+        }
     }
 
     public void next() {
-        if (currentSelectedPosition < getItemCount() - 1)
+        if (currentSelectedPosition < getItemCount() - 1) {
             itemClickListener.onItemClick(null, getData().get(++currentSelectedPosition), currentSelectedPosition);
+        }
     }
 
     public boolean isLast() {
-        if (getItemCount() == 0)
+        if (getItemCount() == 0) {
             return true;
+        }
         return currentSelectedPosition == getItemCount() - 1;
     }
 

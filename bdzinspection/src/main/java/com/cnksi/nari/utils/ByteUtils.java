@@ -9,11 +9,15 @@ public class ByteUtils {
         for (byte aByte : bytes) {
             int v = aByte & 0xFF;
             String hv = Integer.toHexString(v);
-            if (hv.length() < 2)
+            if (hv.length() < 2) {
                 hv = "0" + hv;
+            }
             builder.append(hv);
         }
-        if (isUpper) return builder.toString().toUpperCase();
-        else return builder.toString().toLowerCase();
+        if (isUpper) {
+            return builder.toString().toUpperCase();
+        } else {
+            return builder.toString().toLowerCase();
+        }
     }
 }

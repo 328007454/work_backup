@@ -560,7 +560,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                             ToastUtils.showMessage( "请配置试验周期");
                             continue;
                         }
-                        if (dbModel.getString("period").equalsIgnoreCase("0")) {
+                        if ("0".equalsIgnoreCase(dbModel.getString("period"))) {
                             nextTime = null;
                         } else {
                             nextTime = DateCalcUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));

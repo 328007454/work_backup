@@ -36,20 +36,24 @@ public class BluetoothBroardCastReceiver extends BroadcastReceiver {
         } else if (intent.getAction().equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
             if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
                 Log.i("Bond", "it's boned:" + device.getName() + "----" + device.getAddress());
-                if (!mBoundList.contains(device))
+                if (!mBoundList.contains(device)) {
                     mBoundList.add(device);
-                if (null != listener)
+                }
+                if (null != listener) {
                     listener.boundDevice(mBoundList);
+                }
             } else if (device.getBondState() == BluetoothDevice.BOND_NONE) {
                 if (null != mBoundList && !mBoundList.isEmpty()) {
-                    if (mBoundList.contains(device))
+                    if (mBoundList.contains(device)) {
                         mBoundList.remove(device);
+                    }
                     listener.boundDevice(mBoundList);
                 }
             }
         }else if(intent.getAction().equals(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)){
-            if (!mBoundList.contains(device))
+            if (!mBoundList.contains(device)) {
                 mBoundList.add(device);
+            }
         }
     }
 }

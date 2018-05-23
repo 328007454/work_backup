@@ -119,8 +119,9 @@ public class DataUtils {
             root.add(element);
         }
         try {
-            if (ZNXSZQ != null)
+            if (ZNXSZQ != null) {
                 root.add(BuildZNXSZQ());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -292,9 +293,11 @@ public class DataUtils {
         Element e = DocumentHelper.createElement("Entry");
         setEntryAttr(e, "U", table, ACCOUNT);
         //
-        if (TextUtils.isEmpty(ZYWB_SYXX.getString("LCSLID")))
+        if (TextUtils.isEmpty(ZYWB_SYXX.getString("LCSLID"))) {
             setChildE(e, "LCSLID", "", true);
-        else setChildE(e, "LCSLID", ZYWB_SYXX.getString("LCSLID"), true);
+        } else {
+            setChildE(e, "LCSLID", ZYWB_SYXX.getString("LCSLID"), true);
+        }
         //作业文本名称
         setChildE(e, "ZYWBMC", ZYWB_SYXX.getString("ZYWBMC"), false);
         //null
@@ -500,10 +503,15 @@ public class DataUtils {
                         String name = cursor.getColumnName(i);
                         String txt = cursor.getString(i);
 
-                        if ("XSSJ".equals(name))
+                        if ("XSSJ".equals(name)) {
                             txt = XSSJ; //placed.create_time
-                        if ("XSJG".equals(name)) txt = "正常";
-                        if ("XSR".equals(name)) txt = CURRENT_USERNAME;
+                        }
+                        if ("XSJG".equals(name)) {
+                            txt = "正常";
+                        }
+                        if ("XSR".equals(name)) {
+                            txt = CURRENT_USERNAME;
+                        }
                         setChildE(e, name, txt, false);
                     }
                     rs.add(e);
@@ -807,7 +815,9 @@ public class DataUtils {
     private String findJJBZJ(String bzId) {
         try {
             DbModel model = dbUtils.findDbModelFirst(new SqlInfo("SELECT OBJ_ID FROM T_YJ_DWYJ_YXRZ_JJBJL where JJDWID='" + bzId + "';"));
-            if (model != null) return model.getString("OBJ_ID");
+            if (model != null) {
+                return model.getString("OBJ_ID");
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -823,8 +833,11 @@ public class DataUtils {
 
     private void setChildE(Element element, String name, String txt, boolean isEmpty) {
         Element e = element.addElement(name);
-        if (TextUtils.isEmpty(txt) && isEmpty) e.addAttribute("isEmpty", "true");
-        else e.setText(StringUtils.NullToDefault(txt, ""));
+        if (TextUtils.isEmpty(txt) && isEmpty) {
+            e.addAttribute("isEmpty", "true");
+        } else {
+            e.setText(StringUtils.NullToDefault(txt, ""));
+        }
     }
 
     private void setChildE(Element element, String name, String txt) {

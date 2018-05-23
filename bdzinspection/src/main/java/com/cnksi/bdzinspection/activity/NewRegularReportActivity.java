@@ -158,7 +158,7 @@ public class NewRegularReportActivity extends BaseActivity {
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
-                } else if (currentInspectionType.equalsIgnoreCase("maintenance_blqdzcs")) {
+                } else if ("maintenance_blqdzcs".equalsIgnoreCase(currentInspectionType)) {
                     copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
                     totalCount = CopyItemService.getInstance().getCopyItemCount1(currentBdzId, CopyItemService.getInstance().getCopyType());
                 } else {

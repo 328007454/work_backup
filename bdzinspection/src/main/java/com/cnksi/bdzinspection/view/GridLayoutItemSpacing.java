@@ -28,10 +28,11 @@ public class GridLayoutItemSpacing extends RecyclerView.ItemDecoration {
         int column = position % spanCount; // item column
 
         if (includeEdge) {
-            if (position == 0)
+            if (position == 0) {
                 outRect.left = horizantalSpacing - column * horizantalSpacing / spanCount; // horizantalSpacing - column * ((1f / spanCount) * horizantalSpacing)
-            else
+            } else {
                 outRect.left = (horizantalSpacing - 21) - (column * (horizantalSpacing - 21)) / spanCount; // horizantalSpacing - column * ((1f / spanCount) * horizantalSpacing)
+            }
             outRect.right = (column + 1) * (horizantalSpacing - 21) / spanCount; // (column + 1) * ((1f / spanCount) * horizantalSpacing)
 
             outRect.top = 0;

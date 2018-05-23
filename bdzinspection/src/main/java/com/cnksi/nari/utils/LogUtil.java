@@ -177,8 +177,9 @@ public class LogUtil {
 
 
     public static String getDeviceInfo() {
-        if (deviceInfo == null)
+        if (deviceInfo == null) {
             deviceInfo = buildBody();
+        }
         return deviceInfo;
     }
 

@@ -50,8 +50,9 @@ public class DisplayUtil {
     public static DisplayUtil instance;
 
     public static DisplayUtil getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new DisplayUtil();
+        }
         return instance;
     }
 
@@ -157,8 +158,8 @@ public class DisplayUtil {
      * @return window显示的左上角的xOff, yOff坐标
      */
     public  int[] calculatePopWindowPos(final View anchorView, final View contentView) {
-        final int windowPos[] = new int[2];
-        final int anchorLoc[] = new int[2];
+        final int[] windowPos = new int[2];
+        final int[] anchorLoc = new int[2];
         // 获取锚点View在屏幕上的左上角坐标位置
         anchorView.getLocationOnScreen(anchorLoc);
         final int anchorHeight = anchorView.getHeight();

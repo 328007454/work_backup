@@ -130,6 +130,7 @@ public class ReportToLeaderActivity extends BaseActivity {
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
                         break;
+                        default:
                 }
             }
         }, new IntentFilter("SENT_SMS_ACTION"));

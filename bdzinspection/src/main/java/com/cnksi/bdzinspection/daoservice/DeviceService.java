@@ -191,8 +191,8 @@ public class DeviceService {
 
     public List<DbModel> findAllDevice(String bdzId, String keyWord, String deviceType) {
 
-        String spacingSort = (deviceType.equals("one")) ? Spacing.SORT_ONE
-                : (deviceType.equals("second")) ? Spacing.SORT_SECOND : Spacing.SORT;
+        String spacingSort = ("one".equals(deviceType)) ? Spacing.SORT_ONE
+                : ("second".equals(deviceType)) ? Spacing.SORT_SECOND : Spacing.SORT;
         String pinyin = "second".equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
         String sql = "select s.name_pinyin||' '||d." + pinyin + " as search_key,d.is_important,d.deviceid as deviceId,d.name_short as deviceName," +
                 "s.spid,s.name as spacingName,s.type as spaceType,s.group_id," +
@@ -277,7 +277,7 @@ public class DeviceService {
         String spaceSort = "one".equals(deviceType) ? Spacing.SORT_ONE
                 : "second".equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
         String pinyin = "second".equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
-        if (deviceWay.equalsIgnoreCase("select_device")) {
+        if ("select_device".equalsIgnoreCase(deviceWay)) {
             Report currentReport = null;
             try {
                 currentReport = XunshiApplication.getDbUtils().findById(Report.class, currentReportId);

@@ -138,7 +138,7 @@ public class SafeToolsInfoAdapter extends BaseRecyclerAdapter<DbModel> {
         }
         orderView.setText(String.valueOf(position + 1));
         toolName.setText(TextUtils.isEmpty(dbModel.getString("name")) ? "" : dbModel.getString("name"));
-        toolNum.setText(TextUtils.isEmpty(dbModel.getString("num")) ? "编号:" : ((dbModel.getString("num").equalsIgnoreCase("-1")) ? "编号:" : "编号:" + dbModel.getString("num")));
+        toolNum.setText(TextUtils.isEmpty(dbModel.getString("num")) ? "编号:" : (("-1".equalsIgnoreCase(dbModel.getString("num"))) ? "编号:" : "编号:" + dbModel.getString("num")));
         toolNextTime.setText(TextUtils.isEmpty(date) ? "" : date);
 
         if (isSelected) {

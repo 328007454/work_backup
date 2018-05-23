@@ -156,6 +156,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                     case 4:
                         signalIcon = R.drawable.xs_ic_signal4;
                         break;
+                        default:
                 }
                 binding.tvTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, signalIcon, 0);
                 currentFragment.locationSuccess(location);

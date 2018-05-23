@@ -84,7 +84,9 @@ public class SignNameActivity extends BaseActivity {
             view = new AutoRelativeLayout(context, attrs);
         }
 
-        if (view != null) return view;
+        if (view != null) {
+            return view;
+        }
 
         return super.onCreateView(name, context, attrs);
     }

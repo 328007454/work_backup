@@ -430,9 +430,9 @@ public class BaseActivity extends BaseCoreActivity {
 
     protected void showTipsDialog(ViewGroup mRootContainer, Intent intent) {
 
-        if (currentInspectionType.contains("special") || currentActivity.equals(InspectionType.routine.name()))
+        if (currentInspectionType.contains("special") || currentActivity.equals(InspectionType.routine.name())) {
             showTipsDialog(mRootContainer, intent, -1, R.string.xs_dialog_tips_content_special, false);
-        else {
+        } else {
             showTipsDialog(mRootContainer, intent, -1, R.string.xs_dialog_tips_content_str, false);
         }
     }

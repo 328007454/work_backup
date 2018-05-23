@@ -50,7 +50,9 @@ public class ToolsAdapter extends BaseLinearLayoutAdapter<Tool> {
 
     private String getNum(String s) {
         ReportTool tool = toolMap.get(s);
-        if (tool == null) return "";
+        if (tool == null) {
+            return "";
+        }
         return StringUtilsExt.nullTo(tool.num, "");
     }
 

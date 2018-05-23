@@ -28,8 +28,9 @@ public class DecodeUtils {
     private static String SQLKEY = "mip12345mip12345mip12345mip12345mip12345mip12345";
 
     public static String piDecrypt(String paramString) {
-        if (TextUtils.isEmpty(paramString))
+        if (TextUtils.isEmpty(paramString)) {
             throw new NullPointerException("要解密的字符串不能为 null。");
+        }
         try {
             SecretKey localSecretKey = SecretKeyFactory.getInstance("DES").generateSecret(new DESKeySpec(KEY));
             Cipher localCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
@@ -44,7 +45,9 @@ public class DecodeUtils {
 
 
     public static byte[] md5EncryptToBytes(String str) {
-        if (TextUtils.isEmpty(str)) throw new NullPointerException("要加密的字符串不能为 null。");
+        if (TextUtils.isEmpty(str)) {
+            throw new NullPointerException("要加密的字符串不能为 null。");
+        }
         try {
             MessageDigest localMessageDigest = MessageDigest.getInstance("MD5");
             localMessageDigest.reset();
@@ -58,7 +61,9 @@ public class DecodeUtils {
     }
 
     public static String aesEncrypt(String str1, String str2) {
-        if (TextUtils.isEmpty(str1)) throw new NullPointerException("要加密的字符串不能为 null。");
+        if (TextUtils.isEmpty(str1)) {
+            throw new NullPointerException("要加密的字符串不能为 null。");
+        }
         try {
             SecretKeySpec key = new SecretKeySpec(md5EncryptToBytes(str2), "AES");
             Cipher localCipher = Cipher.getInstance("AES");
@@ -70,7 +75,9 @@ public class DecodeUtils {
     }
 
     public static String aesDecrypt(String str1, String str2) {
-        if (TextUtils.isEmpty(str1)) throw new NullPointerException("要加密的字符串不能为 null。");
+        if (TextUtils.isEmpty(str1)) {
+            throw new NullPointerException("要加密的字符串不能为 null。");
+        }
         try {
             SecretKeySpec key = new SecretKeySpec(md5EncryptToBytes(str2), "AES");
             Cipher localCipher = Cipher.getInstance("AES");

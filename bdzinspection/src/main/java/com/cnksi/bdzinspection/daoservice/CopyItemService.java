@@ -63,10 +63,10 @@ public class CopyItemService {
                 + "left join spacing sp on d.spid=sp.spid where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and " + "kind like '%" + inspection
                 + "%' and dlt = '0')  and d.device_type=?";
 
-        if (!TextUtils.isEmpty(deviceWay) && deviceWay.equalsIgnoreCase("bigtype_device")) {
+        if (!TextUtils.isEmpty(deviceWay) && "bigtype_device".equalsIgnoreCase(deviceWay)) {
             sql = sql + " and d.bigid in ( select bigid from standard_special where kind = '" + inspection + "' and dlt = 0 )";
         }
-        if (!TextUtils.isEmpty(deviceWay) && deviceWay.equalsIgnoreCase("select_device")) {
+        if (!TextUtils.isEmpty(deviceWay) && "select_device".equalsIgnoreCase(deviceWay)) {
             Report currentReport = null;
             try {
                 currentReport = XunshiApplication.getDbUtils().findById(Report.class, reportId);

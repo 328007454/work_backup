@@ -205,7 +205,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                             mBatteryGroupList.add(batteryGroup);
                         }
                     } else if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
-                        if (currentInspectionType.equalsIgnoreCase("maintenance_blqdzcs")) {
+                        if ("maintenance_blqdzcs".equalsIgnoreCase(currentInspectionType)) {
                             copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
                             totalCount = CopyItemService.getInstance().getCopyItemCount1(currentBdzId, CopyItemService.getInstance().getCopyType());
                         } else {

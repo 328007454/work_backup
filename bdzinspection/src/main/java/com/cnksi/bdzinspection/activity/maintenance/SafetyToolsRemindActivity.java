@@ -100,7 +100,9 @@ public class SafetyToolsRemindActivity extends BaseActivity {
                 for (DbModel tool : allTools) {
                     String bdzId = tool.getString("bdz_id");
                     //没有BdzId表明其存放在班组本部
-                    if (bdzId == null || bdzId.isEmpty()) bdzId = "-1";
+                    if (bdzId == null || bdzId.isEmpty()) {
+                        bdzId = "-1";
+                    }
                     if ((tempList = tempMap.get(bdzId)) == null) {
                         tempList = new ArrayList<>();
                         tempMap.put(bdzId, tempList);
@@ -109,7 +111,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
                 }
                 for (Map.Entry<String, List<DbModel>> entry : tempMap.entrySet()) {
                     String key = entry.getKey();
-                    Bdz bdz = new Bdz(key, key.equals("-1") ? "班组本部" : entry.getValue().get(0).getString("bdz_name"));
+                    Bdz bdz = new Bdz(key, "-1".equals(key) ? "班组本部" : entry.getValue().get(0).getString("bdz_name"));
                     DataWrap<Bdz, DbModel> dataWrap = new DataWrap<>(bdz);
                     dataWrap.setChildList(entry.getValue());
                     dataWraps.add(dataWrap);

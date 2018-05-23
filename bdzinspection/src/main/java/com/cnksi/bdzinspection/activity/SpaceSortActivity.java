@@ -151,8 +151,9 @@ public class SpaceSortActivity extends TitleActivity {
 
     @Override
     protected void releaseResAndSaveData() {
-        if (hasUpdate)
+        if (hasUpdate) {
             updateSpaceSort();
+        }
         setResult(RESULT_OK);
     }
 

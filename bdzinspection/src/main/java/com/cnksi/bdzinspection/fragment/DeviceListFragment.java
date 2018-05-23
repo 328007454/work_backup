@@ -226,11 +226,13 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                     String deviceID = dbModel.getString("deviceid");
                     String deviceSpID = dbModel.getString("spid");
                     copyDeviceIdList.add(deviceID);
-                    if (!copyDeviceIdList.contains(deviceSpID))
+                    if (!copyDeviceIdList.contains(deviceSpID)) {
                         copyDeviceIdList.add(deviceSpID);
+                    }
                     if (spaceCopyDeviceMap.keySet().contains(deviceSpID)) {
-                        if (null != spaceCopyDeviceMap.get(deviceSpID))
+                        if (null != spaceCopyDeviceMap.get(deviceSpID)) {
                             spaceCopyDeviceMap.get(deviceSpID).add(deviceID);
+                        }
                     } else {
                         List<String> deviceIDs = new ArrayList<>();
                         deviceIDs.add(deviceID);
@@ -284,8 +286,9 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 } else {
                     spacingDeviceMap.get(spacingId).add(dbModel);
                 }
-                if (!spacingIds.contains(spacingId))
+                if (!spacingIds.contains(spacingId)) {
                     spacingIds.add(spacingId);
+                }
                 deviceDbModelMap.put(dbModel.getString("deviceId"), dbModel);
             }
             boolean isEmptyKey = TextUtils.isEmpty(keyWord);
@@ -294,10 +297,13 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 SpaceItem parentNode = new SpaceItem(entry.getValue().get(0));
                 parentNode.addAll(entry.getValue());
                 data.add(parentNode);
-                if (isEmptyKey)
+                if (isEmptyKey) {
                     sortList.addAll(entry.getValue());
+                }
             }
-            if (isEmptyKey) NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
+            if (isEmptyKey) {
+                NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
+            }
             if ("second".equals(currentFunctionModel)) {
                 Functions.buildTreeData(data, spaceGroupMap);
                 reportSnwsds = ReportSnwsd.getAllCopySNWSD(currentReportId);
@@ -311,12 +317,16 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             } else {
                 adapter.setShowOnly(true);
                 if (!qwerKeyBoardUtils.isCharMode() && spacingLastly != null) {
-                    int index[] = Functions.findSpaceIndex(spacingLastly.spid, data);
-                    if (-1 != index[0]) adapter.expand(index[0]);
+                    int[] index = Functions.findSpaceIndex(spacingLastly.spid, data);
+                    if (-1 != index[0]) {
+                        adapter.expand(index[0]);
+                    }
                     if (-1 != index[1]) {
                         adapter.expand(index[1]);
                         recyclerView.scrollToPosition(index[1]);
-                    } else adapter.notifyDataSetChanged();
+                    } else {
+                        adapter.notifyDataSetChanged();
+                    }
                 } else {
                     adapter.notifyDataSetChanged();
                 }
@@ -402,8 +412,9 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         OnClickListener dialogOnClick = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (R.id.btn_confirm == v.getId())
+                if (R.id.btn_confirm == v.getId()) {
                     arriveCheckHelper.saveLocation(isSpace ? locationSpace : locationDevice, location, isSpace);
+                }
                 dialog.dismiss();
             }
         };
@@ -417,9 +428,13 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
 
 
     public SpacingLastly getSpaceLastly() {
-        if (adapter == null) return null;
+        if (adapter == null) {
+            return null;
+        }
         DbModel model = adapter.getLastlySpace();
-        if (model == null) return null;
+        if (model == null) {
+            return null;
+        }
         String spaceId = model.getString("spid");
         if (null == spacingLastly) {
             spacingLastly = new SpacingLastly(currentReportId, currentAcounts, spaceId, currentFunctionModel);

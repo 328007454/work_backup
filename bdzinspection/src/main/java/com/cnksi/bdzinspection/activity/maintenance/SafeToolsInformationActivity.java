@@ -414,7 +414,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         OperateToolResult toolResult = null;
         try {
             lastTime = testBinding.txtTestTime.getText().toString().trim() + " 00:00:00";
-            if (dbModel.getString("period").equalsIgnoreCase("0")) {
+            if ("0".equalsIgnoreCase(dbModel.getString("period"))) {
                 nextTime = null;
             } else {
                 nextTime = DateCalcUtils.getAfterMonth(lastTime, Integer.valueOf(dbModel.getString("period")));

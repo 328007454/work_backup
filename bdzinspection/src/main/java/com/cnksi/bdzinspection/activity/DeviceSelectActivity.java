@@ -70,8 +70,9 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
     public static DbModel getSelectDevice(List<DbModel> selectDeviceList, String deviceId) {
         if (selectDeviceList != null && !selectDeviceList.isEmpty()) {
             for (DbModel dbModel : selectDeviceList) {
-                if (deviceId.equals(dbModel.getString("deviceId")))
+                if (deviceId.equals(dbModel.getString("deviceId"))) {
                     return dbModel;
+                }
             }
         }
         return null;
@@ -133,8 +134,9 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
             List<DbModel> selectDeviceList = new ArrayList<>();
             for (String key : selectSpacingDeviceMap.keySet()) {
                 List<DbModel> spacingDeviceList = selectSpacingDeviceMap.get(key);
-                if (!spacingDeviceList.isEmpty())
+                if (!spacingDeviceList.isEmpty()) {
                     selectDeviceList.addAll(spacingDeviceList);
+                }
             }
             if (selectDeviceList.isEmpty()) {
                 ToastUtils.showMessage( "请选择设备");
@@ -231,8 +233,9 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
             spacingDeviceList.clear();
         } else {
             List<DbModel> deviceModels = spaceItem.getAllSubDevices();
-            if (spacingDeviceList == null)
+            if (spacingDeviceList == null) {
                 spacingDeviceList = new ArrayList<>();
+            }
             spacingDeviceList.clear();
             spacingDeviceList.addAll(deviceModels);
             selectSpacingDeviceMap.put(spaceItem.getSpid(), spacingDeviceList);

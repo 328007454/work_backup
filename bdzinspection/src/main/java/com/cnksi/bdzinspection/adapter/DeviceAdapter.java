@@ -125,6 +125,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                 final DeviceItem deviceItem = (DeviceItem) item;
                 convertDevice(helper, deviceItem);
                 break;
+            default:
         }
     }
 

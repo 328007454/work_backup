@@ -62,6 +62,8 @@ public class SpaceGroupItem extends AbstractExpandableItem<SpaceItem> implements
     public void clear() {
         if (getSubItems() == null) {
 
-        } else getSubItems().clear();
+        } else {
+            getSubItems().clear();
+        }
     }
 }

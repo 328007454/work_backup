@@ -257,7 +257,7 @@ public class CopyHelper {
             if (TextUtils.isEmpty(result.valSpecial)) {
                 result.valSpecial = null;
             }
-            if (result.type_key.equalsIgnoreCase("youwei") && !TextUtils.isEmpty(result.valSpecial)) {
+            if ("youwei".equalsIgnoreCase(result.type_key) && !TextUtils.isEmpty(result.valSpecial)) {
                 result.val = null;
             }
             if (tips) {
@@ -390,7 +390,7 @@ public class CopyHelper {
                     ViewHolder childHolder = new ViewHolder(context, null, R.layout.xs_copy_value_child_item2, false);
                     AutoUtils.autoSize(childHolder.getRootView());
                     RelativeLayout layoutRoot = (RelativeLayout) childHolder.getRootView();
-                    if (childItem.type_key.equalsIgnoreCase("youwei")) {
+                    if ("youwei".equalsIgnoreCase(childItem.type_key)) {
                         childHolder.getView(R.id.ibtn_history_data).setVisibility(View.INVISIBLE);
                     }
                     // 构造抄录描述
@@ -523,7 +523,7 @@ public class CopyHelper {
         public void afterTextChanged(Editable s) {
             CopyResult copyResult = copyResultMap.get(copyItem.id);
             if (null != copyResult) {
-                if (copyResult.type_key.equalsIgnoreCase("youwei")) {
+                if ("youwei".equalsIgnoreCase(copyResult.type_key)) {
                     copyResult.valSpecial = s.toString();
                 } else {
                     String value = CommonUtils.getTransformTep(s.toString());

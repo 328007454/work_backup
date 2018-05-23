@@ -50,11 +50,11 @@ public class StandardSwitchOverService extends BaseService<StandardSwitchover> {
         ArrayList<DbModel> dbModelLevel2 = new ArrayList<>();
         ArrayList<DbModel> dbModelLevel3 = new ArrayList<>();
         for (DbModel dbModel : dbModleList) {
-            if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("1")) {
+            if ("1".equalsIgnoreCase(dbModel.getString(StandardSwitchover.LEVEL))) {
                 dbModelLevel1.add(dbModel);
-            } else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("2")) {
+            } else if ("2".equalsIgnoreCase(dbModel.getString(StandardSwitchover.LEVEL))) {
                 dbModelLevel2.add(dbModel);
-            } else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("3")) {
+            } else if ("3".equalsIgnoreCase(dbModel.getString(StandardSwitchover.LEVEL))) {
                 dbModelLevel3.add(dbModel);
             }
         }

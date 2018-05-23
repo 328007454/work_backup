@@ -39,8 +39,9 @@ public class PermissionUtil {
     private GrantPermissionListener grantPermissionListener;
 
     public static PermissionUtil getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new PermissionUtil();
+        }
         return instance;
     }
 

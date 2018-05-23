@@ -94,8 +94,9 @@ public class NumberUtil {
             StringBuffer hexString = new StringBuffer();
             for (int i = 0; i < publicKey.length; i++) {
                 String appendString = Integer.toHexString(0xFF & publicKey[i]).toUpperCase(Locale.US);
-                if (appendString.length() == 1)
+                if (appendString.length() == 1) {
                     hexString.append("0");
+                }
                 hexString.append(appendString);
                 hexString.append(":");
             }
@@ -109,7 +110,9 @@ public class NumberUtil {
     }
 
     public static double parse(String s, double def) {
-        if (TextUtils.isEmpty(s)) return def;
+        if (TextUtils.isEmpty(s)) {
+            return def;
+        }
         try {
             return Double.parseDouble(s);
         } catch (Exception e) {
@@ -117,7 +120,9 @@ public class NumberUtil {
         }
     }
     public  static int parse(String s, int def) {
-        if (TextUtils.isEmpty(s)) return def;
+        if (TextUtils.isEmpty(s)) {
+            return def;
+        }
         try {
             return Integer.parseInt(s);
         } catch (Exception e) {
@@ -125,7 +130,9 @@ public class NumberUtil {
         }
     }
     public static float parse(String s, float def) {
-        if (TextUtils.isEmpty(s)) return def;
+        if (TextUtils.isEmpty(s)) {
+            return def;
+        }
         try {
             return Float.parseFloat(s);
         } catch (Exception e) {
