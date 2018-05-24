@@ -195,7 +195,6 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                     reportCopyResultMap.put(result.item_id, result);
                     }
                 }
-            }
             // 历史抄录值
             List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false);
             Map<String, CopyResult> historyMap = new HashMap<>();
