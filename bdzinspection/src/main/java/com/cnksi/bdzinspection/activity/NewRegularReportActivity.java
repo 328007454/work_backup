@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -131,52 +132,48 @@ public class NewRegularReportActivity extends BaseActivity {
 
     private void initialData() {
         final boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                // 查询report数据
-                try {
-                    report =ReportService.getInstance().getReportById(currentReportId);
-                    mReportSignnameListCzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
-                    mReportSignnameListFzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
-                    mHandler.sendEmptyMessage(REFRESH_DATA);
-                } catch (DbException e) {
-                    e.printStackTrace(System.out);
-                }
-                // 查询状态
-                status = TaskService.getInstance().getTaskStatus(currentTaskId);
-                if (xudianchi) {
-                    try {
-
-                        List<DbModel> batteryDbmodelList = BatteryGroupService.getInstance().findBatteryGroup(currentBdzId);
-                        DbModel batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
-                        int sumBatteryCode = 0;
-                        for (DbModel dbModel : batteryDbmodelList) {
-                            sumBatteryCode = sumBatteryCode + Integer.valueOf(dbModel.getString("amount"));
-                        }
-                        copyCount = Integer.valueOf(TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? "0" : batteryCopyTotal.getString("count"));
-                        totalCount = sumBatteryCode;
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-                } else if ("maintenance_blqdzcs".equalsIgnoreCase(currentInspectionType)) {
-                    copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-                    totalCount = CopyItemService.getInstance().getCopyItemCount1(currentBdzId, CopyItemService.getInstance().getCopyType());
-                } else {
-                    // 查询数据抄录数量
-                    copyCount = TaskService.getInstance().queryCopyData(currentReportId);
-                    totalCount = StandardSwitchOverService.getInstance().getSwitchOverCopyTotal(currentInspectionType, currentBdzId);
-                }
-
-                // 查询本次发现的缺陷
-                mNewDefectList = DefectRecordService.getInstance().findCurrentTaskNewDefectList(currentBdzId, currentReportId);
-                // 查询本次跟踪的缺陷
-                mTrackDefectList = DefectRecordService.getInstance().findCurrentTaskTrackDefectList(currentBdzId, currentReportId);
-                // 查询本次消除的缺陷
-                mEliminateDefectList = DefectRecordService.getInstance().findCurrentTaskEliminateDefectList(currentBdzId, currentReportId);
-                mHandler.sendEmptyMessage(LOAD_DATA);
+        ExecutorManager.executeTask(() -> {
+            // 查询report数据
+            try {
+                report =ReportService.getInstance().getReportById(currentReportId);
+                mReportSignnameListCzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
+                mReportSignnameListFzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
+                mHandler.sendEmptyMessage(REFRESH_DATA);
+            } catch (DbException e) {
+                e.printStackTrace(System.out);
             }
+            // 查询状态
+            status = TaskService.getInstance().getTaskStatus(currentTaskId);
+            if (xudianchi) {
+                try {
+
+                    List<DbModel> batteryDbmodelList = BatteryGroupService.getInstance().findBatteryGroup(currentBdzId);
+                    DbModel batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
+                    int sumBatteryCode = 0;
+                    for (DbModel dbModel : batteryDbmodelList) {
+                        sumBatteryCode = sumBatteryCode + Integer.valueOf(dbModel.getString("amount"));
+                    }
+                    copyCount = Integer.valueOf(TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? "0" : batteryCopyTotal.getString("count"));
+                    totalCount = sumBatteryCode;
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            } else if ("maintenance_blqdzcs".equalsIgnoreCase(currentInspectionType)) {
+                copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
+                totalCount = CopyItemService.getInstance().getCopyItemCount1(currentBdzId, CopyItemService.getInstance().getCopyType());
+            } else {
+                // 查询数据抄录数量
+                copyCount = TaskService.getInstance().queryCopyData(currentReportId);
+                totalCount = StandardSwitchOverService.getInstance().getSwitchOverCopyTotal(currentInspectionType, currentBdzId);
+            }
+
+            // 查询本次发现的缺陷
+            mNewDefectList = DefectRecordService.getInstance().findCurrentTaskNewDefectList(currentBdzId, currentReportId);
+            // 查询本次跟踪的缺陷
+            mTrackDefectList = DefectRecordService.getInstance().findCurrentTaskTrackDefectList(currentBdzId, currentReportId);
+            // 查询本次消除的缺陷
+            mEliminateDefectList = DefectRecordService.getInstance().findCurrentTaskEliminateDefectList(currentBdzId, currentReportId);
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -257,18 +254,18 @@ public class NewRegularReportActivity extends BaseActivity {
 
     private void initOnClick() {
 
-        binding.ibtnCancel.setOnClickListener(view -> onBackPressed());
+        binding.ibtnCancel.setOnClickListener(view -> NewRegularReportActivity.this.onBackPressed());
 
-        binding.tvEliminateDefectCount.setOnClickListener(view -> showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
-        binding.llEliminateDefectCount.setOnClickListener(view -> showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.tvEliminateDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.llEliminateDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
 
-        binding.tvTrackDefectCount.setOnClickListener(view -> showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
-        binding.llTrackDefectCount.setOnClickListener(view -> showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.tvTrackDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.llTrackDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
 
-        binding.tvNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
-        binding.llNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.tvNewDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.llNewDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
 
-        binding.ibtnExit.setOnClickListener(view -> ExitThisAndGoLauncher());
+        binding.ibtnExit.setOnClickListener(view -> NewRegularReportActivity.this.ExitThisAndGoLauncher());
 
     }
 

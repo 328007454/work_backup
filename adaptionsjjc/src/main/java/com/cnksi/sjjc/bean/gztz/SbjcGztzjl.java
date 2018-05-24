@@ -515,9 +515,6 @@ public class SbjcGztzjl extends BaseModel {
         if (xb[2] == 1 && TextUtils.isEmpty(c)) {
             return false;
         }
-        if (xb[3] == 1 && TextUtils.isEmpty(o)) {
-            return false;
-        }
-        return true;
+        return xb[3] != 1 || !TextUtils.isEmpty(o);
     }
 }

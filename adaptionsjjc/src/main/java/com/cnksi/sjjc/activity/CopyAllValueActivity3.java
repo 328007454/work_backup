@@ -28,6 +28,7 @@ import com.cnksi.sjjc.adapter.TreeNode;
 import com.cnksi.sjjc.databinding.ActivityCopyAll3Binding;
 import com.cnksi.sjjc.databinding.ActivityCopyDialogBinding;
 import com.cnksi.sjjc.databinding.DialogCopyTipsBinding;
+import com.cnksi.sjjc.inter.CopyItemLongClickListener;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.processor.CopyDataInterface;
 import com.cnksi.sjjc.processor.ProcessorFactory;
@@ -163,9 +164,9 @@ public class CopyAllValueActivity3 extends BaseActivity {
         data = new ArrayList<>();
         copyViewUtil = new CopyViewUtil();
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
-            final ActivityCopyDialogBinding notClearDialogBinding = ActivityCopyDialogBinding.inflate(getLayoutInflater());
+            final ActivityCopyDialogBinding notClearDialogBinding = ActivityCopyDialogBinding.inflate(CopyAllValueActivity3.this.getLayoutInflater());
             notClearDialogBinding.btnCancel.setOnClickListener(v1 -> dialog.dismiss());
-            notClearDialogBinding.btnSure.setOnClickListener(v12 -> saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
+            notClearDialogBinding.btnSure.setOnClickListener(v12 -> CopyAllValueActivity3.this.saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
             dialog = DialogUtils.creatDialog(_this, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             dialog.show();
@@ -215,7 +216,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
                 copyDeviceList.clear();
                 if (null != deviceList && !deviceList.isEmpty()) {
                     copyDeviceList.addAll(deviceList);
-                    setCurrentDevice(0);
+                    CopyAllValueActivity3.this.setCurrentDevice(0);
                 }
                 mHandler.sendEmptyMessage(LOAD_DATA);
             } catch (DbException e) {
@@ -383,17 +384,15 @@ public class CopyAllValueActivity3 extends BaseActivity {
 
     private void initOnClick() {
         mTitleBinding.tvRight.setOnClickListener(view -> {
-                    saveAll();
-                    String tip = String.format(getText(R.string.dialog_tips_finish_str) + "", processor.getCopyResult(currentBdzId));
-                    showTipsDialog(binding.llRootContainer, tip);
-                }
+            CopyAllValueActivity3.this.saveAll();
+            String tip = String.format(CopyAllValueActivity3.this.getText(R.string.dialog_tips_finish_str) + "", processor.getCopyResult(currentBdzId));
+            CopyAllValueActivity3.this.showTipsDialog(binding.llRootContainer, tip);
+        }
         );
-        binding.ibtnSpread.setOnClickListener(view -> {
-            setDeviceListDisplay();
-        });
+        binding.ibtnSpread.setOnClickListener(view -> CopyAllValueActivity3.this.setDeviceListDisplay());
         binding.btnNext.setOnClickListener(view -> {
             if (!isFinish) {
-                saveAll();
+                CopyAllValueActivity3.this.saveAll();
                 if (deviceAdapter.isLast()) {
                     binding.btnNext.setText(R.string.finish_str);
                     isFinish = true;
@@ -405,7 +404,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
             }
         });
         binding.btnPre.setOnClickListener(view -> {
-            saveAll();
+            CopyAllValueActivity3.this.saveAll();
             if (!deviceAdapter.isFirst()) {
                 deviceAdapter.pre();
             }
@@ -443,7 +442,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
             }
             isNeedUpdateTaskState = true;
             Intent intent = new Intent(_this, CopyValueReportActivity.class);
-            startActivity(intent);
+            CopyAllValueActivity3.this.startActivity(intent);
             ScreenManager.getScreenManager().popActivityList(CopyBaseDataActivity.class);
             _this.finish();
         });

@@ -158,10 +158,10 @@ public class CustomerDialog {
             View view = LayoutInflater.from(context).inflate(R.layout.dialog_customer, null);
             mCustomDialog.setContentView(view);
             ((TextView) view.findViewById(R.id.tv_title)).setText(title);
-            TextView mTvToast = ((TextView) view.findViewById(R.id.tv_toast));
-            TextView mTvCancel = (TextView) view.findViewById(R.id.tv_cancel);
-            TextView mTvSingleConfirm = (TextView) view.findViewById(R.id.tv_confirm);
-            TextView mTvMultipleConfirm = (TextView) view.findViewById(R.id.tv_multiple_confirm);
+            TextView mTvToast = view.findViewById(R.id.tv_toast);
+            TextView mTvCancel = view.findViewById(R.id.tv_cancel);
+            TextView mTvSingleConfirm = view.findViewById(R.id.tv_confirm);
+            TextView mTvMultipleConfirm = view.findViewById(R.id.tv_multiple_confirm);
             mTvToast.setText(Html.fromHtml(toast));
             mTvCancel.setText(cancelText);
             mTvSingleConfirm.setText(confirmText);
@@ -173,46 +173,22 @@ public class CustomerDialog {
                     mTvToast.setGravity(Gravity.LEFT);
                 }
             }
-            mTvCancel.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCustomDialog.dismiss();
-                    if (dialogClickListener != null) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialogClickListener.cancel();
-                            }
-                        }, 200);
-                    }
+            mTvCancel.setOnClickListener(view13 -> {
+                mCustomDialog.dismiss();
+                if (dialogClickListener != null) {
+                    new Handler().postDelayed(() -> dialogClickListener.cancel(), 200);
                 }
             });
-            mTvSingleConfirm.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCustomDialog.dismiss();
-                    if (dialogClickListener != null) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialogClickListener.confirm();
-                            }
-                        }, 200);
-                    }
+            mTvSingleConfirm.setOnClickListener(view12 -> {
+                mCustomDialog.dismiss();
+                if (dialogClickListener != null) {
+                    new Handler().postDelayed(() -> dialogClickListener.confirm(), 200);
                 }
             });
-            mTvMultipleConfirm.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCustomDialog.dismiss();
-                    if (dialogClickListener != null) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialogClickListener.confirm();
-                            }
-                        }, 200);
-                    }
+            mTvMultipleConfirm.setOnClickListener(view1 -> {
+                mCustomDialog.dismiss();
+                if (dialogClickListener != null) {
+                    new Handler().postDelayed(() -> dialogClickListener.confirm(), 200);
                 }
             });
             Window mWindow = mCustomDialog.getWindow();
@@ -238,10 +214,10 @@ public class CustomerDialog {
             View view = LayoutInflater.from(context).inflate(R.layout.dialog_customer, null);
             mCustomDialog.setContentView(view);
             ((TextView) view.findViewById(R.id.tv_title)).setText(title);
-            TextView mTvToast = ((TextView) view.findViewById(R.id.tv_toast));
-            TextView mTvCancel = (TextView) view.findViewById(R.id.tv_cancel);
-            TextView mTvSingleConfirm = (TextView) view.findViewById(R.id.tv_confirm);
-            TextView mTvMultipleConfirm = (TextView) view.findViewById(R.id.tv_multiple_confirm);
+            TextView mTvToast = view.findViewById(R.id.tv_toast);
+            TextView mTvCancel = view.findViewById(R.id.tv_cancel);
+            TextView mTvSingleConfirm = view.findViewById(R.id.tv_confirm);
+            TextView mTvMultipleConfirm = view.findViewById(R.id.tv_multiple_confirm);
             if (isPms) {
                 mTvToast.setGravity(Gravity.CENTER);
             } else {
@@ -258,46 +234,22 @@ public class CustomerDialog {
                     mTvToast.setGravity(Gravity.LEFT);
                 }
             }
-            mTvCancel.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCustomDialog.dismiss();
-                    if (dialogClickListener != null) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialogClickListener.cancel();
-                            }
-                        }, 200);
-                    }
+            mTvCancel.setOnClickListener(view13 -> {
+                mCustomDialog.dismiss();
+                if (dialogClickListener != null) {
+                    new Handler().postDelayed(() -> dialogClickListener.cancel(), 200);
                 }
             });
-            mTvSingleConfirm.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCustomDialog.dismiss();
-                    if (dialogClickListener != null) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialogClickListener.confirm();
-                            }
-                        }, 200);
-                    }
+            mTvSingleConfirm.setOnClickListener(view12 -> {
+                mCustomDialog.dismiss();
+                if (dialogClickListener != null) {
+                    new Handler().postDelayed(() -> dialogClickListener.confirm(), 200);
                 }
             });
-            mTvMultipleConfirm.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCustomDialog.dismiss();
-                    if (dialogClickListener != null) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialogClickListener.confirm();
-                            }
-                        }, 200);
-                    }
+            mTvMultipleConfirm.setOnClickListener(view1 -> {
+                mCustomDialog.dismiss();
+                if (dialogClickListener != null) {
+                    new Handler().postDelayed(() -> dialogClickListener.confirm(), 200);
                 }
             });
             Window mWindow = mCustomDialog.getWindow();
@@ -328,7 +280,7 @@ public class CustomerDialog {
             }, false);
             mCustomDialog.setContentView(view);
             // 根据items动态创建
-            LinearLayout parent = (LinearLayout) view.findViewById(R.id.dialogLayout);
+            LinearLayout parent = view.findViewById(R.id.dialogLayout);
             parent.removeAllViews();
             int length = items.length;
             for (int i = 0; i < length; i++) {
@@ -354,28 +306,22 @@ public class CustomerDialog {
                         tv.setBackgroundResource(R.drawable.menudialog_bottom2_selector);
                     }
                 }
-                tv.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        mCustomDialog.dismiss();
-                        dialogClickListener.confirm(tv.getText().toString(), Integer.parseInt(tv.getTag().toString()));
-                    }
+                tv.setOnClickListener(arg0 -> {
+                    mCustomDialog.dismiss();
+                    dialogClickListener.confirm(tv.getText().toString(), Integer.parseInt(tv.getTag().toString()));
                 });
                 parent.addView(tv);
                 if (i != length - 1) {
                     TextView divider = new TextView(context);
-                    LayoutParams params = new LayoutParams(-1, (int) 1);
+                    LayoutParams params = new LayoutParams(-1, 1);
                     divider.setLayoutParams(params);
                     divider.setBackgroundResource(android.R.color.darker_gray);
                     parent.addView(divider);
                 }
             }
-            view.findViewById(R.id.tv_confirm).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-                    mCustomDialog.dismiss();
-                    dialogClickListener.confirm("", -1);
-                }
+            view.findViewById(R.id.tv_confirm).setOnClickListener(arg0 -> {
+                mCustomDialog.dismiss();
+                dialogClickListener.confirm("", -1);
             });
             Window mWindow = mCustomDialog.getWindow();
             WindowManager.LayoutParams lp = mWindow.getAttributes();
@@ -440,8 +386,8 @@ public class CustomerDialog {
             }, false);
             mCustomDialog.setContentView(view);
             ((TextView) view.findViewById(R.id.tv_tips)).setText(tips);
-            ProgressBar mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
-            ImageView mIvMap = (ImageView) view.findViewById(R.id.iv_map);
+            ProgressBar mProgressBar = view.findViewById(R.id.progressBar1);
+            ImageView mIvMap = view.findViewById(R.id.iv_map);
             if (!isShowProgress) {
                 mIvMap.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
@@ -489,23 +435,14 @@ public class CustomerDialog {
 
                 }
             }, false);
-            LinearLayout mLLDateContainer = (LinearLayout) view.findViewById(R.id.ll_date_container);
+            LinearLayout mLLDateContainer = view.findViewById(R.id.ll_date_container);
             mLLDateContainer.addView(timepickerview);
 
-            view.findViewById(R.id.confirm).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    datePickerDialog.dismiss();
-                    dialogClickListener.confirm(wheelMain.getTime(), 0);
-                }
+            view.findViewById(R.id.confirm).setOnClickListener(v -> {
+                datePickerDialog.dismiss();
+                dialogClickListener.confirm(wheelMain.getTime(), 0);
             });
-            view.findViewById(R.id.cancel).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    datePickerDialog.dismiss();
-                }
-            });
+            view.findViewById(R.id.cancel).setOnClickListener(v -> datePickerDialog.dismiss());
             // 设置对话框布局
             datePickerDialog.setContentView(view);
 
@@ -538,12 +475,12 @@ public class CustomerDialog {
     }
 
     public interface DialogClickListener {
-        public abstract void confirm();
+        void confirm();
 
-        public abstract void cancel();
+        void cancel();
     }
 
     public interface DialogItemClickListener {
-        public abstract void confirm(String result, int position);
+        void confirm(String result, int position);
     }
 }

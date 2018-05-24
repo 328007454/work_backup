@@ -40,8 +40,8 @@ public class TextGroup extends UnderLineLinearLayout {
         setDrawUnderLine(true);
         setPadding(AutoUtils.getPercentHeightSize(30), 0, 0, 0);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_text_group, this, true);
-        editText = (EditText) findViewById(R.id.et_input);
-        tvName = (TextView) findViewById(R.id.tv_name);
+        editText = findViewById(R.id.et_input);
+        tvName = findViewById(R.id.tv_name);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.TextGroup);
         if (attributes != null) {
             String string = attributes.getString(R.styleable.TextGroup_title_str);

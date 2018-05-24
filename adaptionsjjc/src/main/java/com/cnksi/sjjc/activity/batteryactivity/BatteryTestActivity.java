@@ -193,7 +193,7 @@ public class BatteryTestActivity extends BaseActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            if (!cacheBatteryInfor()) {
+            if (!BatteryTestActivity.this.cacheBatteryInfor()) {
                 ToastUtils.showMessage("基本信息输入有误，请核对");
                 return;
             }
@@ -206,14 +206,14 @@ public class BatteryTestActivity extends BaseActivity {
             }
             typeName = PreferencesUtils.get("typename", "");
             boolean xudianchi = typeName.contains(Config.XUDIANCHI) && (typeName.contains(Config.DIANYA) || typeName.contains(Config.NEIZU));
-            if (xudianchi && task.status.equalsIgnoreCase("done") && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
+            if (xudianchi && task.status.equalsIgnoreCase("done") && !BatteryTestActivity.this.getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                 PreferencesUtils.put(Config.CURRENT_MAINTANENCE_BATTERY, "");
                 Intent intent = new Intent();
                 ComponentName componentName;
                 componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
                 intent.setComponent(componentName);
                 intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-                startActivity(intent);
+                BatteryTestActivity.this.startActivity(intent);
             }
             KeyBoardUtils.closeKeybord(_this);
             BatteryTestActivity.this.finish();
@@ -392,8 +392,8 @@ public class BatteryTestActivity extends BaseActivity {
             binding.layoutBattery.addView(holder.getRootView());
             holder.getRootView().setTag(battery);
             holder.getRootView().setOnClickListener(v -> {
-                if (cacheBatteryInfor()) {
-                    changeBatteryTab(v);
+                if (BatteryTestActivity.this.cacheBatteryInfor()) {
+                    BatteryTestActivity.this.changeBatteryTab(v);
                 } else {
                     ToastUtils.showMessage("基本信息输入有误，请核对");
                     return;
@@ -639,8 +639,8 @@ public class BatteryTestActivity extends BaseActivity {
 
     private void initOnClick() {
         mTitleBinding.tvRight.setOnClickListener(view -> {
-            if (cacheBatteryInfor()) {
-                saveOrUpdateReport();
+            if (BatteryTestActivity.this.cacheBatteryInfor()) {
+                BatteryTestActivity.this.saveOrUpdateReport();
             } else {
                 ToastUtils.showMessage("基本信息输入有误，请核对");
                 return;
@@ -658,7 +658,7 @@ public class BatteryTestActivity extends BaseActivity {
         });
         binding.ivGoBtdefect.setOnClickListener(view -> {
             Intent intent = new Intent(_this, BatteryDeviceDetectActivity.class);
-            startActivityForResult(intent, BATTERY_DEVICEDEFECT_ACTIVITY);
+            BatteryTestActivity.this.startActivityForResult(intent, BATTERY_DEVICEDEFECT_ACTIVITY);
         });
     }
 
@@ -677,7 +677,7 @@ public class BatteryTestActivity extends BaseActivity {
         mTipsBinding.btnCancel.setOnClickListener(view -> mSureDialog.dismiss());
 
         mTipsBinding.btnSure.setOnClickListener(view -> {
-            saveOrUpdateReport();
+            BatteryTestActivity.this.saveOrUpdateReport();
             mSureDialog.dismiss();
         });
 

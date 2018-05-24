@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.lib.WheelView;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.utils.DateCalcUtils;
 import com.cnksi.core.utils.DateUtils;
@@ -64,14 +65,14 @@ public class TimePickerUtils implements View.OnClickListener {
 
     private void initWidget(boolean isStartTime) {
         if (!initWidget) {
-            mBtnReback = (Button) resLayOutView.findViewById(R.id.btn_reback);
-            mBtnSure = (Button) resLayOutView.findViewById(R.id.btn_sure);
-            mTxtAddHout = (TextView) resLayOutView.findViewById(R.id.txt_add_hour);
-            mTxtMinusHour = (TextView) resLayOutView.findViewById(R.id.txt_minus_hour);
-            mTxtAddMinute = (TextView) resLayOutView.findViewById(R.id.txt_add_minute);
-            mTxtMinusMinute = (TextView) resLayOutView.findViewById(R.id.txt_minus_minute);
-            mTxtTitle = (TextView) resLayOutView.findViewById(R.id.tv_dialog_title);
-            mTxtSumTime = (TextView) resLayOutView.findViewById(R.id.txt_sum_time);
+            mBtnReback = resLayOutView.findViewById(R.id.btn_reback);
+            mBtnSure = resLayOutView.findViewById(R.id.btn_sure);
+            mTxtAddHout = resLayOutView.findViewById(R.id.txt_add_hour);
+            mTxtMinusHour = resLayOutView.findViewById(R.id.txt_minus_hour);
+            mTxtAddMinute = resLayOutView.findViewById(R.id.txt_add_minute);
+            mTxtMinusMinute = resLayOutView.findViewById(R.id.txt_minus_minute);
+            mTxtTitle = resLayOutView.findViewById(R.id.tv_dialog_title);
+            mTxtSumTime = resLayOutView.findViewById(R.id.txt_sum_time);
             mBtnReback.setOnClickListener(this);
             mBtnSure.setOnClickListener(this);
             mTxtAddHout.setOnClickListener(this);
@@ -130,7 +131,7 @@ public class TimePickerUtils implements View.OnClickListener {
         endDate.set(2099, 12, 31);
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerView.Builder(mActivity, (date, v) -> {//选中事件回调
-            dateString = getTime(date);
+            dateString = TimePickerUtils.this.getTime(date);
         }).setTextColorCenter(Color.BLACK)
                 .isDialog(true)
                 .isCyclic(true)

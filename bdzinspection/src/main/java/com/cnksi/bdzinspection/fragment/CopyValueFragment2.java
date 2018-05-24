@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyDeviceAdapter;
+import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.databinding.XsFragmentGridlistBinding;
@@ -108,9 +109,9 @@ public class CopyValueFragment2 extends BaseFragment {
         }
         data.clear();
         ExecutorManager.executeTask(() -> {
-            searchCurrentDeviceType();
+            CopyValueFragment2.this.searchCurrentDeviceType();
             List<DbModel> deviceList = CopyItemService.getInstance().getCopyDeviceList(currentBdzId,
-                    currentFunctionModel, currentInspectionType,specialMenu.deviceWay,currentReportId);
+                    currentFunctionModel, currentInspectionType, specialMenu.deviceWay, currentReportId);
             if (null != deviceList && !deviceList.isEmpty()) {
                 data.addAll(deviceList);
                 originModel.addAll(deviceList);

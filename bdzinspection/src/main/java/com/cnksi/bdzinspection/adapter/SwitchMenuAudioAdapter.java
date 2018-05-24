@@ -2,6 +2,7 @@ package com.cnksi.bdzinspection.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;

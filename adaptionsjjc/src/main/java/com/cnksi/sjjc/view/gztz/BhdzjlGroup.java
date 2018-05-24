@@ -45,15 +45,11 @@ public class BhdzjlGroup {
         } else {
             binding.sbmc.setVisible(View.GONE, View.VISIBLE);
         }
-        binding.sbmc.setSelectOnClickListener(view -> listener.onSelectListener(this, false));
-        binding.bhsbmc.setSelectOnClickListener(v -> listener.onSelectListener(this, true));
-        binding.sbmc.getAddButton().setOnClickListener(view -> {
-            activity.addOtherDevice();
-        });
+        binding.sbmc.setSelectOnClickListener(view -> listener.onSelectListener(BhdzjlGroup.this, false));
+        binding.bhsbmc.setSelectOnClickListener(v -> listener.onSelectListener(BhdzjlGroup.this, true));
+        binding.sbmc.getAddButton().setOnClickListener(view -> activity.addOtherDevice());
 
-        binding.sbmc.getDeleteButton().setOnClickListener(view -> {
-            activity.removeView(this);
-        });
+        binding.sbmc.getDeleteButton().setOnClickListener(view -> activity.removeView(BhdzjlGroup.this));
         binding.bhqdsj.tvValue.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {

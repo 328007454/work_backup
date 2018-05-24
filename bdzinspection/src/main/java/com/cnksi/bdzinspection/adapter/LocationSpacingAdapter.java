@@ -3,6 +3,7 @@ package com.cnksi.bdzinspection.adapter;
 import android.content.Context;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
@@ -41,8 +42,8 @@ public class LocationSpacingAdapter extends BaseAdapter<Spacing> {
 
 		holder.getRootView().setOnClickListener(v -> {
             if (null != itemClickListener) {
-				itemClickListener.onItemClick(v, item, position);
-			}
+                itemClickListener.onItemClick(v, item, position);
+            }
         });
 
 	}

@@ -2,6 +2,7 @@ package com.cnksi.sjjc.activity;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -231,7 +232,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         mTitleBinding.rootContainer.addView(view);
         mTitleBinding.btnBack.setOnClickListener(v -> {
             KeyBoardUtils.closeKeybord(_this);
-            onBackPressed();
+            BaseActivity.this.onBackPressed();
         });
 
     }
@@ -602,7 +603,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
                         e.printStackTrace();
                     }
                     if (null != remoteSjjcAppVersion) {
-                        checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
+                        BaseActivity.this.checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
                                 Config.PCODE, false, TextUtils.isEmpty(remoteSjjcAppVersion.description) ? "修复bug,优化流畅度" : remoteSjjcAppVersion.description);
                     }
                 } catch (Exception e) {
@@ -628,8 +629,8 @@ public abstract class BaseActivity extends BaseCoreActivity {
                     DatabaseUtils.copyDatabase(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME), "", new File(innerDateBaseFolder + Config.ENCRYPT_DATABASE_NAME), "com.cnksi");
                     FileUtils.deleteFile(Config.DATABASE_FOLDER + Config.DATABASE_NAME);
                 }
-                runOnUiThread(() -> {
-                    checkUpdate();
+                BaseActivity.this.runOnUiThread(() -> {
+                    BaseActivity.this.checkUpdate();
                     KSyncConfig.getInstance().setDept_id("-1");
                 });
             } catch (Exception e) {

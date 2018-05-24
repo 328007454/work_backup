@@ -88,28 +88,20 @@ public class DrawCircleImageActivity extends BaseActivity {
     }
 
     public void initOnClick() {
-        mTitleBinding.btnBack.setOnClickListener(view -> {
-            onBackPressed();
-        });
-        binding.btnSaveMark.setOnClickListener(view -> {
-            saveMarkAndExit();
-        });
-        binding.btnAddMark.setOnClickListener(view -> {
-            PicturePaintView.saveMark();
-        });
-        binding.btnClearMark.setOnClickListener(view -> {
-            CustomerDialog.showSelectDialog(_this, "确认要清除所有标记吗?", new DialogClickListener() {
-                @Override
-                public void confirm() {
-                    initBitmap();
-                }
+        mTitleBinding.btnBack.setOnClickListener(view -> DrawCircleImageActivity.this.onBackPressed());
+        binding.btnSaveMark.setOnClickListener(view -> DrawCircleImageActivity.this.saveMarkAndExit());
+        binding.btnAddMark.setOnClickListener(view -> PicturePaintView.saveMark());
+        binding.btnClearMark.setOnClickListener(view -> CustomerDialog.showSelectDialog(_this, "确认要清除所有标记吗?", new DialogClickListener() {
+            @Override
+            public void confirm() {
+                initBitmap();
+            }
 
-                @Override
-                public void cancel() {
+            @Override
+            public void cancel() {
 
-                }
-            });
-        });
+            }
+        }));
     }
 
     @Override
@@ -141,7 +133,7 @@ public class DrawCircleImageActivity extends BaseActivity {
         CustomerDialog.showProgress(_this, "正在保存图片...");
         ExecutorManager.executeTaskSerially(() -> {
             PicturePaintView.saveMark();
-            if (saveEditPicture(binding.rlCirclePicture, currentImagePath)) {
+            if (DrawCircleImageActivity.this.saveEditPicture(binding.rlCirclePicture, currentImagePath)) {
                 mPicturePaintView.setBitmapNull();
                 mHandler.sendEmptyMessage(LOAD_DATA);
             }

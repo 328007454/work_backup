@@ -122,18 +122,15 @@ public class MaintenanceFragment extends BaseCoreFragment {
         public void run() {
 
             final List<Task> taskList = TaskService.getInstance().findTaskListByLimit(3, inspectionType.name());
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    LinearLayout layout = InspectionType.maintenance == inspectionType ? maintenanceBinding.llMaintenance : maintenanceBinding.llSwitchover;
-                    ListView listView = InspectionType.maintenance == inspectionType ? maintenanceBinding.listMaintenance : maintenanceBinding.listSwitchover;
-                    if (taskList == null || taskList.size() == 0) {
-                        layout.setVisibility(View.GONE);
-                    } else {
-                        layout.setVisibility(View.VISIBLE);
-                        listView.setAdapter(new TaskItemAdapter(taskList));
-                        // TODO: 2017/3/23
-                    }
+            mHandler.post(() -> {
+                LinearLayout layout = InspectionType.maintenance == inspectionType ? maintenanceBinding.llMaintenance : maintenanceBinding.llSwitchover;
+                ListView listView = InspectionType.maintenance == inspectionType ? maintenanceBinding.listMaintenance : maintenanceBinding.listSwitchover;
+                if (taskList == null || taskList.size() == 0) {
+                    layout.setVisibility(View.GONE);
+                } else {
+                    layout.setVisibility(View.VISIBLE);
+                    listView.setAdapter(new TaskItemAdapter(taskList));
+                    // TODO: 2017/3/23
                 }
             });
         }
@@ -162,7 +159,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
             binding.tvStatus.setText(isDone ? "已完成" : "未完成");
             binding.tvStatus.setTextColor(isDone ? colorDone : colorUndo);
             binding.ivStatus.setBackground(isDone ? drawableDone : drawableUndo);
-            binding.getRoot().setOnClickListener(v -> startTask(item));
+            binding.getRoot().setOnClickListener(v -> TaskItemAdapter.this.startTask(item));
         }
 
         private void startTask(Task task) {

@@ -128,12 +128,12 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
 
     public void initClick() {
         binding.includeTitle.ticketTxtAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(this, TicketDateWorkActivity.class);
-            startActivity(intent);
+            Intent intent = new Intent(TicketDateHomeActivity.this, TicketDateWorkActivity.class);
+            TicketDateHomeActivity.this.startActivity(intent);
 
         });
 
-        binding.includeTitle.ticketBack.setOnClickListener(v -> onBackPressed());
+        binding.includeTitle.ticketBack.setOnClickListener(v -> TicketDateHomeActivity.this.onBackPressed());
     }
 
 }

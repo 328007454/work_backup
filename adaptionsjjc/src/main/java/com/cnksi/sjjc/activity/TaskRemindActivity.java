@@ -95,12 +95,7 @@ public class TaskRemindActivity extends BaseActivity {
         for (int i = 0; i < titleArray.length; i++) {
             TaskRemindFragment mTaskFragment = new TaskRemindFragment();
 //            mTaskFragment.setOnFragmentEventListener(this);
-            mTaskFragment.setOnFragmentEventListener(new OnFragmentEventListener() {
-                @Override
-                public void updateTaskStatused() {
-                    updateTaskStatus();
-                }
-            });
+            mTaskFragment.setOnFragmentEventListener(() -> updateTaskStatus());
             Bundle args = new Bundle();
             args.putString(Config.CURRENT_FUNCTION_MODEL, functionModelArray[i]);
             args.putString(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
@@ -132,11 +127,11 @@ public class TaskRemindActivity extends BaseActivity {
     }
 
     public void iniOnClick(){
-        mTitleBinding.btnBack.setOnClickListener((view) -> this.finish());
-        mRemindBinding.addTask.setOnClickListener((v) -> {
-            Intent intent = new Intent(this, AddTaskActivity.class);
+        mTitleBinding.btnBack.setOnClickListener(view -> TaskRemindActivity.this.finish());
+        mRemindBinding.addTask.setOnClickListener(v -> {
+            Intent intent = new Intent(TaskRemindActivity.this, AddTaskActivity.class);
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
-            startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
+            TaskRemindActivity.this.startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
         });
 
     }

@@ -365,8 +365,8 @@ public class CopyItemService extends BaseService<CopyItem> {
             if (!objects.isEmpty()) {
                 try {
                     for (CopyItem object : objects) {
-                            saveOrUpdate(object);
-                            logicDelete(CopyResult.class, WhereBuilder.b(CopyResult.ITEM_ID, "=", ( object).id).and(CopyResult.REPORTID, "=", currentReportId));
+                        CopyItemService.this.saveOrUpdate(object);
+                        CopyItemService.this.logicDelete(CopyResult.class, WhereBuilder.b(CopyResult.ITEM_ID, "=", (object).id).and(CopyResult.REPORTID, "=", currentReportId));
 
                     }
                 } catch (DbException e) {

@@ -80,9 +80,9 @@ public class OperateTicketReportActivity extends BaseActivity {
         binding.btnConfirm.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
             intent.putExtra(Config.IS_FROM_BATTERY, isFromWorkPage);
-            startActivity(intent);
+            OperateTicketReportActivity.this.startActivity(intent);
             ScreenManager.getScreenManager().popAllActivityExceptOne(TaskRemindActivity.class);
-            this.finish();
+            OperateTicketReportActivity.this.finish();
         });
     }
 	

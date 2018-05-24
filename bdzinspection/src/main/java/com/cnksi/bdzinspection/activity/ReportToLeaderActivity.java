@@ -10,6 +10,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.telephony.SmsManager;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
@@ -84,16 +86,14 @@ public class ReportToLeaderActivity extends BaseActivity {
     }
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            this.finish();
-        });
-        binding.btnCancel.setOnClickListener(view -> finish());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> ReportToLeaderActivity.this.finish());
+        binding.btnCancel.setOnClickListener(view -> ReportToLeaderActivity.this.finish());
 
         binding.btnReport.setOnClickListener(view -> {
             PlaySound.getIntance(currentActivity).play(R.raw.send);
             List<String> phoneNumberList = new ArrayList<String>();
             phoneNumberList.add("13981308155");
-            sendMessage(phoneNumberList, binding.etReportContent.getText().toString().trim());
+            ReportToLeaderActivity.this.sendMessage(phoneNumberList, binding.etReportContent.getText().toString().trim());
         });
 
         binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {

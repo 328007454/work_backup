@@ -123,22 +123,16 @@ public class PermissionUtil {
         permissionBinding.tvDialogContent.setText("权限不足");
         permissionBinding.btnCancel.setText("退出程序");
         permissionBinding.btnSure.setText("重新授权");
-        permissionBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
-                    permissionDialog.dismiss();
-                    activity.requestPermissions(deniedPermissions, REQUEST_PERMISSIONS_CODE);
-                }
+        permissionBinding.btnSure.setOnClickListener(v -> {
+            if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
+                permissionDialog.dismiss();
+                activity.requestPermissions(deniedPermissions, REQUEST_PERMISSIONS_CODE);
             }
         });
-        permissionBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        permissionBinding.btnCancel.setOnClickListener(v -> {
 //                退出系统
-                permissionDialog.dismiss();
-                CustomApplication.getInstance().exitApplication();
-            }
+            permissionDialog.dismiss();
+            CustomApplication.getInstance().exitApplication();
         });
         permissionDialog.show();
         permissionDialog.setCanceledOnTouchOutside(false);

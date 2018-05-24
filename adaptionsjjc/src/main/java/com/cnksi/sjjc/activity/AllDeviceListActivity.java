@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
@@ -34,8 +35,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-
-;
 
 /**
  * @author nothing 2017/12/11
@@ -198,7 +197,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setQueryHint("输入设备名称");
-        SearchView.SearchAutoComplete autoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
+        SearchView.SearchAutoComplete autoComplete = searchView.findViewById(R.id.search_src_text);
         autoComplete.setHintTextColor(getResources().getColor(android.R.color.white));
         autoComplete.setTextColor(getResources().getColor(android.R.color.white));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

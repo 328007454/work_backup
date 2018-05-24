@@ -2,6 +2,7 @@ package com.cnksi.bdzinspection.ywyth;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -10,9 +11,11 @@ import android.text.InputType;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -131,7 +134,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                     mCurrentBatteryReport = new BatteryReport(currentReportId);
                 }
                 BaseService.getInstance(BatteryReport.class).saveOrUpdate(mCurrentBatteryReport);
-                initBatteryDetails();
+                YWBatteryActivity.this.initBatteryDetails();
                 mHandler.sendEmptyMessage(LOAD_DATA);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -204,16 +207,16 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
 
 
     public void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> onBackPressed());
-        binding.btnFinishInspection.setOnClickListener(view -> onBackPressed());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> YWBatteryActivity.this.onBackPressed());
+        binding.btnFinishInspection.setOnClickListener(view -> YWBatteryActivity.this.onBackPressed());
         binding.gvContainer.setOnItemClickListener((parent, view, position, id) -> {
             mCurrentBatteryDetails = (BatteryDetails) parent.getItemAtPosition(position);
             if (taskStatus) {
                 if (mCurrentBatteryDetails.hasCopyed) {
-                    showBatteryDialog(mCurrentBatteryDetails);
+                    YWBatteryActivity.this.showBatteryDialog(mCurrentBatteryDetails);
                 }
             } else {
-                showBatteryDialog(mCurrentBatteryDetails);
+                YWBatteryActivity.this.showBatteryDialog(mCurrentBatteryDetails);
             }
         });
     }
@@ -256,20 +259,16 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             }
         });
 
-        dialogBinding.btnConfirm.setOnClickListener(view -> saveBatteryCopyValue(dialogBinding.etVoltage, dialogBinding.etResistance, mBatteryDetails));
-        dialogBinding.btnAddNewDefect.setOnClickListener(view -> jumpToDefect(mBatteryDetails));
-        dialogBinding.rlAddNewDefect.setOnClickListener(view -> jumpToDefect(mBatteryDetails));
+        dialogBinding.btnConfirm.setOnClickListener(view -> YWBatteryActivity.this.saveBatteryCopyValue(dialogBinding.etVoltage, dialogBinding.etResistance, mBatteryDetails));
+        dialogBinding.btnAddNewDefect.setOnClickListener(view -> YWBatteryActivity.this.jumpToDefect(mBatteryDetails));
+        dialogBinding.rlAddNewDefect.setOnClickListener(view -> YWBatteryActivity.this.jumpToDefect(mBatteryDetails));
 
-        dialogBinding.etVoltage.setOnFocusChangeListener((view, b) -> {
-            showCustomerKeyBoard(dialogBinding.etVoltage, minVoltage, maxVoltage);
-        });
+        dialogBinding.etVoltage.setOnFocusChangeListener((view, b) -> YWBatteryActivity.this.showCustomerKeyBoard(dialogBinding.etVoltage, minVoltage, maxVoltage));
 
-        dialogBinding.etResistance.setOnFocusChangeListener((view, b) -> {
-            showCustomerKeyBoard(dialogBinding.etResistance, minResistance, maxResistance);
-        });
+        dialogBinding.etResistance.setOnFocusChangeListener((view, b) -> YWBatteryActivity.this.showCustomerKeyBoard(dialogBinding.etResistance, minResistance, maxResistance));
 
         dialogBinding.etResistance.setOnTouchListener((view, motionEvent) -> {
-            showCustomerKeyBoard(dialogBinding.etResistance, minResistance, maxResistance);
+            YWBatteryActivity.this.showCustomerKeyBoard(dialogBinding.etResistance, minResistance, maxResistance);
             return false;
         });
 
@@ -393,17 +392,9 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
      */
     private void judgementHasCopyData(BatteryDetails mBatteryDetails) {
         if (isCopyInternalResistance) {
-            if (!TextUtils.isEmpty(mBatteryDetails.resistance) && !TextUtils.isEmpty(mBatteryDetails.voltage)) {
-                mBatteryDetails.hasCopyed = true;
-            } else {
-                mBatteryDetails.hasCopyed = false;
-            }
+            mBatteryDetails.hasCopyed = !TextUtils.isEmpty(mBatteryDetails.resistance) && !TextUtils.isEmpty(mBatteryDetails.voltage);
         } else {
-            if (!TextUtils.isEmpty(mBatteryDetails.voltage)) {
-                mBatteryDetails.hasCopyed = true;
-            } else {
-                mBatteryDetails.hasCopyed = false;
-            }
+            mBatteryDetails.hasCopyed = !TextUtils.isEmpty(mBatteryDetails.voltage);
         }
     }
 
@@ -428,14 +419,12 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         }
         
         tipsBinding.btnCancel.setOnClickListener(view -> {
-            saveDefect(defectLevel, defectContent);
+            YWBatteryActivity.this.saveDefect(defectLevel, defectContent);
 
             mHandler.sendEmptyMessage(UPDATE_BATTERY_STATUS_REQUEST_CODE);
-            TTSUtils.getInstance().startSpeaking(getString(R.string.xs_save_defect_success_str));
+            TTSUtils.getInstance().startSpeaking(YWBatteryActivity.this.getString(R.string.xs_save_defect_success_str));
         });
-        tipsBinding.btnCancel.setOnClickListener(view -> {
-            tipsDialog.dismiss();
-        });
+        tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
     }
 
   
@@ -471,14 +460,11 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
      * 查询电池记录缺陷的状态 根据当前选择的电池组 和电池编号查询 电池的缺陷状态
      */
     private void queryBatteryStatus() {
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                DbModel mBatteryDbModel = DefectRecordService.getInstance().queryMaxDefectLevelByBatteryId(mCurrentBatteryDetails.battery_number, currentBdzId, currentReportId);
-                mCurrentBatteryDetails.defectLevel = mBatteryDbModel == null ? "" : mBatteryDbModel.getString(DefectRecord.DEFECTLEVEL);
-                isDefectChanged = true;
-                mHandler.sendEmptyMessage(LOAD_DATA);
-            }
+        ExecutorManager.executeTask(() -> {
+            DbModel mBatteryDbModel = DefectRecordService.getInstance().queryMaxDefectLevelByBatteryId(mCurrentBatteryDetails.battery_number, currentBdzId, currentReportId);
+            mCurrentBatteryDetails.defectLevel = mBatteryDbModel == null ? "" : mBatteryDbModel.getString(DefectRecord.DEFECTLEVEL);
+            isDefectChanged = true;
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 

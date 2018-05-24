@@ -104,8 +104,8 @@ public class DialogUtils {
         View view = LayoutInflater.from(context).inflate(R.layout.tips_dialog, null, false);
         ((TextView) view.findViewById(R.id.tv_dialog_title)).setText(title);
         ((TextView) view.findViewById(R.id.tv_text)).setText(text);
-        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
-        Button btnSure = (Button) view.findViewById(R.id.btn_confirm);
+        Button btnCancel = view.findViewById(R.id.btn_cancel);
+        Button btnSure = view.findViewById(R.id.btn_confirm);
         btnCancel.setText("取消");
         btnSure.setText("确定");
         if (btnText != null) {
@@ -196,11 +196,11 @@ public class DialogUtils {
         tipsBinding.btnSure.setText(TextUtils.isEmpty(sureText) ? mActivity.getString(R.string.yes_str) : sureText);
         tipsBinding.btnCancel.setText(TextUtils.isEmpty(cancelText) ? mActivity.getString(R.string.no_str) : cancelText);
         dialog.show();
-        tipsBinding.btnCancel.setOnClickListener((v) -> {
+        tipsBinding.btnCancel.setOnClickListener(v -> {
             dialog.dismiss();
             dialog = null;
         });
-        tipsBinding.btnSure.setOnClickListener((v) -> {
+        tipsBinding.btnSure.setOnClickListener(v -> {
             if (mOnclickListener != null) {
                 mOnclickListener.onClick(v);
             }
@@ -243,7 +243,7 @@ public class DialogUtils {
 
                 }
             }, false);
-            LinearLayout mLLDateContainer = (LinearLayout) view.findViewById(R.id.ll_date_container);
+            LinearLayout mLLDateContainer = view.findViewById(R.id.ll_date_container);
             mLLDateContainer.addView(timepickerview);
 
             view.findViewById(R.id.confirm).setOnClickListener(v -> {
@@ -284,15 +284,15 @@ public class DialogUtils {
     public static Dialog showTimePickerDialog(Activity context, final boolean hasMills, final DialogItemClickListener dialogClickListener) {
         if (context != null && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN || !context.isDestroyed())) {
             View container = LayoutInflater.from(context).inflate(R.layout.date_picker_layout_dialog, null, false);
-            LinearLayout mLLDateContainer = (LinearLayout) container.findViewById(R.id.ll_date_container);
+            LinearLayout mLLDateContainer = container.findViewById(R.id.ll_date_container);
             View view = LayoutInflater.from(context).inflate(R.layout.time_picker_layout, mLLDateContainer, true);
             Calendar calendar = Calendar.getInstance();
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int min = calendar.get(Calendar.MINUTE);
-            final WheelView wv_hours = (WheelView) view.findViewById(R.id.hour);
-            final WheelView wv_mins = (WheelView) view.findViewById(R.id.min);
-            final WheelView wv_second = (WheelView) view.findViewById(R.id.second);
-            final EditText wm = (EditText) view.findViewById(R.id.et_mills);
+            final WheelView wv_hours = view.findViewById(R.id.hour);
+            final WheelView wv_mins = view.findViewById(R.id.min);
+            final WheelView wv_second = view.findViewById(R.id.second);
+            final EditText wm = view.findViewById(R.id.et_mills);
             if (!hasMills) {
                 view.findViewById(R.id.ll_mills).setVisibility(View.GONE);
             }

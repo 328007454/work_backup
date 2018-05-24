@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityDrawCircleBinding;
@@ -55,47 +56,38 @@ public class DrawCircleImageActivity extends BaseActivity {
      */
     private void initBitmap() {
         CustomerDialog.showProgress(currentActivity, "正在初始化图片...");
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
+        ExecutorManager.executeTask(() -> {
 
-                int screenWidth = ScreenUtils.getScreenWidth(currentActivity);
-                int screenHeight = ScreenUtils.getScreenHeight(currentActivity);
-                // 首先压缩图片
-                File file = new File(currentImagePath);
-                if (file.exists()) {
-                    BitmapUtil.compressImage(file.getAbsolutePath(), screenWidth, screenHeight);
-                }
-                Bitmap bitmapTemp = BitmapUtil.getImageThumbnail(BitmapUtil.postRotateBitmap(currentImagePath, true), screenWidth, screenHeight);
-                if (bitmapTemp != null) {
-                    mPicturePaintView = new PicturePaintView(currentActivity, bitmapTemp);
-                    mHandler.sendEmptyMessage(SAVE_DATA);
-                }
+            int screenWidth = ScreenUtils.getScreenWidth(currentActivity);
+            int screenHeight = ScreenUtils.getScreenHeight(currentActivity);
+            // 首先压缩图片
+            File file = new File(currentImagePath);
+            if (file.exists()) {
+                BitmapUtil.compressImage(file.getAbsolutePath(), screenWidth, screenHeight);
+            }
+            Bitmap bitmapTemp = BitmapUtil.getImageThumbnail(BitmapUtil.postRotateBitmap(currentImagePath, true), screenWidth, screenHeight);
+            if (bitmapTemp != null) {
+                mPicturePaintView = new PicturePaintView(currentActivity, bitmapTemp);
+                mHandler.sendEmptyMessage(SAVE_DATA);
             }
         });
     }
     private void initOnClick() {
 
-        binding.btnSaveMark.setOnClickListener(view -> {
-            saveMarkAndExit();
-        });
-        binding.btnAddMark.setOnClickListener(view -> {
-            PicturePaintView.saveMark();
-        });
-        binding.btnClearMark.setOnClickListener(view -> {
-            CustomerDialog.showSelectDialog(currentActivity, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {
+        binding.btnSaveMark.setOnClickListener(view -> DrawCircleImageActivity.this.saveMarkAndExit());
+        binding.btnAddMark.setOnClickListener(view -> PicturePaintView.saveMark());
+        binding.btnClearMark.setOnClickListener(view -> CustomerDialog.showSelectDialog(currentActivity, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {
 
-                @Override
-                public void confirm() {
-                    initBitmap();
-                }
+            @Override
+            public void confirm() {
+                initBitmap();
+            }
 
-                @Override
-                public void cancel() {
+            @Override
+            public void cancel() {
 
-                }
-            });
-        });
+            }
+        }));
     }
 
 

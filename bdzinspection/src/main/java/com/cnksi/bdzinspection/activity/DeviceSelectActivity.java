@@ -126,9 +126,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
 
     private void initOnClick() {
 
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> DeviceSelectActivity.this.onBackPressed());
 
         binding.btnStartInspection.setOnClickListener(view -> {
             List<DbModel> selectDeviceList = new ArrayList<>();
@@ -139,10 +137,10 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
                 }
             }
             if (selectDeviceList.isEmpty()) {
-                ToastUtils.showMessage( "请选择设备");
+                ToastUtils.showMessage("请选择设备");
                 return;
             }
-            showConfig(selectDeviceList);
+            DeviceSelectActivity.this.showConfig(selectDeviceList);
         });
 
     }
@@ -190,8 +188,8 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
                 }
                 sb.deleteCharAt(sb.length() - 1);
                 data.putExtra(RESULT_SELECT_DEVICE, sb.toString());
-                setResult(RESULT_OK, data);
-                finish();
+                DeviceSelectActivity.this.setResult(RESULT_OK, data);
+                DeviceSelectActivity.this.finish();
             }
         };
         viewHolder.getView(R.id.btn_cancel).setOnClickListener(dialogClick);

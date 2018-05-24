@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -154,12 +155,7 @@ public class WeatherView1 extends LinearLayout {
         middleLayoutParam.gravity = Gravity.CENTER_VERTICAL;
         this.addView(mRecyclerView, middleLayoutParam);
         this.addView(bingding.getRoot());
-        bingding.arrow.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showWeatherDialog();
-            }
-        });
+        bingding.arrow.setOnClickListener(v -> showWeatherDialog());
     }
 
     class WeatherAdapter extends BaseRecyclerAdapter<String> {
@@ -180,20 +176,17 @@ public class WeatherView1 extends LinearLayout {
             }else{
                 radioButton.setChecked(false);
             }
-            radioButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (currentWeather.equals(item)) {
-                        currentWeather = "";
-                    } else {
-                        currentWeather = item;
-                    }
-                    adapter1.notifyDataSetChanged();
-                    if (null != adapter2) {
-                        adapter2.notifyDataSetChanged();
-                    }
-                    mRecyclerView.scrollToPosition(position);
+            radioButton.setOnClickListener(v -> {
+                if (currentWeather.equals(item)) {
+                    currentWeather = "";
+                } else {
+                    currentWeather = item;
                 }
+                adapter1.notifyDataSetChanged();
+                if (null != adapter2) {
+                    adapter2.notifyDataSetChanged();
+                }
+                mRecyclerView.scrollToPosition(position);
             });
         }
     }
@@ -241,7 +234,7 @@ public class WeatherView1 extends LinearLayout {
                             CalcUtils.convertFloatToInt(DisplayUtils.getInstance().getWidth() * 0.9f),
                             CalcUtils.convertFloatToInt(DisplayUtils.getInstance().getHeightScale() * 800)));
             listView.setOnItemClickListener((adapterView, view, position, l) -> {
-                TextView textView = (TextView) view.findViewById(R.id.tv_weather);
+                TextView textView = view.findViewById(R.id.tv_weather);
                 String item = textView.getText().toString();
                 if (currentWeather.equals(item)) {
                     currentWeather = "";

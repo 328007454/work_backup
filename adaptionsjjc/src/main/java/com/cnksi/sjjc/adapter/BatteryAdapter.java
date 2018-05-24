@@ -74,12 +74,9 @@ public class BatteryAdapter extends BaseAdapter<String> {
                 batteryName.setTextColor(Color.WHITE);
             }
         }
-        holder.getView(R.id.rl_battery_container).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (null != itemClickListener) {
-                    itemClickListener.itemClick(view, item, position);
-                }
+        holder.getView(R.id.rl_battery_container).setOnClickListener(view -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemClick(view, item, position);
             }
         });
 

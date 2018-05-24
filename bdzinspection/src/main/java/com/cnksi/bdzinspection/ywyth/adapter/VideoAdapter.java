@@ -42,7 +42,7 @@ public class VideoAdapter extends SimpleBaseAdapter {
 		} else {
 		adapterBinding = DataBindingUtil.findBinding(convertView);
 		}
-		final String path = Config.VIDEO_FOLDER + (String) getItem(position);
+		final String path = Config.VIDEO_FOLDER + getItem(position);
 		adapterBinding.img.setImageBitmap(BitmapUtil.getVideoThumbnail(path, 300, 400));
 		adapterBinding.tv.setText(MediaRecorderUtils.getInstance().getVedioDurationString(mContext, path));
 		convertView.setOnClickListener(v -> {

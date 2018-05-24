@@ -131,21 +131,12 @@ public class CopyViewUtil {
                     }
 
                     final int position = index;
-                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            itemClickListener.itemClick(v, childItem, position);
-                        }
-                    });
+                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.itemClick(v, childItem, position));
                     //抄录项如果看不清长按弹出对话框
-                    layoutRoot.setOnLongClickListener(new OnLongClickListener() {
-
-                        @Override
-                        public boolean onLongClick(View v) {
-                            CopyResult copyResult = copyResultMap.get(childItem.id);
-                            itemLongClickListener.onItemLongClick(v, copyResult, position, childItem);
-                            return true;
-                        }
+                    layoutRoot.setOnLongClickListener(v -> {
+                        CopyResult copyResult = copyResultMap.get(childItem.id);
+                        itemLongClickListener.onItemLongClick(v, copyResult, position, childItem);
+                        return true;
                     });
                     parentLayout.addView(childHolder.getRootView());
                     index++;

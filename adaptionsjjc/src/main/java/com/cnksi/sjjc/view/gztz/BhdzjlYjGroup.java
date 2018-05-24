@@ -31,12 +31,8 @@ public class BhdzjlYjGroup {
             binding.add.setVisibility(View.GONE);
             binding.delete.setVisibility(View.VISIBLE);
         }
-        binding.add.setOnClickListener(view -> {
-            group.addOtherYJLX();
-        });
-        binding.delete.setOnClickListener(view -> {
-            group.removeView(this);
-        });
+        binding.add.setOnClickListener(view -> group.addOtherYJLX());
+        binding.delete.setOnClickListener(view -> group.removeView(BhdzjlYjGroup.this));
         binding.bhdzsj.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {

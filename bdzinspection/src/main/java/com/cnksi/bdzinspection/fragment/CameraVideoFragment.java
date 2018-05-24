@@ -62,7 +62,7 @@ public class CameraVideoFragment extends Fragment implements Callback {
 
 	@Override
 	public void onViewCreated(final View view, Bundle savedInstanceState) {
-		mSurfaceView = (SurfaceView) view.findViewById(R.id.sv_video);
+		mSurfaceView = view.findViewById(R.id.sv_video);
 	}
 
 	@Override

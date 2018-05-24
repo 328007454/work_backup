@@ -19,6 +19,8 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityCopy2Binding;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
+import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
+import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
@@ -95,22 +97,20 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         copyViewUtil.setKeyBordListener(this);
         // 抄录项长按弹出看不清输入对话框
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
-            copyDialogBinding = XsActivityCopyDialogBinding.inflate(getLayoutInflater());
+            copyDialogBinding = XsActivityCopyDialogBinding.inflate(CopyValueActivity2.this.getLayoutInflater());
             dialog = DialogUtils.createDialog(currentActivity, copyDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             copyDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             // holder.etInput.setText("看不清");
 //            holder.remark = holder.etInput.getText().toString();
             //隐藏自定义键盘
-            hideKeyBord();
+            CopyValueActivity2.this.hideKeyBord();
             dialog.show();
             copyDialogBinding.btnCancel.setOnClickListener(view -> dialog.dismiss());
-            copyDialogBinding.btnSure.setOnClickListener(view -> {
-                saveRemarkData(result, copyDialogBinding.etCopyValues, item);
-            });
+            copyDialogBinding.btnSure.setOnClickListener(view -> CopyValueActivity2.this.saveRemarkData(result, copyDialogBinding.etCopyValues, item));
         });
         copyViewUtil.setItemClickListener((v, item, position) -> {
             // 显示历史曲线
-            hideKeyBord();
+            CopyValueActivity2.this.hideKeyBord();
             ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
         });
 
@@ -176,7 +176,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     private void initialData() {
         // 查询抄录标准
         ExecutorManager.executeTask(() -> {
-            searchDefect();
+            CopyValueActivity2.this.searchDefect();
             data = copyViewUtil.loadItem();
             mHandler.sendEmptyMessage(LOAD_COPY_FINSIH);
         });
@@ -219,12 +219,8 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     }
 
     private void initOnClick() {
-        binding.btnFinish.setOnClickListener(view -> {
-            save();
-        });
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            save();
-        });
+        binding.btnFinish.setOnClickListener(view -> CopyValueActivity2.this.save());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> CopyValueActivity2.this.save());
     }
 
     private void save() {
@@ -326,21 +322,13 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");
         tipsBinding.btnSure.setText("是");
-        tipsBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                defectDialog.dismiss();
-            }
-        });
-        tipsBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyBord();
-                defectDialog.dismiss();
-                Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
-                setIntentValue(intent);
-                startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
-            }
+        tipsBinding.btnCancel.setOnClickListener(v -> defectDialog.dismiss());
+        tipsBinding.btnSure.setOnClickListener(v -> {
+            hideKeyBord();
+            defectDialog.dismiss();
+            Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
+            setIntentValue(intent);
+            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
     }
 

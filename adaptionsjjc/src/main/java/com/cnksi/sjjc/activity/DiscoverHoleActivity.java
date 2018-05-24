@@ -134,12 +134,8 @@ public class DiscoverHoleActivity extends BaseActivity {
                 positionDialog.show();
             }
         });
-        binding.ivTakePic.setOnClickListener(view -> {
-            FunctionUtils.takePicture(this, imgName = FunctionUtil.getCurrentImageName(_this), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
-        });
-        binding.imgDiscoverholePic.setOnClickListener(view -> {
-            showImageDetails(_this, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(picList, Config.RESULT_PICTURES_FOLDER), true, false);
-        });
+        binding.ivTakePic.setOnClickListener(view -> FunctionUtils.takePicture(DiscoverHoleActivity.this, imgName = FunctionUtil.getCurrentImageName(_this), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST));
+        binding.imgDiscoverholePic.setOnClickListener(view -> DiscoverHoleActivity.this.showImageDetails(_this, 0, StringUtils.addStrToListItem(picList, Config.RESULT_PICTURES_FOLDER), true, false));
         binding.btnSave.setOnClickListener(view -> {
             String picAll = StringUtils.arrayListToString(picList);
             if (TextUtils.isEmpty(binding.tvDiscoverholePosition.getText().toString())) {
@@ -161,8 +157,8 @@ public class DiscoverHoleActivity extends BaseActivity {
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            setResult(RESULT_OK);
-            this.finish();
+            DiscoverHoleActivity.this.setResult(RESULT_OK);
+            DiscoverHoleActivity.this.finish();
         });
     }
 

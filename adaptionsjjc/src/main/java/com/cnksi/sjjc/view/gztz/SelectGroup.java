@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,10 +66,10 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         setOrientation(HORIZONTAL);
         setDrawUnderLine(true);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_select_group, this, true);
-        tvValue = (TextView) findViewById(R.id.tv_value);
-        tvName = (TextView) findViewById(R.id.tv_name);
-        addButton = (ImageButton) findViewById(R.id.add);
-        deleteButton = (ImageButton) findViewById(R.id.delete);
+        tvValue = findViewById(R.id.tv_value);
+        tvName = findViewById(R.id.tv_name);
+        addButton = findViewById(R.id.add);
+        deleteButton = findViewById(R.id.delete);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.SelectGroup);
         if (attributes != null) {
             title = attributes.getString(R.styleable.SelectGroup_title_str);
@@ -76,7 +77,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
             hint = attributes.getString(R.styleable.SelectGroup_select_hint_str);
             tvValue.setHint(StringUtilsExt.nullTo(hint, "请选择"));
         }
-        tvValue.setOnClickListener(v -> show());
+        tvValue.setOnClickListener(v -> SelectGroup.this.show());
     }
 
     public void setSelectOnClickListener(View.OnClickListener onClickListener) {
@@ -113,7 +114,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         };
         //设置adapter的listView点击事件
         lv.setOnItemClickListener((parent, view, position, id) -> {
-            setKeyValue((KeyValue) adapter.getItem(position));
+            SelectGroup.this.setKeyValue((KeyValue) adapter.getItem(position));
             if (listener != null) {
                 listener.onselect(keyValue);
             }

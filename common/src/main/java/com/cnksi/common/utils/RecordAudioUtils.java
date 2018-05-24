@@ -2,7 +2,9 @@ package com.cnksi.common.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 
@@ -26,13 +28,11 @@ public class RecordAudioUtils {
         CommonRecordAudioDialogBinding audioDialogBinding = CommonRecordAudioDialogBinding.inflate(LayoutInflater.from(context), viewGroup, false);
         int dialogWidth = ScreenUtils.getScreenWidth(context) / 2;
         mRecordAudioDialog = DialogUtils.createDialog(context, audioDialogBinding.getRoot(), dialogWidth, dialogWidth,true);
-        audioDialogBinding.getRoot().setOnClickListener(view -> {
-            mRecordAudioDialog.dismiss();
-        });
+        audioDialogBinding.getRoot().setOnClickListener(view -> mRecordAudioDialog.dismiss());
         mRecordAudioDialog.setOnDismissListener(dialog -> {
-                    MediaRecorderUtils.getInstance().stopRecordAudio();
-                    callBack.onSuccess();
-                }
+            MediaRecorderUtils.getInstance().stopRecordAudio();
+            callBack.onSuccess();
+        }
         );
     }
 

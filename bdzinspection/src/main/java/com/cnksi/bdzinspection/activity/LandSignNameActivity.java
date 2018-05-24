@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
@@ -60,13 +61,9 @@ public class LandSignNameActivity extends TitleActivity {
     }
 
     private void initOnClick() {
-        binding.btnQuxiao.setOnClickListener(view -> {
-            finish();
-        });
+        binding.btnQuxiao.setOnClickListener(view -> LandSignNameActivity.this.finish());
 
-        binding.btnReset.setOnClickListener(view -> {
-            binding.pathView.clear();
-        });
+        binding.btnReset.setOnClickListener(view -> binding.pathView.clear());
 
         binding.btnNext.setOnClickListener(view -> {
             try {
@@ -77,10 +74,10 @@ public class LandSignNameActivity extends TitleActivity {
                     binding.pathView.saveBitmapToPNG(new File(signNamePath));
                     // takePicture(currentActivity, signHeadPath);
                     view.setEnabled(false);
-                    setResult(RESULT_OK);
-                    finish();
+                    LandSignNameActivity.this.setResult(RESULT_OK);
+                    LandSignNameActivity.this.finish();
                 } else {
-                    Toast("您还没有签名，请先签名！");
+                    LandSignNameActivity.this.Toast("您还没有签名，请先签名！");
                 }
 
             } catch (IOException e) {

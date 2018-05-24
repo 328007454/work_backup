@@ -131,10 +131,10 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
     }
     
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> finish());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> OperateTaskListActivity.this.finish());
         binding.includeTitle.tvBatteryTestStep.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, DownloadOperationTickActivity.class);
-            startActivityForResult(intent, DOWNLOAD_OPERATION_CODE);
+            OperateTaskListActivity.this.startActivityForResult(intent, DOWNLOAD_OPERATION_CODE);
         });
 
     }

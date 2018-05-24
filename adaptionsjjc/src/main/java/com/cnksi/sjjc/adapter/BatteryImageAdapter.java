@@ -60,12 +60,9 @@ public class BatteryImageAdapter extends BaseAdapter<BatteryRecord> {
             holder.setVisable(R.id.img_battery, View.GONE);
         }
 //        ((ImageView) holder.getView(R.id.img_battery)).setImageURI(Uri.fromFile(new File(Config.RESULT_PICTURES_FOLDER + voltageList.get(0))));
-        holder.getView(R.id.img_battery).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null) {
-                    itemClickListener.itemClick(v, item, position);
-                }
+        holder.getView(R.id.img_battery).setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.itemClick(v, item, position);
             }
         });
     }

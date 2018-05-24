@@ -113,7 +113,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             }
             dbModel = SafeToolsInfoService.getInstance().findToolInfo(dept, toolId, bdzId);
             resultList = OperateToolResultService.getInstance().finAllResults(dept, toolId, bdzId);
-            runOnUiThread(() -> initialUI());
+            SafeToolsInformationActivity.this.runOnUiThread(() -> SafeToolsInformationActivity.this.initialUI());
         });
     }
 
@@ -151,23 +151,20 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
                     itemBinding.txtPicCount.setVisibility(View.VISIBLE);
                     itemBinding.txtPicCount.setText(toolPics.length + "");
                 }
-                itemBinding.ivReportPhoto.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int currentPosition = (int) v.getTag();
-                        OperateToolResult operateToolResult = resultList.get(currentPosition);
-                        String pics = operateToolResult.pic;
-                        if (TextUtils.isEmpty(pics)) {
-                            return;
+                itemBinding.ivReportPhoto.setOnClickListener(v -> {
+                    int currentPosition = (int) v.getTag();
+                    OperateToolResult operateToolResult = resultList.get(currentPosition);
+                    String pics1 = operateToolResult.pic;
+                    if (TextUtils.isEmpty(pics1)) {
+                        return;
+                    }
+                    String[] toolPic = pics1.split(Config.COMMA_SEPARATOR);
+                    if (null != toolPic && !TextUtils.isEmpty(toolPic[0]) && toolPic.length >= 1) {
+                        ArrayList<String> mImageUrlList = new ArrayList<>();
+                        for (int i = 0, count = toolPic.length; i < count; i++) {
+                            mImageUrlList.add(Config.BDZ_INSPECTION_FOLDER + toolPic[i]);
                         }
-                        String[] toolPic = pics.split(Config.COMMA_SEPARATOR);
-                        if (null != toolPic && !TextUtils.isEmpty(toolPic[0]) && toolPic.length >= 1) {
-                            ArrayList<String> mImageUrlList = new ArrayList<>();
-                            for (int i = 0, count = toolPic.length; i < count; i++) {
-                                mImageUrlList.add(Config.BDZ_INSPECTION_FOLDER + toolPic[i]);
-                            }
-                            showImageDetails(currentActivity, mImageUrlList, false);
-                        }
+                        showImageDetails(currentActivity, mImageUrlList, false);
                     }
                 });
             }
@@ -191,29 +188,26 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         stopBinding.btnCancel.setOnClickListener(v -> stopDialog.dismiss());
         stopBinding.btnSure.setOnClickListener(v -> {
             if (!stopBinding.rbUnqualify.isChecked() && !stopBinding.rbInperiod.isChecked()) {
-                ToastUtils.showMessage( "请选择工器具停用的原因");
+                ToastUtils.showMessage("请选择工器具停用的原因");
                 return;
             }
             String reason = stopBinding.etInputReason.getText().toString().trim();
             if (View.VISIBLE == stopBinding.etInputReason.getVisibility() && TextUtils.isEmpty(reason)) {
-                ToastUtils.showMessage( "请填写工器具不合格的原因");
+                ToastUtils.showMessage("请填写工器具不合格的原因");
                 return;
             }
             if (TextUtils.isEmpty(stopBinding.etInputStopperson.getText().toString())) {
-                ToastUtils.showMessage( "请输入操作人员姓名");
+                ToastUtils.showMessage("请输入操作人员姓名");
                 return;
             }
             stopDialog.dismiss();
-            saveStopData();
+            SafeToolsInformationActivity.this.saveStopData();
         });
-        stopBinding.ivArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PersonListUtils.getInsance().setHeight(stopBinding.getRoot().getHeight());
-                PersonListUtils.getInsance().setCurrentUser(stopBinding.etInputStopperson.getText().toString().trim());
-                stopClick = true;
-                PersonListUtils.getInsance().showPopWindow(stopBinding.ivArrow);
-            }
+        stopBinding.ivArrow.setOnClickListener(view -> {
+            PersonListUtils.getInsance().setHeight(stopBinding.getRoot().getHeight());
+            PersonListUtils.getInsance().setCurrentUser(stopBinding.etInputStopperson.getText().toString().trim());
+            stopClick = true;
+            PersonListUtils.getInsance().showPopWindow(stopBinding.ivArrow);
         });
     }
 
@@ -249,67 +243,42 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
         testDialog = DialogUtils.createDialog(currentActivity, testBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         testBinding.rgTest.setOnCheckedChangeListener(testChangeListener);
-        testBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                testDialog.dismiss();
+        testBinding.btnCancel.setOnClickListener(v -> testDialog.dismiss());
+        testBinding.btnSure.setOnClickListener(v -> {
+            if (!testBinding.rbNormal.isChecked() && !testBinding.rbUnnormal.isChecked()) {
+                ToastUtils.showMessage( "请选择试验结果");
+                return;
             }
+            testDialog.dismiss();
+            saveTestData();
         });
-        testBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!testBinding.rbNormal.isChecked() && !testBinding.rbUnnormal.isChecked()) {
-                    ToastUtils.showMessage( "请选择试验结果");
-                    return;
+        testBinding.ibtnSelectInspectionDate.setOnClickListener(v -> CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> {
+            String productTime = dbModel.getString("produce_time");
+            if (!TextUtils.isEmpty(productTime) && !DateUtils.compareDate(result, productTime, DateUtils.yyyy_MM_dd)) {
+                ToastUtils.showMessage("试验时间必须大于出厂时间");
+                return;
+            }
+            testBinding.txtTestTime.setText(result);
+        }));
+        testBinding.ibtnTakePicture.setOnClickListener(v -> {
+            currentImageName = toolPicPath + FunctionUtil.getCurrentImageName();
+            FunctionUtil.takePicture(currentActivity, currentImageName, Config.BDZ_INSPECTION_FOLDER);
+        });
+        testBinding.ivReportPhoto.setOnClickListener(v -> {
+            if (!reportPicList.isEmpty()) {
+                ArrayList<String> mImageUrlList = new ArrayList<>();
+                for (int i = 0, count = reportPicList.size(); i < count; i++) {
+                    mImageUrlList.add(Config.BDZ_INSPECTION_FOLDER + reportPicList.get(i));
                 }
-                testDialog.dismiss();
-                saveTestData();
-            }
-        });
-        testBinding.ibtnSelectInspectionDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomerDialog.showDatePickerDialog(currentActivity, new CustomerDialog.DialogItemClickListener() {
-                    @Override
-                    public void confirm(String result, int position) {
-                        String productTime = dbModel.getString("produce_time");
-                        if (!TextUtils.isEmpty(productTime) && !DateUtils.compareDate(result, productTime, DateUtils.yyyy_MM_dd)) {
-                            ToastUtils.showMessage( "试验时间必须大于出厂时间");
-                            return;
-                        }
-                        testBinding.txtTestTime.setText(result);
-                    }
-                });
-            }
-        });
-        testBinding.ibtnTakePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentImageName = toolPicPath + FunctionUtil.getCurrentImageName();
-                FunctionUtil.takePicture(currentActivity, currentImageName, Config.BDZ_INSPECTION_FOLDER);
-            }
-        });
-        testBinding.ivReportPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!reportPicList.isEmpty()) {
-                    ArrayList<String> mImageUrlList = new ArrayList<>();
-                    for (int i = 0, count = reportPicList.size(); i < count; i++) {
-                        mImageUrlList.add(Config.BDZ_INSPECTION_FOLDER + reportPicList.get(i));
-                    }
-                    showImageDetails(currentActivity, mImageUrlList, true);
-                }
+                showImageDetails(currentActivity, mImageUrlList, true);
             }
         });
 
-        testBinding.ivArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PersonListUtils.getInsance().setHeight(testBinding.getRoot().getHeight());
-                PersonListUtils.getInsance().setCurrentUser(testBinding.etInputPerson.getText().toString().trim());
-                stopClick = false;
-                PersonListUtils.getInsance().showPopWindow(testBinding.ivArrow);
-            }
+        testBinding.ivArrow.setOnClickListener(view -> {
+            PersonListUtils.getInsance().setHeight(testBinding.getRoot().getHeight());
+            PersonListUtils.getInsance().setCurrentUser(testBinding.etInputPerson.getText().toString().trim());
+            stopClick = false;
+            PersonListUtils.getInsance().showPopWindow(testBinding.ivArrow);
         });
 
     }
@@ -333,25 +302,19 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
      */
     private void addWaterTextToBitmap() {
         CustomerDialog.showProgress(currentActivity, "正在处理图片...");
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
-                if (null == currentBitmap) {
-                    ToastUtils.showMessage( "很抱歉，因意外需要您再次拍照。");
-                    return;
-                }
-                currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
-                BitmapUtil.saveBitmap(currentBitmap, Config.BDZ_INSPECTION_FOLDER + currentImageName, 60);
-                reportPicList.add(currentImageName);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        CustomerDialog.dismissProgress();
-                        setImage();
-                    }
-                });
+        ExecutorManager.executeTask(() -> {
+            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
+            if (null == currentBitmap) {
+                ToastUtils.showMessage( "很抱歉，因意外需要您再次拍照。");
+                return;
             }
+            currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
+            BitmapUtil.saveBitmap(currentBitmap, Config.BDZ_INSPECTION_FOLDER + currentImageName, 60);
+            reportPicList.add(currentImageName);
+            runOnUiThread(() -> {
+                CustomerDialog.dismissProgress();
+                setImage();
+            });
         });
     }
 

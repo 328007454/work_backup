@@ -108,7 +108,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
         binding.gvTestManager.setAdapter(showManagerAdapter);
         showManagerAdapter.setClickWidget(this);
         binding.gvTestManager.setOnItemClickListener((adapterView, view, i, l) -> {
-            ImageView iv = (ImageView) view.findViewById(R.id.delete_imag);
+            ImageView iv = view.findViewById(R.id.delete_imag);
             iv.setVisibility(View.VISIBLE);
         });
         if (showPeopleAdapter == null) {
@@ -118,8 +118,8 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
         binding.gvTestPeople.setAdapter(showPeopleAdapter);
         showPeopleAdapter.setClickWidget(this);
 
-        mTitleBinding.btnBack.setOnClickListener((View.OnClickListener) v -> {
-            cacheBatteryInfor();
+        mTitleBinding.btnBack.setOnClickListener(v -> {
+            BatteryFinishActivity.this.cacheBatteryInfor();
             BatteryFinishActivity.this.finish();
         });
     }
@@ -181,24 +181,20 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
     }
 
     private void initOnClick() {
-        binding.tvManager.setOnClickListener(view -> {
-            showPeopleDialog(MANAGER_FLAG);
-        });
-        binding.tvPerson.setOnClickListener(view -> {
-            showPeopleDialog(PEOPLE_FLAG);
-        });
+        binding.tvManager.setOnClickListener(view -> BatteryFinishActivity.this.showPeopleDialog(MANAGER_FLAG));
+        binding.tvPerson.setOnClickListener(view -> BatteryFinishActivity.this.showPeopleDialog(PEOPLE_FLAG));
         binding.btnNext.setOnClickListener(view -> {
-            cacheBatteryInfor();
+            BatteryFinishActivity.this.cacheBatteryInfor();
             try {
                 TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
             } catch (DbException e) {
                 e.printStackTrace();
             }
             Intent intent = new Intent(_this, BatteryTestReportActivity.class);
-            startActivity(intent);
+            BatteryFinishActivity.this.startActivity(intent);
             ScreenManager.getScreenManager().popActivity(BatteryTestActivity.class);
             isNeedUpdateTaskState = true;
-            this.finish();
+            BatteryFinishActivity.this.finish();
         });
     }
 
@@ -258,43 +254,37 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
         }
         peopleBinding.lvPeople.setAdapter(peopleAdapter);
 
-        peopleBinding.lvPeople.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = (String) adapterView.getItemAtPosition(i);
-                peopleDialog.cancel();
-                if (flag.equalsIgnoreCase(MANAGER_FLAG)) {
-                    if (fzrModels.contains(name)) {
-                        ToastUtils.showMessage("负责人中已经有该成员了");
-                        return;
-                    } else {
-                        fzrModels.add(name);
-                    }
-                    showManagerList.add(name);
-                    showManagerAdapter.setList(showManagerList);
+        peopleBinding.lvPeople.setOnItemClickListener((adapterView, view, i, l) -> {
+            String name = (String) adapterView.getItemAtPosition(i);
+            peopleDialog.cancel();
+            if (flag.equalsIgnoreCase(MANAGER_FLAG)) {
+                if (fzrModels.contains(name)) {
+                    ToastUtils.showMessage("负责人中已经有该成员了");
+                    return;
                 } else {
-                    if (czrModels.contains(name)) {
-                        ToastUtils.showMessage("测试人中已经有该成员了");
-                        return;
-                    } else {
-                        czrModels.add(name);
-                    }
-                    showPeopleList.add(name);
-                    showPeopleAdapter.setList(showPeopleList);
+                    fzrModels.add(name);
                 }
-
+                showManagerList.add(name);
+                showManagerAdapter.setList(showManagerList);
+            } else {
+                if (czrModels.contains(name)) {
+                    ToastUtils.showMessage("测试人中已经有该成员了");
+                    return;
+                } else {
+                    czrModels.add(name);
+                }
+                showPeopleList.add(name);
+                showPeopleAdapter.setList(showPeopleList);
             }
+
         });
 
-        peopleBinding.tvNewPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!TextUtils.isEmpty(peopleBinding.etName.getText().toString())) {
-                    peopleList.add(peopleBinding.etName.getText().toString());
-                    peopleAdapter.setList(peopleList);
-                    peopleBinding.lvPeople.setSelection(peopleAdapter.getCount());
-                    peopleBinding.etName.setText("");
-                }
+        peopleBinding.tvNewPerson.setOnClickListener(view -> {
+            if (!TextUtils.isEmpty(peopleBinding.etName.getText().toString())) {
+                peopleList.add(peopleBinding.etName.getText().toString());
+                peopleAdapter.setList(peopleList);
+                peopleBinding.lvPeople.setSelection(peopleAdapter.getCount());
+                peopleBinding.etName.setText("");
             }
         });
 

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -45,11 +46,11 @@ public class TzcsGroup extends UnderLineLinearLayout {
         setOrientation(HORIZONTAL);
         setDrawUnderLine(true);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_tzcs, this, true);
-        a = (TextView) findViewById(R.id.ljtzcs_a);
-        b = (TextView) findViewById(R.id.ljtzcs_b);
-        c = (TextView) findViewById(R.id.ljtzcs_c);
-        o = (TextView) findViewById(R.id.ljtzcs_o);
-        findViewById(R.id.ljtzcs_modify).setOnClickListener(v -> showModifyDialog());
+        a = findViewById(R.id.ljtzcs_a);
+        b = findViewById(R.id.ljtzcs_b);
+        c = findViewById(R.id.ljtzcs_c);
+        o = findViewById(R.id.ljtzcs_o);
+        findViewById(R.id.ljtzcs_modify).setOnClickListener(v -> TzcsGroup.this.showModifyDialog());
         bindValue();
     }
 
@@ -67,7 +68,7 @@ public class TzcsGroup extends UnderLineLinearLayout {
                 intB = CalcUtils.toInt(viewHolder.gxtzcsB.getText().toString(), 0);
                 intC = CalcUtils.toInt(viewHolder.gxtzcsC.getText().toString(), 0);
                 intO = CalcUtils.toInt(viewHolder.gxtzcsO.getText().toString(), 0);
-                bindValue();
+                TzcsGroup.this.bindValue();
                 dialog.dismiss();
             });
             viewHolder.llA.setVisibility(visbles[0] == 1 ? VISIBLE : GONE);

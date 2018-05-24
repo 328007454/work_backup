@@ -65,12 +65,7 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
             if (bitmap!=null) {
                 defectImage.setImageBitmap(bitmap);
             }
-            defectImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    activity.showImageDetails(activity, StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER));
-                }
-            });
+            defectImage.setOnClickListener(v -> activity.showImageDetails(activity, StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER)));
         } else {
             defectImage.setScaleType(ImageView.ScaleType.CENTER);
             defectImage.setImageResource(R.mipmap.icon_nodefect);

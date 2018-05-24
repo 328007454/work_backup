@@ -25,13 +25,7 @@ public class PlaySound {
     private PlaySound(final Context context) {
         this.context = context;
         mSoundPool = new SoundPool(100, AudioManager.STREAM_MUSIC, 100);
-        ExecutorManager.executeTaskSerially(new Runnable() {
-
-            @Override
-            public void run() {
-                initSoundMap(context);
-            }
-        });
+        ExecutorManager.executeTaskSerially(() -> initSoundMap(context));
 
     }
 

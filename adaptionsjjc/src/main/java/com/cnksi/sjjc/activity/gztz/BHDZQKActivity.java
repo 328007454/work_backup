@@ -75,12 +75,12 @@ public class BHDZQKActivity extends BaseActivity {
 
     private void initView() {
         binding.btnNext.setOnClickListener(v -> {
-            if (save(true)) {
+            if (BHDZQKActivity.this.save(true)) {
                 Intent intent = new Intent(_this, BHDZJLActivity.class);
-                startActivity(intent);
+                BHDZQKActivity.this.startActivity(intent);
             }
         });
-        binding.btnPre.setOnClickListener(v -> onBackPressed());
+        binding.btnPre.setOnClickListener(v -> BHDZQKActivity.this.onBackPressed());
         binding.chzdzqk.setType("chzdzqk");
         binding.bhmc.setType("bhmc");
         binding.gxtzcsA.addTextChangedListener(new SimpleTextWatcher() {
@@ -108,16 +108,14 @@ public class BHDZQKActivity extends BaseActivity {
             }
         });
 
-        binding.ivTakePic.setOnClickListener(v -> {
-            FunctionUtil.takePicture(this, imageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
-        });
-        binding.ivShowPic.setOnClickListener(v -> showImageDetails(this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
+        binding.ivTakePic.setOnClickListener(v -> FunctionUtil.takePicture(BHDZQKActivity.this, imageName = FunctionUtil.getCurrentImageName(BHDZQKActivity.this), Config.RESULT_PICTURES_FOLDER));
+        binding.ivShowPic.setOnClickListener(v -> BHDZQKActivity.this.showImageDetails(BHDZQKActivity.this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
         binding.bhsbmc.setSelectOnClickListener(v -> {
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.second);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
             intentDevices.putExtra(Config.TITLE_NAME, "请选择二次设备");
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
+            BHDZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
         binding.gzlbqmc.setSelectOnClickListener(v -> {
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
@@ -130,7 +128,7 @@ public class BHDZQKActivity extends BaseActivity {
             } else {
                 ToastUtils.showMessage("没有找到别名为GZLBQ的设备大类！");
             }
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
+            BHDZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
         });
     }
 
@@ -139,7 +137,7 @@ public class BHDZQKActivity extends BaseActivity {
         ExecutorManager.executeTaskSerially(() -> {
             sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
             SbjcGztzjl last = GZTZSbgzjlService.getInstance().findLastByDeviceId(sbjcGztzjl.dlqbh, currentReportId);
-            runOnUiThread(() -> {
+            BHDZQKActivity.this.runOnUiThread(() -> {
                 if (last != null) {
                     String s = last.ljtzcs;
                     if (!TextUtils.isEmpty(s)) {
@@ -156,7 +154,7 @@ public class BHDZQKActivity extends BaseActivity {
                 } else {
                     photos = new ArrayList<>();
                 }
-                showPic();
+                BHDZQKActivity.this.showPic();
 
                 //处理ABCO 相别
                 int[] visbles = sbjcGztzjl.getXb();
@@ -348,7 +346,7 @@ public class BHDZQKActivity extends BaseActivity {
                         mHandler.post(() -> {
                             CustomerDialog.dismissProgress();
                             photos.add(imageName);
-                            showPic();
+                            BHDZQKActivity.this.showPic();
                         });
                     });
                     break;

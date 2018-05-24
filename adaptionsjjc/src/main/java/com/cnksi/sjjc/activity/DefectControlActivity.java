@@ -66,7 +66,7 @@ public class DefectControlActivity extends BaseActivity {
     private void search() {
         ExecutorManager.executeTaskSerially(() -> {
             final List<DefectRecord> defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(currentBdz == null ? "" : currentBdz.bdzid, defectLevel);
-            runOnUiThread(() -> defectContentAdapter.setList(defectRecords));
+            DefectControlActivity.this.runOnUiThread(() -> defectContentAdapter.setList(defectRecords));
         });
     }
     public void initView() {
@@ -76,7 +76,7 @@ public class DefectControlActivity extends BaseActivity {
         mTitleBinding.btnBack.setImageResource(R.drawable.ic_hompage_selector);
         mTitleBinding.btnBack.setVisibility(View.GONE);
         mTitleBinding.btnBackDefect.setVisibility(View.VISIBLE);
-        mTitleBinding.btnBackDefect.setOnClickListener((View.OnClickListener) view -> onBackPressed());
+        mTitleBinding.btnBackDefect.setOnClickListener(view -> DefectControlActivity.this.onBackPressed());
         defectControlBinding.defectType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -105,12 +105,12 @@ public class DefectControlActivity extends BaseActivity {
             }
 
             mHandler.post(() -> {
-                initBDZDialog();
+                DefectControlActivity.this.initBDZDialog();
                 if (bdzList.size() > 0) {
                     currentBdz = bdzList.get(0);
                     defectControlBinding.bdzName.setText(currentBdz.name);
                 }
-                search();
+                DefectControlActivity.this.search();
             });
         });
         defectContentAdapter = new DefectContentAdapter(this, null);

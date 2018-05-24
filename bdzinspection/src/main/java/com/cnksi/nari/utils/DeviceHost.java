@@ -60,7 +60,7 @@ public class DeviceHost {
         String str = deviceId == null ? "" : deviceId;
         try {
             Class cls = Class.forName("android.os.SystemProperties");
-            deviceId = (String) cls.getMethod("get", new Class[]{String.class, String.class}).invoke(cls, new Object[]{"ro.serialno", null});
+            deviceId = (String) cls.getMethod("get", String.class, String.class).invoke(cls, new Object[]{"ro.serialno", null});
         } catch (Exception e) {
             deviceId = null;
         }

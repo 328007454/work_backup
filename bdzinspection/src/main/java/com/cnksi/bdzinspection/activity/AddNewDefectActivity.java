@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DefectDefineAdapter;
@@ -124,27 +125,25 @@ public class AddNewDefectActivity extends BaseActivity {
     }
 
     private void initOnClick() {
-        binding.btnConfirm.setOnClickListener(view -> {
-            saveDefect();
-        });
+        binding.btnConfirm.setOnClickListener(view -> AddNewDefectActivity.this.saveDefect());
         binding.ibtnTakePicture.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(binding.etInputDefectContent.getText().toString().trim())) {
                 FunctionUtil.takePicture(AddNewDefectActivity.this,
-                        currentImageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
+                        currentImageName = FunctionUtil.getCurrentImageName(AddNewDefectActivity.this), Config.RESULT_PICTURES_FOLDER);
             } else {
-                ToastUtils.showMessage( "请先填写缺陷内容！");
+                ToastUtils.showMessage("请先填写缺陷内容！");
             }
         });
         binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
             if (isRecordDefect) {
-                setResult(RESULT_OK);
+                AddNewDefectActivity.this.setResult(RESULT_OK);
             }
-            this.finish();
+            AddNewDefectActivity.this.finish();
         });
         binding.ivNewDefectPhoto.setOnClickListener(view -> {
             // 显示大图
             if (mDefectImageList != null && !mDefectImageList.isEmpty()) {
-                showImageDetails(this, StringUtils.addStrToListItem(mDefectImageList, Config.RESULT_PICTURES_FOLDER),
+                AddNewDefectActivity.this.showImageDetails(AddNewDefectActivity.this, StringUtils.addStrToListItem(mDefectImageList, Config.RESULT_PICTURES_FOLDER),
                         true);
             }
         });

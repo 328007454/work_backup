@@ -4,6 +4,8 @@
 package com.cnksi.bdzinspection.ywyth;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 
 import com.cnksi.bdzinspection.R;
@@ -79,7 +81,7 @@ public class YWGQJActivity extends TitleActivity {
 		if (!taskStatus) {
 			binding.list.setOnItemClickListener((parent, view, position, id) -> {
                 // TODO Auto-generated method stub
-                CheckBox ck = (CheckBox) view.findViewById(R.id.check);
+                CheckBox ck = view.findViewById(R.id.check);
                 ck.toggle();
                 flag.put(position, ck.isChecked());
 

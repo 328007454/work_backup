@@ -127,12 +127,7 @@ public class New1RegularSwitchListAdapter1 extends BaseMapListExpandableAdapter<
                     itemBind1.tvAudio.setVisibility(View.GONE);
                 }
                 String defectLevel = model.getString(DefectRecord.DEFECTLEVEL);
-                itemBind1.tvDesc.setOnClickListener(clickListener != null ? new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        clickListener.defectClick(v, model, groupPosition << 16 | childPosition);
-                    }
-                } : null);
+                itemBind1.tvDesc.setOnClickListener(clickListener != null ? (View.OnClickListener) v -> clickListener.defectClick(v, model, groupPosition << 16 | childPosition) : null);
                 if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
                     itemBind1.tvDesc.append(CRISIS);
                 } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
@@ -148,24 +143,9 @@ public class New1RegularSwitchListAdapter1 extends BaseMapListExpandableAdapter<
                     itemBind1.tvAudio.setOnClickListener(null);
 
                 } else {
-                    itemBind1.ivRegular.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickListener.toolClick(v, model, groupPosition << 16 | childPosition);
-                        }
-                    });
-                    itemBind1.ibtnPicture.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickListener.imgClick(v, model, groupPosition << 16 | childPosition);
-                        }
-                    });
-                    itemBind1.tvAudio.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickListener.radioClick(v, model, groupPosition << 16 | childPosition);
-                        }
-                    });
+                    itemBind1.ivRegular.setOnClickListener(v -> clickListener.toolClick(v, model, groupPosition << 16 | childPosition));
+                    itemBind1.ibtnPicture.setOnClickListener(v -> clickListener.imgClick(v, model, groupPosition << 16 | childPosition));
+                    itemBind1.tvAudio.setOnClickListener(v -> clickListener.radioClick(v, model, groupPosition << 16 | childPosition));
                 }
                 return itemBind1.getRoot();
             case CHILD2:
@@ -235,18 +215,10 @@ public class New1RegularSwitchListAdapter1 extends BaseMapListExpandableAdapter<
     private void setTextViewRecordTime(final TextView tv, final String audioPath) {
         String s = audioLengthMap.get(audioPath);
         if (s == null) {
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    final String rs = MediaRecorderUtils.getInstance().getDurationSuc(mContext, Config.AUDIO_FOLDER + audioPath) + "”";
-                    audioLengthMap.put(audioPath, rs);
-                    ((Activity) mContext).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tv.setText(rs);
-                        }
-                    });
-                }
+            Executors.newSingleThreadExecutor().execute(() -> {
+                final String rs = MediaRecorderUtils.getInstance().getDurationSuc(mContext, Config.AUDIO_FOLDER + audioPath) + "”";
+                audioLengthMap.put(audioPath, rs);
+                ((Activity) mContext).runOnUiThread(() -> tv.setText(rs));
             });
         } else {
             tv.setText(s);

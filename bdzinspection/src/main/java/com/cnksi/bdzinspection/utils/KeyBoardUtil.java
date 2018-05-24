@@ -87,11 +87,11 @@ public class KeyBoardUtil {
         this.mWindowManager = windowManager;
         this.mContext = context;
         this.mRootContainer = mRootContainer;
-        this.mKeyBoardView = (KeyboardView) mRootContainer.findViewById(R.id.keyboard_view);
-        this.mNumberSeekBar = (NumberSeekBar) mRootContainer.findViewById(R.id.number_seekbar);
-        this.mRlSeekBarContainer = (LinearLayout) mRootContainer.findViewById(R.id.rl_seekbar_container);
-        this.mTvMinValue = (TextView) mRootContainer.findViewById(R.id.tv_min_value);
-        this.mTvMaxValue = (TextView) mRootContainer.findViewById(R.id.tv_max_value);
+        this.mKeyBoardView = mRootContainer.findViewById(R.id.keyboard_view);
+        this.mNumberSeekBar = mRootContainer.findViewById(R.id.number_seekbar);
+        this.mRlSeekBarContainer = mRootContainer.findViewById(R.id.rl_seekbar_container);
+        this.mTvMinValue = mRootContainer.findViewById(R.id.tv_min_value);
+        this.mTvMaxValue = mRootContainer.findViewById(R.id.tv_max_value);
         this.mNumberSeekBar.setOnSeekBarChangeListener(mSeekBarChangeListener);
         this.mEditText = mEditText;
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);

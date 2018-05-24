@@ -109,9 +109,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
 
 
     public void initOnclick() {
-        binding.btnConfirmSave.setOnClickListener((v) -> {
-            saveData();
-        });
+        binding.btnConfirmSave.setOnClickListener(v -> NewIndoorHumitureRecordActivity.this.saveData());
     }
 
 

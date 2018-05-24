@@ -84,20 +84,14 @@ public class ChangeCopyItemParentAdapter extends SimpleBaseAdapter {
         }
         String groupTitle = ((CopyType) dataList.get(position)).name;
         parentBinding.tvGroupItem.setText(TextUtils.isEmpty(groupTitle) ? "" : groupTitle);
-        parentBinding.addItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null) {
-                    itemClickListener.onClick(v, type, position);
-                }
+        parentBinding.addItem.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onClick(v, type, position);
             }
         });
-        parentBinding.item3to1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null) {
-                    itemClickListener.onClick(v, type, position);
-                }
+        parentBinding.item3to1.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onClick(v, type, position);
             }
         });
         return parentBinding.getRoot();

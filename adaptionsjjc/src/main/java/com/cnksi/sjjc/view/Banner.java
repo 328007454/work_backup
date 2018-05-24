@@ -121,10 +121,10 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     private void initView(Context context, AttributeSet attrs) {
         imageViews.clear();
         View view = LayoutInflater.from(context).inflate(R.layout.banner, this, true);
-        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        indicator = (LinearLayout) view.findViewById(R.id.indicator);
-        bannerTitle = (TextView) view.findViewById(R.id.bannerTitle);
-        numIndicator = (TextView) view.findViewById(R.id.numIndicator);
+        viewPager = view.findViewById(R.id.viewpager);
+        indicator = view.findViewById(R.id.indicator);
+        bannerTitle = view.findViewById(R.id.bannerTitle);
+        numIndicator = view.findViewById(R.id.numIndicator);
         handleTypedArray(context, attrs);
     }
 
@@ -355,12 +355,9 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
         public Object instantiateItem(ViewGroup container, final int position) {
             container.addView(imageViews.get(position));
             final ImageView view = imageViews.get(position);
-            view.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.OnBannerClick(v, position);
-                    }
+            view.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.OnBannerClick(v, position);
                 }
             });
             if (checkedListener != null) {

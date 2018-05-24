@@ -411,7 +411,7 @@ public class LunarCalendar {
      * @return 传回农历 year年闰哪个月1-12, 没闰传回 0
      */
     public static int leapMonth(int year) {
-        return (int) ((LUNAR_INFO[year - MIN_YEAR] & 0xF00000)) >> 20;
+        return (LUNAR_INFO[year - MIN_YEAR] & 0xF00000) >> 20;
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
@@ -17,10 +18,13 @@ import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.service.gztz.PmsXianluService;
+import com.cnksi.sjjc.view.gztz.SelectGroup;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
+
+import java.util.List;
 
 /**
  * @version 1.0
@@ -67,7 +71,7 @@ public class TZQKActivity extends BaseActivity {
             } else {
                 ToastUtils.showMessage("没有找到别名为DLQ的设备大类！");
             }
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
+            TZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
         binding.gztysb.setSelectOnClickListener(v -> {
             KeyValue keyValue = binding.tyfw.getValue();
@@ -94,7 +98,7 @@ public class TZQKActivity extends BaseActivity {
                 intentDevices.putExtra(AllDeviceListActivity.BIGID, rs);
                 intentDevices.putExtra(Config.TITLE_NAME, "请选择变压器");
             }
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
+            TZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
         });
         binding.gzdydj.setType("dydj");
         binding.gzlx.setType("gzlx");
@@ -102,9 +106,9 @@ public class TZQKActivity extends BaseActivity {
         binding.gzlb.setType("gzlb");
         binding.tyfw.setType("gztyfw");
         binding.btnSure.setOnClickListener(v -> {
-            if (save(true)) {
+            if (TZQKActivity.this.save(true)) {
                 Intent intent = new Intent(_this, BHDZQKActivity.class);
-                startActivity(intent);
+                TZQKActivity.this.startActivity(intent);
             }
         });
         binding.sfty.setOnCheckChangeListener((buttonView, isChecked) -> {

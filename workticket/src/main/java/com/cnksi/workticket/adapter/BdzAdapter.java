@@ -35,8 +35,8 @@ public class BdzAdapter extends BaseQuickAdapter<DbModel, BaseViewHolder> {
     protected void convert(BaseViewHolder helper, DbModel item) {
         helper.setText(R.id.txt_bdz_name, item.getString("name"));
         helper.itemView.setOnClickListener(v -> {
-            if (itemClickListener!=null){
-                itemClickListener.onItemClick(v,item,helper.getAdapterPosition());
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(v, item, helper.getAdapterPosition());
             }
         });
     }

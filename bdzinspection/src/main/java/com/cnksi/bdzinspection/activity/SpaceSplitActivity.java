@@ -61,20 +61,20 @@ public class SpaceSplitActivity extends TitleActivity {
         binding.btnComplete.setOnClickListener(v -> {
             final HashSet<Device> selectDevice = adapter.getSelectDevices();
             if (selectDevice.size() == devices.size()) {
-                ToastUtils.showMessage( "至少需要留一个设备给原间隔！");
+                ToastUtils.showMessage("至少需要留一个设备给原间隔！");
                 return;
             }
             if (selectDevice.size() == 0) {
-                ToastUtils.showMessage( "没有选择设备！");
+                ToastUtils.showMessage("没有选择设备！");
                 return;
             }
             String newName = binding.etSpaceName.getText().toString();
             if (TextUtils.isEmpty(newName)) {
-                ToastUtils.showMessage( "新间隔名字不能为空！");
+                ToastUtils.showMessage("新间隔名字不能为空！");
                 return;
             }
             if (newName.equals(spacing.name)) {
-                ToastUtils.showMessage( "新间隔名称与原间隔名称一致，建议修改便于区分！");
+                ToastUtils.showMessage("新间隔名称与原间隔名称一致，建议修改便于区分！");
             }
             CharSequence tips = StringUtils.formatPartTextColor("您是否要将选中的%s个设备拆分到新间隔 %s ?", Color.RED, selectDevice.size() + "", newName);
             DialogUtils.showSureTipsDialog(currentActivity, null, tips, new OnViewClickListener() {
@@ -86,14 +86,14 @@ public class SpaceSplitActivity extends TitleActivity {
                         runOnUiThread(() -> {
                             CustomerDialog.dismissProgress();
                             if (rs) {
-                                ToastUtils.showMessage( "操作成功");
+                                ToastUtils.showMessage("操作成功");
                                 Intent intent = new Intent();
                                 intent.putExtra("space", spacing);
                                 intent.putExtra("count", selectDevice.size());
                                 setResult(RESULT_OK, intent);
                                 finish();
                             } else {
-                                ToastUtils.showMessageLong( "更新数据库失败！请检查数据是否完整！");
+                                ToastUtils.showMessageLong("更新数据库失败！请检查数据是否完整！");
                             }
                         });
                     });
@@ -115,7 +115,7 @@ public class SpaceSplitActivity extends TitleActivity {
                 e.printStackTrace();
             }
             copyItems = CopyItemService.getInstance().findAllBySpace(spacing.spid);
-            runOnUiThread(() -> initrcv());
+            SpaceSplitActivity.this.runOnUiThread(() -> SpaceSplitActivity.this.initrcv());
         });
     }
 

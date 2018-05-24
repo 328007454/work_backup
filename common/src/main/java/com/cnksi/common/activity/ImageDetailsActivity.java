@@ -104,12 +104,8 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
     }
 
     private void initOnClick() {
-        mImageDetailsBinding.includeTitle.btnBack.setOnClickListener(view -> {
-            onBackPressed();
-        });
-        mImageDetailsBinding.ibtnDelete.setOnClickListener(view -> {
-            showSureTipsDialog();
-        });
+        mImageDetailsBinding.includeTitle.btnBack.setOnClickListener(view -> ImageDetailsActivity.this.onBackPressed());
+        mImageDetailsBinding.ibtnDelete.setOnClickListener(view -> ImageDetailsActivity.this.showSureTipsDialog());
     }
 
 
@@ -127,9 +123,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
         mTipsBinding.btnSure.setText(R.string.yes_str);
         mTipsBinding.btnCancel.setText(R.string.no_str);
         tipsDialog.show();
-        mTipsBinding.btnCancel.setOnClickListener(view -> {
-            tipsDialog.dismiss();
-        });
+        mTipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
         mTipsBinding.btnSure.setOnClickListener(view -> {
             String imageUrl = imageList.get(currentPosition);
             if (isDeleteFile) {
@@ -141,7 +135,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
             imageList.remove(currentPosition);
             cancelImageList.add(imageUrl);
             if (imageList.size() == 0) {
-                onBackPressed();
+                ImageDetailsActivity.this.onBackPressed();
             }
             viewAdapter.notifyDataSetChanged();
 
@@ -190,8 +184,8 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
         @Override
         public View instantiateItem(ViewGroup container, int position) {
             View view = LayoutInflater.from(ImageDetailsActivity.this).inflate(R.layout.zoom_image_layout, container, false);
-            final PhotoView zoomImageView = (PhotoView) view.findViewById(R.id.zoom_image_view);
-            final ProgressBar progress = (ProgressBar) view.findViewById(R.id.loading);
+            final PhotoView zoomImageView = view.findViewById(R.id.zoom_image_view);
+            final ProgressBar progress = view.findViewById(R.id.loading);
             final String imageUrl = imageList.get(position);
             progress.setVisibility(View.VISIBLE);
             Bitmap bitmap = BitmapUtils.getImageThumbnailByHeight(imageUrl, 1920);

@@ -164,32 +164,35 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
 
     private void initOnClick() {
 
-        binding.ibtnCancel.setOnClickListener(view -> onBackPressed());
+        binding.ibtnCancel.setOnClickListener(view -> ParticularDeviceListActivity.this.onBackPressed());
 
-        binding.btnFinishInspection.setOnClickListener(view -> {
-            if (SystemConfig.isDevicePlaced()) {
-                fragmentList.get(0).handleSpaceArrivedData();
-            }
+        binding.btnFinishInspection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SystemConfig.isDevicePlaced()) {
+                    fragmentList.get(0).handleSpaceArrivedData();
+                }
 
-            if (currentTask.isMember()) {
-                DialogUtils.showSureTipsDialog(currentActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        super.onClick(v);
-                        CustomerDialog.showProgress(currentActivity, "正在上传任务", true, false);
-                        KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).upload();
-                    }
-                });
-            } else {
-                Intent intent = new Intent(currentActivity, GenerateReportActivity.class);
-                showTipsDialog(binding.llRootContainer, intent);
+                if (currentTask.isMember()) {
+                    DialogUtils.showSureTipsDialog(currentActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            super.onClick(v);
+                            CustomerDialog.showProgress(currentActivity, "正在上传任务", true, false);
+                            KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).upload();
+                        }
+                    });
+                } else {
+                    Intent intent = new Intent(currentActivity, GenerateReportActivity.class);
+                    ParticularDeviceListActivity.this.showTipsDialog(binding.llRootContainer, intent);
+                }
             }
         });
 
         binding.ibtnAdd.setOnClickListener(view -> {
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             Intent intent = new Intent(currentActivity, CopyAllValueActivity2.class);
-            startActivity(intent);
+            ParticularDeviceListActivity.this.startActivity(intent);
         });
 
 
@@ -299,7 +302,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
             if (saveList.size() > 0) {
                 ExecutorManager.executeTask(() -> {
                     try {
-                       SpacingLastlyService.getInstance().saveOrUpdate(saveList);
+                        SpacingLastlyService.getInstance().saveOrUpdate(saveList);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }

@@ -151,9 +151,7 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
     }
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> DefectControlActivity.this.onBackPressed());
     }
 
 

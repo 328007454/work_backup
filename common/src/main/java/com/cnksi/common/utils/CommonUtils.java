@@ -195,10 +195,7 @@ public class CommonUtils {
             return false;
         }
         Matcher matcher = pt.matcher(String.valueOf(tempFloat));
-        if (matcher.matches() || "0".equals(temp)) {
-            return true;
-        }
-        return false;
+        return matcher.matches() || "0".equals(temp);
     }
 
 

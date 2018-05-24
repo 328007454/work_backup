@@ -21,6 +21,8 @@ import com.cnksi.bdzinspection.databinding.XsActivityCopyAll3Binding;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogCopyTipsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
+import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
+import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
@@ -134,9 +136,9 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         deviceAdapter = new CopyDeviceAdapter(this, copyDeviceList, R.layout.xs_device_item);
         deviceAdapter.setItemClickListener((v, dbModel, position) -> {
             if (isSpread) {
-                setDeviceListDisplay();
+                CopyAllValueActivity3.this.setDeviceListDisplay();
             }
-            if (!showShadom()) {
+            if (!CopyAllValueActivity3.this.showShadom()) {
                 if (null != dbModel) {
                     deviceAdapter.setCurrentSelectedPosition(position);
                     currentDevice = dbModel;
@@ -144,8 +146,8 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
                         isFinish = false;
                         binding.btnNext.setText(R.string.xs_next);
                     }
-                    saveAll();
-                    setCurrentDevice(position);
+                    CopyAllValueActivity3.this.saveAll();
+                    CopyAllValueActivity3.this.setCurrentDevice(position);
 
                 } else {
                     data.clear();
@@ -160,17 +162,15 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         copyViewUtil.setKeyBordListener(this);
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
             remarkInfor = "";
-            XsActivityCopyDialogBinding copyDialogBinding = XsActivityCopyDialogBinding.inflate(getLayoutInflater());
+            XsActivityCopyDialogBinding copyDialogBinding = XsActivityCopyDialogBinding.inflate(CopyAllValueActivity3.this.getLayoutInflater());
             copyDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
-            dialog = DialogUtils.createDialog(currentActivity,copyDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialog = DialogUtils.createDialog(currentActivity, copyDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             dialog.show();
             copyDialogBinding.btnCancel.setOnClickListener(view -> dialog.dismiss());
-            copyDialogBinding.btnSure.setOnClickListener(view -> {
-                saveRemarkData(result, copyDialogBinding.etCopyValues, item);
-            });
+            copyDialogBinding.btnSure.setOnClickListener(view -> CopyAllValueActivity3.this.saveRemarkData(result, copyDialogBinding.etCopyValues, item));
         });
         copyViewUtil.setItemClickListener((v, copyItem, position) -> {
-            hideKeyBord();
+            CopyAllValueActivity3.this.hideKeyBord();
             ShowCopyHistroyDialogUtils.showHistory(currentActivity, copyItem);
         });
     }
@@ -216,161 +216,155 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
     }
 
     private void initialData() {
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                List<DbModel> deviceList = null;
-                try {
-                    searchDefect();
-                    deviceList = CopyItemService.getInstance().findAllDeviceHasCopyValue(currentInspectionType, currentBdzId);
-                    copyDeviceList.clear();
-                    if (null != deviceList && !deviceList.isEmpty()) {
-                        copyDeviceList.addAll(deviceList);
-                        setCurrentDevice(0);
-                    }
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                } catch (DbException e) {
-                    e.printStackTrace();
+        ExecutorManager.executeTask(() -> {
+            List<DbModel> deviceList = null;
+            try {
+                searchDefect();
+                deviceList = CopyItemService.getInstance().findAllDeviceHasCopyValue(currentInspectionType, currentBdzId);
+                copyDeviceList.clear();
+                if (null != deviceList && !deviceList.isEmpty()) {
+                    copyDeviceList.addAll(deviceList);
+                    setCurrentDevice(0);
                 }
+                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
     }
 
     private void setCurrentDevice(final int position) {
         binding.gvContainer.smoothScrollToPosition(position);
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                currentDevice = copyDeviceList.get(position);
-                currentDeviceId = currentDevice.getString("deviceid");
-                final List<TreeNode> newData = new ArrayList<TreeNode>();
-                // 所有抄录类型
-                Map<String, String> copyType = CopyTypeService.getInstance().getAllCopyType();
-                // 查询当前报告已抄录项目
-                reportResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, true, CopyItemService.getInstance().getCopyType());
-                Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
-                if (null != reportResultList && !reportResultList.isEmpty()) {
-                    for (CopyResult result : reportResultList) {
-                        reportCopyResultMap.put(result.item_id, result);
-                    }
+        ExecutorManager.executeTask(() -> {
+            currentDevice = copyDeviceList.get(position);
+            currentDeviceId = currentDevice.getString("deviceid");
+            final List<TreeNode> newData = new ArrayList<TreeNode>();
+            // 所有抄录类型
+            Map<String, String> copyType = CopyTypeService.getInstance().getAllCopyType();
+            // 查询当前报告已抄录项目
+            reportResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, true, CopyItemService.getInstance().getCopyType());
+            Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
+            if (null != reportResultList && !reportResultList.isEmpty()) {
+                for (CopyResult result : reportResultList) {
+                    reportCopyResultMap.put(result.item_id, result);
                 }
-                // 历史抄录值
-                List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false, CopyItemService.getInstance().getCopyType());
-                Map<String, CopyResult> historyMap = new HashMap<>();
-                if (null != historyResultList && !historyResultList.isEmpty()) {
-                    for (CopyResult historyResult : historyResultList) {
-                        historyMap.put(historyResult.item_id, historyResult);
-                    }
+            }
+            // 历史抄录值
+            List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false, CopyItemService.getInstance().getCopyType());
+            Map<String, CopyResult> historyMap = new HashMap<>();
+            if (null != historyResultList && !historyResultList.isEmpty()) {
+                for (CopyResult historyResult : historyResultList) {
+                    historyMap.put(historyResult.item_id, historyResult);
                 }
-                // 查询当前设备抄录项
-                List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItem1(currentBdzId, currentDeviceId, CopyItemService.getInstance().getCopyType());
-                // 抄录结构map
-                copyResultMap = new HashMap<>();
-                // 按照抄录类型-抄录项转换结果
-                Map<String, List<CopyItem>> typeCopyItemMap = new HashMap<>();
-                if (null != copyItemList && !copyItemList.isEmpty()) {
-                    for (CopyItem item : copyItemList) {
-                        CopyResult result = reportCopyResultMap.get(item.id);
-                        CopyResult historyResult = historyMap.get(item.id);
-                        if (null == result) {
-                            result = new CopyResult(currentReportId, item.id, item.bdzid, item.deviceid, item.device_name, item.type_key, item.description, item.unit, item.install_place);
-                            // 赋值历史数据
-                            if (null != historyResult) {
-                                if ("Y".equalsIgnoreCase(item.val)) {
-                                    result.val = "-1".equalsIgnoreCase(historyResult.val) ? "" : historyResult.val;
-                                }
-                                if ("Y".equalsIgnoreCase(item.val_a)) {
-                                    result.val_a = "-1".equalsIgnoreCase(historyResult.val_a) ? "" : historyResult.val_a;
-                                }
-                                if ("Y".equalsIgnoreCase(item.val_b)) {
-                                    result.val_b = "-1".equalsIgnoreCase(historyResult.val_b) ? "" : historyResult.val_b;
-                                }
-                                if ("Y".equalsIgnoreCase(item.val_c)) {
-                                    result.val_c = "-1".equalsIgnoreCase(historyResult.val_c) ? "" : historyResult.val_c;
-                                }
-                                if ("Y".equalsIgnoreCase(item.val_o)) {
-                                    result.val_o = "-1".equalsIgnoreCase(historyResult.val_o) ? "" : historyResult.val_o;
-                                }
-                            }
-                        }
-                        // 上次抄录值
+            }
+            // 查询当前设备抄录项
+            List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItem1(currentBdzId, currentDeviceId, CopyItemService.getInstance().getCopyType());
+            // 抄录结构map
+            copyResultMap = new HashMap<>();
+            // 按照抄录类型-抄录项转换结果
+            Map<String, List<CopyItem>> typeCopyItemMap = new HashMap<>();
+            if (null != copyItemList && !copyItemList.isEmpty()) {
+                for (CopyItem item : copyItemList) {
+                    CopyResult result = reportCopyResultMap.get(item.id);
+                    CopyResult historyResult = historyMap.get(item.id);
+                    if (null == result) {
+                        result = new CopyResult(currentReportId, item.id, item.bdzid, item.deviceid, item.device_name, item.type_key, item.description, item.unit, item.install_place);
+                        // 赋值历史数据
                         if (null != historyResult) {
                             if ("Y".equalsIgnoreCase(item.val)) {
-                                result.val_old = historyResult.val;
+                                result.val = "-1".equalsIgnoreCase(historyResult.val) ? "" : historyResult.val;
                             }
                             if ("Y".equalsIgnoreCase(item.val_a)) {
-                                result.val_a_old = historyResult.val_a;
+                                result.val_a = "-1".equalsIgnoreCase(historyResult.val_a) ? "" : historyResult.val_a;
                             }
                             if ("Y".equalsIgnoreCase(item.val_b)) {
-                                result.val_b_old = historyResult.val_b;
+                                result.val_b = "-1".equalsIgnoreCase(historyResult.val_b) ? "" : historyResult.val_b;
                             }
                             if ("Y".equalsIgnoreCase(item.val_c)) {
-                                result.val_c_old = historyResult.val_c;
+                                result.val_c = "-1".equalsIgnoreCase(historyResult.val_c) ? "" : historyResult.val_c;
                             }
                             if ("Y".equalsIgnoreCase(item.val_o)) {
-                                result.val_o_old = historyResult.val_o;
+                                result.val_o = "-1".equalsIgnoreCase(historyResult.val_o) ? "" : historyResult.val_o;
                             }
-                        }
-                        copyResultMap.put(item.id, result);
-                        if (typeCopyItemMap.keySet().contains(item.type_key)) {
-                            typeCopyItemMap.get(item.type_key).add(item);
-                        } else {
-                            List<CopyItem> itemList = new ArrayList<>();
-                            itemList.add(item);
-                            typeCopyItemMap.put(item.type_key, itemList);
                         }
                     }
-                }
-                if (!typeCopyItemMap.isEmpty()) {
-                    // 转换抄录项树形结构
-                    for (String key : typeCopyItemMap.keySet()) {
-                        List<CopyItem> itemList = typeCopyItemMap.get(key);
-                        TreeNode parentNode = null;
-                        for (CopyItem item : itemList) {
-                            if (parentNode == null) {
-                                CopyItem parentItem = item.clone();
-                                parentItem.description = copyType.get(item.type_key);
-                                parentNode = new TreeNode(null, 1, true, parentItem);
-                            }
-                            if ("Y".equalsIgnoreCase(item.val)) {
-                                CopyItem childItem = item.clone();
-                                childItem.setCopy("Y", "N", "N", "N", "N");
-                                parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
-                            }
-                            if ("Y".equalsIgnoreCase(item.val_a)) {
-                                CopyItem childItem = item.clone();
-                                childItem.setCopy("N", "Y", "N", "N", "N");
-                                parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
-                            }
-                            if ("Y".equalsIgnoreCase(item.val_b)) {
-                                CopyItem childItem = item.clone();
-                                childItem.setCopy("N", "N", "Y", "N", "N");
-                                parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
-                            }
-                            if ("Y".equalsIgnoreCase(item.val_c)) {
-                                CopyItem childItem = item.clone();
-                                childItem.setCopy("N", "N", "N", "Y", "N");
-                                parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
-                            }
-                            if ("Y".equalsIgnoreCase(item.val_o)) {
-                                CopyItem childItem = item.clone();
-                                childItem.setCopy("N", "N", "N", "N", "Y");
-                                parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
-                            }
-
+                    // 上次抄录值
+                    if (null != historyResult) {
+                        if ("Y".equalsIgnoreCase(item.val)) {
+                            result.val_old = historyResult.val;
                         }
-                        newData.add(parentNode);
+                        if ("Y".equalsIgnoreCase(item.val_a)) {
+                            result.val_a_old = historyResult.val_a;
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_b)) {
+                            result.val_b_old = historyResult.val_b;
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_c)) {
+                            result.val_c_old = historyResult.val_c;
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_o)) {
+                            result.val_o_old = historyResult.val_o;
+                        }
+                    }
+                    copyResultMap.put(item.id, result);
+                    if (typeCopyItemMap.keySet().contains(item.type_key)) {
+                        typeCopyItemMap.get(item.type_key).add(item);
+                    } else {
+                        List<CopyItem> itemList = new ArrayList<>();
+                        itemList.add(item);
+                        typeCopyItemMap.put(item.type_key, itemList);
                     }
                 }
-                mHandler.sendEmptyMessage(LOAD_COPY_FINISIH);
-                // 设置当前抄录设备集合,判断当前设备是否抄录
-                copyMap = CopyResultService.getInstance().getCopyDeviceIdList1(currentReportId, CopyItemService.getInstance().getCopyType());
-                mHandler.post(() -> {
-                    data.clear();
-                    data.addAll(newData);
-                    mHandler.sendEmptyMessage(LOAD_COPY_MAP);
-                });
             }
+            if (!typeCopyItemMap.isEmpty()) {
+                // 转换抄录项树形结构
+                for (String key : typeCopyItemMap.keySet()) {
+                    List<CopyItem> itemList = typeCopyItemMap.get(key);
+                    TreeNode parentNode = null;
+                    for (CopyItem item : itemList) {
+                        if (parentNode == null) {
+                            CopyItem parentItem = item.clone();
+                            parentItem.description = copyType.get(item.type_key);
+                            parentNode = new TreeNode(null, 1, true, parentItem);
+                        }
+                        if ("Y".equalsIgnoreCase(item.val)) {
+                            CopyItem childItem = item.clone();
+                            childItem.setCopy("Y", "N", "N", "N", "N");
+                            parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_a)) {
+                            CopyItem childItem = item.clone();
+                            childItem.setCopy("N", "Y", "N", "N", "N");
+                            parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_b)) {
+                            CopyItem childItem = item.clone();
+                            childItem.setCopy("N", "N", "Y", "N", "N");
+                            parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_c)) {
+                            CopyItem childItem = item.clone();
+                            childItem.setCopy("N", "N", "N", "Y", "N");
+                            parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
+                        }
+                        if ("Y".equalsIgnoreCase(item.val_o)) {
+                            CopyItem childItem = item.clone();
+                            childItem.setCopy("N", "N", "N", "N", "Y");
+                            parentNode.addChildNode(new TreeNode(parentNode, 2, false, childItem));
+                        }
+
+                    }
+                    newData.add(parentNode);
+                }
+            }
+            mHandler.sendEmptyMessage(LOAD_COPY_FINISIH);
+            // 设置当前抄录设备集合,判断当前设备是否抄录
+            copyMap = CopyResultService.getInstance().getCopyDeviceIdList1(currentReportId, CopyItemService.getInstance().getCopyType());
+            mHandler.post(() -> {
+                data.clear();
+                data.addAll(newData);
+                mHandler.sendEmptyMessage(LOAD_COPY_MAP);
+            });
         });
 
     }
@@ -423,21 +417,13 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");
         tipsBinding.btnSure.setText("是");
-        tipsBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                defectDialog.dismiss();
-            }
-        });
-        tipsBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyBord();
-                defectDialog.dismiss();
-                Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
-                setIntentValue(intent);
-                startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
-            }
+        tipsBinding.btnCancel.setOnClickListener(v -> defectDialog.dismiss());
+        tipsBinding.btnSure.setOnClickListener(v -> {
+            hideKeyBord();
+            defectDialog.dismiss();
+            Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
+            setIntentValue(intent);
+            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
     }
 
@@ -466,21 +452,17 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
 
     private void initOnClick() {
         binding.tvBatteryTestStep.setOnClickListener(view -> {
-            saveAll();
-            String tip = String.format(getText(R.string.xs_dialog_tips_finish_str) + "", CopyResultService.getInstance().getCopyResult(currentBdzId, currentReportId, CopyItemService.getInstance().getCopyType()));
-            showTipsDialog(binding.llRootContainer, tip);
+            CopyAllValueActivity3.this.saveAll();
+            String tip = String.format(CopyAllValueActivity3.this.getText(R.string.xs_dialog_tips_finish_str) + "", CopyResultService.getInstance().getCopyResult(currentBdzId, currentReportId, CopyItemService.getInstance().getCopyType()));
+            CopyAllValueActivity3.this.showTipsDialog(binding.llRootContainer, tip);
         });
 
 
-        binding.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
-        binding.btnNext.setOnClickListener(view -> {
-            operateNextDevice();
-        });
+        binding.ibtnCancel.setOnClickListener(view -> CopyAllValueActivity3.this.onBackPressed());
+        binding.btnNext.setOnClickListener(view -> CopyAllValueActivity3.this.operateNextDevice());
 
         binding.ibtnSpread.setOnClickListener(view -> {
-            saveAll();
+            CopyAllValueActivity3.this.saveAll();
             if (!deviceAdapter.isFirst()) {
                 deviceAdapter.pre();
             }
@@ -488,7 +470,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
                 isFinish = false;
                 binding.btnNext.setText(R.string.xs_next);
             }
-            setDeviceListDisplay();
+            CopyAllValueActivity3.this.setDeviceListDisplay();
         });
     }
 
@@ -543,12 +525,8 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         copyTipsBinding.tvCopy.setText(copytips);
         copyTipsBinding.tvTips.setVisibility(View.GONE);
         tipsDialog.show();
-        copyTipsBinding.btnSure.setOnClickListener(view -> {
-            currentActivity.finish();
-        });
-        copyTipsBinding.btnCancel.setOnClickListener(view -> {
-            tipsDialog.dismiss();
-        });
+        copyTipsBinding.btnSure.setOnClickListener(view -> currentActivity.finish());
+        copyTipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
     }
 
     /**

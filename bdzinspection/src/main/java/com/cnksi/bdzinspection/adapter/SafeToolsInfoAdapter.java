@@ -56,7 +56,7 @@ public class SafeToolsInfoAdapter extends BaseRecyclerAdapter<DbModel> {
         this.isSelectedAll = selectedAll;
         if (selectedAll) {
             checkMap.clear();
-            List<DbModel> modelList = (List<DbModel>) realDatas;
+            List<DbModel> modelList = realDatas;
             for (DbModel dbModel : modelList) {
                 checkMap.put(dbModel.getString("id"), true);
             }
@@ -108,7 +108,7 @@ public class SafeToolsInfoAdapter extends BaseRecyclerAdapter<DbModel> {
 
     @Override
     public void convert(RecyclerHolder holder, DbModel item, final int position, boolean isScrolling) {
-        final DbModel dbModel = (DbModel) item;
+        final DbModel dbModel = item;
         String date = dbModel.getString("next_check_time");
         String currentTime = DateUtils.getCurrentLongTime();
         String status = dbModel.getString("status");
@@ -150,15 +150,12 @@ public class SafeToolsInfoAdapter extends BaseRecyclerAdapter<DbModel> {
         }
         (holder.getView(R.id.cb_selected)).setTag(dbModel);
         (holder.getView(R.id.ll_root)).setTag((holder.getView(R.id.cb_selected)));
-        ((CheckBox) (holder.getView(R.id.cb_selected))).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DbModel dbModel1 = (DbModel) buttonView.getTag();
-                if (!isChecked) {
-                    checkMap.remove(dbModel1.getString("id"));
-                } else {
-                    checkMap.put(dbModel1.getString("id"), isChecked);
-                }
+        ((CheckBox) (holder.getView(R.id.cb_selected))).setOnCheckedChangeListener((buttonView, isChecked) -> {
+            DbModel dbModel1 = (DbModel) buttonView.getTag();
+            if (!isChecked) {
+                checkMap.remove(dbModel1.getString("id"));
+            } else {
+                checkMap.put(dbModel1.getString("id"), isChecked);
             }
         });
 
@@ -190,12 +187,9 @@ public class SafeToolsInfoAdapter extends BaseRecyclerAdapter<DbModel> {
                 listener.onClick(v, dbModel, position);
             }
         });
-        (holder.getView(R.id.cb_selected)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != listener) {
-                    listener.onClick(v, dbModel, position);
-                }
+        (holder.getView(R.id.cb_selected)).setOnClickListener(v -> {
+            if (null != listener) {
+                listener.onClick(v, dbModel, position);
             }
         });
         if (!isSwipeLeft) {

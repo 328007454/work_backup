@@ -69,25 +69,15 @@ public class SignNameAdapter extends SimpleBaseAdapter {
            itemBinding.del.setVisibility(View.VISIBLE);
         }
 
-        itemBinding.del.setOnClickListener(v -> {
-            listener.OnAdapterClick(v, position, MASK | 0);
-        });
+        itemBinding.del.setOnClickListener(v -> listener.OnAdapterClick(v, position, MASK | 0));
 
-        itemBinding.tvCzrSign.setOnClickListener(v -> {
-            listener.OnAdapterClick(v, position, MASK | 1);
-        });
+        itemBinding.tvCzrSign.setOnClickListener(v -> listener.OnAdapterClick(v, position, MASK | 1));
 
-        itemBinding.signImgPic.setOnClickListener(v -> {
-            listener.OnAdapterClick(v, position, MASK | 1);
-        });
+        itemBinding.signImgPic.setOnClickListener(v -> listener.OnAdapterClick(v, position, MASK | 1));
 
-        itemBinding.llContainerSign.setOnClickListener(view -> {
-            listener.OnAdapterClick(view, position, MASK | 1);
-        });
+        itemBinding.llContainerSign.setOnClickListener(view -> listener.OnAdapterClick(view, position, MASK | 1));
 
-        itemBinding.signImg.setOnClickListener(view -> {
-            listener.OnAdapterClick(view, position, MASK | 2);
-        });
+        itemBinding.signImg.setOnClickListener(view -> listener.OnAdapterClick(view, position, MASK | 2));
 
 
         return itemBinding.getRoot();

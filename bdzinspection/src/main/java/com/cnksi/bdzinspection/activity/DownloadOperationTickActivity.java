@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -120,35 +121,32 @@ public class DownloadOperationTickActivity extends TitleActivity {
      * 解析数据
      */
     private void parseData(long delayTime) {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                OperateTick operateTick = OpearTickParser.parseOpearTick(path);
-                if (operateTick != null) {
-                    mOperateTick = new com.cnksi.bdzinspection.model.OperateTick(operateTick.getTaskName(),
-                            operateTick.getCode(), operateTick.getUnit());
+        mHandler.postDelayed(() -> {
+            OperateTick operateTick = OpearTickParser.parseOpearTick(path);
+            if (operateTick != null) {
+                mOperateTick = new com.cnksi.bdzinspection.model.OperateTick(operateTick.getTaskName(),
+                        operateTick.getCode(), operateTick.getUnit());
+                try {
+                    isSuccess = OperateTicketService.getInstance().saveOrUpdate(mOperateTick);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                    isSuccess = false;
+                }
+                if (isSuccess && operateTick.getOpears() != null && operateTick.getOpears().size() > 0) {
+                    ArrayList<OperateItem> operateItemList = new ArrayList<OperateItem>();
+                    for (int i = 0, count = operateTick.getOpears().size(); i < count; i++) {
+                        operateItemList.add(new OperateItem(mOperateTick.id, String.valueOf(i + 1),
+                                operateTick.getOpears().get(i)));
+                    }
                     try {
-                        isSuccess = OperateTicketService.getInstance().saveOrUpdate(mOperateTick);
+                        isSuccess = OperateItemService.getInstance().saveOrUpdate(operateItemList);
                     } catch (DbException e) {
                         e.printStackTrace();
                         isSuccess = false;
                     }
-                    if (isSuccess && operateTick.getOpears() != null && operateTick.getOpears().size() > 0) {
-                        ArrayList<OperateItem> operateItemList = new ArrayList<OperateItem>();
-                        for (int i = 0, count = operateTick.getOpears().size(); i < count; i++) {
-                            operateItemList.add(new OperateItem(mOperateTick.id, String.valueOf(i + 1),
-                                    operateTick.getOpears().get(i)));
-                        }
-                        try {
-                            isSuccess = OperateItemService.getInstance().saveOrUpdate(operateItemList);
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                            isSuccess = false;
-                        }
-                    }
-                    if (isSuccess) {
-                        mHandler.sendEmptyMessage(LOAD_DATA);
-                    }
+                }
+                if (isSuccess) {
+                    mHandler.sendEmptyMessage(LOAD_DATA);
                 }
             }
         }, delayTime);
@@ -177,10 +175,10 @@ public class DownloadOperationTickActivity extends TitleActivity {
     }
 
     private void initOnClick() {
-        titlebaseBinding.ibtnCancel.setOnClickListener(view -> onBackPressed());
+        titlebaseBinding.ibtnCancel.setOnClickListener(view -> DownloadOperationTickActivity.this.onBackPressed());
         binding.llRootContainer.setOnLongClickListener(view -> {
             mVibrator.vibrate(50);
-            parseData(3000);
+            DownloadOperationTickActivity.this.parseData(3000);
             return true;
         });
     }
@@ -204,7 +202,7 @@ public class DownloadOperationTickActivity extends TitleActivity {
             Intent intent = new Intent(currentActivity, OperateTaskCheckedActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, mOperateTick.id);
             intent.putExtra(Config.IS_FROM_BATTERY, true);
-            startActivity(intent);
+            DownloadOperationTickActivity.this.startActivity(intent);
             currentActivity.finish();
         });
         tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());

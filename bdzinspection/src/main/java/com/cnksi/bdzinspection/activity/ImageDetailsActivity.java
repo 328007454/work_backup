@@ -87,16 +87,12 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
     }
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> ImageDetailsActivity.this.onBackPressed());
         binding.includeTitle.tvBatteryTestStep.setOnClickListener(view -> {
             cancelImageList.add(imageList.get(binding.viewPager.getCurrentItem()));
-            onBackPressed();
+            ImageDetailsActivity.this.onBackPressed();
         });
-        binding.ibtnDelete.setOnClickListener(view -> {
-            showSureTipsDialog();
-        });
+        binding.ibtnDelete.setOnClickListener(view -> ImageDetailsActivity.this.showSureTipsDialog());
     }
 
     XsDialogTipsBinding tipsBinding;
@@ -122,15 +118,13 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
             imageList.remove(currentPosition);
             cancelImageList.add(imageUrl);
             if (imageList.size() == 0) {
-                onBackPressed();
+                ImageDetailsActivity.this.onBackPressed();
             }
             viewAdapter.notifyDataSetChanged();
             binding.pageText.setText(String.valueOf(currentPosition + 1) + "/" + imageList.size());
         });
 
-        tipsBinding.btnCancel.setOnClickListener(view -> {
-            tipsDialog.dismiss();
-        });
+        tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
     }
 
     @SuppressWarnings("deprecation")
@@ -161,8 +155,8 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
         @Override
         public View instantiateItem(ViewGroup container, int position) {
             View view = LayoutInflater.from(ImageDetailsActivity.this).inflate(R.layout.xs_zoom_image_layout, container, false);
-            final PhotoView zoomImageView = (PhotoView) view.findViewById(R.id.zoom_image_view);
-            final ProgressBar progress = (ProgressBar) view.findViewById(R.id.loading);
+            final PhotoView zoomImageView = view.findViewById(R.id.zoom_image_view);
+            final ProgressBar progress = view.findViewById(R.id.loading);
             String imageUrl = imageList.get(position);
 
             Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(imageUrl,ScreenUtils.getScreenWidth(container.getContext()));
@@ -172,7 +166,7 @@ public class ImageDetailsActivity extends BaseActivity implements OnPageChangeLi
                 ToastUtils.showMessage( "加载失败");
             }
             progress.setVisibility(View.GONE);
-            ((ViewPager) container).addView(view, 0);
+            container.addView(view, 0);
             return view;
         }
 

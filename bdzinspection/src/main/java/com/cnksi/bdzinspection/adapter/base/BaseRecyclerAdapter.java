@@ -87,14 +87,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 	}
 
 	public View.OnClickListener getOnClickListener(final int position) {
-		return new View.OnClickListener() {
-			@Override
-			public void onClick(@Nullable View v) {
-				if (listener != null && v != null) {
-					listener.onAdapterItemClick(v, realDatas.get(position), position);
-				}
-			}
-		};
+		return v -> {
+            if (listener != null && v != null) {
+                listener.onAdapterItemClick(v, realDatas.get(position), position);
+            }
+        };
 	}
 
 	public BaseRecyclerAdapter<T> refresh(Collection<T> datas) {

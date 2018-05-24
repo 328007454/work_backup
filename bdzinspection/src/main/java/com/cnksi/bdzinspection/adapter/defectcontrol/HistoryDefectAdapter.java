@@ -145,10 +145,10 @@ public class HistoryDefectAdapter extends SimpleBaseAdapter {
         }
 
 
-        itemBinding.tvReportDefect.setOnClickListener(view -> onClick(view, mDefect));
-        itemBinding.tvEliminateDefect.setOnClickListener(view -> onClick(view, mDefect));
-        itemBinding.ivDefectImage.setOnClickListener(view -> onClick(view, mDefect));
-        itemBinding.tvTrackDefect.setOnClickListener(view -> onClick(view, mDefect));
+        itemBinding.tvReportDefect.setOnClickListener(view -> HistoryDefectAdapter.this.onClick(view, mDefect));
+        itemBinding.tvEliminateDefect.setOnClickListener(view -> HistoryDefectAdapter.this.onClick(view, mDefect));
+        itemBinding.ivDefectImage.setOnClickListener(view -> HistoryDefectAdapter.this.onClick(view, mDefect));
+        itemBinding.tvTrackDefect.setOnClickListener(view -> HistoryDefectAdapter.this.onClick(view, mDefect));
 
         return itemBinding.getRoot();
     }

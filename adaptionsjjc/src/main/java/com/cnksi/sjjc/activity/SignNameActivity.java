@@ -32,33 +32,25 @@ public class SignNameActivity extends Activity {
             mSignName = Environment.getExternalStorageDirectory().getAbsolutePath() + mSignName;
         }
 //       binding.view.setmPaintWidth(20);
-        binding.save1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.save1.setOnClickListener(v -> {
 
-                if (binding.view.getTouched()) {
-                    try {
-                        binding.view.save(mSignName, false, 10);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Intent data = new Intent();
-                    //返回全部路径 如果是上个Activity传过来的文件名 则不用处理
-                    data.putExtra(Config.SIGN_FILENAME, mSignName);
-                    setResult(RESULT_OK);
-                    finish();
-                } else {
-                    Toast.makeText(SignNameActivity.this, "您没有签名~", Toast.LENGTH_SHORT).show();
+            if (binding.view.getTouched()) {
+                try {
+                    binding.view.save(mSignName, false, 10);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                Intent data = new Intent();
+                //返回全部路径 如果是上个Activity传过来的文件名 则不用处理
+                data.putExtra(Config.SIGN_FILENAME, mSignName);
+                setResult(RESULT_OK);
+                finish();
+            } else {
+                Toast.makeText(SignNameActivity.this, "您没有签名~", Toast.LENGTH_SHORT).show();
             }
         });
 
-        binding.clear1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.view.clear();
-            }
-        });
+        binding.clear1.setOnClickListener(v -> binding.view.clear());
     }
 
 

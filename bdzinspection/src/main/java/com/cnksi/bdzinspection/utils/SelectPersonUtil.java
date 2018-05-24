@@ -67,7 +67,7 @@ public class SelectPersonUtil implements ItemClickListener {
 
     public void disPlayAllPerson(final List<DbModel> datas, View showAddPersonWidget) {
         this.allUsers = datas;
-        showAddPersonWidget.setOnClickListener(view -> showAddPersonDialog());
+        showAddPersonWidget.setOnClickListener(view -> SelectPersonUtil.this.showAddPersonDialog());
     }
 
 

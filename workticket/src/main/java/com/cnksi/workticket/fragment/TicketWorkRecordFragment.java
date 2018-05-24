@@ -68,17 +68,17 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
 
     private void initData() {
         ExecutorManager.executeTaskSerially(() -> {
-            futureOrders = WorkTicketOrderService.getInstance().getFutureWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(),Config.userAccount);
-            historyOrders = WorkTicketOrderService.getInstance().getHistoryWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(),Config.userAccount);
+            futureOrders = WorkTicketOrderService.getInstance().getFutureWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(), Config.userAccount);
+            historyOrders = WorkTicketOrderService.getInstance().getHistoryWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(), Config.userAccount);
             if (futureOrders != null && !futureOrders.isEmpty()) {
                 orders.clear();
                 orders.addAll(futureOrders);
             }
-            getActivity().runOnUiThread(() -> {
+            TicketWorkRecordFragment.this.getActivity().runOnUiThread(() -> {
                 recordAdapter = new TicketWorkRecordAdapter(R.layout.ticket_adapter_record_history, orders);
                 recordAdapter.setShowStyle("future");
-                recordAdapter.setOnItemClickListener(this);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                recordAdapter.setOnItemClickListener(TicketWorkRecordFragment.this);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TicketWorkRecordFragment.this.getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                 binding.recWork.setLayoutManager(linearLayoutManager);
                 binding.recWork.setAdapter(recordAdapter);
             });
@@ -100,10 +100,10 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
             styleStatus = "future";
             recordAdapter.setShowStyle(styleStatus);
             recordAdapter.notifyDataSetChanged();
-            binding.future.setTextColor(ContextCompat.getColor(getContext(), R.color.core_bg_white_ffffff));
+            binding.future.setTextColor(ContextCompat.getColor(TicketWorkRecordFragment.this.getContext(), R.color.core_bg_white_ffffff));
             binding.future.setBackgroundResource(R.drawable.ticket_05c8b8_10px_corner_shape);
 
-            binding.history.setTextColor(ContextCompat.getColor(getContext(), R.color.ticket_color_c0bab9));
+            binding.history.setTextColor(ContextCompat.getColor(TicketWorkRecordFragment.this.getContext(), R.color.ticket_color_c0bab9));
             binding.history.setBackgroundResource(R.drawable.ticket_c0bab9_10px_line_shape);
 
         });
@@ -117,10 +117,10 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
             recordAdapter.setShowStyle(styleStatus);
             recordAdapter.notifyDataSetChanged();
 
-            binding.history.setTextColor(ContextCompat.getColor(getContext(), R.color.core_bg_white_ffffff));
+            binding.history.setTextColor(ContextCompat.getColor(TicketWorkRecordFragment.this.getContext(), R.color.core_bg_white_ffffff));
             binding.history.setBackgroundResource(R.drawable.ticket_05c8b8_10px_corner_shape);
 
-            binding.future.setTextColor(ContextCompat.getColor(getContext(), R.color.ticket_color_c0bab9));
+            binding.future.setTextColor(ContextCompat.getColor(TicketWorkRecordFragment.this.getContext(), R.color.ticket_color_c0bab9));
             binding.future.setBackgroundResource(R.drawable.ticket_c0bab9_10px_line_shape);
         });
     }

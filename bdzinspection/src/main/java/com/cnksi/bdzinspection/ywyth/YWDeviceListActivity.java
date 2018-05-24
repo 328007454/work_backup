@@ -74,9 +74,7 @@ public class YWDeviceListActivity extends BaseActivity {
     }
     
     private void initOncLick() {
-        binding.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.ibtnCancel.setOnClickListener(view -> YWDeviceListActivity.this.onBackPressed());
     }
 
     @Override

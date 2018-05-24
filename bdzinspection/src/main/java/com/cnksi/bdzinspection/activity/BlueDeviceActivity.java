@@ -44,12 +44,9 @@ public class BlueDeviceActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
          binding = DataBindingUtil.setContentView(currentActivity,R.layout.xs_activity_bluedevice);
         setResult(Activity.RESULT_CANCELED);
-        binding.buttonScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doDiscovery();
-                view.setVisibility(View.GONE);
-            }
+        binding.buttonScan.setOnClickListener(view -> {
+            doDiscovery();
+            view.setVisibility(View.GONE);
         });
 
         mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this,

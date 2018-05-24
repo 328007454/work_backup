@@ -75,12 +75,7 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
         }
 
 
-        holder.getRootView().setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClickListener.onClick(v, item, position);
-            }
-        });
+        holder.getRootView().setOnClickListener(v -> itemClickListener.onClick(v, item, position));
     }
 
     public void pre() {

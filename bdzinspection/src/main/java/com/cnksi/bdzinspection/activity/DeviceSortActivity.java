@@ -8,6 +8,7 @@ import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.view.swipemenulist.SwipeMenuDragSortListView;
 
 import org.xutils.ex.DbException;
 

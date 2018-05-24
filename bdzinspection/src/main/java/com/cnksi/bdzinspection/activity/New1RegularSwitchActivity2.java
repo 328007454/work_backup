@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.cnksi.bdzinspection.R;
+import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.New1RegularSwitchListAdapter2;
 import com.cnksi.bdzinspection.adapter.SwitchMenuAudioAdapter;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
@@ -292,51 +294,48 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     }
 
     private void initialData() {
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    report = ReportService.getInstance().findById(currentReportId);
-                    String repSwitchId = report.repSwithoverId;
-                    dbModelList = StandardSwitchOverService.getInstance().getAllTypeNew(currentInspectionType, currentBdzId, currentReportId, repSwitchId);
-                    boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
+        ExecutorManager.executeTask(() -> {
+            try {
+                report = ReportService.getInstance().findById(currentReportId);
+                String repSwitchId = report.repSwithoverId;
+                dbModelList = StandardSwitchOverService.getInstance().getAllTypeNew(currentInspectionType, currentBdzId, currentReportId, repSwitchId);
+                boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
 //                    if ("maintenance_xdcdyjc".equalsIgnoreCase(currentInspectionType)) {
-                    if (xudianchi) {
-                        batteryDbmodelList = BatteryGroupService.getInstance().findBatteryGroup(currentBdzId);
-                    }
-                    if (dbModelList != null) {
-                        groupList = new LinkedList<DbModel>();
-                        childMapLists = new HashMap<>();
-                        ArrayList<DbModel> tempList = null;
-                        //生成显示用的序号
-                        int n1 = 0, n2 = 0, n3 = 0;
-                        for (DbModel model : dbModelList) {
-                            if (model.getInt(StandardSwitchover.LEVEL) == 1) {
-                                tempList = new ArrayList<DbModel>();
-                                n1++;
-                                n2 = 0;
-                                model.add(StandardSwitchover.DISPLAYNUM, n1 + "、");
-                                groupList.add(model);
-                                childMapLists.put(model, tempList);
+                if (xudianchi) {
+                    batteryDbmodelList = BatteryGroupService.getInstance().findBatteryGroup(currentBdzId);
+                }
+                if (dbModelList != null) {
+                    groupList = new LinkedList<DbModel>();
+                    childMapLists = new HashMap<>();
+                    ArrayList<DbModel> tempList = null;
+                    //生成显示用的序号
+                    int n1 = 0, n2 = 0, n3 = 0;
+                    for (DbModel model : dbModelList) {
+                        if (model.getInt(StandardSwitchover.LEVEL) == 1) {
+                            tempList = new ArrayList<DbModel>();
+                            n1++;
+                            n2 = 0;
+                            model.add(StandardSwitchover.DISPLAYNUM, n1 + "、");
+                            groupList.add(model);
+                            childMapLists.put(model, tempList);
+                        } else {
+                            if (model.getInt(StandardSwitchover.LEVEL) == 2) {
+                                n2++;
+                                n3 = 0;
+                                dbModelArrayList.add(model);
+                                model.add(StandardSwitchover.DISPLAYNUM, n1 + "." + n2);
                             } else {
-                                if (model.getInt(StandardSwitchover.LEVEL) == 2) {
-                                    n2++;
-                                    n3 = 0;
-                                    dbModelArrayList.add(model);
-                                    model.add(StandardSwitchover.DISPLAYNUM, n1 + "." + n2);
-                                } else {
-                                    n3++;
-                                    model.add(StandardSwitchover.DISPLAYNUM, n1 + "." + n2 + "." + n3);
-                                }
-                                tempList.add(model);
+                                n3++;
+                                model.add(StandardSwitchover.DISPLAYNUM, n1 + "." + n2 + "." + n3);
                             }
+                            tempList.add(model);
                         }
                     }
-                } catch (DbException e) {
-                    e.printStackTrace();
                 }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
 
     }
@@ -465,17 +464,15 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                     mAudioAdapter = new SwitchMenuAudioAdapter(R.layout.xs_item_audio, audioUrls);
                     mSwitch1Binding.recyAudio.setLayoutManager(new GridLayoutManager(currentActivity, 4));
                     mSwitch1Binding.recyAudio.setAdapter(mAudioAdapter);
-                    mAudioAdapter.setItemClicListener((view, data, position) -> {
-                        DialogUtils.showSureTipsDialog(currentActivity, null, "确定要删除吗？", new OnViewClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                FileUtils.deleteFile(Config.AUDIO_FOLDER + audioUrls.get(position));
-                                audioUrls.remove(position);
-                                report.audioUrl = StringUtils.arrayListToString(audioUrls);
-                                saveReportAudioFile();
-                            }
-                        });
-                    });
+                    mAudioAdapter.setItemClicListener((view, data, position) -> DialogUtils.showSureTipsDialog(currentActivity, null, "确定要删除吗？", new OnViewClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            FileUtils.deleteFile(Config.AUDIO_FOLDER + audioUrls.get(position));
+                            audioUrls.remove(position);
+                            report.audioUrl = StringUtils.arrayListToString(audioUrls);
+                            saveReportAudioFile();
+                        }
+                    }));
                 }
                 break;
             case LOAD_MORE_DATA:
@@ -507,18 +504,12 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                     for (DbModel dbModel : batteryDbmodelList) {
                         sumBatteryCode = sumBatteryCode + Integer.valueOf(dbModel.getString("amount"));
                     }
-                    ExecutorManager.executeTask(new Runnable() {
-                        @Override
-                        public void run() {
-                            batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    int showStr1 = R.string.xs_dialog_tips_content_maintance;
-                                    showTipsDialog(mSwitch1Binding.llRootContainer, intent, -1, "本次蓄电池抄录:" + (TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? 0 : batteryCopyTotal.getString("count")) + "/" + sumBatteryCode + "。" + getText(showStr1), false);
-                                }
-                            });
-                        }
+                    ExecutorManager.executeTask(() -> {
+                        batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
+                        runOnUiThread(() -> {
+                            int showStr1 = R.string.xs_dialog_tips_content_maintance;
+                            showTipsDialog(mSwitch1Binding.llRootContainer, intent, -1, "本次蓄电池抄录:" + (TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? 0 : batteryCopyTotal.getString("count")) + "/" + sumBatteryCode + "。" + getText(showStr1), false);
+                        });
                     });
                 } else {
                     showTipsDialog(mSwitch1Binding.llRootContainer, intent, -1, showStr, false);
@@ -548,21 +539,21 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     private void initOnClick() {
 
         mSwitch1Binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            saveOrUpdateInputValue(0x00);
-            onBackPressed();
+            New1RegularSwitchActivity2.this.saveOrUpdateInputValue(0x00);
+            New1RegularSwitchActivity2.this.onBackPressed();
         });
 
         mSwitch1Binding.btnComplete.setOnClickListener(view -> {
             TTSUtils.getInstance().stopSpeak();
             // 保存抄录数据
-            saveOrUpdateInputValue(ON_COMPELETE_PRESSED_CODE);
+            New1RegularSwitchActivity2.this.saveOrUpdateInputValue(ON_COMPELETE_PRESSED_CODE);
         });
 
         mSwitch1Binding.includeTitle.ibtnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, ChangeDeviceStandardActivity.class);
             intent.putExtra(Config.IS_ADD_DEVICE_STANDARD, true);
             intent.putExtra(Config.CURRENT_DEVICE_PART_ID, currentDevicePartId);
-            startActivityForResult(intent, UPDATE_DEVICE_STANDARD_REQUEST_CODE);
+            New1RegularSwitchActivity2.this.startActivityForResult(intent, UPDATE_DEVICE_STANDARD_REQUEST_CODE);
         });
 
         mSwitch1Binding.includeTitle.ibtnExit.setOnClickListener(view -> {
@@ -578,18 +569,18 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                 intent1.putExtra(Config.CURRENT_FILENAME, PreferencesUtils.get(Config.PICTURE_PREFIX, ""));
                 intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentInspectionTypeName);
                 intent1.setComponent(componentName);
-                startActivity(intent1);
+                New1RegularSwitchActivity2.this.startActivity(intent1);
             } else if ("maintenance_blqdzcs".equalsIgnoreCase(currentInspectionType)) {
-                startActivity(new Intent(currentActivity, CopyAllValueActivity3.class));
+                New1RegularSwitchActivity2.this.startActivity(new Intent(currentActivity, CopyAllValueActivity3.class));
             } else if (currentInspectionTypeName.contains("压板")) {
-                startActivity(new Intent(currentActivity, CopyMaintenanceDeviceActivity.class));
+                New1RegularSwitchActivity2.this.startActivity(new Intent(currentActivity, CopyMaintenanceDeviceActivity.class));
             }
         });
 
         mSwitch1Binding.tvTips.setOnClickListener(view -> {
             if (!MediaRecorderUtils.getInstance().isRecording()) {
                 audioFileName = DateUtils.getCurrentTime(DateUtils.yyyyMMddHHmmssSSS) + Config.AMR_POSTFIX;
-                recordAudioUtils.startRecord(Config.AUDIO_FOLDER + audioFileName, () -> saveReportAudioFile());
+                recordAudioUtils.startRecord(Config.AUDIO_FOLDER + audioFileName, () -> New1RegularSwitchActivity2.this.saveReportAudioFile());
             } else {
                 ToastUtils.showMessage("当前正在录音");
             }
@@ -673,17 +664,14 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
      */
     private void addWaterTextToBitmap() {
         CustomerDialog.showProgress(currentActivity, "正在处理图片...");
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.RESULT_PICTURES_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
-                currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
-                BitmapUtil.saveBitmap(currentBitmap, Config.RESULT_PICTURES_FOLDER + currentImageName, 60);
-                String pics = dbModel.getString(SwitchPic.PIC);
-                pics = TextUtils.isEmpty(pics) ? currentImageName : pics + "," + currentImageName;
-                dbModel.add(SwitchPic.PIC, pics);
-                saveSwitchPic();
-            }
+        ExecutorManager.executeTask(() -> {
+            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.RESULT_PICTURES_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
+            currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
+            BitmapUtil.saveBitmap(currentBitmap, Config.RESULT_PICTURES_FOLDER + currentImageName, 60);
+            String pics = dbModel.getString(SwitchPic.PIC);
+            pics = TextUtils.isEmpty(pics) ? currentImageName : pics + "," + currentImageName;
+            dbModel.add(SwitchPic.PIC, pics);
+            saveSwitchPic();
         });
     }
 
@@ -724,36 +712,33 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
      * 保存抄录数据
      */
     private void saveOrUpdateInputValue(final int messageCode) {
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
+        ExecutorManager.executeTask(() -> {
 //                if (!TextUtils.isEmpty(PreferencesUtils.get(SwitchMenu.REPSWITCHOVERID, ""))) {
 //                    report.repSwithoverId = PreferencesUtils.get(SwitchMenu.REPSWITCHOVERID, "");
-                try {
-                    ReportService.getInstance().saveOrUpdate(report);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
+            try {
+                ReportService.getInstance().saveOrUpdate(report);
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
 //                }
-                DefectRecord defectRecord = null;
-                for (DbModel model : dbModelList) {
-                    if (model.getInt(StandardSwitchover.LEVEL) == 3 && "1".equalsIgnoreCase(model.getString(StandardSwitchover.ISCOPY))) {
-                        defectRecord = DefectRecordService.getInstance().findFirstCopyRecord(currentReportId, model.getString(StandardSwitchover.ID));
-                        if (null == defectRecord) {
-                            defectRecord = new DefectRecord(currentReportId, currentBdzId, currentBdzName);
-                        }
-                        defectRecord.standSwitchId = model.getString(StandardSwitchover.ID);
-                        defectRecord.val = model.getString(DefectRecord.VAL);
-                        defectRecord.oldval = model.getString(DefectRecord.OLDVAL);
-                        try {
-                           DefectRecordService.getInstance().saveOrUpdate(defectRecord);
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
+            DefectRecord defectRecord = null;
+            for (DbModel model : dbModelList) {
+                if (model.getInt(StandardSwitchover.LEVEL) == 3 && "1".equalsIgnoreCase(model.getString(StandardSwitchover.ISCOPY))) {
+                    defectRecord = DefectRecordService.getInstance().findFirstCopyRecord(currentReportId, model.getString(StandardSwitchover.ID));
+                    if (null == defectRecord) {
+                        defectRecord = new DefectRecord(currentReportId, currentBdzId, currentBdzName);
+                    }
+                    defectRecord.standSwitchId = model.getString(StandardSwitchover.ID);
+                    defectRecord.val = model.getString(DefectRecord.VAL);
+                    defectRecord.oldval = model.getString(DefectRecord.OLDVAL);
+                    try {
+                       DefectRecordService.getInstance().saveOrUpdate(defectRecord);
+                    } catch (DbException e) {
+                        e.printStackTrace();
                     }
                 }
-                mHandler.sendEmptyMessage(messageCode);
             }
+            mHandler.sendEmptyMessage(messageCode);
         });
     }
 
@@ -815,13 +800,10 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         }
 
         public void initClickListener() {
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dismiss();
-                    ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(anchor, "rotation", 0, 360f);
-                    rotationAnimator.start();
-                }
+            binding.getRoot().setOnClickListener(v -> {
+                dismiss();
+                ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(anchor, "rotation", 0, 360f);
+                rotationAnimator.start();
             });
             binding.idCamera.setOnClickListener(listener);
             binding.idDefect.setOnClickListener(listener);

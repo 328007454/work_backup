@@ -91,8 +91,8 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
         binding.tvLookDetails.setOnClickListener(view -> {
             //查看详情
             Intent intent1 = new Intent(_this, GetSendLetterActivity.class);
-            startActivity(intent1);
-            finish();
+            GetSendLetterReportActivity.this.startActivity(intent1);
+            GetSendLetterReportActivity.this.finish();
         });
 
     }
@@ -153,12 +153,7 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
                         for (int i = 0; i < imageList.size(); i++) {
                             imgs.add(Config.RESULT_PICTURES_FOLDER + imageList.get(i));
                         }
-                        holder.getView(R.id.iv_exception_pic).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                showImageDetails(_this, imgs);
-                            }
-                        });
+                        holder.getView(R.id.iv_exception_pic).setOnClickListener(view -> showImageDetails(_this, imgs));
                     }
                 }
             }

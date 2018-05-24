@@ -82,9 +82,7 @@ public class CopyValueReportActivity extends BaseReportActivity {
     }
 
     private void initOnClick() {
-        binding.tvContinueInspection.setOnClickListener(view -> {
-            processor.gotoInspection(_this);
-        });
+        binding.tvContinueInspection.setOnClickListener(view -> processor.gotoInspection(_this));
     }
 
     @Override

@@ -94,9 +94,9 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
         helper.itemView.setOnClickListener(v -> {
             int pos = helper.getAdapterPosition();
             if (groupItem.isExpanded()) {
-                collapse(pos);
+                DeviceSelectAdapter.this.collapse(pos);
             } else {
-                expand(pos);
+                DeviceSelectAdapter.this.expand(pos);
             }
         });
     }
@@ -140,14 +140,14 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
         helper.itemView.setOnClickListener(v -> {
             int pos = helper.getAdapterPosition();
             if (spaceItem.isExpanded()) {
-                collapse(pos);
+                DeviceSelectAdapter.this.collapse(pos);
             } else {
-                expand(pos);
+                DeviceSelectAdapter.this.expand(pos);
             }
         });
         helper.getView(R.id.tv_group_item_select).setOnClickListener(view -> {
             if (null != groupItemClickListenner) {
-                groupItemClickListenner.onClick(view, spaceItem, getParentPosition(spaceItem));
+                groupItemClickListenner.onClick(view, spaceItem, DeviceSelectAdapter.this.getParentPosition(spaceItem));
             }
         });
         if (!TextUtils.isEmpty(inspectionType)&&(inspectionType.contains("maintenance")||inspectionType.contains("switchover"))){

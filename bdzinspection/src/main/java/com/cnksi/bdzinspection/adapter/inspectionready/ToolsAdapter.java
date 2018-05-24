@@ -36,12 +36,9 @@ public class ToolsAdapter extends BaseLinearLayoutAdapter<Tool> {
         holder.setText(R.id.tv_tools_name, item.name + "(" + item.unit + ")");
         holder.setVisable(R.id.tv_tools_tips, TextUtils.isEmpty(item.tips) ? View.GONE : View.VISIBLE);
         holder.setText(R.id.tv_tools_tips, item.tips);
-        holder.getView(R.id.tv_tools_name).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (toolsClick != null) {
-                    toolsClick.onItemClick(v, item, position);
-                }
+        holder.getView(R.id.tv_tools_name).setOnClickListener(v -> {
+            if (toolsClick != null) {
+                toolsClick.onItemClick(v, item, position);
             }
         });
     }

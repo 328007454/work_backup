@@ -43,8 +43,8 @@ public class MotionRuleFragment extends BaseFragment {
 
 	private void initialData() {
 		ExecutorManager.executeTask(() -> {
-			dbModel = DeviceService.getInstance().findAccidentDeal(currentDeviceId);
-			mHandler.sendEmptyMessage(LOAD_DATA);
+            dbModel = DeviceService.getInstance().findAccidentDeal(currentDeviceId);
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
 
 	}

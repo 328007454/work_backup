@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -138,12 +139,7 @@ public class WeatherView extends LinearLayout {
         rightLayoutParam.rightMargin = iconMargin;
         rightLayoutParam.leftMargin=iconMargin;
         this.addView(mIcon, rightLayoutParam);
-        mIcon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showWeatherDialog();
-            }
-        });
+        mIcon.setOnClickListener(v -> showWeatherDialog());
     }
 
     class WeatherAdapter extends BaseRecyclerAdapter<String> {
@@ -162,20 +158,17 @@ public class WeatherView extends LinearLayout {
             if (currentWeather.equals(item)) {
                 radioButton.setChecked(true);
             }
-            radioButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (currentWeather.equals(item)) {
-                        currentWeather = "";
-                    } else {
-                        currentWeather = item;
-                    }
-                    adapter1.notifyDataSetChanged();
-                    if (null != adapter2) {
-                        adapter2.notifyDataSetChanged();
-                    }
-                    mRecyclerView.scrollToPosition(position);
+            radioButton.setOnClickListener(v -> {
+                if (currentWeather.equals(item)) {
+                    currentWeather = "";
+                } else {
+                    currentWeather = item;
                 }
+                adapter1.notifyDataSetChanged();
+                if (null != adapter2) {
+                    adapter2.notifyDataSetChanged();
+                }
+                mRecyclerView.scrollToPosition(position);
             });
         }
     }

@@ -51,8 +51,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-;
-
 /**
  * Created by ironGe on 2016/6/12.
  * 收发信息界面
@@ -122,14 +120,11 @@ public class GetSendLetterActivity extends BaseActivity {
     }
 
     public void initView() {
-        binding.radioChannel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == R.id.radio_normal) {
-                    binding.llpic.setVisibility(View.GONE);
-                } else {
-                    binding.llpic.setVisibility(View.VISIBLE);
-                }
+        binding.radioChannel.setOnCheckedChangeListener((radioGroup, i) -> {
+            if (i == R.id.radio_normal) {
+                binding.llpic.setVisibility(View.GONE);
+            } else {
+                binding.llpic.setVisibility(View.VISIBLE);
             }
         });
         if (null == transceiverDeviceList || transceiverDeviceList.isEmpty()) {
@@ -149,7 +144,7 @@ public class GetSendLetterActivity extends BaseActivity {
             }
             //设置item的格式和点击动画
             View view = LayoutInflater.from(this).inflate(R.layout.item_tab, null, false);
-            TextView textView = (TextView) view.findViewById(R.id.tv_tab);
+            TextView textView = view.findViewById(R.id.tv_tab);
 //            textView.setTextSize(AutoUtils.getPercentHeightSizeBigger(44));
             AutoUtils.autoSize(view);
             textView.setTag(transceiverDevice);
@@ -160,20 +155,17 @@ public class GetSendLetterActivity extends BaseActivity {
             p.leftMargin = AutoUtils.getPercentHeightSizeBigger(30);
             view.setLayoutParams(p);
             binding.tabContainer.addView(view);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TranslateAnimation animation = new TranslateAnimation(binding.imageLocation.getLeft(), v.getLeft(), 0, 0);
-                    animation.setFillAfter(true);
-                    animation.setInterpolator(new AccelerateDecelerateInterpolator());
-                    binding.imageLocation.startAnimation(animation);
-                    saveCurrentPage();
-                    changeTab(v);
-                    if (v.getLeft() + v.getWidth() - binding.tabStrip.getScrollX() >= DisplayUtils.getInstance().getWidth()) {
-                        binding.tabStrip.smoothScrollBy(v.getLeft() + v.getWidth() - DisplayUtils.getInstance().getWidth() + 150, 0);
-                    } else if (v.getLeft() <= binding.tabStrip.getScrollX()) {
-                        binding.tabStrip.smoothScrollBy(v.getLeft() - 150 - binding.tabStrip.getScrollX(), 0);
-                    }
+            view.setOnClickListener(v -> {
+                TranslateAnimation animation = new TranslateAnimation(binding.imageLocation.getLeft(), v.getLeft(), 0, 0);
+                animation.setFillAfter(true);
+                animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                binding.imageLocation.startAnimation(animation);
+                saveCurrentPage();
+                changeTab(v);
+                if (v.getLeft() + v.getWidth() - binding.tabStrip.getScrollX() >= DisplayUtils.getInstance().getWidth()) {
+                    binding.tabStrip.smoothScrollBy(v.getLeft() + v.getWidth() - DisplayUtils.getInstance().getWidth() + 150, 0);
+                } else if (v.getLeft() <= binding.tabStrip.getScrollX()) {
+                    binding.tabStrip.smoothScrollBy(v.getLeft() - 150 - binding.tabStrip.getScrollX(), 0);
                 }
             });
         }
@@ -196,27 +188,25 @@ public class GetSendLetterActivity extends BaseActivity {
     private void initOnclick() {
         mTitleBinding.btnBack.setOnClickListener(view -> {
             KeyBoardUtils.closeKeybord(_this);
-            onBackPressed();
-            this.finish();
+            GetSendLetterActivity.this.onBackPressed();
+            GetSendLetterActivity.this.finish();
         });
 
         binding.btnFinish.setOnClickListener(view -> {
-            if (saveCurrentPage()) {
-                Dialog dialog = new Dialog(this, R.style.dialog);
-                ViewHolder holder = new ViewHolder(this, null, R.layout.dialog_test_conclusion, false);
+            if (GetSendLetterActivity.this.saveCurrentPage()) {
+                Dialog dialog = new Dialog(GetSendLetterActivity.this, R.style.dialog);
+                ViewHolder holder = new ViewHolder(GetSendLetterActivity.this, null, R.layout.dialog_test_conclusion, false);
                 AutoUtils.autoSize(holder.getRootView());
                 dialog.setContentView(holder.getRootView());
-                dialogEvent(dialog, holder);
+                GetSendLetterActivity.this.dialogEvent(dialog, holder);
                 dialog.show();
             }
         });
         binding.takePic.setOnClickListener(view -> {
-            imageName = FunctionUtil.getCurrentImageName(this);
-            FunctionUtil.takePicture(this, imageName, Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
+            imageName = FunctionUtil.getCurrentImageName(GetSendLetterActivity.this);
+            FunctionUtil.takePicture(GetSendLetterActivity.this, imageName, Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
         });
-        binding.showPic.setOnClickListener(view -> {
-            viewPic();
-        });
+        binding.showPic.setOnClickListener(view -> GetSendLetterActivity.this.viewPic());
     }
 
     @Override
@@ -296,7 +286,7 @@ public class GetSendLetterActivity extends BaseActivity {
     private void changeTab(View v) {
         for (int i = 0; i < binding.tabContainer.getChildCount(); i++) {
             View childView = binding.tabContainer.getChildAt(i);
-            TextView tvView = (TextView) childView.findViewById(R.id.tv_tab);
+            TextView tvView = childView.findViewById(R.id.tv_tab);
             if (v.equals(childView)) {
 //                childView.setSelected(true);
                 tvView.setSelected(true);
@@ -410,34 +400,26 @@ public class GetSendLetterActivity extends BaseActivity {
             e.printStackTrace();
             Log.e(TAG, "完成任务查询已有的收发信机记录异常");
         }
-        holder.getView(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        holder.getView(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                try {
-                    //1、修改报告
-                    report.jcqk = rbYes.isChecked() ? "正常" : "不正常";
-                    report.tq = binding.weatherView1.getSelectWeather();
-                    report.endtime = DateUtils.getCurrentLongTime();
-                    ReportService.getInstance().saveOrUpdate(report);
-                    //2、修改任务
-                    Task task = TaskService.getInstance().findById(currentTaskId);
-                    task.status = TaskStatus.done.name();
-                    TaskService.getInstance().saveOrUpdate(task);
-                    isNeedUpdateTaskState = true;
-                    Intent intent = new Intent(_this, GetSendLetterReportActivity.class);
-                    startActivity(intent);
-                    finish();
-                } catch (DbException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "完成任务保存数据失败");
-                }
+        holder.getView(R.id.btn_cancel).setOnClickListener(v -> dialog.dismiss());
+        holder.getView(R.id.btn_confirm).setOnClickListener(v -> {
+            dialog.dismiss();
+            try {
+                //1、修改报告
+                report.jcqk = rbYes.isChecked() ? "正常" : "不正常";
+                report.tq = binding.weatherView1.getSelectWeather();
+                report.endtime = DateUtils.getCurrentLongTime();
+                ReportService.getInstance().saveOrUpdate(report);
+                //2、修改任务
+                Task task = TaskService.getInstance().findById(currentTaskId);
+                task.status = TaskStatus.done.name();
+                TaskService.getInstance().saveOrUpdate(task);
+                isNeedUpdateTaskState = true;
+                Intent intent = new Intent(_this, GetSendLetterReportActivity.class);
+                startActivity(intent);
+                finish();
+            } catch (DbException e) {
+                e.printStackTrace();
+                Log.e(TAG, "完成任务保存数据失败");
             }
         });
     }

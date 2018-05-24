@@ -466,14 +466,12 @@ public class BaseActivity extends BaseCoreActivity {
         tipsDialog.show();
         tipsBinding.btnSure.setOnClickListener(view -> {
             if (isFinishInspection) {
-                updateReportStatus();
+                BaseActivity.this.updateReportStatus();
             }
-            startActivityForResult(intent, requestCode);
+            BaseActivity.this.startActivityForResult(intent, requestCode);
             tipsDialog.dismiss();
         });
-        tipsBinding.btnCancel.setOnClickListener(view -> {
-            tipsDialog.dismiss();
-        });
+        tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
     }
 
     /**
@@ -515,8 +513,8 @@ public class BaseActivity extends BaseCoreActivity {
     protected void createKeyBoardView(ViewGroup root) {
 
         mKeyBoardContainerView = LayoutInflater.from(currentActivity).inflate(R.layout.xs_keyboard_layout, root, false);
-        mKeyBoardView = (KeyboardView) mKeyBoardContainerView.findViewById(R.id.keyboard_view);
-        final LinearLayout mSeekBarContainer = (LinearLayout) mKeyBoardContainerView
+        mKeyBoardView = mKeyBoardContainerView.findViewById(R.id.keyboard_view);
+        final LinearLayout mSeekBarContainer = mKeyBoardContainerView
                 .findViewById(R.id.rl_seekbar_container);
         // 动态获取seekBar的高度
         int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -553,11 +551,7 @@ public class BaseActivity extends BaseCoreActivity {
         }
         if (currentInspectionType == null) {
             return false;
-        } else if (currentInspectionType.contains("special")) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return currentInspectionType.contains("special");
 
     }
 
@@ -565,11 +559,7 @@ public class BaseActivity extends BaseCoreActivity {
 
         if (TextUtils.isEmpty(deviceWay)) {
             return false;
-        } else if ("by_device_bigtype".equalsIgnoreCase(deviceWay)) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return "by_device_bigtype".equalsIgnoreCase(deviceWay);
 
     }
 

@@ -68,9 +68,7 @@ public class ReadyExistDefectAdapter extends PinnedHeaderSectionedAdapter<String
             itemBinding.ivDefectImage.setImageResource(R.mipmap.icon_nodefect);
         }
 
-        itemBinding.ivDefectImage.setOnClickListener(view -> {
-            mOnAdapterViewClickListener.OnAdapterViewClick(view, mDefect);
-        });
+        itemBinding.ivDefectImage.setOnClickListener(view -> mOnAdapterViewClickListener.OnAdapterViewClick(view, mDefect));
         return itemBinding.getRoot();
     }
 

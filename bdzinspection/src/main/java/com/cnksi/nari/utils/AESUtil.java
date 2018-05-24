@@ -94,7 +94,7 @@ public class AESUtil {
      * @return 解码后的byte[]
      * @throws Exception
      */
-    public static byte[] base64Decode(String base64Code) throws Exception {
+    public static byte[] base64Decode(String base64Code) {
         return StringUtils.isEmpty(base64Code) ? null : Base64.decode(base64Code, Base64.NO_WRAP);
     }
 

@@ -102,12 +102,9 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
         }
 
 
-        helper.itemView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClickListener.onItemClick(v, item, position);
-                currentSelectedPosition = position;
-            }
+        helper.itemView.setOnClickListener(v -> {
+            itemClickListener.onItemClick(v, item, position);
+            currentSelectedPosition = position;
         });
     }
 

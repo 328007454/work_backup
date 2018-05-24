@@ -70,7 +70,7 @@ public class TicketDailyWorkFragment extends BaseCoreFragment implements Calenda
 
     private void initData() {
         ExecutorManager.executeTaskSerially(() -> {
-            futureOrders = WorkTicketOrderService.getInstance().getCurrentDateWork(Config.userAccount,Config.deptID, currentDate, maxCurrentDate);
+            futureOrders = WorkTicketOrderService.getInstance().getCurrentDateWork(Config.userAccount, Config.deptID, currentDate, maxCurrentDate);
             map.clear();
             entities.clear();
             if (futureOrders == null) {
@@ -105,11 +105,11 @@ public class TicketDailyWorkFragment extends BaseCoreFragment implements Calenda
             }
 
 
-            getActivity().runOnUiThread(() -> {
+            TicketDailyWorkFragment.this.getActivity().runOnUiThread(() -> {
                 if (dailyWorkAdapter == null) {
                     dailyWorkAdapter = new TicketDailyWorkAdapter(entities);
                     dailyWorkAdapter.expandAll();
-                    groupRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    groupRecyclerView.setLayoutManager(new LinearLayoutManager(TicketDailyWorkFragment.this.getContext()));
                     groupRecyclerView.setAdapter(dailyWorkAdapter);
                 } else {
                     dailyWorkAdapter.expandAll();

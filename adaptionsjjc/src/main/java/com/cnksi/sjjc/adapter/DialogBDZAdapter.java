@@ -33,12 +33,9 @@ public class DialogBDZAdapter extends BaseAdapter<Bdz> {
 //        context.getResources().getColor(R.color.green_color)
         tvBDZ.setTextColor(ContextCompat.getColor(context,R.color.green_color));
         tvBDZ.setText(item.name);
-        holder.getRootView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != itemClickListener) {
-                    itemClickListener.itemClick(v, item, position);
-                }
+        holder.getRootView().setOnClickListener(v -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemClick(v, item, position);
             }
         });
     }

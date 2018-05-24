@@ -187,32 +187,30 @@ public class AddTaskActivity extends BaseActivity {
 //    }
 
     public void initOnclick() {
-        mTaskBinding.bdzContanier.setOnClickListener((v) -> {
+        mTaskBinding.bdzContanier.setOnClickListener(v -> {
             if (null != mPowerStationDialog) {
                 mPowerStationDialog.show();
             } else {
                 ToastUtils.showMessageLong("变电站为空");
             }
         });
-        mTaskBinding.tvSelectPowerStation.setOnClickListener((v) -> {
+        mTaskBinding.tvSelectPowerStation.setOnClickListener(v -> {
             if (null != mPowerStationDialog) {
                 mPowerStationDialog.show();
             } else {
                 ToastUtils.showMessageLong("变电站为空");
             }
         });
-        mTaskBinding.ibtnSelectInspectionDate.setOnClickListener((v) -> {
-            DialogUtils.showDatePickerDialog(_this, (result, position) -> mTaskBinding.tvInspectionDate.setText(result));
-        });
-        mTitleBinding.btnBack.setOnClickListener((v) -> onBackPressed());
-        mTaskBinding.btnConfirm.setOnClickListener((v) -> saveTask());
-        mTaskBinding.btnCancel.setOnClickListener((v) -> onBackPressed());
-        mTaskBinding.typeJianceLlContainer.setOnClickListener((v) -> {
+        mTaskBinding.ibtnSelectInspectionDate.setOnClickListener(v -> DialogUtils.showDatePickerDialog(_this, (result, position) -> mTaskBinding.tvInspectionDate.setText(result)));
+        mTitleBinding.btnBack.setOnClickListener(v -> AddTaskActivity.this.onBackPressed());
+        mTaskBinding.btnConfirm.setOnClickListener(v -> AddTaskActivity.this.saveTask());
+        mTaskBinding.btnCancel.setOnClickListener(v -> AddTaskActivity.this.onBackPressed());
+        mTaskBinding.typeJianceLlContainer.setOnClickListener(v -> {
             if (null != mPressDialog) {
                 mPressDialog.show();
             }
         });
-        mTaskBinding.tvYljc.setOnClickListener((v) -> {
+        mTaskBinding.tvYljc.setOnClickListener(v -> {
             if (null != mPressDialog) {
                 mPressDialog.show();
             }
@@ -277,14 +275,11 @@ public class AddTaskActivity extends BaseActivity {
         DialogPressAdapter adapter = new DialogPressAdapter(this, Arrays.asList(names), R.layout.dialog_content_child_item);
 
         mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mPressureDetectionType = types[position];
-                mPressureDetectionName = names[position];
-                mTaskBinding.tvYljc.setText(mPressureDetectionName);
-                mPressDialog.dismiss();
-            }
+        mListView.setOnItemClickListener((parent, view, position, id) -> {
+            mPressureDetectionType = types[position];
+            mPressureDetectionName = names[position];
+            mTaskBinding.tvYljc.setText(mPressureDetectionName);
+            mPressDialog.dismiss();
         });
         mPressDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);
     }

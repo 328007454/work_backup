@@ -525,10 +525,7 @@ public class Camera2VideoFragment extends Fragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Activity activity = getActivity();
-            return new AlertDialog.Builder(activity).setMessage(getArguments().getString(ARG_MESSAGE)).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
+            return new AlertDialog.Builder(activity).setMessage(getArguments().getString(ARG_MESSAGE)).setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
             }).create();
         }
 

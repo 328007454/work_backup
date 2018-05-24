@@ -48,18 +48,15 @@ public class SpaceSplitAdapter extends BaseRecyclerDataBindingAdapter<Device> {
 
     @Override
     public View.OnClickListener getOnClickListener(final int position) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Device item = realDatas.get(position);
-                if (selectDevices.remove(item)) {
-                    v.setSelected(false);
-                    v.findViewById(R.id.iv_check).setVisibility(View.GONE);
-                } else {
-                    selectDevices.add(item);
-                    v.setSelected(true);
-                    v.findViewById(R.id.iv_check).setVisibility(View.VISIBLE);
-                }
+        return v -> {
+            Device item = realDatas.get(position);
+            if (selectDevices.remove(item)) {
+                v.setSelected(false);
+                v.findViewById(R.id.iv_check).setVisibility(View.GONE);
+            } else {
+                selectDevices.add(item);
+                v.setSelected(true);
+                v.findViewById(R.id.iv_check).setVisibility(View.VISIBLE);
             }
         };
     }

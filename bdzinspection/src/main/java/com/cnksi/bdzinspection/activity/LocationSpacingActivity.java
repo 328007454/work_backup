@@ -30,6 +30,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -85,14 +86,11 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
         binding.includeTitle.tvTitle.setText(R.string.xs_near_spacing);
         data = new ArrayList<Spacing>();
         adapter = new LocationSpacingAdapter(this, data, R.layout.xs_item_location_spacing);
-        adapter.setItemClickListener(new ItemClickListener<Spacing>() {
-            @Override
-            public void onItemClick(View v, Spacing item, int position) {
-                Intent data = new Intent();
-                data.putExtra("spacingId", item.spid);
-                setResult(Activity.RESULT_OK, data);
-                finish();
-            }
+        adapter.setItemClickListener((v, item, position) -> {
+            Intent data = new Intent();
+            data.putExtra("spacingId", item.spid);
+            setResult(Activity.RESULT_OK, data);
+            finish();
         });
         binding.listSpacing.setAdapter(adapter);
     }
@@ -116,7 +114,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
                     "sort");
         }
         spaceCount = spacingData.size();
-        mHandler.postDelayed(() -> openResult(), 300);
+        mHandler.postDelayed(() -> LocationSpacingActivity.this.openResult(), 300);
     }
 
     LocationUtil.LocationHelper locationHelper;
@@ -228,7 +226,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
 
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> onBackPressed());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> LocationSpacingActivity.this.onBackPressed());
     }
 
 

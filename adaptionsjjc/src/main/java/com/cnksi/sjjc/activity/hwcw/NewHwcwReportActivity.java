@@ -78,7 +78,7 @@ public class NewHwcwReportActivity extends BaseReportActivity {
                 if (!TextUtils.isEmpty(mBaseInfo.id)) {
                     hotLocations = NewHwcwService.getInstance().getAllLocation(mBaseInfo.id);
                 }
-                runOnUiThread(() -> refreshData());
+                NewHwcwReportActivity.this.runOnUiThread(() -> NewHwcwReportActivity.this.refreshData());
             } catch (DbException e) {
                 e.printStackTrace();
             }
@@ -113,8 +113,8 @@ public class NewHwcwReportActivity extends BaseReportActivity {
 
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         spannableStringBuilder.append("温度：").append(mBaseInfo.temp).append("℃");
-        AbsoluteSizeSpan grayRelativeSizeSpan = new AbsoluteSizeSpan((int) DensityUtils.sp2px(getApplicationContext(), 14));
-        AbsoluteSizeSpan greenRelativeSizeSpan = new AbsoluteSizeSpan((int) DensityUtils.sp2px(getApplicationContext(), 18));
+        AbsoluteSizeSpan grayRelativeSizeSpan = new AbsoluteSizeSpan(DensityUtils.sp2px(getApplicationContext(), 14));
+        AbsoluteSizeSpan greenRelativeSizeSpan = new AbsoluteSizeSpan(DensityUtils.sp2px(getApplicationContext(), 18));
         ForegroundColorSpan grayForegroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.global_gray_text_color));
         ForegroundColorSpan greenForegroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.green_color));
         spannableStringBuilder.setSpan(grayRelativeSizeSpan, 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);

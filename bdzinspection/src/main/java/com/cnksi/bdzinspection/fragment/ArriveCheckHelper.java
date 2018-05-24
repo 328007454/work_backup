@@ -85,10 +85,10 @@ public class ArriveCheckHelper {
                 }
                 needCheckDeviceList = devices;
                 isPrepare = true;
-                mHandler.post(() -> deviceAdapter.setArriveDeviceList(getArrivedDevices()));
+                mHandler.post(() -> deviceAdapter.setArriveDeviceList(ArriveCheckHelper.this.getArrivedDevices()));
             });
         } else {
-            ExecutorManager.executeTask((Runnable) () -> {
+            ExecutorManager.executeTask(() -> {
                 if (Config.PLACED_BY_COPY) {
                     // 抄录为准判断间隔到位，找出不含抄录间隔
                     needCheckSpacingList = SpacingService.getInstance().findSpacing(bdzId, "one", false, currentInspectionType);
@@ -106,7 +106,7 @@ public class ArriveCheckHelper {
                     }
                 }
                 isPrepare = true;
-                mHandler.post(() -> deviceAdapter.setArriveSpaceIdList(getArrivedSpids()));
+                mHandler.post(() -> deviceAdapter.setArriveSpaceIdList(ArriveCheckHelper.this.getArrivedSpids()));
             });
         }
     }
@@ -131,11 +131,11 @@ public class ArriveCheckHelper {
                 }
             }
             mHandler.post(() -> {
-                deviceAdapter.setArriveDeviceList(getArrivedDevices());
-                deviceAdapter.setArriveSpaceIdList(getArrivedSpids());
+                deviceAdapter.setArriveDeviceList(ArriveCheckHelper.this.getArrivedDevices());
+                deviceAdapter.setArriveSpaceIdList(ArriveCheckHelper.this.getArrivedSpids());
                 deviceAdapter.notifyDataSetChanged();
             });
-            handleSpaceArrivedData();
+            ArriveCheckHelper.this.handleSpaceArrivedData();
         });
     }
 
@@ -183,7 +183,7 @@ public class ArriveCheckHelper {
                     saveList.add(placed);
                 }
             }
-            saveDeviceArrived(saveList);
+            ArriveCheckHelper.this.saveDeviceArrived(saveList);
         });
     }
 
@@ -219,7 +219,7 @@ public class ArriveCheckHelper {
                         iterator.remove();
                     }
                 }
-                mHandler.post(() -> deviceAdapter.setArriveSpaceIdList(getArrivedSpids()));
+                mHandler.post(() -> deviceAdapter.setArriveSpaceIdList(ArriveCheckHelper.this.getArrivedSpids()));
             }
         });
     }
@@ -293,12 +293,9 @@ public class ArriveCheckHelper {
                 iterator.remove();
             }
         }
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                deviceAdapter.setArriveDeviceList(getArrivedDevices());
-                deviceAdapter.notifyDataSetChanged();
-            }
+        mHandler.post(() -> {
+            deviceAdapter.setArriveDeviceList(getArrivedDevices());
+            deviceAdapter.notifyDataSetChanged();
         });
     }
 

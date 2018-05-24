@@ -133,7 +133,7 @@ public class ChartDialog {
 			String lineName, List<Float> yValues, int color) {
 		List<LineSet> yValue = new ArrayList<>();
 		yValue.add(new LineSet(lineName, yValues));
-		showLineChartDialog(context, title, xLabel, yLabel, xValues, yValue, Arrays.asList(new Integer[] { color }));
+		showLineChartDialog(context, title, xLabel, yLabel, xValues, yValue, Arrays.asList(color));
 
 	}
 

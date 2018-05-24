@@ -844,7 +844,7 @@ public class DataUtils {
         setChildE(element, name, txt, txt == null);
     }
 
-    private Date addDate(Date date, int day, String zqdw) throws ParseException {
+    private Date addDate(Date date, int day, String zqdw) {
         Calendar ca = Calendar.getInstance();
         ca.setTime(date);
         if ("01".equals(zqdw)) {
@@ -884,10 +884,7 @@ public class DataUtils {
     private boolean isMonthEnd(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        if (cal.get(Calendar.DATE) == cal.getActualMaximum(Calendar.DATE)) {
-            return true;
-        }
-        return false;
+        return cal.get(Calendar.DATE) == cal.getActualMaximum(Calendar.DATE);
     }
 
     public boolean isUpdateCycle(Date scxssjDate, Date xsdqsjDate, int day, String zqdw) {

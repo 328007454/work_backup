@@ -150,9 +150,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
     }
 
     public void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(v -> {
-            onBackPressed();
-        });
+        binding.includeTitle.ibtnCancel.setOnClickListener(v -> TaskRemindActivity.this.onBackPressed());
         binding.includeTitle.ibtnExit.setOnClickListener(view -> {
             CustomerDialog.showProgress(currentActivity, "正在同步任务...", true, false);
             KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).upload();
@@ -160,7 +158,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         binding.addTask.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, AddTaskActivity.class);
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentSelectInspectionType.name());
-            startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
+            TaskRemindActivity.this.startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
         });
     }
 

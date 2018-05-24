@@ -108,7 +108,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         binding.ibtnAdd.setVisibility(View.VISIBLE);
         binding.ibtnAdd.setImageResource(R.drawable.xs_copy_button_background);
         binding.ibtnAdd.setOnLongClickListener(v -> {
-            showChangeDistanceDialog();
+            FullDeviceListActivity.this.showChangeDistanceDialog();
             return false;
         });
 
@@ -183,7 +183,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                     }
                 }
                 if (isLeader) {
-                    runOnUiThread(() -> {
+                    FullDeviceListActivity.this.runOnUiThread(() -> {
                         if (currentPosition < 2) {
                             binding.ibtnSort.setVisibility(View.VISIBLE);
                         }
@@ -218,28 +218,24 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     }
 
     private void initOnClick() {
-        binding.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.ibtnCancel.setOnClickListener(view -> FullDeviceListActivity.this.onBackPressed());
 
         binding.ibtnAdd.setOnClickListener(view -> {
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             Intent intent = new Intent(currentActivity, CopyAllValueActivity2.class);
-            startActivity(intent);
+            FullDeviceListActivity.this.startActivity(intent);
         });
 
         binding.ibtnSort.setOnClickListener(view -> {
-            Intent intent = new Intent(this, SpaceSortActivity.class);
+            Intent intent = new Intent(FullDeviceListActivity.this, SpaceSortActivity.class);
             intent.putExtra(Config.CURRENT_FUNCTION_MODEL, deviceTypes.get(currentPosition).k);
             intent.putExtra(Config.TITLE_NAME, deviceTypes.get(currentPosition).v);
-            startActivityForResult(intent, DeviceListFragment.SORT_SPACING);
+            FullDeviceListActivity.this.startActivityForResult(intent, DeviceListFragment.SORT_SPACING);
         });
-        binding.btnStartInspection.setOnClickListener(view -> {
-            finishInspection();
-        });
+        binding.btnStartInspection.setOnClickListener(view -> FullDeviceListActivity.this.finishInspection());
         binding.ibtnBluetooth.setOnClickListener(view -> {
-            Intent intent1 = new Intent(this, BTDemoActivity.class);
-            startActivityForResult(intent1, DeviceListFragment.RFID);
+            Intent intent1 = new Intent(FullDeviceListActivity.this, BTDemoActivity.class);
+            FullDeviceListActivity.this.startActivityForResult(intent1, DeviceListFragment.RFID);
         });
     }
 

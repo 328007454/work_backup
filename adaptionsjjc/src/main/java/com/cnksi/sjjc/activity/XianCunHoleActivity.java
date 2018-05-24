@@ -90,12 +90,9 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
         binding.btnNext.setVisibility(View.VISIBLE);
         binding.btnNext.setText("提交");
         binding.reContainer.setVisibility(View.GONE);
-        mTitleBinding.btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isBack = true;
-                saveData();
-            }
+        mTitleBinding.btnBack.setOnClickListener(view -> {
+            isBack = true;
+            saveData();
         });
     }
 
@@ -249,7 +246,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
                     clearPosition += record.location + "_" + record.hole_detail + "\n";
                 }
             }
-            showClearHoleDialog(clearPosition);
+            XianCunHoleActivity.this.showClearHoleDialog(clearPosition);
             clearPosition = "";
         });
     }
@@ -270,10 +267,10 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
         }
         mClearDialog.show();
         mTipsBinding.tvDialogTitle.setText("确认清除孔洞");
-        mTipsBinding.btnCancel.setOnClickListener((View.OnClickListener) view -> mClearDialog.dismiss());
+        mTipsBinding.btnCancel.setOnClickListener(view -> mClearDialog.dismiss());
 
-        mTipsBinding.btnSure.setOnClickListener((View.OnClickListener) view -> {
-            saveData();
+        mTipsBinding.btnSure.setOnClickListener(view -> {
+            XianCunHoleActivity.this.saveData();
             mClearDialog.dismiss();
 
         });

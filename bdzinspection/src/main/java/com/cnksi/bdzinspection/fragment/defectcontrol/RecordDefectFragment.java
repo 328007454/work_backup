@@ -19,6 +19,7 @@ import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -197,38 +198,31 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
             binding.includeDefect.tvSelectDevicePart.setCompoundDrawables(null, null, drawable, null);
             binding.include.txtCurrentRecord.setVisibility(View.GONE);
         }
-        binding.includeDefect.etInputDefectContent.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && isShowDefectReason) {
-                    if (isFromBattery) {
-                        showBatteryDefectContentDialog();
-                    } else {
-                        searchDefectContent();
-                    }
+        binding.includeDefect.etInputDefectContent.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus && isShowDefectReason) {
+                if (isFromBattery) {
+                    showBatteryDefectContentDialog();
                 } else {
-                    if (isNeedSearchDefect) {
-                        addEditextListener();
-                    }
+                    searchDefectContent();
+                }
+            } else {
+                if (isNeedSearchDefect) {
+                    addEditextListener();
                 }
             }
         });
         if (isShowDefectReason && !isParticularInspection) {
             binding.includeDefect.tvSelectDevicePart.setText(currentDevicePartName);
             // EditText有焦点阻止输入法弹出
-            binding.includeDefect.etInputDefectContent.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (TextUtils.isEmpty(binding.includeDefect.etInputDefectContent.getText().toString().trim())) {
-                        int inType = binding.includeDefect.etInputDefectContent.getInputType(); // backup the input type
-                        binding.includeDefect.etInputDefectContent.setInputType(InputType.TYPE_NULL); // disable soft input
-                        binding.includeDefect.etInputDefectContent.onTouchEvent(event); // call native handler
-                        binding.includeDefect.etInputDefectContent.setInputType(inType); // restore input type
-                        return true;
-                    }
-                    return false;
+            binding.includeDefect.etInputDefectContent.setOnTouchListener((v, event) -> {
+                if (TextUtils.isEmpty(binding.includeDefect.etInputDefectContent.getText().toString().trim())) {
+                    int inType = binding.includeDefect.etInputDefectContent.getInputType(); // backup the input type
+                    binding.includeDefect.etInputDefectContent.setInputType(InputType.TYPE_NULL); // disable soft input
+                    binding.includeDefect.etInputDefectContent.onTouchEvent(event); // call native handler
+                    binding.includeDefect.etInputDefectContent.setInputType(inType); // restore input type
+                    return true;
                 }
+                return false;
             });
         }
 
@@ -280,13 +274,13 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
 
         binding.includeDefect.tvSelectDevicePart.setOnClickListener(view -> {
             if (!isShowDefectReason) {
-                showDevicePartDialog();
+                RecordDefectFragment.this.showDevicePartDialog();
             }
             if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
                 Intent intent = new Intent(currentActivity, DeviceSelectActivity.class);
                 intent.putExtra(DeviceSelectActivity.SELECT_TYPE, DeviceSelectActivity.SELECT_TYPE_RADIO);
                 intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-                getActivity().startActivityForResult(intent, SELECT_DEVICE);
+                RecordDefectFragment.this.getActivity().startActivityForResult(intent, SELECT_DEVICE);
             }
         });
 
@@ -294,9 +288,9 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
             if (TextUtils.isEmpty(binding.includeDefect.etInputDefectContent.getText().toString().trim())) {
                 if (isShowDefectReason) {
                     if (isFromBattery) {
-                        showBatteryDefectContentDialog();
+                        RecordDefectFragment.this.showBatteryDefectContentDialog();
                     } else {
-                        searchDefectContent();
+                        RecordDefectFragment.this.searchDefectContent();
                     }
                 }
             }
@@ -309,7 +303,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     mOnFunctionButtonClickListener.takePicture(currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
                 }
             } else {
-                ToastUtils.showMessage( R.string.xs_please_input_or_select_defect_reason_str);
+                ToastUtils.showMessage(R.string.xs_please_input_or_select_defect_reason_str);
             }
 
         });
@@ -319,18 +313,18 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                 for (String string : mDefectImageList) {
                     mImageUrlList.add(Config.RESULT_PICTURES_FOLDER + string);
                 }
-                showImageDetails(this, mImageUrlList, true);
+                RecordDefectFragment.this.showImageDetails(RecordDefectFragment.this, mImageUrlList, true);
             }
         });
         binding.btnConfirm.setOnClickListener(view -> {
             PlaySound.getIntance(currentActivity).play(R.raw.record);
             // 征对特殊巡检和熄灯巡检
             if (binding.includeDefect.tvSelectDevicePart.getVisibility() == View.GONE) {
-                saveDefect();
+                RecordDefectFragment.this.saveDefect();
             } else if (!TextUtils.isEmpty(binding.includeDefect.tvSelectDevicePart.getText().toString().trim())) {
-                saveDefect();
+                RecordDefectFragment.this.saveDefect();
             } else {
-                ToastUtils.showMessage( "请选择缺陷设备");
+                ToastUtils.showMessage("请选择缺陷设备");
             }
 
             KeyBoardUtils.closeKeybord(binding.includeDefect.etInputDefectContent, currentActivity);
@@ -350,30 +344,24 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     mHistoryDefectAdapter.setOnAdapterViewClickListener(this);
                     mHistoryDefectAdapter.setCurrentFunctionModel(Config.RECORD_DEFECT_MODEL);
                     binding.include.lvContainer.setAdapter(mHistoryDefectAdapter);
-                    binding.include.lvContainer.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                        @Override
-                        public boolean onItemLongClick(AdapterView<?> view, View view1, int position, long l) {
-                            deleteRecord = dataList.get(position);
-                            if (!TextUtils.equals(currentReportId, deleteRecord.reportid)) {
-                                ToastUtils.showMessage( "只能删除本次记录的缺陷");
-                                return true;
-                            } else {
-                                deleteDialog.show();
-                            }
-                            return false;
+                    binding.include.lvContainer.setOnItemLongClickListener((view, view1, position, l) -> {
+                        deleteRecord = dataList.get(position);
+                        if (!TextUtils.equals(currentReportId, deleteRecord.reportid)) {
+                            ToastUtils.showMessage( "只能删除本次记录的缺陷");
+                            return true;
+                        } else {
+                            deleteDialog.show();
                         }
+                        return false;
                     });
-                    binding.include.lvContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view1, int position, long id) {
-                            mofifyDefectRe = (DefectRecord) parent.getItemAtPosition(position);
-                            if (!TextUtils.equals(currentReportId, mofifyDefectRe.reportid)) {
-                                ToastUtils.showMessage( "只能修改本次记录的缺陷");
-                            } else {
-                                modifyDefectUI();
-                            }
-
+                    binding.include.lvContainer.setOnItemClickListener((parent, view1, position, id) -> {
+                        mofifyDefectRe = (DefectRecord) parent.getItemAtPosition(position);
+                        if (!TextUtils.equals(currentReportId, mofifyDefectRe.reportid)) {
+                            ToastUtils.showMessage( "只能修改本次记录的缺陷");
+                        } else {
+                            modifyDefectUI();
                         }
+
                     });
                 } else {
                     mHistoryDefectAdapter.setList(dataList);
@@ -457,24 +445,20 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      */
     public void searchData() {
 
-        ExecutorManager.executeTask(new Runnable() {
+        ExecutorManager.executeTask(() -> {
+            if (!isFromBattery) {
 
-            @Override
-            public void run() {
-                if (!isFromBattery) {
-
-                    if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
-                        dataList = DefectRecordService.getInstance().getReportDefectRecords(currentReportId, currentBdzId);
-                    } else {
-                        // 查询历史缺陷
-                        dataList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
-                    }
+                if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
+                    dataList = DefectRecordService.getInstance().getReportDefectRecords(currentReportId, currentBdzId);
                 } else {
-                    // 查询电池的缺陷
-                    dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.get(Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
+                    // 查询历史缺陷
+                    dataList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
                 }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } else {
+                // 查询电池的缺陷
+                dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.get(Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
             }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -484,20 +468,16 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      * @param content
      */
     private void searchData(final String content) {
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    dbModelList = DefectDefineService.getInstance().findDefectDefineByDeviceIdAndContent(currentDeviceId, content);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                if (dbModelList == null) {
-                    dbModelList = new ArrayList<DbModel>();
-                }
-                mHandler.sendEmptyMessage(LOAD_MORE_DATA);
+        ExecutorManager.executeTask(() -> {
+            try {
+                dbModelList = DefectDefineService.getInstance().findDefectDefineByDeviceIdAndContent(currentDeviceId, content);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            if (dbModelList == null) {
+                dbModelList = new ArrayList<DbModel>();
+            }
+            mHandler.sendEmptyMessage(LOAD_MORE_DATA);
         });
     }
 
@@ -505,13 +485,9 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      * 查询设备部件对应的常见缺陷内容
      */
     private void searchDefectContent() {
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                mDefectContentMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
-                mHandler.sendEmptyMessage(INIT_DEFECT_CONTENT_CODE);
-            }
+        ExecutorManager.executeTask(() -> {
+            mDefectContentMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
+            mHandler.sendEmptyMessage(INIT_DEFECT_CONTENT_CODE);
         });
     }
 

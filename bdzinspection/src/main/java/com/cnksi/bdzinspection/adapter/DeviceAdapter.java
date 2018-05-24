@@ -150,9 +150,9 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         helper.itemView.setOnClickListener(v -> {
             int pos = helper.getAdapterPosition();
             if (groupItem.isExpanded()) {
-                collapse(pos);
+                DeviceAdapter.this.collapse(pos);
             } else {
-                expand(pos);
+                DeviceAdapter.this.expand(pos);
             }
         });
         imgCopy.setOnClickListener(view -> {
@@ -233,9 +233,9 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         helper.itemView.setOnClickListener(v -> {
             int pos = helper.getAdapterPosition();
             if (spaceItem.isExpanded()) {
-                collapse(pos);
+                DeviceAdapter.this.collapse(pos);
             } else {
-                expand(pos);
+                DeviceAdapter.this.expand(pos);
             }
         });
         // 间隔长按

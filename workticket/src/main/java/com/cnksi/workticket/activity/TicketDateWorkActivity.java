@@ -3,6 +3,7 @@ package com.cnksi.workticket.activity;
 import android.app.Dialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
@@ -107,7 +108,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            runOnUiThread(() -> {
+            TicketDateWorkActivity.this.runOnUiThread(() -> {
                 if (TextUtils.isEmpty(department.name)) {
                     dateBinding.txtDeptName.setText(Config.deptName);
                 } else {
@@ -123,7 +124,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         dateBinding.rgTicketType.setOnCheckedChangeListener(checkedChangeListener);
         dateBinding.rgWorkType.setOnCheckedChangeListener(checkedChangeListener);
 
-        dateBinding.txtBdzName.setOnClickListener(v -> new DialogUtil().initBdzDialog(this, models == null ? new ArrayList<>() : models, (view, item, position) -> {
+        dateBinding.txtBdzName.setOnClickListener(v -> new DialogUtil().initBdzDialog(TicketDateWorkActivity.this, models == null ? new ArrayList<>() : models, (view, item, position) -> {
             ToastUtils.showMessage(models.get(position).getString("name"));
             bdzName = models.get(position).getString("name");
             if (!TextUtils.isEmpty(Config.otherDeptUser) && Config.OTHER_DEPT_USER.equalsIgnoreCase(Config.otherDeptUser)) {
@@ -132,50 +133,50 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             dateBinding.txtBdzName.setText(models.get(position).getString("name"));
             bdzId = models.get(position).getString("bdzid");
             if (!TextUtils.isEmpty(selectDate)) {
-                caculateDataCanBeSaved();
+                TicketDateWorkActivity.this.caculateDataCanBeSaved();
             }
         }));
 
-        dateBinding.ibtnSelectTime.setOnClickListener(v -> showWeekWorkDate());
+        dateBinding.ibtnSelectTime.setOnClickListener(v -> TicketDateWorkActivity.this.showWeekWorkDate());
 
         dateBinding.save.setOnClickListener(v -> {
-            if (!checkInputAllInfor()) {
+            if (!TicketDateWorkActivity.this.checkInputAllInfor()) {
                 return;
             }
             if (isSaved) {
                 isSaved = false;
-                saveData(save);
+                TicketDateWorkActivity.this.saveData(save);
             } else {
                 ToastUtils.showMessage("正在保存");
             }
         });
 
         dateBinding.goon.setOnClickListener(v -> {
-            if (!checkInputAllInfor()) {
+            if (!TicketDateWorkActivity.this.checkInputAllInfor()) {
                 return;
             }
             if (isSaved) {
                 isSaved = false;
-                saveData(goOn);
+                TicketDateWorkActivity.this.saveData(goOn);
             } else {
                 ToastUtils.showMessage("正在保存");
             }
         });
 
-        dateBinding.includeTitle.ticketBack.setOnClickListener(v -> onBackPressed());
+        dateBinding.includeTitle.ticketBack.setOnClickListener(v -> TicketDateWorkActivity.this.onBackPressed());
 
         dateBinding.txtSelectTime.setOnClickListener(v -> {
             if (TextUtils.isEmpty(bdzId) || TextUtils.isEmpty(selectType)) {
                 ToastUtils.showMessage("请选择变电站和工作类型");
                 return;
             }
-            new DialogUtil().showDatePickerDialog(this, (result, position) -> {
+            new DialogUtil().showDatePickerDialog(TicketDateWorkActivity.this, (result, position) -> {
                 selectDate = result;
                 seletTimeZone = "";
                 dateBinding.txtSelectTime.setText("时间及日期:  " + result);
                 dateBinding.rgSelectTime.clearCheck();
                 orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate);
-                caculateDataCanBeSaved();
+                TicketDateWorkActivity.this.caculateDataCanBeSaved();
             });
         });
     }
@@ -237,7 +238,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         KSyncConfig.getInstance().setFailListener(syncSuccess -> {
             if (syncSuccess) {
                 if (TicketStatusEnum.kp.name().equalsIgnoreCase(ticketType)) {
-                    caculateDataCanBeSaved();
+                    TicketDateWorkActivity.this.caculateDataCanBeSaved();
                     if (!isSelectTimeZone) {
                         ToastUtils.showMessage("所选时间区冲突，请重新选择");
                         return;
@@ -247,8 +248,8 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                         dateBinding.txtContentName.getText().toString(), ticketType, selectDate, selectTimeZoneKey, seletTimeZone, Config.userAccount, Config.userName);
                 try {
                     WorkTicketDbManager.getInstance().getTicketManager().saveOrUpdate(order);
-                    showDateSuccessDialog(button);
-                    upLoadData();
+                    TicketDateWorkActivity.this.showDateSuccessDialog(button);
+                    TicketDateWorkActivity.this.upLoadData();
                 } catch (DbException e) {
                     e.printStackTrace();
                     isSaved = true;
@@ -273,18 +274,18 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         successDialog = new DialogUtil().createDialog(this, tipsBinding.getRoot(), ScreenUtils.getScreenWidth(this) * 7 / 9, ViewGroup.LayoutParams.WRAP_CONTENT);
         tipsBinding.no.setOnClickListener(v -> {
             if (TextUtils.equals(button, goOn)) {
-                clearAllElement();
+                TicketDateWorkActivity.this.clearAllElement();
             } else if (TextUtils.equals(button, save)) {
-                finish();
+                TicketDateWorkActivity.this.finish();
             }
             successDialog.dismiss();
         });
 
         tipsBinding.yes.setOnClickListener(v -> {
             if (TextUtils.equals(button, goOn)) {
-                clearAllElement();
+                TicketDateWorkActivity.this.clearAllElement();
             } else if (TextUtils.equals(button, save)) {
-                finish();
+                TicketDateWorkActivity.this.finish();
             }
             isSaved = true;
             successDialog.dismiss();
@@ -577,28 +578,31 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
     }
 
 
-    private RadioGroup.OnCheckedChangeListener checkedChangeListener = (RadioGroup radioGroup, int i) -> {
-        int i1 = radioGroup.getId();
-        if (i1 == R.id.rg_select_time) {
-            if (TextUtils.isEmpty(selectDate)) {
-                ToastUtils.showMessage("请先选择时间");
-                return;
-            }
-            getSelectTimeGroup(i);
-        } else if (i1 == R.id.rg_ticket_type) {
-            if (i == R.id.rb_kai_typpe) {
-                ticketType = "kp";
-            } else if (i == R.id.rb_jie_type) {
-                ticketType = "jp";
-                setSelectTimeEnAbled();
-            } else if (i == R.id.rb_other_type) {
-                ticketType = "other";
-                setSelectTimeEnAbled();
-            }
-        } else if (i1 == R.id.rg_work_type) {
-            selectType = i == R.id.rb_a_typpe ? a : b;
-            if (!TextUtils.isEmpty(selectDate)) {
-                caculateDataCanBeSaved();
+    private RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            int i1 = radioGroup.getId();
+            if (i1 == R.id.rg_select_time) {
+                if (TextUtils.isEmpty(selectDate)) {
+                    ToastUtils.showMessage("请先选择时间");
+                    return;
+                }
+                TicketDateWorkActivity.this.getSelectTimeGroup(i);
+            } else if (i1 == R.id.rg_ticket_type) {
+                if (i == R.id.rb_kai_typpe) {
+                    ticketType = "kp";
+                } else if (i == R.id.rb_jie_type) {
+                    ticketType = "jp";
+                    TicketDateWorkActivity.this.setSelectTimeEnAbled();
+                } else if (i == R.id.rb_other_type) {
+                    ticketType = "other";
+                    TicketDateWorkActivity.this.setSelectTimeEnAbled();
+                }
+            } else if (i1 == R.id.rg_work_type) {
+                selectType = i == R.id.rb_a_typpe ? a : b;
+                if (!TextUtils.isEmpty(selectDate)) {
+                    TicketDateWorkActivity.this.caculateDataCanBeSaved();
+                }
             }
         }
     };

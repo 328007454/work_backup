@@ -6,6 +6,8 @@ import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ExpandableListView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
@@ -59,7 +61,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
         getIntentValue();
         dept_id = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_ID);
         binding.lvTools.setAdapter(adapter = new SafetyToolAdapter());
-        binding.ibtnCancel.setOnClickListener(v -> finish());
+        binding.ibtnCancel.setOnClickListener(v -> SafetyToolsRemindActivity.this.finish());
         binding.lvTools.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
             DbModel model = adapter.getChild(groupPosition, childPosition);
             Intent intent = new Intent(currentActivity, SafeToolsInformationActivity.class);
@@ -68,7 +70,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
             String title = model.getString("name");
             intent.putExtra("title", title);
             intent.putExtra(SafeToolsInfor.DEPTID, dept_id);
-            startActivity(intent);
+            SafetyToolsRemindActivity.this.startActivity(intent);
             return false;
         });
         binding.lvTools.setOnGroupClickListener((parent, v, groupPosition, id) -> {
@@ -76,7 +78,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
             Intent intent = new Intent(currentActivity, SafetyToolsControlActivity.class);
             intent.putExtra(Bdz.BDZID, bdz.bdzid);
             intent.putExtra(SafeToolsInfor.DEPTID, dept_id);
-            startActivity(intent);
+            SafetyToolsRemindActivity.this.startActivity(intent);
             return true;
         });
         qwerKeyBoardUtils = new QWERKeyBoardUtils(currentActivity);
@@ -117,7 +119,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
                     dataWraps.add(dataWrap);
                 }
             }
-            runOnUiThread(() -> {
+            SafetyToolsRemindActivity.this.runOnUiThread(() -> {
                 adapter.searchKey = "";
                 qwerKeyBoardUtils.setKeyWord("");
                 adapter.setList(dataWraps);

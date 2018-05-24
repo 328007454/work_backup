@@ -31,10 +31,7 @@ public class StringUtilsExt {
     public static boolean hasEmoji(String content) {
 
         Matcher matcher = pattern.matcher(content);
-        if (matcher.find()) {
-            return true;
-        }
-        return false;
+        return matcher.find();
     }
 
     public static String nullTo(String string, String string1) {
@@ -101,10 +98,7 @@ public class StringUtilsExt {
             return false;
         }
         Matcher matcher = pt.matcher(String.valueOf(tempFloat));
-        if (matcher.matches() || "0".equals(temp)) {
-            return true;
-        }
-        return false;
+        return matcher.matches() || "0".equals(temp);
     }
 
 

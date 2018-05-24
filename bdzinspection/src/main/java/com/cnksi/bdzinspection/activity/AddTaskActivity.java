@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
@@ -155,14 +156,11 @@ public class AddTaskActivity extends BaseActivity {
     }
 
     private void initialData() {
-        mHandler.postDelayed(() -> ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                initBdzData();
-                initInspectionTypeData();
-                initInspectionTypeChildData();
+        mHandler.postDelayed(() -> ExecutorManager.executeTask(() -> {
+            initBdzData();
+            initInspectionTypeData();
+            initInspectionTypeChildData();
 
-            }
         }), 0);
 
     }
@@ -261,21 +259,19 @@ public class AddTaskActivity extends BaseActivity {
     }
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> this.finish());
-        binding.btnCancel.setOnClickListener(view -> finish());
-        binding.btnConfirm.setOnClickListener(view -> saveTask());
-        binding.ibtnSelectInspectionDate.setOnClickListener(view -> {
-            CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> binding.tvInspectionDate.setText(result));
-        });
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> AddTaskActivity.this.finish());
+        binding.btnCancel.setOnClickListener(view -> AddTaskActivity.this.finish());
+        binding.btnConfirm.setOnClickListener(view -> AddTaskActivity.this.saveTask());
+        binding.ibtnSelectInspectionDate.setOnClickListener(view -> CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> binding.tvInspectionDate.setText(result)));
         binding.bdzContanier.setOnClickListener(view -> {
             binding.bdzContanier.setPressed(true);
             if (isBdzDataPrepared) {
-                showPowerStationDialog(mBdzList);
+                AddTaskActivity.this.showPowerStationDialog(mBdzList);
             }
         });
-        binding.tvSelectInspectionType.setOnClickListener(view -> selectType());
-        binding.typeXunjianIbt.setOnClickListener(view -> selectType());
-        binding.typeLlContainer.setOnClickListener(view -> selectType());
+        binding.tvSelectInspectionType.setOnClickListener(view -> AddTaskActivity.this.selectType());
+        binding.typeXunjianIbt.setOnClickListener(view -> AddTaskActivity.this.selectType());
+        binding.typeLlContainer.setOnClickListener(view -> AddTaskActivity.this.selectType());
     }
 
     private void selectType() {
@@ -372,7 +368,7 @@ public class AddTaskActivity extends BaseActivity {
                 binding.btnConfirm.setText(R.string.xs_confirm_str);
             }
 
-            PreferencesUtils.put( mLookup.k + "_" + mCurrentBdz.bdzid, mLookup.repSwitchOverId);
+            PreferencesUtils.put(mLookup.k + "_" + mCurrentBdz.bdzid, mLookup.repSwitchOverId);
             if (currentTypeStr.contains(InspectionType.switchover.name()) || currentTypeStr.contains(InspectionType.maintenance.name())) {
                 StringBuilder builder = new StringBuilder();
                 if (switchMaintenances.contains(mLookup)) {
@@ -392,9 +388,7 @@ public class AddTaskActivity extends BaseActivity {
                 mInspectionTypeDialog.dismiss();
             }
         });
-        typeDialogBinding.btnConfirm.setOnClickListener(view -> {
-            mInspectionTypeDialog.dismiss();
-        });
+        typeDialogBinding.btnConfirm.setOnClickListener(view -> mInspectionTypeDialog.dismiss());
     }
 
     /**
@@ -437,7 +431,7 @@ public class AddTaskActivity extends BaseActivity {
                 }
             }
             mPowerStationDialog.dismiss();
-            initInspectionTypeChildData();
+            AddTaskActivity.this.initInspectionTypeChildData();
         });
     }
 
@@ -525,7 +519,7 @@ public class AddTaskActivity extends BaseActivity {
                     startActivityForResult(intent, MUMAL_SELECT_DEVICE);
                 } else if (xudianchi) {
                     // 蓄电池电压检测
-                    RadioGroup checkType = (RadioGroup) findViewById(R.id.radio_ceshi_type);
+                    RadioGroup checkType = findViewById(R.id.radio_ceshi_type);
                     TaskExtend taskExpand = new TaskExtend(mCurrentTask.taskid);
                     if (checkType.getCheckedRadioButtonId() == R.id.radio_puce) {
                         taskExpand.sbjcIsAllCheck = 0;

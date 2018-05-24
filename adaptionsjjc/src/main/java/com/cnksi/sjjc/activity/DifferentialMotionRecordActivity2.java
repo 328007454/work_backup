@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.ReportService;
@@ -121,19 +122,17 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
     }
 
     private void initOnclick() {
-        mRecordBinding.btnConfirmSave.setOnClickListener((v) -> {
-            if (saveData()) {
+        mRecordBinding.btnConfirmSave.setOnClickListener(v -> {
+            if (DifferentialMotionRecordActivity2.this.saveData()) {
                 Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
-                startActivity(intent);
-                setResult(RESULT_OK);
-                this.finish();
+                DifferentialMotionRecordActivity2.this.startActivity(intent);
+                DifferentialMotionRecordActivity2.this.setResult(RESULT_OK);
+                DifferentialMotionRecordActivity2.this.finish();
             } else {
                 ToastUtils.showMessage("输入数据有误，请核对");
             }
         });
-        mTitleBinding.btnBack.setOnClickListener((v) -> {
-            finish();
-        });
+        mTitleBinding.btnBack.setOnClickListener(v -> DifferentialMotionRecordActivity2.this.finish());
     }
 
 

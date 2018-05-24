@@ -34,24 +34,21 @@ public class UpLoadDataService extends Service {
     Handler handler = new Handler();
     private Binder mBinder = new UpDataToReportManager.Stub() {
         @Override
-        public void upDataWithUpPMS() throws RemoteException {
+        public void upDataWithUpPMS() {
             Log.d("TAG","开始上传数据");
             upLoad();
         }
     };
 
     private void upLoad() {
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                ksync.uploadData();
-                if (config.isUploadFile()) {
-                    isSyncFile = true;
-                    if (TextUtils.isEmpty(config.getUploadFolder())) {
-                        ksync.uploadFile();
-                    } else {
-                        ksync.uploadFile(config.getUploadFolder());
-                    }
+        executorService.execute(() -> {
+            ksync.uploadData();
+            if (config.isUploadFile()) {
+                isSyncFile = true;
+                if (TextUtils.isEmpty(config.getUploadFolder())) {
+                    ksync.uploadFile();
+                } else {
+                    ksync.uploadFile(config.getUploadFolder());
                 }
             }
         });

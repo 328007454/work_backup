@@ -82,31 +82,25 @@ public class YunweiReportActivity extends BaseActivity {
 
 	private void initialData() {
 
-		ExecutorManager.executeTask(new Runnable() {
+		ExecutorManager.executeTask(() -> {
+            try {
+                // 查询状态
+                mCurrentDepartment = DepartmentService.getInstance().findDepartmentById(currentDepartmentId);
+                status = TaskService.getInstance().getTaskStatus(currentTaskId);
+                report= ReportService.getInstance().findById(currentReportId);
 
-			@Override
-			public void run() {
-				try {
-					// 查询状态
-					mCurrentDepartment = DepartmentService.getInstance().findDepartmentById(currentDepartmentId);
-					status = TaskService.getInstance().getTaskStatus(currentTaskId);
-					report= ReportService.getInstance().findById(currentReportId);
-
-				} catch (DbException e) {
-					e.printStackTrace();
-				}
-				mHandler.sendEmptyMessage(LOAD_DATA);
-			}
-		});
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
+        });
 	}
 	private void initOnClick() {
 		
-		binding.tvContinueInspection.setOnClickListener(view -> {
-			startActivity(new Intent(currentActivity, YWWorkflowActivity.class));
-		});
+		binding.tvContinueInspection.setOnClickListener(view -> YunweiReportActivity.this.startActivity(new Intent(currentActivity, YWWorkflowActivity.class)));
 		
-		binding.includeTitle.ibtnCancel.setOnClickListener(view -> ExitThisAndGoLauncher());
-		binding.includeTitle.ibtnExit.setOnClickListener(view -> ExitThisAndGoLauncher());
+		binding.includeTitle.ibtnCancel.setOnClickListener(view -> YunweiReportActivity.this.ExitThisAndGoLauncher());
+		binding.includeTitle.ibtnExit.setOnClickListener(view -> YunweiReportActivity.this.ExitThisAndGoLauncher());
 	}
 
 

@@ -26,14 +26,14 @@ public class CustomApplication extends CommonApplication {
             ExecutorManager.executeTaskSerially(() -> {
                 if (BuildConfig.HAS_WEB_ASSETS) {
                     FileUtils.deleteAllFiles(Config.WWWROOT_FOLDER);
-                    if (FileUtils.copyAssetsToSDCard(this, Config.WWWROOT_FOLDER, "src/main/assets-web/www")) {
+                    if (FileUtils.copyAssetsToSDCard(CustomApplication.this, Config.WWWROOT_FOLDER, "src/main/assets-web/www")) {
                         try {
                             XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    FileUtils.copyAssetsToSDCard(this, Config.DATABASE_FOLDER, "database");
+                    FileUtils.copyAssetsToSDCard(CustomApplication.this, Config.DATABASE_FOLDER, "database");
                 }
                 PreferencesUtils.put("DataVersion", DataVersion);
             });

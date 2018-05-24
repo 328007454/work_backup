@@ -47,9 +47,9 @@ public class WheelOptions<T> {
         super();
         this.linkage = linkage;
         this.view = view;
-        wv_option1 = (WheelView) view.findViewById(R.id.options1);// 初始化时显示的数据
-        wv_option2 = (WheelView) view.findViewById(R.id.options2);
-        wv_option3 = (WheelView) view.findViewById(R.id.options3);
+        wv_option1 = view.findViewById(R.id.options1);// 初始化时显示的数据
+        wv_option2 = view.findViewById(R.id.options2);
+        wv_option3 = view.findViewById(R.id.options3);
     }
 
 

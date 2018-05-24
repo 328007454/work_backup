@@ -30,11 +30,6 @@ public class DiscoverHoleAdapter extends BaseAdapter<String> {
 //        context.getResources().getColor(R.color.green_color)
         tvPosition.setTextColor(ContextCompat.getColor(context,R.color.green_color));
         tvPosition.setText(item);
-        tvPosition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClickListener.itemClick(view,item,position);
-            }
-        });
+        tvPosition.setOnClickListener(view -> itemClickListener.itemClick(view,item,position));
     }
 }

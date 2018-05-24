@@ -30,12 +30,7 @@ public class HomeSafetyToolAdapter extends BaseLinearBindingAdapter<ItemHomeSafe
     public HomeSafetyToolAdapter(final Activity context, List<DbModel> data, final LinearLayout container) {
         super(context, data, container, R.layout.item_home_safety_tool);
         lookMore = LayoutInflater.from(context).inflate(R.layout.item_look_more, null, false);
-        lookMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityUtil.startSafetyRemindActivity(context);
-            }
-        });
+        lookMore.setOnClickListener(v -> ActivityUtil.startSafetyRemindActivity(context));
     }
 
     @Override

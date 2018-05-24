@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.LinearLayout;
@@ -100,32 +101,23 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     }
 
     private void initialData() {
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                if (!isAddDeviceStandard) {
-                    mCurrentDeviceStandard = DeviceStandardsService.getInstance().findDeviceStandardById(currentStandardId);
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                    groupMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
-                    mHandler.sendEmptyMessage(LOAD_MORE_DATA);
-                }
+        ExecutorManager.executeTask(() -> {
+            if (!isAddDeviceStandard) {
+                mCurrentDeviceStandard = DeviceStandardsService.getInstance().findDeviceStandardById(currentStandardId);
+                mHandler.sendEmptyMessage(LOAD_DATA);
+                groupMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
+                mHandler.sendEmptyMessage(LOAD_MORE_DATA);
             }
         });
 
-        binding.elvContainer.setOnChildClickListener(new OnChildClickListener() {
+        binding.elvContainer.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+            // TODO: 弹出编辑缺陷定义的dialog
+            isAddDefectDefine = false;
+            mCurrentDefectDefine = mDefectDefineAdapter.getChild(groupPosition, childPosition);
+            mCurrentDefectLevel = mDefectDefineAdapter.getGroup(groupPosition);
+            showAddDefectDefineDialog();
 
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
-                                        long id) {
-                // TODO: 弹出编辑缺陷定义的dialog
-                isAddDefectDefine = false;
-                mCurrentDefectDefine = mDefectDefineAdapter.getChild(groupPosition, childPosition);
-                mCurrentDefectLevel = mDefectDefineAdapter.getGroup(groupPosition);
-                showAddDefectDefineDialog();
-
-                return false;
-            }
+            return false;
         });
     }
 
@@ -175,70 +167,64 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     }
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> ChangeDeviceStandardActivity.this.onBackPressed());
         binding.tvAddNewDefectDefine.setOnClickListener(view -> {
             isAddDefectDefine = true;
             mCurrentDefectDefine = null;
             if (isAddDeviceStandard) {
-                if (saveDeviceStandards(isAddDeviceStandard)) {
+                if (ChangeDeviceStandardActivity.this.saveDeviceStandards(isAddDeviceStandard)) {
                     if (!TextUtils.isEmpty(currentStandardId)) {
-                        showAddDefectDefineDialog();
+                        ChangeDeviceStandardActivity.this.showAddDefectDefineDialog();
                     }
                 }
             } else {
-                showAddDefectDefineDialog();
+                ChangeDeviceStandardActivity.this.showAddDefectDefineDialog();
             }
             isAddDefectDefine = true;
             mCurrentDefectDefine = null;
             if (isAddDeviceStandard) {
-                if (saveDeviceStandards(isAddDeviceStandard)) {
+                if (ChangeDeviceStandardActivity.this.saveDeviceStandards(isAddDeviceStandard)) {
                     if (!TextUtils.isEmpty(currentStandardId)) {
-                        showAddDefectDefineDialog();
+                        ChangeDeviceStandardActivity.this.showAddDefectDefineDialog();
                     }
                 }
             } else {
-                showAddDefectDefineDialog();
+                ChangeDeviceStandardActivity.this.showAddDefectDefineDialog();
             }
         });
         binding.btnSave.setOnClickListener(view -> {
-            if (saveDeviceStandards(false)) {
+            if (ChangeDeviceStandardActivity.this.saveDeviceStandards(false)) {
                 // TODO:更新和添加巡检标准
                 if (!TextUtils.isEmpty(currentStandardId)) {
                     Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
-                    this.finish();
+                    ChangeDeviceStandardActivity.this.setResult(RESULT_OK, intent);
+                    ChangeDeviceStandardActivity.this.finish();
                 }
             }
         });
 
         binding.btnDelete.setOnClickListener(view -> {
             isDeleteDeviceStandard = true;
-            showSureTipsDialog();
+            ChangeDeviceStandardActivity.this.showSureTipsDialog();
         });
 
         binding.ivStandardImage.setOnClickListener(view -> {
             if (isAddDeviceStandard) {
-                showChangePictureDialog();
+                ChangeDeviceStandardActivity.this.showChangePictureDialog();
             }
         });
 
-        binding.rlTakeStandardImage.setOnClickListener(view -> {
-            FunctionUtil.takePicture(currentActivity,
-                    (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
-                    Config.CUSTOMER_PICTURES_FOLDER);
-        });
-        binding.btnTakeStandardImage.setOnClickListener(view -> {
-            FunctionUtil.takePicture(currentActivity,
-                    (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
-                    Config.CUSTOMER_PICTURES_FOLDER);
-        });
+        binding.rlTakeStandardImage.setOnClickListener(view -> FunctionUtil.takePicture(currentActivity,
+                (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
+                Config.CUSTOMER_PICTURES_FOLDER));
+        binding.btnTakeStandardImage.setOnClickListener(view -> FunctionUtil.takePicture(currentActivity,
+                (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
+                Config.CUSTOMER_PICTURES_FOLDER));
 
         binding.ivStandardImage.setOnLongClickListener(view -> {
             if (mCurrentDeviceStandard != null) {
                 isDeleteDeviceStandard = false;
-                showChangePictureDialog();
+                ChangeDeviceStandardActivity.this.showChangePictureDialog();
             }
             return true;
         });
@@ -262,7 +248,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
             mCurrentDeviceStandard.staid = currentStandardId;
         }
         currentStandardId = DeviceStandardsService.getInstance().saveDeviceStandards(mCurrentDeviceStandard, isAdd);
-        return TextUtils.isEmpty(currentStandardId) ? false : true;
+        return !TextUtils.isEmpty(currentStandardId);
     }
 
 
@@ -301,9 +287,9 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         listDialogBinding.lvContainer.setOnItemClickListener((adapterView, view, position, l) -> {
             switch (position) {
                 case 2: // 恢复默认照片
-                    int maxHeight = getResources().getDimensionPixelSize(R.dimen.xs_standard_image_minheight);
+                    int maxHeight = ChangeDeviceStandardActivity.this.getResources().getDimensionPixelSize(R.dimen.xs_standard_image_minheight);
                     int maxWidth = ScreenUtils.getScreenWidth(currentActivity) / 2
-                            - getResources().getDimensionPixelSize(R.dimen.xs_global_padding_left_right) * 2;
+                            - ChangeDeviceStandardActivity.this.getResources().getDimensionPixelSize(R.dimen.xs_global_padding_left_right) * 2;
                     String picPath = CommonUtils.getDefaultPicPath("", mCurrentDeviceStandard.pics);
                     if (FileUtils.isFileExists(picPath)) {
                         binding.ivStandardImage.setImageBitmap(BitmapUtil.getImageThumbnail(picPath, maxWidth, maxHeight));
@@ -321,13 +307,13 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                     break;
                 case 0:// 查看大图片
                     if (isAddDeviceStandard) {
-                        showImageDetails(currentActivity,
+                        ChangeDeviceStandardActivity.this.showImageDetails(currentActivity,
                                 Config.CUSTOMER_PICTURES_FOLDER + binding.ivStandardImage.getTag().toString());
                     } else {
                         picPath = CommonUtils.getDefaultPicPath(mCurrentDeviceStandard.change_pic,
                                 mCurrentDeviceStandard.pics);
                         if (FileUtils.isFileExists(picPath)) {
-                            showImageDetails(currentActivity, picPath);
+                            ChangeDeviceStandardActivity.this.showImageDetails(currentActivity, picPath);
                         }
                     }
                     break;
@@ -398,9 +384,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         tipsBinding.btnSure.setText(R.string.xs_delete_str);
         tipsBinding.btnCancel.setText(R.string.xs_no_str);
         tipsDialog.show();
-        tipsBinding.btnSure.setOnClickListener(view -> {
-            operateDefect();
-        });
+        tipsBinding.btnSure.setOnClickListener(view -> ChangeDeviceStandardActivity.this.operateDefect());
         tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
     }
 
@@ -480,7 +464,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
             }
             String description = defectDefineBinding.etContent.getText().toString().trim();
             if (TextUtils.isEmpty(description)) {
-                ToastUtils.showMessage( R.string.xs_please_input_defect_content_str);
+                ToastUtils.showMessage(R.string.xs_please_input_defect_content_str);
                 return;
             }
             Defect mDefectDefine = null;
@@ -495,7 +479,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                 mDefectDefine.level = defectLevel;
             }
             if (DefectDefineService.getInstance().saveOrUpdateDefectDefine(mDefectDefine, isAddDefectDefine)) {
-                updateDefectDefineList();
+                ChangeDeviceStandardActivity.this.updateDefectDefineList();
             }
         });
     }
@@ -504,16 +488,12 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
      * 更新缺陷定义列表
      */
     private void updateDefectDefineList() {
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                if (groupMap != null) {
-                    groupMap.clear();
-                }
-                groupMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
-                mHandler.sendEmptyMessage(LOAD_MORE_DATA);
+        ExecutorManager.executeTask(() -> {
+            if (groupMap != null) {
+                groupMap.clear();
             }
+            groupMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
+            mHandler.sendEmptyMessage(LOAD_MORE_DATA);
         });
     }
 

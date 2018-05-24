@@ -148,84 +148,54 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         mCopyBinding.rcv.setLayoutManager(new GridLayoutManager(currentActivity, 2));
         mCopyBinding.rcv.addItemDecoration(new GridSpacingItemDecoration(2, 20, 8, true));
         adapter.bindToRecyclerView(mCopyBinding.rcv);
-        mCopyBinding.includeTitle.ibtnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                KeyBoardUtils.closeKeybord(currentActivity);
-                finish();
-            }
+        mCopyBinding.includeTitle.ibtnCancel.setOnClickListener(view -> {
+            KeyBoardUtils.closeKeybord(currentActivity);
+            finish();
         });
-        mCopyBinding.ibtnSpread.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDeviceListDisplay();
-            }
-        });
-        mCopyBinding.shadomTip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mCopyBinding.ibtnSpread.setOnClickListener(view -> setDeviceListDisplay());
+        mCopyBinding.shadomTip.setOnClickListener(v -> {
 
-            }
         });
-        mCopyBinding.btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mCopyBinding.btnNext.setOnClickListener(view -> {
 //                 点击完成
-                if (isFinish) {
-                    finish();
-                } else {
-                    if (!adapter.isLast()) {
-                        adapter.next();
-                    } else {
-                        copyHelper.saveAll();
-                        mCopyBinding.btnNext.setText(R.string.xs_finish_str);
-                        isFinish = true;
-                    }
-                }
-            }
-        });
-        mCopyBinding.btnPre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 不是列表中第一个，指向前一个设备,保存当前数据
-                if (!adapter.isFirst()) {
-                    adapter.pre();
+            if (isFinish) {
+                finish();
+            } else {
+                if (!adapter.isLast()) {
+                    adapter.next();
                 } else {
                     copyHelper.saveAll();
+                    mCopyBinding.btnNext.setText(R.string.xs_finish_str);
+                    isFinish = true;
                 }
-                if (isFinish) {
-                    isFinish = false;
-                    mCopyBinding.btnNext.setText(R.string.xs_next_str);
-                }
+            }
+        });
+        mCopyBinding.btnPre.setOnClickListener(view -> {
+            // 不是列表中第一个，指向前一个设备,保存当前数据
+            if (!adapter.isFirst()) {
+                adapter.pre();
+            } else {
+                copyHelper.saveAll();
+            }
+            if (isFinish) {
+                isFinish = false;
+                mCopyBinding.btnNext.setText(R.string.xs_next_str);
             }
         });
 
         copyHelper.setKeyBordListener(this);
-        copyHelper.setItemLongClickListener(new CopyItemLongClickListener<CopyResult>() {
-            @Override
-            public void onItemLongClick(View v, final CopyResult result, int position, final CopyItem item) {
-                final XsActivityCopyDialogBinding notClearDialogBinding = XsActivityCopyDialogBinding.inflate(getLayoutInflater());
-                notClearDialogBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                notClearDialogBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item);
-                    }
-                });
-                dialog = DialogUtils.createDialog(currentActivity, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
-                //隐藏自定义键盘
-                hideKeyBord();
-                dialog.show();
-            }
+        copyHelper.setItemLongClickListener((v, result, position, item) -> {
+            final XsActivityCopyDialogBinding notClearDialogBinding = XsActivityCopyDialogBinding.inflate(getLayoutInflater());
+            notClearDialogBinding.btnCancel.setOnClickListener(v12 -> dialog.dismiss());
+            notClearDialogBinding.btnSure.setOnClickListener(v1 -> saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
+            dialog = DialogUtils.createDialog(currentActivity, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
+            //隐藏自定义键盘
+            hideKeyBord();
+            dialog.show();
         });
         copyHelper.setItemClickListener((v, item, position) -> {
-            hideKeyBord();
+            SingleSpaceCopyActivity.this.hideKeyBord();
             // 显示历史曲线
             ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
         });
@@ -291,23 +261,17 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
     }
 
     private void loadCopyItem() {
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                searchDefect();
-                final List<TreeNode> newData = copyHelper.loadItem();
-                // 设置当前抄录设备集合,判断当前设备是否抄录
-                HashSet<String> copyDeviceList = CopyResultService.getInstance().getCopyDeviceIdListIds(currentReportId, currentInspectionType);
-                adapter.setCopyDeviceModel(copyDeviceList);
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        data.clear();
-                        data.addAll(newData);
-                        mHandler.sendEmptyMessage(LOAD_COPY_FINISH);
-                    }
-                });
-            }
+        ExecutorManager.executeTask(() -> {
+            searchDefect();
+            final List<TreeNode> newData = copyHelper.loadItem();
+            // 设置当前抄录设备集合,判断当前设备是否抄录
+            HashSet<String> copyDeviceList = CopyResultService.getInstance().getCopyDeviceIdListIds(currentReportId, currentInspectionType);
+            adapter.setCopyDeviceModel(copyDeviceList);
+            mHandler.post(() -> {
+                data.clear();
+                data.addAll(newData);
+                mHandler.sendEmptyMessage(LOAD_COPY_FINISH);
+            });
         });
     }
 
@@ -449,14 +413,14 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         tipsBinding.btnSure.setText("是");
         tipsBinding.btnCancel.setOnClickListener(v -> defectDialog.dismiss());
         tipsBinding.btnSure.setOnClickListener(v -> {
-            hideKeyBord();
+            SingleSpaceCopyActivity.this.hideKeyBord();
             defectDialog.dismiss();
             if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
                 mKeyBoardUtil.hideKeyboard();
             }
             Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
-            setIntentValue(intent);
-            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+            SingleSpaceCopyActivity.this.setIntentValue(intent);
+            SingleSpaceCopyActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
     }
 

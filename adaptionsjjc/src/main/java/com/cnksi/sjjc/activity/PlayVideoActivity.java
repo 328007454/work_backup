@@ -47,13 +47,7 @@ public class PlayVideoActivity extends Activity {
 		mController.setMediaPlayer(binding.vvAudio);
 		binding.vvAudio.requestFocus();
 		binding.vvAudio.start();
-		binding.vvAudio.setOnCompletionListener(new OnCompletionListener() {
-			
-			@Override
-			public void onCompletion(MediaPlayer mp) {
-				PlayVideoActivity.this.finish();
-			}
-		});
+		binding.vvAudio.setOnCompletionListener(mp -> PlayVideoActivity.this.finish());
 	}
 
 }

@@ -93,20 +93,14 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         etHumidity.setText(item.sd);
 
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != itemClickListener) {
-                    itemClickListener.itemClick(v, item, position);
-                }
+        imageButton.setOnClickListener(v -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemClick(v, item, position);
             }
         });
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (null != itemClickListener) {
-                    itemClickListener.itemClick(view, item, position);
-                }
+        deleteButton.setOnClickListener(view -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemClick(view, item, position);
             }
         });
 

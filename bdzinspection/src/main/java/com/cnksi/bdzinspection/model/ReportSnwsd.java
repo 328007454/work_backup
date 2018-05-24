@@ -160,9 +160,6 @@ public class ReportSnwsd extends BaseModel {
         }
         if (TextUtils.isEmpty(StringUtilsExt.getDecimalPoint(sd))) {
             return false;
-        } else if ((0 > new Float(sd) || new Float(sd) > 100)) {
-            return false;
-        }
-        return true;
+        } else return (0 <= new Float(sd) && new Float(sd) <= 100);
     }
 }

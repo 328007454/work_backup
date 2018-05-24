@@ -121,12 +121,9 @@ public class PersonListUtils implements BaseRecyclerDataBindingAdapter.OnItemCli
             popupWindow.setBackgroundDrawable(drawable);
             popupWindow.setOutsideTouchable(true);
             popupWindow.setContentView(XsRecyclerviewBinding.getRoot());
-            XsRecyclerviewBinding.imgSure.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (itemClickListener != null) {
-                        itemClickListener.getSelectPersons(selectUsers);
-                    }
+            XsRecyclerviewBinding.imgSure.setOnClickListener(view -> {
+                if (itemClickListener != null) {
+                    itemClickListener.getSelectPersons(selectUsers);
                 }
             });
         }
