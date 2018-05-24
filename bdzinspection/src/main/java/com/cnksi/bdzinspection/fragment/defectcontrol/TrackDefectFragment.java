@@ -34,8 +34,7 @@ import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.CopyItem;
@@ -43,6 +42,7 @@ import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -192,7 +192,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
         copyViewUtil.setItemClickListener((v, item, position) -> {
             // 显示历史曲线
             hideKeyBord();
-            ShowHistroyDialogUtils.showHistory(currentActivity, item);
+            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
         });
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
 

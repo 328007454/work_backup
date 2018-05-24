@@ -16,7 +16,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityOperateTicketReportBinding;
 import com.cnksi.bdzinspection.emnu.OperateType;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;

@@ -19,7 +19,7 @@ import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OpearTickParser;
 import com.cnksi.bdzinspection.utils.OperateTick;
-import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.ScreenUtils;
 

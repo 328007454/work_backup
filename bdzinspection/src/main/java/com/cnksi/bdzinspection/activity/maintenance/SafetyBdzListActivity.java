@@ -14,7 +14,7 @@ import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyBdzListBinding;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
-import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.model.Bdz;

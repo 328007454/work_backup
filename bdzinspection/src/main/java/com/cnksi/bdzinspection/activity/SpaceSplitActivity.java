@@ -11,11 +11,11 @@ import com.cnksi.bdzinspection.adapter.SpaceSplitAdapter;
 import com.cnksi.bdzinspection.adapter.base.GridSpacingItemDecoration;
 import com.cnksi.bdzinspection.databinding.XsActivitySpaceSplitBinding;
 import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.SpacingService;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
@@ -137,7 +137,7 @@ public class SpaceSplitActivity extends TitleActivity {
 
     public boolean saveData(List<Device> devices) {
         spacing.pid = spacing.spid;
-        String newSpid = FunctionUtil.getPrimarykey();
+        String newSpid = BaseModel.getPrimarykey();
         spacing.spid = newSpid;
         spacing.name = binding.etSpaceName.getText().toString();
         spacing.deviceType = mode;

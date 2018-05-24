@@ -7,8 +7,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.sjjc.databinding.GztzItemAddSubBinding;
-import com.cnksi.sjjc.util.CalcUtils;
 
 
 /**

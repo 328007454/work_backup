@@ -350,14 +350,6 @@
         <activity android:name="com.cnksi.core.activity.PermissionActivity" />
 
 
-        <receiver android:name=".receiver.NetWorkDisableReceiver">
-            <intent-filter android:priority="2147483647">
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
-
         <service
             android:name=".aidlservice.UpLoadDataService"
             android:exported="true"

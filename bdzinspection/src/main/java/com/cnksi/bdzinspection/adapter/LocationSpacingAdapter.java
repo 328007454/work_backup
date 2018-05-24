@@ -8,8 +8,8 @@ import android.widget.TextView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.utils.NumberUtil;
 import com.cnksi.common.model.Spacing;
+import com.cnksi.common.utils.CalcUtils;
 
 import java.util.Collection;
 import java.util.regex.Matcher;
@@ -37,7 +37,7 @@ public class LocationSpacingAdapter extends BaseAdapter<Spacing> {
 	public void convert(ViewHolder holder, final Spacing item, final int position) {
 		String result = getDigitsArray(item.name);
 		((TextView) holder.getView(R.id.name)).setText(Html.fromHtml(result));
-		holder.setText(R.id.distance, context.getString(R.string.xs_near_distance, NumberUtil.formatNumber(item.distance, "#.#")));
+		holder.setText(R.id.distance, context.getString(R.string.xs_near_distance, CalcUtils.formatNumber(item.distance, "#.#")));
 
 		holder.getRootView().setOnClickListener(v -> {
             if (null != itemClickListener) {

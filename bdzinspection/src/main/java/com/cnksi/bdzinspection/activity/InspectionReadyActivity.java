@@ -22,8 +22,6 @@ import com.cnksi.bdzinspection.fragment.inspectionready.RoadMapFragment;
 import com.cnksi.bdzinspection.fragment.inspectionready.ToolFragment;
 import com.cnksi.bdzinspection.model.InspectionPrepared;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
@@ -32,10 +30,12 @@ import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -361,7 +361,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                 mReport = new Report(currentTaskId, currentBdzId, currentBdzName, currentInspectionType, loginPerson,
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);
                 mReport.pmsJhid = task.pmsJhid;
-                mReport.reportid = FunctionUtil.getPrimarykey();
+                mReport.reportid = BaseModel.getPrimarykey();
             } else {
                 mReport.setReport(currentBdzId, currentBdzName, currentInspectionType,
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);

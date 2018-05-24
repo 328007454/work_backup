@@ -3,17 +3,24 @@ package com.cnksi.bdzinspection.utils;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
+import com.cnksi.bdzinspection.inter.DialogInputClickListener;
+import com.cnksi.core.utils.ScreenUtils;
 
 public class DialogUtils {
 
@@ -172,6 +179,53 @@ public class DialogUtils {
         if (dialog != null) {
             dialog = null;
         }
+    }
+
+    /**
+     * @param context
+     * @param maxLength
+     * @param inputType
+     * @param title
+     * @param hint
+     * @param ok
+     * @param cancel
+     * @param onClickListener
+     */
+    public  static void showInputCancelDialog(Context context, int maxLength, int inputType, String title, String oldValue, String hint, String ok, String cancel, final DialogInputClickListener onClickListener) {
+        setDialogNull();
+        dialog = new Dialog(context, R.style.dialog);
+        ViewHolder holder = new ViewHolder(context, null, R.layout.xs_dialog_input_1, false);
+        final EditText editText = holder.getView(R.id.edit);
+        TextView tvTitle = holder.getView(R.id.tv_dialog_title);
+        editText.setHint(hint);
+        editText.setText(oldValue);
+        tvTitle.setText(title);
+        if (maxLength != 0) {
+            InputFilter[] filters = {new InputFilter.LengthFilter(maxLength)};
+            editText.setFilters(filters);
+        }
+        editText.setInputType(inputType);
+        Button btnYes = holder.getView(R.id.btn_sure);
+        Button btnCancel = holder.getView(R.id.btn_cancel);
+        btnCancel.setText(cancel);
+        btnYes.setText(ok);
+        View.OnClickListener dialogClick = v -> {
+            if (v.getId() == R.id.btn_sure) {
+                onClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE, editText.getText().toString());
+            } else {
+                onClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE, "");
+            }
+        };
+
+        btnYes.setOnClickListener(dialogClick);
+        btnCancel.setOnClickListener(dialogClick);
+        dialog.setContentView(holder.getRootView());
+        Window mWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = mWindow.getAttributes();
+        mWindow.setAttributes(lp);
+        // 添加动画
+        mWindow.setWindowAnimations(R.style.XS_DialogAnim);
+        dialog.show();
     }
 
 }

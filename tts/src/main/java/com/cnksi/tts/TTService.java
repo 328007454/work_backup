@@ -145,7 +145,9 @@ public class TTService extends Service {
     }
 
     private boolean isPrepare() {
-        if (!isPrepare) Log.w(TAG, "TTS服务还没有准备好！");
+        if (!isPrepare) {
+            Log.w(TAG, "TTS服务还没有准备好！");
+        }
         return isPrepare;
     }
 

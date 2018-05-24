@@ -30,8 +30,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.model.BaseModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -143,7 +143,7 @@ public class CameraVideoFragment extends Fragment implements Callback {
 			mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 			mMediaRecorder.setOrientationHint(90);
 			mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-			videoFileName = FunctionUtil.getPrimarykey() + ".mp4";
+			videoFileName = BaseModel.getPrimarykey() + ".mp4";
 			// mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 			mMediaRecorder.setOutputFile(Config.VIDEO_FOLDER + videoFileName);
 			mMediaRecorder.prepare();

@@ -2,4 +2,14 @@
           package="com.cnksi.common">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <application>
+
+        <receiver android:name="com.cnksi.common.receiver.NetWorkDisableReceiver">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+    </application>
 </manifest>

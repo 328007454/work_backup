@@ -23,7 +23,6 @@ import com.cnksi.bdzinspection.databinding.XsDialogInput1Binding;
 import com.cnksi.bdzinspection.model.ChangeCopyItem;
 import com.cnksi.bdzinspection.model.Logs;
 import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
@@ -35,6 +34,7 @@ import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.CopyType;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -96,7 +96,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         settingCopyBinding = DataBindingUtil.setContentView(this, R.layout.xs_activity_setting_copy);
-        DisplayUtil.getInstance().init(getApplicationContext());
+        DisplayUtils.getInstance().init(getApplicationContext());
         initialUI();
         initialData();
     }

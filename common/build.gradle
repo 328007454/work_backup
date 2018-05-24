@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(include: ['*.jar'], dir: 'libs')
     api "com.android.support:appcompat-v7:$appcompat_v7_version"
     testApi "junit:junit:$junit_version"
     androidTestApi "com.android.support.test:runner:$runner_version"
@@ -50,13 +50,14 @@ dependencies {
     api "com.cnksi:core:$ksi_core_version"
     api "net.zetetic:android-database-sqlcipher:$sqlcipher_version"
     api "com.cnksi:bdloc:$ksi_bdloc"
-    api ("com.cnksi:ksynclib:$ksi_sync_version") {
+    api("com.cnksi:ksynclib:$ksi_sync_version") {
         exclude module: 'fastjson'
     }
-    api project(":tts")
-    api project(":res")
+    api project(':tts')
+    api project(':res')
     debugApi "com.cnksi:debug-db:1.0.5"
     releaseApi "com.cnksi:debug-db-release:1.0.0"
     debugApi "com.squareup.leakcanary:leakcanary-android:$leakcanary_android"
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_android"
+
 }

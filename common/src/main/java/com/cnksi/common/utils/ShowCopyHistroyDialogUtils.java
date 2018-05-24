@@ -1,13 +1,12 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.common.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.view.ChartDialog;
-import com.cnksi.bdzinspection.view.ChartDialog.LineSet;
+import com.cnksi.common.R;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.view.ChartDialog;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ToastUtils;
 
@@ -24,7 +23,7 @@ import java.util.List;
  * @author Wastrel
  * @date 创建时间：2016年8月23日 上午11:39:57 TODO
  */
-public class ShowHistroyDialogUtils {
+public class ShowCopyHistroyDialogUtils {
 
 
 
@@ -87,15 +86,14 @@ public class ShowHistroyDialogUtils {
                     xValues.add(DateUtils.getFormatterTime(model.getString("time"), "MM/dd"));
                 }
             }
-            List<LineSet> yValues = new ArrayList<>();
-
+            List<ChartDialog.LineSet> yValues = new ArrayList<>();
             if (!isNeedTemperature) {
-                yValues.add(new LineSet(item.description.replace("(" + item.unit + ")", ""), resultValues));
+                yValues.add(new ChartDialog.LineSet(item.description.replace("(" + item.unit + ")", ""), resultValues));
                 ChartDialog.getInstance().showLineChartDialog(context, title, "时间", "数值(" + item.unit + ")", xValues,
                         yValues, Arrays.asList(R.color.xs_global_base_color));
             } else {
-                yValues.add(new LineSet("压力", resultValues));
-                yValues.add(new LineSet("温度", tempValues));
+                yValues.add(new ChartDialog.LineSet("压力", resultValues));
+                yValues.add(new ChartDialog.LineSet("温度", tempValues));
                 ChartDialog.getInstance().showLineChartDialog(context, title, "时间", "数值(MPa/℃)", xValues, yValues,
                         Arrays.asList(R.color.xs_global_base_color, R.color.xs_light_red));
             }

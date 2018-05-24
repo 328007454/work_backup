@@ -32,8 +32,6 @@ import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
-import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.enmu.LookUpType;
@@ -42,7 +40,9 @@ import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -137,7 +137,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         copyHelper.setItemClickListener((v, item, position) -> {
             hideKeyBord();
             // 显示历史曲线
-            ShowHistroyDialogUtils.showHistory(currentActivity, item);
+            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
         });
         initFragment();
         binding.llKeyboardHelpLayout.setVisibility(View.GONE);

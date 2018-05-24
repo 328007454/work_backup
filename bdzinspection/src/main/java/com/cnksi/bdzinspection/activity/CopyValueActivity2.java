@@ -16,12 +16,9 @@ import com.baidu.location.BDLocation;
 import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopy2Binding;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.common.model.CopyItem;
-import com.cnksi.common.model.CopyResult;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
@@ -29,15 +26,18 @@ import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
-import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.GPSUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
@@ -111,7 +111,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         copyViewUtil.setItemClickListener((v, item, position) -> {
             // 显示历史曲线
             hideKeyBord();
-            ShowHistroyDialogUtils.showHistory(currentActivity, item);
+            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
         });
 
         DbModel device = DeviceService.getInstance().findDeviceById(currentDeviceId);

@@ -1,8 +1,6 @@
 package com.cnksi.bdzinspection.model;
 
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.model.BaseModel;
-import com.cnksi.common.model.Battery;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -63,21 +61,10 @@ public class BatteryReport  extends BaseModel{
 	public BatteryReport() {
 	}
 
-	public BatteryReport(String reportid, String test_type, String has_resistance, Battery mBattery, String ma, String voltage, String kvoltage) {
-		this.id = FunctionUtil.getPrimarykey();
-		this.reportid = reportid;
-		this.battery_groupname = mBattery.name;
-		this.ma = ma;
-		this.voltage = voltage;
-		this.kvoltage = kvoltage;
-		this.test_type = test_type;
-		this.number = mBattery.number;
-		this.batteryid = mBattery.battery;
-		this.has_resistance = has_resistance;
-	}
+
 
 	public BatteryReport(String reportid) {
-		this.id = FunctionUtil.getPrimarykey();
+		this.id = BaseModel.getPrimarykey();
 		this.reportid = reportid;
 		this.number = "108";
 		this.has_resistance = "Y";

@@ -1,6 +1,5 @@
 package com.cnksi.bdzinspection.model;
 
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.Device;
 import com.cnksi.core.utils.DateUtils;
@@ -72,7 +71,7 @@ public class DeviceStandardsOper extends BaseModel {
 
     public static DeviceStandardsOper createMark(Device device, String libStaid, String createPerson) {
         DeviceStandardsOper oper = new DeviceStandardsOper();
-        oper.id = FunctionUtil.getPrimarykey();
+        oper.id = BaseModel.getPrimarykey();
         oper.deviceid = device.deviceid;
         oper.bdzid = device.bdzid;
         oper.staid = libStaid;

@@ -28,7 +28,6 @@ import com.cnksi.bdzinspection.model.SafeToolsInfor;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PersonListUtils;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Department;
@@ -40,6 +39,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
@@ -397,16 +397,13 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                 selectmodels.clear();
             }
         });
-        testBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!testBinding.rbNormal.isChecked() && !testBinding.rbUnnormal.isChecked()) {
-                    ToastUtils.showMessage( "请选择试验结果");
-                    return;
-                }
-                testDialog.dismiss();
-                saveTestData();
+        testBinding.btnSure.setOnClickListener(v -> {
+            if (!testBinding.rbNormal.isChecked() && !testBinding.rbUnnormal.isChecked()) {
+                ToastUtils.showMessage( "请选择试验结果");
+                return;
             }
+            testDialog.dismiss();
+            saveTestData();
         });
         testBinding.ibtnSelectInspectionDate.setOnClickListener(new View.OnClickListener() {
             @Override

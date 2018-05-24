@@ -1,7 +1,6 @@
 package com.cnksi.bdzinspection.model;
 
 import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.model.BaseModel;
 
 import org.xutils.db.annotation.Column;
@@ -125,7 +124,7 @@ public class OperateTick extends BaseModel {
 	}
 
 	public OperateTick(String taskName, String code, String unit) {
-		this.id = FunctionUtil.getPrimarykey();
+		this.id = BaseModel.getPrimarykey();
 		this.task = taskName;
 		this.code = code;
 		this.unit = unit;

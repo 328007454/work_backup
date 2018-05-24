@@ -26,18 +26,18 @@ import com.cnksi.bdzinspection.databinding.XsBatteryInputValueDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.bdzinspection.model.BatteryReport;
-import com.cnksi.bdzinspection.utils.DefectLevelUtils;
+import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
-import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -339,7 +339,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         // 保存抄录的数量
         try {
             if (TextUtils.isEmpty(mBatteryDetails.id)) {
-                mBatteryDetails.id = FunctionUtil.getPrimarykey();
+                mBatteryDetails.id = BaseModel.getPrimarykey();
             }
             mBatteryDetails.reportid = currentReportId;
             BatteryDetailsService.getInstance().saveOrUpdate(mBatteryDetails);
@@ -358,20 +358,20 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             float inputVoltageValue = Float.parseFloat(TextUtils.isEmpty(voltage) ? "0" : voltage);
             // 判断电压不正常数据的缺陷等级
             if (inputVoltageValue > Float.parseFloat(maxVoltage)) {
-                defectLevel = DefectLevelUtils.getDefectLevel(Float.parseFloat(maxVoltage), Float.parseFloat(minVoltage), inputVoltageValue, true);
+                defectLevel = DefectUtils.getDefectLevel(Float.parseFloat(maxVoltage), Float.parseFloat(minVoltage), inputVoltageValue, true);
                 isValueNormal = false;
             }
             if (inputVoltageValue < Float.parseFloat(minVoltage)) {
-                defectLevel = DefectLevelUtils.getDefectLevel(Float.parseFloat(maxVoltage), Float.parseFloat(minVoltage), inputVoltageValue, false);
+                defectLevel = DefectUtils.getDefectLevel(Float.parseFloat(maxVoltage), Float.parseFloat(minVoltage), inputVoltageValue, false);
                 isValueNormal = false;
             }
             // 判断内阻不正常数据的缺陷等级
             if (inputResistanceValue > Float.parseFloat(maxResistance)) {
-                defectLevel = DefectLevelUtils.getDefectLevel(Float.parseFloat(maxResistance), Float.parseFloat(minVoltage), inputResistanceValue, true);
+                defectLevel = DefectUtils.getDefectLevel(Float.parseFloat(maxResistance), Float.parseFloat(minVoltage), inputResistanceValue, true);
                 isValueNormal = false;
             }
             if (inputResistanceValue < Float.parseFloat(minResistance)) {
-                defectLevel = DefectLevelUtils.getDefectLevel(Float.parseFloat(maxResistance), Float.parseFloat(minVoltage), inputResistanceValue, false);
+                defectLevel = DefectUtils.getDefectLevel(Float.parseFloat(maxResistance), Float.parseFloat(minVoltage), inputResistanceValue, false);
                 isValueNormal = false;
             }
             if (!isValueNormal) {
@@ -444,7 +444,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
      * 保存电池的缺陷信息
      */
     private void saveDefect(String defectLevel, String defectContent) {
-        defectLevel = DefectLevelUtils.convertDefectLevel2Code(defectLevel);
+        defectLevel = DefectUtils.convertDefectLevel2Code(defectLevel);
         // 电池记录的缺陷 间隔id和名称 存的是电池组的id和名称 设备Id和名称 以及 设备部件id和名称 存的都是电池的编号 如 001
         DefectRecord record = new DefectRecord(currentReportId, // 报告id
                 currentBdzId, // 变电站id

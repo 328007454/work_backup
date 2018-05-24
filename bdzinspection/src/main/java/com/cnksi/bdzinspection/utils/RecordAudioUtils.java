@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.databinding.XsRecordAudioDialogBinding;
+import com.cnksi.core.utils.ScreenUtils;
 
 /**
  * 录音工具，显示录音对话框

@@ -22,15 +22,13 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.RoadMapAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsHistoryDataDialogBinding;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.DisplayUtil;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
@@ -49,12 +47,12 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.nari.NariActivity;
 
-import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -237,7 +235,7 @@ public class InspectionReportActivity extends BaseActivity {
     }
 
     private void initSignName() {
-        float scale = DisplayUtil.getInstance().getDensity();
+        float scale = DisplayUtils.getInstance().getDensity();
         if (mReportSignnameListCzr != null) {
             for (ReportSignname bean : mReportSignnameListCzr) {
                 ImageView v = new ImageView(currentActivity);

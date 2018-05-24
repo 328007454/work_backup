@@ -26,7 +26,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.DateUtils;
 
@@ -172,7 +172,7 @@ public class LogUtil {
      * @return
      */
     public static String buildBody() {
-        return buildBody(XunshiApplication.getAppContext());
+        return buildBody(CommonApplication.getAppContext());
     }
 
 

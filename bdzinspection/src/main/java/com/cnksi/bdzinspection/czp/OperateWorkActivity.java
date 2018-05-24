@@ -29,7 +29,7 @@ import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.core.common.ExecutorManager;

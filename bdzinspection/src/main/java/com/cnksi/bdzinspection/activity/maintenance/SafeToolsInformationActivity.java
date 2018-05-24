@@ -14,7 +14,6 @@ import android.widget.RadioGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.OperateToolResultService;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetytoolInformationBinding;
@@ -27,7 +26,6 @@ import com.cnksi.bdzinspection.model.SafeToolsInfor;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PersonListUtils;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Department;
@@ -38,6 +36,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
@@ -189,31 +188,23 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
         stopDialog = DialogUtils.createDialog(currentActivity, stopBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         stopBinding.rgStop.setOnCheckedChangeListener(stopDialogCheckListener);
-        stopBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopDialog.dismiss();
+        stopBinding.btnCancel.setOnClickListener(v -> stopDialog.dismiss());
+        stopBinding.btnSure.setOnClickListener(v -> {
+            if (!stopBinding.rbUnqualify.isChecked() && !stopBinding.rbInperiod.isChecked()) {
+                ToastUtils.showMessage( "请选择工器具停用的原因");
+                return;
             }
-        });
-        stopBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!stopBinding.rbUnqualify.isChecked() && !stopBinding.rbInperiod.isChecked()) {
-                    ToastUtils.showMessage( "请选择工器具停用的原因");
-                    return;
-                }
-                String reason = stopBinding.etInputReason.getText().toString().trim();
-                if (View.VISIBLE == stopBinding.etInputReason.getVisibility() && TextUtils.isEmpty(reason)) {
-                    ToastUtils.showMessage( "请填写工器具不合格的原因");
-                    return;
-                }
-                if (TextUtils.isEmpty(stopBinding.etInputStopperson.getText().toString())) {
-                    ToastUtils.showMessage( "请输入操作人员姓名");
-                    return;
-                }
-                stopDialog.dismiss();
-                saveStopData();
+            String reason = stopBinding.etInputReason.getText().toString().trim();
+            if (View.VISIBLE == stopBinding.etInputReason.getVisibility() && TextUtils.isEmpty(reason)) {
+                ToastUtils.showMessage( "请填写工器具不合格的原因");
+                return;
             }
+            if (TextUtils.isEmpty(stopBinding.etInputStopperson.getText().toString())) {
+                ToastUtils.showMessage( "请输入操作人员姓名");
+                return;
+            }
+            stopDialog.dismiss();
+            saveStopData();
         });
         stopBinding.ivArrow.setOnClickListener(new View.OnClickListener() {
             @Override

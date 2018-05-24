@@ -23,13 +23,12 @@ import com.cnksi.bdzinspection.databinding.XsActivityFullDeviceListBinding;
 import com.cnksi.bdzinspection.fragment.DeviceListFragment;
 import com.cnksi.bdzinspection.inter.DialogInputClickListener;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.bdzinspection.utils.DialogUtil;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShakeListener;
 import com.cnksi.bdzinspection.utils.ShakeListener.OnShakeListener;
-import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.CopyItemService;
@@ -338,7 +337,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     }
 
     private void showChangeDistanceDialog() {
-        DialogUtil.getInstance().showInputCancelDialog(this, 10, InputType.TYPE_CLASS_NUMBER, "修改判断距离", Config.COPY_MAX_DISTANCE + "", "请输入判断距离(m)", "修改", "取消", new DialogInputClickListener() {
+        DialogUtils.showInputCancelDialog(this, 10, InputType.TYPE_CLASS_NUMBER, "修改判断距离", Config.COPY_MAX_DISTANCE + "", "请输入判断距离(m)", "修改", "取消", new DialogInputClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, String result) {
                 if (DialogInterface.BUTTON_POSITIVE == which) {

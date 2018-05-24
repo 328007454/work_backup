@@ -7,9 +7,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 
+import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.inter.SimpleTextWatcher;
-import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 
 /**

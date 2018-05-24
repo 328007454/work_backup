@@ -2,7 +2,6 @@ package com.cnksi.sjjc.processor;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.PMSDeviceType;
@@ -11,15 +10,13 @@ import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.sjjc.CustomApplication;
-import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.DevicePart;
 import com.cnksi.sjjc.bean.Lookup;
 import com.cnksi.sjjc.service.DevicePartService;
 import com.cnksi.sjjc.service.StandardService;
 import com.cnksi.sjjc.util.DateUtils;
-import com.cnksi.sjjc.view.ChartDialog;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -28,7 +25,6 @@ import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -72,7 +68,6 @@ public abstract class CopyDataInterface {
      * @return
      */
     public abstract String getFinishString();
-
 
 
     /**
@@ -205,79 +200,7 @@ public abstract class CopyDataInterface {
 
 
     public static void showHistory(Context context, CopyItem item) {
-        boolean isSf6=item.type_key.contains("sf6yl");
-        String sql = "SELECT case WHEN result.val  ISNULL THEN 0 ELSE  result.val END val,"
-                + " case WHEN result.val_a  ISNULL THEN 0 ELSE  result.val_a END A,"
-                + " case WHEN result.val_b  ISNULL THEN 0 ELSE  result.val_b END B,"
-                + " case WHEN result.val_c  ISNULL THEN 0 ELSE  result.val_c END C,"
-                + " case WHEN result.val_o  ISNULL THEN 0 ELSE  result.val_o END O,"
-                + " case WHEN report.temperature ISNULL  or report.temperature='' THEN 0 ELSE report.temperature END temperature,"
-                + "	case WHEN result.update_time ISNULL THEN result.create_time ELSE result.update_time END time"
-                + " FROM"
-                + " copy_result result LEFT JOIN report report ON result.reportid = report.reportid WHERE result.bdzid = ?"
-                + " AND report.reportid NOT IN(SELECT DISTINCT(reportid) FROM report rp WHERE rp.taskid in (SELECT DISTINCT(taskid) FROM task tk WHERE tk.STATUS='undo'))"
-                + " AND result.deviceid = ? AND result.item_id=?"
-                + " ORDER BY time";
-        SqlInfo sqlInfo = new SqlInfo(sql);
-        sqlInfo.addBindArg(new KeyValue("", item.bdzid));
-        sqlInfo.addBindArg(new KeyValue("", item.deviceid));
-        sqlInfo.addBindArg(new KeyValue("", item.id));
-        try {
-            List<DbModel> resultModel = CustomApplication.getInstance().getDbManager().findDbModelAll(sqlInfo);
-
-            if (resultModel == null || resultModel.size() < 1) {
-                ToastUtils.showMessage("当前没有历史抄录记录");
-                return;
-            }
-            String title = context.getString(R.string.data_history_record_format_str, item.description.replace("(" + item.unit + ")", ""));
-            List<String> xValues = new ArrayList<>();
-            List<Float> resultValues = new ArrayList<>();
-            List<Float> tempValues = new ArrayList<>();
-            String val="";
-            for (DbModel model : resultModel) {
-                if ("Y".equals(item.val)) {
-                    val=model.getString("val");
-                }
-                if ("Y".equals(item.val_a)) {
-                    val=model.getString("A");
-                }
-                if ("Y".equals(item.val_b)) {
-                    val=model.getString("B");
-                }
-                if ("Y".equals(item.val_c)) {
-                    val=model.getString("C");
-                }
-                if ("Y".equals(item.val_o)) {
-                    val=model.getString("O");
-                }
-                if (!TextUtils.isEmpty(val)&&!("-1".equalsIgnoreCase(val))){
-                    resultValues.add(Float.valueOf(val));
-                    xValues.add(DateUtils.formatDateTime(model.getString("time"), "MM/dd"));
-                    if (isSf6) {
-                        tempValues.add(model.getFloat("temperature"));
-                    }
-                }
-            }
-
-            if (resultValues.size()<1)
-            {
-                ToastUtils.showMessage("当前没有历史抄录记录");
-                return;
-            }
-            List<ChartDialog.LineSet> yValues = new ArrayList<>();
-
-
-            if (!isSf6) {
-                yValues.add(new ChartDialog.LineSet(item.description.replace("(" + item.unit + ")", ""), resultValues));
-                ChartDialog.getInstance().showLineChartDialog(context, title, "时间", "数值(" + item.unit + ")", xValues, yValues, Arrays.asList(R.color.global_base_color));
-            } else {
-                yValues.add(new ChartDialog.LineSet("压力", resultValues));
-                yValues.add(new ChartDialog.LineSet("温度", tempValues));
-                ChartDialog.getInstance().showLineChartDialog(context, title, "时间", "数值(MPa/℃)", xValues, yValues, Arrays.asList(R.color.global_base_color, R.color.light_red));
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+        ShowCopyHistroyDialogUtils.showHistory(context, item);
     }
 
     public abstract String getCopyType();

@@ -2,8 +2,8 @@ package com.cnksi.bdzinspection.model;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.Device;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -73,7 +73,7 @@ public class PlacedDevice {
         PlacedDevice placedDevice = new PlacedDevice();
         placedDevice.bdzid = device.bdzid;
         placedDevice.create_time = DateUtils.getCurrentLongTime();
-        placedDevice.id = FunctionUtil.getPrimarykey();
+        placedDevice.id = BaseModel.getPrimarykey();
         placedDevice.deviceid = device.deviceid;
         placedDevice.device_name = device.name;
         placedDevice.insert_time = placedDevice.create_time;
@@ -87,7 +87,7 @@ public class PlacedDevice {
         PlacedDevice placedDevice = new PlacedDevice();
         placedDevice.bdzid = device.getString(BDZID);
         placedDevice.create_time = DateUtils.getCurrentLongTime();
-        placedDevice.id = FunctionUtil.getPrimarykey();
+        placedDevice.id = BaseModel.getPrimarykey();
         placedDevice.deviceid = device.getString(DEVICEID);
         placedDevice.device_name = device.getString(DEVICE_NAME);
         placedDevice.insert_time = placedDevice.create_time;

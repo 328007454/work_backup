@@ -36,7 +36,7 @@ import com.cnksi.bdzinspection.utils.KeyboardChangeListener;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.RecordAudioUtils;
-import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.ReportService;

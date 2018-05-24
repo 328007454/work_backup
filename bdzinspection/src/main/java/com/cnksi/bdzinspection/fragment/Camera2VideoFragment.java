@@ -57,6 +57,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.view.AutoFitTextureView;
 import com.cnksi.common.Config;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.ToastUtils;
 
 import java.io.File;
@@ -470,7 +471,7 @@ public class Camera2VideoFragment extends Fragment {
     }
 
     private File getVideoFile() {
-        return new File(Config.VIDEO_FOLDER, videoFileName = FunctionUtil.getPrimarykey() + ".mp4");
+        return new File(Config.VIDEO_FOLDER, videoFileName = BaseModel.getPrimarykey() + ".mp4");
     }
 
     public void startRecordingVideo() {

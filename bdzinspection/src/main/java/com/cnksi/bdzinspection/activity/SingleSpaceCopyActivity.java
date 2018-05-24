@@ -19,28 +19,28 @@ import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyRcvDeviceAdapter;
 import com.cnksi.bdzinspection.adapter.base.GridSpacingItemDecoration;
-import com.cnksi.common.daoservice.CopyItemService;
-import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsActivitySingleSpaceCopyBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.common.model.CopyItem;
-import com.cnksi.common.model.CopyResult;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
-import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -224,14 +224,10 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
                 dialog.show();
             }
         });
-        copyHelper.setItemClickListener(new ItemClickListener<CopyItem>() {
-
-            @Override
-            public void onItemClick(View v, CopyItem item, int position) {
-                hideKeyBord();
-                // 显示历史曲线
-                ShowHistroyDialogUtils.showHistory(currentActivity, item);
-            }
+        copyHelper.setItemClickListener((v, item, position) -> {
+            hideKeyBord();
+            // 显示历史曲线
+            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
         });
     }
 
@@ -451,24 +447,16 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");
         tipsBinding.btnSure.setText("是");
-        tipsBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                defectDialog.dismiss();
+        tipsBinding.btnCancel.setOnClickListener(v -> defectDialog.dismiss());
+        tipsBinding.btnSure.setOnClickListener(v -> {
+            hideKeyBord();
+            defectDialog.dismiss();
+            if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+                mKeyBoardUtil.hideKeyboard();
             }
-        });
-        tipsBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyBord();
-                defectDialog.dismiss();
-                if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
-                    mKeyBoardUtil.hideKeyboard();
-                }
-                Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
-                setIntentValue(intent);
-                startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
-            }
+            Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
+            setIntentValue(intent);
+            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
     }
 

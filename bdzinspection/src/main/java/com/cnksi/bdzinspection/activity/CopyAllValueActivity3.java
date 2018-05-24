@@ -17,15 +17,10 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyDeviceAdapter;
-import com.cnksi.common.daoservice.CopyItemService;
-import com.cnksi.common.daoservice.CopyResultService;
-import com.cnksi.common.daoservice.CopyTypeService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyAll3Binding;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogCopyTipsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.common.model.CopyItem;
-import com.cnksi.common.model.CopyResult;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
@@ -33,11 +28,16 @@ import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
-import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.CopyTypeService;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -171,7 +171,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         });
         copyViewUtil.setItemClickListener((v, copyItem, position) -> {
             hideKeyBord();
-            ShowHistroyDialogUtils.showHistory(currentActivity, copyItem);
+            ShowCopyHistroyDialogUtils.showHistory(currentActivity, copyItem);
         });
     }
 

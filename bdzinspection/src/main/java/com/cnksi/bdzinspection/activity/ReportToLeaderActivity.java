@@ -15,8 +15,8 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityReportToLeaderBinding;
 import com.cnksi.bdzinspection.model.TestPerson;
-import com.cnksi.bdzinspection.utils.DefectLevelUtils;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.bdzinspection.utils.DefectUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.ToastUtils;
@@ -54,7 +54,7 @@ public class ReportToLeaderActivity extends BaseActivity {
         binding.includeTitle.tvTitle.setText(R.string.xs_select_leader_str);
         String defectDescription = getIntent().getStringExtra(DefectRecord.DESCRIPTION);
         String defectLevel = getIntent().getStringExtra(DefectRecord.DEFECTLEVEL);
-        defectLevel = DefectLevelUtils.convert2DefectLevel(defectLevel);
+        defectLevel = DefectUtils.convert2DefectLevel(defectLevel);
         String deviceName = getIntent().getStringExtra(Config.CURRENT_DEVICE_NAME);
         binding.etReportContent.setText(getString(R.string.xs_report_defect_description_format_str, currentBdzName, deviceName, defectLevel, defectDescription));
 

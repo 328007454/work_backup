@@ -28,7 +28,7 @@ import com.cnksi.bdzinspection.model.SpecialMenu;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;

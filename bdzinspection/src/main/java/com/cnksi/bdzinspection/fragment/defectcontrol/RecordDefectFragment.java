@@ -40,7 +40,7 @@ import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.enmu.InspectionType;
@@ -244,7 +244,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
     DefectRecord deleteRecord;
 
     private void initDeleteDialog() {
-        int dialogWidth = com.cnksi.bdzinspection.utils.ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
         XsDialogTipsBinding tipsBinding = XsDialogTipsBinding.inflate(currentActivity.getLayoutInflater());
         deleteDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogContent.setText("确认要删除本次缺陷？");

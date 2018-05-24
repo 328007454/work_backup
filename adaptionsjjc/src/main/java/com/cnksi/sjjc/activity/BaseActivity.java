@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.core.activity.BaseCoreActivity;
@@ -619,7 +619,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         ProgressDialog dialog = ProgressDialog.show(this, "提示", "正在加密数据，请稍等...请不要强行取消，耐心等待", false, false);
         ExecutorManager.executeTaskSerially(() -> {
             try {
-                String innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
+                String innerDateBaseFolder = CommonApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
                 File innerFile = new File(innerDateBaseFolder);
                 if (!innerFile.exists()) {
                     innerFile.mkdir();

@@ -1,6 +1,5 @@
 package com.cnksi.bdzinspection.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -14,7 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,12 +36,10 @@ import com.cnksi.bdzinspection.model.DeviceTypeImage;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.SpecialMenu;
 import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.CopyItemService;
@@ -57,8 +53,10 @@ import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.model.Standards;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -210,42 +208,29 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
 
     private void initialUI() {
         devicedetailsBinding.devicePartRecy.setVisibility(View.GONE);
-        devicedetailsBinding.deviceStandardLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mCurrentStandard = mStandardList.get(position);
-                if (isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) || (InspectionType.special_xideng.equals(currentInspectionType))) {
-                    Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
-                    setIntentValue(intent);
-                    startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
-                } else {
-                    Intent intent = new Intent(currentActivity, DefectControlActivity.class);
-                    setIntentValue(intent);
-                    intent.putExtra(Config.IS_SHOW_DEFECT_REASON, true);
-                    intent.putExtra(Config.CURRENT_STANDARD_ID, String.valueOf(mCurrentStandard.getString(Standards.STAID))); // 传递巡视标准ID
-                    startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
-                }
+        devicedetailsBinding.deviceStandardLv.setOnItemClickListener((parent, view, position, id) -> {
+            mCurrentStandard = mStandardList.get(position);
+            if (isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) || (InspectionType.special_xideng.equals(currentInspectionType))) {
+                Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
+                setIntentValue(intent);
+                startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+            } else {
+                Intent intent = new Intent(currentActivity, DefectControlActivity.class);
+                setIntentValue(intent);
+                intent.putExtra(Config.IS_SHOW_DEFECT_REASON, true);
+                // 传递巡视标准ID
+                intent.putExtra(Config.CURRENT_STANDARD_ID, String.valueOf(mCurrentStandard.getString(Standards.STAID)));
+                startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
             }
         });
-        devicedetailsBinding.deviceStandardLv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showStandardSource(mStandardList.get(position));
-                return true;
-            }
+        devicedetailsBinding.deviceStandardLv.setOnItemLongClickListener((parent, view, position, id) -> {
+            showStandardSource(mStandardList.get(position));
+            return true;
         });
-        devicedetailsBinding.btPhotoSign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FunctionUtil.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, PHOTO_SIGN_IMAGE);
-            }
-        });
-        devicedetailsBinding.imgArrived.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        devicedetailsBinding.btPhotoSign.setOnClickListener(v -> FunctionUtil.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, PHOTO_SIGN_IMAGE));
+        devicedetailsBinding.imgArrived.setOnClickListener(v -> {
 //                showImageDetails(currentActivity, Config.RESULT_PICTURES_FOLDER + placedDevice.pic, true);
-                showImageDetails(currentActivity, Config.RESULT_PICTURES_FOLDER, imgList, true);
-            }
+            showImageDetails(currentActivity, Config.RESULT_PICTURES_FOLDER, imgList, true);
         });
     }
 
@@ -284,7 +269,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 // 历史缺陷
                 mExistDefectList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
                 if (!mExistDefectList.isEmpty()) {
-                    TTSUtils.getInstance().startSpeaking(getResources().getString(R.string.xs_current_device_has_defect_format_str, mExistDefectList.size()+""));
+                    TTSUtils.getInstance().startSpeaking(getResources().getString(R.string.xs_current_device_has_defect_format_str, mExistDefectList.size() + ""));
                 }
                 mHandler.sendEmptyMessage(DEVICE_EXIST_DEFECT);
                 //控制点及危险措施
@@ -470,7 +455,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             if (null != bigTypeModel && !TextUtils.isEmpty(bigTypeModel.getString("identification_prevent_measures"))) {
                 showDangerPointDialog();
             } else {
-                ToastUtils.showMessage( "该设备暂无危险点及控制措施");
+                ToastUtils.showMessage("该设备暂无危险点及控制措施");
             }
         });
 
@@ -546,7 +531,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         public void onClick(View v) {
                             try {
                                 DeviceStandardOperService.getInstance().saveOrUpdate(mark);
-                                ToastUtils.showMessage( "操作成功");
+                                ToastUtils.showMessage("操作成功");
                                 if ("1".equals(mark.dlt)) {
                                     standard.add("isMark", "N");
                                     staidMarkMap.remove(mark.staid);
@@ -587,59 +572,56 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         ((ListView) changeHolder.getView(R.id.lv_container)).setAdapter(mListContentDialogAdapter);
         ((TextView) changeHolder.getView(R.id.tv_dialog_title)).setText(R.string.xs_picture_function_str);
         mChangePictureDialog.show();
-        ((ListView) changeHolder.getView(R.id.lv_container)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    // 恢复默认照片
-                    case 2:
-                        // 1、清空数据库中更换图片
-                        DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, "");
-                        // 2、设置设备图片
-                        setDeviceImage();
-                        break;
-                    // 更换图片
-                    case 1:
-                        FunctionUtil.takePicture(currentActivity, (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)), Config.CUSTOMER_PICTURES_FOLDER);
-                        break;
-                    // 查看大图片
-                    case 0:
-                        String picPath;
-                        picPath = TextUtils.isEmpty(mCurrentDevice.change_pic) ? (TextUtils.isEmpty(mCurrentDevice.pic) ? "" : mCurrentDevice.pic) : mCurrentDevice.change_pic;
-                        picPath = mCurrentDevice.getPic(picPath);
-                        if (FileUtils.isFileExists(picPath)) {
-                            showImageDetails(currentActivity, picPath);
-                        }
-                        break;
-                    case 3:
-                        // 类型库中查询设备类型图
-                        try {
-                            List<DeviceTypeImage> typeImageList = DeviceTypeImageService.getInstance().queryImage(mCurrentDevice.dtid);
-                            ArrayList<String> imageList = new ArrayList<String>();
-                            if (null != typeImageList && !typeImageList.isEmpty()) {
-                                for (DeviceTypeImage typeImage : typeImageList) {
-                                    imageList.add(Config.BDZ_INSPECTION_FOLDER + typeImage.image);
-                                }
-                                // 跳转选择图片
-                                Intent intent = new Intent(NewDeviceDetailsActivity.this, ImageDetailsActivity.class);
-                                intent.putStringArrayListExtra(Config.IMAGEURL_LIST, imageList);
-                                intent.putExtra(Config.TITLE_NAME, "点击选择设备图片");
-                                intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, false);
-                                intent.putExtra("select", true);
-                                startActivityForResult(intent, SELECT_DEVICE_IMAGE);
-                            } else {
-                                ToastUtils.showMessageLong( "暂无图库可供选择");
+        ((ListView) changeHolder.getView(R.id.lv_container)).setOnItemClickListener((parent, view1, position, id) -> {
+            switch (position) {
+                // 恢复默认照片
+                case 2:
+                    // 1、清空数据库中更换图片
+                    DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, "");
+                    // 2、设置设备图片
+                    setDeviceImage();
+                    break;
+                // 更换图片
+                case 1:
+                    FunctionUtil.takePicture(currentActivity, (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)), Config.CUSTOMER_PICTURES_FOLDER);
+                    break;
+                // 查看大图片
+                case 0:
+                    String picPath;
+                    picPath = TextUtils.isEmpty(mCurrentDevice.change_pic) ? (TextUtils.isEmpty(mCurrentDevice.pic) ? "" : mCurrentDevice.pic) : mCurrentDevice.change_pic;
+                    picPath = mCurrentDevice.getPic(picPath);
+                    if (FileUtils.isFileExists(picPath)) {
+                        showImageDetails(currentActivity, picPath);
+                    }
+                    break;
+                case 3:
+                    // 类型库中查询设备类型图
+                    try {
+                        List<DeviceTypeImage> typeImageList = DeviceTypeImageService.getInstance().queryImage(mCurrentDevice.dtid);
+                        ArrayList<String> imageList = new ArrayList<String>();
+                        if (null != typeImageList && !typeImageList.isEmpty()) {
+                            for (DeviceTypeImage typeImage : typeImageList) {
+                                imageList.add(Config.BDZ_INSPECTION_FOLDER + typeImage.image);
                             }
-
-                        } catch (DbException e) {
-                            Log.e("", "查询设备类型“" + mCurrentDevice.dtid + "”出错了");
-                            e.printStackTrace();
+                            // 跳转选择图片
+                            Intent intent = new Intent(NewDeviceDetailsActivity.this, ImageDetailsActivity.class);
+                            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, imageList);
+                            intent.putExtra(Config.TITLE_NAME, "点击选择设备图片");
+                            intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, false);
+                            intent.putExtra("select", true);
+                            startActivityForResult(intent, SELECT_DEVICE_IMAGE);
+                        } else {
+                            ToastUtils.showMessageLong("暂无图库可供选择");
                         }
-                        break;
-                    default:
-                }
-                mChangePictureDialog.dismiss();
+
+                    } catch (DbException e) {
+                        Log.e("", "查询设备类型“" + mCurrentDevice.dtid + "”出错了");
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
             }
+            mChangePictureDialog.dismiss();
         });
     }
 
@@ -763,23 +745,19 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
      * 查询当前设备的历史缺陷
      */
     public void searchCurrentDeviceExistDefect() {
-        ExecutorManager.executeTask(new Runnable() {
-            @SuppressLint("StringFormatMatches")
-            @Override
-            public void run() {
-                mExistDefectList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
-                if (mExistDefectList != null && !mExistDefectList.isEmpty()) {
-                    TTSUtils.getInstance().startSpeaking(getResources().getString(R.string.xs_current_device_has_defect_format_str, mExistDefectList.size()));
-                }
-                mHandler.sendEmptyMessage(DEVICE_EXIST_DEFECT);
-                if (!isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) && !(InspectionType.special_xideng.equals(currentInspectionType))) {
-                    // 更新设备部件的缺陷数量显示
-                    // 1、从库中查询设备部件
-                    mDevicePartList = DevicePartService.getInstance().getDevicePart(mCurrentDevice.dtid, currentInspectionType, currentBdzId, mCurrentDevice.deviceid);
-                    mHandler.sendEmptyMessage(DEVICE_PART_INFORMATION);
-                }
-
+        ExecutorManager.executeTask(() -> {
+            mExistDefectList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
+            if (mExistDefectList != null && !mExistDefectList.isEmpty()) {
+                TTSUtils.getInstance().startSpeaking(getResources().getString(R.string.xs_current_device_has_defect_format_str, mExistDefectList.size()));
             }
+            mHandler.sendEmptyMessage(DEVICE_EXIST_DEFECT);
+            if (!isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) && !(InspectionType.special_xideng.equals(currentInspectionType))) {
+                // 更新设备部件的缺陷数量显示
+                // 1、从库中查询设备部件
+                mDevicePartList = DevicePartService.getInstance().getDevicePart(mCurrentDevice.dtid, currentInspectionType, currentBdzId, mCurrentDevice.deviceid);
+                mHandler.sendEmptyMessage(DEVICE_PART_INFORMATION);
+            }
+
         });
     }
 
@@ -810,8 +788,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
 
 
     class GestureHandler {
-        int sWidth = DisplayUtil.getInstance().getWidth();
-        int sHeight = DisplayUtil.getInstance().getHeight();
+        int sWidth = DisplayUtils.getInstance().getWidth();
+        int sHeight = DisplayUtils.getInstance().getHeight();
         PointF down;
         float minY, maxY;
         long downTime;
@@ -846,6 +824,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         return true;
                     }
                     work = false;
+                    break;
                 default:
             }
             return work;
@@ -871,7 +850,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         public boolean left() {
             DbModel model = NextDeviceUtils.getInstance().getLeft(mCurrentDevice.device_type, mCurrentDevice.deviceid);
             if (model == null) {
-                ToastUtils.showMessage( "没有找到上一个设备！");
+                ToastUtils.showMessage("没有找到上一个设备！");
                 return false;
             }
             jumpDevice(model, R.anim.xs_left_to_right);
@@ -882,7 +861,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         public boolean right() {
             DbModel model = NextDeviceUtils.getInstance().getRight(mCurrentDevice.device_type, mCurrentDevice.deviceid);
             if (model == null) {
-                ToastUtils.showMessage( "没有找到下一个设备！");
+                ToastUtils.showMessage("没有找到下一个设备！");
                 return false;
             }
             jumpDevice(model, R.anim.xs_right_to_left);
