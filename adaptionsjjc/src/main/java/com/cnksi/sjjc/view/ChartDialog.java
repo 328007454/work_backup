@@ -7,9 +7,9 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.util.NumberUtil;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;

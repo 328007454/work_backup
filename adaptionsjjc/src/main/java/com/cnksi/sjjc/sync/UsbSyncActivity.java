@@ -9,15 +9,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.cnksi.sjjc.util.StringUtils;
+import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.model.Department;
+import com.cnksi.common.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.ksynclib.KUsbSync;
 import com.cnksi.sjjc.R;
-import com.cnksi.common.model.Department;
 import com.cnksi.sjjc.databinding.ActivityUsbSyncBinding;
-import com.cnksi.common.daoservice.DepartmentService;
 
 import static com.cnksi.ksynclib.activity.KSyncAJActivity.DELETE_FINISHED;
 

@@ -13,15 +13,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.databinding.ActivityImageDetailsBinding;
+import com.cnksi.common.databinding.DialogTipsBinding;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.photo.PhotoView;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.databinding.ActivityImageDetailsBinding;
-import com.cnksi.sjjc.databinding.DialogTipsBinding;
-import com.cnksi.sjjc.util.DialogUtils;
 
 import java.io.File;
 import java.util.ArrayList;

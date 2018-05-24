@@ -10,12 +10,12 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.cnksi.sjjc.util.StringUtils;
+import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.model.Department;
+import com.cnksi.common.utils.StringUtils;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.UpDataToReportManager;
-import com.cnksi.common.model.Department;
-import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.sjjc.sync.KSyncConfig;
 
 import java.util.concurrent.ExecutorService;

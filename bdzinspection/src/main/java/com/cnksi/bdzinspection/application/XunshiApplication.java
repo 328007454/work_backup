@@ -19,8 +19,6 @@ public class XunshiApplication {
 
 
     public void init(Application application, Context context) {
-
-
         Config.COPY_MAX_DISTANCE = PreferencesUtils.get(Config.COPY_DISTANCE_KEY, Config.COPY_MAX_DISTANCE);
         NariDataManager.init(Config.NARI_BASEFOLDER);
         PreferencesUtils.init(context);

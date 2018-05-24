@@ -1,15 +1,18 @@
-package com.cnksi.sjjc.util;
+package com.cnksi.common.utils;
 
 import android.text.TextUtils;
 
-import com.cnksi.core.utils.DateUtils;
 import com.cnksi.common.Config;
+import com.cnksi.core.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.cnksi.core.utils.CommonUtils.getPrimarykey;
+import static com.cnksi.core.utils.Cst.COMMA_SEPARATOR;
 
 /**
  * 字符工具处理类
@@ -66,7 +69,7 @@ public class StringUtils {
         } else {
             plan_id = "";
         }
-        return plan_id + FunctionUtils.getCurrentImageName();
+        return plan_id +getCurrentImageName("");
     }
 
     /**
@@ -81,7 +84,7 @@ public class StringUtils {
         } else {
             plan_id = "";
         }
-        return plan_id + FunctionUtils.getPrimarykey() + Config.AAC_POSTFIX;
+        return plan_id +getPrimarykey() + Config.AAC_POSTFIX;
     }
 
     /**
@@ -96,11 +99,11 @@ public class StringUtils {
         } else {
             plan_id = "";
         }
-        String uuidStr = UUID.randomUUID().toString().replace(CoreConfig.DASH_SEPARATOR, "");
+        String uuidStr = UUID.randomUUID().toString().replace("-", "");
         if (uuidStr.length() > 8) {
             uuidStr = uuidStr.substring(0, 8);
         }
-        return plan_id + DateUtils.getCurrentTime(CoreConfig.dateFormat6) + uuidStr + Config.VIDEO_TYPE_MP4;
+        return plan_id + DateUtils.getCurrentTime(DateUtils.yyyyMMddHHmmssSSS) + uuidStr + Config.VIDEO_TYPE_MP4;
     }
 
     /**
@@ -216,7 +219,7 @@ public class StringUtils {
                 }
                 sb.append(content);
                 if (i != count - 1) {
-                    sb.append(CoreConfig.COMMA_SEPARATOR);
+                    sb.append(COMMA_SEPARATOR);
                 }
             }
         }

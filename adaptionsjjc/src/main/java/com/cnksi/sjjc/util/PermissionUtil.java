@@ -2,7 +2,6 @@ package com.cnksi.sjjc.util;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
@@ -12,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
@@ -20,8 +20,6 @@ import com.cnksi.sjjc.inter.GrantPermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.cnksi.sjjc.R.style.dialog;
 
 
 /**

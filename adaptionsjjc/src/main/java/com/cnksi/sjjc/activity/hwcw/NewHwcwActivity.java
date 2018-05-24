@@ -8,26 +8,25 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.cnksi.common.Config;
+import com.cnksi.common.enmu.PMSDeviceType;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
 import com.cnksi.sjjc.adapter.hwcw.HwcwNewHotPartAdapter;
-import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
 import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityHwcwNewBinding;
 import com.cnksi.sjjc.databinding.ItemHotDeviceHwcwBinding;
-import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.NewHwcwService;
-import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.GsonUtil;
-
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

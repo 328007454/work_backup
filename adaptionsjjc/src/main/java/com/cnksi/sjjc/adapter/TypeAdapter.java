@@ -5,8 +5,9 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cnksi.sjjc.R;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.utils.ViewHolder;
+import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.inter.ItemClickListener;
 
 import java.util.Collection;
@@ -53,7 +54,7 @@ public class TypeAdapter extends BaseAdapter<String> {
     }
 
     @Override
-    public void convert(com.cnksi.sjjc.adapter.ViewHolder holder, String item, int position) {
+    public void convert(ViewHolder holder, String item, int position) {
         ImageView typeImage = holder.getView(R.id.type_image);
         switch (inspectionType) {
             case SBXS:
@@ -99,6 +100,8 @@ public class TypeAdapter extends BaseAdapter<String> {
                 typeImage.setBackgroundResource(R.drawable.launcher_tjwt_background);
                 setClickable(holder, item, Integer.MAX_VALUE, position);
                 break;
+                default:
+                    break;
         }
         holder.setText(R.id.type_value, item);
     }

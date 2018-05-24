@@ -10,22 +10,22 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DiscoverHoleAdapter;
-import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.databinding.ActivityDiscoverHoleBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.util.CoreConfig;
-import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
 import com.cnksi.sjjc.util.FunctionUtils;
 

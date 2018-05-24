@@ -7,10 +7,11 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.CdbhclValue;
 import com.cnksi.sjjc.bean.ReportCdbhcl;
-import com.cnksi.sjjc.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;

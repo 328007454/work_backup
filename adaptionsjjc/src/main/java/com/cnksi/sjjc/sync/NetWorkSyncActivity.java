@@ -13,7 +13,9 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cnksi.sjjc.util.StringUtils;
+import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.model.Department;
+import com.cnksi.common.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
@@ -22,9 +24,7 @@ import com.cnksi.ksynclib.model.SyncInfo;
 import com.cnksi.ksynclib.utils.KNetUtil;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.common.model.Department;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
-import com.cnksi.common.daoservice.DepartmentService;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;

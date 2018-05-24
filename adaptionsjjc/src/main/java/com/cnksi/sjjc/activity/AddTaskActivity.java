@@ -19,6 +19,8 @@ import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.TaskExtend;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
@@ -27,10 +29,8 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.DialogPressAdapter;
-import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.databinding.ActivityAddTaskBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
@@ -89,6 +89,8 @@ public class AddTaskActivity extends BaseActivity {
                     } else {
                         mTaskBinding.radioCeshiType.check(R.id.neizu_no);
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -228,8 +230,8 @@ public class AddTaskActivity extends BaseActivity {
                 }
                 initBDZDialog();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 

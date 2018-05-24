@@ -20,11 +20,11 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BaseAdapter;
 import com.cnksi.sjjc.adapter.BaseRecyclerAdapter;
-import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.adapter.holder.RecyclerHolder;
 import com.cnksi.sjjc.databinding.ArrowBinding;
 import com.cnksi.sjjc.databinding.WeatherTitleBinding;

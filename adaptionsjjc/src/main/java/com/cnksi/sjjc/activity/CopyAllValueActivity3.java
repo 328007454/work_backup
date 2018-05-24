@@ -16,6 +16,7 @@ import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
@@ -31,7 +32,6 @@ import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.processor.CopyDataInterface;
 import com.cnksi.sjjc.processor.ProcessorFactory;
 import com.cnksi.sjjc.util.CopyViewUtil;
-import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;

@@ -9,10 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.util.StringUtils;
 
 import java.util.List;
 
