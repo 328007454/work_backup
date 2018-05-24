@@ -140,8 +140,9 @@ public class CopyTemperatureFragment extends BaseFragment {
                 if ((s.toString().length() == 1) && (s.toString().startsWith("+") || s.toString().startsWith("-") || s.toString().startsWith("."))) {
                     previousInput = s.toString();
                     isRight = true;
-                } else
+                } else {
                     isRight = CommonUtils.judgeTemperature(s.toString());
+                }
             } else {
                 isRight = true;
             }
@@ -150,8 +151,9 @@ public class CopyTemperatureFragment extends BaseFragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (!isRight)
+            if (!isRight) {
                 binding.etTemperature.setText(previousInput);
+            }
         }
     }
 }

@@ -129,10 +129,11 @@ public class DialogUtil {
         View.OnClickListener dialogClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.getId() == R.id.btn_sure)
+                if (v.getId() == R.id.btn_sure) {
                     onClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE, editText.getText().toString());
-                else
+                } else {
                     onClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE, "");
+                }
             }
         };
 

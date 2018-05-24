@@ -41,8 +41,9 @@ public class RecordAudioUtils {
     }
 
     public void onDestory() {
-        if (mRecordAudioDialog.isShowing())
+        if (mRecordAudioDialog.isShowing()) {
             mRecordAudioDialog.dismiss();
+        }
         mRecordAudioDialog = null;
     }
 

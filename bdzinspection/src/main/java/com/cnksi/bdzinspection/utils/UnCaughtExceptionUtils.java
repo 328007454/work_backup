@@ -32,8 +32,9 @@ public class UnCaughtExceptionUtils implements Thread.UncaughtExceptionHandler {
     }
 
     public synchronized static UnCaughtExceptionUtils getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new UnCaughtExceptionUtils();
+        }
         return instance;
     }
 
@@ -67,8 +68,9 @@ public class UnCaughtExceptionUtils implements Thread.UncaughtExceptionHandler {
     }
 
     private boolean handleExeption(Thread thread, Throwable ex) {
-        if (null == ex)
+        if (null == ex) {
             return false;
+        }
         submitException(thread, ex);
         return true;
     }

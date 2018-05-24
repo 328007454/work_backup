@@ -190,8 +190,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 reportResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, true);
                 Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
                 if (null != reportResultList && !reportResultList.isEmpty()) {
-                    for (CopyResult result : reportResultList)
+                    for (CopyResult result : reportResultList) {
                         reportCopyResultMap.put(result.item_id, result);
+                    }
                 }
                 // 历史抄录值
                 List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false);
@@ -377,11 +378,13 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         }
         itemBinding.tvDevieName.append(TextUtils.isEmpty(currentDeviceName) ? "" : currentDeviceName);
         itemBinding.tvSpaceName.append(TextUtils.isEmpty(currentSpacingName) ? "" : currentSpacingName);
-        if (null == typeAdapter)
+        if (null == typeAdapter) {
             typeAdapter = new CopyTypeAdapter(currentActivity, copyTypes, R.layout.xs_copy_type, "0");
+        }
         itemBinding.typeSpinner.setAdapter(typeAdapter);
-        if (null == typeCountAdapter)
+        if (null == typeCountAdapter) {
             typeCountAdapter = new CopyTypeAdapter(currentActivity, typeCounts, R.layout.xs_copy_type, "1");
+        }
         itemBinding.countSipnner.setAdapter(typeCountAdapter);
         dialog = DialogUtils.createDialog(currentActivity, itemBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
@@ -508,8 +511,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 List<ChangeCopyItem> newCopyItems = new ArrayList<>();
                 newCopyItems.add(copyItem);
                 childRoutineMap.put(copyType.key, newCopyItems);
-                if (!parentRoutineTypes.contains(copyType))
+                if (!parentRoutineTypes.contains(copyType)) {
                     parentRoutineTypes.add(copyType);
+                }
             }
         }
         if (selectKind.contains(InspectionType.full.name())) {
@@ -517,8 +521,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 List<ChangeCopyItem> newCopyItems = new ArrayList<>();
                 newCopyItems.add(copyItem);
                 childFullHashMap.put(copyType.key, newCopyItems);
-                if (!parentFullTypes.contains(copyType))
+                if (!parentFullTypes.contains(copyType)) {
                     parentFullTypes.add(copyType);
+                }
             }
         }
         if (selectKind.contains(currentInspectionType)) {
@@ -526,8 +531,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 List<ChangeCopyItem> newCopyItems = new ArrayList<>();
                 newCopyItems.add(copyItem);
                 childSpecialMap.put(copyType.key, newCopyItems);
-                if (!parentSpecialTypes.contains(copyType))
+                if (!parentSpecialTypes.contains(copyType)) {
                     parentSpecialTypes.add(copyType);
+                }
             }
         }
     }
@@ -581,8 +587,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 newCopyItems.add(copyItem1);
                 newCopyItems.add(copyItem2);
                 childRoutineMap.put(copyType.key, newCopyItems);
-                if (!parentRoutineTypes.contains(copyType))
+                if (!parentRoutineTypes.contains(copyType)) {
                     parentRoutineTypes.add(copyType);
+                }
             }
         }
         if (selectKind.contains(InspectionType.full.name())) {
@@ -592,8 +599,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 newCopyItems.add(copyItem1);
                 newCopyItems.add(copyItem2);
                 childFullHashMap.put(copyType.key, newCopyItems);
-                if (!parentFullTypes.contains(copyType))
+                if (!parentFullTypes.contains(copyType)) {
                     parentFullTypes.add(copyType);
+                }
             }
         }
         if (selectKind.contains(currentInspectionType)) {
@@ -603,8 +611,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 newCopyItems.add(copyItem1);
                 newCopyItems.add(copyItem2);
                 childSpecialMap.put(copyType.key, newCopyItems);
-                if (!parentSpecialTypes.contains(copyType))
+                if (!parentSpecialTypes.contains(copyType)) {
                     parentSpecialTypes.add(copyType);
+                }
             }
         }
     }
@@ -621,12 +630,15 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             }
             increaseLogs.add(logs);
         }
-        if (!parentRoutineTypes.isEmpty())
+        if (!parentRoutineTypes.isEmpty()) {
             saveCopyItem(parentRoutineTypes, childRoutineMap);
-        if (!parentFullTypes.isEmpty())
+        }
+        if (!parentFullTypes.isEmpty()) {
             saveCopyItem(parentFullTypes, childFullHashMap);
-        if (!parentSpecialTypes.isEmpty())
+        }
+        if (!parentSpecialTypes.isEmpty()) {
             saveCopyItem(parentSpecialTypes, childSpecialMap);
+        }
         if (!increaseLogs.isEmpty()) {
             CopyItemService.getInstance().saveUpdate(increaseLogs, mFixedThreadPoolExecutor);
             CopyItemService.getInstance().saveUpdate(new ArrayList<>(updateCopyItems), currentReportId, mFixedThreadPoolExecutor);
@@ -655,8 +667,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                     increaseLogs.add(logs);
                     updateCopyItems.add(changeCopyItem.getItem());
                 } else {
-                    if (updateCopyItems.contains(changeCopyItem.getItem()))
+                    if (updateCopyItems.contains(changeCopyItem.getItem())) {
                         continue;
+                    }
                     CopyItem item = originCopyItemMap.get(changeCopyItem.getItem().id);
                     Logs logs1 = new Logs();
                     logs1.setCurrentMessage(currentDeviceId, currentDeviceName, currentPersonId, currentUserName, "update", "copy_item");
@@ -724,10 +737,12 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 if (originCopyItemMap.containsKey(changeCopyItem.getItem().id) && !updateCopyItems.contains(changeCopyItem.getItem())) {
                     updateCopyItems.add(changeCopyItem.getItem());
                 }
-                if (null != fullItems)
+                if (null != fullItems) {
                     fullItems.clear();
-                if (null != routineItems)
+                }
+                if (null != routineItems) {
                     routineItems.clear();
+                }
             }
             if (copyItems.size() == 1) {
                 CopyItem item = new CopyItem(currentBdzId, currentDeviceName, currentDeviceId, copyType.name, copyType.key, false, type);
@@ -751,8 +766,9 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                     if (changeCopyItem.setCopyItemVal(changeCopyItem)) {
                         updateCopyItems.add(changeCopyItem.getItem());
                     }
-                    if (changeCopyItem.getItem().version != -1)
+                    if (changeCopyItem.getItem().version != -1) {
                         changeCopyItem.getItem().version += 1;
+                    }
                     changeCopyItem.getItem().isUpLoad = "N";
                     if (null != childFullHashMap.get(changeCopyItem.getItem().type_key) && fullItems.contains(changeCopyItem)) {
                         fullItems.remove(changeCopyItem);

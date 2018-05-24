@@ -170,9 +170,9 @@ public class ArcMenu extends ViewGroup implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (isForbidden)
+        if (isForbidden) {
             return;
-        else {
+        } else {
             rotateCButton();
             toggleMenu();
         }

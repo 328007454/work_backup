@@ -24,10 +24,11 @@ public class CopyTypeAdapter extends BaseAdapter {
 
     public CopyTypeAdapter(Context context, Collection data, int layoutId, String status) {
         super(context, data, layoutId);
-        if (status.equalsIgnoreCase("1"))
+        if (status.equalsIgnoreCase("1")) {
             typeCounts = (List<String>) data;
-        else if (status.equalsIgnoreCase("0"))
+        } else if (status.equalsIgnoreCase("0")) {
             copyTypes = (List<CopyType>) data;
+        }
         this.status = status;
     }
 

@@ -180,7 +180,9 @@ public class NARIHelper {
     }
 
     public static List<BDPackage> getPackage(Regulation regulation) throws IOException, PMSException {
-        if (TextUtils.isEmpty(token)) login();
+        if (TextUtils.isEmpty(token)) {
+            login();
+        }
         RequestBody body = new FormBody.Builder()
                 .add("appURL", "[\"app://nari.pms.app.xunshi\",\"app://PMS.PDA/GG/LXZYB\"]")
                 .add("regulationID", regulation.toString())
@@ -311,8 +313,9 @@ public class NARIHelper {
         String success = (String) object.get("isSuccessful");
         if (success.equalsIgnoreCase("true")) {
             return "OK:" + "PMS服务器数据删除成功";
-        } else
+        } else {
             return "FAIL:" + object.getString("exceptionInfo" + ",PMS服务器数据删除失败");
+        }
     }
 
 
@@ -325,7 +328,9 @@ public class NARIHelper {
             inZip = new ZipInputStream(new FileInputStream(zipFileString));
             while ((zipEntry = inZip.getNextEntry()) != null) {
                 szName = zipEntry.getName();
-                if (!szName.contains("data.db3")) continue;
+                if (!szName.contains("data.db3")) {
+                    continue;
+                }
                 File file = new File(outPathString + File.separator + szName);
                 file.createNewFile();
                 out = new FileOutputStream(file);

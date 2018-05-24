@@ -32,7 +32,9 @@ public enum XSType {
 
     public static XSType find(String code) {
         for (XSType xsType : XSType.values()) {
-            if (xsType.bm.equals(code)) return xsType;
+            if (xsType.bm.equals(code)) {
+                return xsType;
+            }
         }
         return unKnown;
     }

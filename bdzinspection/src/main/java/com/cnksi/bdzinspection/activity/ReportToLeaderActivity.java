@@ -1,8 +1,5 @@
 package com.cnksi.bdzinspection.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -17,12 +14,15 @@ import android.telephony.SmsManager;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityReportToLeaderBinding;
-import com.cnksi.common.model.DefectRecord;
 import com.cnksi.bdzinspection.model.TestPerson;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DefectLevelUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.Config;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.cnksi.common.Config.LOAD_DATA;
 
@@ -96,7 +96,7 @@ public class ReportToLeaderActivity extends BaseActivity {
             sendMessage(phoneNumberList, binding.etReportContent.getText().toString().trim());
         });
 
-        binding.lvContainer.setOnItemClickListener((parent,view,position,id) ->{
+        binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
             TestPerson mPerson = (TestPerson) parent.getItemAtPosition(position);
 
             mPerson.isChecked = !mPerson.isChecked;
@@ -108,10 +108,8 @@ public class ReportToLeaderActivity extends BaseActivity {
     /**
      * 发送短信
      *
-     * @param currentActivity
-     * @param phoneNumList
-     * @param msgContent
-     * @param playCount
+     * @param phoneNumList 电话号码
+     * @param msgContent   短信内容
      */
     private void sendMessage(List<String> phoneNumList, String msgContent) {
         Intent sentIntent = new Intent("SENT_SMS_ACTION");
@@ -121,14 +119,16 @@ public class ReportToLeaderActivity extends BaseActivity {
             public void onReceive(Context _context, Intent _intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        ToastUtils.showMessage( "短信发送成功");
+                        ToastUtils.showMessage("短信发送成功");
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        ToastUtils.showMessage( "短信发送失败");
+                        ToastUtils.showMessage("短信发送失败");
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
+                        break;
+                    default:
                         break;
                 }
             }
@@ -140,7 +140,7 @@ public class ReportToLeaderActivity extends BaseActivity {
         currentActivity.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context _context, Intent _intent) {
-                ToastUtils.showMessage( "收信人已经成功接收");
+                ToastUtils.showMessage("收信人已经成功接收");
             }
         }, new IntentFilter("SENT_SMS_ACTION"));
 

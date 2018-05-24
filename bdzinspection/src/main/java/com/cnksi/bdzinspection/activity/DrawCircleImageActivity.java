@@ -80,7 +80,7 @@ public class DrawCircleImageActivity extends BaseActivity {
             saveMarkAndExit();
         });
         binding.btnAddMark.setOnClickListener(view -> {
-            mPicturePaintView.saveMark();
+            PicturePaintView.saveMark();
         });
         binding.btnClearMark.setOnClickListener(view -> {
             CustomerDialog.showSelectDialog(currentActivity, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {
@@ -125,7 +125,7 @@ public class DrawCircleImageActivity extends BaseActivity {
         isSavePicture = true;
         CustomerDialog.showProgress(currentActivity, "正在保存图片...");
         mFixedThreadPoolExecutor.execute(() -> {
-            mPicturePaintView.saveMark();
+            PicturePaintView.saveMark();
             if (BitmapUtil.saveEditPicture(binding.rlCirclePicture, currentImagePath, 80)) {
                 mPicturePaintView.setBitmapNull();
                 mHandler.sendEmptyMessage(LOAD_DATA);

@@ -81,8 +81,9 @@ public class DevicePartService {
     public List<DbModel> getDevicePart(String dtid, String inspectionType, String bdzId, String deviceid) {
         // 查询lib的部件
         List<DbModel> devicePartList = DevicePartService.getInstance().getDevicePartFromDB(dtid, bdzId, deviceid);
-        if (null == devicePartList)
+        if (null == devicePartList) {
             devicePartList = new ArrayList<>();
+        }
 
         // 查询admin中的部件
         List<DbModel> partList = DevicePartService.getInstance().getDevicePartModel(deviceid, bdzId);
@@ -173,8 +174,9 @@ public class DevicePartService {
         SqlInfo sqlInfo = new SqlInfo("select name from device_type as dp where dp.dtid = '" + dtid + "' ");
         try {
             dbModel = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
-            if (dbModel == null)
+            if (dbModel == null) {
                 dbModel = new DbModel();
+            }
         } catch (DbException e) {
             e.printStackTrace();
             dbModel = new DbModel();

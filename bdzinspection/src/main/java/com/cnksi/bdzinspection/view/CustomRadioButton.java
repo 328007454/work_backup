@@ -3,8 +3,8 @@ package com.cnksi.bdzinspection.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
-import android.widget.RadioButton;
 
 import com.cnksi.bdzinspection.R;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -13,7 +13,7 @@ import com.zhy.autolayout.utils.AutoUtils;
  * Created by han on 2017/1/8.
  */
 
-public class CustomRadioButton extends RadioButton {
+public class CustomRadioButton extends AppCompatRadioButton {
     private int mDrawableSize;// xml文件中设置的大小
 
     public CustomRadioButton(Context context) {
@@ -59,6 +59,7 @@ public class CustomRadioButton extends RadioButton {
 
     }
 
+    @Override
     public void setCompoundDrawablesWithIntrinsicBounds(Drawable left,
                                                         Drawable top, Drawable right, Drawable bottom) {
 

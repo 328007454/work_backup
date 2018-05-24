@@ -158,8 +158,9 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
         super.onResume();
         if (!isFirstLoad) {
             queryInfo();
-            if (null != arriveCheckHelper)
+            if (null != arriveCheckHelper) {
                 arriveCheckHelper.refreshArrived();
+            }
         }
 
     }
@@ -181,11 +182,13 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                     String deviceID = dbModel.getString("deviceid");
                     String deviceSpID = dbModel.getString("spid");
                     copyDeviceIdList.add(deviceID);
-                    if (!copyDeviceIdList.contains(deviceSpID))
+                    if (!copyDeviceIdList.contains(deviceSpID)) {
                         copyDeviceIdList.add(deviceSpID);
+                    }
                     if (spaceCopyDeviceMap.keySet().contains(deviceSpID)) {
-                        if (null != spaceCopyDeviceMap.get(deviceSpID))
+                        if (null != spaceCopyDeviceMap.get(deviceSpID)) {
                             spaceCopyDeviceMap.get(deviceSpID).add(deviceID);
+                        }
                     } else {
                         List<String> deviceIDs = new ArrayList<>();
                         deviceIDs.add(deviceID);
@@ -222,7 +225,9 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
             deviceList = DeviceService.getInstance().findAllParticularDevice(currentBdzId, keyWord, currentFunctionModel, currentReportId, specialMenu.deviceWay);
         } else
             // 查询设备及设备所在间隔
+        {
             deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, specialMenu.deviceWay);
+        }
         LinkedHashMap<String, List<DbModel>> spacingDeviceMap = new LinkedHashMap<>();
         // 转换treeNode
         if (null != deviceList && !deviceList.isEmpty()) {
@@ -242,9 +247,13 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                 SpaceItem parentNode = new SpaceItem(spacingDeviceMap.get(key).get(0));
                 parentNode.addAll(spacingDeviceMap.get(key));
                 data.add(parentNode);
-                if (isEmptyKey) sortList.addAll(spacingDeviceMap.get(key));
+                if (isEmptyKey) {
+                    sortList.addAll(spacingDeviceMap.get(key));
+                }
             }
-            if (isEmptyKey) NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
+            if (isEmptyKey) {
+                NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
+            }
             if ("second".equals(currentFunctionModel)) {
                 Functions.buildTreeData(data, spaceGroupMap);
             }
@@ -256,11 +265,15 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
             } else {
                 if (spacingLastly != null && !qwerKeyBoardUtils.isCharMode()) {
                     int index[] = Functions.findSpaceIndex(spacingLastly.spid, data);
-                    if (-1 != index[0]) adapter.expand(index[0]);
+                    if (-1 != index[0]) {
+                        adapter.expand(index[0]);
+                    }
                     if (-1 != index[1]) {
                         adapter.expand(index[1]);
                         recyclerView.scrollToPosition(index[1]);
-                    } else adapter.notifyDataSetChanged();
+                    } else {
+                        adapter.notifyDataSetChanged();
+                    }
                 } else {
                     adapter.notifyDataSetChanged();
                 }
@@ -304,9 +317,13 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
     }
 
     public SpacingLastly getSpacingLastly() {
-        if (adapter == null) return null;
+        if (adapter == null) {
+            return null;
+        }
         DbModel spacing = adapter.getLastlySpace();
-        if (spacing == null) return null;
+        if (spacing == null) {
+            return null;
+        }
         String spaceId = spacing.getString("spid");
         if (null == spacingLastly) {
             spacingLastly = new SpacingLastly(currentReportId, currentAcounts, spaceId, currentFunctionModel);

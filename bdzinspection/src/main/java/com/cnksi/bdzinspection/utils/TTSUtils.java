@@ -80,7 +80,9 @@ public class TTSUtils {
     }
 
     public void stopSpeak() {
-        if (!isConnect()) return;
+        if (!isConnect()) {
+            return;
+        }
         try {
             speakInterface.stopSpeak();
         } catch (RemoteException e) {

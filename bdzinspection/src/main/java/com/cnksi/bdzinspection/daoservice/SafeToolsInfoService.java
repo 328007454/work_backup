@@ -39,8 +39,9 @@ public class SafeToolsInfoService extends BaseService {
         List<DbModel> toolsInfors = null;
         List<DbModel> inTestList;
         String sql = "SELECT gi.id,gi.name,gi.bdz_name,gi.dept_name,gi.bdz_id,gi.dept_id,gi.num,gi.lastly_check_time,gi.period,gi.next_check_time,gi.isnormal,gi.status,gi.remark FROM gqj_info gi  WHERE gi.dlt = '0' and dept_id = '" + dept + "' and bdz_id = '" + bdzId + "' and (gi.status <> '" +ToolStatus.stop.name() + "' or gi.status is null ) ";
-        if (!TextUtils.isEmpty(keyWord))
+        if (!TextUtils.isEmpty(keyWord)) {
             sql = sql + " and (gi.name_pinyin like '%" + keyWord + "%' or gi.num like '%" + keyWord + "%') ";
+        }
         sql = sql + " ORDER BY  next_check_time is null asc,next_check_time asc";
         try {
             toolsInfors = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));

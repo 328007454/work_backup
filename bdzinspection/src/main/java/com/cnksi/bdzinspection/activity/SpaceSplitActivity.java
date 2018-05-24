@@ -176,17 +176,29 @@ public class SpaceSplitActivity extends TitleActivity {
                 String k = entry.getKey();
                 String v = entry.getValue();
                 insertSql.append(k).append(",");
-                if (k.equals("spid")) v = spacing.spid;
-                if (k.equals("pid")) v = spacing.pid;
-                if (k.equals("name")) v = spacing.name;
-                if (k.equals("device_type")) v = spacing.deviceType;
-                if (k.equals("type")) v = "spacing_self";
-                if (k.equals("update_time") || k.equals("create_time"))
+                if (k.equals("spid")) {
+                    v = spacing.spid;
+                }
+                if (k.equals("pid")) {
+                    v = spacing.pid;
+                }
+                if (k.equals("name")) {
+                    v = spacing.name;
+                }
+                if (k.equals("device_type")) {
+                    v = spacing.deviceType;
+                }
+                if (k.equals("type")) {
+                    v = "spacing_self";
+                }
+                if (k.equals("update_time") || k.equals("create_time")) {
                     v = DateUtils.getCurrentLongTime();
+                }
                 if (v == null) {
                     values.append("null").append(",");
-                } else
+                } else {
                     values.append("'").append(v).append("',");
+                }
             }
             insertSql.deleteCharAt(insertSql.length() - 1).append(") VALUES(").append(values.deleteCharAt(values.length() - 1).toString()).append(");");
             //保存一个新间隔

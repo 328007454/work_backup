@@ -73,20 +73,23 @@ public class CopyMaintenanceDeviceAdapter extends BaseAdapter<CopyItem> {
 	}
 
 	public void pre() {
-		if (currentSelectedPosition > 0)
-			itemClickListener.onItemClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
-					currentSelectedPosition - 1);
+		if (currentSelectedPosition > 0) {
+            itemClickListener.onItemClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
+                    currentSelectedPosition - 1);
+        }
 	}
 
 	public void next() {
-		if (currentSelectedPosition < data.size() - 1)
-			itemClickListener.onItemClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
-					currentSelectedPosition + 1);
+		if (currentSelectedPosition < data.size() - 1) {
+            itemClickListener.onItemClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
+                    currentSelectedPosition + 1);
+        }
 	}
 
 	public boolean isLast() {
-		if (data.isEmpty())
-			return true;
+		if (data.isEmpty()) {
+            return true;
+        }
 		return currentSelectedPosition == data.size() - 1;
 	}
 

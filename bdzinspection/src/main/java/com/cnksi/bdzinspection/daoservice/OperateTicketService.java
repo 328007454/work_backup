@@ -42,6 +42,7 @@ public class OperateTicketService extends BaseService {
      * @param idValue
      * @return
      */
+    @Override
     public OperateTick findById(Object idValue) {
         OperateTick result = null;
         try {

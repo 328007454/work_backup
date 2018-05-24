@@ -150,10 +150,11 @@ public class LookupService {
             Selector selector = XunshiApplication.getDbUtils().selector(SwitchMenu.class).where(SwitchMenu.BDZID, "=", bdzId).and(SwitchMenu.DLT, "<>", "1").expr("and k like  '" + type + "%' ")
                     .orderBy(Lookup.SORT, false);
             menus = selector.findAll();
-            if (null != menus && !menus.isEmpty())
+            if (null != menus && !menus.isEmpty()) {
                 for (SwitchMenu menu : menus) {
                     lookups.add(new Lookup(menu));
                 }
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -206,10 +207,11 @@ public class LookupService {
                     .orderBy(Lookup.SORT, false);
 
             specialMenus = selector.findAll();
-            if (null != specialMenus && !specialMenus.isEmpty())
+            if (null != specialMenus && !specialMenus.isEmpty()) {
                 for (SpecialMenu menu : specialMenus) {
                     lookups.add(new Lookup(menu));
                 }
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }

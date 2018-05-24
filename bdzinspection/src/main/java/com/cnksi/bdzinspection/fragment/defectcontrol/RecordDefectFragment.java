@@ -174,10 +174,11 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
         boolean isShowDeviceWidget = bundle.getBoolean(Config.IS_SHOW_DEVICE_WIDGET);
         isNeedSearchDefect = bundle.getBoolean(Config.IS_NEED_SEARCH_DEFECT_REASON);
         isAddNewDefect = bundle.getBoolean(Config.ADD_NEW_DEFECT_RECORD);
-        if (!isShowDeviceWidget)
+        if (!isShowDeviceWidget) {
             binding.includeDefect.tvSelectDevicePart.setVisibility(View.GONE);
-        else
+        } else {
             binding.includeDefect.tvSelectDevicePart.setCompoundDrawables(null, null, null, null);
+        }
         isFromBattery = bundle.getBoolean(Config.IS_FROM_BATTERY, false);
         initBitmapUtils(currentActivity);
         binding.lvContainerDefect.setParentScrollView(binding.scvRootContainer);
@@ -207,8 +208,9 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         searchDefectContent();
                     }
                 } else {
-                    if (isNeedSearchDefect)
+                    if (isNeedSearchDefect) {
                         addEditextListener();
+                    }
                 }
             }
         });
@@ -444,8 +446,9 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
     protected void lazyLoad() {
         if (null != dbModelList) {
             dbModelList.clear();
-            if (mDefectDefineAdapter != null)
+            if (mDefectDefineAdapter != null) {
                 mDefectDefineAdapter.notifyDataSetChanged();
+            }
         }
         if (isPrepared && isVisible && isFirstLoad) {
             // 填充各控件的数据
@@ -726,7 +729,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                 currentDevicePartId = "";
                 currentDevicePartName = "";
             }
-            if (isAddNewDefect)
+            if (isAddNewDefect) {
                 record = new DefectRecord(currentReportId, // 报告id
                         currentBdzId, // 变电站id
                         currentBdzName, // 变电站名称
@@ -741,7 +744,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DefectDefine.STAID), // 巡视标准id
                         StringUtils.arrayListToString(mDefectImageList)// pics图片
                 );
-            else
+            } else {
                 record = new DefectRecord(currentReportId, // 报告id
                         currentBdzId, // 变电站id
                         currentBdzName, // 变电站名称
@@ -756,6 +759,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         currentStandardId, // 巡视标准id
                         StringUtils.arrayListToString(mDefectImageList)// pics图片
                 );
+            }
         }
         if (binding.rbInflunceNo.isChecked()) {
             record.hasInfluenceDbz = "否";

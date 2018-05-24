@@ -16,7 +16,6 @@
         android:paddingLeft="30px">
 
         <RelativeLayout
-            android:id="@+id/rl_cotainer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
@@ -36,7 +35,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_cotainer"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_marginLeft="20px"
@@ -44,7 +42,6 @@
 
             <TextView
                 android:id="@+id/txt_test_time"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40px"

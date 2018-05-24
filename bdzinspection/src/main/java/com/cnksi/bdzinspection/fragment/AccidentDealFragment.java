@@ -78,8 +78,9 @@ public class AccidentDealFragment extends BaseFragment {
 	protected void onRefresh(Message msg) {
 		switch (msg.what) {
 		case LOAD_DATA:
-			if (null!=dbModel&&!TextUtils.isEmpty(dbModel.getString("db.exception_deal_methods")))
-				webView.loadDataWithBaseURL(null, "<head>\n<body>\n"+dbModel.getString("db.exception_deal_methods")+"\n</body>\n</head>", "text/html", "utf-8", null);
+			if (null!=dbModel&&!TextUtils.isEmpty(dbModel.getString("db.exception_deal_methods"))) {
+                webView.loadDataWithBaseURL(null, "<head>\n<body>\n" + dbModel.getString("db.exception_deal_methods") + "\n</body>\n</head>", "text/html", "utf-8", null);
+            }
 			webView.setWebChromeClient(new WebChromeClient());
 			break;
 		default:

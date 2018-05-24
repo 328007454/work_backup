@@ -160,7 +160,9 @@ public class CommonUtils {
     }
 
     public static String getTransformTep(String temperature) {
-        if (TextUtils.isEmpty(temperature)) return "";
+        if (TextUtils.isEmpty(temperature)) {
+            return "";
+        }
         Double tempFloat = 0.0d;
         try {
             tempFloat = new Double(temperature);
@@ -168,8 +170,9 @@ public class CommonUtils {
             ex.printStackTrace();
             return "";
         }
-        if (tempFloat == 0.0f)
+        if (tempFloat == 0.0f) {
             return "0.0";
+        }
 
         if (!temperature.contains(".")) {
             return temperature;
@@ -207,6 +210,8 @@ public class CommonUtils {
         }
         if (accounts.length==1) {
             return " ((','||create_account ||',') like ( '%," + accounts[0] + ",%') or (','||members_account ||',') like (',%" + accounts[0] + ",%')) ";
-        }else return " ";
+        }else {
+            return " ";
+        }
     }
 }

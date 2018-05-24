@@ -50,8 +50,9 @@ public class DisplayUtil {
     public static DisplayUtil instance;
 
     public static DisplayUtil getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new DisplayUtil();
+        }
         return instance;
     }
 

@@ -61,7 +61,8 @@ public class OperateTick {
 		this.opears = opears;
 	}
 	
-	public String toString(){
+	@Override
+    public String toString(){
 		StringBuilder result = new StringBuilder();
 		result.append("\n任务："+getTaskName());
 		result.append("\n单位："+getUnit());

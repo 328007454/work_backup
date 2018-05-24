@@ -77,7 +77,7 @@ public class ToolFragment extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-        if (!isPrepared)
+        if (!isPrepared) {
             mFixedThreadPoolExecutor.execute(() -> {
                 Selector selector;
                 try {
@@ -91,8 +91,9 @@ public class ToolFragment extends BaseFragment {
                     try {
                         selector = XunshiApplication.getDbUtils().selector(ReportTool.class).and(ReportTool.REPORTID, "=", currentReportId);
                         List<ReportTool> reportTools = selector.findAll();
-                        if (null == reportTools)
+                        if (null == reportTools) {
                             reportTools = new ArrayList<ReportTool>();
+                        }
                         if (reportTools.size() > 0) {
                             for (ReportTool tool : reportTools) {
                                 toolHashMap.put(tool.toolId, tool);
@@ -109,6 +110,7 @@ public class ToolFragment extends BaseFragment {
                     isPrepared = true;
                 });
             });
+        }
     }
 
     private Dialog mToolStandardDialog = null;
@@ -116,8 +118,9 @@ public class ToolFragment extends BaseFragment {
 
     public void save(String reportId) {
         final List<ReportTool> saveList = new ArrayList<>();
-        if (toolsAdapter == null)
+        if (toolsAdapter == null) {
             return;
+        }
         for (int i = 0; i < toolsAdapter.getCount(); i++) {
             View v = linearLayout.getChildAt(i);
             EditText et = (EditText) v.findViewById(R.id.et_input_values);
@@ -125,13 +128,17 @@ public class ToolFragment extends BaseFragment {
             Tool t = mToolsList.get(i);
             ReportTool reportTool = toolHashMap.get(t.toolid);
             if (reportTool == null) {
-                if (!TextUtils.isEmpty(num))
+                if (!TextUtils.isEmpty(num)) {
                     reportTool = new ReportTool(reportId, t.toolid, num);
-                else continue;
+                } else {
+                    continue;
+                }
             } else {
                 if (!num.equals(reportTool.num)) {
                     reportTool.num = num;
-                } else continue;
+                } else {
+                    continue;
+                }
             }
             saveList.add(reportTool);
         }

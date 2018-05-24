@@ -79,9 +79,11 @@ public class ResultSet<T> {
     public void setError(Exception e, String desc) {
         this.setDesc(desc);
         this.setException(e);
-        if (e != null && e.getClass().getName().startsWith("java.net"))
+        if (e != null && e.getClass().getName().startsWith("java.net")) {
             setStatus(NETWORK_ERROR);
-        else setStatus(ERROR);
+        } else {
+            setStatus(ERROR);
+        }
 
     }
 

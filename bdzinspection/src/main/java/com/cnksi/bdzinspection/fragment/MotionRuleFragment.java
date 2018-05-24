@@ -77,8 +77,9 @@ public class MotionRuleFragment extends BaseFragment {
 	protected void onRefresh(Message msg) {
 		switch (msg.what) {
 		case LOAD_DATA:
-			if (null!=dbModel&&!TextUtils.isEmpty(dbModel.getString("db.rules")))
-				webView.loadDataWithBaseURL(null, "<head>\n<body>\n"+dbModel.getString("db.rules")+"\n</body>\n</head>", "text/html", "utf-8", null);
+			if (null!=dbModel&&!TextUtils.isEmpty(dbModel.getString("db.rules"))) {
+                webView.loadDataWithBaseURL(null, "<head>\n<body>\n" + dbModel.getString("db.rules") + "\n</body>\n</head>", "text/html", "utf-8", null);
+            }
 			webView.setWebChromeClient(new WebChromeClient());
 			break;
 

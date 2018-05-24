@@ -60,19 +60,23 @@ public abstract class SimpleBaseAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
+    @Override
     public int getCount() {
         return dataList != null ? dataList.size() : 0;
     }
 
+    @Override
     public Object getItem(int position) {
         return dataList != null ? dataList.get(position) : null;
     }
 
 
+    @Override
     public long getItemId(int position) {
         return position;
     }
 
+    @Override
     public abstract View getView(int position, View convertView, ViewGroup parent);
 
     protected @ColorInt

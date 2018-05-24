@@ -59,8 +59,9 @@ public class ChangeCopyItemRecyclerChildAdapter extends BaseRecyclerAdapter {
         itemDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (itemClickListener != null)
+                if (itemClickListener != null) {
                     itemClickListener.onClick(v, item, position);
+                }
             }
         });
 

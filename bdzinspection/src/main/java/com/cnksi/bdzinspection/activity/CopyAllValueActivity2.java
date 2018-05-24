@@ -314,8 +314,9 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
                 copyHelper.saveAll();
                 // 切换新设备,默认保存当前界面值
                 currentFragment.getAdapter().setCurrentSelectedPosition(position);
-                if (copyHelper != null && null != copyHelper.device)
+                if (copyHelper != null && null != copyHelper.device) {
                     currentDeviceId = copyHelper.device.getString("deviceid");
+                }
                 copyHelper.loadDevice(dbModel);
                 // 加载新的抄录数据
                 copyHelper.judgeDistance(currentLocation, binding.shadom, binding.shadomTip);
@@ -330,8 +331,9 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
 
     public boolean showShadom() {
         long mCurrentTime = System.currentTimeMillis();
-        if (0 == clickIndex)
+        if (0 == clickIndex) {
             mAfterTime = mCurrentTime;
+        }
         long diffTime = mCurrentTime - mAfterTime;
         clickIndex++;
         if (1000 >= diffTime && 3 <= clickIndex) {
@@ -392,8 +394,9 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         if (DefectUtils.calcCopyBound(item, copyHelper.getCopyResultMap().get(item.id), val, mExistDefectList, rs)) {
             tipsBinding.tvDialogContent.setText(rs.get(1));
             transDefectContent = rs.get(0);
-            if (null != defectDialog)
+            if (null != defectDialog) {
                 defectDialog.show();
+            }
         } else {
         }
     }
@@ -530,8 +533,9 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
 
     private void saveNotClearCopyInfo(CopyResult result, View v, CopyItem item) {
         EditText etInput = (EditText) v;
-        if ("youwei".equalsIgnoreCase(item.type_key))
+        if ("youwei".equalsIgnoreCase(item.type_key)) {
             result.valSpecial = null;
+        }
         if ("Y".equals(item.val)) {
             if ((!TextUtils.isEmpty(etInput.getText().toString()))) {
                 result.val = "-1";

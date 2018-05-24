@@ -109,6 +109,8 @@ public class OperateTaskCheckedActivity extends BaseActivity {
                     case OnScrollListener.SCROLL_STATE_FLING:// 是当用户由于之前划动屏幕并抬起手指，屏幕产生惯性滑动时
                         scrollFlag = false;
                         break;
+                    default:
+                        break;
                 }
             }
 

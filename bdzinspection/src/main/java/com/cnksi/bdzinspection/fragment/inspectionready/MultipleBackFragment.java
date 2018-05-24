@@ -74,13 +74,16 @@ public class MultipleBackFragment extends BaseFragment implements ItemClickListe
 
     @Override
     public void onItemClick(View v, Object o, int position) {
-        if (!mObjects.contains(o))
+        if (!mObjects.contains(o)) {
             mObjects.add(o);
+        }
     }
 
     public boolean getCheckAll() {
         for (DbModel model : mBackDataList) {
-            if (TextUtils.isEmpty(model.getString(ZzhtResult.CONFIRM_TIME))) return false;
+            if (TextUtils.isEmpty(model.getString(ZzhtResult.CONFIRM_TIME))) {
+                return false;
+            }
         }
         saveData();
         return true;

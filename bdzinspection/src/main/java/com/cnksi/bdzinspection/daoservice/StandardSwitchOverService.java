@@ -47,12 +47,13 @@ public class StandardSwitchOverService extends BaseService {
         ArrayList<DbModel> dbModelLevel2 = new ArrayList<>();
         ArrayList<DbModel> dbModelLevel3 = new ArrayList<>();
         for (DbModel dbModel : dbModleList) {
-            if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("1"))
+            if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("1")) {
                 dbModelLevel1.add(dbModel);
-            else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("2"))
+            } else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("2")) {
                 dbModelLevel2.add(dbModel);
-            else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("3"))
+            } else if (dbModel.getString(StandardSwitchover.LEVEL).equalsIgnoreCase("3")) {
                 dbModelLevel3.add(dbModel);
+            }
         }
         for (DbModel dbModel1 : dbModelLevel1) {
             newDbmodelList.add(dbModel1);
@@ -60,8 +61,9 @@ public class StandardSwitchOverService extends BaseService {
                 if (dbModel1.getString(StandardSwitchover.ID).equalsIgnoreCase(dbModel2.getString(StandardSwitchover.PID))) {
                     newDbmodelList.add(dbModel2);
                     for (DbModel dbModel3 : dbModelLevel3) {
-                        if (dbModel2.getString(StandardSwitchover.ID).equalsIgnoreCase(dbModel3.getString(StandardSwitchover.PID)))
+                        if (dbModel2.getString(StandardSwitchover.ID).equalsIgnoreCase(dbModel3.getString(StandardSwitchover.PID))) {
                             newDbmodelList.add(dbModel3);
+                        }
                     }
                 }
 

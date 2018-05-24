@@ -289,8 +289,11 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
             final List<SpacingLastly> saveList = new ArrayList<>();
             for (ParticularDevicesFragment fragment : fragmentList) {
                 SpacingLastly lastly = fragment.getSpacingLastly();
-                if (lastly == null) continue;
-                else saveList.add(lastly);
+                if (lastly == null) {
+                    continue;
+                } else {
+                    saveList.add(lastly);
+                }
             }
             if (saveList.size() > 0) {
                 mFixedThreadPoolExecutor.execute(() -> {

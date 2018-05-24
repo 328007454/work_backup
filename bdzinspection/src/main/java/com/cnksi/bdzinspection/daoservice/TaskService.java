@@ -256,8 +256,9 @@ public class TaskService {
         try {
             tasks = XunshiApplication.getDbUtils().selector(Task.class).where(Task.DLT, "=", "0").and(Task.INSPECTION, "=", name).and(Task.STATUS, "=", "undo").and(Task.BDZID, "=", bdzId)
                     .expr(extraSql + " and (select datetime('" + chooseTime + "','+24 hour'))> schedule_time and schedule_time >= (select datetime('" + chooseTime + "'))").findAll();
-            if (null == tasks)
+            if (null == tasks) {
                 return new ArrayList<Task>();
+            }
             return tasks;
         } catch (DbException e) {
             e.printStackTrace();

@@ -230,11 +230,13 @@ public abstract class BaseFragment extends BaseCoreFragment {
     /**
      * 延迟加载
      */
+    @Override
     protected abstract void lazyLoad();
 
     /**
      * 不可见时
      */
+    @Override
     protected void onInvisible() {
     }
 
@@ -243,6 +245,7 @@ public abstract class BaseFragment extends BaseCoreFragment {
      *
      * @param msg
      */
+    @Override
     protected void onRefresh(android.os.Message msg) {
 
     }

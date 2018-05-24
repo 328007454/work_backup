@@ -29,8 +29,9 @@ public class CopyTypeService {
             Selector selector = XunshiApplication.getDbUtils().selector(CopyType.class).where(CopyType.SELECTED_ABLE, "=", "Y").and(CopyType.DLT, "=", 0);
             List<CopyType> list = selector.findAll();
             if (null != list && !list.isEmpty()) {
-                for (CopyType type : list)
+                for (CopyType type : list) {
                     typeMap.put(type.key, type.name);
+                }
             }
         } catch (DbException e) {
             e.printStackTrace();

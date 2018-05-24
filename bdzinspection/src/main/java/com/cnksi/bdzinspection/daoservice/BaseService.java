@@ -192,13 +192,14 @@ public class BaseService<T> {
 
 
     protected void RecordException(final DbException e) {
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     ToastUtils.showMessage("操作数据库出错，请确保数据库的完整性。");
                 }
             });
+        }
         executor.execute(new Runnable() {
             @Override
             public void run() {

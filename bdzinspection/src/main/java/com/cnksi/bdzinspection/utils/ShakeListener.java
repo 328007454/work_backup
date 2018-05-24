@@ -69,8 +69,9 @@ public class ShakeListener implements SensorEventListener {
 		// 两次检测的时间间隔
 		long timeInterval = currentUpdateTime - lastUpdateTime;
 		// 判断是否达到了检测时间间隔
-		if (timeInterval < UPTATE_INTERVAL_TIME)
-			return;
+		if (timeInterval < UPTATE_INTERVAL_TIME) {
+            return;
+        }
 		// 现在的时间变成last时间
 		lastUpdateTime = currentUpdateTime;
 

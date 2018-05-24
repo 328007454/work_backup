@@ -1,7 +1,5 @@
 package com.cnksi.bdzinspection.view;
 
-import java.math.BigDecimal;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,11 +11,13 @@ import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.SeekBar;
 
 import com.cnksi.bdzinspection.R;
+
+import java.math.BigDecimal;
 
 /**
  * @类名: NumberSeekBar
@@ -31,7 +31,7 @@ import com.cnksi.bdzinspection.R;
  * @版权:Copyright © 2014 云盛海宏信息技术（深圳）有限公司 . All rights reserved.
  */
 @SuppressLint({ "ClickableViewAccessibility", "DrawAllocation" })
-public class NumberSeekBar extends SeekBar {
+public class NumberSeekBar extends AppCompatSeekBar {
 
 	private int oldPaddingTop;
 
@@ -162,7 +162,8 @@ public class NumberSeekBar extends SeekBar {
 		}
 	}
 
-	protected synchronized void onDraw(Canvas canvas) {
+	@Override
+    protected synchronized void onDraw(Canvas canvas) {
 		try {
 			super.onDraw(canvas);
 

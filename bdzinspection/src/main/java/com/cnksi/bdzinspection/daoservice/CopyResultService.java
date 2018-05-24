@@ -85,10 +85,11 @@ public class CopyResultService {
             SqlInfo sqlInfo = new SqlInfo(sql);
             sqlInfo.addBindArg(new KeyValue("", reportId));
             List<DbModel> models = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
-            if (models != null)
+            if (models != null) {
                 for (DbModel model : models) {
                     rs.add(model.getString("deviceid"));
                 }
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }

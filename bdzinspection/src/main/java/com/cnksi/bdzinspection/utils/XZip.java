@@ -169,8 +169,9 @@ public class XZip {
     private static void ZipFiles(String folderString, String fileString, java.util.zip.ZipOutputStream zipOutputSteam) throws IOException {
         android.util.Log.v("XZip", "ZipFiles(String, String, ZipOutputStream)");
 
-        if (zipOutputSteam == null)
+        if (zipOutputSteam == null) {
             return;
+        }
 
         java.io.File file = new java.io.File(folderString + fileString);
 
@@ -210,6 +211,7 @@ public class XZip {
 
     }//end of func
 
+    @Override
     public void finalize() throws Throwable {
 
     }

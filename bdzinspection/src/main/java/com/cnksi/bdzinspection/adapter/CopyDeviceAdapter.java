@@ -84,20 +84,23 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
     }
 
     public void pre() {
-        if (currentSelectedPosition > 0)
+        if (currentSelectedPosition > 0) {
             itemClickListener.onClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
                     currentSelectedPosition - 1);
+        }
     }
 
     public void next() {
-        if (currentSelectedPosition < data.size() - 1)
+        if (currentSelectedPosition < data.size() - 1) {
             itemClickListener.onClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
                     currentSelectedPosition + 1);
+        }
     }
 
     public boolean isLast() {
-        if (data.isEmpty())
+        if (data.isEmpty()) {
             return true;
+        }
         return currentSelectedPosition == data.size() - 1;
     }
 

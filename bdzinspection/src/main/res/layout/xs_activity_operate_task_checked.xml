@@ -190,7 +190,6 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/signImg_pic"
                         android:layout_width="61px"
                         android:layout_height="61px"
                         android:layout_gravity="center_vertical"
@@ -233,7 +232,6 @@
                 android:padding="@dimen/xs_global_padding_left_right">
 
                 <LinearLayout
-
                     android:id="@+id/tv_jhr_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -243,7 +241,6 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/signImg_pic"
                         android:layout_width="61px"
                         android:layout_height="61px"
                         android:layout_gravity="center_vertical"
@@ -296,7 +293,6 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/signImg_pic"
                         android:layout_width="61px"
                         android:layout_height="61px"
                         android:layout_gravity="center_vertical"

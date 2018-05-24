@@ -53,7 +53,9 @@ public enum TQEnum {
     }
 
     public static String findCode(String s) {
-        if (TextUtils.isEmpty(s)) return "";
+        if (TextUtils.isEmpty(s)) {
+            return "";
+        }
         for (TQEnum tqEnum : values()) {
             if (tqEnum.name().equals(s)) {
                 return tqEnum.code;

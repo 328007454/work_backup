@@ -8,11 +8,11 @@ package com.cnksi.bdzinspection.view;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.widget.TextView;
 
-public class AutoFitTextView extends TextView {
+public class AutoFitTextView extends AppCompatTextView {
 	private static float DEFAULT_MIN_TEXT_SIZE = 10;
 	private static float DEFAULT_MAX_TEXT_SIZE = 20;
 	// Attributes

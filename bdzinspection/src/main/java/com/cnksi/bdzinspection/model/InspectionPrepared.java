@@ -4,9 +4,8 @@ import android.text.TextUtils;
 
 import com.cnksi.core.utils.DateUtils;
 
-
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -53,9 +52,13 @@ public class InspectionPrepared {
     }
 
     public boolean contains(String[] us) {
-        if (TextUtils.isEmpty(account)) return false;
+        if (TextUtils.isEmpty(account)) {
+            return false;
+        }
         for (String s : us) {
-            if (account.contains(s)) return true;
+            if (account.contains(s)) {
+                return true;
+            }
         }
         return false;
     }

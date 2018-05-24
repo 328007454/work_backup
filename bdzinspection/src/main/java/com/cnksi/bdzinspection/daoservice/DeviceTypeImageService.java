@@ -12,8 +12,9 @@ public class DeviceTypeImageService extends BaseService {
     private static DeviceTypeImageService instance;
 
     public static DeviceTypeImageService getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new DeviceTypeImageService();
+        }
         return instance;
     }
 

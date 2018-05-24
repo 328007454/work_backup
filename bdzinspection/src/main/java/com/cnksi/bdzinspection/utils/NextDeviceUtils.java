@@ -35,11 +35,15 @@ public class NextDeviceUtils {
 
     public DbModel getLeft(String key, String device) {
         List<DbModel> models = devices.get(key);
-        if (models == null) return null;
+        if (models == null) {
+            return null;
+        }
         if (lastIndex >= 0) {
             if (lastIndex > 0) {
                 return models.get(--lastIndex);
-            } else return null;
+            } else {
+                return null;
+            }
         }
         for (int i = 0; i < models.size(); i++) {
             DbModel model = models.get(i);
@@ -59,11 +63,15 @@ public class NextDeviceUtils {
 
     public DbModel getRight(String key, String device) {
         List<DbModel> models = devices.get(key);
-        if (models == null) return null;
+        if (models == null) {
+            return null;
+        }
         if (lastIndex >= 0) {
             if (lastIndex < models.size() - 1) {
                 return models.get(++lastIndex);
-            } else return null;
+            } else {
+                return null;
+            }
         }
         for (int i = 0; i < models.size(); i++) {
             DbModel model = models.get(i);

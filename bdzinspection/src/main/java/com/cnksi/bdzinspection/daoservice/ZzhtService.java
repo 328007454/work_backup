@@ -48,8 +48,9 @@ public class ZzhtService extends BaseService {
         } catch (DbException e) {
             e.printStackTrace();
         }
-        if (dbModels == null)
+        if (dbModels == null) {
             dbModels = new ArrayList<>();
+        }
         return dbModels;
     }
 

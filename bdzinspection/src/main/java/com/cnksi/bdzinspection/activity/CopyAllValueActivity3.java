@@ -176,8 +176,9 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
     }
 
     private void saveRemarkData(CopyResult result, TextView etInput, CopyItem item) {
-        if (item.type_key.equalsIgnoreCase("youwei"))
+        if (item.type_key.equalsIgnoreCase("youwei")) {
             result.valSpecial = null;
+        }
         if ("Y".equals(item.val)) {
             if ((!TextUtils.isEmpty(etInput.getText().toString()))) {
                 result.val = "-1";
@@ -249,8 +250,9 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
                 reportResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, true, CopyItemService.getInstance().getCopyType());
                 Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
                 if (null != reportResultList && !reportResultList.isEmpty()) {
-                    for (CopyResult result : reportResultList)
+                    for (CopyResult result : reportResultList) {
                         reportCopyResultMap.put(result.item_id, result);
+                    }
                 }
                 // 历史抄录值
                 List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false, CopyItemService.getInstance().getCopyType());
@@ -274,30 +276,40 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
                             result = new CopyResult(currentReportId, item.id, item.bdzid, item.deviceid, item.device_name, item.type_key, item.description, item.unit, item.install_place);
                             // 赋值历史数据
                             if (null != historyResult) {
-                                if ("Y".equalsIgnoreCase(item.val))
+                                if ("Y".equalsIgnoreCase(item.val)) {
                                     result.val = "-1".equalsIgnoreCase(historyResult.val) ? "" : historyResult.val;
-                                if ("Y".equalsIgnoreCase(item.val_a))
+                                }
+                                if ("Y".equalsIgnoreCase(item.val_a)) {
                                     result.val_a = "-1".equalsIgnoreCase(historyResult.val_a) ? "" : historyResult.val_a;
-                                if ("Y".equalsIgnoreCase(item.val_b))
+                                }
+                                if ("Y".equalsIgnoreCase(item.val_b)) {
                                     result.val_b = "-1".equalsIgnoreCase(historyResult.val_b) ? "" : historyResult.val_b;
-                                if ("Y".equalsIgnoreCase(item.val_c))
+                                }
+                                if ("Y".equalsIgnoreCase(item.val_c)) {
                                     result.val_c = "-1".equalsIgnoreCase(historyResult.val_c) ? "" : historyResult.val_c;
-                                if ("Y".equalsIgnoreCase(item.val_o))
+                                }
+                                if ("Y".equalsIgnoreCase(item.val_o)) {
                                     result.val_o = "-1".equalsIgnoreCase(historyResult.val_o) ? "" : historyResult.val_o;
+                                }
                             }
                         }
                         // 上次抄录值
                         if (null != historyResult) {
-                            if ("Y".equalsIgnoreCase(item.val))
+                            if ("Y".equalsIgnoreCase(item.val)) {
                                 result.val_old = historyResult.val;
-                            if ("Y".equalsIgnoreCase(item.val_a))
+                            }
+                            if ("Y".equalsIgnoreCase(item.val_a)) {
                                 result.val_a_old = historyResult.val_a;
-                            if ("Y".equalsIgnoreCase(item.val_b))
+                            }
+                            if ("Y".equalsIgnoreCase(item.val_b)) {
                                 result.val_b_old = historyResult.val_b;
-                            if ("Y".equalsIgnoreCase(item.val_c))
+                            }
+                            if ("Y".equalsIgnoreCase(item.val_c)) {
                                 result.val_c_old = historyResult.val_c;
-                            if ("Y".equalsIgnoreCase(item.val_o))
+                            }
+                            if ("Y".equalsIgnoreCase(item.val_o)) {
                                 result.val_o_old = historyResult.val_o;
+                            }
                         }
                         copyResultMap.put(item.id, result);
                         if (typeCopyItemMap.keySet().contains(item.type_key)) {
@@ -397,8 +409,9 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         if (DefectUtils.calcCopyBound(item, copyResultMap.get(item.id), val, mExistDefectList, rs)) {
             tipsBinding.tvDialogContent.setText(rs.get(1));
             transDefectContent = rs.get(0);
-            if (null != defectDialog)
+            if (null != defectDialog) {
                 defectDialog.show();
+            }
             isShowTips = true;
         } else {
             isShowTips = false;
@@ -470,8 +483,9 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
 
         binding.ibtnSpread.setOnClickListener(view -> {
             saveAll();
-            if (!deviceAdapter.isFirst())
+            if (!deviceAdapter.isFirst()) {
                 deviceAdapter.pre();
+            }
             if (isFinish) {
                 isFinish = false;
                 binding.btnNext.setText(R.string.xs_next);
@@ -495,8 +509,9 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
 
     public boolean showShadom() {
         long mCurrentTime = System.currentTimeMillis();
-        if (0 == clickIndex)
+        if (0 == clickIndex) {
             mAfterTime = mCurrentTime;
+        }
         long diffTime = mCurrentTime - mAfterTime;
         clickIndex++;
         if (1000 >= diffTime && 3 <= clickIndex) {
@@ -577,22 +592,29 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
             return;
         }
         for (CopyResult result : copyResultMap.values()) {
-            if (TextUtils.isEmpty(result.val))
+            if (TextUtils.isEmpty(result.val)) {
                 result.val = null;
-            if (TextUtils.isEmpty(result.val_a))
+            }
+            if (TextUtils.isEmpty(result.val_a)) {
                 result.val_a = null;
-            if (TextUtils.isEmpty(result.val_b))
+            }
+            if (TextUtils.isEmpty(result.val_b)) {
                 result.val_b = null;
-            if (TextUtils.isEmpty(result.val_c))
+            }
+            if (TextUtils.isEmpty(result.val_c)) {
                 result.val_c = null;
-            if (TextUtils.isEmpty(result.val_o))
+            }
+            if (TextUtils.isEmpty(result.val_o)) {
                 result.val_o = null;
-            if (TextUtils.isEmpty(result.valSpecial))
+            }
+            if (TextUtils.isEmpty(result.valSpecial)) {
                 result.valSpecial = null;
+            }
             // 初始化动作次数等值
             result.initArresterActionValue();
-            if (reportResultList.contains(result) || !TextUtils.isEmpty(result.val) || !TextUtils.isEmpty(result.val_a) || !TextUtils.isEmpty(result.val_b) || !TextUtils.isEmpty(result.val_c) || !TextUtils.isEmpty(result.val_o))
+            if (reportResultList.contains(result) || !TextUtils.isEmpty(result.val) || !TextUtils.isEmpty(result.val_a) || !TextUtils.isEmpty(result.val_b) || !TextUtils.isEmpty(result.val_c) || !TextUtils.isEmpty(result.val_o)) {
                 CopyResultService.getInstance().saveOrUpdate(result);
+            }
         }
 
     }

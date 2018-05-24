@@ -1,14 +1,18 @@
 package com.cnksi.nari.utils;
 
-import android.app.Service;
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Build.VERSION;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
+
+import static com.cnksi.DebugDB.getContext;
 
 
 /**
@@ -39,8 +43,12 @@ public class Globalforlogin {
     }
 
     public static String getImeiString(Context context) {
-        String deviceId = ((TelephonyManager) context.getSystemService("phone")).getDeviceId();
-        return (deviceId == null || deviceId.length() == 0) ? DecodeUtils.md5EncryptToString(getDeviceMac2(context)).substring(0, 15) : deviceId;
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            String deviceId = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+            return (deviceId == null || deviceId.length() == 0) ? DecodeUtils.md5EncryptToString(getDeviceMac2(context)).substring(0, 15) : deviceId;
+        }else{
+            return "";
+        }
     }
 
     public static Globalforlogin getInstance() {
@@ -51,7 +59,7 @@ public class Globalforlogin {
     }
 
     public static String getNetwork(Context context) {
-        int networkType = ((TelephonyManager) context.getSystemService("phone")).getNetworkType();
+        int networkType = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getNetworkType();
         String str = "UNKNOWN";
         if (networkType == 4) {
             str = "2G";
@@ -138,7 +146,8 @@ public class Globalforlogin {
     }
 
     public String getCurrentNetwork(Context context) {
-        return "4G";  }
+        return "4G";
+    }
 
     public String getDeviceDPI() {
         return "xhdpi";
@@ -170,11 +179,15 @@ public class Globalforlogin {
     }
 
     public String getimsi(Context context) {
-        this.imsi_ = ((TelephonyManager) context.getSystemService("phone")).getSubscriberId();
-        if (this.imsi_ == null) {
-            this.imsi_ = "";
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            this.imsi_ = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getSubscriberId();
+            if (this.imsi_ == null) {
+                this.imsi_ = "";
+            }
+            return this.imsi_;
+        }else{
+            return "";
         }
-        return this.imsi_;
     }
 
     public String getosVersion() {

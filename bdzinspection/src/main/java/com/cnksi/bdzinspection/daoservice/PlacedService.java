@@ -25,8 +25,9 @@ public class PlacedService extends BaseService {
     private static PlacedService instance;
 
     public static PlacedService getInstance() {
-        if (null == instance)
+        if (null == instance) {
             instance = new PlacedService();
+        }
         return instance;
     }
 
@@ -109,8 +110,9 @@ public class PlacedService extends BaseService {
 
     public boolean saveOrUpdateAll(List<? extends Object> entities) {
         for (Object entity : entities) {
-            if (entities instanceof Placed)
+            if (entities instanceof Placed) {
                 ((Placed) entity).createTime = DateUtils.getCurrentLongTime();
+            }
         }
         try {
             XunshiApplication.getDbUtils().saveOrUpdate(entities);
