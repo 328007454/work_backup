@@ -23,7 +23,7 @@ import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
 import com.cnksi.bdzinspection.utils.DefectUtils;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.Config;

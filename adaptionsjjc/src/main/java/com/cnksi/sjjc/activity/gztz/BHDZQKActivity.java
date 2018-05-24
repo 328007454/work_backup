@@ -14,9 +14,10 @@ import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.CalcUtils;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
@@ -151,7 +152,7 @@ public class BHDZQKActivity extends BaseActivity {
                 binding.chzdzqk.setVisibility(sbjcGztzjl.isTz() ? View.VISIBLE : View.GONE);
 
                 if (!TextUtils.isEmpty(sbjcGztzjl.dzbhFj)) {
-                    photos = Arrays.asList(StringUtils.NullToBlank(sbjcGztzjl.dzbhFj).split(","));
+                    photos = Arrays.asList(StringUtils.NullToDefault(sbjcGztzjl.dzbhFj).split(","));
                 } else {
                     photos = new ArrayList<>();
                 }
@@ -183,7 +184,7 @@ public class BHDZQKActivity extends BaseActivity {
 
 
                 binding.chzdzqk.setKeyValue(new KeyValue(sbjcGztzjl.chzdzqkK, sbjcGztzjl.chzdzqk));
-                binding.ecgzdl.setText(StringUtils.NullToBlank(sbjcGztzjl.ecgzdl));
+                binding.ecgzdl.setText(StringUtils.NullToDefault(sbjcGztzjl.ecgzdl));
                 binding.hfsdsj.setValueStr(sbjcGztzjl.hfsdsj);
                 binding.zhycdxsj.setValueStr(sbjcGztzjl.zhycdxsj);
                 binding.bhsbmc.setKeyValue(new KeyValue(sbjcGztzjl.bhsbmcK, sbjcGztzjl.bhsbmc));
@@ -245,7 +246,7 @@ public class BHDZQKActivity extends BaseActivity {
         String zdq = getText(binding.zdq);
         String ldkgql = binding.ldkgqk.getValueStr();
         if (isCheck) {
-            if ((chtzql == null && sbjcGztzjl.isTz()) || bhmc == null || bhsbmc == null || StringUtils.isHasOneEmpty(gzdl, ljz, ecgzdl, dzsj, zdq, ldkgql)) {
+            if ((chtzql == null && sbjcGztzjl.isTz()) || bhmc == null || bhsbmc == null || StringUtilsExt.isHasOneEmpty(gzdl, ljz, ecgzdl, dzsj, zdq, ldkgql)) {
                 ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                 return false;
             }
@@ -258,14 +259,14 @@ public class BHDZQKActivity extends BaseActivity {
         String yqtbhph = binding.yqtbhph.getValueStr();
         String ylbzzph = binding.ylbzzph.getValueStr();
         String yjkxtph = binding.yjkxtph.getValueStr();
-        String fjzp = StringUtils.ArrayListToString(photos);
+        String fjzp = StringUtils.arrayListToString(photos);
         String bz = binding.etBz.getValueStr();
         KeyValue gzlbq = binding.gzlbqmc.getValue();
         String gzlbqfx = binding.gzlbqfx.getValueStr();
         String gzlbqcj = binding.gzlbqcj.getValueStr();
         if (isCheck) {
             if (gzlbq != null) {
-                if (StringUtils.isHasOneEmpty(gzlbqfx, gzlbqcj)) {
+                if (StringUtilsExt.isHasOneEmpty(gzlbqfx, gzlbqcj)) {
                     ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                     return false;
                 }

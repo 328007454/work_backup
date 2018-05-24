@@ -22,7 +22,7 @@ import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.zhy.autolayout.utils.AutoUtils;

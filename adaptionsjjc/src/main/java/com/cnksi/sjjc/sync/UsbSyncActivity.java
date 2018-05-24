@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Department;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
@@ -58,7 +58,7 @@ public class UsbSyncActivity extends AppCompatActivity implements View.OnClickLi
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
             if (department != null) {
-                deptName = StringUtils.BlankToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+                deptName = StringUtils.NullToDefault(department.name, department.dept_name, department.pms_name, dept_id);
             }
         }
         binding.tvDept.setText("当前班组： " + deptName);

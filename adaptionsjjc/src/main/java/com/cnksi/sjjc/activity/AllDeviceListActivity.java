@@ -19,7 +19,7 @@ import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
@@ -65,7 +65,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         setSupportActionBar(mExpadableListBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        mExpadableListBinding.toolbar.setTitle(StringUtils.BlankToDefault(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
+        mExpadableListBinding.toolbar.setTitle(StringUtilsExt.nullTo(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
         initView();
         loadData();
     }

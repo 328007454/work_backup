@@ -35,11 +35,8 @@ import com.cnksi.bdzinspection.model.DeviceStandardsOper;
 import com.cnksi.bdzinspection.model.DeviceTypeImage;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.SpecialMenu;
-import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.CopyItemService;
@@ -47,11 +44,14 @@ import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DevicePartService;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.model.Standards;
 import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
@@ -567,7 +567,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         if (mChangePictureDialog == null) {
             int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
             changeHolder = new ViewHolder(currentActivity, null, R.layout.xs_content_list_dialog, false);
-            mChangePictureDialog = DialogUtils.createDialog1(currentActivity, devicedetailsBinding.llContainer, changeHolder, dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            mChangePictureDialog = DialogUtils.createDialog(currentActivity,changeHolder.getRootView(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         }
         ((ListView) changeHolder.getView(R.id.lv_container)).setAdapter(mListContentDialogAdapter);
         ((TextView) changeHolder.getView(R.id.tv_dialog_title)).setText(R.string.xs_picture_function_str);
@@ -636,7 +636,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             data.add(bigTypeModel.getString("identification_prevent_measures"));
             holder = new ViewHolder(currentActivity, null, R.layout.xs_content_list_dialog, false);
             BigTypePreventAdapter adapter = new BigTypePreventAdapter(currentActivity, data, R.layout.xs_danger_point_item2);
-            mDangerPointDialog = DialogUtils.createDialog1(currentActivity, devicedetailsBinding.llContainer, holder, dialogWidth, (data != null && data.size() > 4) ? dialogHeight : LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            mDangerPointDialog = DialogUtils.createDialog(currentActivity,  holder.getRootView(), dialogWidth, (data != null && data.size() > 4) ? dialogHeight : LinearLayout.LayoutParams.WRAP_CONTENT, true);
             ((TextView) holder.getView(R.id.tv_dialog_title)).setText("危险点及控制措施");
             ((ListView) holder.getView(R.id.lv_container)).setAdapter(adapter);
         }

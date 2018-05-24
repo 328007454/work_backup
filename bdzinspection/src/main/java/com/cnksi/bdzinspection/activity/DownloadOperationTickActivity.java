@@ -16,7 +16,7 @@ import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityDownloadOptrTickBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.OperateItem;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OpearTickParser;
 import com.cnksi.bdzinspection.utils.OperateTick;
 import com.cnksi.common.utils.TTSUtils;

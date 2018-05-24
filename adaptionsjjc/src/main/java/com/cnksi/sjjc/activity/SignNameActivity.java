@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ActivityHandWriteBinding;
-import com.cnksi.sjjc.util.FunctionUtils;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ public class SignNameActivity extends Activity {
         setResult(50);
         mSignName = getIntent().getStringExtra(Config.SIGN_FILENAME);
         if (TextUtils.isEmpty(mSignName)) {
-            mSignName = FunctionUtils.getPrimarykey() + ".jpg";
+            mSignName = BaseModel.getPrimarykey() + ".jpg";
             mSignName = Environment.getExternalStorageDirectory().getAbsolutePath() + mSignName;
         }
 //       binding.view.setmPaintWidth(20);

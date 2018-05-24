@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
+import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.ToastUtils;
 

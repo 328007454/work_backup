@@ -14,7 +14,7 @@ import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
@@ -154,8 +154,8 @@ public class NewTransformRecordActivity extends BaseActivity {
             if (listDbModel != null && listDbModel.size() > 0) {
                 for (int i = 0; i < listDbModel.size(); i++) {
                     DbModel dbModel = listDbModel.get(i);
-                    String bcds = StringUtils.getTransformTep(listBcds.get(i).getText().toString());
-                    String dzcs = StringUtils.getTransformTep(listDzcs.get(i).getText().toString());
+                    String bcds = StringUtilsExt.getDecimalPoint(listBcds.get(i).getText().toString());
+                    String dzcs = StringUtilsExt.getDecimalPoint(listDzcs.get(i).getText().toString());
                     if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
                         continue;
                     }

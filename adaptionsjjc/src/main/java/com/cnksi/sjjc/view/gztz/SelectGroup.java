@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
@@ -74,7 +74,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
             title = attributes.getString(R.styleable.SelectGroup_title_str);
             tvName.setText(title);
             hint = attributes.getString(R.styleable.SelectGroup_select_hint_str);
-            tvValue.setHint(StringUtils.BlankToDefault(hint, "请选择"));
+            tvValue.setHint(StringUtilsExt.nullTo(hint, "请选择"));
         }
         tvValue.setOnClickListener(v -> show());
     }

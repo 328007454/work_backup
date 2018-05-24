@@ -5,7 +5,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
+import android.content.DialogInterface;
 import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.text.TextUtils;
@@ -38,8 +38,6 @@ import java.util.Calendar;
 public class DialogUtils {
 
     private static Dialog dialog = null;
-    private static TipsViewHolder mTipsHolder;
-    private static ViewDataBinding dataBinding;
 
     /**
      * 创建dialog
@@ -71,48 +69,23 @@ public class DialogUtils {
         dialog.setCanceledOnTouchOutside(cancelable);
         dialog.setContentView(v);
         Window mWindow = dialog.getWindow();
-        if (width > 0 && height > 0) {
-
-            WindowManager.LayoutParams lp = mWindow.getAttributes();
-            lp.height = height;
+        WindowManager.LayoutParams lp = mWindow.getAttributes();
+        if (width != 0) {
             lp.width = width;
-            mWindow.setAttributes(lp);
         }
+        if (height != 0) {
+            lp.height = height;
+        }
+        mWindow.setAttributes(lp);
         // 添加动画
         mWindow.setWindowAnimations(R.style.DialogAnim);
         return dialog;
     }
 
-
-    /**
-     * 创建dialog
-     *
-     * @param context
-     * @param parent     父控件 一般为所在Activity或Fragment的根目录
-     * @param resource   布局文件id
-     * @param holder     ViewHolder
-     * @param cancelable 是否可以点击dialog以外的地方dismissdialog
-     * @return Dialog
-     */
-    public static Dialog createDialog(Context context, ViewGroup parent, int resource, Object holder, int width, int height, boolean cancelable) {
-        dialog = new Dialog(context, R.style.DialogStyle);
-        dialog.setCanceledOnTouchOutside(cancelable);
-        dataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), resource, null, false);
-//        View view = LayoutInflater.from(context).inflate(resource, parent, false);
-        dialog.setContentView(dataBinding.getRoot());
-        Window mWindow = dialog.getWindow();
-        if (width != 0 || height != 0) {
-
-            WindowManager.LayoutParams lp = mWindow.getAttributes();
-            lp.height = height;
-            lp.width = width;
-            mWindow.setAttributes(lp);
-        }
-
-        // 添加动画
-        mWindow.setWindowAnimations(R.style.DialogAnim);
-        return dialog;
+    public static Dialog createDialog(Context context, View v, int width, int height) {
+        return createDialog(context, v, width, height, true);
     }
+
 
     /**
      * 创建dialog
@@ -147,43 +120,24 @@ public class DialogUtils {
 
         if (listeners != null) {
             if (listeners.length == 1) {
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                btnSure.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        listeners[0].onClick(v);
-                        dialog.dismiss();
-                    }
+                btnCancel.setOnClickListener(v -> dialog.dismiss());
+                btnSure.setOnClickListener(v -> {
+                    listeners[0].onClick(v);
+                    dialog.dismiss();
                 });
             }
             if (listeners.length > 1) {
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        listeners[0].onClick(v);
-                        dialog.dismiss();
-                    }
+                btnCancel.setOnClickListener(v -> {
+                    listeners[0].onClick(v);
+                    dialog.dismiss();
                 });
-                btnSure.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        listeners[1].onClick(v);
-                        dialog.dismiss();
-                    }
+                btnSure.setOnClickListener(v -> {
+                    listeners[1].onClick(v);
+                    dialog.dismiss();
                 });
             }
         } else {
-            btnCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
         }
         dialog.setContentView(view);
         Window mWindow = dialog.getWindow();
@@ -198,22 +152,6 @@ public class DialogUtils {
         return createTipsDialog(context, "提示", text, new String[]{"取消", "确定"}, new View.OnClickListener[]{listener}, cancelable);
     }
 
-    /**
-     * 创建dialog
-     *
-     * @param context
-     * @param parent   父控件 一般为所在Activity或Fragment的根目录
-     * @param resource 布局文件id
-     * @param holder   ViewHolder
-     * @return Dialog
-     */
-    public static Dialog createDialog(Context context, ViewGroup parent, int resource, Object holder, int width, int height) {
-        return createDialog(context, parent, resource, holder, width, height, false);
-    }
-
-    public static Dialog createDialog(Context context, int resource, Object holder) {
-        return createDialog(context, null, resource, holder, 0, 0);
-    }
 
     /**
      * 提示dialog
@@ -222,7 +160,7 @@ public class DialogUtils {
      * @param dialogContent
      * @param mOnclickListener
      */
-    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogContent, OnViewClickListener mOnclickListener) {
+    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, CharSequence dialogContent, OnViewClickListener mOnclickListener) {
         showSureTipsDialog(mActivity, mRootContainer, null, dialogContent, null, null, mOnclickListener);
     }
 
@@ -249,28 +187,25 @@ public class DialogUtils {
      * @param cancelText
      * @param mOnclickListener
      */
-    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogTitle, String dialogContent, String sureText, String cancelText, OnViewClickListener mOnclickListener) {
+    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogTitle, CharSequence dialogContent, String sureText, String cancelText, OnViewClickListener mOnclickListener) {
         int dialogWidth = DisplayUtils.getInstance().getWidth() * 9 / 10;
-        createDialog(mActivity, mRootContainer, R.layout.dialog_tips, mTipsHolder = new TipsViewHolder(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, false);
-        mTipsHolder.mOnclickListener = mOnclickListener;
-        if (dataBinding != null) {
-            DialogTipsBinding tipsBinding = (DialogTipsBinding) dataBinding;
-            tipsBinding.tvDialogTitle.setText(TextUtils.isEmpty(dialogTitle) ? mActivity.getString(R.string.dialog_tips_str) : dialogTitle);
-            tipsBinding.tvDialogContent.setText(dialogContent);
-            tipsBinding.btnSure.setText(TextUtils.isEmpty(sureText) ? mActivity.getString(R.string.yes_str) : sureText);
-            tipsBinding.btnCancel.setText(TextUtils.isEmpty(cancelText) ? mActivity.getString(R.string.no_str) : cancelText);
-            dialog.show();
+        DialogTipsBinding tipsBinding = DialogTipsBinding.inflate(mActivity.getLayoutInflater());
+        dialog = createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+        tipsBinding.tvDialogTitle.setText(TextUtils.isEmpty(dialogTitle) ? mActivity.getString(R.string.dialog_tips_str) : dialogTitle);
+        tipsBinding.tvDialogContent.setText(dialogContent);
+        tipsBinding.btnSure.setText(TextUtils.isEmpty(sureText) ? mActivity.getString(R.string.yes_str) : sureText);
+        tipsBinding.btnCancel.setText(TextUtils.isEmpty(cancelText) ? mActivity.getString(R.string.no_str) : cancelText);
+        dialog.show();
+        tipsBinding.btnCancel.setOnClickListener((v) -> {
+            dialog.dismiss();
+            dialog = null;
+        });
+        tipsBinding.btnSure.setOnClickListener((v) -> {
+            if (mOnclickListener != null) {
+                mOnclickListener.onClick(v);
+            }
+        });
 
-            ((DialogTipsBinding) dataBinding).btnCancel.setOnClickListener((v) -> {
-                dialog.dismiss();
-                dialog = null;
-            });
-            ((DialogTipsBinding) dataBinding).btnSure.setOnClickListener((v) -> {
-                if (mOnclickListener != null) {
-                    mOnclickListener.onClick(v);
-                }
-            });
-        }
     }
 
     public static Dialog showDatePickerDialog(Activity context, final DialogItemClickListener dialogClickListener) {
@@ -311,20 +246,11 @@ public class DialogUtils {
             LinearLayout mLLDateContainer = (LinearLayout) view.findViewById(R.id.ll_date_container);
             mLLDateContainer.addView(timepickerview);
 
-            view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    datePickerDialog.dismiss();
-                    dialogClickListener.confirm(wheelMain.getTime(), 0);
-                }
+            view.findViewById(R.id.confirm).setOnClickListener(v -> {
+                datePickerDialog.dismiss();
+                dialogClickListener.confirm(wheelMain.getTime(), 0);
             });
-            view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    datePickerDialog.dismiss();
-                }
-            });
+            view.findViewById(R.id.cancel).setOnClickListener(v -> datePickerDialog.dismiss());
             // 设置对话框布局
             datePickerDialog.setContentView(view);
 
@@ -394,7 +320,7 @@ public class DialogUtils {
 
             container.findViewById(R.id.confirm).setOnClickListener(v -> {
                 datePickerDialog.dismiss();
-                String mimls = StringUtils.BlankToDefault(wm.getText().toString(), "0");
+                String mimls = StringUtilsExt.nullTo(wm.getText().toString(), "0");
                 String rs = String.format("%02d", wv_hours.getCurrentItem()) + ":" + String.format("%02d", wv_mins.getCurrentItem()) + ":" + String.format("%02d", wv_second.getCurrentItem());
                 if (hasMills) {
                     rs = rs + " " + String.format("%03d", Integer.parseInt(mimls));
@@ -444,42 +370,36 @@ public class DialogUtils {
         void confirm(String result, int position);
     }
 
-    static class TipsViewHolder {
 
-        OnViewClickListener mOnclickListener;
-
-//        @ViewInject(R.id.tv_dialog_title)
-//        private TextView mTvDialogTile;
-//
-//        @ViewInject(R.id.tv_dialog_content)
-//        private TextView mTvDialogContent;
-//
-//        @ViewInject(R.id.btn_sure)
-//        private Button mBtnSure;
-//        @ViewInject(R.id.btn_cancel)
-//        private Button mBtnCancel;
-
-//        @Event({R.id.btn_sure, R.id.btn_cancel})
-//        private void OnViewClick(View view) {
-//            switch (view.getId()) {
-//                case R.id.btn_sure:
-//                    if (mOnclickListener != null) {
-//                        mOnclickListener.onClick(view);
-//                    }
-//                case R.id.btn_cancel:
-//                    dialog.dismiss();
-//                    dialog = null;
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
+    public static void setDialogNull() {
+        if (dialog != null) {
+            dialog = null;
+        }
     }
 
-    public static void setDialogNull(){
-        if (dialog!=null){
-            dialog =null;
-        }
+
+    /**
+     * @param context
+     * @param maxLength
+     * @param inputType
+     * @param title
+     * @param hint
+     * @param ok
+     * @param cancel
+     * @param onClickListener
+     */
+    public static void showInputCancelDialog(Context context, int maxLength, int inputType, String title, String oldValue, String hint, String ok, String cancel, final DialogInputClickListener onClickListener) {
+        setDialogNull();
+
+    }
+
+    public interface DialogInputClickListener {
+        /**
+         * @param dialog
+         * @param which
+         * @param result
+         */
+        void onClick(DialogInterface dialog, int which, String result);
     }
 
 }

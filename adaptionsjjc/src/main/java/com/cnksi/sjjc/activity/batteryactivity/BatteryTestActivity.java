@@ -32,13 +32,14 @@ import com.cnksi.common.model.Task;
 import com.cnksi.common.model.TaskExtend;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
@@ -303,7 +304,7 @@ public class BatteryTestActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        binding.etCurrentTempreture.setText(StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
+        binding.etCurrentTempreture.setText(StringUtilsExt.getDecimalPoint(binding.etCurrentTempreture.getText().toString()));
     }
 
     @Override
@@ -461,7 +462,7 @@ public class BatteryTestActivity extends BaseActivity {
             }
             batteryGroupList.put(currentBatterId, group);
         }
-        binding.etCurrentTempreture.setText(StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
+        binding.etCurrentTempreture.setText(StringUtilsExt.getDecimalPoint(binding.etCurrentTempreture.getText().toString()));
         String zuDuanVoltage = group.zuDuanVoltage == null ? currentBattery.voltage : group.zuDuanVoltage + "";
         String zuDuanElectricity = group.chargeElectricity == null ? currentBattery.dl : group.chargeElectricity + "";
         String singleVoltage = group.singleVoltage == null ? currentBattery.singleVoltage : group.singleVoltage + "";
@@ -537,20 +538,20 @@ public class BatteryTestActivity extends BaseActivity {
      */
     private boolean saveGroupBaseInfor(BatteryGroup batteryGroup) {
 
-        if (StringUtils.checkTemprature(binding.groupVoltage.getText().toString()) && StringUtils.checkTemprature(binding.chargeCurrent.getText().toString())
-                && StringUtils.checkTemprature(binding.singleVoltage.getText().toString()) && StringUtils.checkTemprature(binding.etFactVoltage.getText().toString())
-                && StringUtils.checkTemprature(binding.etSystemVoltage.getText().toString()) && StringUtils.checkTemprature(binding.etLoadElectric.getText().toString())
-                && StringUtils.checkTemprature(binding.etFuchongElectricty.getText().toString()) && StringUtils.checkTemprature(binding.etZhengMuxianVoltage.getText().toString())
-                && StringUtils.checkTemprature(binding.etFuMuxianVoltage.getText().toString())) {
-            batteryGroup.zuDuanVoltage = StringUtils.getTransformTep(binding.groupVoltage.getText().toString().replace("V", ""));
-            batteryGroup.chargeElectricity = StringUtils.getTransformTep(binding.chargeCurrent.getText().toString().replace("A", ""));
-            batteryGroup.singleVoltage = StringUtils.getTransformTep(binding.singleVoltage.getText().toString().replace("V", ""));
-            batteryGroup.fcdySc = StringUtils.getTransformTep(binding.etFactVoltage.getText().toString());
-            batteryGroup.fcdyZlxt = StringUtils.getTransformTep(binding.etSystemVoltage.getText().toString());
-            batteryGroup.loadElectricty = StringUtils.getTransformTep(binding.etLoadElectric.getText().toString());
-            batteryGroup.fcElectricty = StringUtils.getTransformTep(binding.etFuchongElectricty.getText().toString());
-            batteryGroup.zVoltage = StringUtils.getTransformTep(binding.etZhengMuxianVoltage.getText().toString());
-            batteryGroup.fVoltage = StringUtils.getTransformTep(binding.etFuMuxianVoltage.getText().toString());
+        if (StringUtilsExt.checkTemprature(binding.groupVoltage.getText().toString()) && StringUtilsExt.checkTemprature(binding.chargeCurrent.getText().toString())
+                && StringUtilsExt.checkTemprature(binding.singleVoltage.getText().toString()) && StringUtilsExt.checkTemprature(binding.etFactVoltage.getText().toString())
+                && StringUtilsExt.checkTemprature(binding.etSystemVoltage.getText().toString()) && StringUtilsExt.checkTemprature(binding.etLoadElectric.getText().toString())
+                && StringUtilsExt.checkTemprature(binding.etFuchongElectricty.getText().toString()) && StringUtilsExt.checkTemprature(binding.etZhengMuxianVoltage.getText().toString())
+                && StringUtilsExt.checkTemprature(binding.etFuMuxianVoltage.getText().toString())) {
+            batteryGroup.zuDuanVoltage = StringUtilsExt.getDecimalPoint(binding.groupVoltage.getText().toString().replace("V", ""));
+            batteryGroup.chargeElectricity = StringUtilsExt.getDecimalPoint(binding.chargeCurrent.getText().toString().replace("A", ""));
+            batteryGroup.singleVoltage = StringUtilsExt.getDecimalPoint(binding.singleVoltage.getText().toString().replace("V", ""));
+            batteryGroup.fcdySc = StringUtilsExt.getDecimalPoint(binding.etFactVoltage.getText().toString());
+            batteryGroup.fcdyZlxt = StringUtilsExt.getDecimalPoint(binding.etSystemVoltage.getText().toString());
+            batteryGroup.loadElectricty = StringUtilsExt.getDecimalPoint(binding.etLoadElectric.getText().toString());
+            batteryGroup.fcElectricty = StringUtilsExt.getDecimalPoint(binding.etFuchongElectricty.getText().toString());
+            batteryGroup.zVoltage = StringUtilsExt.getDecimalPoint(binding.etZhengMuxianVoltage.getText().toString());
+            batteryGroup.fVoltage = StringUtilsExt.getDecimalPoint(binding.etFuMuxianVoltage.getText().toString());
             batteryGroup.testInstrument = binding.etTestInstrument.getText().toString().trim();
         } else {
 
@@ -790,7 +791,7 @@ public class BatteryTestActivity extends BaseActivity {
         if (null == batteryRecord && (!TextUtils.isEmpty(value) || !imageList.isEmpty())) {
             batteryRecord = new BatteryRecord(currentReportId, currentBdzId, currentBdzName, currentBattery.bid, batteryCode, currentInspectionType, taskExpand.sbjcIsAllCheck);
         }
-        String images = StringUtils.ArrayListToString(imageList);
+        String images = StringUtils.arrayListToString(imageList);
         if (null != batteryRecord) {
             if (currentCheckType == 0) {
                 batteryRecord.voltage = value;

@@ -15,7 +15,7 @@ import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.TaskRemindAdapter;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;

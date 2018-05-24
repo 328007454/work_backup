@@ -27,7 +27,7 @@ import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectReasonBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentEliminateDefectBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.bdzinspection.view.CustomRadioButton;

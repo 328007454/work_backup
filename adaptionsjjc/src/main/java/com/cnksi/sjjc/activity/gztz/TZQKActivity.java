@@ -9,7 +9,7 @@ import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
@@ -89,7 +89,7 @@ public class TZQKActivity extends BaseActivity {
                 if (s1 != null && s2 != null) {
                     rs = s1 + "," + s2;
                 } else {
-                    rs = StringUtils.BlankToDefault(s1, s2);
+                    rs = StringUtilsExt.nullTo(s1, s2);
                 }
                 intentDevices.putExtra(AllDeviceListActivity.BIGID, rs);
                 intentDevices.putExtra(Config.TITLE_NAME, "请选择变压器");
@@ -188,11 +188,11 @@ public class TZQKActivity extends BaseActivity {
         String sfty = binding.sfty.getValueStr();
         String dlqjcqk = binding.dlqjcqk.getValueStr();
         if (isCheck) {
-            if (dlqbh == null || sbxb == null || gzxl == null || StringUtils.isHasOneEmpty(dlqtzqk, yyjjcqk, sfdz, kgdzpj, sfzngz, gzfssj)) {
+            if (dlqbh == null || sbxb == null || gzxl == null || StringUtilsExt.isHasOneEmpty(dlqtzqk, yyjjcqk, sfdz, kgdzpj, sfzngz, gzfssj)) {
                 ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                 return false;
             }
-            if (gzdydj == null || gzlx == null || gzsdtq == null || gzlb == null || StringUtils.isHasOneEmpty(gzsfyj, sfty, sftz, dlqjcqk)) {
+            if (gzdydj == null || gzlx == null || gzsdtq == null || gzlb == null || StringUtilsExt.isHasOneEmpty(gzsfyj, sfty, sftz, dlqjcqk)) {
                 ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                 return false;
             }

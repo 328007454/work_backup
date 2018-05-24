@@ -10,20 +10,13 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.ToastUtils;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,41 +25,9 @@ import java.util.UUID;
 
 public class FunctionUtils {
 
-    /**
-     * 根据listView的每个item计算ListView的高度
-     *
-     * @param listView
-     */
-    public static int setListViewHeightBasedOnChildren(ListView listView) {
-        int totalHeight = 0;
-        ListAdapter adapter = listView.getAdapter();
-        for (int i = 0, len = adapter.getCount(); i < len; i++) {
-            View listItem = adapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listView.getCount() - 1));
-        listView.setLayoutParams(params);
-        return params.height;
-    }
 
-    /**
-     * 根据listView的每个item计算ListView的高度
-     *
-     * @param listView
-     */
-    public static int getListViewHeightBasedOnChildren(ListView listView) {
-        int totalHeight = 0;
-        ListAdapter adapter = listView.getAdapter();
-        for (int i = 0, len = adapter.getCount(); i < len; i++) {
-            View listItem = adapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-        return totalHeight + (listView.getDividerHeight() * (listView.getCount() - 1));
-    }
-    
+
+
     /**
      * 以系统时间返回照相图片文件名称
      *
@@ -81,18 +42,7 @@ public class FunctionUtils {
         return String.valueOf(formatter.format(new Date()) + uuidStr + CoreConfig.IMAGE_JPG_POSTFIX);
     }
 
-    /**
-     * 得到随机码
-     *
-     * @param count 几位
-     */
-    public static String getRandomUUID(int count) {
-        String uuidStr = UUID.randomUUID().toString().replace(CoreConfig.DASH_SEPARATOR, "");
-        if (uuidStr.length() > count) {
-            uuidStr = uuidStr.substring(0, count);
-        }
-        return uuidStr;
-    }
+
 
     /**
      * 启动系统照相功能，按指定的文件名称存储到系统图片路径下
@@ -125,45 +75,10 @@ public class FunctionUtils {
         activity.startActivityForResult(intent, requestCode);
     }
 
-    /**
-     * 启动系统照相功能，按指定的文件名称存储到系统图片路径下
-     *
-     * @param fragment         启动activity
-     * @param currentImageName 当前照片文件名
-     */
-    public static void takePictureFromFragment(Fragment fragment, String currentImageName, String defectImagePath) {
-        takePictureFromFragment(fragment, currentImageName, defectImagePath, CoreConfig.ACTION_IMAGE);
-    }
 
-    /**
-     * 启动系统照相功能，按指定的文件名称存储到系统图片路径下
-     *
-     * @param fragment
-     * @param currentImageName
-     * @param imageFolder
-     * @param requestCode
-     */
-    public static void takePictureFromFragment(Fragment fragment, String currentImageName, String imageFolder, int requestCode) {
-        if (!FileUtils.isFolderExists(imageFolder)) {
-            FileUtils.makeDirectory(imageFolder);
-        }
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        currentImageName = (null == currentImageName) ? getCurrentImageName() : currentImageName;
-        File imageFile = new File(imageFolder, currentImageName);
-        intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
-        fragment.startActivityForResult(intent, requestCode);
-    }
 
-    /**
-     * 得到以时间戳的字符串
-     *
-     * @return String HHmmssSSS+UUID
-     */
-    public static String getPrimarykey() {
-        SimpleDateFormat formatter = new SimpleDateFormat(CoreConfig.dateFormat10, Locale.CHINA);
-        return formatter.format(new Date()) + UUID.randomUUID().toString().replace(CoreConfig.DASH_SEPARATOR, "");
-    }
+
+
 
     /**
      * 获取ApiKey

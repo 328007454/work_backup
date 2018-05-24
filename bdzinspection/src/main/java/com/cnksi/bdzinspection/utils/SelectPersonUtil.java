@@ -12,6 +12,7 @@ import com.cnksi.bdzinspection.adapter.AddPersonAdapter;
 import com.cnksi.bdzinspection.adapter.SelectionPersonAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 

@@ -23,10 +23,7 @@ import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSignViewBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.BatteryGroup;
-import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.common.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
 import com.cnksi.bdzinspection.utils.TimePickerUtils;
 import com.cnksi.common.Config;
@@ -41,11 +38,14 @@ import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.BitmapUtils;
@@ -514,24 +514,21 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         dialogAdpeter.setOnItemClickListener(this);
         mAddPersonDialog.show();
         this.list = list;
-        mPersonBinding.btnAddPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = mPersonBinding.etName.getText().toString();
-                if (TextUtils.isEmpty(name)) {
-                    ToastUtils.showMessage("名字不能为空！");
-                    return;
-                }
-                DbModel model = new DbModel();
-                model.add("username", mPersonBinding.etName.getText().toString());
-                model.add(ReportSignname.DEPTID, "-1");
-                model.add(ReportSignname.DEPTNAME, "");
-                model.add(ReportSignname.ACCOUNT, BaseModel.getPrimarykey());
-                persons.add(model);
-                dialogAdpeter.notifyDataSetChanged();
-                mPersonBinding.lvContainer.smoothScrollToPosition(mPersonBinding.lvContainer.getCount());
-                mPersonBinding.etName.setText("");
+        mPersonBinding.btnAddPerson.setOnClickListener(view -> {
+            String name = mPersonBinding.etName.getText().toString();
+            if (TextUtils.isEmpty(name)) {
+                ToastUtils.showMessage("名字不能为空！");
+                return;
             }
+            DbModel model = new DbModel();
+            model.add("username", mPersonBinding.etName.getText().toString());
+            model.add(ReportSignname.DEPTID, "-1");
+            model.add(ReportSignname.DEPTNAME, "");
+            model.add(ReportSignname.ACCOUNT, BaseModel.getPrimarykey());
+            persons.add(model);
+            dialogAdpeter.notifyDataSetChanged();
+            mPersonBinding.lvContainer.smoothScrollToPosition(mPersonBinding.lvContainer.getCount());
+            mPersonBinding.etName.setText("");
         });
     }
 

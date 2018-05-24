@@ -25,7 +25,7 @@ import com.cnksi.bdzinspection.databinding.XsDialogSafetyToolTestBinding;
 import com.cnksi.bdzinspection.emnu.ToolStatus;
 import com.cnksi.bdzinspection.model.OperateToolResult;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PersonListUtils;
 import com.cnksi.common.Config;

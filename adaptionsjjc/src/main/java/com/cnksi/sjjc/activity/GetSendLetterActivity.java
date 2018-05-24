@@ -29,12 +29,12 @@ import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
-import com.cnksi.common.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Transceiver;
@@ -257,7 +257,7 @@ public class GetSendLetterActivity extends BaseActivity {
     private boolean saveCurrentPage() {
         String sendLevelStr = binding.editSendLevel.getText().toString();
         String receiveLevelStr = binding.editReceiveLevel.getText().toString();
-        if ((!TextUtils.isEmpty(sendLevelStr) || !TextUtils.isEmpty(receiveLevelStr)) && (TextUtils.isEmpty(StringUtils.getTransformTep(sendLevelStr)) || TextUtils.isEmpty(StringUtils.getTransformTep(receiveLevelStr)))) {
+        if ((!TextUtils.isEmpty(sendLevelStr) || !TextUtils.isEmpty(receiveLevelStr)) && (TextUtils.isEmpty(StringUtilsExt.getDecimalPoint(sendLevelStr)) || TextUtils.isEmpty(StringUtilsExt.getDecimalPoint(receiveLevelStr)))) {
             ToastUtils.showMessage("请输入正确的发信电平或者收信电平");
             return false;
         }
@@ -265,8 +265,8 @@ public class GetSendLetterActivity extends BaseActivity {
             ToastUtils.showMessage("当前页面没有设备，记录将不会保存。");
             return true;
         }
-        currentTransceiver.sendLevel = StringUtils.getTransformTep(sendLevelStr);
-        currentTransceiver.receiveLevel = StringUtils.getTransformTep(receiveLevelStr);
+        currentTransceiver.sendLevel = StringUtilsExt.getDecimalPoint(sendLevelStr);
+        currentTransceiver.receiveLevel = StringUtilsExt.getDecimalPoint(receiveLevelStr);
         currentTransceiver.channelStatus = binding.radioChannel.getCheckedRadioButtonId() == R.id.radio_normal ? 0 : 1;
         currentTransceiver.remark = binding.editRemark.getText().toString();
         try {

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsAudioAdapterBinding;
-import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
+import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.ToastUtils;
 import com.zhy.autolayout.utils.AutoUtils;

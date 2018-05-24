@@ -37,22 +37,22 @@ import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
 import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyboardChangeListener;
-import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.RecordAudioUtils;
-import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.SwitchPic;
 import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.MediaRecorderUtils;
+import com.cnksi.common.utils.RecordAudioUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.DateUtils;
@@ -91,14 +91,6 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     private List<DbModel> dbModelList = new ArrayList<DbModel>();
     private String inspectionTips = "";
     /**
-     * 当前操作图片录音的对象
-     */
-    private SwitchPic switchPic;
-    /**
-     * 当前操作的对象
-     */
-    private DbModel mCurrentDbModel = null;
-    /**
      * 当前照片的名称
      */
     private String currentImageName = "";
@@ -114,8 +106,6 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
      * 当前键盘的状态
      */
     private int currentKeyBoardState = KeyBoardUtil.KEYBORAD_HIDE;
-    private StandardSwitchover standardSwitchOver;
-    private DefectRecord defectRecord;
     private LinkedList<DbModel> groupList;
     private HashMap<DbModel, ArrayList<DbModel>> childMapLists;
     private ArrayList<DbModel> dbModelArrayList = new ArrayList<>();

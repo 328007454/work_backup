@@ -38,7 +38,7 @@ import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Defect;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;

@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 
@@ -46,7 +46,7 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
             String name = attributes.getString(R.styleable.SelectTimeGroup_title_str);
             tvName.setText(name);
             String str = attributes.getString(R.styleable.SelectTimeGroup_select_hint_str);
-            str = StringUtils.BlankToDefault(str, "请选择");
+            str = StringUtilsExt.nullTo(str, "请选择");
             tvValue.setHint(str);
         }
         switch (type) {

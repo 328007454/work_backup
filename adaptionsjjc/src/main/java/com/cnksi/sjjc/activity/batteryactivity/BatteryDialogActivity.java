@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.model.Battery;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -398,10 +399,10 @@ public class BatteryDialogActivity extends AppCompatActivity {
                 if (null != batteryRecord) {
                     String imageStr = StringUtils.arrayListToString(exitImageList);
                     if (batteryCheckType == 0) {
-                        batteryRecord.voltage = com.cnksi.common.utils.StringUtils.getTransformTep(value, 3);
+                        batteryRecord.voltage = StringUtilsExt.getDecimalPoint(value, 3);
                         batteryRecord.voltageImages = imageStr;
                     } else {
-                        batteryRecord.resistance =  com.cnksi.common.utils.StringUtils.getTransformTep(value, 3);
+                        batteryRecord.resistance =  StringUtilsExt.getDecimalPoint(value, 3);
                         batteryRecord.resistanceImages = imageStr;
                     }
                     batteryRecord.last_modify_time = DateUtils.getCurrentLongTime();

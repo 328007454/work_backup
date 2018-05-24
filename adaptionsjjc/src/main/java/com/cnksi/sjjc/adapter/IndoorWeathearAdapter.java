@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.ReportSnwsd;
@@ -144,10 +144,10 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
                 reportSnwsd.location = s.toString();
             }
             if (ReportSnwsd.WD.equalsIgnoreCase(tag)) {
-                reportSnwsd.wd = StringUtils.getTransformTep(s.toString());
+                reportSnwsd.wd = StringUtilsExt.getDecimalPoint(s.toString());
             }
             if (ReportSnwsd.SD.equalsIgnoreCase(tag)) {
-                reportSnwsd.sd = StringUtils.getTransformTep(s.toString());
+                reportSnwsd.sd = StringUtilsExt.getDecimalPoint(s.toString());
             }
         }
     }

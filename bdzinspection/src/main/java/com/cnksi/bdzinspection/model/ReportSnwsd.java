@@ -153,12 +153,12 @@ public class ReportSnwsd extends BaseModel {
     }
 
     public boolean judgeValueNormal(String temp, String sd) {
-        if (TextUtils.isEmpty(StringUtilsExt.getTransformTep(wd))) {
+        if (TextUtils.isEmpty(StringUtilsExt.getDecimalPoint(wd))) {
             return false;
         } else if ((-99.9f > new Float(wd) || new Float(wd) > 99.99)) {
             return false;
         }
-        if (TextUtils.isEmpty(StringUtilsExt.getTransformTep(sd))) {
+        if (TextUtils.isEmpty(StringUtilsExt.getDecimalPoint(sd))) {
             return false;
         } else if ((0 > new Float(sd) || new Float(sd) > 100)) {
             return false;

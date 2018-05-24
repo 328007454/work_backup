@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.TreeNode;
@@ -183,7 +183,7 @@ public class CopyViewUtil {
         public void afterTextChanged(Editable s) {
             CopyResult copyResult = copyResultMap.get(copyItem.id);
             if (null != copyResult) {
-                String value = StringUtils.getTransformTep(s.toString());
+                String value = StringUtilsExt.getDecimalPoint(s.toString());
                 if ("Y".equals(copyItem.val)) {
                     copyResult.val = value;
                 }

@@ -18,7 +18,7 @@ import com.cnksi.bdzinspection.databinding.SwitchItemChild1;
 import com.cnksi.bdzinspection.databinding.SwitchItemChild2;
 import com.cnksi.bdzinspection.databinding.SwitchItemParentBinding;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
+import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.SwitchPic;

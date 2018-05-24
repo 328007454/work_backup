@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityImageDetailsBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.ScreenUtils;

@@ -34,7 +34,7 @@ import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;

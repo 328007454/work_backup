@@ -21,7 +21,7 @@ import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;

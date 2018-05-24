@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Department;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.UpDataToReportManager;
@@ -73,7 +73,7 @@ public class UpLoadDataService extends Service {
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
             if (department != null) {
-                deptName = StringUtils.BlankToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+                deptName = StringUtils.NullToDefault(department.name, department.dept_name, department.pms_name, dept_id);
             }
         }
         String url = config.getUrl();
