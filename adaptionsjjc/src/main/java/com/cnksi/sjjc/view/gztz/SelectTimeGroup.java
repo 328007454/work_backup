@@ -8,9 +8,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
-import com.cnksi.sjjc.util.StringUtils;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.StringUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 
 /**

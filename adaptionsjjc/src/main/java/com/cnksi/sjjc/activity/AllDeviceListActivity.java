@@ -13,18 +13,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.cnksi.core.common.ExecutorManager;
-import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.Config;
-import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
-import com.cnksi.common.model.Device;
-import com.cnksi.common.model.Spacing;;
-import com.cnksi.sjjc.databinding.ActivityDevicesExpadableListBinding;
-import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.SpacingService;
-import com.cnksi.sjjc.util.StringUtils;
+import com.cnksi.common.enmu.PMSDeviceType;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.model.Spacing;
+import com.cnksi.common.utils.StringUtils;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.sjjc.R;
+import com.cnksi.sjjc.adapter.DeviceExpandabelListAdapter;
+import com.cnksi.sjjc.databinding.ActivityDevicesExpadableListBinding;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+
+;
 
 /**
  * @author nothing 2017/12/11

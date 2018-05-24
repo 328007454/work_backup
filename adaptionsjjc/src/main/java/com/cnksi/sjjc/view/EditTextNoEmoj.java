@@ -6,9 +6,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 
+import com.cnksi.common.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.util.StringUtils;
 
 /**
  * Created by kkk on 2017/9/21.

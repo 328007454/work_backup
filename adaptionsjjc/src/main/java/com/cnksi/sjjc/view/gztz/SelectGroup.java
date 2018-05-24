@@ -13,13 +13,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DisplayUtils;
-import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.sjjc.util.StringUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BaseAdapter;
 import com.cnksi.sjjc.service.gztz.GZTZSjlyService;
-import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -107,7 +107,7 @@ public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
         holder.setText(R.id.tv_dialog_title, title);
         adapter = new BaseAdapter<KeyValue>(getContext(), keyValues, R.layout.dialog_content_child_item) {
             @Override
-            public void convert(com.cnksi.sjjc.adapter.ViewHolder holder, KeyValue item, int position) {
+            public void convert(ViewHolder holder, KeyValue item, int position) {
                 holder.setText(R.id.tv_child_item, item.getValueStr());
             }
         };

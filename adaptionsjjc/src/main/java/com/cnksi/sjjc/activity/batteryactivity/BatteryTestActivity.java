@@ -24,12 +24,16 @@ import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.databinding.DialogTipsBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.TaskExtend;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
@@ -41,16 +45,12 @@ import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.adapter.BatteryAdapter;
 import com.cnksi.sjjc.adapter.BatteryImageAdapter;
-import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.BatteryInstrument;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.ActivityBatteryBinding;
-import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.BatteryInstrumentService;
 import com.cnksi.sjjc.service.BatteryRecordService;
-import com.cnksi.sjjc.util.DialogUtils;
-import com.cnksi.sjjc.util.StringUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
@@ -303,7 +303,7 @@ public class BatteryTestActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        binding.etCurrentTempreture.setText(com.cnksi.sjjc.util.StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
+        binding.etCurrentTempreture.setText(StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
     }
 
     @Override
@@ -337,6 +337,8 @@ public class BatteryTestActivity extends BaseActivity {
                 }
                 batteryCodeAdapter.setRecordMap(batteryRecordMap);
                 batteryImageAdapter.notifyDataSetChanged();
+                break;
+            default:
                 break;
         }
 
@@ -459,7 +461,7 @@ public class BatteryTestActivity extends BaseActivity {
             }
             batteryGroupList.put(currentBatterId, group);
         }
-        binding.etCurrentTempreture.setText(com.cnksi.sjjc.util.StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
+        binding.etCurrentTempreture.setText(StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
         String zuDuanVoltage = group.zuDuanVoltage == null ? currentBattery.voltage : group.zuDuanVoltage + "";
         String zuDuanElectricity = group.chargeElectricity == null ? currentBattery.dl : group.chargeElectricity + "";
         String singleVoltage = group.singleVoltage == null ? currentBattery.singleVoltage : group.singleVoltage + "";

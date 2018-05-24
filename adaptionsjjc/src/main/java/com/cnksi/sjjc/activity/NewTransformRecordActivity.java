@@ -14,15 +14,15 @@ import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.ReportJzlbyqfjkg;
 import com.cnksi.sjjc.databinding.ActivityDifferentialMotionRecordBinding;
 import com.cnksi.sjjc.service.ReportJzlbyqfjkgService;
-import com.cnksi.sjjc.util.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;

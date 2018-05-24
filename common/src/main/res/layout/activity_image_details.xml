@@ -2,12 +2,15 @@
 <layout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:id="@+id/ll_root_container"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@android:color/white"
-                  android:orientation="vertical">
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/include_title" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -18,7 +21,7 @@
             <com.cnksi.core.view.HackyViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/filename"
@@ -27,8 +30,7 @@
                 android:layout_above="@+id/page_text"
                 android:text="1212213123.jpg"
                 android:textColor="@color/dark_text"
-                android:textSize="@dimen/global_text_size"
-                />
+                android:textSize="@dimen/global_text_size" />
 
             <TextView
                 android:id="@+id/page_text"
@@ -38,7 +40,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/global_padding_top_bottom"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/global_text_size"/>
+                android:textSize="@dimen/global_text_size" />
 
             <ImageButton
                 android:id="@+id/ibtn_delete"
@@ -49,7 +51,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
                 android:src="@drawable/delete_image_selector"
-                android:visibility="visible"/>
+                android:visibility="visible" />
         </RelativeLayout>
 
     </LinearLayout>

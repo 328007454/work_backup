@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;

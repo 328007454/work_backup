@@ -16,6 +16,7 @@ import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.DateUtils;
@@ -31,7 +32,6 @@ import com.cnksi.sjjc.databinding.ActivityGztzRecordBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
-import com.cnksi.sjjc.util.DialogUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;

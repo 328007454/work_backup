@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.util;
+package com.cnksi.common.utils;
 
 
 import android.annotation.TargetApi;
@@ -20,14 +20,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cnksi.common.R;
+import com.cnksi.common.databinding.DialogTipsBinding;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.datepicker.NumericWheelAdapter;
 import com.cnksi.core.view.datepicker.WheelMain;
 import com.cnksi.core.view.datepicker.WheelView;
-import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.Calendar;

@@ -29,14 +29,14 @@ import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
-import com.cnksi.core.utils.StringUtils;
+import com.cnksi.common.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.ViewHolder;
 import com.cnksi.sjjc.bean.Transceiver;
 import com.cnksi.sjjc.databinding.ActivityGetSendLetterBinding;
 import com.cnksi.sjjc.service.TransceiverService;
@@ -234,14 +234,14 @@ public class GetSendLetterActivity extends BaseActivity {
                 //删除后的图片
                 case Config.CANCEL_RESULT_LOAD_IMAGE:
                     ArrayList<String> deleteImages = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
-                    ArrayList<String> exitImages = StringUtils.string2List(currentTransceiver.images, false);
+                    ArrayList<String> exitImages = com.cnksi.core.utils.StringUtils.string2List(currentTransceiver.images, false);
                     for (String image : deleteImages) {
                         String realImage = image.replace(Config.RESULT_PICTURES_FOLDER, "");
                         if (exitImages.contains(realImage)) {
                             exitImages.remove(realImage);
                         }
                     }
-                    currentTransceiver.images = StringUtils.arrayListToString(exitImages);
+                    currentTransceiver.images = com.cnksi.core.utils.StringUtils.arrayListToString(exitImages);
                     showThumbPic();
                     saveCurrentPage();
                     break;
@@ -257,7 +257,7 @@ public class GetSendLetterActivity extends BaseActivity {
     private boolean saveCurrentPage() {
         String sendLevelStr = binding.editSendLevel.getText().toString();
         String receiveLevelStr = binding.editReceiveLevel.getText().toString();
-        if ((!TextUtils.isEmpty(sendLevelStr) || !TextUtils.isEmpty(receiveLevelStr)) && (TextUtils.isEmpty(com.cnksi.sjjc.util.StringUtils.getTransformTep(sendLevelStr)) || TextUtils.isEmpty(com.cnksi.sjjc.util.StringUtils.getTransformTep(receiveLevelStr)))) {
+        if ((!TextUtils.isEmpty(sendLevelStr) || !TextUtils.isEmpty(receiveLevelStr)) && (TextUtils.isEmpty(StringUtils.getTransformTep(sendLevelStr)) || TextUtils.isEmpty(StringUtils.getTransformTep(receiveLevelStr)))) {
             ToastUtils.showMessage("请输入正确的发信电平或者收信电平");
             return false;
         }
@@ -265,8 +265,8 @@ public class GetSendLetterActivity extends BaseActivity {
             ToastUtils.showMessage("当前页面没有设备，记录将不会保存。");
             return true;
         }
-        currentTransceiver.sendLevel = com.cnksi.sjjc.util.StringUtils.getTransformTep(sendLevelStr);
-        currentTransceiver.receiveLevel = com.cnksi.sjjc.util.StringUtils.getTransformTep(receiveLevelStr);
+        currentTransceiver.sendLevel = StringUtils.getTransformTep(sendLevelStr);
+        currentTransceiver.receiveLevel = StringUtils.getTransformTep(receiveLevelStr);
         currentTransceiver.channelStatus = binding.radioChannel.getCheckedRadioButtonId() == R.id.radio_normal ? 0 : 1;
         currentTransceiver.remark = binding.editRemark.getText().toString();
         try {
@@ -346,7 +346,7 @@ public class GetSendLetterActivity extends BaseActivity {
      */
     private void showThumbPic() {
         if (null != currentTransceiver && !TextUtils.isEmpty(currentTransceiver.images)) {
-            List<String> images = StringUtils.string2List(currentTransceiver.images, false);
+            List<String> images = com.cnksi.core.utils.StringUtils.string2List(currentTransceiver.images, false);
             if (!images.isEmpty()) {
                 binding.showPic.setVisibility(View.VISIBLE);
                 if (images.size() > 1) {
@@ -373,7 +373,7 @@ public class GetSendLetterActivity extends BaseActivity {
         Intent intent = new Intent(this, ImageDetailsActivity.class);
         intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
         intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
-        ArrayList<String> images = StringUtils.string2List(currentTransceiver.images, false);
+        ArrayList<String> images =  com.cnksi.core.utils.StringUtils.string2List(currentTransceiver.images, false);
         ArrayList<String> viewImages = new ArrayList<String>();
         for (String image : images) {
             viewImages.add(Config.RESULT_PICTURES_FOLDER + image);

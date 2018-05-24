@@ -12,9 +12,11 @@ import android.widget.RadioGroup;
 
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.databinding.DialogTipsBinding;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.DateUtils;
@@ -24,10 +26,8 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.databinding.ActivityPreventSecondAnimalBinding;
-import com.cnksi.sjjc.databinding.DialogTipsBinding;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;
-import com.cnksi.sjjc.util.DialogUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;

@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.adapter;
+package com.cnksi.common.utils;
 
 import android.content.Context;
 import android.databinding.ViewDataBinding;
@@ -9,10 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.cnksi.core.utils.BitmapUtils;
-
-import org.xutils.x;
 
 /**
  * Created by lyndon on 2016/9/1.

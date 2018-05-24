@@ -18,29 +18,29 @@ import com.cnksi.bdloc.DistanceUtil;
 import com.cnksi.bdloc.LatLng;
 import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.SpacingService;
+import com.cnksi.common.listener.OnViewClickListener;
+import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Department;
+import com.cnksi.common.model.Spacing;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
-import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.common.model.Bdz;
-import com.cnksi.common.model.Department;
-import com.cnksi.common.model.Spacing;;
 import com.cnksi.sjjc.databinding.ActivityLauncherNewBinding;
 import com.cnksi.sjjc.fragment.launcher.MaintenanceFragment;
 import com.cnksi.sjjc.fragment.launcher.TourFragment;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.common.daoservice.BdzService;
-import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.sjjc.util.ActivityUtil;
-import com.cnksi.sjjc.util.DialogUtils;
-import com.cnksi.sjjc.util.OnViewClickListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
@@ -48,6 +48,8 @@ import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+;
 
 public class NewLauncherActivity extends BaseActivity {
     private ActivityLauncherNewBinding launcherBinding;

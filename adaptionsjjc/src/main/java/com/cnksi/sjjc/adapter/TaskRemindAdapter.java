@@ -6,10 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.common.model.Task;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.util.CoreConfig;
 

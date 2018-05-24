@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 
 import java.util.Collection;

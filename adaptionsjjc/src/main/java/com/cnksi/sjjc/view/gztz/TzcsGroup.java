@@ -11,10 +11,10 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.utils.CalcUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.DialogModifyLjtzcsBinding;
-import com.cnksi.sjjc.util.DialogUtils;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 
 import java.util.HashMap;

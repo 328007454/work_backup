@@ -14,6 +14,7 @@ import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.CalcUtils;
+import com.cnksi.common.utils.StringUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -25,7 +26,6 @@ import com.cnksi.sjjc.databinding.ActivityGztzBhdzqkBinding;
 import com.cnksi.sjjc.inter.SimpleTextWatcher;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.util.FunctionUtil;
-import com.cnksi.sjjc.util.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;

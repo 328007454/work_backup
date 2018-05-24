@@ -13,11 +13,13 @@ import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.databinding.ContentListDialogBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.FileUtils;
@@ -47,12 +49,10 @@ import com.cnksi.sjjc.activity.indoortempretureactivity.IndoorHumitureReportActi
 import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordActivity;
 import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
 import com.cnksi.sjjc.adapter.TaskRemindAdapter;
-import com.cnksi.sjjc.databinding.ContentListDialogBinding;
 import com.cnksi.sjjc.databinding.FragmentListBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.inter.OnFragmentEventListener;
 import com.cnksi.sjjc.util.CoreConfig;
-import com.cnksi.sjjc.util.DialogUtils;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;

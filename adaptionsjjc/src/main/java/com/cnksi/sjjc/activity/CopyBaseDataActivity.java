@@ -8,11 +8,11 @@ import android.util.Log;
 
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
+import com.cnksi.common.utils.StringUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.databinding.ActivityCopybasedataBinding;
-import com.cnksi.sjjc.util.StringUtils;
 
 import org.xutils.ex.DbException;
 
@@ -103,8 +103,8 @@ public class CopyBaseDataActivity extends BaseActivity {
             }
 
             mReport.tq = weather;
-            mReport.temperature = com.cnksi.sjjc.util.StringUtils.getTransformTep(tempreture);
-            mReport.humidity = com.cnksi.sjjc.util.StringUtils.getTransformTep(sd);
+            mReport.temperature = StringUtils.getTransformTep(tempreture);
+            mReport.humidity =StringUtils.getTransformTep(sd);
             mReport.endtime = DateUtils.getCurrentLongTime();
             try {
                 ReportService.getInstance().saveOrUpdate(mReport);

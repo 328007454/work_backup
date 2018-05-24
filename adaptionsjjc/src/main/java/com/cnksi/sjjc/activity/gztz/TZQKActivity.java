@@ -5,16 +5,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.cnksi.sjjc.util.StringUtils;
-import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.enmu.PMSDeviceType;
+import com.cnksi.common.model.Device;
+import com.cnksi.common.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseActivity;
-import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
-import com.cnksi.common.enmu.PMSDeviceType;
-import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.service.gztz.PmsXianluService;
 

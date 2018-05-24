@@ -15,14 +15,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.model.Battery;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.DrawCircleImageActivity;
 import com.cnksi.sjjc.activity.ImageDetailsActivity;
-import com.cnksi.common.model.Battery;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.ActivityBatteryItemDialogBinding;
 import com.cnksi.sjjc.service.BatteryRecordService;
@@ -353,6 +353,8 @@ public class BatteryDialogActivity extends AppCompatActivity {
                     showImageThumb();
                     saveData();
                     break;
+                default:
+                    break;
             }
         }
     }
@@ -396,10 +398,10 @@ public class BatteryDialogActivity extends AppCompatActivity {
                 if (null != batteryRecord) {
                     String imageStr = StringUtils.arrayListToString(exitImageList);
                     if (batteryCheckType == 0) {
-                        batteryRecord.voltage = com.cnksi.sjjc.util.StringUtils.getTransformTep(value, 3);
+                        batteryRecord.voltage = com.cnksi.common.utils.StringUtils.getTransformTep(value, 3);
                         batteryRecord.voltageImages = imageStr;
                     } else {
-                        batteryRecord.resistance = com.cnksi.sjjc.util.StringUtils.getTransformTep(value, 3);
+                        batteryRecord.resistance =  com.cnksi.common.utils.StringUtils.getTransformTep(value, 3);
                         batteryRecord.resistanceImages = imageStr;
                     }
                     batteryRecord.last_modify_time = DateUtils.getCurrentLongTime();
