@@ -67,12 +67,7 @@ public class SelectPersonUtil implements ItemClickListener {
 
     public void disPlayAllPerson(final List<DbModel> datas, View showAddPersonWidget) {
         this.allUsers = datas;
-        showAddPersonWidget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddPersonDialog();
-            }
-        });
+        showAddPersonWidget.setOnClickListener(view -> showAddPersonDialog());
     }
 
 
@@ -91,24 +86,21 @@ public class SelectPersonUtil implements ItemClickListener {
         mAddPersonDialog.show();
 
 
-        addPersonBinding.btnAddPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TextUtils.isEmpty(addPersonBinding.etName.getText().toString())) {
-                    ToastUtils.showMessage("请输入增加人员姓名");
-                } else {
-                    DbModel dbModel = new DbModel();
-                    dbModel.add("account", "-1");
-                    dbModel.add("username", addPersonBinding.etName.getText().toString());
-                    dbModel.add("name", "");
-                    dbModel.add("dept_id", "-1");
-                    dbModel.add("delete", "true");
-                    allUsers.add(dbModel);
-                    addPersonBinding.etName.setText("");
-                    addPersonBinding.lvContainer.smoothScrollToPosition(allUsers.size() - 1);
-                    dialogAdpeter.notifyDataSetChanged();
+        addPersonBinding.btnAddPerson.setOnClickListener(view -> {
+            if (TextUtils.isEmpty(addPersonBinding.etName.getText().toString())) {
+                ToastUtils.showMessage("请输入增加人员姓名");
+            } else {
+                DbModel dbModel = new DbModel();
+                dbModel.add("account", "-1");
+                dbModel.add("username", addPersonBinding.etName.getText().toString());
+                dbModel.add("name", "");
+                dbModel.add("dept_id", "-1");
+                dbModel.add("delete", "true");
+                allUsers.add(dbModel);
+                addPersonBinding.etName.setText("");
+                addPersonBinding.lvContainer.smoothScrollToPosition(allUsers.size() - 1);
+                dialogAdpeter.notifyDataSetChanged();
 
-                }
             }
         });
     }

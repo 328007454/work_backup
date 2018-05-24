@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomRadioButton">
 
-        <attr name="drawableSize" format="dimension" />
-        <attr name="drawableTop" format="reference" />
-        <attr name="drawableLeft" format="reference" />
-        <attr name="drawableRight" format="reference" />
-        <attr name="drawableBottom" format="reference" />
-
-    </declare-styleable>
     <declare-styleable name="RoundedRectProgressBar">
         <attr name="backColor" format="color" />
         <attr name="barColor" format="color" />
@@ -27,7 +19,15 @@
         <!--<attr name="indicator_animator_reverse" format="reference" />-->
     </declare-styleable>
 
+    <declare-styleable name="CustomRadioButton">
 
+        <attr name="drawableSize" format="dimension" />
+        <attr name="drawableTop" format="reference" />
+        <attr name="drawableLeft" format="reference" />
+        <attr name="drawableRight" format="reference" />
+        <attr name="drawableBottom" format="reference" />
+
+    </declare-styleable>
     <attr name="lineColor" format="color" />
     <attr name="sjjclineHeight" format="dimension" />
     <declare-styleable name="UnderLineTextView">

@@ -68,7 +68,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/switch_yes"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -85,7 +85,7 @@
                             app:drawableLeft="@drawable/radio_button_selector"
                             app:drawableSize="48px"/>
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/switch_no"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -134,7 +134,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/indoor_yes"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -151,7 +151,7 @@
                             app:drawableLeft="@drawable/radio_button_selector"
                             app:drawableSize="48px"/>
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/indoor_no"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -201,7 +201,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/outdoor_yes"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -218,7 +218,7 @@
                             app:drawableLeft="@drawable/radio_button_selector"
                             app:drawableSize="48px"/>
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/outdoor_no"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -268,7 +268,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/window_yes"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -285,7 +285,7 @@
                             app:drawableLeft="@drawable/radio_button_selector"
                             app:drawableSize="48px"/>
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/window_no"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -337,7 +337,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/ratsbane_yes"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -354,7 +354,7 @@
                             app:drawableLeft="@drawable/radio_button_selector"
                             app:drawableSize="48px"/>
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/ratsbane_no"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -406,7 +406,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/mousetrap_yes"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"
@@ -423,7 +423,7 @@
                             app:drawableLeft="@drawable/radio_button_selector"
                             app:drawableSize="48px"/>
 
-                        <com.cnksi.sjjc.view.CustomRadioButton
+                        <com.cnksi.common.view.CustomRadioButton
                             android:id="@+id/mousetrap_no"
                             style="@style/RadioButtonBaseStyle"
                             android:layout_width="0dp"

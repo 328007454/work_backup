@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.view;
+package com.cnksi.common.view;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;

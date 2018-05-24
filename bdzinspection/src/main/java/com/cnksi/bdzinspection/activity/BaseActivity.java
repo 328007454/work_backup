@@ -46,6 +46,7 @@ import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -206,10 +207,15 @@ public class BaseActivity extends BaseCoreActivity {
             String userName = intent.getStringExtra(Config.CURRENT_LOGIN_USER);
             String userAccount = intent.getStringExtra(Config.CURRENT_LOGIN_ACCOUNT);
             String bdzId = intent.getStringExtra(Config.LASTTIEM_CHOOSE_BDZNAME);
-            PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, bdzId);
-            PreferencesUtils.put( Config.CURRENT_LOGIN_USER, userName);
-            PreferencesUtils.put( Config.CURRENT_LOGIN_ACCOUNT,
-                    userAccount);
+            if (!TextUtils.isEmpty(bdzId)) {
+                PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdzId);
+            }
+            if (!StringUtilsExt.isHasOneEmpty(userName, userAccount)) {
+                PreferencesUtils.put(Config.CURRENT_LOGIN_USER, userName);
+                PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
+            }
+
+
         }
     }
 
@@ -278,14 +284,14 @@ public class BaseActivity extends BaseCoreActivity {
         // 是否是从巡检任务提醒界面跳转过去的
         isFromTaskRemind = getIntent().getBooleanExtra(Config.IS_FROM_TASK_REMIND, false);
 
-        currentBdzId = PreferencesUtils.get( Config.CURRENT_BDZ_ID, "");
-        currentBdzName = PreferencesUtils.get( Config.CURRENT_BDZ_NAME, "");
-        currentInspectionType = PreferencesUtils.get( Config.CURRENT_INSPECTION_TYPE, "");
-        currentInspectionTypeName = PreferencesUtils.get( Config.CURRENT_INSPECTION_TYPE_NAME,
+        currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
+        currentBdzName = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");
+        currentInspectionType = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE, "");
+        currentInspectionTypeName = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE_NAME,
                 "");
-        currentTaskId = PreferencesUtils.get( Config.CURRENT_TASK_ID, "");
-        currentReportId = PreferencesUtils.get( Config.CURRENT_REPORT_ID, "");
-        currentAcounts = PreferencesUtils.get( Config.CURRENT_LOGIN_ACCOUNT, "");
+        currentTaskId = PreferencesUtils.get(Config.CURRENT_TASK_ID, "");
+        currentReportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
+        currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
     }
 
     /**
@@ -619,7 +625,7 @@ public class BaseActivity extends BaseCoreActivity {
     public void setWindowOverLayPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (!Settings.canDrawOverlays(getApplicationContext())) {
-                ToastUtils.showMessage( "没有悬浮窗权限");
+                ToastUtils.showMessage("没有悬浮窗权限");
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                 intent.setData(uri);

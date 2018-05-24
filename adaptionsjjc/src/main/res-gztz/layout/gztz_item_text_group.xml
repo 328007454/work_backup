@@ -11,7 +11,7 @@
             android:textColor="@color/global_text_color"
             android:textSize="@dimen/tv_text_size"/>
 
-        <com.cnksi.sjjc.view.ContainsEmojiEditText
+        <com.cnksi.common.view.ContainsEmojiEditText
             android:id="@+id/et_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

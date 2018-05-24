@@ -54,7 +54,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.view.AutoFitTextureView;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.BaseModel;
@@ -251,7 +250,7 @@ public class Camera2VideoFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+        mTextureView = view.findViewById(R.id.texture);
     }
 
     @Override

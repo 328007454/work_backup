@@ -225,7 +225,7 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <com.cnksi.bdzinspection.view.CustomRadioButton
+                            <com.cnksi.common.view.CustomRadioButton
                                 android:id="@+id/rb_jh"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -240,7 +240,7 @@
                                 app:drawableLeft="@drawable/xs_radio_button_selector"
                                 app:drawableSize="48px" />
 
-                            <com.cnksi.bdzinspection.view.CustomRadioButton
+                            <com.cnksi.common.view.CustomRadioButton
                                 android:id="@+id/rb_dr"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -254,7 +254,7 @@
                                 app:drawableLeft="@drawable/xs_radio_button_selector"
                                 app:drawableSize="48px" />
 
-                            <com.cnksi.bdzinspection.view.CustomRadioButton
+                            <com.cnksi.common.view.CustomRadioButton
                                 android:id="@+id/rb_jxr"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"

@@ -30,7 +30,7 @@ import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
-import com.cnksi.bdzinspection.view.CustomRadioButton;
+import com.cnksi.common.view.CustomRadioButton;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.DefectRecord;

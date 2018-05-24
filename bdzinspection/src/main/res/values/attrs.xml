@@ -106,15 +106,7 @@
         <attr name="velocityFilterWeight" format="float" />
         <attr name="clearOnDoubleClick" format="boolean" />
     </declare-styleable>
-    <declare-styleable name="XS_CustomRadioButton">
 
-        <attr name="drawableSize" format="dimension" />
-        <attr name="drawableTop" format="reference" />
-        <attr name="drawableLeft" format="reference" />
-        <attr name="drawableRight" format="reference" />
-        <attr name="drawableBottom" format="reference" />
-
-    </declare-styleable>
 
     <declare-styleable name="XS_UnderLineLinearLayout">
         <attr name="drawUnderLine" format="boolean" />

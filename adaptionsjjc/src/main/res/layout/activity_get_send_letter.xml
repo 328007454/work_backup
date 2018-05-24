@@ -200,7 +200,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <com.cnksi.sjjc.view.CustomRadioButton
+                    <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/radio_normal"
                         style="@style/RadioButtonBaseStyle"
                         android:layout_width="wrap_content"
@@ -215,7 +215,7 @@
                         app:drawableLeft="@drawable/radio_button_selector"
                         app:drawableSize="48px" />
 
-                    <com.cnksi.sjjc.view.CustomRadioButton
+                    <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/radio_unNormal"
                         style="@style/RadioButtonBaseStyle"
                         android:layout_width="wrap_content"
