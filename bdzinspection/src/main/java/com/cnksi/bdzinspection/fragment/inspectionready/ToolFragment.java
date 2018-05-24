@@ -16,16 +16,15 @@ import android.widget.ScrollView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.inspectionready.ToolsAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.BaseService;
+import com.cnksi.bdzinspection.daoservice.ReportToolService;
+import com.cnksi.bdzinspection.daoservice.ToolService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
 import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
-
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.Selector;
@@ -78,21 +77,20 @@ public class ToolFragment extends BaseFragment {
     @Override
     protected void lazyLoad() {
         if (!isPrepared) {
-            mFixedThreadPoolExecutor.execute(() -> {
+            ExecutorManager.executeTask(() -> {
                 Selector selector;
                 try {
-                    selector = XunshiApplication.getDbUtils().selector(Tool.class).where(Tool.DLT, "=", 0).and(Tool.INSPECTION, "=", currentInspectionType);
-                    mToolsList = selector.findAll();
+
+                    mToolsList = ToolService.getInstance().findByInspectionType(currentInspectionType);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
                 if (!TextUtils.isEmpty(currentReportId)) {
 
                     try {
-                        selector = XunshiApplication.getDbUtils().selector(ReportTool.class).and(ReportTool.REPORTID, "=", currentReportId);
-                        List<ReportTool> reportTools = selector.findAll();
+                        List<ReportTool> reportTools = ReportToolService.getInstance().findByReportId(currentReportId);
                         if (null == reportTools) {
-                            reportTools = new ArrayList<ReportTool>();
+                            reportTools = new ArrayList<>();
                         }
                         if (reportTools.size() > 0) {
                             for (ReportTool tool : reportTools) {
@@ -142,9 +140,9 @@ public class ToolFragment extends BaseFragment {
             }
             saveList.add(reportTool);
         }
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
-                XunshiApplication.getDbUtils().saveOrUpdate(saveList);
+                ReportToolService.getInstance().saveOrUpdate(saveList);
             } catch (DbException e) {
                 e.printStackTrace();
             }

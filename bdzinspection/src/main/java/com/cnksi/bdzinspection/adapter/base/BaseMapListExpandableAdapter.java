@@ -1,20 +1,18 @@
 package com.cnksi.bdzinspection.adapter.base;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Set;
-
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
-import com.cnksi.bdzinspection.R;
 import com.cnksi.core.utils.BitmapUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Set;
 
 @SuppressWarnings("deprecation")
 public abstract class BaseMapListExpandableAdapter<E, T> extends BaseExpandableListAdapter {

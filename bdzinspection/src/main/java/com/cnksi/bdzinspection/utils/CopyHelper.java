@@ -16,20 +16,23 @@ import com.cnksi.bdloc.DistanceUtil;
 import com.cnksi.bdloc.LatLng;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.daoservice.CopyTypeService;
+import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.CopyTypeService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
+import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.core.utils.GPSUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -74,7 +77,7 @@ public class CopyHelper {
         this.currentBdzId = currentBdzId;
         this.currentInspectionType = inspectionType;
         copyType = CopyTypeService.getInstance().getAllCopyType();
-        copyDeviceIdList = CopyResultService.getInstance().getCopyDeviceIdList(reportId, currentInspectionType);
+        copyDeviceIdList = CopyResultService.getInstance().getCopyDeviceIdListIds(reportId, currentInspectionType);
     }
 
     public Map<String, CopyResult> getCopyResultMap() {
@@ -94,7 +97,7 @@ public class CopyHelper {
         this.device = device;
         saveCurrentData = true;
         if (SystemConfig.isDevicePlaced()) {
-            placedDevice = PlacedService.getInstance().findDevicePlaced(currentReportId, device.getString("deviceid"));
+            placedDevice = PlacedDeviceService.getInstance().findDevicePlaced(currentReportId, device.getString("deviceid"));
         } else {
             placed = PlacedService.getInstance().findPlaced(currentReportId, device.getString("spid"));
         }
@@ -254,7 +257,7 @@ public class CopyHelper {
             if (TextUtils.isEmpty(result.valSpecial)) {
                 result.valSpecial = null;
             }
-            if (result.type_key.equalsIgnoreCase("youwei") && !TextUtils.isEmpty(result.valSpecial)) {
+            if ("youwei".equalsIgnoreCase(result.type_key) && !TextUtils.isEmpty(result.valSpecial)) {
                 result.val = null;
             }
             if (tips) {
@@ -297,7 +300,7 @@ public class CopyHelper {
                         placedDevice = PlacedDevice.create(device, currentReportId);
                     }
                     placedDevice.setPlacedWayHighest("copy");
-                    PlacedService.getInstance().saveOrUpdate(placedDevice);
+                    PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
                 }
             } else {
                 if (Device.isOnceDevice(device)) {
@@ -387,7 +390,7 @@ public class CopyHelper {
                     ViewHolder childHolder = new ViewHolder(context, null, R.layout.xs_copy_value_child_item2, false);
                     AutoUtils.autoSize(childHolder.getRootView());
                     RelativeLayout layoutRoot = (RelativeLayout) childHolder.getRootView();
-                    if (childItem.type_key.equalsIgnoreCase("youwei")) {
+                    if ("youwei".equalsIgnoreCase(childItem.type_key)) {
                         childHolder.getView(R.id.ibtn_history_data).setVisibility(View.INVISIBLE);
                     }
                     // 构造抄录描述
@@ -417,12 +420,9 @@ public class CopyHelper {
                         keyBordListener.onViewFocus((EditText) v, childItem, copyResult, requestEdtits, copyItems);
                         return false;
                     });
-                    copyValue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                        @Override
-                        public void onFocusChange(View v, boolean hasFocus) {
-                            CopyResult copyResult = copyResultMap.get(childItem.id);
-                            keyBordListener.onViewFocusChange((EditText) v, childItem, copyResult, hasFocus, txtDescript.getText().toString(), requestEdtits);
-                        }
+                    copyValue.setOnFocusChangeListener((v, hasFocus) -> {
+                        CopyResult copyResult = copyResultMap.get(childItem.id);
+                        keyBordListener.onViewFocusChange((EditText) v, childItem, copyResult, hasFocus, txtDescript.getText().toString(), requestEdtits);
                     });
                     // 显示历史抄录
                     if (copyResultMap.keySet().contains(childItem.id)) {
@@ -520,7 +520,7 @@ public class CopyHelper {
         public void afterTextChanged(Editable s) {
             CopyResult copyResult = copyResultMap.get(copyItem.id);
             if (null != copyResult) {
-                if (copyResult.type_key.equalsIgnoreCase("youwei")) {
+                if ("youwei".equalsIgnoreCase(copyResult.type_key)) {
                     copyResult.valSpecial = s.toString();
                 } else {
                     String value = CommonUtils.getTransformTep(s.toString());

@@ -19,9 +19,10 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
+import com.cnksi.common.utils.CommonUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class CopyViewUtil {
                     ViewHolder childHolder = new ViewHolder(context, null, R.layout.xs_copy_value_child_item2, false);
                     AutoUtils.autoSize(childHolder.getRootView());
                     RelativeLayout layoutRoot = (RelativeLayout) childHolder.getRootView();
-                    if (childItem.type_key.equalsIgnoreCase("youwei")) {
+                    if ("youwei".equalsIgnoreCase(childItem.type_key)) {
                         childHolder.getView(R.id.ibtn_history_data).setVisibility(View.INVISIBLE);
                     }
                     // 构造抄录描述
@@ -212,7 +213,7 @@ public class CopyViewUtil {
         public void afterTextChanged(Editable s) {
             CopyResult copyResult = copyResultMap.get(copyItem.id);
             if (null != copyResult) {
-                if (copyResult.type_key.equalsIgnoreCase("youwei")) {
+                if ("youwei".equalsIgnoreCase(copyResult.type_key)) {
                     copyResult.valSpecial = s.toString();
                 } else {
                     String value = CommonUtils.getTransformTep(s.toString());

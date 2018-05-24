@@ -104,12 +104,12 @@ public class PlacedDevice {
         }
         switch (placed_way) {
             case "gps":
-                if (placedWay.equals("photo") || placedWay.equals("copy")) {
+                if ("photo".equals(placedWay) || "copy".equals(placedWay)) {
                     placed_way = placedWay;
                 }
                 break;
             case "copy":
-                if (placedWay.equals("photo")) {
+                if ("photo".equals(placedWay)) {
                     placed_way = placedWay;
                 }
                 break;

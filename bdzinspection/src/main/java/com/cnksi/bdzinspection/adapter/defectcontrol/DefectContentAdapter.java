@@ -10,9 +10,8 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogContentChildItemBinding;
 import com.cnksi.bdzinspection.databinding.XsGroupItemBinding;
-import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.common.Config;
-
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**
@@ -20,7 +19,7 @@ import com.zhy.autolayout.utils.AutoUtils;
  *
  * @author Joe
  */
-public class DefectContentAdapter extends BaseMapListExpandableAdapter<String, DefectDefine> {
+public class DefectContentAdapter extends BaseMapListExpandableAdapter<String, Defect> {
 
     public DefectContentAdapter(Context context) {
         super(context);
@@ -29,7 +28,7 @@ public class DefectContentAdapter extends BaseMapListExpandableAdapter<String, D
     private OnAdapterViewClickListener mOnAdapterViewClickListener;
 
     public interface OnAdapterViewClickListener {
-        void OnAdapterViewClick(View view, DefectDefine define);
+        void OnAdapterViewClick(View view, Defect define);
     }
 
     public void setOnAdapterViewClickListener(OnAdapterViewClickListener mOnAdapterViewClickListener) {
@@ -39,7 +38,7 @@ public class DefectContentAdapter extends BaseMapListExpandableAdapter<String, D
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        DefectDefine child = getChild(groupPosition, childPosition);
+        Defect child = getChild(groupPosition, childPosition);
         XsDialogContentChildItemBinding itemBinding = null;
         if (convertView == null) {
             itemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.xs_dialog_content_child_item, parent, false);

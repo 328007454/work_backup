@@ -2,14 +2,13 @@ package com.cnksi.bdzinspection.activity;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DeviceSortAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.PreferencesUtils;
 
-import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -58,8 +57,7 @@ public class DeviceSortActivity extends TitleActivity {
         currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         // TODO: 2017/3/22
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Device.class).where(Device.DLT, "=", "0").and(Device.SPID, "=", spacing.spid).and(Device.DEVICE_TYPE, "=", functionMode).orderBy(Device.SORT);
-            mData = selector.findAll();
+                  mData = DeviceService.getInstance().findDeviceBySpidAndType(spacing.spid,functionMode);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -82,7 +80,7 @@ public class DeviceSortActivity extends TitleActivity {
             mData.get(i).sort = i + 1;
         }
         try {
-            XunshiApplication.getDbUtils().update(mData, "sort");
+            DeviceService.getInstance().update(mData, "sort");
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -2,12 +2,10 @@ package com.cnksi.bdzinspection.daoservice;
 
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Defect;
-import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.common.daoservice.BaseService;
 
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -22,11 +20,12 @@ import java.util.List;
  *
  * @author terry
  */
-public class DefectDefineService{
+public class DefectDefineService extends BaseService<Defect> {
 
     public static DefectDefineService mInstance;
 
     private DefectDefineService() {
+        super(Defect.class);
     }
 
     public static DefectDefineService getInstance() {
@@ -42,45 +41,48 @@ public class DefectDefineService{
      * @param staid 巡视标准ID
      * @return
      */
-    public HashMap<String, ArrayList<DefectDefine>> findDefectDefineByStandardId(String staid) {
+    public HashMap<String, ArrayList<Defect>> findDefectDefineByStandardId(String staid) {
 
-        LinkedHashMap<String, ArrayList<DefectDefine>> groupHashMap = new LinkedHashMap<String, ArrayList<DefectDefine>>();
+        LinkedHashMap<String, ArrayList<Defect>> groupHashMap = new LinkedHashMap<String, ArrayList<Defect>>();
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Defect.class);
-            List<Defect> defects = selector.where(Defect.STAID, "=", staid).expr("and dlt <> '1'").findAll();
-            List<DefectDefine> ddlist = new ArrayList<DefectDefine>();
-            if (null != defects && !defects.isEmpty()) {
-                for (Defect df : defects) {
-                    ddlist.add(new DefectDefine(df));
+            List<Defect> ddlist = new ArrayList<Defect>();
+            SqlInfo sqlInfo = new SqlInfo("select * from defect_define where staid=? and dlt=0 ");
+            sqlInfo.addBindArg(new KeyValue("staid", staid));
+            try {
+                List<DbModel> localDefectDefine = findDbModelAll(sqlInfo);
+                if (localDefectDefine != null && localDefectDefine.size() > 0) {
+                    for (DbModel model : localDefectDefine) {
+                        ddlist.add(new Defect(model));
+                    }
                 }
+            }catch (Exception e){
+
             }
 
-            selector = XunshiApplication.getDbUtils().selector(DefectDefine.class);
-            List<DefectDefine> defectList = selector.where(DefectDefine.STAID, "=", staid)
-                    .expr("and (" + DefectDefine.DLT + " is null or " + DefectDefine.DLT + "<>'1')")
-                    .orderBy(DefectDefine.LEVEL).findAll();
+            List<Defect> defectList = selector().and(Defect.STAID, "=", staid)
+                    .expr("and (" + Defect.DLT + " is null or " + Defect.DLT + "<>'1')")
+                    .orderBy(Defect.LEVEL).findAll();
             if (null != defectList) {
                 ddlist.addAll(defectList);
             }
             String _tmpLevel = "";
-            ArrayList<DefectDefine> descriptionList = null;
+            ArrayList<Defect> descriptionList = null;
             if (ddlist != null && ddlist.size() > 0) {
-                for (DefectDefine dd : ddlist) {
+                for (Defect dd : ddlist) {
                     if (TextUtils.isEmpty(_tmpLevel)) {
                         _tmpLevel = dd.level;
-                        descriptionList = new ArrayList<DefectDefine>();
+                        descriptionList = new ArrayList<Defect>();
                     }
                     if (!_tmpLevel.equals(dd.level)) {
                         groupHashMap.put(_tmpLevel, descriptionList);
                         _tmpLevel = dd.level;
-                        descriptionList = new ArrayList<DefectDefine>();
+                        descriptionList = new ArrayList<Defect>();
                     }
                     descriptionList.add(dd);
                 }
                 if (!TextUtils.isEmpty(_tmpLevel)) {
                     groupHashMap.put(_tmpLevel, descriptionList);
                 }
-                _tmpLevel = "";
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -104,7 +106,7 @@ public class DefectDefineService{
                 + content + "%'";
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", deviceId));
-        List<DbModel> defectModel = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
+        List<DbModel> defectModel = findDbModelAll(sqlInfo);
         if (defectList == null) {
             defectList = new ArrayList<>();
         }
@@ -122,7 +124,7 @@ public class DefectDefineService{
         sqlInfo.addBindArg(new KeyValue("", deviceId));
         sqlInfo.addBindArg(new KeyValue("", "%" + content + "%"));
 
-        return XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
+        return findDbModelAll(sqlInfo);
     }
 
     /**
@@ -159,9 +161,9 @@ public class DefectDefineService{
      * @param mDefectDefine
      * @return
      */
-    public boolean saveOrUpdateDefectDefine(DefectDefine mDefectDefine, boolean isAdd) {
+    public boolean saveOrUpdateDefectDefine(Defect mDefectDefine, boolean isAdd) {
         try {
-            XunshiApplication.getDbUtils().saveOrUpdate(mDefectDefine);
+            saveOrUpdate(mDefectDefine);
             return true;
         } catch (DbException e) {
             e.printStackTrace();
@@ -175,10 +177,10 @@ public class DefectDefineService{
      * @param mDefectDefine
      * @return
      */
-    public boolean deleteDefectDefine(DefectDefine mDefectDefine) {
+    public boolean deleteDefectDefine(Defect mDefectDefine) {
         try {
-            mDefectDefine.dlt ="1";
-            XunshiApplication.getDbUtils().saveOrUpdate(mDefectDefine);
+            mDefectDefine.dlt = "1";
+            saveOrUpdate(mDefectDefine);
             return true;
         } catch (DbException e) {
             e.printStackTrace();

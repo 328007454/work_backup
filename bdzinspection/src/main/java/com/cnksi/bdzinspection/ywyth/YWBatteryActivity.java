@@ -20,27 +20,29 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.DefectControlActivity;
 import com.cnksi.bdzinspection.adapter.BatteryDetailsAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
-import com.cnksi.bdzinspection.daoservice.TaskService;
+import com.cnksi.bdzinspection.daoservice.BatteryDetailsService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwBatteryBinding;
 import com.cnksi.bdzinspection.databinding.XsBatteryInputValueDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.bdzinspection.model.BatteryReport;
-import com.cnksi.common.model.DefectRecord;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DefectLevelUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
-import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BaseService;
+import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -121,14 +123,14 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     }
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 // 查询已选择的电池组
-                mCurrentBatteryReport = XunshiApplication.getDbUtils().selector(BatteryReport.class).where(BatteryReport.REPORTID, "=", currentReportId).findFirst();
+                mCurrentBatteryReport = BaseService.getInstance(BatteryReport.class).selector().and(BatteryReport.REPORTID, "=", currentReportId).findFirst();
                 if (mCurrentBatteryReport == null) {
                     mCurrentBatteryReport = new BatteryReport(currentReportId);
                 }
-                XunshiApplication.getDbUtils().saveOrUpdate(mCurrentBatteryReport);
+                BaseService.getInstance(BatteryReport.class).saveOrUpdate(mCurrentBatteryReport);
                 initBatteryDetails();
                 mHandler.sendEmptyMessage(LOAD_DATA);
             } catch (Exception e) {
@@ -141,7 +143,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
      * 初始化电池列表信息 1.初始化电池信息时 查询相应电池记录的最高缺陷信息
      */
     private void initBatteryDetails() {
-        List<BatteryDetails> _temp = DefectRecordService.getInstance().queryAllRecordBattery(currentReportId);
+        List<BatteryDetails> _temp = BatteryDetailsService.getInstance().queryAllRecordBattery(currentReportId);
         for (int i = 1; i < batteryCount; i++) {
             BatteryDetails mBatteryDetails = null;
             if (i < 10) {
@@ -340,7 +342,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                 mBatteryDetails.id = FunctionUtil.getPrimarykey();
             }
             mBatteryDetails.reportid = currentReportId;
-            XunshiApplication.getDbUtils().saveOrUpdate(mBatteryDetails);
+            BatteryDetailsService.getInstance().saveOrUpdate(mBatteryDetails);
             PreferencesUtils.put( Config.CURRENT_REPORT_ID + currentReportId, true);
         } catch (DbException e1) {
             e1.printStackTrace();
@@ -459,7 +461,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                 ""// pics图片
         );
         try {
-            XunshiApplication.getDbUtils().save(record);
+            DefectRecordService.getInstance().saveOrUpdate(record);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -469,7 +471,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
      * 查询电池记录缺陷的状态 根据当前选择的电池组 和电池编号查询 电池的缺陷状态
      */
     private void queryBatteryStatus() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 DbModel mBatteryDbModel = DefectRecordService.getInstance().queryMaxDefectLevelByBatteryId(mCurrentBatteryDetails.battery_number, currentBdzId, currentReportId);

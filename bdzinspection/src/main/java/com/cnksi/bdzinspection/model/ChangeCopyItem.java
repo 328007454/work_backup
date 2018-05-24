@@ -1,5 +1,9 @@
 package com.cnksi.bdzinspection.model;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
+
 /**
  * Created by han on 2017/5/14.
  */
@@ -87,7 +91,7 @@ public class ChangeCopyItem {
         }
         if ("N".equalsIgnoreCase(copyItem.val) && "N".equalsIgnoreCase(copyItem.val_a) && "N".equalsIgnoreCase(copyItem.val_b) &&
                 "N".equalsIgnoreCase(copyItem.val_c) && "N".equalsIgnoreCase(copyItem.val_o)) {
-            copyItem.dlt = 1;
+            copyItem.dlt = Config.DELETED;
             if (copyItem.version == -1&&"new".equalsIgnoreCase(copyItem.remark)) {//如果该项是新增的抄录项返回false,代表不需要将该项添加到需要保存的数据中去
                 return false;
             } else {

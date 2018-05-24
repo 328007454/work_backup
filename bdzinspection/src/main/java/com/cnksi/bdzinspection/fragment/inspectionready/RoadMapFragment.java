@@ -9,16 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.RoadMapAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentRoadmapBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.common.model.Spacing;
-import com.zhy.autolayout.utils.AutoUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
-
-import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -105,11 +103,8 @@ public class RoadMapFragment extends BaseFragment {
                 : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
         currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.DLT, "=", "0").and(Spacing.BDZID, "=", currentBdzId)
-                    .expr("and spid in (select distinct(spid) spid from device where device_type = '" + fucntionModel
-                            + "' and bdzid = '" + currentBdzId + "' and dlt<>1)")
-                    .orderBy(sort, false);
-            spaceList = selector.findAll();
+
+            spaceList = SpacingService.getInstance().findByFunctionModel(currentBdzId,fucntionModel,sort);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

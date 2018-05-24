@@ -19,19 +19,16 @@ import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyRcvDeviceAdapter;
 import com.cnksi.bdzinspection.adapter.base.GridSpacingItemDecoration;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsActivitySingleSpaceCopyBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
-import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.bdzinspection.model.TreeNode;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.DefectUtils;
@@ -39,11 +36,13 @@ import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
-
-import com.zhy.autolayout.utils.AutoUtils;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
-
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ToastUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
 
@@ -296,13 +295,13 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
     }
 
     private void loadCopyItem() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 searchDefect();
                 final List<TreeNode> newData = copyHelper.loadItem();
                 // 设置当前抄录设备集合,判断当前设备是否抄录
-                HashSet<String> copyDeviceList = CopyResultService.getInstance().getCopyDeviceIdList(currentReportId, currentInspectionType);
+                HashSet<String> copyDeviceList = CopyResultService.getInstance().getCopyDeviceIdListIds(currentReportId, currentInspectionType);
                 adapter.setCopyDeviceModel(copyDeviceList);
                 mHandler.post(new Runnable() {
                     @Override

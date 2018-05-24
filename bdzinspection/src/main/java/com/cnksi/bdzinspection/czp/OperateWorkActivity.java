@@ -21,22 +21,22 @@ import com.cnksi.bdzinspection.daoservice.OperateItemService;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateWorkBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogOperateTipsBinding;
+import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
 import com.cnksi.bdzinspection.fragment.Camera2VideoFragment;
 import com.cnksi.bdzinspection.fragment.CameraVideoFragment;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.model.OperateTick;
-import com.cnksi.bdzinspection.utils.CommonUtils;
-import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.core.common.ScreenManager;
-
 
 import org.xutils.ex.DbException;
 
@@ -44,6 +44,9 @@ import java.util.List;
 
 import static com.cnksi.common.Config.LOAD_DATA;
 
+/**
+ * @author Wastrel
+ */
 @SuppressLint("ClickableViewAccessibility")
 public class OperateWorkActivity extends BaseActivity {
 
@@ -88,35 +91,39 @@ public class OperateWorkActivity extends BaseActivity {
 
     private void initialData() {
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
+        ExecutorManager.executeTask(() -> {
+            try {
                 mCurrentOperateTick = OperateTicketService.getInstance().findById(currentOperateId);
-                dataList = OperateItemService.getInstance().findAllOperateItemByTaskId(currentOperateId);
-                String currentTime = DateUtils.getCurrentLongTime();
-                if (dataList != null) {
-                    for (int i = 0, count = dataList.size(); i < count; i++) {
-                        OperateItem item = dataList.get(i);
-                        if (TextUtils.isEmpty(item.spend_time)) {
-                            if (TextUtils.isEmpty(item.time_start)) {
-                                item.time_start = currentTime;
-                            }
-                            currentOperateItemPosition = i;
-                            break;
-                        }
-                    }
-                }
-                if (TextUtils.isEmpty(mCurrentOperateTick.time_operate_start)) {
-                    mCurrentOperateTick.time_operate_start = currentTime;
-                    try {
-                        OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.TIME_OPERATE_START);
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            if (mCurrentOperateTick == null) {
+                runOnUiThread(() -> ToastUtils.showMessage("没有找到操作票！"));
+                return;
+            }
+            dataList = OperateItemService.getInstance().findAllOperateItemByTaskId(currentOperateId);
+            String currentTime = DateUtils.getCurrentLongTime();
+            if (dataList != null) {
+                for (int i = 0, count = dataList.size(); i < count; i++) {
+                    OperateItem item = dataList.get(i);
+                    if (TextUtils.isEmpty(item.spend_time)) {
+                        if (TextUtils.isEmpty(item.time_start)) {
+                            item.time_start = currentTime;
+                        }
+                        currentOperateItemPosition = i;
+                        break;
+                    }
+                }
+            }
+            if (TextUtils.isEmpty(mCurrentOperateTick.time_operate_start)) {
+                mCurrentOperateTick.time_operate_start = currentTime;
+                try {
+                    OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.TIME_OPERATE_START);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
 
         binding.rlFunctionContainer.setOnTouchListener(new OnTouchListener() {
@@ -192,17 +199,17 @@ public class OperateWorkActivity extends BaseActivity {
         });
 
 
-        binding.lvContainer.setOnItemClickListener((parent,view,position,id) -> {
+        binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
             OperateItem item = (OperateItem) parent.getItemAtPosition(position);
             if (position == currentOperateItemPosition) {
                 showOperateContentTips(item);
             } else if (TextUtils.isEmpty(item.time_start)) {
-                ToastUtils.showMessage( "你正在进行越项操作，请注意!");
+                ToastUtils.showMessage("你正在进行越项操作，请注意!");
                 TTSUtils.getInstance().startSpeaking("你正在进行越项操作，请注意!");
             }
         });
 
-        binding.lvContainer.setOnItemLongClickListener((parent,view,position,id) ->{
+        binding.lvContainer.setOnItemLongClickListener((parent, view, position, id) -> {
             binding.rlFunctionContainer.setVisibility(View.VISIBLE);
             return true;
         });
@@ -264,7 +271,7 @@ public class OperateWorkActivity extends BaseActivity {
      */
     private void recordAudio(boolean isStart) {
         if (isRecordingVideo) {
-            ToastUtils.showMessage( "请先停止录像再录音~");
+            ToastUtils.showMessage("请先停止录像再录音~");
             return;
         }
         if (isStart) {

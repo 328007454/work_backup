@@ -14,15 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.activity.ImageDetailsActivity;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.common.Config;
-import  com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.PreferencesUtils;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
 
 @SuppressLint("HandlerLeak")
 public abstract class BaseFragment extends BaseCoreFragment {
@@ -124,7 +122,6 @@ public abstract class BaseFragment extends BaseCoreFragment {
     boolean isDetach = false;
     protected Activity currentActivity;
 
-    protected ExecutorService mFixedThreadPoolExecutor = XunshiApplication.getFixedThreadPoolExecutor();
 
     protected Handler mHandler = new Handler() {
         @Override

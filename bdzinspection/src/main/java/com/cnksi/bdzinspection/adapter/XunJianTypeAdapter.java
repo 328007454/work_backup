@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsInspectionTypeChildItemBinding;
-import com.cnksi.bdzinspection.model.Lookup;
+import com.cnksi.common.model.Lookup;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;

@@ -6,19 +6,17 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SpaceSortAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 
-import org.xutils.DbManager;
-import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -72,11 +70,7 @@ public class SpaceSortActivity extends TitleActivity {
         currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         // TODO: 2017/3/22
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Spacing.class).where(Spacing.DLT, "=", 0).and(Spacing.BDZID, "=", currentBdzId).
-                    expr("and spid in (select distinct(spid) spid from device where device_type = '" + functionMode
-                            + "' and bdzid = '" + currentBdzId + "'  and dlt=0)")
-                    .orderBy(sort, false);
-            mData = selector.findAll();
+            mData = SpacingService.getInstance().findByFunctionModel(currentBdzId, functionMode, sort);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -89,19 +83,19 @@ public class SpaceSortActivity extends TitleActivity {
                     @Override
                     public void onClick(View v) {
                         CustomerDialog.showProgress(currentActivity, "恢复中...");
-                        mFixedThreadPoolExecutor.execute(() -> {
+                        ExecutorManager.executeTask(() -> {
                             final boolean rs = restore(data);
                             runOnUiThread(() -> {
                                 CustomerDialog.dismissProgress();
                                 if (rs) {
-                                    ToastUtils.showMessage( "恢复间隔操作成功");
+                                    ToastUtils.showMessage("恢复间隔操作成功");
                                     Integer count = deviceCountMap.get(data.pid);
                                     count = count + deviceCountMap.get(data.spid);
                                     deviceCountMap.put(data.pid, count);
                                     mData.remove(data);
                                     spaceAdapter.notifyDataSetChanged();
                                 } else {
-                                    ToastUtils.showMessage( "更新数据库失败，请检查数据库！");
+                                    ToastUtils.showMessage("更新数据库失败，请检查数据库！");
                                 }
                             });
                         });
@@ -129,23 +123,7 @@ public class SpaceSortActivity extends TitleActivity {
     }
 
     private boolean restore(Spacing spacing) {
-        String sqlDevice = "update device set spid='" + spacing.pid + "' where spid='" + spacing.spid + "'";
-        String sqlCopyItem = "update copy_item set spid='" + spacing.pid + "' where spid='" + spacing.spid + "'";
-       DbManager manager= XunshiApplication.getDbUtils();
-        try {
-            manager.beginTransaction();
-            manager.execNonQuery(sqlDevice);
-            manager.execNonQuery(sqlCopyItem);
-            manager.execNonQuery("update spacing set dlt=1 where spid='" + spacing.spid + "'");
-            manager.setTransactionSuccessful();
-            return true;
-        } catch (DbException e) {
-            e.printStackTrace();
-        } finally {
-            manager.endTransaction();
-        }
-        return false;
-
+        return SpacingService.getInstance().restore(spacing);
     }
 
     @Override
@@ -175,8 +153,8 @@ public class SpaceSortActivity extends TitleActivity {
             updateColumnNames = "sort";
         }
         try {
-            XunshiApplication.getDbUtils().update(mData, updateColumnNames);
-            PreferencesUtils.put( "RELOAD_DATA", true);
+            SpacingService.getInstance().update(mData, updateColumnNames);
+            PreferencesUtils.put("RELOAD_DATA", true);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

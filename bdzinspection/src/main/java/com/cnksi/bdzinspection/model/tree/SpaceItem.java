@@ -4,7 +4,6 @@ import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 
-
 import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;

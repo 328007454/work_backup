@@ -24,13 +24,13 @@ import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsActivityDeviceSelectBinding;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment.DeviceClickListener;
-import com.cnksi.bdzinspection.model.Lookup;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.common.Config;
-import com.cnksi.bdzinspection.utils.Config.LookUpType;
+import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.model.Device;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.common.model.Lookup;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.table.DbModel;
 

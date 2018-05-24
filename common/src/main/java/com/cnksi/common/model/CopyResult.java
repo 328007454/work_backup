@@ -1,8 +1,11 @@
 package com.cnksi.common.model;
 
 
+import android.text.TextUtils;
+
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.utils.CalcUtils;
+import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.annotation.Column;
@@ -165,7 +168,19 @@ public class CopyResult extends BaseModel {
         this.unit = unit;
         this.install_place = install_place;
     }
-
+    public CopyResult(String reportid, String item_id, String bdzid, String device_name, String deviceid, String type_key, String description, String val, String valSpecial, String unit) {
+        this.reportid = reportid;
+        this.item_id = item_id;
+        this.bdzid = bdzid;
+        this.description = description;
+        this.device_name = device_name;
+        this.deviceid = deviceid;
+        this.type_key = type_key;
+        this.remark = valSpecial;
+        this.valSpecial = val;
+        this.unit = unit;
+        this.create_time = DateUtils.getCurrentLongTime();
+    }
     public void initArresterActionValue() {
         if ("blqdzcs_dzcs".contains(type_key)) {
             this.dzcs = CalcUtils.sub(val, val_old);
@@ -180,5 +195,16 @@ public class CopyResult extends BaseModel {
                 e.printStackTrace();
             }
         }
+    }
+    public boolean isHasCopyData() {
+        boolean hasData = false;
+        if (!TextUtils.isEmpty(val) || !TextUtils.isEmpty(val_a)) {
+            hasData = true;
+        } else if (!TextUtils.isEmpty(val_b) || !TextUtils.isEmpty(val_c) || !TextUtils.isEmpty(val_o)) {
+            hasData = true;
+        } else if (!TextUtils.isEmpty(valSpecial)) {
+            hasData = true;
+        }
+        return hasData;
     }
 }

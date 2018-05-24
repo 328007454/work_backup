@@ -26,6 +26,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by luoxy on 16/4/29.
+ *
  * @author wastrel
  */
 public class BaseService<T> {
@@ -43,18 +44,20 @@ public class BaseService<T> {
         this.clz = clz;
     }
 
-    public void saveOrUpdate(T t) throws DbException {
+    public boolean saveOrUpdate(T t) throws DbException {
         try {
             getDbManager().saveOrUpdate(t);
+            return true;
         } catch (DbException e) {
             RecordException(e);
             throw e;
         }
     }
 
-    public void saveOrUpdate(List<T> t) throws DbException {
+    public boolean saveOrUpdate(List<T> t) throws DbException {
         try {
             getDbManager().saveOrUpdate(t);
+            return true;
         } catch (DbException e) {
             RecordException(e);
             throw e;

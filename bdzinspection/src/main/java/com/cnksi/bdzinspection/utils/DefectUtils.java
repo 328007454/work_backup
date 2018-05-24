@@ -5,8 +5,9 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -93,7 +94,7 @@ public class DefectUtils {
     }
 
     public static boolean calcCopyBound(CopyItem item, CopyResult copyResult, String val, List<DefectRecord> mExistDefectList, List<String> result) {
-        boolean isDZCS = item.type_key.equals("blqdzcs_dzcs");
+        boolean isDZCS = "blqdzcs_dzcs".equals(item.type_key);
         if (!isDZCS && (TextUtils.isEmpty(item.max) && TextUtils.isEmpty(item.min))) {//判断抄录上下限值是否为空
             return false;
         }

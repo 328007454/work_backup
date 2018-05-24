@@ -13,8 +13,8 @@ import com.cnksi.bdzinspection.adapter.ImageAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityYwythDescBinding;
 import com.cnksi.bdzinspection.model.PlanProcessStatus;
 import com.cnksi.bdzinspection.model.Process;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.ywyth.adapter.VideoAdapter;
+import com.cnksi.common.Config;
 import com.cnksi.core.utils.StringUtils;
 
 import java.util.ArrayList;

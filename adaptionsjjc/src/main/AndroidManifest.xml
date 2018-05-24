@@ -346,7 +346,7 @@
 
         <!-- 连接数据线后打开数据同步端口 -->
 
-        <activity android:name=".activity.VideoPlayer" />
+
         <activity android:name="com.cnksi.core.activity.PermissionActivity" />
 
 

@@ -17,24 +17,24 @@ import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.StandardDefectDefineAdapter;
 import com.cnksi.bdzinspection.adapter.StandardDefectDefineAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
-import com.cnksi.bdzinspection.daoservice.StandardService;
+import com.cnksi.bdzinspection.daoservice.DeviceStandardsService;
 import com.cnksi.bdzinspection.databinding.XsActivityChangeStandardBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddDefectDefineBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.common.model.DeviceStandards;
-import com.cnksi.bdzinspection.utils.CommonUtils;
-import com.cnksi.common.Config;
-import  com.cnksi.common.enmu.InspectionType;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.Config;
+import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.common.utils.BitmapUtil;
-import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.core.utils.FileUtils;
+import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.ScreenUtils;
-
+import com.cnksi.core.utils.ToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     private ListContentDialogAdapter mListContentDialogAdapter = null;
     private Dialog mAddDefectDefineDialog = null;
     private String currentStandardId = "";
-    private HashMap<String, ArrayList<DefectDefine>> groupMap = null;
+    private HashMap<String, ArrayList<Defect>> groupMap = null;
     private DeviceStandards mCurrentDeviceStandard;
     private String currentImageName;
     // 是否是删除巡检标准
@@ -70,7 +70,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     // 是否是新增巡检标准
     private boolean isAddDeviceStandard = false;
     private boolean isAddDefectDefine = false;
-    private DefectDefine mCurrentDefectDefine = null;
+    private Defect mCurrentDefectDefine = null;
     private String mCurrentDefectLevel = "";
     private XsActivityChangeStandardBinding binding;
 
@@ -100,12 +100,12 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     }
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
                 if (!isAddDeviceStandard) {
-                    mCurrentDeviceStandard = StandardService.getInstance().findDeviceStandardById(currentStandardId);
+                    mCurrentDeviceStandard = DeviceStandardsService.getInstance().findDeviceStandardById(currentStandardId);
                     mHandler.sendEmptyMessage(LOAD_DATA);
                     groupMap = DefectDefineService.getInstance().findDefectDefineByStandardId(currentStandardId);
                     mHandler.sendEmptyMessage(LOAD_MORE_DATA);
@@ -261,13 +261,13 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         if (!TextUtils.isEmpty(currentStandardId)) {
             mCurrentDeviceStandard.staid = currentStandardId;
         }
-        currentStandardId = StandardService.getInstance().saveDeviceStandards(mCurrentDeviceStandard, isAdd);
+        currentStandardId = DeviceStandardsService.getInstance().saveDeviceStandards(mCurrentDeviceStandard, isAdd);
         return TextUtils.isEmpty(currentStandardId) ? false : true;
     }
 
 
     @Override
-    public void OnAdapterViewClick(View view, String defectLevel, DefectDefine define) {
+    public void OnAdapterViewClick(View view, String defectLevel, Defect define) {
         // TODO:删除 弹出确认提示框
         isDeleteDeviceStandard = false;
         mCurrentDefectDefine = define;
@@ -310,7 +310,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                     } else {
                         binding.ivStandardImage.setImageResource(R.drawable.xs_ic_long_press);
                     }
-                    StandardService.getInstance().updateStandardPic(mCurrentDeviceStandard, "");
+                    DeviceStandardsService.getInstance().updateStandardPic(mCurrentDeviceStandard, "");
                     break;
                 case 1: // 更换图片
 
@@ -368,7 +368,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                         }
                         if (!isAddDeviceStandard) {
                             // 保存到数据
-                            StandardService.getInstance().updateStandardPic(mCurrentDeviceStandard, currentImageName);
+                            DeviceStandardsService.getInstance().updateStandardPic(mCurrentDeviceStandard, currentImageName);
                         }
                     } else {
                         ToastUtils.showMessage( R.string.xs_change_photo_failure_try_again_str);
@@ -406,7 +406,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
 
     private void operateDefect() {
         if (isDeleteDeviceStandard) {
-            boolean isSuccess = StandardService.getInstance().deleteStandardById(currentStandardId);
+            boolean isSuccess = DeviceStandardsService.getInstance().deleteStandardById(currentStandardId);
             if (isSuccess) {
                 Intent intent = getIntent();
                 intent.putExtra(Config.CURRENT_STANDARD_ID, currentStandardId);
@@ -416,7 +416,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         } else {
             // TODO:删除缺陷定义
             if (DefectDefineService.getInstance().deleteDefectDefine(mCurrentDefectDefine)) {
-                List<DefectDefine> mDefectDefineList = groupMap.get(mCurrentDefectLevel);
+                List<Defect> mDefectDefineList = groupMap.get(mCurrentDefectLevel);
                 if (mDefectDefineList != null && mDefectDefineList.size() > 0) {
                     int index = -1;
                     for (int i = 0, count = mDefectDefineList.size(); i < count; i++) {
@@ -483,9 +483,9 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                 ToastUtils.showMessage( R.string.xs_please_input_defect_content_str);
                 return;
             }
-            DefectDefine mDefectDefine = null;
+            Defect mDefectDefine = null;
             if (isAddDefectDefine) {
-                mDefectDefine = new DefectDefine();
+                mDefectDefine = new Defect();
                 mDefectDefine.staid = currentStandardId;
                 mDefectDefine.description = description;
                 mDefectDefine.level = defectLevel;
@@ -504,7 +504,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
      * 更新缺陷定义列表
      */
     private void updateDefectDefineList() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -520,7 +520,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     @Override
     public void onBackPressed() {
         if (isAddDeviceStandard) {
-            StandardService.getInstance().deleteStandardById(currentStandardId);
+            DeviceStandardsService.getInstance().deleteStandardById(currentStandardId);
         }
         super.onBackPressed();
     }

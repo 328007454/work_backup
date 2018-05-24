@@ -13,18 +13,17 @@ import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyMaintenanceDeviceAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyAll3Binding;
 import com.cnksi.bdzinspection.databinding.XsMaintenanceCopyItemBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
-import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.utils.KeyBoardUtils;
-
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ToastUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
@@ -117,26 +116,23 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
     private HashMap<String, CopyResult> resultHashMap = new HashMap<>();
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
+        ExecutorManager.executeTask(() -> {
 
-                try {
-                    copyItems = CopyItemService.getInstance().findAllMaintenanceHasCopyValue(currentInspectionType, currentBdzId);
-                    copyResults = CopyResultService.getInstance().findAllMaintenanceCopyResult(currentReportId, currentInspectionType, currentBdzId);
-                    for (CopyItem item : copyItems) {
-                        for (CopyResult result : copyResults) {
-                            if (item.id.equalsIgnoreCase(result.item_id)) {
-                                resultHashMap.put(item.id, result);
-                                copyHashSet.put(item.id, result.valSpecial);
-                            }
+            try {
+                copyItems = CopyItemService.getInstance().findAllMaintenanceHasCopyValue(currentInspectionType, currentBdzId);
+                copyResults = CopyResultService.getInstance().findAllMaintenanceCopyResult(currentReportId, currentInspectionType, currentBdzId);
+                for (CopyItem item : copyItems) {
+                    for (CopyResult result : copyResults) {
+                        if (item.id.equalsIgnoreCase(result.item_id)) {
+                            resultHashMap.put(item.id, result);
+                            copyHashSet.put(item.id, result.valSpecial);
                         }
                     }
-                    mHandler.sendEmptyMessage(LOAD_DATA);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                    copyItems = new ArrayList<CopyItem>();
                 }
+                mHandler.sendEmptyMessage(LOAD_DATA);
+            } catch (DbException e) {
+                e.printStackTrace();
+                copyItems = new ArrayList<CopyItem>();
             }
         });
     }
@@ -151,7 +147,7 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
         } else {
             return;
         }
-        XsMaintenanceCopyItemBinding = XsMaintenanceCopyItemBinding.inflate(getLayoutInflater());
+        XsMaintenanceCopyItemBinding = com.cnksi.bdzinspection.databinding.XsMaintenanceCopyItemBinding.inflate(getLayoutInflater());
         binding.copyContainer.addView(XsMaintenanceCopyItemBinding.getRoot());
         if (null != resultHashMap.get(currentItem.id)) {
             String value = resultHashMap.get(currentItem.id).valSpecial;
@@ -301,11 +297,7 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
                 result = new CopyResult(currentReportId, currentItem.id, currentBdzId, currentItem.device_name, currentItem.deviceid, currentItem.type_key, currentItem.description, copyHashSet.get(currentItem.id), currentItem.remark, currentItem.unit);
                 resultHashMap.put(currentItem.id, result);
             }
-            try {
-                XunshiApplication.getDbUtils().saveOrUpdate(result);
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
+            CopyResultService.getInstance().saveOrUpdate(result);
         }
     }
 

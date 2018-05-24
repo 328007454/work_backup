@@ -476,7 +476,7 @@ public class Config implements Cst {
             Config.BAK_FOLDER,
             Config.NFC_FOLDER,
             Config.WWWROOT_FOLDER};
-    public static Object DELETED="1";
+    public static String DELETED="1";
 
     /**
      * Pms设备型号

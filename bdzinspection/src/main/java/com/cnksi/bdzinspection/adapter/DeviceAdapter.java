@@ -17,7 +17,6 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.daoservice.DeviceService;
 import com.cnksi.bdzinspection.inter.ItemLongClickListener;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
@@ -30,6 +29,7 @@ import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Device;
+import com.cnksi.common.model.vo.DefectInfo;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -59,7 +59,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
 
     private String keyWord;
     // 变电站存在缺陷
-    private Map<String, DeviceService.DefectInfo> defectmap;
+    private Map<String, DefectInfo> defectmap;
     // 变电站已到间隔Id
     private Set<String> arriveSpaceIdList;
     // 变电站已到设备Id
@@ -125,6 +125,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
                 final DeviceItem deviceItem = (DeviceItem) item;
                 convertDevice(helper, deviceItem);
                 break;
+            default:
         }
     }
 
@@ -334,7 +335,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     private void showDefect(DbModel item, BaseViewHolder holder) {
         if (null != defectmap && !defectmap.isEmpty()) {
             String deviceId = item.getString("deviceId");
-            DeviceService.DefectInfo defectInfo = defectmap.get(deviceId);
+            DefectInfo defectInfo = defectmap.get(deviceId);
             if (null != defectInfo) {
                 TextView txtDefect = holder.getView(R.id.tv_device_defect_count);
                 txtDefect.setVisibility(View.VISIBLE);
@@ -491,7 +492,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         this.arriveDeviceList = arriveDeviceList;
     }
 
-    public void setDefectMap(HashMap<String, DeviceService.DefectInfo> defectMap) {
+    public void setDefectMap(HashMap<String, DefectInfo> defectMap) {
         this.defectmap = defectMap;
     }
 

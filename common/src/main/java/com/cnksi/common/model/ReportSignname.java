@@ -110,6 +110,18 @@ public class ReportSignname extends BaseModel {
         this.createTime = DateUtils.getCurrentLongTime();
     }
 
+    public ReportSignname(String reportId, String role, DbModel model) {
+        this.reportId = reportId;
+        this.signerRole = role;
+        this.dpetId = model.getString(Users.DEPT_ID);
+        this.dpetName = model.getString(Department.NAME);
+        this.name = model.getString(Users.USERNAME);
+        this.id = getPrimarykey();
+        this.createTime = DateUtils.getCurrentLongTime();
+        this.account = model.getString("account");
+    }
+
+
     /**
      * @param reportId
      * @param dpetId

@@ -11,10 +11,10 @@ import android.widget.PopupWindow;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.PersonAdapter;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerDataBindingAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsRecyclerviewBinding;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Users;
+import com.cnksi.core.common.ExecutorManager;
 
 import org.xutils.ex.DbException;
 
@@ -139,7 +139,7 @@ public class PersonListUtils implements BaseRecyclerDataBindingAdapter.OnItemCli
      *                    查询当前部门所有的成员
      */
     public void initPersonData(final String currentDept) {
-        XunshiApplication.getFixedThreadPoolExecutor().execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 mUserses = DepartmentService.getInstance().getAllUsers(currentDept);
                 context.runOnUiThread(() -> personAdapter.setList(mUserses));

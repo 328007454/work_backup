@@ -27,7 +27,7 @@ public abstract class TitleActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		_this = this;
 		titlebaseBinding = DataBindingUtil.setContentView(this,R.layout.xs_activity_titlebase);
-		content = (FrameLayout) findViewById(R.id.mh);
+		content = findViewById(R.id.mh);
 		back = (ImageView) findViewById(R.id.ibtn_cancel);
 		back.setOnClickListener(v -> {
             // TODO Auto-generated method stub

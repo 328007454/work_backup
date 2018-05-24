@@ -13,18 +13,18 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.TaskRemindAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
-import com.cnksi.bdzinspection.utils.CommonUtils;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
+import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.SqliteUtils;
@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.cnksi.common.Config.LOAD_DATA;
 import static com.cnksi.common.enmu.InspectionType.day;
 import static com.cnksi.common.enmu.InspectionType.full;
 import static com.cnksi.common.enmu.InspectionType.maintenance;
@@ -49,7 +50,6 @@ import static com.cnksi.common.enmu.InspectionType.special;
 import static com.cnksi.common.enmu.InspectionType.special_nighttime;
 import static com.cnksi.common.enmu.InspectionType.special_xideng;
 import static com.cnksi.common.enmu.InspectionType.switchover;
-import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * Created by Mr.K on 2018/4/12.
@@ -133,7 +133,7 @@ public class TaskRemindFragment extends BaseFragment {
 
     public void searchData() {
 
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 if (currentInspectionType == null) {
                     ToastUtils.showMessage( "没有正确的获取巡检类型，请重启程序再尝试！");
@@ -148,7 +148,7 @@ public class TaskRemindFragment extends BaseFragment {
                     deptId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
                 }
                 String[] accoutArray = currentAcounts.split(",");
-                Selector selector =XunshiApplication.getDbUtils().selector(Task.class).expr(" bdzid in (select bdzid  from bdz where dept_id = '" + deptId + "' )");
+                Selector selector =TaskService.getInstance().selector().expr(" and  bdzid in (select bdzid  from bdz where dept_id = '" + deptId + "' )");
                 selector.expr("and (pms_jh_source ='pms_pc' or " + CommonUtils.buildWhereTaskContainMe(accoutArray) + " or create_account is NULL or create_account = '')");
                 // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                 if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
@@ -195,7 +195,7 @@ public class TaskRemindFragment extends BaseFragment {
                     default:
                         break;
                 }
-                selector = selector.and(Task.DLT, "=", "0").orderBy(Task.SCHEDULE_TIME);
+                selector = selector.orderBy(Task.SCHEDULE_TIME);
 
                 mDataList =selector.findAll();
 

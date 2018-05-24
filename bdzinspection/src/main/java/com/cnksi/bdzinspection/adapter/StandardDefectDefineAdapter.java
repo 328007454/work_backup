@@ -10,16 +10,15 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.XsGroupItemBinding;
 import com.cnksi.bdzinspection.databinding.XsStandardDefectDefineChildItemBinding;
-import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.common.Config;
-
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * 选择缺陷定义Dialog对话框
  * 
  */
-public class StandardDefectDefineAdapter extends BaseMapListExpandableAdapter<String, DefectDefine> {
+public class StandardDefectDefineAdapter extends BaseMapListExpandableAdapter<String, Defect> {
 
 	public StandardDefectDefineAdapter(Context context) {
 		super(context);
@@ -28,7 +27,7 @@ public class StandardDefectDefineAdapter extends BaseMapListExpandableAdapter<St
 	private OnAdapterViewClickListener mOnAdapterViewClickListener;
 
 	public interface OnAdapterViewClickListener {
-		 void OnAdapterViewClick(View view, String defectLevel,DefectDefine define);
+		 void OnAdapterViewClick(View view, String defectLevel,Defect define);
 	}
 
 	public void setOnAdapterViewClickListener(OnAdapterViewClickListener mOnAdapterViewClickListener) {
@@ -38,7 +37,7 @@ public class StandardDefectDefineAdapter extends BaseMapListExpandableAdapter<St
 	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-		DefectDefine child = getChild(groupPosition, childPosition);
+		Defect child = getChild(groupPosition, childPosition);
 		XsStandardDefectDefineChildItemBinding itemBinding;
 		if (convertView == null) {
 			itemBinding = XsStandardDefectDefineChildItemBinding.inflate(LayoutInflater.from(mContext));

@@ -1,14 +1,13 @@
 package com.cnksi.nari.utils;
 
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.common.CommonApplication;
 import com.cnksi.nari.model.BDPackage;
 import com.cnksi.nari.model.XSJH;
 import com.cnksi.nari.type.PackageStatus;
 
 import org.xutils.DbManager;
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
@@ -46,7 +45,7 @@ public class NariDataManager {
     }
 
     public static DbManager getPackageManager() {
-        return XunshiApplication.getDbUtils();
+        return CommonApplication.getInstance().getDbManager();
     }
 
     public static HashMap<String, BDPackage> getPackageByUser(String user) {
@@ -78,7 +77,7 @@ public class NariDataManager {
     }
 
     private static DbManager.DaoConfig buildConfig(String parent, String name) {
-        DbManager.DaoConfig daoConfig = XunshiApplication.getDbUtils().getDaoConfig();
+        DbManager.DaoConfig daoConfig = CommonApplication.getInstance().getDaoConfig();
         daoConfig.setDbDir(new File(parent));
         daoConfig.setDbName(name);
         return daoConfig;

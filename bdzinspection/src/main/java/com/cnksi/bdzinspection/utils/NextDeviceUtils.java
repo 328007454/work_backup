@@ -2,7 +2,6 @@ package com.cnksi.bdzinspection.utils;
 
 import android.text.TextUtils;
 
-
 import org.xutils.db.table.DbModel;
 
 import java.util.HashMap;

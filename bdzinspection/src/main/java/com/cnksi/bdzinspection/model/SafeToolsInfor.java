@@ -2,7 +2,7 @@ package com.cnksi.bdzinspection.model;
 
 
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 
 /**
  * 工器具台账信息

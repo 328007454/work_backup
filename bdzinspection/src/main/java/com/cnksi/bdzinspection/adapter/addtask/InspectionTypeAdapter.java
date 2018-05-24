@@ -10,7 +10,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseMapListExpandableAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogContentChildItemBinding;
 import com.cnksi.bdzinspection.databinding.XsInspectionTypeChildItemBinding;
-import com.cnksi.bdzinspection.model.Lookup;
+import com.cnksi.common.model.Lookup;
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**

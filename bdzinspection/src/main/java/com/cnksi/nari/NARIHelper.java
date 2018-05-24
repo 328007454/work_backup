@@ -311,7 +311,7 @@ public class NARIHelper {
         JSONObject jsonObject = (JSONObject) array.get(0);
         JSONObject object = (JSONObject) jsonObject.get(packageId);
         String success = (String) object.get("isSuccessful");
-        if (success.equalsIgnoreCase("true")) {
+        if ("true".equalsIgnoreCase(success)) {
             return "OK:" + "PMS服务器数据删除成功";
         } else {
             return "FAIL:" + object.getString("exceptionInfo" + ",PMS服务器数据删除失败");

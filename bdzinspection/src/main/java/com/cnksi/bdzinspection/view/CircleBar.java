@@ -1,7 +1,5 @@
 package com.cnksi.bdzinspection.view;
 
-import java.text.DecimalFormat;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +12,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+
+import java.text.DecimalFormat;
 
 public class CircleBar extends View {
 	public static final String TAG = CircleBar.class.getSimpleName();
@@ -30,7 +30,7 @@ public class CircleBar extends View {
 	private int stepnumbermax = 12;// 默认最大时间
 	private DecimalFormat fnum = new DecimalFormat("#.0");// 格式为保留小数点后一位
 	private Context context;
-	private int mColors[];
+    private int[] mColors;
 	private OnProgressChangeListener changeListener;
 
 	public interface OnProgressChangeListener {

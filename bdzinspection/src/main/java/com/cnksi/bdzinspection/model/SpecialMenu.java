@@ -1,8 +1,11 @@
 package com.cnksi.bdzinspection.model;
 
 
+import com.cnksi.common.model.BaseModel;
+import com.cnksi.common.model.Lookup;
+
 import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;import com.cnksi.common.model.BaseModel;
+import org.xutils.db.annotation.Table;
 
 /**
  * @author yangjun
@@ -127,4 +130,15 @@ public class SpecialMenu extends BaseModel{
 		this.loo_id = menu.loo_id;
 		this.v = menu.v;
 	}
+	public static Lookup convertLookup(SpecialMenu menu) {
+		Lookup lookup = new Lookup();
+		lookup.id = menu.id;
+		lookup.k = menu.k;
+		lookup.loo_id = menu.loo_id;
+		lookup.v = menu.v;
+		lookup.remark = menu.remark;
+		lookup.deviceWay = menu.deviceWay;
+		return lookup;
+	}
+
 }

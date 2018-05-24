@@ -29,26 +29,26 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.DefectContentAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.adapter.infrared.DevicePartAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
-import com.cnksi.bdzinspection.daoservice.DevicePartService;
+import com.cnksi.common.daoservice.DevicePartService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectSourceBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.model.DefectDefine;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -131,7 +131,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
     }
 
     // 缺陷内容
-    private HashMap<String, ArrayList<DefectDefine>> mDefectContentMap = null;
+    private HashMap<String, ArrayList<Defect>> mDefectContentMap = null;
     private DbModel mCurrentDbModel;
     private XsFragmentRecordDefectBinding binding;
 
@@ -248,41 +248,33 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
         XsDialogTipsBinding tipsBinding = XsDialogTipsBinding.inflate(currentActivity.getLayoutInflater());
         deleteDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogContent.setText("确认要删除本次缺陷？");
-        tipsBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteRecord.dlt = "1";
-                try {
-                    XunshiApplication.getDbUtils().saveOrUpdate(deleteRecord);
-                    dataList.remove(deleteRecord);
-                    mHistoryDefectAdapter.notifyDataSetChanged();
-                    deleteRecord = null;
-                    deleteDialog.dismiss();
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        tipsBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        tipsBinding.btnSure.setOnClickListener(view -> {
+            deleteRecord.dlt = "1";
+            try {
+                DefectRecordService.getInstance().saveOrUpdate(deleteRecord);
+                dataList.remove(deleteRecord);
+                mHistoryDefectAdapter.notifyDataSetChanged();
+                deleteRecord = null;
                 deleteDialog.dismiss();
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
+        tipsBinding.btnCancel.setOnClickListener(view -> deleteDialog.dismiss());
     }
 
 
     private void initOnClick() {
         binding.lvContainerDefect.setOnItemClickListener((parent, view, position, l) -> {
             mCurrentDbModel = (DbModel) parent.getItemAtPosition(position);
-            if (Config.CRISIS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(DefectDefine.LEVEL))) {
+            if (Config.CRISIS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(Defect.LEVEL))) {
                 binding.includeDefect.rbCrisisDefect.setChecked(true);
-            } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(DefectDefine.LEVEL))) {
+            } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(Defect.LEVEL))) {
                 binding.includeDefect.rbSeriousDefect.setChecked(true);
             } else {
                 binding.includeDefect.rbGeneralDefect.setChecked(true);
             }
-            binding.includeDefect.etInputDefectContent.setText(mCurrentDbModel.getString(DefectDefine.DESCRIPTION));
+            binding.includeDefect.etInputDefectContent.setText(mCurrentDbModel.getString(Defect.DESCRIPTION));
             KeyBoardUtils.closeKeybord(currentActivity);
         });
 
@@ -465,7 +457,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      */
     public void searchData() {
 
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -492,7 +484,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      * @param content
      */
     private void searchData(final String content) {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -513,7 +505,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
      * 查询设备部件对应的常见缺陷内容
      */
     private void searchDefectContent() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
 
             @Override
             public void run() {
@@ -741,7 +733,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                         mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DevicePart.NAME), // 设备部件名称
                         currentDefectLevel, // 缺陷级别
                         defectContent, // 缺陷描述
-                        mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DefectDefine.STAID), // 巡视标准id
+                        mCurrentDbModel == null ? "" : mCurrentDbModel.getString(Defect.STAID), // 巡视标准id
                         StringUtils.arrayListToString(mDefectImageList)// pics图片
                 );
             } else {
@@ -770,7 +762,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
         }
         record.discoverer_unit = departmentName;
         try {
-            XunshiApplication.getDbUtils().saveOrUpdate(record);
+            DefectRecordService.getInstance().saveOrUpdate(record);
             mofifyDefectRe = null;
         } catch (DbException e) {
             e.printStackTrace();
@@ -886,7 +878,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
     }
 
     @Override
-    public void OnAdapterViewClick(View view, DefectDefine define) {
+    public void OnAdapterViewClick(View view, Defect define) {
         int i = view.getId();
         if (i == R.id.img_child_item_bt) {
             String defectOrigin = define.origin;

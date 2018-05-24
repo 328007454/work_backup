@@ -14,20 +14,15 @@ import com.cnksi.bdzinspection.adapter.AdapterClickListener;
 import com.cnksi.bdzinspection.adapter.AddPersonAdapter;
 import com.cnksi.bdzinspection.adapter.SignNameAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
-import com.cnksi.bdzinspection.daoservice.ReportService;
-import com.cnksi.bdzinspection.daoservice.TaskService;
+import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
+import com.cnksi.bdzinspection.daoservice.LookupService;
+import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.XsActivityGenerateReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSignViewBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.BatteryGroup;
-import com.cnksi.bdzinspection.model.ReportSignname;
-import com.cnksi.bdzinspection.utils.Config.Role;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
@@ -36,11 +31,22 @@ import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
 import com.cnksi.bdzinspection.utils.TimePickerUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.ReportSignnameService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.Role;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
+import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
+import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -50,9 +56,6 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.nari.NariActivity;
 import com.cnksi.nari.type.PackageStatus;
 import com.cnksi.nari.utils.NariDataManager;
-
-import com.cnksi.core.common.ScreenManager;
-
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -182,35 +185,35 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             binding.layoutConclusion.setVisibility(View.VISIBLE);
         }
 
-        mFixedThreadPoolExecutor.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
-                currentReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).findFirst();
+                currentReport =ReportService.getInstance().getReportById(currentReportId);
                 inspectionMark = currentReport.inspectionRemark;
                 inspectionResult = currentReport.inspectionResult;
                 if ((!isParticularInspection()) && (!isRoutineNotCopy())) {
                     copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
                     totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
                     if (xudianchi) {
-                        List<DbModel> batteryDbmodelList = ReportService.getInstance().findBatteryGroup(currentBdzId);
-                        DbModel batteryCopyTotal = ReportService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
+                        List<DbModel> batteryDbmodelList = BatteryGroupService.getInstance().findBatteryGroup(currentBdzId);
+                        DbModel batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
                         int sumBatteryCode = 0;
                         for (DbModel dbModel : batteryDbmodelList) {
                             sumBatteryCode = sumBatteryCode + Integer.valueOf(dbModel.getString("amount"));
                         }
                         copyCount = Integer.valueOf(TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? "0" : batteryCopyTotal.getString("count"));
                         totalCount = sumBatteryCode;
-                        mBatteryGroupList = ReportService.getInstance().findAllBatteryGroup(currentBdzId, currentReportId);
+                        mBatteryGroupList = BatteryGroupService.getInstance().findAllBatteryGroup(currentBdzId, currentReportId);
                         if (mBatteryGroupList.isEmpty() && !batteryDbmodelList.isEmpty()) {
                             BatteryGroup batteryGroup = new BatteryGroup(currentReportId, currentBdzId, currentBdzName, batteryDbmodelList.get(0).getString("bid"));
                             mBatteryGroupList.add(batteryGroup);
                         }
                     } else if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
-                        if (currentInspectionType.equalsIgnoreCase("maintenance_blqdzcs")) {
+                        if ("maintenance_blqdzcs".equalsIgnoreCase(currentInspectionType)) {
                             copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
                             totalCount = CopyItemService.getInstance().getCopyItemCount1(currentBdzId, CopyItemService.getInstance().getCopyType());
                         } else {
                             copyCount = TaskService.getInstance().queryCopyData(currentReportId);
-                            totalCount = TaskService.getInstance().getSwitchOverCopyTotal(currentInspectionType, currentBdzId);
+                            totalCount = StandardSwitchOverService.getInstance().getSwitchOverCopyTotal(currentInspectionType, currentBdzId);
                         }
 
                     }
@@ -219,7 +222,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
                         String selectDevices = "'" + (currentReport.selected_deviceid == null ? "" : currentReport.selected_deviceid) + "'";
                         selectDevices = selectDevices.replace(",", "','");
-                        DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT group_concat(name,',') as rs  FROM	device WHERE deviceid IN (" + selectDevices + ")"));
+                        DbModel model = DeviceService.getInstance().findDeviceNamesByDeviceIds(selectDevices);
                         String mark = model.getString("rs");
                         inspectionMark = mark == null ? "" : "本次巡视的设备：\n" + mark.replace(",", "\n");
                     }
@@ -241,7 +244,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 String sql = "SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;";
                 SqlInfo sqlInfo = new SqlInfo(sql);
                 sqlInfo.addBindArg(new KeyValue("", currentInspectionType));
-                DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(sqlInfo);
+                DbModel model = LookupService.getInstance().findDbModelFirst(sqlInfo);
                 inspectionContent = TextUtils.isEmpty(currentReport.inspectionContent) ? model == null ? "" : model.getString("xjnr") : currentReport.inspectionContent;
                 if (model != null) {
                     inspectionMark = TextUtils.isEmpty(inspectionMark) ? model.getString("remark") : inspectionMark;
@@ -266,7 +269,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             });
 
             try {
-                List<ReportSignname> mList = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
+                List<ReportSignname> mList = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
                 if (mList != null) {
                     StringBuilder nameBuilder = new StringBuilder();
                     for (int i = 0; i < mList.size(); i++) {
@@ -281,7 +284,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 String userAccount = (String) PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
                 List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(userAccount);
                 totalCountUser = defaultUesrs.size();
-                mList = ReportService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
+                mList = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
                 if (mList != null) {
                     mDataFzr.addAll(mList);
                 }
@@ -296,7 +299,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 binding.signList1.setAdapter(adapterFzr);
             });
         });
-        mFixedThreadPoolExecutor.execute(() -> persons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts));
+        ExecutorManager.executeTask(() -> persons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts));
     }
 
     /**
@@ -389,21 +392,21 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                     group.testPersons = testPersons;
                     group.analysisResult = binding.etConlusion.getText().toString();
                 }
-                ReportService.getInstance().saveBatteryGroup(mBatteryGroupList);
+                BatteryGroupService.getInstance().saveOrUpdate(mBatteryGroupList);
             }
 
             // 保存签名 完成任务 保存报告
-            ReportService.getInstance().saveSignName(mDataCzr);
-            ReportService.getInstance().saveSignName(mDataFzr);
+            ReportSignnameService.getInstance().saveOrUpdate(mDataCzr);
+            ReportSignnameService.getInstance().saveOrUpdate(mDataFzr);
             currentReport.inspectionContent = binding.inspectionContent.getText().toString();
             currentReport.inspectionRemark = binding.etRemark.getText().toString();
             currentReport.inspectionResult = binding.etResult.getText().toString();
             if (TextUtils.isEmpty(currentReport.endtime)) {
                 currentReport.endtime = DateUtils.getCurrentLongTime();
             }
-            XunshiApplication.getDbUtils().saveOrUpdate(currentReport);
+            com.cnksi.common.daoservice.ReportService.getInstance().saveOrUpdate(currentReport);
             Task mTask = new Task(currentTaskId);
-            XunshiApplication.getDbUtils().update(mTask, Task.STATUS);
+           TaskService.getInstance().update(mTask, Task.STATUS);
             if (!TextUtils.isEmpty(currentReport.pmsJhid)) {
                 NariDataManager.markBdPackageStatus(currentReport.pmsJhid, PackageStatus.done);
                 NariActivity.isNeedUpdateStatus = true;
@@ -570,7 +573,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                     ReportSignname reportSignname = list.remove(position);
                     reportSignname.setDlt("1");
                     try {
-                        XunshiApplication.getDbUtils().saveOrUpdate(reportSignname);
+                        ReportSignnameService.getInstance().saveOrUpdate(reportSignname);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }

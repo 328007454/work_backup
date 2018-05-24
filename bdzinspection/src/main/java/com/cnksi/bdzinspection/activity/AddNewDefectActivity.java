@@ -12,16 +12,17 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DefectDefineAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddNewDefectBinding;
-import com.cnksi.bdzinspection.model.DefectDefine;
-import com.cnksi.common.Config;
+import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -108,21 +109,17 @@ public class AddNewDefectActivity extends BaseActivity {
      * @param content
      */
     private void searchData(final String content) {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    dataList = DefectDefineService.getInstance().findDefectDefineByDeviceIdAndContent(currentDeviceId,
-                            content);
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
-                if (dataList == null) {
-                    dataList = new ArrayList<DbModel>();
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+        ExecutorManager.executeTask(() -> {
+            try {
+                dataList = DefectDefineService.getInstance().findDefectDefineByDeviceIdAndContent(currentDeviceId,
+                        content);
+            } catch (DbException e) {
+                e.printStackTrace();
             }
+            if (dataList == null) {
+                dataList = new ArrayList<DbModel>();
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -154,14 +151,14 @@ public class AddNewDefectActivity extends BaseActivity {
 
         binding.lvContainer.setOnItemClickListener((parent, view, position, l) -> {
             mCurrentDbModel = (DbModel) parent.getItemAtPosition(position);
-            if (Config.CRISIS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(DefectDefine.LEVEL))) {
+            if (Config.CRISIS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(Defect.LEVEL))) {
                 binding.rbCrisisDefect.setChecked(true);
-            } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(DefectDefine.LEVEL))) {
+            } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(mCurrentDbModel.getString(Defect.LEVEL))) {
                 binding.rbSeriousDefect.setChecked(true);
             } else {
                 binding.rbGeneralDefect.setChecked(true);
             }
-            binding.etInputDefectContent.setText(mCurrentDbModel.getString(DefectDefine.DESCRIPTION));
+            binding.etInputDefectContent.setText(mCurrentDbModel.getString(Defect.DESCRIPTION));
             KeyBoardUtils.closeKeybord(currentActivity);
         });
     }
@@ -193,7 +190,7 @@ public class AddNewDefectActivity extends BaseActivity {
                 mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DevicePart.NAME), // 设备部件名称
                 currentDefectLevel, // 缺陷级别
                 defectContent, // 缺陷描述
-                mCurrentDbModel == null ? "" : mCurrentDbModel.getString(DefectDefine.STAID), // 巡视标准id
+                mCurrentDbModel == null ? "" : mCurrentDbModel.getString(Defect.STAID), // 巡视标准id
                 StringUtils.arrayListToString(mDefectImageList)// pics图片
         );
         record.remark = TextUtils.isEmpty(defectContentPre) ? "" : defectContentPre;
@@ -206,7 +203,7 @@ public class AddNewDefectActivity extends BaseActivity {
             record.hasInfluenceDbz = "不清楚";
         }
         try {
-            XunshiApplication.getDbUtils().save(record);
+            DefectRecordService.getInstance().saveOrUpdate(record);
             isRecordDefect = true;
         } catch (DbException e) {
             e.printStackTrace();

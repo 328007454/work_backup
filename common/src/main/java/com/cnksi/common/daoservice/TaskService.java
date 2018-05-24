@@ -10,7 +10,9 @@ import com.cnksi.common.model.Report;
 import com.cnksi.common.model.SwitchPic;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.vo.TaskStatistic;
+import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -40,11 +42,21 @@ public class TaskService extends BaseService<Task> {
     }
 
 
+    @Override
+    public Task findById(Object id) {
+        try {
+            return super.findById(id);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
-    *删除计划任务 和已经巡视的报告数据
-    *
-    * @param idValue
-    */
+     * 删除计划任务 和已经巡视的报告数据
+     *
+     * @param idValue
+     */
     public boolean deleteTaskAndReportById(Object idValue) {
         Class<?>[] tableClassArray = {Report.class, DefectRecord.class, SwitchPic.class};
         String[] tableClassId = {Report.REPORTID, DefectRecord.REPORTID, SwitchPic.REPORTID};
@@ -210,7 +222,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks = selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").expr("and (pms_jh_source ='pms_pc' or "+buildWhereTaskContainMe()+" or create_account is NULL or create_account = '')").findAll();
+            tasks = selector().and(Task.INSPECTION, "=", inspectionType).and(Task.STATUS, "=", "undo").expr("and (pms_jh_source ='pms_pc' or " + buildWhereTaskContainMe() + " or create_account is NULL or create_account = '')").findAll();
             if (null == tasks) {
                 tasks = new ArrayList<>();
             }
@@ -223,7 +235,7 @@ public class TaskService extends BaseService<Task> {
         return tasks;
     }
 
-    public static String buildWhereTaskContainMe(){
+    public static String buildWhereTaskContainMe() {
         String currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         String[] accounts = currentAcounts.split(",");
         if (accounts.length > 1) {
@@ -231,9 +243,9 @@ public class TaskService extends BaseService<Task> {
                     + ",%') or (','||create_account ||',') like ('%," + accounts[1] + ",%')or (','||members_account ||',') like('%," + accounts[0]
                     + ",%')  or (','||members_account ||',') like ('%," + accounts[1] + ",%')) ";
         }
-        if (accounts.length==1) {
+        if (accounts.length == 1) {
             return " ((','||create_account ||',') like ( '%," + accounts[0] + ",%') or (','||members_account ||',') like (',%" + accounts[0] + ",%')) ";
-        }else {
+        } else {
             return " ";
         }
     }
@@ -241,7 +253,7 @@ public class TaskService extends BaseService<Task> {
     public List<Task> getUnDoSpecialTask(String inspectionType) {
         List<Task> tasks = null;
         try {
-            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").expr("and (pms_jh_source ='pms_pc' or "+buildWhereTaskContainMe()+" or create_account is NULL or create_account = '')").findAll();
+            tasks = selector().expr(" and inspection like '%special%' and  inspection <> 'special_xideng'").and(Task.STATUS, "=", "undo").expr("and (pms_jh_source ='pms_pc' or " + buildWhereTaskContainMe() + " or create_account is NULL or create_account = '')").findAll();
             if (null == tasks) {
                 tasks = new ArrayList<>();
             }
@@ -264,24 +276,8 @@ public class TaskService extends BaseService<Task> {
         return tasks;
     }
 
-    public List<Task> getFinishedTask() {
-        List<Task> tasks = new ArrayList<>();
-        try {
-            tasks = selector().where(Task.STATUS, "=", "undo").findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return tasks;
-    }
 
-    public List<Task> findOperationTaskByLimit(int limit) {
-        try {
-            return selector().and(Task.TYPE, "=", InspectionType.operation.name()).orderBy(Task.SCHEDULE_TIME, true).limit(limit > 0 ? limit : 1).findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     public List<Task> findTaskListByLimit(int limit, String... inspections) {
         StringBuilder expr = new StringBuilder();
@@ -367,5 +363,84 @@ public class TaskService extends BaseService<Task> {
             return -1;
         }
         return 0;
+    }
+
+    /**
+     * 查询任务计划的状态
+     *
+     * @param currentTaskId
+     * @return
+     */
+    public String getTaskStatus(String currentTaskId) {
+
+        Task task = findById(currentTaskId);
+        if (task != null && TaskStatus.done.name().equalsIgnoreCase(task.status)) {
+            return "已完成";
+        }
+        return "未完成";
+    }
+
+    /**
+     * 查询同一天相同变电站，相同类型下的任务计划个数
+     *
+     * @param bdzId      变电站id
+     * @param chooseTime 任务选择时间
+     * @param name       巡视类型
+     */
+
+
+    public List<Task> getCountSameTask(String name, String bdzId, String chooseTime, String loginCounts) {
+        String[] accounts = loginCounts.split(",");
+        String extraSql = null;
+        List<Task> tasks = null;
+        if (accounts.length > 0) {
+            extraSql = " and " + CommonUtils.buildWhereTaskContainMe(accounts);
+        } else {
+            extraSql = "";
+        }
+        try {
+            tasks = selector().and(Task.INSPECTION, "=", name).and(Task.STATUS, "=", "undo").and(Task.BDZID, "=", bdzId)
+                    .expr(extraSql + " and (select datetime('" + chooseTime + "','+24 hour'))> schedule_time and schedule_time >= (select datetime('" + chooseTime + "'))").findAll();
+            if (null == tasks)
+                return new ArrayList<Task>();
+            return tasks;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return new ArrayList<Task>();
+        }
+    }
+
+    /**
+     * 查询任务计划的状态
+     *
+     * @param currentTaskId
+     * @return true is finish
+     */
+    public boolean getTaskStatusForBoolean(String currentTaskId) {
+
+        Task task = findById(currentTaskId);
+        if (task != null && TaskStatus.done.name().equalsIgnoreCase(task.status)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 完成任务
+     */
+    public boolean finishTask(String taskid) {
+
+        if (StringUtils.isEmpty(taskid)) {
+            return false;
+        }
+        String sql = "update task set STATUS='done' where taskid='" + taskid + "'";
+        try {
+            execSql(sql);
+            return true;
+        } catch (Exception e) {
+
+            return false;// TODO: handle exception
+        }
+
     }
 }

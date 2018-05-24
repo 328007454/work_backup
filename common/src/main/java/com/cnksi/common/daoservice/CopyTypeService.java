@@ -4,6 +4,7 @@ import com.cnksi.common.model.CopyType;
 
 import org.xutils.ex.DbException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,16 @@ public class CopyTypeService extends BaseService<CopyType> {
             e.printStackTrace();
         }
         return typeMap;
+    }
+
+    public List<CopyType> findAllCopyType() {
+        try {
+            List<CopyType> types = selector().and(CopyType.SELECTED_ABLE, "=", "Y").findAll();
+            return types;
+        } catch (DbException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
 }

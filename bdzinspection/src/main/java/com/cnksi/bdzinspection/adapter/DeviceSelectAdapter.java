@@ -81,6 +81,7 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
                 final DeviceItem deviceItem = (DeviceItem) item;
                 convertDevice(helper, deviceItem);
                 break;
+            default:
         }
     }
 

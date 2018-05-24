@@ -115,7 +115,7 @@ public class BTDemoActivity extends BaseActivity {
             toast.show();
             return;
         }
-        if (binding.Timeinterval.getText().toString().equals("")) {
+        if ("".equals(binding.Timeinterval.getText().toString())) {
             System.out.println("Can NOT Get Timeinterval");
             return;
         }

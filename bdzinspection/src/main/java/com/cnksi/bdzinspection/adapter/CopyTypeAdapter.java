@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.model.CopyType;
+import com.cnksi.common.model.CopyType;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,9 +24,9 @@ public class CopyTypeAdapter extends BaseAdapter {
 
     public CopyTypeAdapter(Context context, Collection data, int layoutId, String status) {
         super(context, data, layoutId);
-        if (status.equalsIgnoreCase("1")) {
+        if ("1".equalsIgnoreCase(status)) {
             typeCounts = (List<String>) data;
-        } else if (status.equalsIgnoreCase("0")) {
+        } else if ("0".equalsIgnoreCase(status)) {
             copyTypes = (List<CopyType>) data;
         }
         this.status = status;
@@ -35,7 +35,7 @@ public class CopyTypeAdapter extends BaseAdapter {
     @Override
     public void convert(ViewHolder holder, Object item, int position) {
         TextView textView = holder.getView(R.id.tv_type_name);
-        if (status.equalsIgnoreCase("0")) {
+        if ("0".equalsIgnoreCase(status)) {
             textView.setText(TextUtils.isEmpty(copyTypes.get(position).name) ? "" : copyTypes.get(position).name);
             if (selectedPosition == position) {
                 textView.setTextColor(context.getResources().getColor(R.color.xs_global_base_color));
@@ -43,7 +43,7 @@ public class CopyTypeAdapter extends BaseAdapter {
                 textView.setTextColor(context.getResources().getColor(R.color.xs_spinner_text969f9e));
             }
         }
-        if (status.equalsIgnoreCase("1")) {
+        if ("1".equalsIgnoreCase(status)) {
             textView.setText(TextUtils.isEmpty(typeCounts.get(position)) ? "" : typeCounts.get(position));
             if (selectedPosition == position) {
                 textView.setTextColor(context.getResources().getColor(R.color.xs_global_base_color));

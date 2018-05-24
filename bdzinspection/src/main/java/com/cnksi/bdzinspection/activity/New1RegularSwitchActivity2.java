@@ -28,10 +28,10 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.New1RegularSwitchListAdapter2;
 import com.cnksi.bdzinspection.adapter.SwitchMenuAudioAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.DefectRecordService;
-import com.cnksi.bdzinspection.daoservice.ReportService;
+import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
+import com.cnksi.bdzinspection.daoservice.StandardStepConfirmService;
 import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
+import com.cnksi.bdzinspection.daoservice.SwitchPicService;
 import com.cnksi.bdzinspection.databinding.PopMenuBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
 import com.cnksi.bdzinspection.model.StandardStepConfirm;
@@ -47,10 +47,13 @@ import com.cnksi.bdzinspection.utils.RecordAudioUtils;
 import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.SwitchPic;
 import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
@@ -174,7 +177,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                 MediaRecorderUtils.getInstance().stopPlayAudio();
             } else {
                 MediaRecorderUtils.getInstance().startPlayAudio(Config.AUDIO_FOLDER + voice, mp -> {
-                    ToastUtils.showMessage( "播放完毕...");
+                    ToastUtils.showMessage("播放完毕...");
                     MediaRecorderUtils.getInstance().setPlaying(false);
                 });
             }
@@ -288,7 +291,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         super.onResume();
         if (!isFirstLoad) {
             try {
-                report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId).findFirst();
+                report = ReportService.getInstance().findById(currentReportId);
                 report.inspection = currentInspectionType;
             } catch (DbException e) {
                 e.printStackTrace();
@@ -299,17 +302,17 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     }
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 try {
-                    report = XunshiApplication.getDbUtils().selector(Report.class).where(Report.REPORTID, "=", currentReportId).and(Report.DLT, "=", "0").and(Report.BDZID, "=", currentBdzId).findFirst();
+                    report = ReportService.getInstance().findById(currentReportId);
                     String repSwitchId = report.repSwithoverId;
                     dbModelList = StandardSwitchOverService.getInstance().getAllTypeNew(currentInspectionType, currentBdzId, currentReportId, repSwitchId);
                     boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
 //                    if ("maintenance_xdcdyjc".equalsIgnoreCase(currentInspectionType)) {
                     if (xudianchi) {
-                        batteryDbmodelList = ReportService.getInstance().findBatteryGroup(currentBdzId);
+                        batteryDbmodelList = BatteryGroupService.getInstance().findBatteryGroup(currentBdzId);
                     }
                     if (dbModelList != null) {
                         groupList = new LinkedList<DbModel>();
@@ -381,14 +384,14 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         String standId = model.getString(StandardSwitchover.ID);
         StandardStepConfirm item = null;
         try {
-            item = XunshiApplication.getDbUtils().selector(StandardStepConfirm.class).where(StandardStepConfirm.BDZID, "=", currentBdzId).and(StandardStepConfirm.REPORTID, "=", currentReportId).and(StandardStepConfirm.STANDID, "=", standId).findFirst();
+            item = StandardStepConfirmService.getInstance().findByBdzAndReportAndStand(currentBdzId, currentReportId, standId);
         } catch (DbException e) {
             e.printStackTrace();
         }
         item = item != null ? item : StandardStepConfirm.create(currentBdzId, currentReportId, standId);
         item.confirm_date = DateUtils.getCurrentLongTime();
         try {
-            XunshiApplication.getDbUtils().saveOrUpdate(item);
+            StandardStepConfirmService.getInstance().saveOrUpdate(item);
             model.add(StandardStepConfirm.CONFIRMDATE, item.confirm_date);
             return true;
         } catch (DbException e) {
@@ -514,10 +517,10 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                     for (DbModel dbModel : batteryDbmodelList) {
                         sumBatteryCode = sumBatteryCode + Integer.valueOf(dbModel.getString("amount"));
                     }
-                    mFixedThreadPoolExecutor.execute(new Runnable() {
+                    ExecutorManager.executeTask(new Runnable() {
                         @Override
                         public void run() {
-                            batteryCopyTotal = ReportService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
+                            batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -619,7 +622,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         mAudioAdapter.notifyDataSetChanged();
         audioFileName = "";
         try {
-            XunshiApplication.getDbUtils().saveOrUpdate(report);
+            ReportService.getInstance().saveOrUpdate(report);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -680,7 +683,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
      */
     private void addWaterTextToBitmap() {
         CustomerDialog.showProgress(currentActivity, "正在处理图片...");
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
                 Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.RESULT_PICTURES_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
@@ -701,7 +704,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     private void saveSwitchPic() {
         SwitchPic pic = null;
         try {
-            pic = StandardSwitchOverService.getInstance().findFirstPic(currentReportId, dbModel.getString(StandardSwitchover.ID));
+            pic = SwitchPicService.getInstance().findFirstPic(currentReportId, dbModel.getString(StandardSwitchover.ID));
         } catch (DbException e1) {
             e1.printStackTrace();
         }
@@ -720,7 +723,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
         pic.pic = dbModel.getString(SwitchPic.PIC);
         try {
             audioFileName = "";
-            XunshiApplication.getDbUtils().saveOrUpdate(pic);
+            SwitchPicService.getInstance().saveOrUpdate(pic);
             mHandler.sendEmptyMessage(LOAD_MORE_DATA);
         } catch (DbException e) {
             e.printStackTrace();
@@ -731,13 +734,13 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
      * 保存抄录数据
      */
     private void saveOrUpdateInputValue(final int messageCode) {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
+        ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
 //                if (!TextUtils.isEmpty(PreferencesUtils.get(SwitchMenu.REPSWITCHOVERID, ""))) {
 //                    report.repSwithoverId = PreferencesUtils.get(SwitchMenu.REPSWITCHOVERID, "");
                 try {
-                    XunshiApplication.getDbUtils().saveOrUpdate(report);
+                    ReportService.getInstance().saveOrUpdate(report);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
@@ -753,7 +756,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                         defectRecord.val = model.getString(DefectRecord.VAL);
                         defectRecord.oldval = model.getString(DefectRecord.OLDVAL);
                         try {
-                            XunshiApplication.getDbUtils().saveOrUpdate(defectRecord);
+                           DefectRecordService.getInstance().saveOrUpdate(defectRecord);
                         } catch (DbException e) {
                             e.printStackTrace();
                         }
@@ -801,7 +804,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                             saveSwitchPic();
                         });
                     } else {
-                        ToastUtils.showMessage( "当前正在录音");
+                        ToastUtils.showMessage("当前正在录音");
                     }
 
                 }

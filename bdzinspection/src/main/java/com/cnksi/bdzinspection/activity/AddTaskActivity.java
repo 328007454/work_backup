@@ -15,27 +15,32 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.XunJianTypeAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.BdzDialogAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.InspectionTypeAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.LookupService;
-import com.cnksi.bdzinspection.daoservice.TaskService;
+import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
+import com.cnksi.bdzinspection.daoservice.SwitchMenuService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddInspectionTaskBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityAddinpsectionTypeDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.bdzinspection.model.Lookup;
-import com.cnksi.bdzinspection.model.TaskExtend;
-import com.cnksi.bdzinspection.utils.Config.LookUpType;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.bdzinspection.utils.SelectPersonUtil;
 import com.cnksi.bdzinspection.ywyth.YWDeviceListActivity;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskExtendService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.model.TaskExtend;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -151,20 +156,15 @@ public class AddTaskActivity extends BaseActivity {
     }
 
     private void initialData() {
-        mHandler.postDelayed(new Runnable() {
+        mHandler.postDelayed(() -> ExecutorManager.executeTask(new Runnable() {
             @Override
             public void run() {
-                mFixedThreadPoolExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        initBdzData();
-                        initInspectionTypeData();
-                        initInspectionTypeChildData();
+                initBdzData();
+                initInspectionTypeData();
+                initInspectionTypeChildData();
 
-                    }
-                });
             }
-        }, 0);
+        }), 0);
 
     }
 
@@ -175,9 +175,9 @@ public class AddTaskActivity extends BaseActivity {
         try {
             String bdzId = PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, "");
             if (!TextUtils.isEmpty(bdzId)) {
-                mCurrentBdz = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.BDZID, "=", bdzId).and(Bdz.DLT, "=", 0).findFirst();
+                mCurrentBdz = BdzService.getInstance().findById(bdzId);
             }
-            mBdzList = XunshiApplication.getDbUtils().selector(Bdz.class).where(Bdz.DLT, "=", "0").findAll();
+            mBdzList = BdzService.getInstance().findAll();
             mHandler.sendEmptyMessage(LOAD_BDZ_DATA);
             currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
             allPersons = DepartmentService.getInstance().findAllUserForCurrentUser(currentAcounts);
@@ -216,10 +216,10 @@ public class AddTaskActivity extends BaseActivity {
             if (groupList != null && groupList.size() == 1) {
                 Lookup mGroupLookUp = groupList.get(0);
                 if ((InspectionType.switchover.name().equals(currentTypeStr) || InspectionType.maintenance.name().equals(currentTypeStr)) && null != mCurrentBdz) {
-                    childList = (ArrayList<Lookup>) LookupService.getInstance()
+                    childList = (ArrayList<Lookup>) SwitchMenuService.getInstance()
                             .findSwitchMenu(currentTypeStr, mCurrentBdz.bdzid);
                 } else if (InspectionType.special.name().equals(currentTypeStr)) {
-                    childList = (ArrayList<Lookup>) LookupService.getInstance()
+                    childList = (ArrayList<Lookup>) SpecialMenuService.getInstance()
                             .findSpecialMenu(currentTypeStr);
                 } else {
                     childList = new ArrayList<Lookup>(LookupService.getInstance()
@@ -244,11 +244,11 @@ public class AddTaskActivity extends BaseActivity {
             groupHashMap = new HashMap<>();
             for (Lookup mGroupLookUp : groupList) {
                 if ((InspectionType.switchover.name().equals(currentTypeStr) || InspectionType.maintenance.name().equals(currentTypeStr)) && null != mCurrentBdz) {
-                    childList = (ArrayList<Lookup>) LookupService.getInstance()
+                    childList = (ArrayList<Lookup>) SwitchMenuService.getInstance()
                             .findSwitchMenu(currentTypeStr, mCurrentBdz.bdzid);
                     groupHashMap.put(mGroupLookUp, childList);
                 } else if (InspectionType.special.name().equals(currentTypeStr)) {
-                    childList = (ArrayList<Lookup>) LookupService.getInstance()
+                    childList = (ArrayList<Lookup>) SpecialMenuService.getInstance()
                             .findSpecialMenu(currentTypeStr);
                     groupHashMap.put(mGroupLookUp, childList);
                 } else {
@@ -516,7 +516,7 @@ public class AddTaskActivity extends BaseActivity {
             PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
             boolean xudianchi = mInspectionType.v.contains(Config.XUDIANCHI) && (mInspectionType.v.contains(Config.DIANYA) || mInspectionType.v.contains(Config.NEIZU));
             try {
-                XunshiApplication.getDbUtils().saveOrUpdate(mReport);
+                ReportService.getInstance().saveOrUpdate(mReport);
                 if ("select_device".equalsIgnoreCase(mInspectionType.deviceWay)) {
                     // 手动选择设备
                     Intent intent = new Intent(currentActivity, DeviceSelectActivity.class);
@@ -533,8 +533,8 @@ public class AddTaskActivity extends BaseActivity {
                     } else {
                         taskExpand.sbjcIsAllCheck = 1;
                     }
-                    XunshiApplication.getDbUtils().save(taskExpand);
-                    XunshiApplication.getDbUtils().save(mCurrentTask);
+                   TaskExtendService.getInstance().saveOrUpdate(taskExpand);
+                    TaskService.getInstance().saveOrUpdate(mCurrentTask);
                     setResult(RESULT_OK);
                     this.finish();
                 } else if (InspectionType.operation.name().equalsIgnoreCase(mInspectionType.k)) {
@@ -542,7 +542,7 @@ public class AddTaskActivity extends BaseActivity {
                     Intent intent = new Intent(currentActivity, YWDeviceListActivity.class);
                     startActivityForResult(intent, ADD_YUNWEI_TASK_CODE);
                 } else {
-                    XunshiApplication.getDbUtils().save(mCurrentTask);
+                    TaskService.getInstance().saveOrUpdate(mCurrentTask);
                     setResult(RESULT_OK);
                     this.finish();
                 }
@@ -559,7 +559,7 @@ public class AddTaskActivity extends BaseActivity {
             switch (requestCode) {
                 case SAVE_TASK_REQUEST_CODE:
                     try {
-                        XunshiApplication.getDbUtils().save(mCurrentTask);
+                        TaskService.getInstance().saveOrUpdate(mCurrentTask);
                         setResult(RESULT_OK);
                         this.finish();
                     } catch (DbException e) {
@@ -581,7 +581,7 @@ public class AddTaskActivity extends BaseActivity {
                             PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
                             PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
                             try {
-                                XunshiApplication.getDbUtils().save(mCurrentTask);
+                                TaskService.getInstance().saveOrUpdate(mCurrentTask);
                                 setResult(RESULT_OK);
                                 this.finish();
                             } catch (DbException e) {
@@ -595,8 +595,8 @@ public class AddTaskActivity extends BaseActivity {
                     mCurrentTask.selected_deviceid = selectDevice;
                     mReport.selected_deviceid = selectDevice;
                     try {
-                        XunshiApplication.getDbUtils().saveOrUpdate(mReport);
-                        XunshiApplication.getDbUtils().save(mCurrentTask);
+                        ReportService.getInstance().saveOrUpdate(mReport);
+                        TaskService.getInstance().saveOrUpdate(mCurrentTask);
                         setResult(RESULT_OK);
                         this.finish();
                     } catch (DbException e) {

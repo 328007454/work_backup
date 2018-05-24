@@ -9,20 +9,22 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdloc.DistanceUtil;
 import com.cnksi.bdloc.LatLng;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
-import com.cnksi.bdzinspection.daoservice.DeviceService;
+import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
-import com.cnksi.bdzinspection.daoservice.SpacingService;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 
 import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +68,7 @@ public class ArriveCheckHelper {
         DISTANCE = PreferencesUtils.get( Config.COPY_DISTANCE_KEY, 100f);
         if (SystemConfig.isDevicePlaced()) {
             ExecutorManager.executeTask(() -> {
-                List<PlacedDevice> result = PlacedService.getInstance().findPlacedDevice(currentReportId);
+                List<PlacedDevice> result = PlacedDeviceService.getInstance().findPlacedDevice(currentReportId);
                 if (result != null) {
                     for (PlacedDevice placed : result) {
                         arrivedDevices.put(placed.deviceid, placed);
@@ -113,33 +115,27 @@ public class ArriveCheckHelper {
         if (!isPrepare) {
             return;
         }
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                arrivedPlaces.clear();
-                List<Placed> result = PlacedService.getInstance().findPlacedSpace(currentReportId);
-                if (result != null) {
-                    for (Placed placed : result) {
-                        arrivedPlaces.put(placed.spId, placed);
-                    }
+        ExecutorManager.executeTask(() -> {
+            arrivedPlaces.clear();
+            List<Placed> result = PlacedService.getInstance().findPlacedSpace(currentReportId);
+            if (result != null) {
+                for (Placed placed : result) {
+                    arrivedPlaces.put(placed.spId, placed);
                 }
-                arrivedDevices.clear();
-                List<PlacedDevice> resultDevice = PlacedService.getInstance().findPlacedDevice(currentReportId);
-                if (result != null) {
-                    for (PlacedDevice placed : resultDevice) {
-                        arrivedDevices.put(placed.deviceid, placed);
-                    }
-                }
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        deviceAdapter.setArriveDeviceList(getArrivedDevices());
-                        deviceAdapter.setArriveSpaceIdList(getArrivedSpids());
-                        deviceAdapter.notifyDataSetChanged();
-                    }
-                });
-                handleSpaceArrivedData();
             }
+            arrivedDevices.clear();
+            List<PlacedDevice> resultDevice = PlacedDeviceService.getInstance().findPlacedDevice(currentReportId);
+            if (result != null) {
+                for (PlacedDevice placed : resultDevice) {
+                    arrivedDevices.put(placed.deviceid, placed);
+                }
+            }
+            mHandler.post(() -> {
+                deviceAdapter.setArriveDeviceList(getArrivedDevices());
+                deviceAdapter.setArriveSpaceIdList(getArrivedSpids());
+                deviceAdapter.notifyDataSetChanged();
+            });
+            handleSpaceArrivedData();
         });
     }
 
@@ -165,72 +161,65 @@ public class ArriveCheckHelper {
     }
 
     private void checkArrivedDevice(final LatLng location) {
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                final List<PlacedDevice> saveList = new ArrayList<>();
-                for (Device device : needCheckDeviceList) {
-                    LatLng deviceLocation = LatLng.valueOf(device.latitude, device.longitude);
-                    if (deviceLocation == null) {
-                        continue;
-                    }
-                    double distance = DistanceUtil.getDistance(location, deviceLocation);
-                    //距离范围太远
-                    if (distance > DISTANCE) {
-                        continue;
-                    }
-                    PlacedDevice placed = arrivedDevices.get(device.deviceid);
-                    if (placed == null) {
-                        placed = PlacedDevice.create(device, currentReportId);
-                        arrivedDevices.put(placed.deviceid, placed);
-                        placed.setPlacedWayHighest("gps");
-                        placed.latitude = String.valueOf(deviceLocation.lat);
-                        placed.longtitude = String.valueOf(deviceLocation.lng);
-                        saveList.add(placed);
-                    }
+        ExecutorManager.executeTask(() -> {
+            final List<PlacedDevice> saveList = new ArrayList<>();
+            for (Device device : needCheckDeviceList) {
+                LatLng deviceLocation = LatLng.valueOf(device.latitude, device.longitude);
+                if (deviceLocation == null) {
+                    continue;
                 }
-                saveDeviceArrived(saveList);
+                double distance = DistanceUtil.getDistance(location, deviceLocation);
+                //距离范围太远
+                if (distance > DISTANCE) {
+                    continue;
+                }
+                PlacedDevice placed = arrivedDevices.get(device.deviceid);
+                if (placed == null) {
+                    placed = PlacedDevice.create(device, currentReportId);
+                    arrivedDevices.put(placed.deviceid, placed);
+                    placed.setPlacedWayHighest("gps");
+                    placed.latitude = String.valueOf(deviceLocation.lat);
+                    placed.longtitude = String.valueOf(deviceLocation.lng);
+                    saveList.add(placed);
+                }
             }
+            saveDeviceArrived(saveList);
         });
     }
 
     private void checkArrivedSpace(final LatLng location) {
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                List<Placed> saveList = new ArrayList<>();
-                for (Spacing spacing : needCheckSpacingList) {
-                    LatLng spaceLocation = LatLng.valueOf(spacing.latitude, spacing.longitude);
-                    if (spaceLocation == null) {
-                        continue;
-                    }
-                    double distance = DistanceUtil.getDistance(location, spaceLocation);
-                    //距离范围太远
-                    if (distance > DISTANCE) {
-                        continue;
-                    }
-                    Placed placed = arrivedPlaces.get(spacing.spid);
-                    if (placed == null) {
-                        placed = new Placed(currentReportId, bdzId, spacing.spid, spacing.name, 1, location.lat, location.lng);
-                        arrivedPlaces.put(placed.spId, placed);
-                        saveList.add(placed);
+        ExecutorManager.executeTask(() -> {
+            List<Placed> saveList = new ArrayList<>();
+            for (Spacing spacing : needCheckSpacingList) {
+                LatLng spaceLocation = LatLng.valueOf(spacing.latitude, spacing.longitude);
+                if (spaceLocation == null) {
+                    continue;
+                }
+                double distance = DistanceUtil.getDistance(location, spaceLocation);
+                //距离范围太远
+                if (distance > DISTANCE) {
+                    continue;
+                }
+                Placed placed = arrivedPlaces.get(spacing.spid);
+                if (placed == null) {
+                    placed = new Placed(currentReportId, bdzId, spacing.spid, spacing.name, 1, location.lat, location.lng);
+                    arrivedPlaces.put(placed.spId, placed);
+                    saveList.add(placed);
+                }
+            }
+            if (saveList.size() > 0) {
+                try {
+                    PlacedService.getInstance().saveOrUpdate(saveList);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                Iterator<Spacing> iterator = needCheckSpacingList.iterator();
+                while (iterator.hasNext()) {
+                    if (arrivedPlaces.containsKey(iterator.next().spid)) {
+                        iterator.remove();
                     }
                 }
-                if (saveList.size() > 0) {
-                    PlacedService.getInstance().saveOrUpdateAll(saveList);
-                    Iterator<Spacing> iterator = needCheckSpacingList.iterator();
-                    while (iterator.hasNext()) {
-                        if (arrivedPlaces.containsKey(iterator.next().spid)) {
-                            iterator.remove();
-                        }
-                    }
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            deviceAdapter.setArriveSpaceIdList(getArrivedSpids());
-                        }
-                    });
-                }
+                mHandler.post(() -> deviceAdapter.setArriveSpaceIdList(getArrivedSpids()));
             }
         });
     }
@@ -293,7 +282,11 @@ public class ArriveCheckHelper {
         if (saveList == null || saveList.size() == 0) {
             return;
         }
-        PlacedService.getInstance().saveOrUpdateAll(saveList);
+        try {
+            PlacedDeviceService.getInstance().saveOrUpdate(saveList);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
         Iterator<Device> iterator = needCheckDeviceList.iterator();
         while (iterator.hasNext()) {
             if (arrivedDevices.containsKey(iterator.next().deviceid)) {
@@ -327,7 +320,11 @@ public class ArriveCheckHelper {
                     }
                 }
             }
-            PlacedService.getInstance().saveOrUpdateAll(saveList);
+            try {
+                PlacedService.getInstance().saveOrUpdate(saveList);
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
             for (Placed placed : saveList) {
                 arrivedPlaces.put(placed.spId, placed);
             }

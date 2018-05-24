@@ -16,22 +16,25 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ChangeCopyItemParentAdapter;
 import com.cnksi.bdzinspection.adapter.CopyTypeAdapter;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
-import com.cnksi.bdzinspection.daoservice.CopyItemService;
-import com.cnksi.bdzinspection.daoservice.CopyResultService;
+import com.cnksi.bdzinspection.daoservice.LogsService;
 import com.cnksi.bdzinspection.databinding.XsActivitySettingCopyBinding;
 import com.cnksi.bdzinspection.databinding.XsAddCopyItemBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogInput1Binding;
 import com.cnksi.bdzinspection.model.ChangeCopyItem;
-import com.cnksi.bdzinspection.model.CopyItem;
-import com.cnksi.bdzinspection.model.CopyResult;
-import com.cnksi.bdzinspection.model.CopyType;
 import com.cnksi.bdzinspection.model.Logs;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.DisplayUtil;
 import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.daoservice.CopyItemService;
+import com.cnksi.common.daoservice.CopyResultService;
+import com.cnksi.common.daoservice.CopyTypeService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
+import com.cnksi.common.model.CopyType;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -142,81 +145,77 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     }
 
     private void initialData() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                copyTypes = CopyItemService.getInstance().findAllCopyType();
-                for (CopyType type : copyTypes) {
-                    if (!copyTypeHashMap.containsKey(type.key)) {
-                        copyTypeHashMap.put(type.key, type);
-                    }
+        ExecutorManager.executeTask(() -> {
+            copyTypes = CopyTypeService.getInstance().findAllCopyType();
+            for (CopyType type : copyTypes) {
+                if (!copyTypeHashMap.containsKey(type.key)) {
+                    copyTypeHashMap.put(type.key, type);
                 }
-                typeCounts = Arrays.asList(getResources().getStringArray(R.array.XS_CopyItemCount));
-                // 查询当前设备抄录项
-                copyItemList = (ArrayList<CopyItem>) CopyItemService.getInstance().getDeviceALLCopyItem(currentBdzId, currentDeviceId);
+            }
+            typeCounts = Arrays.asList(getResources().getStringArray(R.array.XS_CopyItemCount));
+            // 查询当前设备抄录项
+            copyItemList = (ArrayList<CopyItem>) CopyItemService.getInstance().getDeviceALLCopyItem(currentBdzId, currentDeviceId);
 //                originItems = (ArrayList<CopyItem>) copyItemList.clone();
-                originItems = (ArrayList<CopyItem>) CopyItemService.getInstance().getDeviceALLCopyItem(currentBdzId, currentDeviceId);
-                List<String> keys = new ArrayList<>();
-                List<String> fullKeys = new ArrayList<>();
-                List<String> routineKeys = new ArrayList<>();
-                List<String> specialKeys = new ArrayList<>();
-                for (CopyItem item : copyItemList) {
-                    if (item.kind.contains(InspectionType.full.name())) {
-                        if (copyTypeHashMap.containsKey(item.type_key) && !fullKeys.contains(item.type_key)) {
-                            parentFullTypes.add(copyTypeHashMap.get(item.type_key));
-                            fullKeys.add(item.type_key);
-                        }
-                    }
-                    if (item.kind.contains(InspectionType.routine.name())) {
-                        if (copyTypeHashMap.containsKey(item.type_key) && !routineKeys.contains(item.type_key)) {
-                            parentRoutineTypes.add(copyTypeHashMap.get(item.type_key));
-                            routineKeys.add(item.type_key);
-                        }
-                    }
-                    if (item.kind.contains(currentInspectionType)) {
-                        if (copyTypeHashMap.containsKey(item.type_key) && !specialKeys.contains(item.type_key)) {
-                            parentSpecialTypes.add(copyTypeHashMap.get(item.type_key));
-                            specialKeys.add(item.type_key);
-                        }
+            originItems = (ArrayList<CopyItem>) CopyItemService.getInstance().getDeviceALLCopyItem(currentBdzId, currentDeviceId);
+            List<String> keys = new ArrayList<>();
+            List<String> fullKeys = new ArrayList<>();
+            List<String> routineKeys = new ArrayList<>();
+            List<String> specialKeys = new ArrayList<>();
+            for (CopyItem item : copyItemList) {
+                if (item.kind.contains(InspectionType.full.name())) {
+                    if (copyTypeHashMap.containsKey(item.type_key) && !fullKeys.contains(item.type_key)) {
+                        parentFullTypes.add(copyTypeHashMap.get(item.type_key));
+                        fullKeys.add(item.type_key);
                     }
                 }
-
-                for (CopyItem copyItem : originItems) {
-                    if (null == originCopyItemMap.get(copyItem.id)) {
-                        originCopyItemMap.put(copyItem.id, copyItem);
+                if (item.kind.contains(InspectionType.routine.name())) {
+                    if (copyTypeHashMap.containsKey(item.type_key) && !routineKeys.contains(item.type_key)) {
+                        parentRoutineTypes.add(copyTypeHashMap.get(item.type_key));
+                        routineKeys.add(item.type_key);
                     }
                 }
-
-                reportResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, true);
-                Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
-                if (null != reportResultList && !reportResultList.isEmpty()) {
-                    for (CopyResult result : reportResultList) {
-                        reportCopyResultMap.put(result.item_id, result);
+                if (item.kind.contains(currentInspectionType)) {
+                    if (copyTypeHashMap.containsKey(item.type_key) && !specialKeys.contains(item.type_key)) {
+                        parentSpecialTypes.add(copyTypeHashMap.get(item.type_key));
+                        specialKeys.add(item.type_key);
                     }
                 }
-                // 历史抄录值
-                List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false);
-                Map<String, CopyResult> historyMap = new HashMap<>();
-                if (null != historyResultList && !historyResultList.isEmpty()) {
-                    for (CopyResult historyResult : historyResultList) {
-                        historyMap.put(historyResult.item_id, historyResult);
-                    }
-                }
-                CopyResult originResult = null;
-                for (CopyItem item : copyItemList) {
-                    if (null != reportCopyResultMap.get(item.id)) {
-                        originResult = reportCopyResultMap.get(item.id);
-                    } else if (null != historyMap.get(item.id)) {
-                        originResult = historyMap.get(item.id);
-                    } else {
-                        originResult = new CopyResult();
-                    }
-                    initCopyItemData(item, originResult);
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
             }
 
+            for (CopyItem copyItem : originItems) {
+                if (null == originCopyItemMap.get(copyItem.id)) {
+                    originCopyItemMap.put(copyItem.id, copyItem);
+                }
+            }
 
+            reportResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, true);
+            Map<String, CopyResult> reportCopyResultMap = new HashMap<>();
+            if (null != reportResultList && !reportResultList.isEmpty()) {
+                for (CopyResult result : reportResultList) {
+                    reportCopyResultMap.put(result.item_id, result);
+                    }
+                }
+            }
+            // 历史抄录值
+            List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false);
+            Map<String, CopyResult> historyMap = new HashMap<>();
+            if (null != historyResultList && !historyResultList.isEmpty()) {
+                for (CopyResult historyResult : historyResultList) {
+                    historyMap.put(historyResult.item_id, historyResult);
+                }
+            }
+            CopyResult originResult = null;
+            for (CopyItem item : copyItemList) {
+                if (null != reportCopyResultMap.get(item.id)) {
+                    originResult = reportCopyResultMap.get(item.id);
+                } else if (null != historyMap.get(item.id)) {
+                    originResult = historyMap.get(item.id);
+                } else {
+                    originResult = new CopyResult();
+                }
+                initCopyItemData(item, originResult);
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -623,7 +622,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     private void saveData() {
         Logs logs = null;
         for (CopyItem copyItem : updateCopyItems) {
-            if (copyItem.dlt == 1) {
+            if (copyItem.dlt.equals(Config.DELETED)) {
                 logs = new Logs();
                 logs.setCurrentMessage(currentDeviceId, currentDeviceName, currentPersonId, currentUserName, "delete", "copy_item");
                 logs.content = "删除抄录项";
@@ -640,8 +639,8 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             saveCopyItem(parentSpecialTypes, childSpecialMap);
         }
         if (!increaseLogs.isEmpty()) {
-            CopyItemService.getInstance().saveUpdate(increaseLogs, mFixedThreadPoolExecutor);
-            CopyItemService.getInstance().saveUpdate(new ArrayList<>(updateCopyItems), currentReportId, mFixedThreadPoolExecutor);
+            LogsService.getInstance().saveOrUpdateQuiet(increaseLogs);
+            CopyItemService.getInstance().saveUpdate(new ArrayList<>(updateCopyItems), currentReportId);
         }
 
     }
@@ -674,15 +673,15 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                     Logs logs1 = new Logs();
                     logs1.setCurrentMessage(currentDeviceId, currentDeviceName, currentPersonId, currentUserName, "update", "copy_item");
                     if (!changeCopyItem.getItem().val.equalsIgnoreCase(item.val)) {
-                        logs1.content = (changeCopyItem.getItem().val.equalsIgnoreCase("Y") ? "增加单项抄录" : "去除单项抄录") + "\n";
+                        logs1.content = ("Y".equalsIgnoreCase(changeCopyItem.getItem().val) ? "增加单项抄录" : "去除单项抄录") + "\n";
                     } else if (!changeCopyItem.getItem().val_a.equalsIgnoreCase(item.val_a)) {
-                        logs1.content = (changeCopyItem.getItem().val_a.equalsIgnoreCase("Y") ? "增加A项抄录" : "去除A项抄录") + "\n";
+                        logs1.content = ("Y".equalsIgnoreCase(changeCopyItem.getItem().val_a) ? "增加A项抄录" : "去除A项抄录") + "\n";
                     } else if (!changeCopyItem.getItem().val_b.equalsIgnoreCase(item.val_b)) {
-                        logs1.content = (changeCopyItem.getItem().val_b.equalsIgnoreCase("Y") ? "增加B项抄录" : "去除B项抄录") + "\n";
+                        logs1.content = ("Y".equalsIgnoreCase(changeCopyItem.getItem().val_b) ? "增加B项抄录" : "去除B项抄录") + "\n";
                     } else if (!changeCopyItem.getItem().val_c.equalsIgnoreCase(item.val_c)) {
-                        logs1.content = (changeCopyItem.getItem().val_c.equalsIgnoreCase("Y") ? "增加C项抄录" : "去除C项抄录") + "\n";
+                        logs1.content = ("Y".equalsIgnoreCase(changeCopyItem.getItem().val_c) ? "增加C项抄录" : "去除C项抄录") + "\n";
                     } else if (!changeCopyItem.getItem().val_o.equalsIgnoreCase(item.val_o)) {
-                        logs1.content = (changeCopyItem.getItem().val_o.equalsIgnoreCase("Y") ? "增加O项抄录" : "去除O项抄录") + "\n";
+                        logs1.content = ("Y".equalsIgnoreCase(changeCopyItem.getItem().val_o) ? "增加O项抄录" : "去除O项抄录") + "\n";
                     }
                     if (!TextUtils.isEmpty(logs1.content)) {
                         changeCopyItem.getItem().version += 1;
@@ -733,7 +732,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             for (ChangeCopyItem changeCopyItem : copyItems) {
                 type = changeCopyItem.getItem().kind;
                 changeCopyItem.getItem().isUpLoad = "N";
-                changeCopyItem.getItem().dlt = 1;
+                changeCopyItem.getItem().dlt = Config.DELETED;
                 if (originCopyItemMap.containsKey(changeCopyItem.getItem().id) && !updateCopyItems.contains(changeCopyItem.getItem())) {
                     updateCopyItems.add(changeCopyItem.getItem());
                 }

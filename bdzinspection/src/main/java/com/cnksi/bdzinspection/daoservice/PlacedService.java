@@ -1,8 +1,7 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.Placed;
-import com.cnksi.bdzinspection.model.PlacedDevice;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.common.util.KeyValue;
@@ -20,14 +19,15 @@ import java.util.List;
  *
  * @author luoxy
  */
-public class PlacedService extends BaseService {
+public class PlacedService extends BaseService<Placed> {
 
-    private static PlacedService instance;
+    private final static PlacedService instance=new PlacedService();;
+
+    protected PlacedService() {
+        super(Placed.class);
+    }
 
     public static PlacedService getInstance() {
-        if (null == instance) {
-            instance = new PlacedService();
-        }
         return instance;
     }
 
@@ -40,7 +40,7 @@ public class PlacedService extends BaseService {
     public List<Placed> findPlacedSpace(String reportId) {
         List<Placed> placed = new ArrayList<Placed>();
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Placed.class).where(Placed.REPORTID, "=", reportId).and(Placed.PLACED, "=",
+            Selector selector = selector().and(Placed.REPORTID, "=", reportId).and(Placed.PLACED, "=",
                     "1");
 
             placed = selector.findAll();
@@ -50,21 +50,7 @@ public class PlacedService extends BaseService {
         return placed;
     }
 
-    /**
-     * 查詢已到間隔
-     *
-     * @param reportId
-     * @return
-     */
-    public List<PlacedDevice> findPlacedDevice(String reportId) {
-        try {
-            Selector selector = XunshiApplication.getDbUtils().selector(PlacedService.class).where(PlacedDevice.REPORTID, "=", reportId);
-            return selector.findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
 
     public HashMap<String, String> findPmsPlaced(String reportId) {
@@ -73,7 +59,7 @@ public class PlacedService extends BaseService {
             String sql = "SELECT  s.pms_id,p.create_time FROM `placed` p LEFT JOIN spacing s on p.spid=s.spid  where report_id=? and p.dlt=0 GROUP BY pms_id";
             SqlInfo sqlInfo = new SqlInfo(sql);
             sqlInfo.addBindArg(new KeyValue("", reportId));
-            List<DbModel> dbModels = XunshiApplication.getDbUtils().findDbModelAll(sqlInfo);
+            List<DbModel> dbModels = findDbModelAll(sqlInfo);
             if (dbModels != null) {
                 for (DbModel model : dbModels) {
                     map.put(model.getString("pms_id"), model.getString("create_time"));
@@ -86,6 +72,7 @@ public class PlacedService extends BaseService {
     }
 
 
+    @Override
     public boolean saveOrUpdate(Placed mObject) {
         mObject.createTime = DateUtils.getCurrentLongTime();
         try {
@@ -97,31 +84,8 @@ public class PlacedService extends BaseService {
         return true;
     }
 
-    public boolean saveOrUpdate(PlacedDevice mObject) {
-        mObject.update_time = DateUtils.getCurrentLongTime();
-        try {
-            XunshiApplication.getDbUtils().saveOrUpdate(mObject);
-        } catch (DbException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
 
-    public boolean saveOrUpdateAll(List<? extends Object> entities) {
-        for (Object entity : entities) {
-            if (entities instanceof Placed) {
-                ((Placed) entity).createTime = DateUtils.getCurrentLongTime();
-            }
-        }
-        try {
-            XunshiApplication.getDbUtils().saveOrUpdate(entities);
-        } catch (DbException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
+
 
     /**
      * 查詢到位間隔
@@ -132,7 +96,7 @@ public class PlacedService extends BaseService {
      */
     public Placed findPlaced(String reportId, String spid) {
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Placed.class).where(Placed.DLT, "=", "0").and(Placed.REPORTID, "=", reportId)
+            Selector selector = selector().and(Placed.REPORTID, "=", reportId)
                     .and(Placed.PLACED, "=", "1").and(Placed.SPID, "=", spid);
 
             return (Placed) selector.findFirst();
@@ -143,17 +107,5 @@ public class PlacedService extends BaseService {
     }
 
 
-    public PlacedDevice findDevicePlaced(String reportId, String deviceId) {
-        try {
-
-            Selector selector = XunshiApplication.getDbUtils().selector(PlacedDevice.class).where(PlacedDevice.REPORTID, "=", reportId)
-                    .and(PlacedDevice.DEVICEID, "=", deviceId);
-
-            return (PlacedDevice) selector.findFirst();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 }

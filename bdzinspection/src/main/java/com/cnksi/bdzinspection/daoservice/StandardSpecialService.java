@@ -1,21 +1,22 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import java.util.List;
-
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.model.StandardSpecial;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;
 
+import java.util.List;
+
 /**
  * @author lyndon
  */
-public class StandardSpecialService {
+public class StandardSpecialService extends BaseService<StandardSpecial> {
 
     public static StandardSpecialService mInstance;
 
     private StandardSpecialService() {
+        super(StandardSpecial.class);
     }
 
     public static StandardSpecialService getInstance() {
@@ -28,7 +29,7 @@ public class StandardSpecialService {
     public List<StandardSpecial> getStandardSpecial(String insepctionType) {
         // SELECT group_concat(bigid,",") from (SELECT DISTINCT(bigid) as bigid from standard_special where kind=?)
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(StandardSpecial.class).where(StandardSpecial.KIND, "=", insepctionType);
+            Selector selector = selector().and(StandardSpecial.KIND, "=", insepctionType);
             return selector.findAll();
         } catch (DbException e) {
             e.printStackTrace();

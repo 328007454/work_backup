@@ -119,7 +119,7 @@ public class ArcMenu extends ViewGroup implements OnClickListener {
                 l = getMeasuredWidth() - width;
                 t = getMeasuredHeight() - height;
                 break;
-
+            default:
         }
 
         /** 放置菜单按钮**/

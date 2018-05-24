@@ -1,7 +1,7 @@
 package com.cnksi.bdzinspection.daoservice;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
+import com.cnksi.common.daoservice.BaseService;
 
 import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
@@ -15,22 +15,23 @@ import java.util.List;
  * Created by kkk on 2018/3/8.
  */
 
-public class ZzhtService extends BaseService {
+public class ZzhtService extends BaseService<Zzht> {
 
-    private static ZzhtService service;
+    private final static ZzhtService instance = new ZzhtService();
 
-    public static ZzhtService getService() {
-        if (service == null) {
-            service = new ZzhtService();
-        }
-        return service;
+    protected ZzhtService() {
+        super(Zzht.class);
+    }
+
+    public static ZzhtService getInstance() {
+        return instance;
     }
 
 
     public Zzht bdzInZzht(String currentBdzId) {
         Zzht zzht = null;
         try {
-            Selector selector = XunshiApplication.getDbUtils().selector(Zzht.class).where(Zzht.DLT, "=", "0").and(Zzht.BDZID, "=", currentBdzId);
+            Selector selector = selector().and(Zzht.DLT, "=", "0").and(Zzht.BDZID, "=", currentBdzId);
             zzht = (Zzht) selector.findFirst();
         } catch (DbException e) {
             e.printStackTrace();
@@ -44,7 +45,7 @@ public class ZzhtService extends BaseService {
                 " report_zzht rz LEFT JOIN ( SELECT * FROM report_zzht_result WHERE reportid = '" + reportId + "') rzr ON rz.id = rzr.zzht_id" +
                 " WHERE rz.bdzid = '" + bdzId + "' AND rz.dlt = '0' and (rzr.reportid = '" + reportId + "' or rzr.reportid IS NULL) ORDER BY rz.LEVEL ASC, rz.sort ASC ";
         try {
-            dbModels = XunshiApplication.getDbUtils().findDbModelAll(new SqlInfo(sql));
+            dbModels = findDbModelAll(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
         }

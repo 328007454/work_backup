@@ -34,25 +34,23 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
 import com.cnksi.core.activity.BaseCoreActivity;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
-
-import com.cnksi.core.common.ScreenManager;
-
-
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.zhy.autolayout.AutoFrameLayout;
@@ -66,7 +64,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
@@ -79,10 +76,7 @@ public class BaseActivity extends BaseCoreActivity {
     public static final int INIT_SPEECH = -0x101001;
     public static final int ACTION_RECORDVIDEO = 0x500;
     public static final int PERMISSION_WINDOW = ACTION_RECORDVIDEO + 1;
-    /**
-     * 线程池
-     */
-    protected ExecutorService mFixedThreadPoolExecutor = XunshiApplication.getFixedThreadPoolExecutor();
+
     /**
      * 利用静态变量多个实例共享的特性 控制TaskRemind更新任务逻辑
      **/
@@ -482,9 +476,9 @@ public class BaseActivity extends BaseCoreActivity {
     protected void updateReportStatus() {
         try {
             Report report = new Report(currentReportId);
-            XunshiApplication.getDbUtils().update(report, Report.ENDTIME);
+            ReportService.getInstance().update(report, Report.ENDTIME);
             Task mTask = new Task(currentTaskId);
-            XunshiApplication.getDbUtils().update(mTask, Task.STATUS);
+            TaskService.getInstance().update(mTask, Task.STATUS);
         } catch (Exception e) {
             e.printStackTrace();
         }

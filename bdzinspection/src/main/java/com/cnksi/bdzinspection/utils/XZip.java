@@ -193,7 +193,7 @@ public class XZip {
         } else {
 
             //文件夹的方式,获取文件夹下的子文件
-            String fileList[] = file.list();
+            String[] fileList = file.list();
 
             //如果没有子文件, 则添加进去即可
             if (fileList.length <= 0) {

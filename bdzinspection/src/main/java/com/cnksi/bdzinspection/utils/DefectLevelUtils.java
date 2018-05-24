@@ -1,5 +1,7 @@
 package com.cnksi.bdzinspection.utils;
 
+import com.cnksi.common.Config;
+
 /**
  * 判定缺陷等级的工具类
  * 

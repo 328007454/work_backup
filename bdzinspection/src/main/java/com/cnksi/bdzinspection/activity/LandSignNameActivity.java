@@ -114,6 +114,7 @@ public class LandSignNameActivity extends TitleActivity {
                     setResult(RESULT_OK);
                     finish();
                     break;
+                default:
             }
         } else {
             findViewById(R.id.btn_next).setEnabled(true);

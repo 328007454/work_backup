@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsVideoAdapterBinding;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.ywyth.VideoPlayer;
+import com.cnksi.common.Config;
 import com.cnksi.common.utils.BitmapUtil;
-
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;

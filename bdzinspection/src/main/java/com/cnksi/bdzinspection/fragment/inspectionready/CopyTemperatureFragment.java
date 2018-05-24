@@ -11,11 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.databinding.XsFragmentCopyTemperature2Binding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
+import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
-import com.cnksi.bdzinspection.utils.CommonUtils;
+import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
@@ -57,9 +58,9 @@ public class CopyTemperatureFragment extends BaseFragment {
     protected void lazyLoad() {
         if (isPrepared && isVisible && isFirstLoad) {
             //Load时加载处理NFC 读取温度湿度
-            mFixedThreadPoolExecutor.execute(() -> {
+            ExecutorManager.executeTask(() -> {
                 try {
-                    mReport = XunshiApplication.getDbUtils().selector(Report.class).where(Report.TASK_ID, "=", currentTaskId).findFirst();
+                    mReport = ReportService.getInstance().getReportByTask(currentTaskId);
                     mHandler.sendEmptyMessage(LOAD_DATA);
                 } catch (DbException e) {
                     e.printStackTrace();
@@ -136,7 +137,7 @@ public class CopyTemperatureFragment extends BaseFragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (!s.toString().equalsIgnoreCase("")) {
+            if (!"".equalsIgnoreCase(s.toString())) {
                 if ((s.toString().length() == 1) && (s.toString().startsWith("+") || s.toString().startsWith("-") || s.toString().startsWith("."))) {
                     previousInput = s.toString();
                     isRight = true;

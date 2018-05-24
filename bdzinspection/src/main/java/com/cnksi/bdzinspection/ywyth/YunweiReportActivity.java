@@ -10,15 +10,16 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
-import com.cnksi.bdzinspection.application.XunshiApplication;
-import com.cnksi.bdzinspection.daoservice.TaskService;
 import com.cnksi.bdzinspection.databinding.XsActivityYunweiReportBinding;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
 import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.model.Department;
 import com.cnksi.common.model.Report;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -81,7 +82,7 @@ public class YunweiReportActivity extends BaseActivity {
 
 	private void initialData() {
 
-		mFixedThreadPoolExecutor.execute(new Runnable() {
+		ExecutorManager.executeTask(new Runnable() {
 
 			@Override
 			public void run() {
@@ -89,7 +90,7 @@ public class YunweiReportActivity extends BaseActivity {
 					// 查询状态
 					mCurrentDepartment = DepartmentService.getInstance().findDepartmentById(currentDepartmentId);
 					status = TaskService.getInstance().getTaskStatus(currentTaskId);
-					report = XunshiApplication.getDbUtils().findById(Report.class, currentReportId);
+					report= ReportService.getInstance().findById(currentReportId);
 
 				} catch (DbException e) {
 					e.printStackTrace();

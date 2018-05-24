@@ -12,11 +12,13 @@ import android.widget.RadioGroup;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.model.TaskExtend;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
@@ -26,10 +28,8 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.adapter.DialogPressAdapter;
 import com.cnksi.sjjc.adapter.ViewHolder;
-import com.cnksi.sjjc.bean.TaskExtend;
 import com.cnksi.sjjc.databinding.ActivityAddTaskBinding;
 import com.cnksi.sjjc.inter.ItemClickListener;
-import com.cnksi.sjjc.service.TaskExtendService;
 import com.cnksi.sjjc.util.DialogUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 

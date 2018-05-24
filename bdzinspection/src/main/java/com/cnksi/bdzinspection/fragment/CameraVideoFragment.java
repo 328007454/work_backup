@@ -16,9 +16,6 @@
 
 package com.cnksi.bdzinspection.fragment;
 
-import java.io.IOException;
-import java.util.List;
-
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.hardware.Camera;
@@ -33,8 +30,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.Config;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.Config;
+
+import java.io.IOException;
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class CameraVideoFragment extends Fragment implements Callback {

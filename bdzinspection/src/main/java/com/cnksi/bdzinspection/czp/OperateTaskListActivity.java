@@ -13,14 +13,14 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.DownloadOperationTickActivity;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.application.XunshiApplication;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskListBinding;
+import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
+import com.cnksi.bdzinspection.emnu.OperateTaskType;
 import com.cnksi.bdzinspection.fragment.OperateTaskListFragment;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.common.Config;
-import com.cnksi.bdzinspection.utils.Config.OperateTaskStatus;
-import com.cnksi.bdzinspection.utils.Config.OperateTaskType;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 
 import org.xutils.db.sqlite.SqlInfo;
@@ -59,7 +59,7 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
         String id = getIntent().getStringExtra("task_id");
         if (!TextUtils.isEmpty(id)) {
             try {
-                DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("select * from operate_tick where id='" + id + "'"));
+                DbModel model = OperateTicketService.getInstance().findDbModelFirst(new SqlInfo("select * from operate_tick where id='" + id + "'"));
                 if (model != null) {
                     CLog.e("收到第三方跳转请求，中断加载Activity");
                     startOperateTask(model);
@@ -95,13 +95,9 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
     }
 
     private void searchTitleArray() {
-        mFixedThreadPoolExecutor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                List<String> titleList = OperateTicketService.getInstance().getTaskCount(currentActivity);
-                mHandler.sendMessage(mHandler.obtainMessage(LOAD_DATA, titleList));
-            }
+        ExecutorManager.executeTask(() -> {
+            List<String> titleList = OperateTicketService.getInstance().getTaskCount(currentActivity);
+            mHandler.sendMessage(mHandler.obtainMessage(LOAD_DATA, titleList));
         });
 
     }

@@ -155,7 +155,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                                 + " AND (status = 'doing' OR status = 'undo') ");
                     }
                     if (null != mInspectionType) {
-                        whereBuilder.expr("AND " + Task.INSPECTION + " like '%" + mInspectionType.name() + "%'");
+                        whereBuilder.expr(" AND " + Task.INSPECTION + " like '%" + mInspectionType.name() + "%'");
                     }
                     mDataList = TaskService.getInstance().selector().and(whereBuilder).orderBy(Task.SCHEDULE_TIME).findAll();
                     // 遍历当前已完成的任务，查询是否有新增缺陷
