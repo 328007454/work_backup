@@ -9,19 +9,15 @@ import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
-import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
 import com.cnksi.sjjc.adapter.BatteryDefetcDeviceAdapter;
 import com.cnksi.sjjc.bean.BatteryInstrument;
 import com.cnksi.sjjc.databinding.ActivityBatteryDeviceDetectBinding;
 import com.cnksi.sjjc.service.BatteryInstrumentService;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 
 import java.util.ArrayList;
 import java.util.List;

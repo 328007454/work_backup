@@ -47,7 +47,7 @@ public class CommonApplication extends CoreApplication {
     @Override
     public DbManager.DaoConfig getDaoConfig() {
         if (config == null) {
-            config = new DbManager.DaoConfig(this).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(1)
+            config = new DbManager.DaoConfig(this).setDbDir(new File(CommonApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/")).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(1)
                     .setDbOpenListener(db -> {
                     })
                     .setUseEncrypt(true)

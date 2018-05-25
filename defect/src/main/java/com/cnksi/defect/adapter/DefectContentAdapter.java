@@ -82,7 +82,11 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
             if (bitmap != null) {
                 itemBinding.ivDefectImage.setImageBitmap(bitmap);
             }
-            itemBinding.ivDefectImage.setOnClickListener(v -> ImageDetailsActivity.startImageActivity(activity, 0,StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER),false,false));
+            itemBinding.ivDefectImage.setOnClickListener(v -> {
+                        new ImageDetailsActivity.Builder(activity).setPosition(0).setImageUrlList(StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER))
+                                .setDeleteFile(false).setShowDelete(false).start();
+                    }
+            );
         } else {
             itemBinding.ivDefectImage.setScaleType(ImageView.ScaleType.CENTER);
             itemBinding.ivDefectImage.setImageResource(R.mipmap.icon_nodefect);
