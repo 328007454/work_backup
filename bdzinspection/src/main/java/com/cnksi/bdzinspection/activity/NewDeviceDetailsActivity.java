@@ -40,6 +40,7 @@ import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DevicePartService;
@@ -602,13 +603,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                             for (DeviceTypeImage typeImage : typeImageList) {
                                 imageList.add(Config.BDZ_INSPECTION_FOLDER + typeImage.image);
                             }
-                            // 跳转选择图片
-                            Intent intent = new Intent(NewDeviceDetailsActivity.this, ImageDetailsActivity.class);
-                            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, imageList);
-                            intent.putExtra(Config.TITLE_NAME, "点击选择设备图片");
-                            intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, false);
-                            intent.putExtra("select", true);
-                            NewDeviceDetailsActivity.this.startActivityForResult(intent, SELECT_DEVICE_IMAGE);
+                            ImageDetailsActivity.with(mActivity).setSelect(true).setTitle("点击选择设备图片")
+                                    .setImageUrlList(imageList).setRequestCode(SELECT_DEVICE_IMAGE).start();
                         } else {
                             ToastUtils.showMessageLong("暂无图库可供选择");
                         }

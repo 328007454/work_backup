@@ -160,12 +160,7 @@ public class BTDemoActivity extends BaseActivity {
                 System.out.println("ByteArray INV:" + x6invtt);
                 System.out.println("handle INV: " + x6EPCstr4);
 
-                try {
-                    ModifyListView(x6EPCstr4);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                ModifyListView(x6EPCstr4);
                 break;
             case MSG_M100CMDRESP:
                 Bundle x6ver = msg.getData();

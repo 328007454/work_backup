@@ -3,7 +3,6 @@ package com.cnksi.bdzinspection.fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.bdzinspection.activity.ImageDetailsActivity;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.CLog;
@@ -262,13 +261,8 @@ public abstract class BaseFragment extends BaseCoreFragment {
      * @param position
      */
     public void showImageDetails(Fragment context, int position, ArrayList<String> mImageUrlList, boolean isShowDelete) {
-        Intent intent = new Intent(context.getActivity(), ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, position);
-        if (mImageUrlList != null) {
-            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, mImageUrlList);
-        }
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, isShowDelete);
-        context.getActivity().startActivityForResult(intent, com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE);
+        ImageDetailsActivity.with(context.getActivity()).setImageUrlList(mImageUrlList)
+                .setShowDelete(isShowDelete).setPosition(position).start();
     }
 
     /**

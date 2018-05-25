@@ -16,14 +16,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.DrawCircleImageActivity;
-import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.ActivityBatteryItemDialogBinding;
 import com.cnksi.sjjc.service.BatteryRecordService;
@@ -41,8 +42,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
@@ -87,7 +86,6 @@ public class BatteryDialogActivity extends AppCompatActivity {
      */
     private ArrayList<BatteryRecord> batteryListCode = new ArrayList<>();
     private Map<String, BatteryRecord> batteryRecordMap = new HashMap<String, BatteryRecord>();
-    private ExecutorService mServerice;
     private String bdzName;
     /**
      * 当前检测类型
@@ -107,7 +105,6 @@ public class BatteryDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_battery_item_dialog);
-        mServerice = Executors.newCachedThreadPool();
         getIntentValue();
         initView();
         loadData();
@@ -168,7 +165,7 @@ public class BatteryDialogActivity extends AppCompatActivity {
 
 
     private void loadData() {
-        mServerice.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 batteryRecord = BatteryRecordService.getInstance().getBatteryRecord(currentReportId, battery.bid, batteryCode);
                 batteryListCode = (ArrayList<BatteryRecord>) BatteryRecordService.getInstance().getBatteryRecordLatest(currentReportId, battery.bid, false);

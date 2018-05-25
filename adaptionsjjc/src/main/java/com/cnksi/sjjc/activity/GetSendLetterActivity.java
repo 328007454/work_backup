@@ -15,7 +15,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cnksi.common.Config;
@@ -35,6 +34,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.Transceiver;
@@ -360,17 +360,8 @@ public class GetSendLetterActivity extends BaseActivity {
      * 查看大图
      */
     private void viewPic() {
-        Intent intent = new Intent(this, ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
-        intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
-        ArrayList<String> images =  com.cnksi.core.utils.StringUtils.string2List(currentTransceiver.images, false);
-        ArrayList<String> viewImages = new ArrayList<String>();
-        for (String image : images) {
-            viewImages.add(Config.RESULT_PICTURES_FOLDER + image);
-        }
-        intent.putStringArrayListExtra(Config.IMAGEURL_LIST, viewImages);
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, true);
-        startActivityForResult(intent, Config.CANCEL_RESULT_LOAD_IMAGE);
+        ArrayList<String> images =  StringUtils.string2List(currentTransceiver.images, false);
+        showImageDetails(this,StringUtils.addStrToListItem(images,Config.RESULT_PICTURES_FOLDER),true);
     }
 
     /**

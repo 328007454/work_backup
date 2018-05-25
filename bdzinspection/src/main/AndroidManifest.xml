@@ -39,10 +39,6 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.cnksi.bdzinspection.activity.ImageDetailsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.cnksi.bdzinspection.activity.InspectionReadyActivity"
             android:exported="true"
             android:launchMode="singleTask"

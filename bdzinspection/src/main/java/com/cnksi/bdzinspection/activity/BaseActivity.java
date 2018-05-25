@@ -35,10 +35,9 @@ import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
-import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
@@ -46,6 +45,8 @@ import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ScreenManager;
@@ -67,7 +68,6 @@ import java.util.List;
 import java.util.Map;
 
 import static android.os.Build.VERSION.SDK_INT;
-import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
 
 @SuppressLint("HandlerLeak")
 public class BaseActivity extends BaseCoreActivity {
@@ -306,13 +306,11 @@ public class BaseActivity extends BaseCoreActivity {
      */
     public void showImageDetails(Activity context, int position, ArrayList<String> mImageUrlList,
                                  boolean isShowDelete) {
-        Intent intent = new Intent(currentActivity, ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, position);
-        if (mImageUrlList != null) {
-            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, mImageUrlList);
-        }
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, isShowDelete);
-        context.startActivityForResult(intent, CANCEL_RESULT_LOAD_IMAGE);
+        ImageDetailsActivity.with(context)
+                .setPosition(position)
+                .setShowDelete(isShowDelete)
+                .setImageUrlList(mImageUrlList)
+                .start();
     }
 
     /**

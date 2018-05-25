@@ -2,7 +2,6 @@ package com.cnksi.sjjc.activity;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -35,6 +34,7 @@ import android.widget.Toast;
 
 import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.databinding.IncludeTitleBinding;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
@@ -280,15 +280,8 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
     public void showImageDetails(Activity context, int position, ArrayList<String> mImageUrlList,
                                  boolean isShowDelete, boolean isDeleteFile) {
-        Intent intent = new Intent(_this, ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, position);
-        intent.putExtra(Config.CANCEL_IMAGEURL_LIST, isShowPicName);
-        if (mImageUrlList != null) {
-            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, mImageUrlList);
-        }
-        intent.putExtra(Config.IS_DELETE_FILE, isDeleteFile);
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, isShowDelete);
-        context.startActivityForResult(intent, CANCEL_RESULT_LOAD_IMAGE);
+        ImageDetailsActivity.with(context).setPosition(position).setImageUrlList(mImageUrlList).setDeleteFile(isDeleteFile).setShowDelete(isShowDelete).start();
+
     }
 
     public void showImageDetails(Activity context, int position, ArrayList<String> mImageUrlList,

@@ -83,6 +83,7 @@ ext {
     multidex_version = "1.0.3"
     SmartRefreshLayout_version = "1.0.3"
     material_calendarview = "1.4.3"
+    autofittextview="0.2.1"
 }
 
 

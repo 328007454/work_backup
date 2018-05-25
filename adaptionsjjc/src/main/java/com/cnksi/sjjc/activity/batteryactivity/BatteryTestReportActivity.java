@@ -11,6 +11,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
@@ -27,7 +28,6 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseReportActivity;
 import com.cnksi.sjjc.activity.HomeActivity;
-import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.adapter.BatteryReportImageAdapter;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.BatteryTestLayoutBinding;
@@ -273,12 +273,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                     imageAdapter.setItemClickListener(new ItemClickListener<List<String>>() {
                         @Override
                         public void itemClick(View v, List<String> imageList, int position) {
-                            Intent intent = new Intent(mActivity, ImageDetailsActivity.class);
-                            intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
-                            intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
-                            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, StringUtils.addStrToListItem(imageList, Config.RESULT_PICTURES_FOLDER));
-                            intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, false);
-                            startActivity(intent);
+                            ImageDetailsActivity.with(mActivity).setImageUrlList(StringUtils.addStrToListItem(imageList, Config.RESULT_PICTURES_FOLDER)).start();
                         }
 
                         @Override

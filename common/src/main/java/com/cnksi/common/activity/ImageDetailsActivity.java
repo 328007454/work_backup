@@ -28,10 +28,16 @@ import com.cnksi.core.view.photo.PhotoView;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.cnksi.common.Config.CANCEL_IMAGEURL_LIST;
 import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
+import static com.cnksi.common.Config.CURRENT_IMAGE_POSITION;
+import static com.cnksi.common.Config.IMAGEURL_LIST;
+import static com.cnksi.common.Config.IS_DELETE_FILE;
+import static com.cnksi.common.Config.IS_SHOW_PHOTO_FLAG;
 
 /**
  * 查看大图的Activity界面。
+ * @author Wastrel
  */
 public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChangeListener {
 
@@ -44,8 +50,8 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
 
     private ViewPagerAdapter viewAdapter = null;
 
-    private boolean isShowSelectFlag = false;
-
+    private boolean isShowDeleteFlag = false;
+    private boolean isSelectFlag = false;
     private int position = 0;
 
     private String titleName = "";
@@ -69,13 +75,13 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
     @Override
     public void getRootDataBinding() {
         mImageDetailsBinding = ActivityImageDetailsBinding.inflate(getLayoutInflater());
-        imageList = getIntent().getStringArrayListExtra(Config.IMAGEURL_LIST);
-        currentPosition = position = getIntent().getIntExtra(Config.CURRENT_IMAGE_POSITION, 0);
-        isShowSelectFlag = getIntent().getBooleanExtra(Config.IS_SHOW_PHOTO_FLAG, true);
-        isDeleteFile = getIntent().getBooleanExtra(Config.IS_DELETE_FILE, true);
+        imageList = getIntent().getStringArrayListExtra(IMAGEURL_LIST);
+        currentPosition = position = getIntent().getIntExtra(CURRENT_IMAGE_POSITION, 0);
+        isShowDeleteFlag = getIntent().getBooleanExtra(IS_SHOW_PHOTO_FLAG, true);
+        isDeleteFile = getIntent().getBooleanExtra(IS_DELETE_FILE, true);
         titleName = getIntent().getStringExtra(Config.TITLE_NAME);
-        mImageDetailsBinding.includeTitle.tvTitle.setText(TextUtils.isEmpty(titleName) ? "图片查看" : titleName);
-        if (isShowSelectFlag) {
+        mImageDetailsBinding.tvTitle.setText(TextUtils.isEmpty(titleName) ? "图片查看" : titleName);
+        if (isShowDeleteFlag) {
             mImageDetailsBinding.ibtnDelete.setVisibility(View.VISIBLE);
         } else {
             mImageDetailsBinding.ibtnDelete.setVisibility(View.GONE);
@@ -101,10 +107,19 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
 
     public void initView() {
         initOnClick();
+        isSelectFlag = getIntent().getBooleanExtra("select", false);
+        if (isSelectFlag) {
+            mImageDetailsBinding.tvBatteryTestStep.setVisibility(View.VISIBLE);
+            mImageDetailsBinding.tvBatteryTestStep.setText("确认选择");
+        }
     }
 
     private void initOnClick() {
-        mImageDetailsBinding.includeTitle.btnBack.setOnClickListener(view -> ImageDetailsActivity.this.onBackPressed());
+        mImageDetailsBinding.ibtnCancel.setOnClickListener(view -> ImageDetailsActivity.this.onBackPressed());
+        mImageDetailsBinding.tvBatteryTestStep.setOnClickListener(view -> {
+            cancelImageList.add(imageList.get(mImageDetailsBinding.viewPager.getCurrentItem()));
+            ImageDetailsActivity.this.onBackPressed();
+        });
         mImageDetailsBinding.ibtnDelete.setOnClickListener(view -> ImageDetailsActivity.this.showSureTipsDialog());
     }
 
@@ -145,7 +160,6 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
 
     @SuppressWarnings("deprecation")
     public void loadData() {
-
         viewAdapter = new ViewPagerAdapter();
         mImageDetailsBinding.viewPager.setAdapter(viewAdapter);
         mImageDetailsBinding.viewPager.setCurrentItem(position);
@@ -156,7 +170,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
         mImageDetailsBinding.pageText.setText((position + 1) + "/" + imageList.size());
         if (imageList.size() > 0) {
             try {
-                if (getIntent().getBooleanExtra(Config.CANCEL_IMAGEURL_LIST, true)) {
+                if (isShowDeleteFlag) {
                     mImageDetailsBinding.filename.setText(new File(imageList.get(position).trim()).getName());
                 } else {
                     mImageDetailsBinding.filename.setVisibility(View.GONE);
@@ -239,25 +253,81 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
 
     @Override
     public void onBackPressed() {
-        if (isShowSelectFlag) {
+        if (isShowDeleteFlag ||isSelectFlag) {
             Intent intent = getIntent();
-            intent.putStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST, cancelImageList);
+            intent.putStringArrayListExtra(CANCEL_IMAGEURL_LIST, cancelImageList);
             setResult(RESULT_OK, intent);
         }
         this.finish();
     }
 
 
-    public static void startImageActivity(Activity context, int position, ArrayList<String> mImageUrlList, boolean isDeleteFile, boolean isShowDelete) {
-        Intent intent = new Intent(context, ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, position);
-        if (mImageUrlList != null) {
-            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, mImageUrlList);
-        }
-        intent.putExtra(Config.IS_DELETE_FILE, isDeleteFile);
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, isShowDelete);
-        context.startActivityForResult(intent, CANCEL_RESULT_LOAD_IMAGE);
 
+    public static Builder with(Activity activity){
+        return new Builder(activity);
+    }
+
+    public static class Builder{
+
+        Activity context;
+        int position=0;
+        ArrayList<String> imageUrlList =new ArrayList<>();
+        boolean isDeleteFile=false;
+        boolean isShowDelete=false;
+        boolean isSelect=false;
+        int requestCode=CANCEL_RESULT_LOAD_IMAGE;
+        String title="查看图片";
+        public Builder(Activity context) {
+            this.context = context;
+        }
+
+        public Builder setPosition(int position) {
+            this.position = position;
+            return this;
+        }
+
+        public Builder setImageUrlList(ArrayList<String> imageUrlList) {
+            this.imageUrlList = imageUrlList;
+            return this;
+        }
+
+        public Builder setDeleteFile(boolean deleteFile) {
+            isDeleteFile = deleteFile;
+            return this;
+        }
+
+        public Builder setShowDelete(boolean showDelete) {
+            isShowDelete = showDelete;
+            return this;
+        }
+
+        public Builder setSelect(boolean select) {
+            isSelect = select;
+            return this;
+        }
+
+        public Builder setRequestCode(int requestCode) {
+            this.requestCode = requestCode;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public void start(){
+            Intent intent = new Intent(context, ImageDetailsActivity.class);
+            intent.putExtra(CURRENT_IMAGE_POSITION, position);
+            if (imageUrlList != null) {
+                intent.putStringArrayListExtra(IMAGEURL_LIST, imageUrlList);
+            }
+            intent.putExtra(IS_DELETE_FILE, isDeleteFile);
+            intent.putExtra(IS_SHOW_PHOTO_FLAG, isShowDelete);
+            intent.putExtra(Config.TITLE_NAME,title);
+            intent.putExtra("select", isSelect);
+            context.startActivityForResult(intent, requestCode);
+        }
     }
 
 

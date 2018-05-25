@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baoyz.widget.PullRefreshLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
@@ -72,7 +71,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -586,8 +584,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
             holder.setText(R.id.tv_date, TextUtils.isEmpty(item.createTime) ? "" : item.createTime);
             holder.getRootView().setOnLongClickListener(view -> {
-                int width = ScreenUtils.getScreenWidth(ItemAdapter.this.getApplicationContext()) * 9 / 10;
-                XsDialogSelectBinding selectBinding = XsDialogSelectBinding.inflate(ItemAdapter.this.getLayoutInflater());
+                int width = ScreenUtils.getScreenWidth(NariActivity.this.getApplicationContext()) * 9 / 10;
+                XsDialogSelectBinding selectBinding = XsDialogSelectBinding.inflate(NariActivity.this.getLayoutInflater());
                 Dialog dialog = DialogUtils.createDialog(currentActivity, selectBinding.getRoot(), width, LinearLayout.LayoutParams.WRAP_CONTENT);
                 selectBinding.tvDialogContent.setText(R.string.xs_pms_task_delete_tips);
                 dialog.show();
@@ -595,9 +593,9 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 selectBinding.btnSure.setOnClickListener(view1 -> {
                     if (selectBinding.checkboxLeft.isChecked() || selectBinding.checkboxRight.isChecked()) {
                         if (selectBinding.checkboxLeft.isChecked()) {
-                            ItemAdapter.this.deltePacage(item, 0, dialog);
+                            NariActivity.this.deltePacage(item, 0, dialog);
                         } else {
-                            ItemAdapter.this.deltePacage(item, 1, dialog);
+                            NariActivity.this.deltePacage(item, 1, dialog);
                         }
                     } else {
                         ToastUtils.showMessage("请选择需要删除的范围");

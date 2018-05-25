@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
@@ -43,7 +44,6 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
-import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.adapter.BatteryAdapter;
 import com.cnksi.sjjc.adapter.BatteryImageAdapter;
 import com.cnksi.sjjc.bean.BatteryInstrument;
@@ -64,8 +64,8 @@ import java.util.Map;
 
 /**
  * @author yj
- *         蓄电池检测界面
- *         2016/8/9 15:56
+ * 蓄电池检测界面
+ * 2016/8/9 15:56
  */
 public class BatteryTestActivity extends BaseActivity {
     public static final String TAG = "BatteryTestActivity";
@@ -817,11 +817,7 @@ public class BatteryTestActivity extends BaseActivity {
         List<String> voltageList = com.cnksi.core.utils.StringUtils.stringToList(voltageImages);
         List<String> resistanceList = com.cnksi.core.utils.StringUtils.stringToList(resistanceImages);
         voltageList.addAll(resistanceList);
-        Intent intent = new Intent(mActivity, ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
-        intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
-        intent.putStringArrayListExtra(Config.IMAGEURL_LIST, com.cnksi.core.utils.StringUtils.addStrToListItem(voltageList, Config.RESULT_PICTURES_FOLDER));
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, true);
-        startActivityForResult(intent, DELETE_IMAGE);
+        ImageDetailsActivity.with(this).setImageUrlList(StringUtils.addStrToListItem(voltageList, Config.RESULT_PICTURES_FOLDER))
+                .setShowDelete(true).setRequestCode(DELETE_IMAGE);
     }
 }
