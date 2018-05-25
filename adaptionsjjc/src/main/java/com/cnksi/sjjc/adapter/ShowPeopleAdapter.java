@@ -4,8 +4,8 @@ import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.view.View;
 
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.sjjc.databinding.ShowNameBinding;
-import com.cnksi.sjjc.inter.ItemClickListener;
 
 import java.util.Collection;
 

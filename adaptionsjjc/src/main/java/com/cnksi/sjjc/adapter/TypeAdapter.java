@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.inter.ItemClickListener;
 
 import java.util.Collection;
 

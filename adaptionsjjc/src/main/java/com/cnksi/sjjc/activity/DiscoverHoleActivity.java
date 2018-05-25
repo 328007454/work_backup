@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
@@ -23,7 +24,6 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.DiscoverHoleAdapter;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.databinding.ActivityDiscoverHoleBinding;
-import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.FunctionUtil;

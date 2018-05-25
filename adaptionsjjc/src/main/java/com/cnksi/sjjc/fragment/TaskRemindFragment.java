@@ -16,6 +16,7 @@ import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.databinding.ContentListDialogBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
@@ -50,7 +51,6 @@ import com.cnksi.sjjc.activity.indoortempretureactivity.NewIndoorHumitureRecordA
 import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
 import com.cnksi.sjjc.adapter.TaskRemindAdapter;
 import com.cnksi.sjjc.databinding.FragmentListBinding;
-import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.inter.OnFragmentEventListener;
 import com.cnksi.sjjc.util.CoreConfig;
 

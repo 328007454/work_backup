@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import com.cnksi.sjjc.adapter.holder.ItemHolder;
 import com.cnksi.sjjc.bean.BatteryInstrument;
 import com.cnksi.sjjc.databinding.ItemBatteryDefdeviceBinding;
-import com.cnksi.sjjc.inter.ItemClickListener;
 
 import java.util.Collection;
 

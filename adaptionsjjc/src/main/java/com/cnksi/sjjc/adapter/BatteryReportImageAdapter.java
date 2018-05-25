@@ -5,11 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.holder.RecyclerHolder;
-import com.cnksi.sjjc.inter.ItemClickListener;
 
 import java.util.Collection;
 import java.util.List;

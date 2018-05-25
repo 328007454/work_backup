@@ -13,6 +13,7 @@ import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
@@ -30,7 +31,6 @@ import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzRecordBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
-import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 
 import org.xutils.common.util.KeyValue;

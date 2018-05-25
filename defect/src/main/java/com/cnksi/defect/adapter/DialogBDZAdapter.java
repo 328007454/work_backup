@@ -3,12 +3,10 @@ package com.cnksi.defect.adapter;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
-import android.widget.TextView;
 
+import com.cnksi.common.databinding.DialogContentChildItemBinding;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Bdz;
-import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.adapter.BaseAdapter;
 import com.cnksi.defect.R;
 
@@ -31,6 +29,14 @@ public class DialogBDZAdapter extends BaseAdapter<Bdz> {
 
     @Override
     public void convert(ViewDataBinding dataBinding, Bdz item, int position) {
+        DialogContentChildItemBinding binding = (DialogContentChildItemBinding) dataBinding;
+        binding.tvChildItem.setTextColor(ContextCompat.getColor(context, R.color.green_color));
+        binding.tvChildItem.setText(item.name);
+        binding.getRoot().setOnClickListener(v -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemClick(v, item, position);
+            }
+        });
 
     }
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.cnksi.sjjc.inter.ItemClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.LinkedList;

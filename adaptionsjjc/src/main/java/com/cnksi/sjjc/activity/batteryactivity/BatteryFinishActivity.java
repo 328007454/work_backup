@@ -18,6 +18,7 @@ import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.model.Task;
@@ -34,7 +35,6 @@ import com.cnksi.sjjc.adapter.ShowManagerAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.databinding.ActivityBatteryFinishBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
-import com.cnksi.sjjc.inter.ItemClickListener;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;

@@ -145,6 +145,7 @@ dependencies {
    
     compile project(':common')
     compile project(':bdzinspection')
+    compile project(':defect')
     if (WorkTicketLibrary.toBoolean()) {
         compile project(path: ':workticket')
     }

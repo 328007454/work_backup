@@ -14,6 +14,7 @@ import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
@@ -34,7 +35,6 @@ import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityNewhwcwInforBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
-import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.NewHwcwService;
 import com.cnksi.sjjc.util.GsonUtil;
 

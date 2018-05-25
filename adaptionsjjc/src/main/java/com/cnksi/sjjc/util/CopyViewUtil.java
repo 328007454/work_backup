@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.utils.StringUtils;
@@ -19,7 +20,6 @@ import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.TreeNode;
 import com.cnksi.sjjc.inter.CopyItemLongClickListener;
-import com.cnksi.sjjc.inter.ItemClickListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;

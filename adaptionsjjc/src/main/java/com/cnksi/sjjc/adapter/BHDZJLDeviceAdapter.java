@@ -2,11 +2,9 @@ package com.cnksi.sjjc.adapter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.cnksi.sjjc.adapter.holder.ItemHolder;
 import com.cnksi.common.model.Device;
+import com.cnksi.sjjc.adapter.holder.ItemHolder;
 import com.cnksi.sjjc.databinding.DeviceItemBinding;
-import com.cnksi.sjjc.inter.ItemClickListener;
-import com.zhy.autolayout.utils.L;
 
 import java.util.Collection;
 

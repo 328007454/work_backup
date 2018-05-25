@@ -13,6 +13,7 @@ import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.StringUtils;
@@ -24,7 +25,6 @@ import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.adapter.IndoorWeathearAdapter;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.databinding.IndoorBinding;
-import com.cnksi.sjjc.inter.ItemClickListener;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;

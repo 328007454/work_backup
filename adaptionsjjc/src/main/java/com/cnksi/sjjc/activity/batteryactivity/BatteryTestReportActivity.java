@@ -15,6 +15,7 @@ import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.TaskExtend;
@@ -31,7 +32,6 @@ import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.adapter.BatteryReportImageAdapter;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.BatteryTestLayoutBinding;
-import com.cnksi.sjjc.inter.ItemClickListener;
 import com.cnksi.sjjc.service.BatteryRecordService;
 import com.zhy.autolayout.utils.AutoUtils;
 
