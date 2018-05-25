@@ -25,6 +25,7 @@
             android:padding="30px">
 
             <LinearLayout
+                android:paddingLeft="@dimen/_20px"
                 android:id="@+id/bdz_contanier"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -41,9 +42,6 @@
                     android:id="@+id/bdz_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20px"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginTop="20px"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:textColor="#958c8c"
@@ -58,26 +56,35 @@
             </LinearLayout>
 
             <LinearLayout
+                android:paddingLeft="@dimen/_20px"
+                android:id="@+id/defect_type_container"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10px"
-                android:layout_marginLeft="40px"
+                android:layout_marginLeft="30px"
                 android:layout_marginRight="30px"
                 android:layout_marginTop="10px"
                 android:layout_weight="1"
                 android:background="@drawable/home_include_background"
+                android:onClick="onClick"
                 android:orientation="vertical">
 
-                <Spinner
+
+                <TextView
                     android:id="@+id/defect_type"
                     android:layout_width="match_parent"
-                    android:layout_height="90px"
-                    android:dropDownVerticalOffset="90px"
-                    android:spinnerMode="dropdown" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/icon_pull"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/_20px"
+                    android:textColor="#958c8c"
+                    android:textSize="@dimen/txt_size36px" />
             </LinearLayout>
 
 
             <LinearLayout
+                android:paddingLeft="@dimen/_20px"
                 android:id="@+id/container_people"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -93,9 +100,6 @@
                     android:id="@+id/txt_people_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20px"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginTop="20px"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_pull"
                     android:gravity="center_vertical"

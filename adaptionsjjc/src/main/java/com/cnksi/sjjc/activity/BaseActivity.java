@@ -624,7 +624,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
                 }
                 BaseActivity.this.runOnUiThread(() -> {
                     BaseActivity.this.checkUpdate();
-//                    KSyncConfig.getInstance().setDept_id("-1");
+                    KSyncConfig.getInstance().setDept_id("-1");
                 });
             } catch (Exception e) {
                 ToastUtils.showMessage("加密失败，请重新同步数据，继续使用");
