@@ -204,7 +204,7 @@ public class WeatherView1 extends LinearLayout {
             if (currentWeather.equals(item)) {
                 imgButton.setImageResource(R.drawable.ticket_radiobutton_red_selected);
             } else {
-                imgButton.setImageResource(R.drawable.ticket_radiobutton_unselected);
+                imgButton.setImageResource(R.drawable.ic_radiobutton_unselected);
             }
 
         }

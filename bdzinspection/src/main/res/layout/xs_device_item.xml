@@ -27,7 +27,7 @@
             android:contentDescription="@null"
             android:scaleType="centerInside"
             android:visibility="invisible"
-            app:srcCompat="@drawable/xs_ic_green_finish"/>
+            app:srcCompat="@drawable/ic_green_finish"/>
 
         <TextView
             android:id="@+id/tv_device_name"
