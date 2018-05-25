@@ -29,10 +29,10 @@
 
     </declare-styleable>
     <attr name="lineColor" format="color" />
-    <attr name="sjjclineHeight" format="dimension" />
+    <attr name="lineHeight" format="dimension" />
     <declare-styleable name="UnderLineTextView">
         <attr name="lineColor" />
-        <attr name="sjjclineHeight" />
+        <attr name="lineHeight" />
         <attr name="textSelectColor" format="color" />
     </declare-styleable>
     <declare-styleable name="UnderLineLinearLayout">
@@ -40,6 +40,14 @@
         <attr name="marginLeft" format="dimension" />
         <attr name="marginRight" format="dimension" />
         <attr name="lineColor" />
-        <attr name="sjjclineHeight" />
+        <attr name="lineHeight" />
+    </declare-styleable>
+    <!-- 签名view -->
+    <declare-styleable name="SignaturePad">
+        <attr name="penMinWidth" format="dimension" />
+        <attr name="penMaxWidth" format="dimension" />
+        <attr name="penColor" format="color" />
+        <attr name="velocityFilterWeight" format="float" />
+        <attr name="clearOnDoubleClick" format="boolean" />
     </declare-styleable>
 </resources>

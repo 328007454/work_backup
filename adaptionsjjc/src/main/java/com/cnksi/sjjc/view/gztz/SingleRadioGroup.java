@@ -12,7 +12,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.view.UnderLineLinearLayout;
+import com.cnksi.common.view.UnderLineLinearLayout;
 
 /**
  * @version 1.0

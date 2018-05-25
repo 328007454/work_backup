@@ -34,7 +34,7 @@
                         android:layout_marginTop="@dimen/xs_gp_desc_blank_h_px"
                         android:text="@string/xs_gp_inspection_content" />
 
-                    <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                    <com.cnksi.common.view.EditTextNoEmoj
                         android:id="@+id/inspection_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                         style="@style/GPLableTextStyle"
                         android:text="巡视结果" />
 
-                    <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                    <com.cnksi.common.view.EditTextNoEmoj
                         android:id="@+id/et_result"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -86,7 +86,7 @@
                         style="@style/GPLableTextStyle"
                         android:text="@string/xs_gp_remark" />
 
-                    <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                    <com.cnksi.common.view.EditTextNoEmoj
                         android:id="@+id/et_remark"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -275,7 +275,7 @@
                         style="@style/GPLableTextStyle"
                         android:text="分析结论" />
 
-                    <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                    <com.cnksi.common.view.EditTextNoEmoj
                         android:id="@+id/et_conlusion"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

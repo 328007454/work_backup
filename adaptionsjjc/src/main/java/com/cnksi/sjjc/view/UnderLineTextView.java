@@ -74,7 +74,7 @@ public class UnderLineTextView extends AppCompatTextView {
 
     private void init(AttributeSet attrs) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.UnderLineTextView, 0, 0);
-        dividerWidth = a.getDimensionPixelSize(R.styleable.UnderLineTextView_sjjclineHeight, 6);
+        dividerWidth = a.getDimensionPixelSize(R.styleable.UnderLineTextView_lineHeight, 6);
         lineColor = a.getColor(R.styleable.UnderLineTextView_lineColor, Color.RED);
         textSelectColor = a.getColor(R.styleable.UnderLineTextView_textSelectColor, Color.RED);
         a.recycle();

@@ -122,7 +122,7 @@ public class TypeListActivity extends BaseActivity {
                 typeList = titleList;
                 break;
             case operation:
-
+            default:
         }
         if (null != typeList && !typeList.isEmpty()) {
             data.clear();

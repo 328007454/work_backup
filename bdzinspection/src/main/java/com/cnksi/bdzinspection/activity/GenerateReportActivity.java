@@ -28,6 +28,7 @@ import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
 import com.cnksi.bdzinspection.utils.TimePickerUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.activity.LandSignNameActivity;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DefectRecordService;
@@ -647,11 +648,11 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     }
 
     public void takeSignName(Activity context, String signer, String signPath, String headPath, int requestCode) {
-        Intent intent = new Intent(context, LandSignNameActivity.class);
-        intent.putExtra(LandSignNameActivity.SIGNER, signer);
-        intent.putExtra(LandSignNameActivity.SIGNNAME_PATH, Config.CUSTOMER_PICTURES_FOLDER + signPath);
-        intent.putExtra(LandSignNameActivity.HEAD_PATH, Config.CUSTOMER_PICTURES_FOLDER + headPath);
-        startActivityForResult(intent, requestCode);
+        LandSignNameActivity.with(currentActivity).setHeadPath(Config.CUSTOMER_PICTURES_FOLDER + headPath)
+                .setRequestCode(requestCode)
+                .setSigner(signer)
+                .setSignPath(Config.CUSTOMER_PICTURES_FOLDER + signPath)
+                .start();
     }
 
     @Override

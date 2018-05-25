@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -16,7 +15,7 @@ import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.DialogModifyLjtzcsBinding;
-import com.cnksi.sjjc.view.UnderLineLinearLayout;
+import com.cnksi.common.view.UnderLineLinearLayout;
 
 import java.util.HashMap;
 

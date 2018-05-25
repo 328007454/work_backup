@@ -67,7 +67,7 @@
                     app:srcCompat="@drawable/xs_camera_button_background" />
             </LinearLayout>
 
-            <com.cnksi.bdzinspection.view.EditTextNoEmoj
+            <com.cnksi.common.view.EditTextNoEmoj
                 android:id="@+id/et_input_defect_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

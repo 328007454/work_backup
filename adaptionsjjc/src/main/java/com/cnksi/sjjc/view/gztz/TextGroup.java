@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.view.UnderLineLinearLayout;
+import com.cnksi.common.view.UnderLineLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**

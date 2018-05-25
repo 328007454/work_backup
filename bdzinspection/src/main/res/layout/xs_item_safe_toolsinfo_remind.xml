@@ -21,7 +21,7 @@
             android:textColor="@color/xs_white"
             android:textSize="36px" />
 
-        <com.cnksi.bdzinspection.view.UnderLineLinearLayout
+        <com.cnksi.common.view.UnderLineLinearLayout
             android:id="@+id/ll_root"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -66,6 +66,6 @@
                     android:textColor="@color/xs__c0bab9_color"
                     android:textSize="36px" />
             </RelativeLayout>
-        </com.cnksi.bdzinspection.view.UnderLineLinearLayout>
+        </com.cnksi.common.view.UnderLineLinearLayout>
     </RelativeLayout>
 </layout>

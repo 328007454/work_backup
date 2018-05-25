@@ -24,7 +24,7 @@ import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.tree.DeviceItem;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.view.UnderLineLinearLayout;
+import com.cnksi.common.view.UnderLineLinearLayout;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.enmu.InspectionType;

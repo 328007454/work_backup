@@ -137,7 +137,7 @@
                     android:textSize="@dimen/new_global_text_size"/>
             </RelativeLayout>
 
-            <com.cnksi.sjjc.view.EditTextNoEmoj
+            <com.cnksi.common.view.EditTextNoEmoj
                 android:id="@+id/et_conclusion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

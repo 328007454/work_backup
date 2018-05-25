@@ -357,7 +357,7 @@
                         app:srcCompat="@drawable/xs_ic_gray_drop_down" />
                 </com.cnksi.bdzinspection.view.LinearLayoutIntercept>
 
-                <com.cnksi.bdzinspection.view.EditTextNoEmoj
+                <com.cnksi.common.view.EditTextNoEmoj
                     android:id="@+id/et_charge_person"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

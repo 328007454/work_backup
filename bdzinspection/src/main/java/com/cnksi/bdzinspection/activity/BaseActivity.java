@@ -20,7 +20,6 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -55,9 +54,6 @@ import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.core.view.PagerSlidingTabStrip;
-import com.zhy.autolayout.AutoFrameLayout;
-import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.io.File;
@@ -71,9 +67,7 @@ import static android.os.Build.VERSION.SDK_INT;
 
 @SuppressLint("HandlerLeak")
 public class BaseActivity extends BaseCoreActivity {
-    private static final String LAYOUT_LINEARLAYOUT = "LinearLayout";
-    private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
-    private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
+
     public static final int INIT_SPEECH = -0x101001;
     public static final int ACTION_RECORDVIDEO = 0x500;
     public static final int PERMISSION_WINDOW = ACTION_RECORDVIDEO + 1;
@@ -241,31 +235,6 @@ public class BaseActivity extends BaseCoreActivity {
 
     public WindowManager.LayoutParams getWindowManagerParams() {
         return new WindowManager.LayoutParams();
-    }
-
-    /**
-     * 适配布局控件
-     */
-    @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
-        View view = null;
-        if (name.equals(LAYOUT_FRAMELAYOUT)) {
-            view = new AutoFrameLayout(context, attrs);
-        }
-
-        if (name.equals(LAYOUT_LINEARLAYOUT)) {
-            view = new AutoLinearLayout(context, attrs);
-        }
-
-        if (name.equals(LAYOUT_RELATIVELAYOUT)) {
-            view = new AutoRelativeLayout(context, attrs);
-        }
-
-        if (view != null) {
-            return view;
-        }
-
-        return super.onCreateView(name, context, attrs);
     }
 
     /**
@@ -549,7 +518,9 @@ public class BaseActivity extends BaseCoreActivity {
         }
         if (currentInspectionType == null) {
             return false;
-        } else return currentInspectionType.contains("special");
+        } else {
+            return currentInspectionType.contains("special");
+        }
 
     }
 
@@ -557,7 +528,9 @@ public class BaseActivity extends BaseCoreActivity {
 
         if (TextUtils.isEmpty(deviceWay)) {
             return false;
-        } else return "by_device_bigtype".equalsIgnoreCase(deviceWay);
+        } else {
+            return "by_device_bigtype".equalsIgnoreCase(deviceWay);
+        }
 
     }
 

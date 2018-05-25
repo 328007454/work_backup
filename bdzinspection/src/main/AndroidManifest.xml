@@ -114,10 +114,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
-            android:name="com.cnksi.bdzinspection.activity.LandSignNameActivity"
-            android:exported="true"
-            android:screenOrientation="landscape" />
-        <activity
             android:name="com.cnksi.bdzinspection.activity.GenerateReportActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
@@ -182,11 +178,6 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.DownloadOperationTickActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name="com.cnksi.bdzinspection.activity.SignNameActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />

@@ -25,7 +25,7 @@
                 android:visibility="visible"
                 app:srcCompat="@drawable/xs_cancel_button_background" />
 
-            <com.cnksi.bdzinspection.view.AutoFitTextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

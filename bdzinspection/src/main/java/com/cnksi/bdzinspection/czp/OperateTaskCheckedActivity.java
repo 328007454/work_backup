@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
-import com.cnksi.bdzinspection.activity.SignNameActivity;
 import com.cnksi.bdzinspection.czp.adapter.OperateWorkItemAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateItemService;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
@@ -20,7 +19,9 @@ import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskCheckedBinding;
 import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.model.OperateTick;
+import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.LandSignNameActivity;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.FileUtils;
@@ -29,7 +30,6 @@ import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.ex.DbException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.cnksi.common.Config.LOAD_DATA;
@@ -58,6 +58,7 @@ public class OperateTaskCheckedActivity extends BaseActivity {
     private int lastVisibleItemPosition = 0;// 标记上次滑动位置
 
     private XsActivityOperateTaskCheckedBinding binding;
+    private String signPath;
 
 
     @Override
@@ -197,45 +198,51 @@ public class OperateTaskCheckedActivity extends BaseActivity {
             }
         });
 
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> OperateTaskCheckedActivity.this.onBackPressed());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> onBackPressed());
 
         binding.btnConfirm.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, OperateTaskDetailsActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, currentOperateId);
             intent.putExtra(Config.IS_FROM_BATTERY, true);
-            OperateTaskCheckedActivity.this.startActivity(intent);
-            OperateTaskCheckedActivity.this.finish();
+            startActivity(intent);
+            finish();
         });
 
         binding.ivCzfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_czr)) {
-                OperateTaskCheckedActivity.this.showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr);
+                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr);
             }
         });
 
         binding.tvCzrSignContainer.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, SignNameActivity.class);
-            OperateTaskCheckedActivity.this.startActivityForResult(intent, CZR_SIGN_CODE);
+            LandSignNameActivity.with(currentActivity)
+                    .setRequestCode(CZR_SIGN_CODE)
+                    .setSignPath(Config.SIGN_PICTURE_FOLDER + (signPath = FunctionUtil.getCurrentImageName()))
+                    .start();
         });
 
         binding.ivCzfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_jhr)) {
-                OperateTaskCheckedActivity.this.showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr);
+                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr);
             }
         });
 
         binding.tvJhrContainer.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, SignNameActivity.class);
-            OperateTaskCheckedActivity.this.startActivityForResult(intent, CZFZR_SIGN_CODE);
+            LandSignNameActivity.with(currentActivity)
+                    .setRequestCode(CZFZR_SIGN_CODE)
+                    .setSignPath(Config.SIGN_PICTURE_FOLDER + (signPath = FunctionUtil.getCurrentImageName()))
+                    .start();
         });
 
         binding.tvYwfzrContainer.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, SignNameActivity.class);
-            OperateTaskCheckedActivity.this.startActivityForResult(intent, ZBFZR_SIGN_CODE);
+            LandSignNameActivity.with(currentActivity)
+                    .setRequestCode(ZBFZR_SIGN_CODE)
+                    .setSignPath(Config.SIGN_PICTURE_FOLDER + (signPath = FunctionUtil.getCurrentImageName()))
+                    .start();
         });
         binding.ivZbfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_ywfzr)) {
-                OperateTaskCheckedActivity.this.showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr);
+                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr);
             }
         });
 
@@ -249,7 +256,7 @@ public class OperateTaskCheckedActivity extends BaseActivity {
                 case CZR_SIGN_CODE:
                     // 删除之前的签名图片
                     FileUtils.deleteFile(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr);
-                    mCurrentOperateTick.person_czr = initSignPicture(data, binding.ivCzrSign);
+                    mCurrentOperateTick.person_czr = initSignPicture(binding.ivCzrSign);
                     try {
                         OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_CZR);
                     } catch (DbException e) {
@@ -258,7 +265,7 @@ public class OperateTaskCheckedActivity extends BaseActivity {
                     break;
                 case CZFZR_SIGN_CODE:
                     FileUtils.deleteFile(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr);
-                    mCurrentOperateTick.person_jhr = initSignPicture(data, binding.ivCzfzrSign);
+                    mCurrentOperateTick.person_jhr = initSignPicture(binding.ivCzfzrSign);
                     try {
                         OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_JHR);
                     } catch (DbException e) {
@@ -267,7 +274,7 @@ public class OperateTaskCheckedActivity extends BaseActivity {
                     break;
                 case ZBFZR_SIGN_CODE:
                     FileUtils.deleteFile(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr);
-                    mCurrentOperateTick.person_ywfzr = initSignPicture(data, binding.ivZbfzrSign);
+                    mCurrentOperateTick.person_ywfzr = initSignPicture(binding.ivZbfzrSign);
                     try {
                         OperateTicketService.getInstance().update(mCurrentOperateTick, OperateTick.PERSON_YWFZR);
                     } catch (DbException e) {
@@ -295,18 +302,13 @@ public class OperateTaskCheckedActivity extends BaseActivity {
     /**
      * 初始化签名布局
      *
-     * @param data
      * @param mImageView
      * @return
      */
-    private String initSignPicture(Intent data, ImageView mImageView) {
-        String signPicName = "";
-        ArrayList<String> signNameList = data.getStringArrayListExtra(Config.CURRENT_FILENAME);
-        if (signNameList != null && signNameList.size() > 0) {
-            signPicName = signNameList.get(0);
-            mImageView.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + signPicName, ScreenUtils.getScreenWidth(currentActivity) / 3));
-        }
-        return signPicName;
+    private String initSignPicture(ImageView mImageView) {
+        mImageView.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + signPath,
+                ScreenUtils.getScreenWidth(currentActivity) / 3));
+        return signPath;
     }
 
     @Override

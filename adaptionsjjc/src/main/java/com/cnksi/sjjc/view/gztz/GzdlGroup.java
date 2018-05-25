@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.inter.SimpleTextWatcher;
-import com.cnksi.sjjc.view.UnderLineLinearLayout;
+import com.cnksi.common.view.UnderLineLinearLayout;
 
 /**
  * @version 1.0

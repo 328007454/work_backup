@@ -1,5 +1,5 @@
 
-include ':workticket', ':res', ':common', ':defect'
+include ':workticket', ':res', ':common', ':defect', ':gztz'
 include ':adaptionsjjc', ':tts', ':bdloc', ':pickerview',':bdzinspection', ':workticket'
 
 

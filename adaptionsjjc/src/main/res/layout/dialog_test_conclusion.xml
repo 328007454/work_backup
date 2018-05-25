@@ -90,7 +90,7 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"/>
 
-                <com.cnksi.sjjc.view.EditTextNoEmoj
+                <com.cnksi.common.view.EditTextNoEmoj
                     android:id="@+id/status_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

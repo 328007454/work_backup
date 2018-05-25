@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 
+import com.cnksi.common.activity.LandSignNameActivity;
 import com.cnksi.core.utils.UriUtils;
 import com.cnksi.common.Config;
 import com.cnksi.sjjc.JSObject;
@@ -156,15 +157,12 @@ public class WorkPlanInformationActivity extends BaseActivity {
         @Override
         public void signName(String id) {
             jsId = id;
-            Intent intent = new Intent(_this, SignNameActivity.class);
             imageName = jsId + ".jpg";
             File file = new File(Config.WORKTICKIT_PIC + imageName);
             if (file.exists()) {
                 file.delete();
             }
-            intent.putExtra(Config.SIGN_FILENAME, Config.WORKTICKIT_PIC + imageName);
-            // TODO Auto-generated method stub
-            startActivityForResult(intent, 100);
+            LandSignNameActivity.with(mActivity).setRequestCode(100).setSignPath(Config.WORKTICKIT_PIC + imageName).start();
         }
 
         @Override
