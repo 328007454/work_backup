@@ -44,6 +44,7 @@ public class DefectControlActivity extends BaseCoreActivity {
     private Dialog mPowerStationDialog = null;
     private Bdz currentBdz;
     private int defectLevel = 0;
+    private List<DefectRecord> defectRecords = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,7 @@ public class DefectControlActivity extends BaseCoreActivity {
 
     @Override
     public void getRootDataBinding() {
-        super.getRootDataBinding();
-        defectControlBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_defect_control, null, false);
+        defectControlBinding = DataBindingUtil.setContentView(this, R.layout.activity_defect_control);
     }
 
     @Override
@@ -75,10 +75,18 @@ public class DefectControlActivity extends BaseCoreActivity {
 
     private void search() {
         ExecutorManager.executeTaskSerially(() -> {
-            final List<DefectRecord> defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(currentBdz == null ? "" : currentBdz.bdzid, defectLevel);
-            runOnUiThread(() -> defectContentAdapter.notifyDataSetChanged());
+            defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(currentBdz == null ? "" : currentBdz.bdzid, defectLevel);
+            runOnUiThread(() -> {
+                if (defectContentAdapter == null) {
+                    defectContentAdapter = new DefectContentAdapter(this, defectRecords);
+                    defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
+                }else{
+                    defectContentAdapter.notifyDataSetChanged();
+                }
+            });
         });
     }
+
     public void initView() {
 
         defectControlBinding.setEvent(this);
@@ -123,8 +131,6 @@ public class DefectControlActivity extends BaseCoreActivity {
                 search();
             });
         });
-        defectContentAdapter = new DefectContentAdapter(this, null);
-        defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
 
     }
 

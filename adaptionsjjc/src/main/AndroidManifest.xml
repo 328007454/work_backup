@@ -284,7 +284,7 @@
             android:windowSoftInputMode="adjustUnspecified|stateAlwaysVisible" />
 
         <activity
-            android:name=".activity.DefectControlActivity"
+            android:name="com.cnksi.defect.activity.DefectControlActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden" />

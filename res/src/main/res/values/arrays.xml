@@ -208,6 +208,8 @@
         <item>一般缺陷</item>
         <item>严重缺陷</item>
         <item>危急缺陷</item>
+        <item>问题</item>
+        <item>隐患</item>
     </string-array>
     <string-array name="NetSyncMenuArray">
         <item>USB同步</item>

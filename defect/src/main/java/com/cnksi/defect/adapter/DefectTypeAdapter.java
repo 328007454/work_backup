@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.ViewDataBinding;
 
 import com.cnksi.core.adapter.BaseAdapter;
+import com.cnksi.defect.databinding.AdapterDefectTypeBinding;
 
 import java.util.Collection;
 
@@ -19,6 +20,7 @@ public class DefectTypeAdapter extends BaseAdapter<String> {
 
     @Override
     public void convert(ViewDataBinding dataBinding, String item, int position) {
-
+        AdapterDefectTypeBinding binding = (AdapterDefectTypeBinding) dataBinding;
+        binding.defectTypeName.setText(item);
     }
 }
