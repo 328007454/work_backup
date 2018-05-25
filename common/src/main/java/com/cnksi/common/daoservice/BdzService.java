@@ -2,6 +2,7 @@ package com.cnksi.common.daoservice;
 
 import com.cnksi.common.model.Bdz;
 
+import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -43,15 +44,30 @@ public class BdzService extends BaseService<Bdz> {
     }
 
     public Bdz findByPmsId(String pms_id) throws DbException {
-        return  selector().and("pms_id", "=", pms_id).findFirst();
+        return selector().and("pms_id", "=", pms_id).findFirst();
     }
 
     public List<Bdz> findAllBdzByDp(String dept_id) {
         try {
-            return   selector().and(Bdz.DEPTID, "=", dept_id).findAll();
+            return selector().and(Bdz.DEPTID, "=", dept_id).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<DbModel> findAllBdzByDpDbmodel(String deptId) {
+        List<DbModel> models = new ArrayList<>();
+        String sql = "select * from bdz where dept_id = ? and dlt = 0";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", deptId));
+        try {
+            models = getDbManager().findDbModelAll(sqlInfo);
+        } catch (DbException e) {
+            e.printStackTrace();
+            return models;
+        }
+
+        return models;
     }
 }

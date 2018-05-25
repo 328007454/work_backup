@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.cnksi.common.model.Users;
 
+import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -12,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/** y用户相关查询
+/**
+ * y用户相关查询
  * Created by luoxy on 16/4/28.Ø
  */
 public class UserService extends BaseService<Users> {
@@ -91,5 +93,19 @@ public class UserService extends BaseService<Users> {
             Log.i("Test", "查询用户数据出错了");
         }
         return nameList;
+    }
+
+    public List<DbModel> getAllUserByDeptId(String deptId) {
+        List<DbModel> dbModels = null;
+        String sql = "select * from users where dept_id = ? and dlt =0";
+        SqlInfo sqlInfo = new SqlInfo(sql);
+        sqlInfo.addBindArg(new KeyValue("", deptId));
+        try {
+            dbModels = getDbManager().findDbModelAll(sqlInfo);
+        } catch (DbException e) {
+            e.printStackTrace();
+            return new ArrayList<DbModel>();
+        }
+        return dbModels;
     }
 }

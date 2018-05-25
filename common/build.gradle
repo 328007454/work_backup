@@ -61,4 +61,5 @@ dependencies {
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_android"
     api "me.grantland:autofittextview:$autofittextview"
 
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
 }

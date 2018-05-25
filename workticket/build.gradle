@@ -47,6 +47,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile "com.cnksi:core:$ksi_core_version"
+    compile project(':res')
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.cnksi:core:1.2.7.1'
