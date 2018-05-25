@@ -18,6 +18,7 @@ import com.cnksi.bdzinspection.activity.CopyValueActivity2;
 import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
+import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.SpacingGroupService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
@@ -28,7 +29,7 @@ import com.cnksi.bdzinspection.model.SpecialMenu;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;
@@ -93,7 +94,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
             intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
-            startActivity(intent);
+            ParticularDevicesFragment.this.startActivity(intent);
         });
         // 跳转设备抄录
         adapter.setCopyClickListener((v, dbModel, position) -> {
@@ -105,7 +106,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
             intent.putExtra(Config.TITLE_NAME, dbModel.getString("deviceName"));
             PlaySound.getIntance(currentActivity).play(R.raw.input);
-            startActivity(intent);
+            ParticularDevicesFragment.this.startActivity(intent);
         });
         // 设置间隔点击事件
         adapter.setGroupItemClickListener((v, dbModel, position) -> {
@@ -115,7 +116,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                 intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
                 intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
                 intent.putExtra(Config.CURRENT_FUNCTION_MODEL, currentFunctionModel);
-                startActivity(intent);
+                ParticularDevicesFragment.this.startActivity(intent);
             }
         });
         recyclerView = rootHolder.getView(R.id.elv_container);
@@ -169,7 +170,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
     private HashSet<String> copyDeviceIdList = new HashSet<>();// 当前变电站下所有抄录设备
     Map<String, List<String>> spaceCopyDeviceMap = new HashMap<>();
     private void queryInfo() {
-        ExecutorManager.executeTask(() ->{
+        ExecutorManager.executeTask(() -> {
             // 查寻缺陷
             HashMap<String, DefectInfo> defectmap = DeviceService.getInstance().findDeviceDefect(currentBdzId);
             adapter.setDefectMap(defectmap);
@@ -199,7 +200,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                 }
             }
 
-            getActivity().runOnUiThread(() -> {
+            ParticularDevicesFragment.this.getActivity().runOnUiThread(() -> {
                 adapter.setCopyDeviceIdList(copyDeviceIdList);
                 adapter.setDefectMap(defectmap);
                 adapter.setCopyDeviceMap(copyedMap);

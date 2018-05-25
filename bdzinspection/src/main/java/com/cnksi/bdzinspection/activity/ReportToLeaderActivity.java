@@ -10,13 +10,15 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.telephony.SmsManager;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityReportToLeaderBinding;
 import com.cnksi.bdzinspection.model.TestPerson;
-import com.cnksi.bdzinspection.utils.DefectLevelUtils;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.bdzinspection.utils.DefectUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.ToastUtils;
@@ -54,7 +56,7 @@ public class ReportToLeaderActivity extends BaseActivity {
         binding.includeTitle.tvTitle.setText(R.string.xs_select_leader_str);
         String defectDescription = getIntent().getStringExtra(DefectRecord.DESCRIPTION);
         String defectLevel = getIntent().getStringExtra(DefectRecord.DEFECTLEVEL);
-        defectLevel = DefectLevelUtils.convert2DefectLevel(defectLevel);
+        defectLevel = DefectUtils.convert2DefectLevel(defectLevel);
         String deviceName = getIntent().getStringExtra(Config.CURRENT_DEVICE_NAME);
         binding.etReportContent.setText(getString(R.string.xs_report_defect_description_format_str, currentBdzName, deviceName, defectLevel, defectDescription));
 
@@ -84,16 +86,14 @@ public class ReportToLeaderActivity extends BaseActivity {
     }
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            this.finish();
-        });
-        binding.btnCancel.setOnClickListener(view -> finish());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> ReportToLeaderActivity.this.finish());
+        binding.btnCancel.setOnClickListener(view -> ReportToLeaderActivity.this.finish());
 
         binding.btnReport.setOnClickListener(view -> {
             PlaySound.getIntance(currentActivity).play(R.raw.send);
             List<String> phoneNumberList = new ArrayList<String>();
             phoneNumberList.add("13981308155");
-            sendMessage(phoneNumberList, binding.etReportContent.getText().toString().trim());
+            ReportToLeaderActivity.this.sendMessage(phoneNumberList, binding.etReportContent.getText().toString().trim());
         });
 
         binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {

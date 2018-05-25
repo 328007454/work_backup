@@ -56,12 +56,9 @@ public class ChangeCopyItemRecyclerChildAdapter extends BaseRecyclerAdapter {
         tvCopyContent.setText(content);
         tvCopytValue.setText(TextUtils.isEmpty(value) ? "" : value);
 //        childBinding.tvCopytValue.setText(value);
-        itemDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null) {
-                    itemClickListener.onClick(v, item, position);
-                }
+        itemDelete.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onClick(v, item, position);
             }
         });
 

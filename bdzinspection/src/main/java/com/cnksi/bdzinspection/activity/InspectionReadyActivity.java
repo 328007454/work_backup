@@ -22,8 +22,6 @@ import com.cnksi.bdzinspection.fragment.inspectionready.RoadMapFragment;
 import com.cnksi.bdzinspection.fragment.inspectionready.ToolFragment;
 import com.cnksi.bdzinspection.model.InspectionPrepared;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
@@ -32,10 +30,12 @@ import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -121,9 +121,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     private void initZzht() {
         ExecutorManager.executeTask(() -> {
             zzht = ZzhtService.getInstance().bdzInZzht(currentBdzId);
-            runOnUiThread(() -> {
-                initFragmentList();
-            });
+            InspectionReadyActivity.this.runOnUiThread(() -> InspectionReadyActivity.this.initFragmentList());
 
         });
     }
@@ -149,7 +147,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         task = TaskService.getInstance().findById( currentTaskId);
         mFragmentList = new ArrayList<>();
         Bundle args = new Bundle();
-        boolean hasZzht = null == zzht ? false : true;
+        boolean hasZzht = null != zzht;
         hasZzht = hasZzht && ("full".equals(currentInspectionType));
         if (!task.isMember()) {
             if (hasZzht) {
@@ -236,7 +234,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                 }
 
             });
-            onBackPressed();
+            InspectionReadyActivity.this.onBackPressed();
         });
         if (SystemConfig.isMustVerifyInspectionReady()) {
             binding.btnLeft.setOnClickListener(v -> binding.viewPager.setCurrentItem(--currentPosition, true));
@@ -245,7 +243,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                     String temperature = mTemperatureFragment.getCurrentTemperature();
                     String weather = mTemperatureFragment.getCurrentWeater();
                     if (TextUtils.isEmpty(weather) || TextUtils.isEmpty(temperature)) {
-                        ToastUtils.showMessage( "请选择天气和填写温度！");
+                        ToastUtils.showMessage("请选择天气和填写温度！");
                         return;
                     }
                 }
@@ -254,14 +252,14 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                 } else {
                     Fragment fragment = mFragmentList.get(currentPosition);
                     if (fragment instanceof MultipleBackFragment && !((MultipleBackFragment) fragment).getCheckAll()) {
-                        ToastUtils.showMessage( "请核实完所有的综自后台步骤");
+                        ToastUtils.showMessage("请核实完所有的综自后台步骤");
                         return;
                     }
-                    startInspection();
+                    InspectionReadyActivity.this.startInspection();
                 }
             });
         } else {
-            binding.btnRight.setOnClickListener(v -> startInspection());
+            binding.btnRight.setOnClickListener(v -> InspectionReadyActivity.this.startInspection());
         }
     }
 
@@ -311,7 +309,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         ExecutorManager.executeTask(() -> {
             InspectionPrepared prepared = new InspectionPrepared(mReport.reportid, task.taskid, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
             try {
-                SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo( InspectionPreparedService.getInstance().getTable());
+                SqlInfo sqlInfo = SqlInfoBuilder.buildCreateTableSqlInfo(InspectionPreparedService.getInstance().getTable());
                 InspectionPreparedService.getInstance().execSql(sqlInfo);
                 InspectionPreparedService.getInstance().saveOrUpdate(prepared);
             } catch (DbException e) {
@@ -361,7 +359,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                 mReport = new Report(currentTaskId, currentBdzId, currentBdzName, currentInspectionType, loginPerson,
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);
                 mReport.pmsJhid = task.pmsJhid;
-                mReport.reportid = FunctionUtil.getPrimarykey();
+                mReport.reportid = BaseModel.getPrimarykey();
             } else {
                 mReport.setReport(currentBdzId, currentBdzName, currentInspectionType,
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);
@@ -372,7 +370,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             ExecutorManager.executeTask(() -> {
                 try {
-                    saveReportSign();
+                    InspectionReadyActivity.this.saveReportSign();
                     ReportService.getInstance().saveOrUpdate(mReport);
                 } catch (DbException e) {
                     e.printStackTrace();

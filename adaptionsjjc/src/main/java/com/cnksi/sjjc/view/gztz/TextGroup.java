@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -40,8 +40,8 @@ public class TextGroup extends UnderLineLinearLayout {
         setDrawUnderLine(true);
         setPadding(AutoUtils.getPercentHeightSize(30), 0, 0, 0);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_text_group, this, true);
-        editText = (EditText) findViewById(R.id.et_input);
-        tvName = (TextView) findViewById(R.id.tv_name);
+        editText = findViewById(R.id.et_input);
+        tvName = findViewById(R.id.tv_name);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.TextGroup);
         if (attributes != null) {
             String string = attributes.getString(R.styleable.TextGroup_title_str);
@@ -50,7 +50,7 @@ public class TextGroup extends UnderLineLinearLayout {
                 editText.setHint("请输入");
             }
             string = attributes.getString(R.styleable.TextGroup_default_str);
-            editText.setText(StringUtils.NullToBlank(string));
+            editText.setText(StringUtils.NullToDefault(string));
         }
     }
 

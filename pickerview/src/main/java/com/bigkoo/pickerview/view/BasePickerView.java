@@ -74,7 +74,7 @@ public class BasePickerView {
             //设置界面的背景为透明
             dialogView.setBackgroundColor(Color.TRANSPARENT);
             //这个是真正要加载时间选取器的父布局
-            contentContainer = (ViewGroup) dialogView.findViewById(R.id.content_container);
+            contentContainer = dialogView.findViewById(R.id.content_container);
             //设置对话框 左右间距屏幕30
             this.params.leftMargin = 30;
             this.params.rightMargin = 30;
@@ -93,7 +93,7 @@ public class BasePickerView {
             //如果只是要显示在屏幕的下方
             //decorView是activity的根View
             if (decorView == null) {
-                decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+                decorView = ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
             }
             //将控件添加到decorView中
             rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, decorView, false);
@@ -105,7 +105,7 @@ public class BasePickerView {
             }
             // rootView.setBackgroundColor(ContextCompat.getColor(context,backgroudId));
             //这个是真正要加载时间选取器的父布局
-            contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
+            contentContainer = rootView.findViewById(R.id.content_container);
             contentContainer.setLayoutParams(params);
         }
         setKeyBackCancelable(true);

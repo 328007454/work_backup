@@ -131,30 +131,22 @@ public class WorkPlanInformationActivity extends BaseActivity {
     private String jsId = "";
 
     public void callJs(final String id, final String path) {
-        mHandler.post(new Runnable() {
-
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                //调用JS中的 函数，当然也可以不传参
-                String str = "javascript:androidCallJS('" + id + "','" + path + "')";
-                binding.webView.loadUrl(str);
-                jsId = "";
-            }
+        mHandler.post(() -> {
+            // TODO Auto-generated method stub
+            //调用JS中的 函数，当然也可以不传参
+            String str = "javascript:androidCallJS('" + id + "','" + path + "')";
+            binding.webView.loadUrl(str);
+            jsId = "";
         });
     }
 
     public void callJsSign(final String id, final String path) {
-        mHandler.post(new Runnable() {
-
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                //调用JS中的 函数，当然也可以不传参
-                String str = "javascript:androidCallqx('" + id + "','" + path + "')";
-                binding.webView.loadUrl(str);
-                jsId = "";
-            }
+        mHandler.post(() -> {
+            // TODO Auto-generated method stub
+            //调用JS中的 函数，当然也可以不传参
+            String str = "javascript:androidCallqx('" + id + "','" + path + "')";
+            binding.webView.loadUrl(str);
+            jsId = "";
         });
     }
 

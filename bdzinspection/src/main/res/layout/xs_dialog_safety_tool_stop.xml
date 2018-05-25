@@ -90,7 +90,7 @@
                 android:textColor="@color/xs_green_radio_button_text_selector"
                 android:textSize="40px" />
 
-            <com.cnksi.bdzinspection.view.ContainsEmojiEditText
+            <com.cnksi.common.view.ContainsEmojiEditText
                 android:id="@+id/et_input_reason"
                 android:layout_width="match_parent"
                 android:layout_height="120px"
@@ -138,7 +138,7 @@
                 android:orientation="horizontal"
                 android:padding="10px">
 
-                <com.cnksi.bdzinspection.view.ContainsEmojiEditText
+                <com.cnksi.common.view.ContainsEmojiEditText
                     android:id="@+id/et_input_stopperson"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
@@ -163,7 +163,7 @@
                     android:src="@drawable/xs_icon_up"/>
             </LinearLayout>
 
-            <!--<com.cnksi.bdzinspection.view.ContainsEmojiEditText-->
+            <!--<com.cnksi.common.view.ContainsEmojiEditText-->
                 <!--android:id="@+id/et_input_stopperson"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->

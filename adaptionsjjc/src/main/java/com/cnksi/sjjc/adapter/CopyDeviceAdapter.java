@@ -72,12 +72,9 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
             ibCopy.setImageResource(R.drawable.ic_green_finish);
         }
 
-        holder.getRootView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isClickAble){
-                    itemClickListener.itemClick(v, item, position);
-                }
+        holder.getRootView().setOnClickListener(v -> {
+            if(isClickAble){
+                itemClickListener.itemClick(v, item, position);
             }
         });
     }

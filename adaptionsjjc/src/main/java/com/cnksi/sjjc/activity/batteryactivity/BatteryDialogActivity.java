@@ -16,13 +16,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.model.Battery;
+import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.DrawCircleImageActivity;
-import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.ActivityBatteryItemDialogBinding;
 import com.cnksi.sjjc.service.BatteryRecordService;
@@ -40,8 +42,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
@@ -86,7 +86,6 @@ public class BatteryDialogActivity extends AppCompatActivity {
      */
     private ArrayList<BatteryRecord> batteryListCode = new ArrayList<>();
     private Map<String, BatteryRecord> batteryRecordMap = new HashMap<String, BatteryRecord>();
-    private ExecutorService mServerice;
     private String bdzName;
     /**
      * 当前检测类型
@@ -106,7 +105,6 @@ public class BatteryDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_battery_item_dialog);
-        mServerice = Executors.newCachedThreadPool();
         getIntentValue();
         initView();
         loadData();
@@ -167,7 +165,7 @@ public class BatteryDialogActivity extends AppCompatActivity {
 
 
     private void loadData() {
-        mServerice.execute(() -> {
+        ExecutorManager.executeTask(() -> {
             try {
                 batteryRecord = BatteryRecordService.getInstance().getBatteryRecord(currentReportId, battery.bid, batteryCode);
                 batteryListCode = (ArrayList<BatteryRecord>) BatteryRecordService.getInstance().getBatteryRecordLatest(currentReportId, battery.bid, false);
@@ -218,30 +216,30 @@ public class BatteryDialogActivity extends AppCompatActivity {
     private void initOnClick() {
         binding.takePicture.setOnClickListener(view -> {
             if (0 == batteryCheckType) {
-                imageName = FunctionUtil.getCurrentImageName(this, "DY" + FunctionUtils.getCurrentImageName());
+                imageName = FunctionUtil.getCurrentImageName(BatteryDialogActivity.this, "DY" + FunctionUtils.getCurrentImageName());
             } else {
-                imageName = FunctionUtil.getCurrentImageName(this, "DZ" + FunctionUtils.getCurrentImageName());
+                imageName = FunctionUtil.getCurrentImageName(BatteryDialogActivity.this, "DZ" + FunctionUtils.getCurrentImageName());
             }
-            FunctionUtils.takePicture(this, imageName, Config.RESULT_PICTURES_FOLDER);
+            FunctionUtils.takePicture(BatteryDialogActivity.this, imageName, Config.RESULT_PICTURES_FOLDER);
         });
         binding.imageShow.setOnClickListener(view -> {
-            Intent intent = new Intent(this, ImageDetailsActivity.class);
+            Intent intent = new Intent(BatteryDialogActivity.this, ImageDetailsActivity.class);
             intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
             intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
             intent.putStringArrayListExtra(Config.IMAGEURL_LIST, StringUtils.addStrToListItem(exitImageList, Config.RESULT_PICTURES_FOLDER));
             intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, true);
-            startActivityForResult(intent, DELETE_IMAGE);
+            BatteryDialogActivity.this.startActivityForResult(intent, DELETE_IMAGE);
         });
         binding.btnCancel.setOnClickListener(view -> {
             if ("0".equalsIgnoreCase(typeStr) && !batteryCode.equalsIgnoreCase(String.valueOf(battery.amount))) {
-                if (saveData()) {
-                    finishDialog();
+                if (BatteryDialogActivity.this.saveData()) {
+                    BatteryDialogActivity.this.finishDialog();
                 } else {
                     ToastUtils.showMessage("请输入正确的值!");
                     return;
                 }
             } else {
-                finish();
+                BatteryDialogActivity.this.finish();
             }
         });
 
@@ -250,19 +248,19 @@ public class BatteryDialogActivity extends AppCompatActivity {
                 if (batteryCode.equalsIgnoreCase(String.valueOf(battery.amount))
                         || (2 == String.valueOf(battery.amount).length() && batteryCode.substring(1).equalsIgnoreCase(String.valueOf(battery.amount)))
                         || (1 == String.valueOf(battery.amount).length() && batteryCode.substring(2).equalsIgnoreCase(String.valueOf(battery.amount)))) {
-                    Toast.makeText(this, "当前电池数为最后一节了", Toast.LENGTH_LONG).show();
-                    saveData();
-                    finishDialog();
+                    Toast.makeText(BatteryDialogActivity.this, "当前电池数为最后一节了", Toast.LENGTH_LONG).show();
+                    BatteryDialogActivity.this.saveData();
+                    BatteryDialogActivity.this.finishDialog();
                     return;
                 }
-                if (saveData()) {
-                    setChangedBatteryCode();
+                if (BatteryDialogActivity.this.saveData()) {
+                    BatteryDialogActivity.this.setChangedBatteryCode();
                 } else {
                     ToastUtils.showMessage("请输入正确的值!");
                     return;
                 }
             } else {
-                finishDialog();
+                BatteryDialogActivity.this.finishDialog();
             }
 
         });
@@ -398,10 +396,10 @@ public class BatteryDialogActivity extends AppCompatActivity {
                 if (null != batteryRecord) {
                     String imageStr = StringUtils.arrayListToString(exitImageList);
                     if (batteryCheckType == 0) {
-                        batteryRecord.voltage = com.cnksi.common.utils.StringUtils.getTransformTep(value, 3);
+                        batteryRecord.voltage = StringUtilsExt.getDecimalPoint(value, 3);
                         batteryRecord.voltageImages = imageStr;
                     } else {
-                        batteryRecord.resistance =  com.cnksi.common.utils.StringUtils.getTransformTep(value, 3);
+                        batteryRecord.resistance =  StringUtilsExt.getDecimalPoint(value, 3);
                         batteryRecord.resistanceImages = imageStr;
                     }
                     batteryRecord.last_modify_time = DateUtils.getCurrentLongTime();

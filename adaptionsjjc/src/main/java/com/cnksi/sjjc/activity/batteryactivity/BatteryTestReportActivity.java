@@ -11,6 +11,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
@@ -28,7 +29,6 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseReportActivity;
 import com.cnksi.sjjc.activity.HomeActivity;
-import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.adapter.BatteryReportImageAdapter;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.BatteryTestLayoutBinding;
@@ -95,21 +95,21 @@ public class BatteryTestReportActivity extends BaseReportActivity {
         mBtnBack.setOnClickListener(v -> {
             typeName = PreferencesUtils.get("typename", "");
             boolean xudianchi = typeName.contains(Config.XUDIANCHI) && (typeName.contains(Config.DIANYA) || typeName.contains(Config.NEIZU));
-            if (xudianchi && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
+            if (xudianchi && !BatteryTestReportActivity.this.getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                 PreferencesUtils.put(Config.CURRENT_MAINTANENCE_BATTERY, "");
             }
             ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
 
-            onBackPressed();
+            BatteryTestReportActivity.this.onBackPressed();
         });
         mBtnRight.setOnClickListener(v -> {
             if ("maintenance_xdcdyjc".equalsIgnoreCase(type)) {
                 Intent intent = new Intent(BatteryTestReportActivity.this, HomeActivity.class);
-                startActivity(intent);
-                onBackPressed();
+                BatteryTestReportActivity.this.startActivity(intent);
+                BatteryTestReportActivity.this.onBackPressed();
             } else {
                 ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
-                onBackPressed();
+                BatteryTestReportActivity.this.onBackPressed();
             }
         });
         loadData();
@@ -171,7 +171,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                             resistanceMap.put(record.battaryGroup, resistanceCount + 1);
                         }
                         if (!TextUtils.isEmpty(record.resistanceImages) || !TextUtils.isEmpty(record.voltageImages)) {
-                            List<String> imageList = getRecordImageList(record);
+                            List<String> imageList = BatteryTestReportActivity.this.getRecordImageList(record);
                             Map<String, List<String>> imageMap = groupImageList.get(record.battaryGroup);
                             if (imageMap.keySet().contains(record.battary_code)) {
                                 imageMap.get(record.battary_code).addAll(imageList);
@@ -231,10 +231,10 @@ public class BatteryTestReportActivity extends BaseReportActivity {
 
     private void initOnClick() {
         binding.continueInspection.setOnClickListener(view -> {
-            Intent intent = new Intent(this, BatteryTestActivity.class);
-            intent.putExtra(Config.IS_FROM_SJJC, getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false));
-            startActivity(intent);
-            this.finish();
+            Intent intent = new Intent(BatteryTestReportActivity.this, BatteryTestActivity.class);
+            intent.putExtra(Config.IS_FROM_SJJC, BatteryTestReportActivity.this.getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false));
+            BatteryTestReportActivity.this.startActivity(intent);
+            BatteryTestReportActivity.this.finish();
         });
     }
 
@@ -273,12 +273,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                     imageAdapter.setItemClickListener(new ItemClickListener<List<String>>() {
                         @Override
                         public void itemClick(View v, List<String> imageList, int position) {
-                            Intent intent = new Intent(mActivity, ImageDetailsActivity.class);
-                            intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
-                            intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
-                            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, StringUtils.addStrToListItem(imageList, Config.RESULT_PICTURES_FOLDER));
-                            intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, false);
-                            startActivity(intent);
+                            ImageDetailsActivity.with(mActivity).setImageUrlList(StringUtils.addStrToListItem(imageList, Config.RESULT_PICTURES_FOLDER)).start();
                         }
 
                         @Override

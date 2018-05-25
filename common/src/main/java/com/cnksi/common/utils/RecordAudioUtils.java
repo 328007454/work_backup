@@ -1,11 +1,15 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.common.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.bdzinspection.databinding.XsRecordAudioDialogBinding;
+
+import com.cnksi.common.databinding.CommonRecordAudioDialogBinding;
+import com.cnksi.core.utils.ScreenUtils;
 
 /**
  * 录音工具，显示录音对话框
@@ -21,16 +25,14 @@ public class RecordAudioUtils {
 
     public RecordAudioUtils(Context context, ViewGroup viewGroup) {
         this.mContext = context;
-        XsRecordAudioDialogBinding audioDialogBinding = XsRecordAudioDialogBinding.inflate(LayoutInflater.from(context), viewGroup, false);
+        CommonRecordAudioDialogBinding audioDialogBinding = CommonRecordAudioDialogBinding.inflate(LayoutInflater.from(context), viewGroup, false);
         int dialogWidth = ScreenUtils.getScreenWidth(context) / 2;
-        mRecordAudioDialog = DialogUtils.createDialog(context, audioDialogBinding.getRoot(), dialogWidth, dialogWidth);
-        audioDialogBinding.getRoot().setOnClickListener(view -> {
-            mRecordAudioDialog.dismiss();
-        });
+        mRecordAudioDialog = DialogUtils.createDialog(context, audioDialogBinding.getRoot(), dialogWidth, dialogWidth,true);
+        audioDialogBinding.getRoot().setOnClickListener(view -> mRecordAudioDialog.dismiss());
         mRecordAudioDialog.setOnDismissListener(dialog -> {
-                    MediaRecorderUtils.getInstance().stopRecordAudio();
-                    callBack.onSuccess();
-                }
+            MediaRecorderUtils.getInstance().stopRecordAudio();
+            callBack.onSuccess();
+        }
         );
     }
 

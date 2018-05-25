@@ -13,9 +13,11 @@ import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.CalcUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
@@ -24,7 +26,6 @@ import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzqkBinding;
 import com.cnksi.sjjc.inter.SimpleTextWatcher;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
-import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.util.FunctionUtil;
 
 import org.xutils.common.util.KeyValue;
@@ -74,12 +75,12 @@ public class BHDZQKActivity extends BaseActivity {
 
     private void initView() {
         binding.btnNext.setOnClickListener(v -> {
-            if (save(true)) {
+            if (BHDZQKActivity.this.save(true)) {
                 Intent intent = new Intent(_this, BHDZJLActivity.class);
-                startActivity(intent);
+                BHDZQKActivity.this.startActivity(intent);
             }
         });
-        binding.btnPre.setOnClickListener(v -> onBackPressed());
+        binding.btnPre.setOnClickListener(v -> BHDZQKActivity.this.onBackPressed());
         binding.chzdzqk.setType("chzdzqk");
         binding.bhmc.setType("bhmc");
         binding.gxtzcsA.addTextChangedListener(new SimpleTextWatcher() {
@@ -107,16 +108,14 @@ public class BHDZQKActivity extends BaseActivity {
             }
         });
 
-        binding.ivTakePic.setOnClickListener(v -> {
-            FunctionUtil.takePicture(this, imageName = FunctionUtil.getCurrentImageName(this), Config.RESULT_PICTURES_FOLDER);
-        });
-        binding.ivShowPic.setOnClickListener(v -> showImageDetails(this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
+        binding.ivTakePic.setOnClickListener(v -> FunctionUtil.takePicture(BHDZQKActivity.this, imageName = FunctionUtil.getCurrentImageName(BHDZQKActivity.this), Config.RESULT_PICTURES_FOLDER));
+        binding.ivShowPic.setOnClickListener(v -> BHDZQKActivity.this.showImageDetails(BHDZQKActivity.this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
         binding.bhsbmc.setSelectOnClickListener(v -> {
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.second);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
             intentDevices.putExtra(Config.TITLE_NAME, "请选择二次设备");
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
+            BHDZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
         binding.gzlbqmc.setSelectOnClickListener(v -> {
             Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
@@ -129,7 +128,7 @@ public class BHDZQKActivity extends BaseActivity {
             } else {
                 ToastUtils.showMessage("没有找到别名为GZLBQ的设备大类！");
             }
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
+            BHDZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
         });
     }
 
@@ -138,7 +137,7 @@ public class BHDZQKActivity extends BaseActivity {
         ExecutorManager.executeTaskSerially(() -> {
             sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
             SbjcGztzjl last = GZTZSbgzjlService.getInstance().findLastByDeviceId(sbjcGztzjl.dlqbh, currentReportId);
-            runOnUiThread(() -> {
+            BHDZQKActivity.this.runOnUiThread(() -> {
                 if (last != null) {
                     String s = last.ljtzcs;
                     if (!TextUtils.isEmpty(s)) {
@@ -151,11 +150,11 @@ public class BHDZQKActivity extends BaseActivity {
                 binding.chzdzqk.setVisibility(sbjcGztzjl.isTz() ? View.VISIBLE : View.GONE);
 
                 if (!TextUtils.isEmpty(sbjcGztzjl.dzbhFj)) {
-                    photos = Arrays.asList(StringUtils.NullToBlank(sbjcGztzjl.dzbhFj).split(","));
+                    photos = Arrays.asList(StringUtils.NullToDefault(sbjcGztzjl.dzbhFj).split(","));
                 } else {
                     photos = new ArrayList<>();
                 }
-                showPic();
+                BHDZQKActivity.this.showPic();
 
                 //处理ABCO 相别
                 int[] visbles = sbjcGztzjl.getXb();
@@ -183,7 +182,7 @@ public class BHDZQKActivity extends BaseActivity {
 
 
                 binding.chzdzqk.setKeyValue(new KeyValue(sbjcGztzjl.chzdzqkK, sbjcGztzjl.chzdzqk));
-                binding.ecgzdl.setText(StringUtils.NullToBlank(sbjcGztzjl.ecgzdl));
+                binding.ecgzdl.setText(StringUtils.NullToDefault(sbjcGztzjl.ecgzdl));
                 binding.hfsdsj.setValueStr(sbjcGztzjl.hfsdsj);
                 binding.zhycdxsj.setValueStr(sbjcGztzjl.zhycdxsj);
                 binding.bhsbmc.setKeyValue(new KeyValue(sbjcGztzjl.bhsbmcK, sbjcGztzjl.bhsbmc));
@@ -245,7 +244,7 @@ public class BHDZQKActivity extends BaseActivity {
         String zdq = getText(binding.zdq);
         String ldkgql = binding.ldkgqk.getValueStr();
         if (isCheck) {
-            if ((chtzql == null && sbjcGztzjl.isTz()) || bhmc == null || bhsbmc == null || StringUtils.isHasOneEmpty(gzdl, ljz, ecgzdl, dzsj, zdq, ldkgql)) {
+            if ((chtzql == null && sbjcGztzjl.isTz()) || bhmc == null || bhsbmc == null || StringUtilsExt.isHasOneEmpty(gzdl, ljz, ecgzdl, dzsj, zdq, ldkgql)) {
                 ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                 return false;
             }
@@ -258,14 +257,14 @@ public class BHDZQKActivity extends BaseActivity {
         String yqtbhph = binding.yqtbhph.getValueStr();
         String ylbzzph = binding.ylbzzph.getValueStr();
         String yjkxtph = binding.yjkxtph.getValueStr();
-        String fjzp = StringUtils.ArrayListToString(photos);
+        String fjzp = StringUtils.arrayListToString(photos);
         String bz = binding.etBz.getValueStr();
         KeyValue gzlbq = binding.gzlbqmc.getValue();
         String gzlbqfx = binding.gzlbqfx.getValueStr();
         String gzlbqcj = binding.gzlbqcj.getValueStr();
         if (isCheck) {
             if (gzlbq != null) {
-                if (StringUtils.isHasOneEmpty(gzlbqfx, gzlbqcj)) {
+                if (StringUtilsExt.isHasOneEmpty(gzlbqfx, gzlbqcj)) {
                     ToastUtils.showMessage("请检查带星号的项目是否均已填写！");
                     return false;
                 }
@@ -347,7 +346,7 @@ public class BHDZQKActivity extends BaseActivity {
                         mHandler.post(() -> {
                             CustomerDialog.dismissProgress();
                             photos.add(imageName);
-                            showPic();
+                            BHDZQKActivity.this.showPic();
                         });
                     });
                     break;

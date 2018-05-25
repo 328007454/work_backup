@@ -126,7 +126,7 @@
             android:paddingLeft="@dimen/xs_global_padding_left_right_px"
             android:paddingRight="@dimen/xs_global_padding_left_right_px">
 
-            <com.cnksi.bdzinspection.view.CustomRadioButton
+            <com.cnksi.common.view.CustomRadioButton
                 android:id="@+id/rb_general_defect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                 app:drawableLeft="@drawable/xs_radio_button_selector"
                 app:drawableSize="48px" />
 
-            <com.cnksi.bdzinspection.view.CustomRadioButton
+            <com.cnksi.common.view.CustomRadioButton
                 android:id="@+id/rb_serious_defect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
                 app:drawableLeft="@drawable/xs_radio_button_selector"
                 app:drawableSize="48px" />
 
-            <com.cnksi.bdzinspection.view.CustomRadioButton
+            <com.cnksi.common.view.CustomRadioButton
                 android:id="@+id/rb_crisis_defect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

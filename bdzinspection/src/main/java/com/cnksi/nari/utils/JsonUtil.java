@@ -86,7 +86,7 @@ public class JsonUtil {
 
     public static final String toJSONString(String str, String str2) {
         com.alibaba.fastjson.JSONObject jSONObject = new com.alibaba.fastjson.JSONObject();
-        jSONObject.put(str, (Object) str2);
+        jSONObject.put(str, str2);
         return jSONObject.toString();
     }
 }

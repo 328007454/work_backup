@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
@@ -28,7 +29,6 @@ import com.cnksi.sjjc.adapter.BaseRecyclerAdapter;
 import com.cnksi.sjjc.adapter.holder.RecyclerHolder;
 import com.cnksi.sjjc.databinding.ArrowBinding;
 import com.cnksi.sjjc.databinding.WeatherTitleBinding;
-import com.cnksi.sjjc.util.NumberUtil;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -106,7 +106,7 @@ public class WeatherView1 extends LinearLayout {
             mLabelPaddingLeft = a.getDimensionPixelSize(R.styleable.WeatherView_label_padding_left, 0);
             // 默认字体大小30px
             mLabelSize = a.getDimensionPixelSize(R.styleable.WeatherView_label_size,
-                    NumberUtil.convertFloatToInt(DisplayUtils.getInstance().getTextScale() * 30));
+                    CalcUtils.convertFloatToInt(DisplayUtils.getInstance().getTextScale() * 30));
 
             weatherResource = a.getResourceId(R.styleable.WeatherView_selector, 0);
             if (0 != weatherResource) {
@@ -118,7 +118,7 @@ public class WeatherView1 extends LinearLayout {
             iconHeight = a.getDimensionPixelOffset(R.styleable.WeatherView_icon_height, 48);
             iconWidth = a.getDimensionPixelSize(R.styleable.WeatherView_icon_width, 29);
             iconMargin = a.getDimensionPixelSize(R.styleable.WeatherView_icon_margin,
-                    NumberUtil.convertFloatToInt(DisplayUtils.getInstance().getTextScale() * 10));
+                    CalcUtils.convertFloatToInt(DisplayUtils.getInstance().getTextScale() * 10));
 
             a.recycle();
         }
@@ -155,12 +155,7 @@ public class WeatherView1 extends LinearLayout {
         middleLayoutParam.gravity = Gravity.CENTER_VERTICAL;
         this.addView(mRecyclerView, middleLayoutParam);
         this.addView(bingding.getRoot());
-        bingding.arrow.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showWeatherDialog();
-            }
-        });
+        bingding.arrow.setOnClickListener(v -> showWeatherDialog());
     }
 
     class WeatherAdapter extends BaseRecyclerAdapter<String> {
@@ -181,20 +176,17 @@ public class WeatherView1 extends LinearLayout {
             }else{
                 radioButton.setChecked(false);
             }
-            radioButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (currentWeather.equals(item)) {
-                        currentWeather = "";
-                    } else {
-                        currentWeather = item;
-                    }
-                    adapter1.notifyDataSetChanged();
-                    if (null != adapter2) {
-                        adapter2.notifyDataSetChanged();
-                    }
-                    mRecyclerView.scrollToPosition(position);
+            radioButton.setOnClickListener(v -> {
+                if (currentWeather.equals(item)) {
+                    currentWeather = "";
+                } else {
+                    currentWeather = item;
                 }
+                adapter1.notifyDataSetChanged();
+                if (null != adapter2) {
+                    adapter2.notifyDataSetChanged();
+                }
+                mRecyclerView.scrollToPosition(position);
             });
         }
     }
@@ -239,25 +231,22 @@ public class WeatherView1 extends LinearLayout {
             listView.setAdapter(adapter2);
             weatherDialog.setContentView(holder.getRootView(),
                     new ViewGroup.LayoutParams(
-                            NumberUtil.convertFloatToInt(DisplayUtils.getInstance().getWidth() * 0.9f),
-                            NumberUtil.convertFloatToInt(DisplayUtils.getInstance().getHeightScale() * 800)));
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    TextView textView = (TextView) view.findViewById(R.id.tv_weather);
-                    String item = textView.getText().toString();
-                    if (currentWeather.equals(item)) {
-                        currentWeather = "";
-                    } else {
-                        currentWeather = item;
-                    }
-                    adapter1.notifyDataSetChanged();
-                    if (null != adapter2) {
-                        adapter2.notifyDataSetChanged();
-                        weatherDialog.dismiss();
-                    }
-                    mRecyclerView.scrollToPosition(position);
+                            CalcUtils.convertFloatToInt(DisplayUtils.getInstance().getWidth() * 0.9f),
+                            CalcUtils.convertFloatToInt(DisplayUtils.getInstance().getHeightScale() * 800)));
+            listView.setOnItemClickListener((adapterView, view, position, l) -> {
+                TextView textView = view.findViewById(R.id.tv_weather);
+                String item = textView.getText().toString();
+                if (currentWeather.equals(item)) {
+                    currentWeather = "";
+                } else {
+                    currentWeather = item;
                 }
+                adapter1.notifyDataSetChanged();
+                if (null != adapter2) {
+                    adapter2.notifyDataSetChanged();
+                    weatherDialog.dismiss();
+                }
+                mRecyclerView.scrollToPosition(position);
             });
         }
         weatherDialog.show();

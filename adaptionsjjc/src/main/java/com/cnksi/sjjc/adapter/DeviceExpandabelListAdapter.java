@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.cnksi.core.view.FollowListView;
 import com.cnksi.sjjc.R;
-import com.cnksi.common.model.Spacing;;
+import com.cnksi.common.model.Spacing;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.x;
@@ -95,20 +95,20 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
             holder = new ViewChildHolder();
             convertView = mInflater.inflate(R.layout.expandable_gridview_child_item, parent, false);
             convertView.setTag(holder);
-            holder.mFollowListView = (FollowListView) convertView.findViewById(R.id.gv_container);
+            holder.mFollowListView = convertView.findViewById(R.id.gv_container);
         } else {
             holder = (ViewChildHolder) convertView.getTag();
         }
         holder.mFollowListView.setOnItemClickListener((view, view1, i, l) -> {
             if (mOnAdapterViewClickListener != null) {
-                mOnAdapterViewClickListener.OnItemViewClick(view, view1, mDeviceList.get(i), getGroup(groupPosition));
+                mOnAdapterViewClickListener.OnItemViewClick(view, view1, mDeviceList.get(i), DeviceExpandabelListAdapter.this.getGroup(groupPosition));
             }
         });
 
         holder.mFollowListView.setOnItemLongClickListener((view, view1, i, l) -> {
             if (mOnAdapterViewClickListener != null) {
                 return mOnAdapterViewClickListener.onItemLongClick(view, view1, mDeviceList.get(i),
-                        getGroup(groupPosition));
+                        DeviceExpandabelListAdapter.this.getGroup(groupPosition));
             }
             return false;
         });
@@ -159,7 +159,7 @@ public class DeviceExpandabelListAdapter extends BaseMapListExpandableAdapter<Sp
             holder = new ViewGroupHolder();
             convertView = mInflater.inflate(R.layout.group_item, parent, false);
             convertView.setTag(holder);
-            holder.mTvDeviceInterval = (TextView) convertView.findViewById(R.id.tv_group_item);
+            holder.mTvDeviceInterval = convertView.findViewById(R.id.tv_group_item);
         } else {
             holder = (ViewGroupHolder) convertView.getTag();
         }

@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -26,12 +27,12 @@ import com.cnksi.bdzinspection.fragment.Camera2VideoFragment;
 import com.cnksi.bdzinspection.fragment.CameraVideoFragment;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.model.OperateTick;
-import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.MediaRecorderUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.DateUtils;
@@ -98,7 +99,7 @@ public class OperateWorkActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (mCurrentOperateTick == null) {
-                runOnUiThread(() -> ToastUtils.showMessage("没有找到操作票！"));
+                OperateWorkActivity.this.runOnUiThread(() -> ToastUtils.showMessage("没有找到操作票！"));
                 return;
             }
             dataList = OperateItemService.getInstance().findAllOperateItemByTaskId(currentOperateId);
@@ -126,13 +127,7 @@ public class OperateWorkActivity extends BaseActivity {
             mHandler.sendEmptyMessage(LOAD_DATA);
         });
 
-        binding.rlFunctionContainer.setOnTouchListener(new OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+        binding.rlFunctionContainer.setOnTouchListener((v, event) -> true);
     }
 
     @Override
@@ -162,47 +157,37 @@ public class OperateWorkActivity extends BaseActivity {
     }
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> onBackPressed());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> OperateWorkActivity.this.onBackPressed());
 
-        binding.rlAudio.setOnClickListener(view -> recordAudio(true));
+        binding.rlAudio.setOnClickListener(view -> OperateWorkActivity.this.recordAudio(true));
 
-        binding.rlVideo.setOnClickListener(view -> recordVideo(true));
+        binding.rlVideo.setOnClickListener(view -> OperateWorkActivity.this.recordVideo(true));
 
-        binding.btnConfirm.setOnClickListener(view -> completeOperateTask());
+        binding.btnConfirm.setOnClickListener(view -> OperateWorkActivity.this.completeOperateTask());
 
-        binding.ibtnStopAudio.setOnClickListener(view -> recordAudio(false));
+        binding.ibtnStopAudio.setOnClickListener(view -> OperateWorkActivity.this.recordAudio(false));
 
-        binding.ibtnStopVideo.setOnClickListener(view -> recordVideo(false));
+        binding.ibtnStopVideo.setOnClickListener(view -> OperateWorkActivity.this.recordVideo(false));
 
-        binding.ibtnStart.setOnClickListener(view -> {
-            startOperateTask();
-        });
-        binding.btnPause.setOnClickListener(view -> {
-            pauseOperateTask();
-        });
+        binding.ibtnStart.setOnClickListener(view -> OperateWorkActivity.this.startOperateTask());
+        binding.btnPause.setOnClickListener(view -> OperateWorkActivity.this.pauseOperateTask());
 
-        binding.btnStop.setOnClickListener(view -> {
-            DialogUtils.showSureTipsDialog(currentActivity, binding.llRootContainer,
-                    getString(R.string.xs_sure_stop_operate_task_str), new OnViewClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            stopOperateTask();
-                        }
-                    });
-        });
+        binding.btnStop.setOnClickListener(view -> DialogUtils.showSureTipsDialog(currentActivity, binding.llRootContainer,
+                OperateWorkActivity.this.getString(R.string.xs_sure_stop_operate_task_str), new OnViewClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        stopOperateTask();
+                    }
+                }));
 
-        binding.btnCancel.setOnClickListener(view -> {
-            binding.rlFunctionContainer.setVisibility(View.GONE);
-        });
-        binding.includeTitle.ibtnExit.setOnClickListener(view -> {
-            binding.rlFunctionContainer.setVisibility(View.VISIBLE);
-        });
+        binding.btnCancel.setOnClickListener(view -> binding.rlFunctionContainer.setVisibility(View.GONE));
+        binding.includeTitle.ibtnExit.setOnClickListener(view -> binding.rlFunctionContainer.setVisibility(View.VISIBLE));
 
 
         binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
             OperateItem item = (OperateItem) parent.getItemAtPosition(position);
             if (position == currentOperateItemPosition) {
-                showOperateContentTips(item);
+                OperateWorkActivity.this.showOperateContentTips(item);
             } else if (TextUtils.isEmpty(item.time_start)) {
                 ToastUtils.showMessage("你正在进行越项操作，请注意!");
                 TTSUtils.getInstance().startSpeaking("你正在进行越项操作，请注意!");
@@ -232,9 +217,7 @@ public class OperateWorkActivity extends BaseActivity {
         tipsBinding.tvDialogContent.setText(item.content);
         tipsDialog.show();
 
-        tipsBinding.btnCancel.setOnClickListener(view -> {
-            tipsDialog.dismiss();
-        });
+        tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
 
         tipsBinding.btnSure.setOnClickListener(view -> {
             // TODO:保存改操作项目的耗时并开始下一条操作项目

@@ -1,23 +1,27 @@
-package com.cnksi.bdzinspection.view;
+package com.cnksi.common.view;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.utils.DisplayUtil;
-import com.cnksi.bdzinspection.utils.NumberUtil;
+import com.cnksi.common.R;
+import com.cnksi.common.databinding.CommonDialogChartBinding;
+import com.cnksi.common.utils.CalcUtils;
+import com.cnksi.core.utils.DisplayUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,19 +66,14 @@ public class ChartDialog {
 			List<LineSet> yValues, List<Integer> yColors) {
 		dismissDialog();
 		dialog = new Dialog(context, R.style.dialog);
-		ViewHolder holder = new ViewHolder(context, null, R.layout.xs_dialog_chart, false);
-		holder.setText(R.id.title, title);
-		holder.setText(R.id.xLabel, xLabel);
-		holder.setText(R.id.yLabel, yLabel);
-		holder.setVisable(R.id.btn_back, View.GONE);
-		holder.getView(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
+		CommonDialogChartBinding holder = CommonDialogChartBinding.inflate(LayoutInflater.from(context));
+		holder.title.setText(title);
+		holder.xLabel.setText(xLabel);
+		holder.yLabel.setText(yLabel);
+		holder.btnBack.setVisibility( View.GONE);
+		holder.btnBack.setOnClickListener(v -> dialog.dismiss());
 
-		LineChart chart = holder.getView(R.id.line_chart);
+		LineChart chart = holder.lineChart;
 		chart.setDescription("");
 		chart.setNoDataTextDescription("无图形数据");
 		XAxis xAxis = chart.getXAxis();
@@ -125,8 +124,8 @@ public class ChartDialog {
 		data.setValueFormatter(new MyValueFormatter());
 		chart.setData(data);
 
-		dialog.setContentView(holder.getRootView(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-				NumberUtil.convertFloatToInt(DisplayUtil.getInstance().getScale() * 800)));
+		dialog.setContentView(holder.getRoot(), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+				CalcUtils.convertFloatToInt(DisplayUtils.getInstance().getScale() * 800)));
 		dialog.show();
 	}
 
@@ -134,7 +133,7 @@ public class ChartDialog {
 			String lineName, List<Float> yValues, int color) {
 		List<LineSet> yValue = new ArrayList<>();
 		yValue.add(new LineSet(lineName, yValues));
-		showLineChartDialog(context, title, xLabel, yLabel, xValues, yValue, Arrays.asList(new Integer[] { color }));
+		showLineChartDialog(context, title, xLabel, yLabel, xValues, yValue, Arrays.asList(color));
 
 	}
 
@@ -161,6 +160,23 @@ public class ChartDialog {
 
 		public void setSet(List<Float> set) {
 			this.set = set;
+		}
+	}
+	/**
+	 * Created by wastrel on 2016/7/7.
+	 */
+	public static class MyValueFormatter implements ValueFormatter {
+
+		private DecimalFormat mFormat;
+
+		public MyValueFormatter() {
+
+			this.mFormat = new DecimalFormat("###,###,###,###.####");
+		}
+
+		@Override
+		public String getFormattedValue(float v, Entry entry, int i, ViewPortHandler viewPortHandler) {
+			return this.mFormat.format(v);
 		}
 	}
 }

@@ -14,7 +14,7 @@ import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
@@ -145,17 +145,15 @@ public class NewTransformRecordActivity extends BaseActivity {
 
     private void initOnClick() {
 
-        mTitleBinding.btnBack.setOnClickListener(view -> {
-            this.finish();
-        });
+        mTitleBinding.btnBack.setOnClickListener(view -> NewTransformRecordActivity.this.finish());
 
         binding.btnConfirmSave.setOnClickListener(view -> {
             List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
             if (listDbModel != null && listDbModel.size() > 0) {
                 for (int i = 0; i < listDbModel.size(); i++) {
                     DbModel dbModel = listDbModel.get(i);
-                    String bcds = StringUtils.getTransformTep(listBcds.get(i).getText().toString());
-                    String dzcs = StringUtils.getTransformTep(listDzcs.get(i).getText().toString());
+                    String bcds = StringUtilsExt.getDecimalPoint(listBcds.get(i).getText().toString());
+                    String dzcs = StringUtilsExt.getDecimalPoint(listDzcs.get(i).getText().toString());
                     if (TextUtils.isEmpty(bcds) && TextUtils.isEmpty(dzcs)) {
                         continue;
                     }
@@ -179,7 +177,7 @@ public class NewTransformRecordActivity extends BaseActivity {
             }
             try {
                 TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
-                setResult(RESULT_OK);
+                NewTransformRecordActivity.this.setResult(RESULT_OK);
             } catch (DbException e) {
                 e.printStackTrace();
             }
@@ -190,8 +188,8 @@ public class NewTransformRecordActivity extends BaseActivity {
                 e.printStackTrace();
             }
             Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
-            startActivity(intent);
-            this.finish();
+            NewTransformRecordActivity.this.startActivity(intent);
+            NewTransformRecordActivity.this.finish();
         });
     }
 

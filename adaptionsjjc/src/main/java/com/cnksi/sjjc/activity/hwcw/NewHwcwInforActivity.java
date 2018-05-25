@@ -116,13 +116,10 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
         mInforBinding.gvTestManager.setAdapter(showPeopleAdapter);
         showPeopleAdapter.setUserCount(1);
         showPeopleAdapter.setClickWidget(this);
-        mTitleBinding.btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveData();
-                setResult(RESULT_OK);
-                _this.finish();
-            }
+        mTitleBinding.btnBack.setOnClickListener(view -> {
+            saveData();
+            setResult(RESULT_OK);
+            _this.finish();
         });
     }
 
@@ -243,31 +240,25 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
         }
         peopleBinding.lvPeople.setAdapter(peopleAdapter);
 
-        peopleBinding.lvPeople.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = (String) adapterView.getItemAtPosition(i);
-                peopleDialog.cancel();
-                if (czrModels.contains(name)) {
-                    ToastUtils.showMessage("测试人中已经有该成员了");
-                    return;
-                } else {
-                    czrModels.add(name);
-                }
-                showPeopleList.add(name);
-                showPeopleAdapter.setList(showPeopleList);
+        peopleBinding.lvPeople.setOnItemClickListener((adapterView, view, i, l) -> {
+            String name = (String) adapterView.getItemAtPosition(i);
+            peopleDialog.cancel();
+            if (czrModels.contains(name)) {
+                ToastUtils.showMessage("测试人中已经有该成员了");
+                return;
+            } else {
+                czrModels.add(name);
             }
+            showPeopleList.add(name);
+            showPeopleAdapter.setList(showPeopleList);
         });
 
-        peopleBinding.tvNewPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!TextUtils.isEmpty(peopleBinding.etName.getText().toString())) {
-                    peopleList.add(peopleBinding.etName.getText().toString());
-                    peopleAdapter.setList(peopleList);
-                    peopleBinding.lvPeople.setSelection(peopleAdapter.getCount());
-                    peopleBinding.etName.setText("");
-                }
+        peopleBinding.tvNewPerson.setOnClickListener(view -> {
+            if (!TextUtils.isEmpty(peopleBinding.etName.getText().toString())) {
+                peopleList.add(peopleBinding.etName.getText().toString());
+                peopleAdapter.setList(peopleList);
+                peopleBinding.lvPeople.setSelection(peopleAdapter.getCount());
+                peopleBinding.etName.setText("");
             }
         });
 

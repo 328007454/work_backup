@@ -7,15 +7,16 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SpaceSortAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
-import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.SpacingService;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Spacing;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.core.view.swipemenulist.SwipeMenuDragSortListView;
 
 import org.xutils.ex.DbException;
 
@@ -107,17 +108,14 @@ public class SpaceSortActivity extends TitleActivity {
                 Intent intent = new Intent(currentActivity, SpaceSplitActivity.class);
                 intent.putExtra("space", data);
                 intent.putExtra("mode", functionMode);
-                startActivityForResult(intent, LOAD_DATA);
+                SpaceSortActivity.this.startActivityForResult(intent, LOAD_DATA);
             }
         });
-        spaceAdapter.setSortListener(new ItemClickListener<Spacing>() {
-            @Override
-            public void onClick(View v, Spacing data, int position) {
-                Intent intent = new Intent(currentActivity, DeviceSortActivity.class);
-                intent.putExtra("space", data);
-                intent.putExtra(Config.CURRENT_FUNCTION_MODEL, functionMode);
-                startActivity(intent);
-            }
+        spaceAdapter.setSortListener((v, data, position) -> {
+            Intent intent = new Intent(currentActivity, DeviceSortActivity.class);
+            intent.putExtra("space", data);
+            intent.putExtra(Config.CURRENT_FUNCTION_MODEL, functionMode);
+            startActivity(intent);
         });
         binding.swlvContainer.setAdapter(spaceAdapter);
     }

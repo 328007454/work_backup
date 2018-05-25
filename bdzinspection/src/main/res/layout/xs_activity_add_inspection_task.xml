@@ -194,7 +194,7 @@
                     android:gravity="center_vertical|right"
                     android:orientation="horizontal">
 
-                    <com.cnksi.bdzinspection.view.CustomRadioButton
+                    <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/radio_puce"
                         style="@style/RadioButtonBaseStyle"
                         android:layout_width="0dp"
@@ -210,7 +210,7 @@
                         app:drawableLeft="@drawable/xs_radio_button_selector"
                         app:drawableSize="48px"/>
 
-                    <com.cnksi.bdzinspection.view.CustomRadioButton
+                    <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/radio_chouce"
                         style="@style/RadioButtonBaseStyle"
                         android:layout_width="0dp"

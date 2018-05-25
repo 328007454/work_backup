@@ -140,20 +140,16 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         });
 
         findViewById(R.id.ivLogo).setOnLongClickListener(v -> {
-            modifySyncURL();
+            LoginActivity.this.modifySyncURL();
             return true;
         });
     }
 
     private void initOnClick() {
-        binding.bLoginButton.setOnClickListener(view -> loginUser(true));
+        binding.bLoginButton.setOnClickListener(view -> LoginActivity.this.loginUser(true));
         binding.ivLogo.setOnClickListener(view -> ActivityUtil.startSync(mActivity));
-        binding.tvVersion.setOnClickListener(view -> {
-            mHandler.sendEmptyMessage(SHOW_UPDATE_LOG_DIALOG);
-        });
-        binding.bAddPeopleButton.setOnClickListener(view -> {
-            loginUser(false);
-        });
+        binding.tvVersion.setOnClickListener(view -> mHandler.sendEmptyMessage(SHOW_UPDATE_LOG_DIALOG));
+        binding.bAddPeopleButton.setOnClickListener(view -> LoginActivity.this.loginUser(false));
         binding.maskWifi.setOnClickListener(view -> {
             if (count == 0) {
                 startTime = System.currentTimeMillis();
@@ -213,13 +209,13 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         binding.etAppId.setText(Config.SYNC_APP_ID);
         binding.btnCancel.setOnClickListener(v -> dialog.dismiss());
         binding.btnSure.setOnClickListener(v -> {
-            String url = getText(binding.etNewUrl).trim();
+            String url = LoginActivity.this.getText(binding.etNewUrl).trim();
             if (url.startsWith("http://") || url.startsWith("https://")) {
             } else {
                 url = "http://" + url;
             }
             Config.SYNC_URL = url;
-            String appId = getText(binding.etAppId);
+            String appId = LoginActivity.this.getText(binding.etAppId);
             if (!TextUtils.isEmpty(appId)) {
                 Config.SYNC_APP_ID = appId;
             }

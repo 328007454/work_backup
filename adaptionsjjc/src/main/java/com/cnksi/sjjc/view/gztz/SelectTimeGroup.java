@@ -6,10 +6,11 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 
@@ -37,8 +38,8 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
         setOrientation(HORIZONTAL);
         setDrawUnderLine(true);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_time, this, true);
-        tvValue = (TextView) findViewById(R.id.tv_value);
-        tvName = (TextView) findViewById(R.id.tv_name);
+        tvValue = findViewById(R.id.tv_value);
+        tvName = findViewById(R.id.tv_name);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.SelectTimeGroup);
         int type = 0;
         if (attributes != null) {
@@ -46,25 +47,15 @@ public class SelectTimeGroup extends UnderLineLinearLayout {
             String name = attributes.getString(R.styleable.SelectTimeGroup_title_str);
             tvName.setText(name);
             String str = attributes.getString(R.styleable.SelectTimeGroup_select_hint_str);
-            str = StringUtils.BlankToDefault(str, "请选择");
+            str = StringUtilsExt.nullTo(str, "请选择");
             tvValue.setHint(str);
         }
         switch (type) {
             case 0:
-                tvValue.setOnClickListener(v -> DialogUtils.showDatePickerDialog((Activity) context, new DialogUtils.DialogItemClickListener() {
-                    @Override
-                    public void confirm(String result, int position) {
-                        tvValue.setText(result);
-                    }
-                }));
+                tvValue.setOnClickListener(v -> DialogUtils.showDatePickerDialog((Activity) context, (result, position) -> tvValue.setText(result)));
                 break;
             case 1:
-                tvValue.setOnClickListener(v -> DialogUtils.showDatePickerDialog((Activity) context, true, new DialogUtils.DialogItemClickListener() {
-                    @Override
-                    public void confirm(String result, int position) {
-                        tvValue.setText(result);
-                    }
-                }));
+                tvValue.setOnClickListener(v -> DialogUtils.showDatePickerDialog((Activity) context, true, (result, position) -> tvValue.setText(result)));
                 break;
             case 2:
                 tvValue.setOnClickListener(v -> DialogUtils.showTimePickerDialog((Activity) context, false, (result, position) -> tvValue.setText(result)));

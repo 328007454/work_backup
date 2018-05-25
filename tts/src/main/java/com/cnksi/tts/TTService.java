@@ -31,28 +31,28 @@ public class TTService extends Service {
     private String speaker = "xiaoyan";
     ISpeakCallback DEFAULT = new ISpeakCallback.Stub() {
         @Override
-        public void onSpeakBegin() throws RemoteException {
+        public void onSpeakBegin() {
         }
 
         @Override
-        public void onSpeakPaused() throws RemoteException {
-
-        }
-
-        @Override
-        public void onSpeakResumed() throws RemoteException {
+        public void onSpeakPaused() {
 
         }
 
         @Override
-        public void onCompleted(String error) throws RemoteException {
+        public void onSpeakResumed() {
+
+        }
+
+        @Override
+        public void onCompleted(String error) {
 
         }
     };
     ISpeakInterface.Stub stub = new ISpeakInterface.Stub() {
 
         @Override
-        public int speak(final String content, ISpeakCallback callback) throws RemoteException {
+        public int speak(final String content, ISpeakCallback callback) {
             if (isPrepare()) {
                 final ISpeakCallback mCallback = callback != null ? callback : DEFAULT;
                 if (mTts.isSpeaking()) mTts.stopSpeaking();
@@ -123,7 +123,7 @@ public class TTService extends Service {
         }
 
         @Override
-        public boolean setSpeaker(String speaker) throws RemoteException {
+        public boolean setSpeaker(String speaker) {
             TTService.this.speaker = speaker;
             if (isPrepare())
                 return mTts.setParameter(ResourceUtil.TTS_RES_PATH, getResourcePath()) && mTts.setParameter(SpeechConstant.VOICE_NAME, speaker);
@@ -145,7 +145,9 @@ public class TTService extends Service {
     }
 
     private boolean isPrepare() {
-        if (!isPrepare) Log.w(TAG, "TTS服务还没有准备好！");
+        if (!isPrepare) {
+            Log.w(TAG, "TTS服务还没有准备好！");
+        }
         return isPrepare;
     }
 

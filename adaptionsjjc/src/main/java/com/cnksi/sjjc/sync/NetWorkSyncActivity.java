@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Department;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
@@ -71,19 +71,16 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         mSyncInfoAdapter = new SyncInfoAdapter(currentActivity, mSyncInfos);
         binding.lvContainer.setAdapter(mSyncInfoAdapter);
         initKsync();
-        binding.lvContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SyncInfo syncInfo = mSyncInfoAdapter.getItem(position);
-                if (syncInfo.type == KSync.SYNC_ERROR) {
-                    Dialog dialog = new Dialog(currentActivity);
-                    dialog.setContentView(View.inflate(currentActivity, R.layout.sync_info_dialog, null));
-                    dialog.setCanceledOnTouchOutside(true);
-                    TextView tv = (TextView) dialog.findViewById(com.cnksi.ksynclib.R.id.tv_toast);
-                    tv.setText(syncInfo.content);
-                    tv.setMovementMethod(ScrollingMovementMethod.getInstance());
-                    dialog.show();
-                }
+        binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
+            SyncInfo syncInfo = mSyncInfoAdapter.getItem(position);
+            if (syncInfo.type == KSync.SYNC_ERROR) {
+                Dialog dialog = new Dialog(currentActivity);
+                dialog.setContentView(View.inflate(currentActivity, R.layout.sync_info_dialog, null));
+                dialog.setCanceledOnTouchOutside(true);
+                TextView tv = dialog.findViewById(com.cnksi.ksynclib.R.id.tv_toast);
+                tv.setText(syncInfo.content);
+                tv.setMovementMethod(ScrollingMovementMethod.getInstance());
+                dialog.show();
             }
         });
     }
@@ -104,7 +101,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
             if (department != null) {
-                deptName = StringUtils.BlankToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+                deptName = StringUtils.NullToDefault(department.name, department.dept_name, department.pms_name, dept_id);
             }
         }
         binding.tvDept.setText("当前班组： " + deptName);
@@ -132,12 +129,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                         SyncMenuUtils.deleteBakFile(currentActivity, ksync, handler);
                         break;
                     case 3: // 上传数据库
-                        SyncMenuUtils.uploadDatabase(currentActivity, ksync, handler, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mSyncInfos.clear();
-                                mSyncInfoAdapter.notifyDataSetChanged();
-                            }
+                        SyncMenuUtils.uploadDatabase(currentActivity, ksync, handler, v -> {
+                            mSyncInfos.clear();
+                            mSyncInfoAdapter.notifyDataSetChanged();
                         });
                         break;
                     case 4://删除除本班组以外的数据
@@ -163,14 +157,14 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
                     if (!KSyncConfig.getInstance().isHaveDept()) {
                         handler.sendMessage(handler.obtainMessage(KSync.SYNC_INFO, "当前没有登陆，本次同步仅同步基础数据！"));
                     }
-                    download();
+                    NetWorkSyncActivity.this.download();
                 });
                 break;
             //上传数据
             case R.id.tv_upload:
                 SyncMenuUtils.ShowTipsDialog(currentActivity, " 确认要将本机数据更新到服务器端么?", v -> {
                     cacheMap.clear();
-                    upload();
+                    NetWorkSyncActivity.this.upload();
                 });
                 break;
             default:
@@ -264,12 +258,7 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showDialogTips() {
-        SyncMenuUtils.ShowTipsDialog(currentActivity, "基本数据已同步完成，可以返回开始运维工作；文件在后台下载，不影响使用", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentActivity.finish();
-            }
-        });
+        SyncMenuUtils.ShowTipsDialog(currentActivity, "基本数据已同步完成，可以返回开始运维工作；文件在后台下载，不影响使用", v -> currentActivity.finish());
     }
 
     /**

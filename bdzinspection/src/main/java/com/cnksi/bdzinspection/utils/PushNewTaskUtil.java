@@ -31,19 +31,19 @@ public class PushNewTaskUtil {
         boolean goOn = !TextUtils.isEmpty(type) && (type.contains("maintenance") || type.contains("switchover"));
         if (goOn) {
            ExecutorManager.executeTask(() -> {
-                try {
-                    Task task = TaskService.getInstance().findById(taskId);
-                    String startTime = null==task ?DateUtils.getCurrentLongTime():(TextUtils.isEmpty(task.schedule_time)?DateUtils.getCurrentLongTime():task.schedule_time);
-                    SwitchMenu menu = SwitchMenuService.getInstance().findByBdz(task.bdzid,type);
-                    if (null != task && menu != null && !TextUtils.isEmpty(menu.cycle)) {
-                        String nextTime = DateCalcUtils.getAfterMonth(DateUtils.getFormatterTime(startTime, DateUtils.yyyy_MM_dd_HH_mm_ss), Integer.valueOf(menu.cycle));
-                        Task newTask = new Task(MyUUID.id(4), task.bdzid, task.bdzname, task.inspection, task.inspection_name, nextTime, TaskStatus.undo.name(), task.createAccount, null);
-                        TaskService.getInstance().saveOrUpdate(newTask);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+               try {
+                   Task task = TaskService.getInstance().findById(taskId);
+                   String startTime = null == task ? DateUtils.getCurrentLongTime() : (TextUtils.isEmpty(task.schedule_time) ? DateUtils.getCurrentLongTime() : task.schedule_time);
+                   SwitchMenu menu = SwitchMenuService.getInstance().findByBdz(task.bdzid, type);
+                   if (null != task && menu != null && !TextUtils.isEmpty(menu.cycle)) {
+                       String nextTime = DateCalcUtils.getAfterMonth(DateUtils.getFormatterTime(startTime, DateUtils.yyyy_MM_dd_HH_mm_ss), Integer.valueOf(menu.cycle));
+                       Task newTask = new Task(MyUUID.id(4), task.bdzid, task.bdzname, task.inspection, task.inspection_name, nextTime, TaskStatus.undo.name(), task.createAccount, null);
+                       TaskService.getInstance().saveOrUpdate(newTask);
+                   }
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+           });
         } else {
             return;
         }

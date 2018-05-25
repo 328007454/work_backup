@@ -48,10 +48,10 @@ public class StandardDefectDefineAdapter extends BaseMapListExpandableAdapter<St
 		itemBinding.tvChildItem.setText(child.description);
 
 		itemBinding.ibtnDelete.setOnClickListener(view -> {
-			if (mOnAdapterViewClickListener != null) {
-				mOnAdapterViewClickListener.OnAdapterViewClick(view, getGroup(groupPosition),child);
-			}
-		});
+            if (mOnAdapterViewClickListener != null) {
+                mOnAdapterViewClickListener.OnAdapterViewClick(view, StandardDefectDefineAdapter.this.getGroup(groupPosition), child);
+            }
+        });
 		return itemBinding.getRoot();
 	}
 	

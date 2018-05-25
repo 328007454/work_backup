@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BaseService;
@@ -77,15 +78,12 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
         bdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         reportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
         bdzName = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");
-        ExecutorManager.executeTaskSerially(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mReport = ReportService.getInstance().findById(reportId);
-                    mReport.starttime = DateUtils.getCurrentLongTime();
-                } catch (DbException e) {
-                    e.printStackTrace();
-                }
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                mReport = ReportService.getInstance().findById(reportId);
+                mReport.starttime = DateUtils.getCurrentLongTime();
+            } catch (DbException e) {
+                e.printStackTrace();
             }
         });
 
@@ -93,12 +91,8 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
 
 
     private void initOnclick() {
-        mHumitureBinding.btnCompleteRecord.setOnClickListener((v) -> {
-            saveData();
-        });
-        mTitleBinding.btnBack.setOnClickListener((v) -> {
-            this.finish();
-        });
+        mHumitureBinding.btnCompleteRecord.setOnClickListener(v -> IndoorHumitureRecordActivity.this.saveData());
+        mTitleBinding.btnBack.setOnClickListener(v -> IndoorHumitureRecordActivity.this.finish());
     }
 
     private void saveData() {

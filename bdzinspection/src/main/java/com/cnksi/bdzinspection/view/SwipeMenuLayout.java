@@ -513,12 +513,7 @@ public class SwipeMenuLayout extends ViewGroup {
 
         cancelAnim();
         mExpandAnim = ValueAnimator.ofInt(getScrollX(), isLeftSwipe ? mRightMenuWidths : -mRightMenuWidths);
-        mExpandAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                scrollTo((Integer) animation.getAnimatedValue(), 0);
-            }
-        });
+        mExpandAnim.addUpdateListener(animation -> scrollTo((Integer) animation.getAnimatedValue(), 0));
         mExpandAnim.setInterpolator(new OvershootInterpolator());
         mExpandAnim.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -557,12 +552,7 @@ public class SwipeMenuLayout extends ViewGroup {
 
         cancelAnim();
         mCloseAnim = ValueAnimator.ofInt(getScrollX(), 0);
-        mCloseAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                scrollTo((Integer) animation.getAnimatedValue(), 0);
-            }
-        });
+        mCloseAnim.addUpdateListener(animation -> scrollTo((Integer) animation.getAnimatedValue(), 0));
         mCloseAnim.setInterpolator(new AccelerateInterpolator());
         mCloseAnim.addListener(new AnimatorListenerAdapter() {
             @Override

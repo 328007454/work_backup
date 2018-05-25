@@ -136,16 +136,12 @@ public class ArcMenu extends ViewGroup implements OnClickListener {
             childView.layout(l, t, l + width, t + height);
             childView.setVisibility(View.GONE);
             final int pos = i;
-            childView.setOnClickListener(new OnClickListener() {
+            childView.setOnClickListener(v -> {
+                clickItemAnim(pos);
+                changeStatus();
+                if (mMenuItemClickListener != null) {
+                    mMenuItemClickListener.onItemClick(v, pos);
 
-                @Override
-                public void onClick(View v) {
-                    clickItemAnim(pos);
-                    changeStatus();
-                    if (mMenuItemClickListener != null) {
-                        mMenuItemClickListener.onItemClick(v, pos);
-
-                    }
                 }
             });
         }

@@ -49,8 +49,6 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-;
-
 public class NewLauncherActivity extends BaseActivity {
     private ActivityLauncherNewBinding launcherBinding;
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -125,12 +123,7 @@ public class NewLauncherActivity extends BaseActivity {
                 });
             }
         });
-        launcherBinding.lancherTitle.bdzLocationContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPowerStationDialog.show();
-            }
-        });
+        launcherBinding.lancherTitle.bdzLocationContainer.setOnClickListener(view -> mPowerStationDialog.show());
         locationHelper = LocationUtil.getInstance().getLocalHelper(new LocationListener() {
             @Override
             public void locationSuccess(BDLocation location) {
@@ -181,18 +174,15 @@ public class NewLauncherActivity extends BaseActivity {
                 bdzList = (ArrayList<Bdz>) CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
                 final Department department = CustomApplication.getInstance().getDbManager().selector(Department.class).where(Department.ID, "=", deparmentId).and(Department.DLT, "<>", 1).findFirst();
                 if (null != department) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            launcherBinding.lancherTitle.txtTeam.setText(department.name);
-                            initBDZDialog();
-                            if (!bdzList.isEmpty()) {
-                                launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
-                                PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
-                                PreferencesUtils.put(Config.LOCATION_BDZID, bdzList.get(0).bdzid);
-                                PreferencesUtils.put(Config.LOCATION_BDZNAME, bdzList.get(0).name);
-                                PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, department.name);
-                            }
+                    NewLauncherActivity.this.runOnUiThread(() -> {
+                        launcherBinding.lancherTitle.txtTeam.setText(department.name);
+                        initBDZDialog();
+                        if (!bdzList.isEmpty()) {
+                            launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
+                            PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
+                            PreferencesUtils.put(Config.LOCATION_BDZID, bdzList.get(0).bdzid);
+                            PreferencesUtils.put(Config.LOCATION_BDZNAME, bdzList.get(0).name);
+                            PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, department.name);
                         }
                     });
                 }

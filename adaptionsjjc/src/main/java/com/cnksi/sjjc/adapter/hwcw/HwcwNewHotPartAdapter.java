@@ -67,14 +67,11 @@ public class HwcwNewHotPartAdapter extends BaseRecyclerDataBindingAdapter<HwcwLo
         } else {
             hotPartBinding.etEtting.setVisibility(View.GONE);
         }
-        hotPartBinding.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                if (mLongItemListener != null) {
-                    mLongItemListener.onLongItemClick(view, item, position);
-                }
-                return true;
+        hotPartBinding.getRoot().setOnLongClickListener(view -> {
+            if (mLongItemListener != null) {
+                mLongItemListener.onLongItemClick(view, item, position);
             }
+            return true;
         });
     }
 

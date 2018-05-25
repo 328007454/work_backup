@@ -17,8 +17,8 @@ import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment.On
 import com.cnksi.bdzinspection.fragment.defectcontrol.RecordDefectFragment;
 import com.cnksi.bdzinspection.fragment.defectcontrol.TrackDefectFragment;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.utils.PlaySound;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
@@ -151,9 +151,7 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
     }
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> DefectControlActivity.this.onBackPressed());
     }
 
 

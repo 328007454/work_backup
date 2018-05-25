@@ -2,6 +2,7 @@ package com.cnksi.sjjc.activity.gztz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
@@ -65,12 +66,12 @@ public class BHDZJLActivity extends BaseActivity {
 
     private void initView() {
         binding.btnNext.setOnClickListener(v -> {
-            if (saveData(true)) {
+            if (BHDZJLActivity.this.saveData(true)) {
                 Intent intent = new Intent(_this, GZTZRecordActivity.class);
-                startActivity(intent);
+                BHDZJLActivity.this.startActivity(intent);
             }
         });
-        binding.btnPre.setOnClickListener(v -> onBackPressed());
+        binding.btnPre.setOnClickListener(v -> BHDZJLActivity.this.onBackPressed());
         addOtherDevice();
     }
 
@@ -78,11 +79,11 @@ public class BHDZJLActivity extends BaseActivity {
         sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
         ExecutorManager.executeTaskSerially(() -> {
             List<SbjcGztzjlBhdzjl> bhdzjls = GZTZBhdzjlService.getInstance().findByGzjl(sbjcGztzjl.id);
-            runOnUiThread(() -> {
+            BHDZJLActivity.this.runOnUiThread(() -> {
                 if (bhdzjls != null && bhdzjls.size() > 0) {
                     groups.get(0).setRecord(bhdzjls.get(0));
                     for (int i = 1; i < bhdzjls.size(); i++) {
-                        addOtherDevice().setRecord(bhdzjls.get(i));
+                        BHDZJLActivity.this.addOtherDevice().setRecord(bhdzjls.get(i));
                     }
                 }
                 isFirstLoad = false;
@@ -112,7 +113,7 @@ public class BHDZJLActivity extends BaseActivity {
             } else {
                 intentDevices.putExtra(Config.SECOND_SPACE_AND_ONE_DEVICE, true);
             }
-            startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0));
+            BHDZJLActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0));
         });
         groups.add(group);
         return group;

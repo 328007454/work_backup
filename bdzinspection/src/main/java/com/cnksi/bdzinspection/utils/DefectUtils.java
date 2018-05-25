@@ -4,11 +4,12 @@ import android.graphics.Color;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.common.CommonApplication;
+import com.cnksi.common.Config;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
-import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 
@@ -23,9 +24,9 @@ import java.util.List;
  */
 public class DefectUtils {
 
-    public static final int CRISIS_COLOR = XunshiApplication.getAppContext().getResources().getColor(R.color.xs_red_color);
-    public static final int SERIOUS_COLOR = XunshiApplication.getAppContext().getResources().getColor(R.color.xs_orange_color);
-    public static final int COMMON_COLOR = XunshiApplication.getAppContext().getResources().getColor(R.color.xs_yellow_color);
+    public static final int CRISIS_COLOR = CommonApplication.getAppContext().getResources().getColor(R.color.xs_red_color);
+    public static final int SERIOUS_COLOR = CommonApplication.getAppContext().getResources().getColor(R.color.xs_orange_color);
+    public static final int COMMON_COLOR = CommonApplication.getAppContext().getResources().getColor(R.color.xs_yellow_color);
 
     /**
      * 转换缺陷等级为 一般 严重 危机
@@ -103,14 +104,14 @@ public class DefectUtils {
             if (copyResult == null) {
                 return false;
             }
-            min = NumberUtil.parse(copyResult.val_old, -1);
+            min = CalcUtils.parse(copyResult.val_old, -1);
             if (min == -1) {
                 return false;
             }
             max = min + 5;
         } else {
-            max = NumberUtil.parse(item.max, 99999d);
-            min = NumberUtil.parse(item.min, -99999d);
+            max = CalcUtils.parse(item.max, 99999d);
+            min = CalcUtils.parse(item.min, -99999d);
         }
 
         double currentValue = Double.parseDouble(val);
@@ -150,9 +151,9 @@ public class DefectUtils {
                 }
             } else {
                 if (currentValue >= max) {
-                    tips = String.format(XunshiApplication.getAppContext().getResources().getString(R.string.xs_copy_max_tips), descript, max + "");
+                    tips = String.format(CommonApplication.getAppContext().getResources().getString(R.string.xs_copy_max_tips), descript, max + "");
                 } else {
-                    tips = String.format(XunshiApplication.getAppContext().getResources().getString(R.string.xs_copy_min_tips), descript, min + "");
+                    tips = String.format(CommonApplication.getAppContext().getResources().getString(R.string.xs_copy_min_tips), descript, min + "");
                 }
             }
             result.clear();
@@ -162,5 +163,76 @@ public class DefectUtils {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 根据抄录的数据得到当前的缺陷等级
+     *
+     * @param theBig
+     *            最大值
+     * @param theLittle
+     *            最小值
+     * @param inputValue
+     *            抄录值
+     * @param isGreaterThan
+     *            是否大于最大值
+     * @return
+     *
+     *         例如，正常数据范围为0.6-0.65 设抄录值为X，缺陷判定值为Y
+     *
+     *         当X＜0.6（即小于最小值时） Y=0.6/X 1＜Y≤1.2 一般缺陷 1.2＜Y≤1.4 严重缺陷 1.4＜Y或Y=0 危急缺陷
+     *
+     *         当X＞0.65（即大于最大值时） Y=X/0.65 1＜Y≤1.2 一般缺陷 1.2＜Y≤1.4 严重缺陷 1.4＜Y或Y=0 危急缺陷
+     */
+    public static String getDefectLevel(float theBig, float theLittle, float inputValue, boolean isGreaterThan) {
+        String defectLevel = Config.GENERAL_LEVEL;
+        float value = 0.0f;
+        if (isGreaterThan) {
+            value = inputValue / theBig;
+        } else {
+            value = theLittle / inputValue;
+        }
+        if (1 < value && value <= 1.2f) {
+            defectLevel = Config.GENERAL_LEVEL;
+        } else if (1.2 < value && value <= 1.4) {
+            defectLevel = Config.SERIOUS_LEVEL;
+        } else if (1.4 < value || value == 0) {
+            defectLevel = Config.CRISIS_LEVEL;
+        }
+        return defectLevel;
+    }
+
+    /**
+     * 转换缺陷等级为 2 4 6
+     *
+     * @param defectLevel
+     * @return
+     */
+    public static String convertDefectLevel2Code(String defectLevel) {
+        if (Config.GENERAL_LEVEL.equalsIgnoreCase(defectLevel)) {
+            defectLevel = Config.GENERAL_LEVEL_CODE;
+        } else if (Config.SERIOUS_LEVEL.equalsIgnoreCase(defectLevel)) {
+            defectLevel = Config.SERIOUS_LEVEL_CODE;
+        } else {
+            defectLevel = Config.CRISIS_LEVEL_CODE;
+        }
+        return defectLevel;
+    }
+
+    /**
+     * 转换缺陷等级为 一般 严重 危机
+     *
+     * @param defectLevel
+     * @return
+     */
+    public static String convert2DefectLevel(String defectLevel) {
+        if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
+            defectLevel = Config.GENERAL_LEVEL;
+        } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
+            defectLevel = Config.SERIOUS_LEVEL;
+        } else {
+            defectLevel = Config.CRISIS_LEVEL;
+        }
+        return defectLevel;
     }
 }

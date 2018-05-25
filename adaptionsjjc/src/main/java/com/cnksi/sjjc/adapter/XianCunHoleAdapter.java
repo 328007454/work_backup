@@ -100,35 +100,21 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         }
 
 
-        ibPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClickListener.itemClick(view, item, position, imgClear, tvClearNum);
+        ibPhoto.setOnClickListener(view -> itemClickListener.itemClick(view, item, position, imgClear, tvClearNum));
+        ibClearPhoto.setOnClickListener(view -> {
+            if (itemClickListener != null) {
+                itemClickListener.itemClick(view, item, position);
             }
         });
-        ibClearPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (itemClickListener != null) {
-                    itemClickListener.itemClick(view, item, position);
-                }
-            }
-        });
-        imgClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (itemClickListener != null) {
-                    itemClickListener.itemClick(view, item, position);
-                }
+        imgClear.setOnClickListener(view -> {
+            if (itemClickListener != null) {
+                itemClickListener.itemClick(view, item, position);
             }
         });
 
-        imgDiscover.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (itemClickListener != null) {
-                    itemClickListener.itemClick(view, item, position);
-                }
+        imgDiscover.setOnClickListener(view -> {
+            if (itemClickListener != null) {
+                itemClickListener.itemClick(view, item, position);
             }
         });
     }

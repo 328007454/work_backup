@@ -84,10 +84,10 @@ public class DeviceListItemAdapter extends SimpleBaseAdapter {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.device_item, parent, false);
             convertView.setTag(holder);
-            holder.mRlDeviceContainer = (RelativeLayout) convertView.findViewById(R.id.rl_device_container);
-            holder.mTvDeviceName = (TextView) convertView.findViewById(R.id.tv_device_name);
-            holder.mImageView = (ImageView) convertView.findViewById(R.id.ibt_copy_pen);
-            holder.mTvCopyValue = (TextView) convertView.findViewById(R.id.tv_copy_data);
+            holder.mRlDeviceContainer = convertView.findViewById(R.id.rl_device_container);
+            holder.mTvDeviceName = convertView.findViewById(R.id.tv_device_name);
+            holder.mImageView = convertView.findViewById(R.id.ibt_copy_pen);
+            holder.mTvCopyValue = convertView.findViewById(R.id.tv_copy_data);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }

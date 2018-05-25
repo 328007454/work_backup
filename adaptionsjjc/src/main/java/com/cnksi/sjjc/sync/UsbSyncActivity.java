@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Department;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
@@ -58,7 +58,7 @@ public class UsbSyncActivity extends AppCompatActivity implements View.OnClickLi
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
             if (department != null) {
-                deptName = StringUtils.BlankToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+                deptName = StringUtils.NullToDefault(department.name, department.dept_name, department.pms_name, dept_id);
             }
         }
         binding.tvDept.setText("当前班组： " + deptName);
@@ -75,23 +75,20 @@ public class UsbSyncActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.ibtn_sync_menu) {
-            SyncMenuUtils.showMenuPopWindow(currentActivity, binding.ibtnSyncMenu, R.array.UsbSyncMenuArray, new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    switch (i) {
-                        case 0://网络同步方式
-                            SyncMenuUtils.changeSync(currentActivity);
-                            break;
-                        case 1://删除数据库
-                            SyncMenuUtils.dropDb(currentActivity, kSync, handler);
-                            break;
-                        case 2: // 删除文件
-                            SyncMenuUtils.deleteBakFile(currentActivity, kSync, handler);
-                            break;
-                        case 3:
-                            SyncMenuUtils.deleteOtherDepartmentData(currentActivity, handler, dept_id);
-                            break;
-                    }
+            SyncMenuUtils.showMenuPopWindow(currentActivity, binding.ibtnSyncMenu, R.array.UsbSyncMenuArray, (adapterView, view1, i, l) -> {
+                switch (i) {
+                    case 0://网络同步方式
+                        SyncMenuUtils.changeSync(currentActivity);
+                        break;
+                    case 1://删除数据库
+                        SyncMenuUtils.dropDb(currentActivity, kSync, handler);
+                        break;
+                    case 2: // 删除文件
+                        SyncMenuUtils.deleteBakFile(currentActivity, kSync, handler);
+                        break;
+                    case 3:
+                        SyncMenuUtils.deleteOtherDepartmentData(currentActivity, handler, dept_id);
+                        break;
                 }
             });
         }

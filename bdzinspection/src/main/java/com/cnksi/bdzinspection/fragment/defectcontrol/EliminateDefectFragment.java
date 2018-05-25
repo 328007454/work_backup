@@ -13,10 +13,12 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
@@ -27,10 +29,10 @@ import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectReasonBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentEliminateDefectBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.bdzinspection.view.CustomRadioButton;
+import com.cnksi.common.utils.PlaySound;
+import com.cnksi.common.view.CustomRadioButton;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.DefectRecord;
@@ -181,32 +183,26 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
             }
         });
 
-        binding.ibtnSelectEliminateDate.setOnClickListener(view -> {
-            CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> binding.tvEliminateDate.setText(result));
-        });
+        binding.ibtnSelectEliminateDate.setOnClickListener(view -> CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> binding.tvEliminateDate.setText(result)));
 
         binding.ivEliminateDefectPhoto.setOnClickListener(view -> {
             mCurrentClickPhotoModel = ELIMINATE_MODEL;
-            showImageDetails(mDefectImageList);
+            EliminateDefectFragment.this.showImageDetails(mDefectImageList);
         });
 
         binding.ivWorkTicket.setOnClickListener(view -> {
             mCurrentClickPhotoModel = TICKETS_MODEL;
-            showImageDetails(mWorkTicketImageList);
+            EliminateDefectFragment.this.showImageDetails(mWorkTicketImageList);
         });
         binding.ivEliminateRecord.setOnClickListener(view -> {
             mCurrentClickPhotoModel = ELIMINATE_REOCRD_MODEL;
-            showImageDetails(mEliminateRecordImageList);
+            EliminateDefectFragment.this.showImageDetails(mEliminateRecordImageList);
         });
 
-        binding.btnConfirm.setOnClickListener(view -> {
-            eliminateDefect();
-        });
+        binding.btnConfirm.setOnClickListener(view -> EliminateDefectFragment.this.eliminateDefect());
 
-        binding.reasonContainer.setOnClickListener(view -> {
-            selectDefectReason();
-        });
-        binding.tvSelectDefectReason.setOnClickListener(view -> selectDefectReason());
+        binding.reasonContainer.setOnClickListener(view -> EliminateDefectFragment.this.selectDefectReason());
+        binding.tvSelectDefectReason.setOnClickListener(view -> EliminateDefectFragment.this.selectDefectReason());
 
     }
 
@@ -247,32 +243,28 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
             PlaySound.getIntance(currentActivity).play(R.raw.clear);
             binding.tvSelectDefectReason.setText("");
             binding.etChargePerson.setText("");
-            ExecutorManager.executeTask(new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        mCurrentEliminateDefect.has_remove = "Y";
-                        mCurrentEliminateDefect.removeDate = DateUtils.getCurrentLongTime();
-                        DefectRecordService.getInstance().update(mCurrentEliminateDefect, DefectRecord.HAS_REMOVE, DefectRecord.REMOVE_DATE);
-                        DefectRecord mTempDefectRecord = null;
-                        for (DefectRecord mDefectRecord : dataList) {
-                            if (mDefectRecord.defectid.equalsIgnoreCase(currentSelectDefectRecordId)) {
-                                mTempDefectRecord = mDefectRecord;
-                                break;
-                            }
+            ExecutorManager.executeTask(() -> {
+                try {
+                    mCurrentEliminateDefect.has_remove = "Y";
+                    mCurrentEliminateDefect.removeDate = DateUtils.getCurrentLongTime();
+                    DefectRecordService.getInstance().update(mCurrentEliminateDefect, DefectRecord.HAS_REMOVE, DefectRecord.REMOVE_DATE);
+                    DefectRecord mTempDefectRecord = null;
+                    for (DefectRecord mDefectRecord : dataList) {
+                        if (mDefectRecord.defectid.equalsIgnoreCase(currentSelectDefectRecordId)) {
+                            mTempDefectRecord = mDefectRecord;
+                            break;
                         }
-                        dataList.remove(mTempDefectRecord);
-                        mHandler.sendEmptyMessage(LOAD_DATA);
-                        // 消除了缺陷 要对其他两个界面的缺陷列表进行更新
-                        if (mOnFunctionButtonClickListener != null) {
-                            mOnFunctionButtonClickListener.onDefectChanged(getString(R.string.xs_eliminate_defect_success_str));
-                        }
-                        // 消缺后对当前消缺对象赋空
-                        mCurrentEliminateDefect = null;
-                    } catch (DbException e) {
-                        e.printStackTrace();
                     }
+                    dataList.remove(mTempDefectRecord);
+                    mHandler.sendEmptyMessage(LOAD_DATA);
+                    // 消除了缺陷 要对其他两个界面的缺陷列表进行更新
+                    if (mOnFunctionButtonClickListener != null) {
+                        mOnFunctionButtonClickListener.onDefectChanged(getString(R.string.xs_eliminate_defect_success_str));
+                    }
+                    // 消缺后对当前消缺对象赋空
+                    mCurrentEliminateDefect = null;
+                } catch (DbException e) {
+                    e.printStackTrace();
                 }
             });
 
@@ -316,9 +308,9 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
                     }
                 }
                 binding.rgDefectReasonContainer.setOnCheckedChangeListener((group, checkedId) -> {
-                    RadioButton mRadioButton = (RadioButton) group.findViewById(checkedId);
+                    RadioButton mRadioButton = group.findViewById(checkedId);
                     if (mRadioButton.isChecked()) {
-                        binding.tvSelectDefectReason.setHint(getResources().getString(R.string.xs_please_select_defect_reason_format_str, mRadioButton.getText().toString()));
+                        binding.tvSelectDefectReason.setHint(EliminateDefectFragment.this.getResources().getString(R.string.xs_please_select_defect_reason_format_str, mRadioButton.getText().toString()));
                     }
                 });
 
@@ -363,23 +355,19 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
      * @param
      */
     public void searchData() {
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                if (!isFromBattery) {
-                    if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
-                        dataList = DefectRecordService.getInstance().getReportDefectRecords(currentReportId, currentBdzId);
-                    } else {
-                        // 查询历史缺陷
-                        dataList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
-                    }
+        ExecutorManager.executeTask(() -> {
+            if (!isFromBattery) {
+                if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
+                    dataList = DefectRecordService.getInstance().getReportDefectRecords(currentReportId, currentBdzId);
                 } else {
-                    // 查询电池的缺陷
-                    dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.get(Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
+                    // 查询历史缺陷
+                    dataList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
                 }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            } else {
+                // 查询电池的缺陷
+                dataList = DefectRecordService.getInstance().queryDefectByBatteryId(PreferencesUtils.get(Config.CURRENT_BATTERY_ID, "1"), currentDeviceId, currentBdzId);
             }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
@@ -387,13 +375,9 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
      * 查询缺陷原因
      */
     private void searchDefectReason() {
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                mDefectReasonTypeList = LookupService.getInstance().getDefectReasonType();
-                mHandler.sendEmptyMessage(INIT_DEFECT_REASON);
-            }
+        ExecutorManager.executeTask(() -> {
+            mDefectReasonTypeList = LookupService.getInstance().getDefectReasonType();
+            mHandler.sendEmptyMessage(INIT_DEFECT_REASON);
         });
     }
 
@@ -415,13 +399,9 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
         mDefectReasonLayout.setChecked((position == 0));
         mDefectReasonLayout.setClickable(true);
         mDefectReasonLayout.setId(R.id.xs_radio_button_id + position);
-        mDefectReasonLayout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    binding.tvSelectDefectReason.setText("");
-                }
+        mDefectReasonLayout.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                binding.tvSelectDefectReason.setText("");
             }
         });
         return mDefectReasonLayout;
@@ -591,23 +571,23 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
                 mCurrentSelectedDefectReason = mSelectedDefectReasonList.remove(mSelectedDefectReasonList.size() - 1);
                 List<Lookup> mDefectReasonList = LookupService.getInstance().getDefectReasonListByParentId(mCurrentSelectedDefectReason.loo_id);
                 mDefectReasonAdapter.setList(mDefectReasonList);
-                reasonBinding.tvDialogTitle.setText(getTitle(mSelectedDefectReasonList, true));
+                reasonBinding.tvDialogTitle.setText(EliminateDefectFragment.this.getTitle(mSelectedDefectReasonList, true));
                 if (mSelectedDefectReasonList.isEmpty()) {
                     reasonBinding.ibtnCancel.setVisibility(View.INVISIBLE);
                 }
             }
         });
-        reasonBinding.lvContainer.setOnItemClickListener((parent,view,position,id) -> {
+        reasonBinding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
             mCurrentSelectedDefectReason = (Lookup) parent.getItemAtPosition(position);
             mSelectedDefectReasonList.add(mCurrentSelectedDefectReason);
             List<Lookup> mDefectReasonList = LookupService.getInstance().getDefectReasonListByParentId(mCurrentSelectedDefectReason.id);
             if (mDefectReasonList != null && !mDefectReasonList.isEmpty()) {
-                reasonBinding.tvDialogTitle.setText(getTitle(mSelectedDefectReasonList, true));
+                reasonBinding.tvDialogTitle.setText(EliminateDefectFragment.this.getTitle(mSelectedDefectReasonList, true));
                 mDefectReasonAdapter.setList(mDefectReasonList);
                 reasonBinding.ibtnCancel.setVisibility(View.VISIBLE);
             } else {
                 mDefectReasonDialog.dismiss();
-                binding.tvSelectDefectReason.setText(getTitle(mSelectedDefectReasonList, false));
+                binding.tvSelectDefectReason.setText(EliminateDefectFragment.this.getTitle(mSelectedDefectReasonList, false));
                 mSelectedDefectReasonList.clear();
             }
         });

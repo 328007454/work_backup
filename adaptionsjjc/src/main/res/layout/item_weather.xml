@@ -7,7 +7,7 @@
                   android:layout_height="match_parent"
                   android:orientation="horizontal">
 
-        <com.cnksi.sjjc.view.CustomRadioButton
+        <com.cnksi.common.view.CustomRadioButton
             android:id="@+id/weather"
             style="@style/RadioButtonBaseStyle"
             android:layout_width="wrap_content"

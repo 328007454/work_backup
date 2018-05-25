@@ -519,7 +519,7 @@ public class BitmapUtil {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static String saveViewToBitmap(View view, String filePath) throws NullPointerException, FileNotFoundException, IOException {
+    public static String saveViewToBitmap(View view, String filePath) throws NullPointerException, IOException {
         view.setDrawingCacheEnabled(true);
         String fileName = "";
         Bitmap bitmap = view.getDrawingCache();

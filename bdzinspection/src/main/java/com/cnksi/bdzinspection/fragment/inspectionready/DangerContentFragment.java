@@ -69,12 +69,7 @@ public class DangerContentFragment extends BaseFragment {
     @Override
     protected void lazyLoad() {
         if (isPrepared && isVisible && isFirstLoad) {
-            ExecutorManager.executeTask(new Runnable() {
-                @Override
-                public void run() {
-                    searchData();
-                }
-            });
+            ExecutorManager.executeTask(() -> searchData());
             isFirstLoad = false;
         }
     }
@@ -87,7 +82,7 @@ public class DangerContentFragment extends BaseFragment {
             List<DbModel> dangPoints = DangpointService.getInstance().findGroupType();
             for (DbModel dbModel : dangPoints) {
                 //添加行头
-                List<Dangpoint> points =  DangpointService.getInstance().findByType(dbModel.getString("avoid_type"));;
+                List<Dangpoint> points =  DangpointService.getInstance().findByType(dbModel.getString("avoid_type"));
                 mDangerPointList.add(new Dangpoint(dbModel.getString("avoid_type")));
                 mDangerPointList.addAll(points);
             }

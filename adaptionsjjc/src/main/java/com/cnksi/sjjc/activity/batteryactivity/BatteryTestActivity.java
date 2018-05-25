@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
@@ -33,17 +34,17 @@ import com.cnksi.common.model.Task;
 import com.cnksi.common.model.TaskExtend;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseActivity;
-import com.cnksi.sjjc.activity.ImageDetailsActivity;
 import com.cnksi.sjjc.adapter.BatteryAdapter;
 import com.cnksi.sjjc.adapter.BatteryImageAdapter;
 import com.cnksi.sjjc.bean.BatteryInstrument;
@@ -63,8 +64,8 @@ import java.util.Map;
 
 /**
  * @author yj
- *         蓄电池检测界面
- *         2016/8/9 15:56
+ * 蓄电池检测界面
+ * 2016/8/9 15:56
  */
 public class BatteryTestActivity extends BaseActivity {
     public static final String TAG = "BatteryTestActivity";
@@ -192,7 +193,7 @@ public class BatteryTestActivity extends BaseActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            if (!cacheBatteryInfor()) {
+            if (!BatteryTestActivity.this.cacheBatteryInfor()) {
                 ToastUtils.showMessage("基本信息输入有误，请核对");
                 return;
             }
@@ -205,14 +206,14 @@ public class BatteryTestActivity extends BaseActivity {
             }
             typeName = PreferencesUtils.get("typename", "");
             boolean xudianchi = typeName.contains(Config.XUDIANCHI) && (typeName.contains(Config.DIANYA) || typeName.contains(Config.NEIZU));
-            if (xudianchi && task.status.equalsIgnoreCase("done") && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
+            if (xudianchi && task.status.equalsIgnoreCase("done") && !BatteryTestActivity.this.getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                 PreferencesUtils.put(Config.CURRENT_MAINTANENCE_BATTERY, "");
                 Intent intent = new Intent();
                 ComponentName componentName;
                 componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
                 intent.setComponent(componentName);
                 intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-                startActivity(intent);
+                BatteryTestActivity.this.startActivity(intent);
             }
             KeyBoardUtils.closeKeybord(_this);
             BatteryTestActivity.this.finish();
@@ -303,7 +304,7 @@ public class BatteryTestActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        binding.etCurrentTempreture.setText(StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
+        binding.etCurrentTempreture.setText(StringUtilsExt.getDecimalPoint(binding.etCurrentTempreture.getText().toString()));
     }
 
     @Override
@@ -391,8 +392,8 @@ public class BatteryTestActivity extends BaseActivity {
             binding.layoutBattery.addView(holder.getRootView());
             holder.getRootView().setTag(battery);
             holder.getRootView().setOnClickListener(v -> {
-                if (cacheBatteryInfor()) {
-                    changeBatteryTab(v);
+                if (BatteryTestActivity.this.cacheBatteryInfor()) {
+                    BatteryTestActivity.this.changeBatteryTab(v);
                 } else {
                     ToastUtils.showMessage("基本信息输入有误，请核对");
                     return;
@@ -461,7 +462,7 @@ public class BatteryTestActivity extends BaseActivity {
             }
             batteryGroupList.put(currentBatterId, group);
         }
-        binding.etCurrentTempreture.setText(StringUtils.getTransformTep(binding.etCurrentTempreture.getText().toString()));
+        binding.etCurrentTempreture.setText(StringUtilsExt.getDecimalPoint(binding.etCurrentTempreture.getText().toString()));
         String zuDuanVoltage = group.zuDuanVoltage == null ? currentBattery.voltage : group.zuDuanVoltage + "";
         String zuDuanElectricity = group.chargeElectricity == null ? currentBattery.dl : group.chargeElectricity + "";
         String singleVoltage = group.singleVoltage == null ? currentBattery.singleVoltage : group.singleVoltage + "";
@@ -537,20 +538,20 @@ public class BatteryTestActivity extends BaseActivity {
      */
     private boolean saveGroupBaseInfor(BatteryGroup batteryGroup) {
 
-        if (StringUtils.checkTemprature(binding.groupVoltage.getText().toString()) && StringUtils.checkTemprature(binding.chargeCurrent.getText().toString())
-                && StringUtils.checkTemprature(binding.singleVoltage.getText().toString()) && StringUtils.checkTemprature(binding.etFactVoltage.getText().toString())
-                && StringUtils.checkTemprature(binding.etSystemVoltage.getText().toString()) && StringUtils.checkTemprature(binding.etLoadElectric.getText().toString())
-                && StringUtils.checkTemprature(binding.etFuchongElectricty.getText().toString()) && StringUtils.checkTemprature(binding.etZhengMuxianVoltage.getText().toString())
-                && StringUtils.checkTemprature(binding.etFuMuxianVoltage.getText().toString())) {
-            batteryGroup.zuDuanVoltage = StringUtils.getTransformTep(binding.groupVoltage.getText().toString().replace("V", ""));
-            batteryGroup.chargeElectricity = StringUtils.getTransformTep(binding.chargeCurrent.getText().toString().replace("A", ""));
-            batteryGroup.singleVoltage = StringUtils.getTransformTep(binding.singleVoltage.getText().toString().replace("V", ""));
-            batteryGroup.fcdySc = StringUtils.getTransformTep(binding.etFactVoltage.getText().toString());
-            batteryGroup.fcdyZlxt = StringUtils.getTransformTep(binding.etSystemVoltage.getText().toString());
-            batteryGroup.loadElectricty = StringUtils.getTransformTep(binding.etLoadElectric.getText().toString());
-            batteryGroup.fcElectricty = StringUtils.getTransformTep(binding.etFuchongElectricty.getText().toString());
-            batteryGroup.zVoltage = StringUtils.getTransformTep(binding.etZhengMuxianVoltage.getText().toString());
-            batteryGroup.fVoltage = StringUtils.getTransformTep(binding.etFuMuxianVoltage.getText().toString());
+        if (StringUtilsExt.checkTemprature(binding.groupVoltage.getText().toString()) && StringUtilsExt.checkTemprature(binding.chargeCurrent.getText().toString())
+                && StringUtilsExt.checkTemprature(binding.singleVoltage.getText().toString()) && StringUtilsExt.checkTemprature(binding.etFactVoltage.getText().toString())
+                && StringUtilsExt.checkTemprature(binding.etSystemVoltage.getText().toString()) && StringUtilsExt.checkTemprature(binding.etLoadElectric.getText().toString())
+                && StringUtilsExt.checkTemprature(binding.etFuchongElectricty.getText().toString()) && StringUtilsExt.checkTemprature(binding.etZhengMuxianVoltage.getText().toString())
+                && StringUtilsExt.checkTemprature(binding.etFuMuxianVoltage.getText().toString())) {
+            batteryGroup.zuDuanVoltage = StringUtilsExt.getDecimalPoint(binding.groupVoltage.getText().toString().replace("V", ""));
+            batteryGroup.chargeElectricity = StringUtilsExt.getDecimalPoint(binding.chargeCurrent.getText().toString().replace("A", ""));
+            batteryGroup.singleVoltage = StringUtilsExt.getDecimalPoint(binding.singleVoltage.getText().toString().replace("V", ""));
+            batteryGroup.fcdySc = StringUtilsExt.getDecimalPoint(binding.etFactVoltage.getText().toString());
+            batteryGroup.fcdyZlxt = StringUtilsExt.getDecimalPoint(binding.etSystemVoltage.getText().toString());
+            batteryGroup.loadElectricty = StringUtilsExt.getDecimalPoint(binding.etLoadElectric.getText().toString());
+            batteryGroup.fcElectricty = StringUtilsExt.getDecimalPoint(binding.etFuchongElectricty.getText().toString());
+            batteryGroup.zVoltage = StringUtilsExt.getDecimalPoint(binding.etZhengMuxianVoltage.getText().toString());
+            batteryGroup.fVoltage = StringUtilsExt.getDecimalPoint(binding.etFuMuxianVoltage.getText().toString());
             batteryGroup.testInstrument = binding.etTestInstrument.getText().toString().trim();
         } else {
 
@@ -638,8 +639,8 @@ public class BatteryTestActivity extends BaseActivity {
 
     private void initOnClick() {
         mTitleBinding.tvRight.setOnClickListener(view -> {
-            if (cacheBatteryInfor()) {
-                saveOrUpdateReport();
+            if (BatteryTestActivity.this.cacheBatteryInfor()) {
+                BatteryTestActivity.this.saveOrUpdateReport();
             } else {
                 ToastUtils.showMessage("基本信息输入有误，请核对");
                 return;
@@ -657,7 +658,7 @@ public class BatteryTestActivity extends BaseActivity {
         });
         binding.ivGoBtdefect.setOnClickListener(view -> {
             Intent intent = new Intent(_this, BatteryDeviceDetectActivity.class);
-            startActivityForResult(intent, BATTERY_DEVICEDEFECT_ACTIVITY);
+            BatteryTestActivity.this.startActivityForResult(intent, BATTERY_DEVICEDEFECT_ACTIVITY);
         });
     }
 
@@ -676,7 +677,7 @@ public class BatteryTestActivity extends BaseActivity {
         mTipsBinding.btnCancel.setOnClickListener(view -> mSureDialog.dismiss());
 
         mTipsBinding.btnSure.setOnClickListener(view -> {
-            saveOrUpdateReport();
+            BatteryTestActivity.this.saveOrUpdateReport();
             mSureDialog.dismiss();
         });
 
@@ -790,7 +791,7 @@ public class BatteryTestActivity extends BaseActivity {
         if (null == batteryRecord && (!TextUtils.isEmpty(value) || !imageList.isEmpty())) {
             batteryRecord = new BatteryRecord(currentReportId, currentBdzId, currentBdzName, currentBattery.bid, batteryCode, currentInspectionType, taskExpand.sbjcIsAllCheck);
         }
-        String images = StringUtils.ArrayListToString(imageList);
+        String images = StringUtils.arrayListToString(imageList);
         if (null != batteryRecord) {
             if (currentCheckType == 0) {
                 batteryRecord.voltage = value;
@@ -816,11 +817,7 @@ public class BatteryTestActivity extends BaseActivity {
         List<String> voltageList = com.cnksi.core.utils.StringUtils.stringToList(voltageImages);
         List<String> resistanceList = com.cnksi.core.utils.StringUtils.stringToList(resistanceImages);
         voltageList.addAll(resistanceList);
-        Intent intent = new Intent(mActivity, ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, 0);
-        intent.putExtra(Config.CANCEL_IMAGEURL_LIST, false);
-        intent.putStringArrayListExtra(Config.IMAGEURL_LIST, com.cnksi.core.utils.StringUtils.addStrToListItem(voltageList, Config.RESULT_PICTURES_FOLDER));
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, true);
-        startActivityForResult(intent, DELETE_IMAGE);
+        ImageDetailsActivity.with(this).setImageUrlList(StringUtils.addStrToListItem(voltageList, Config.RESULT_PICTURES_FOLDER))
+                .setShowDelete(true).setRequestCode(DELETE_IMAGE);
     }
 }

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
@@ -19,7 +20,7 @@ import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
@@ -34,8 +35,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-
-;
 
 /**
  * @author nothing 2017/12/11
@@ -65,7 +64,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         setSupportActionBar(mExpadableListBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        mExpadableListBinding.toolbar.setTitle(StringUtils.BlankToDefault(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
+        mExpadableListBinding.toolbar.setTitle(StringUtilsExt.nullTo(getIntent().getStringExtra(Config.TITLE_NAME), "选择设备"));
         initView();
         loadData();
     }
@@ -198,7 +197,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setQueryHint("输入设备名称");
-        SearchView.SearchAutoComplete autoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
+        SearchView.SearchAutoComplete autoComplete = searchView.findViewById(R.id.search_src_text);
         autoComplete.setHintTextColor(getResources().getColor(android.R.color.white));
         autoComplete.setTextColor(getResources().getColor(android.R.color.white));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

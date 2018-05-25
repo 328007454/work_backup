@@ -24,20 +24,21 @@ import com.cnksi.bdzinspection.activity.CopyValueActivity2;
 import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
+import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
 import com.cnksi.bdzinspection.daoservice.SpacingGroupService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsDialogCopySnwsdBinding;
+import com.cnksi.bdzinspection.inter.ItemLongClickListener;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
 import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
-import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;
@@ -47,6 +48,7 @@ import com.cnksi.common.model.vo.DefectInfo;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.GPSUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
@@ -104,7 +106,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     private void initialUI() {
         getBundleValue();
         qwerKeyBoardUtils = new QWERKeyBoardUtils(currentActivity);
-        qwerKeyBoardUtils.init((LinearLayout) rootHolder.getView(R.id.ll_root_container), this);
+        qwerKeyBoardUtils.init(rootHolder.getView(R.id.ll_root_container), this);
         data = new ArrayList<>();
         adapter = new DeviceAdapter(currentActivity, data);
         adapter.setCurrentFunctionMode(currentFunctionModel);
@@ -117,18 +119,18 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
                 intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
                 intent.putExtra(Config.CURRENT_FUNCTION_MODEL, currentFunctionModel);
-                startActivity(intent);
+                DeviceListFragment.this.startActivity(intent);
             }
         });
         // 设置间隔长按事件,间隔定位
         adapter.setGroupItemLongClickListener((v, item, position) -> {
             locationSpace = item;
-            requestLocation(true);
+            DeviceListFragment.this.requestLocation(true);
         });
         // 设置设备长按事件,定位
         adapter.setDeviceItemLongClickListener((v, item, position) -> {
             locationDevice = item;
-            requestLocation(false);
+            DeviceListFragment.this.requestLocation(false);
         });
         // 跳转设备详情
         adapter.setDeviceClickListener((v, dbModel, position) -> {
@@ -139,7 +141,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
             intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
-            startActivity(intent);
+            DeviceListFragment.this.startActivity(intent);
         });
         // 跳转设备抄录
         adapter.setCopyClickListener((v, dbModel, position) -> {
@@ -151,9 +153,9 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
             intent.putExtra(Config.TITLE_NAME, dbModel.getString("deviceName"));
             PlaySound.getIntance(currentActivity).play(R.raw.input);
-            startActivity(intent);
+            DeviceListFragment.this.startActivity(intent);
         });
-        adapter.setGroupItemListener((v, data, position) -> showCopyWSDDialog(data, position));
+        adapter.setGroupItemListener((v, data, position) -> DeviceListFragment.this.showCopyWSDDialog(data, position));
         recyclerView = rootHolder.getView(R.id.elv_container);
         final GridLayoutManager manager = new GridLayoutManager(currentActivity, "second".equals(currentFunctionModel) ? 2 : 3);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -407,14 +409,11 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         TextView txtSatelliteNumber = holder.getView(R.id.tv_satellite_number);
         txtSatelliteNumber.setText(StringUtils.changePartTextColor(currentActivity, content, R.color.xs_global_base_color, 5, content.length()));
 
-        OnClickListener dialogOnClick = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (R.id.btn_confirm == v.getId()) {
-                    arriveCheckHelper.saveLocation(isSpace ? locationSpace : locationDevice, location, isSpace);
-                }
-                dialog.dismiss();
+        OnClickListener dialogOnClick = v -> {
+            if (R.id.btn_confirm == v.getId()) {
+                arriveCheckHelper.saveLocation(isSpace ? locationSpace : locationDevice, location, isSpace);
             }
+            dialog.dismiss();
         };
         holder.getView(R.id.btn_cancel).setOnClickListener(dialogOnClick);
         holder.getView(R.id.btn_confirm).setOnClickListener(dialogOnClick);

@@ -20,7 +20,7 @@ import com.cnksi.bdzinspection.databinding.SwitchItemChild2;
 import com.cnksi.bdzinspection.databinding.SwitchItemParentBinding;
 import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
+import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.model.DefectRecord;
@@ -170,12 +170,7 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
                     itemBind1.tvAudio.setVisibility(View.GONE);
                 }
                 String defectLevel = model.getString(DefectRecord.DEFECTLEVEL);
-                itemBind1.tvDesc.setOnClickListener(clickListener != null ? new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        clickListener.defectClick(v, model, groupPosition, childPosition);
-                    }
-                } : null);
+                itemBind1.tvDesc.setOnClickListener(clickListener != null ? (View.OnClickListener) v -> clickListener.defectClick(v, model, groupPosition, childPosition) : null);
                 if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
                     itemBind1.tvDesc.append(CRISIS);
                 } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
@@ -192,30 +187,10 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
                     itemBind1.check.setOnClickListener(null);
 
                 } else {
-                    itemBind1.ivRegular.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickListener.toolClick(v, model, groupPosition, childPosition);
-                        }
-                    });
-                    itemBind1.ibtnPicture.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickListener.imgClick(v, model, groupPosition, childPosition);
-                        }
-                    });
-                    itemBind1.tvAudio.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickListener.radioClick(v, model, groupPosition, childPosition);
-                        }
-                    });
-                    itemBind1.check.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickListener.confirmClick(v, model, groupPosition, childPosition, true);
-                        }
-                    });
+                    itemBind1.ivRegular.setOnClickListener(v -> clickListener.toolClick(v, model, groupPosition, childPosition));
+                    itemBind1.ibtnPicture.setOnClickListener(v -> clickListener.imgClick(v, model, groupPosition, childPosition));
+                    itemBind1.tvAudio.setOnClickListener(v -> clickListener.radioClick(v, model, groupPosition, childPosition));
+                    itemBind1.check.setOnClickListener(v -> clickListener.confirmClick(v, model, groupPosition, childPosition, true));
                 }
                 return itemBind1.getRoot();
             case CHILD2:
@@ -277,9 +252,7 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
                 } else {
                     itemBind2.llCopy.setVisibility(View.INVISIBLE);
                 }
-                itemBind2.check.setOnClickListener(view -> {
-                    clickListener.confirmClick(view, model, groupPosition, childPosition, false);
-                });
+                itemBind2.check.setOnClickListener(view -> clickListener.confirmClick(view, model, groupPosition, childPosition, false));
                 setAnimationEditexts(mapEdittexts);
                 return itemBind2.getRoot();
             default:
@@ -318,18 +291,10 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
     private void setTextViewRecordTime(final TextView tv, final String audioPath) {
         String s = audioLengthMap.get(audioPath);
         if (s == null) {
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    final String rs = MediaRecorderUtils.getInstance().getDurationSuc(mContext, Config.AUDIO_FOLDER + audioPath) + "”";
-                    audioLengthMap.put(audioPath, rs);
-                    ((Activity) mContext).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tv.setText(rs);
-                        }
-                    });
-                }
+            Executors.newSingleThreadExecutor().execute(() -> {
+                final String rs = MediaRecorderUtils.getInstance().getDurationSuc(mContext, Config.AUDIO_FOLDER + audioPath) + "”";
+                audioLengthMap.put(audioPath, rs);
+                ((Activity) mContext).runOnUiThread(() -> tv.setText(rs));
             });
         } else {
             tv.setText(s);

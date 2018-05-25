@@ -7,9 +7,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 
+import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.inter.SimpleTextWatcher;
-import com.cnksi.sjjc.util.CalcUtils;
 import com.cnksi.sjjc.view.UnderLineLinearLayout;
 
 /**
@@ -39,8 +39,8 @@ public class GzdlGroup extends UnderLineLinearLayout {
         setDrawUnderLine(true);
         setOrientation(HORIZONTAL);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_gzdl, this, true);
-        eddl = (EditText) findViewById(R.id.et_gzdl);
-        countView = (InputCountView) findViewById(R.id.ljz);
+        eddl = findViewById(R.id.et_gzdl);
+        countView = findViewById(R.id.ljz);
         countView.setMin(0.0f);
         eddl.addTextChangedListener(new SimpleTextWatcher() {
             @Override

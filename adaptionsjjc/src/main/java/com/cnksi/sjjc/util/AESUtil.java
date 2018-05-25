@@ -156,7 +156,7 @@ public class AESUtil {
      * @return 解码后的byte[]
      * @throws Exception
      */
-    public static byte[] base64Decode(String base64Code) throws Exception {
+    public static byte[] base64Decode(String base64Code) {
         return com.cnksi.core.utils.StringUtils.isEmpty(base64Code) ? null : android.util.Base64.encode(base64Code.getBytes(), Base64.NO_WRAP);
     }
 

@@ -88,26 +88,23 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
         binding.tvBatteryTestStep.setBackgroundResource(R.drawable.xs_red_button_background_selector);
         deviceAdapter = new CopyMaintenanceDeviceAdapter(this, copyItems, R.layout.xs_device_item);
         binding.gvContainer.setAdapter(deviceAdapter);
-        deviceAdapter.setItemClickListener(new ItemClickListener<CopyItem>() {
-            @Override
-            public void onItemClick(View v, CopyItem copyItem, int position) {
-                if (isSpread) {
-                    setDeviceListDisplay();
-                }
-                if (!showShadom()) {
-                    if (null != copyItem) {
-                        saveAll();
-                        deviceAdapter.setCurrentSelectedPosition(position);
-                        currentItem = copyItem;
-                        if (!deviceAdapter.isLast()) {
-                            isFinish = false;
-                            binding.btnNext.setText(R.string.xs_next);
-                        }
-                        setCurrentDevice(position);
-
-                    } else {
-                        binding.copyContainer.removeAllViews();
+        deviceAdapter.setItemClickListener((v, copyItem, position) -> {
+            if (isSpread) {
+                setDeviceListDisplay();
+            }
+            if (!showShadom()) {
+                if (null != copyItem) {
+                    saveAll();
+                    deviceAdapter.setCurrentSelectedPosition(position);
+                    currentItem = copyItem;
+                    if (!deviceAdapter.isLast()) {
+                        isFinish = false;
+                        binding.btnNext.setText(R.string.xs_next);
                     }
+                    setCurrentDevice(position);
+
+                } else {
+                    binding.copyContainer.removeAllViews();
                 }
             }
         });
@@ -246,19 +243,15 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
     }
 
     private void initOnClick() {
-        binding.tvBatteryTestStep.setOnClickListener(view -> {
-            saveAll();
-        });
+        binding.tvBatteryTestStep.setOnClickListener(view -> CopyMaintenanceDeviceActivity.this.saveAll());
         binding.ibtnCancel.setOnClickListener(view -> {
-            saveAll();
-            onBackPressed();
+            CopyMaintenanceDeviceActivity.this.saveAll();
+            CopyMaintenanceDeviceActivity.this.onBackPressed();
         });
-        binding.ibtnSpread.setOnClickListener(view -> {
-            setDeviceListDisplay();
-        });
+        binding.ibtnSpread.setOnClickListener(view -> CopyMaintenanceDeviceActivity.this.setDeviceListDisplay());
 
         binding.btnPre.setOnClickListener(view -> {
-            saveAll();
+            CopyMaintenanceDeviceActivity.this.saveAll();
             if (!deviceAdapter.isFirst()) {
                 deviceAdapter.pre();
             }
@@ -267,9 +260,7 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
                 binding.btnNext.setText(R.string.xs_next);
             }
         });
-        binding.btnNext.setOnClickListener(view -> {
-            saveBtnNextData();
-        });
+        binding.btnNext.setOnClickListener(view -> CopyMaintenanceDeviceActivity.this.saveBtnNextData());
 
     }
 

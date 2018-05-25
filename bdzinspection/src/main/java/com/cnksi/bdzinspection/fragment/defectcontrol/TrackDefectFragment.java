@@ -17,12 +17,15 @@ import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.defectcontrol.DefectContentAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
+import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
+import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectSourceBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBinding;
@@ -32,10 +35,9 @@ import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.PlaySound;
-import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.CopyItem;
@@ -43,6 +45,7 @@ import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -191,8 +194,8 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
         copyViewUtil.setKeyBordListener(this);
         copyViewUtil.setItemClickListener((v, item, position) -> {
             // 显示历史曲线
-            hideKeyBord();
-            ShowHistroyDialogUtils.showHistory(currentActivity, item);
+            TrackDefectFragment.this.hideKeyBord();
+            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
         });
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
 
@@ -203,7 +206,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
         binding.includeAdd.rbGeneralDefect.setOnClickListener(view -> mCurrentClickDefectLevel = Config.GENERAL_LEVEL_CODE);
         binding.includeAdd.rbCrisisDefect.setOnClickListener(view -> mCurrentClickDefectLevel = Config.CRISIS_LEVEL_CODE);
         binding.includeAdd.rbSeriousDefect.setOnClickListener(view -> mCurrentClickDefectLevel = Config.SERIOUS_LEVEL_CODE);
-        binding.btnConfirm.setOnClickListener(view -> save());
+        binding.btnConfirm.setOnClickListener(view -> TrackDefectFragment.this.save());
         binding.includeAdd.ibtnTakePicture.setOnClickListener(view -> {
             currentPictureContent = binding.includeAdd.etInputDefectContent.getText().toString().trim();
             if (!TextUtils.isEmpty(currentPictureContent)) {
@@ -211,7 +214,7 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                     mOnFunctionButtonClickListener.takePicture(currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
                 }
             } else {
-                ToastUtils.showMessage( "请先填写缺陷内容！");
+                ToastUtils.showMessage("请先填写缺陷内容！");
             }
         });
         binding.includeAdd.ivNewDefectPhoto.setOnClickListener(view -> {
@@ -220,13 +223,13 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
                 for (String string : mDefectImageList) {
                     mImageUrlList.add(Config.RESULT_PICTURES_FOLDER + string);
                 }
-                showImageDetails(this, mImageUrlList, true);
+                TrackDefectFragment.this.showImageDetails(TrackDefectFragment.this, mImageUrlList, true);
             }
         });
 
         binding.includeAdd.etInputDefectContent.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mTrackDefectStandardId) && TextUtils.isEmpty(binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
-                showDefectContentDialog(mTrackDefectStandardId);
+                TrackDefectFragment.this.showDefectContentDialog(mTrackDefectStandardId);
             }
         });
 
@@ -300,28 +303,21 @@ public class TrackDefectFragment extends BaseFragment implements OnAdapterViewCl
     private void setOnTouchListener() {
         // EditText有焦点阻止输入法弹出
         if (!TextUtils.isEmpty(mTrackDefectStandardId)) {
-            binding.includeAdd.etInputDefectContent.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (TextUtils.isEmpty(binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
-                        int inType = binding.includeAdd.etInputDefectContent.getInputType(); // backup the input type
-                        binding.includeAdd.etInputDefectContent.setInputType(InputType.TYPE_NULL); // disable soft input
-                        binding.includeAdd.etInputDefectContent.onTouchEvent(event); // call native handler
-                        binding.includeAdd.etInputDefectContent.setInputType(inType); // restore input type
-                        return true;
-                    }
-                    return false;
+            binding.includeAdd.etInputDefectContent.setOnTouchListener((v, event) -> {
+                if (TextUtils.isEmpty(binding.includeAdd.etInputDefectContent.getText().toString().trim())) {
+                    int inType = binding.includeAdd.etInputDefectContent.getInputType(); // backup the input type
+                    binding.includeAdd.etInputDefectContent.setInputType(InputType.TYPE_NULL); // disable soft input
+                    binding.includeAdd.etInputDefectContent.onTouchEvent(event); // call native handler
+                    binding.includeAdd.etInputDefectContent.setInputType(inType); // restore input type
+                    return true;
                 }
+                return false;
             });
         }
 
-        binding.includeAdd.etInputDefectContent.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && !TextUtils.isEmpty(mTrackDefectStandardId)) {
-                    showDefectContentDialog(mTrackDefectStandardId);
-                }
+        binding.includeAdd.etInputDefectContent.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus && !TextUtils.isEmpty(mTrackDefectStandardId)) {
+                showDefectContentDialog(mTrackDefectStandardId);
             }
         });
     }

@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-;
-
 /**
  * Created by ironGe on 2016/6/23.
  */

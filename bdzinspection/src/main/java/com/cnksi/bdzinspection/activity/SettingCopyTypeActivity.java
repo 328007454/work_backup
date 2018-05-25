@@ -22,19 +22,19 @@ import com.cnksi.bdzinspection.databinding.XsAddCopyItemBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogInput1Binding;
 import com.cnksi.bdzinspection.model.ChangeCopyItem;
 import com.cnksi.bdzinspection.model.Logs;
-import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.DisplayUtil;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.CopyType;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -96,7 +96,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         settingCopyBinding = DataBindingUtil.setContentView(this, R.layout.xs_activity_setting_copy);
-        DisplayUtil.getInstance().init(getApplicationContext());
+        DisplayUtils.getInstance().init(getApplicationContext());
         initialUI();
         initialData();
     }
@@ -110,8 +110,8 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         if (special) {
             settingCopyBinding.tab.addTab(settingCopyBinding.tab.newTab().setText(currentInspectionTypeName));
         }
-        currentUserName = (String) PreferencesUtils.get( Config.CURRENT_LOGIN_USER, "");
-        currentPersonId = (String) PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, "");
+        currentUserName = PreferencesUtils.get( Config.CURRENT_LOGIN_USER, "");
+        currentPersonId = PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, "");
         settingCopyBinding.tvTitle.setText(TextUtils.isEmpty(currentDeviceName) ? "" : currentDeviceName);
         if (itemParentAdapter == null) {
             itemParentAdapter = new ChangeCopyItemParentAdapter(currentActivity, parentTypes);
@@ -152,7 +152,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                     copyTypeHashMap.put(type.key, type);
                 }
             }
-            typeCounts = Arrays.asList(getResources().getStringArray(R.array.XS_CopyItemCount));
+            typeCounts = Arrays.asList(SettingCopyTypeActivity.this.getResources().getStringArray(R.array.XS_CopyItemCount));
             // 查询当前设备抄录项
             copyItemList = (ArrayList<CopyItem>) CopyItemService.getInstance().getDeviceALLCopyItem(currentBdzId, currentDeviceId);
 //                originItems = (ArrayList<CopyItem>) copyItemList.clone();
@@ -193,8 +193,8 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             if (null != reportResultList && !reportResultList.isEmpty()) {
                 for (CopyResult result : reportResultList) {
                     reportCopyResultMap.put(result.item_id, result);
-                    }
                 }
+            }
             // 历史抄录值
             List<CopyResult> historyResultList = CopyResultService.getInstance().getResultList(currentBdzId, currentReportId, currentDeviceId, false);
             Map<String, CopyResult> historyMap = new HashMap<>();
@@ -212,7 +212,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
                 } else {
                     originResult = new CopyResult();
                 }
-                initCopyItemData(item, originResult);
+                SettingCopyTypeActivity.this.initCopyItemData(item, originResult);
             }
             mHandler.sendEmptyMessage(LOAD_DATA);
         });
@@ -348,7 +348,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         input1Binding.btnSure.setOnClickListener(v -> {
             String updateName = TextUtils.isEmpty(input1Binding.edit.getText().toString().trim()) ? clickCopyType.name : input1Binding.edit.getText().toString().trim();
             CopyItem item1 = new CopyItem(currentBdzId, currentDeviceName, currentDeviceId, updateName, clickCopyType.key, true, currentInspectionType);
-            add1Item(clickCopyType, item1);
+            SettingCopyTypeActivity.this.add1Item(clickCopyType, item1);
             itemParentAdapter.notifyDataSetChanged();
             copyNameDialog.dismiss();
         });
@@ -386,55 +386,47 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         itemBinding.countSipnner.setAdapter(typeCountAdapter);
         dialog = DialogUtils.createDialog(currentActivity, itemBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
-        itemBinding.btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (specialNeedCopy) {
-                    if (!itemBinding.radioRoutine.isChecked() && !itemBinding.radioFull.isChecked() && !itemBinding.radioSpecial.isChecked()) {
-                        ToastUtils.showMessage( "请选择抄录适用的巡检类型");
-                        return;
-                    }
-                } else {
-                    if (!itemBinding.radioRoutine.isChecked() && !itemBinding.radioFull.isChecked()) {
-                        ToastUtils.showMessage( "请选择抄录适用的巡检类型");
-                        return;
-                    }
+        itemBinding.btnSave.setOnClickListener(v -> {
+            if (specialNeedCopy) {
+                if (!itemBinding.radioRoutine.isChecked() && !itemBinding.radioFull.isChecked() && !itemBinding.radioSpecial.isChecked()) {
+                    ToastUtils.showMessage( "请选择抄录适用的巡检类型");
+                    return;
                 }
-                CopyType copyType = ((CopyType) itemBinding.typeSpinner.getSelectedItem());
-                String updateCopyName = TextUtils.isEmpty(itemBinding.etUpdateName.getText().toString()) ? copyType.name : itemBinding.etUpdateName.getText().toString();
-                if (itemBinding.radioFull.isChecked()) {
-                    selectKind = "full,";
+            } else {
+                if (!itemBinding.radioRoutine.isChecked() && !itemBinding.radioFull.isChecked()) {
+                    ToastUtils.showMessage( "请选择抄录适用的巡检类型");
+                    return;
                 }
-                if (itemBinding.radioRoutine.isChecked()) {
-                    selectKind = selectKind + "routine,";
-                }
+            }
+            CopyType copyType = ((CopyType) itemBinding.typeSpinner.getSelectedItem());
+            String updateCopyName = TextUtils.isEmpty(itemBinding.etUpdateName.getText().toString()) ? copyType.name : itemBinding.etUpdateName.getText().toString();
+            if (itemBinding.radioFull.isChecked()) {
+                selectKind = "full,";
+            }
+            if (itemBinding.radioRoutine.isChecked()) {
+                selectKind = selectKind + "routine,";
+            }
 
-                if (specialNeedCopy && itemBinding.radioSpecial.isChecked()) {
-                    selectKind = selectKind + currentInspectionType;
-                }
+            if (specialNeedCopy && itemBinding.radioSpecial.isChecked()) {
+                selectKind = selectKind + currentInspectionType;
+            }
 
-                if ("单相".equalsIgnoreCase(itemBinding.countSipnner.getSelectedItem().toString())) {
-                    CopyItem item = new CopyItem(currentBdzId, currentDeviceName, currentDeviceId, updateCopyName, copyType.key, true, selectKind);
-                    add1Item(copyType, item);
-                } else {
-                    CopyItem item = new CopyItem(currentBdzId, currentDeviceName, currentDeviceId, updateCopyName, copyType.key, false, selectKind);
-                    add3Item(copyType, item);
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+            if ("单相".equalsIgnoreCase(itemBinding.countSipnner.getSelectedItem().toString())) {
+                CopyItem item = new CopyItem(currentBdzId, currentDeviceName, currentDeviceId, updateCopyName, copyType.key, true, selectKind);
+                add1Item(copyType, item);
+            } else {
+                CopyItem item = new CopyItem(currentBdzId, currentDeviceName, currentDeviceId, updateCopyName, copyType.key, false, selectKind);
+                add3Item(copyType, item);
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
 //                itemParentAdapter.notifyDataSetChanged();
-                dialog.dismiss();
-            }
+            dialog.dismiss();
         });
-        itemBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        itemBinding.btnCancel.setOnClickListener(v -> dialog.dismiss());
         itemBinding.typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view.findViewById(R.id.tv_type_name);
+                TextView textView = view.findViewById(R.id.tv_type_name);
                 textView.setTextColor(parent.getContext().getResources().getColor(R.color.xs_global_base_color));
                 typeSelectPosition = position;
                 typeAdapter.setPosition(typeSelectPosition);
@@ -449,7 +441,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         itemBinding.countSipnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view.findViewById(R.id.tv_type_name);
+                TextView textView = view.findViewById(R.id.tv_type_name);
                 textView.setTextColor(parent.getContext().getResources().getColor(R.color.xs_global_base_color));
                 countSelectPosition = position;
                 typeCountAdapter.setPosition(countSelectPosition);

@@ -42,13 +42,10 @@ public class TypeAdapter extends BaseAdapter<String> {
         } else {
             holder.getRootView().setBackgroundResource(R.drawable.task_item_background_selector);
         }
-        holder.getRootView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != itemClickListener) {
-                    //通过字符串传递maxPosition
-                    itemClickListener.itemClick(v, item + " " + maxPosition, position);
-                }
+        holder.getRootView().setOnClickListener(v -> {
+            if (null != itemClickListener) {
+                //通过字符串传递maxPosition
+                itemClickListener.itemClick(v, item + " " + maxPosition, position);
             }
         });
     }

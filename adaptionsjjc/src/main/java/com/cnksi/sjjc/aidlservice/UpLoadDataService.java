@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Department;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.UpDataToReportManager;
@@ -34,24 +34,21 @@ public class UpLoadDataService extends Service {
     Handler handler = new Handler();
     private Binder mBinder = new UpDataToReportManager.Stub() {
         @Override
-        public void upDataWithUpPMS() throws RemoteException {
+        public void upDataWithUpPMS() {
             Log.d("TAG","开始上传数据");
             upLoad();
         }
     };
 
     private void upLoad() {
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                ksync.uploadData();
-                if (config.isUploadFile()) {
-                    isSyncFile = true;
-                    if (TextUtils.isEmpty(config.getUploadFolder())) {
-                        ksync.uploadFile();
-                    } else {
-                        ksync.uploadFile(config.getUploadFolder());
-                    }
+        executorService.execute(() -> {
+            ksync.uploadData();
+            if (config.isUploadFile()) {
+                isSyncFile = true;
+                if (TextUtils.isEmpty(config.getUploadFolder())) {
+                    ksync.uploadFile();
+                } else {
+                    ksync.uploadFile(config.getUploadFolder());
                 }
             }
         });
@@ -73,7 +70,7 @@ public class UpLoadDataService extends Service {
         if (!"-1".equals(dept_id)) {
             Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
             if (department != null) {
-                deptName = StringUtils.BlankToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+                deptName = StringUtils.NullToDefault(department.name, department.dept_name, department.pms_name, dept_id);
             }
         }
         String url = config.getUrl();

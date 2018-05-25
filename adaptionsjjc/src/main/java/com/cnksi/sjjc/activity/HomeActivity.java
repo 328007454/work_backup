@@ -135,9 +135,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
-                transformDefectType();
-                runOnUiThread(() -> {
-                    initBDZDialog();
+                HomeActivity.this.transformDefectType();
+                HomeActivity.this.runOnUiThread(() -> {
+                    HomeActivity.this.initBDZDialog();
                     if (bdzAdapter == null) {
                         bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
                         bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
@@ -147,7 +147,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, ""))) {
                         homePageBinding.bdzName.setText(bdzList.get(0).name);
                     }
-                    loadDefect();
+                    HomeActivity.this.loadDefect();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -476,16 +476,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     default:
                 }
                 final List<Task> temp = taskList;
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        tasks.clear();
-                        if (temp != null && temp.size() > 0) {
-                            tasks.addAll(temp);
-                        }
-                        if (currentDataType == TaskType.this) {
-                            taskItemAdapter.setList(tasks);
-                        }
+                mHandler.post(() -> {
+                    tasks.clear();
+                    if (temp != null && temp.size() > 0) {
+                        tasks.addAll(temp);
+                    }
+                    if (currentDataType == TaskType.this) {
+                        taskItemAdapter.setList(tasks);
                     }
                 });
             });
@@ -523,12 +520,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         tabs[3] = new TaskType(homePageBinding.tvOperations, TabType.safetytool);
         select(tabs[0]);
         for (final TaskType tab : tabs) {
-            tab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    select(tab);
-                }
-            });
+            tab.setOnClickListener(v -> select(tab));
         }
     }
 
@@ -576,12 +568,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private void checkIsNeedSync() {
         try {
             if (DeviceService.getInstance().selector().count() == 0) {
-                DialogUtils.createTipsDialog(mActivity, "检测到本地设备数据为空，是否需要同步数据？", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ActivityUtil.startSync(mActivity);
-                    }
-                }, false).show();
+                DialogUtils.createTipsDialog(mActivity, "检测到本地设备数据为空，是否需要同步数据？", v -> ActivityUtil.startSync(mActivity), false).show();
             }
         } catch (DbException e) {
             e.printStackTrace();

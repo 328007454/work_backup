@@ -59,7 +59,7 @@ public class SyncMenuUtils {
     public static PopupWindow showMenuPopWindow(final Activity mActivity, View view, int menuResId, final AdapterView.OnItemClickListener mOnItemClickListener) {
         // 动态加载弹出框布局
         View contentView = mActivity.getLayoutInflater().inflate(R.layout.sync_pop_menu, null, false);
-        ListView mLvMenu = (ListView) contentView.findViewById(R.id.lv_menu);
+        ListView mLvMenu = contentView.findViewById(R.id.lv_menu);
         PopMenuAdapter mPopMenuAdapter = new PopMenuAdapter(mActivity, Arrays.asList(mActivity.getResources().getStringArray(menuResId)));
         mLvMenu.setAdapter(mPopMenuAdapter);
         // 设置菜单栏布局文件和显示大小
@@ -72,14 +72,11 @@ public class SyncMenuUtils {
         mMenuPopwindow.setFocusable(true);
         // 更新设置
         mMenuPopwindow.update();
-        mLvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(parent, view, position, id);
-                }
-                mMenuPopwindow.dismiss();
+        mLvMenu.setOnItemClickListener((parent, view1, position, id) -> {
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(parent, view1, position, id);
             }
+            mMenuPopwindow.dismiss();
         });
         mMenuPopwindow.showAsDropDown(view);
         return mMenuPopwindow;
@@ -98,23 +95,15 @@ public class SyncMenuUtils {
             mCustomDialog.setCancelable(false);
             View view = LayoutInflater.from(context).inflate(com.cnksi.ksynclib.R.layout.sync_dialog_customer, null);
             mCustomDialog.setContentView(view);
-            TextView mTvToast = ((TextView) view.findViewById(com.cnksi.ksynclib.R.id.tv_toast));
-            TextView mTvCancel = (TextView) view.findViewById(com.cnksi.ksynclib.R.id.tv_cancel);
-            TextView mTvMultipleConfirm = (TextView) view.findViewById(com.cnksi.ksynclib.R.id.tv_multiple_confirm);
+            TextView mTvToast = view.findViewById(com.cnksi.ksynclib.R.id.tv_toast);
+            TextView mTvCancel = view.findViewById(com.cnksi.ksynclib.R.id.tv_cancel);
+            TextView mTvMultipleConfirm = view.findViewById(com.cnksi.ksynclib.R.id.tv_multiple_confirm);
             mTvToast.setText(toast);
-            mTvCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCustomDialog.dismiss();
-                }
-            });
-            mTvMultipleConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCustomDialog.dismiss();
-                    if (okClickListener != null) {
-                        okClickListener.onClick(view);
-                    }
+            mTvCancel.setOnClickListener(view12 -> mCustomDialog.dismiss());
+            mTvMultipleConfirm.setOnClickListener(view1 -> {
+                mCustomDialog.dismiss();
+                if (okClickListener != null) {
+                    okClickListener.onClick(view1);
                 }
             });
             Window mWindow = mCustomDialog.getWindow();
@@ -177,31 +166,25 @@ public class SyncMenuUtils {
 
 
     public static void uploadDatabase(final Activity mActivity, final KSync ksync, final Handler handler, final View.OnClickListener listener) {
-        ShowTipsDialog(mActivity, "确认上传数据库么?", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onClick(v);
-                upLoadData(mActivity, ksync, handler);
+        ShowTipsDialog(mActivity, "确认上传数据库么?", v -> {
+            listener.onClick(v);
+            upLoadData(mActivity, ksync, handler);
 
-            }
         });
     }
 
     private static void upLoadData(final Activity mActivity, final KSync ksync, final Handler handler) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String deviceId = ((TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-                String uploadFileName = deviceId + "-" + CommonUtils.getCurrenTime() + ".db";
-                boolean isSuccess = CommonUtils.copyFile(ksync.getKnConfig().getDbDir() + File.separator + ksync.getKnConfig().getDbName(), ksync.getKnConfig().getDbDir() + File.separator + uploadFileName, true);
-                if (isSuccess) {
-                    File uploadFile = new File(ksync.getKnConfig().getDbDir(), uploadFileName);
-                    ksync.uploadFile(uploadFile);
-                    FileUtils.deleteFile(uploadFile.getAbsolutePath());
-                    handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件上传完成"));
-                } else {
-                    handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件上传失败"));
-                }
+        new Thread(() -> {
+            String deviceId = ((TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+            String uploadFileName = deviceId + "-" + CommonUtils.getCurrenTime() + ".db";
+            boolean isSuccess = CommonUtils.copyFile(ksync.getKnConfig().getDbDir() + File.separator + ksync.getKnConfig().getDbName(), ksync.getKnConfig().getDbDir() + File.separator + uploadFileName, true);
+            if (isSuccess) {
+                File uploadFile = new File(ksync.getKnConfig().getDbDir(), uploadFileName);
+                ksync.uploadFile(uploadFile);
+                FileUtils.deleteFile(uploadFile.getAbsolutePath());
+                handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件上传完成"));
+            } else {
+                handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "文件上传失败"));
             }
         }).start();
     }
@@ -214,31 +197,25 @@ public class SyncMenuUtils {
             ToastUtils.showMessageLong("当前没有班组，请在登陆后的界面点击进入同步界面操作！");
             return;
         }
-        SyncMenuUtils.ShowTipsDialog(activity, "是否要删除当前班组以外的数据？", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomerDialog.showProgress(activity, "删除中！");
-                new Thread((new Runnable() {
-                    @Override
-                    public void run() {
-                        if (tables.size() == 0) {
-                            initDeleteForDeptId();
-                        }
-                        int delRows = 0;
-                        for (DeleteModel model : tables) {
-                            try {
-                                int count = CustomApplication.getInstance().getDbManager().executeUpdateDelete(model.getDeleteSql(dept_id));
-                                CLog.w("delete " + model.tbl + " " + count + " rows");
-                                delRows += count;
-                            } catch (DbException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "删除完成，共" + delRows + "条记录！"));
+        SyncMenuUtils.ShowTipsDialog(activity, "是否要删除当前班组以外的数据？", v -> {
+            CustomerDialog.showProgress(activity, "删除中！");
+            new Thread((() -> {
+                if (tables.size() == 0) {
+                    initDeleteForDeptId();
+                }
+                int delRows = 0;
+                for (DeleteModel model : tables) {
+                    try {
+                        int count = CustomApplication.getInstance().getDbManager().executeUpdateDelete(model.getDeleteSql(dept_id));
+                        CLog.w("delete " + model.tbl + " " + count + " rows");
+                        delRows += count;
+                    } catch (DbException e) {
+                        e.printStackTrace();
                     }
-                })).start();
+                }
+                handler.sendMessage(handler.obtainMessage(DELETE_FINISHED, "删除完成，共" + delRows + "条记录！"));
+            })).start();
 
-            }
         });
     }
 

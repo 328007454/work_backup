@@ -1,13 +1,19 @@
 package com.cnksi.bdzinspection.activity;
 
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -16,30 +22,29 @@ import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsActivityFullDeviceListBinding;
 import com.cnksi.bdzinspection.fragment.DeviceListFragment;
-import com.cnksi.bdzinspection.inter.DialogInputClickListener;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.bdzinspection.utils.DialogUtil;
-import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShakeListener;
 import com.cnksi.bdzinspection.utils.ShakeListener.OnShakeListener;
-import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.LookUpType;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.common.utils.TTSUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -103,7 +108,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         binding.ibtnAdd.setVisibility(View.VISIBLE);
         binding.ibtnAdd.setImageResource(R.drawable.xs_copy_button_background);
         binding.ibtnAdd.setOnLongClickListener(v -> {
-            showChangeDistanceDialog();
+            FullDeviceListActivity.this.showChangeDistanceDialog();
             return false;
         });
 
@@ -156,7 +161,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                     case 4:
                         signalIcon = R.drawable.xs_ic_signal4;
                         break;
-                        default:
+                    default:
                 }
                 binding.tvTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, signalIcon, 0);
                 currentFragment.locationSuccess(location);
@@ -178,7 +183,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                     }
                 }
                 if (isLeader) {
-                    runOnUiThread(() -> {
+                    FullDeviceListActivity.this.runOnUiThread(() -> {
                         if (currentPosition < 2) {
                             binding.ibtnSort.setVisibility(View.VISIBLE);
                         }
@@ -213,28 +218,24 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     }
 
     private void initOnClick() {
-        binding.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.ibtnCancel.setOnClickListener(view -> FullDeviceListActivity.this.onBackPressed());
 
         binding.ibtnAdd.setOnClickListener(view -> {
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             Intent intent = new Intent(currentActivity, CopyAllValueActivity2.class);
-            startActivity(intent);
+            FullDeviceListActivity.this.startActivity(intent);
         });
 
         binding.ibtnSort.setOnClickListener(view -> {
-            Intent intent = new Intent(this, SpaceSortActivity.class);
+            Intent intent = new Intent(FullDeviceListActivity.this, SpaceSortActivity.class);
             intent.putExtra(Config.CURRENT_FUNCTION_MODEL, deviceTypes.get(currentPosition).k);
             intent.putExtra(Config.TITLE_NAME, deviceTypes.get(currentPosition).v);
-            startActivityForResult(intent, DeviceListFragment.SORT_SPACING);
+            FullDeviceListActivity.this.startActivityForResult(intent, DeviceListFragment.SORT_SPACING);
         });
-        binding.btnStartInspection.setOnClickListener(view -> {
-            finishInspection();
-        });
+        binding.btnStartInspection.setOnClickListener(view -> FullDeviceListActivity.this.finishInspection());
         binding.ibtnBluetooth.setOnClickListener(view -> {
-            Intent intent1 = new Intent(this, BTDemoActivity.class);
-            startActivityForResult(intent1, DeviceListFragment.RFID);
+            Intent intent1 = new Intent(FullDeviceListActivity.this, BTDemoActivity.class);
+            FullDeviceListActivity.this.startActivityForResult(intent1, DeviceListFragment.RFID);
         });
     }
 
@@ -289,7 +290,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     @Override
     public void onShake() {
         if (currentPosition != 0) {
-            ToastUtils.showMessage( "摇一摇功能只能在一次设备列表使用");
+            ToastUtils.showMessage("摇一摇功能只能在一次设备列表使用");
         } else {
             if (!shaking) {
                 shaking = true;
@@ -309,7 +310,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                         if (code == SHAKE_CODE) {
                             shaking = false;
                             CustomerDialog.dismissProgress();
-                            ToastUtils.showMessage( "摇一摇定位失败！");
+                            ToastUtils.showMessage("摇一摇定位失败！");
                         }
                     }
                 }).setTimeout(10).start();
@@ -338,40 +339,61 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     }
 
     private void showChangeDistanceDialog() {
-        DialogUtil.getInstance().showInputCancelDialog(this, 10, InputType.TYPE_CLASS_NUMBER, "修改判断距离", Config.COPY_MAX_DISTANCE + "", "请输入判断距离(m)", "修改", "取消", new DialogInputClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, String result) {
-                if (DialogInterface.BUTTON_POSITIVE == which) {
-                    try {
-                        Float distance = Float.valueOf(result);
-                        Config.COPY_MAX_DISTANCE = distance;
-                        PreferencesUtils.put( Config.COPY_DISTANCE_KEY, distance);
-                    } catch (NumberFormatException e) {
-                        ToastUtils.showMessageLong( "请输入数字");
-                        return;
-                    }
+        Dialog dialog = new Dialog(mActivity, com.cnksi.common.R.style.dialog);
+        ViewHolder holder = new ViewHolder(mActivity, null, R.layout.xs_dialog_input_1, false);
+        final EditText editText = holder.getView(R.id.edit);
+        TextView tvTitle = holder.getView(R.id.tv_dialog_title);
+        editText.setHint("修改判断距离");
+        editText.setText(Config.COPY_MAX_DISTANCE+"");
+        tvTitle.setText("请输入判断距离(m)");
+        InputFilter[] filters = {new InputFilter.LengthFilter(10)};
+        editText.setFilters(filters);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        Button btnYes = holder.getView(R.id.btn_sure);
+        Button btnCancel = holder.getView(R.id.btn_cancel);
+        btnCancel.setText("取消");
+        btnYes.setText("修改");
+        View.OnClickListener dialogClick = v -> {
+            if (v.getId() == R.id.btn_sure) {
+                try {
+                    Float distance = Float.valueOf(editText.getText().toString());
+                    Config.COPY_MAX_DISTANCE = distance;
+                    PreferencesUtils.put(Config.COPY_DISTANCE_KEY, distance);
+                } catch (NumberFormatException e) {
+                    ToastUtils.showMessageLong("请输入数字");
+                    return;
                 }
-                dialog.dismiss();
             }
-        });
+            dialog.dismiss();
+        };
+
+        btnYes.setOnClickListener(dialogClick);
+        btnCancel.setOnClickListener(dialogClick);
+        dialog.setContentView(holder.getRootView());
+        Window mWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = mWindow.getAttributes();
+        mWindow.setAttributes(lp);
+        // 添加动画
+        mWindow.setWindowAnimations(com.cnksi.common.R.style.DialogAnim);
+        dialog.show();
     }
 
     @Override
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case SYNC_START:
-                ToastUtils.showMessage( "开始上传数据");
+                ToastUtils.showMessage("开始上传数据");
                 break;
             case SYNC_INFO:
                 break;
             case SYNC_SUCCESS:
                 String messageSuccess = (String) msg.obj;
-                ToastUtils.showMessage( messageSuccess);
+                ToastUtils.showMessage(messageSuccess);
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;
             case SYNC_ERROR:
-                ToastUtils.showMessage( "请检查网络，在主页手动同步");
+                ToastUtils.showMessage("请检查网络，在主页手动同步");
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;

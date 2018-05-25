@@ -135,7 +135,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                 ToastUtils.showMessage("请输入鼠药及捕鼠器具放置情况");
                 return;
             }
-            showSureDialog();
+            PreventAnimalSecondActivity.this.showSureDialog();
         });
 
     }
@@ -168,7 +168,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
             }
             Intent intent = new Intent(_this, AnimalReportActivity.class);
             isNeedUpdateTaskState = true;
-            startActivity(intent);
+            PreventAnimalSecondActivity.this.startActivity(intent);
             _this.finish();
             mSureDialog.dismiss();
             ScreenManager.getScreenManager().popActivity(PreventAnimalActivity.class);

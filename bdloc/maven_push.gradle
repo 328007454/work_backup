@@ -11,12 +11,12 @@ repositories {
 
 // 判断版本是Release or Snapshots
 def isReleaseBuild() {
-    return !VERSION.contains("SNAPSHOT");
+    return !VERSION.contains("SNAPSHOT")
 }
 
 // 获取仓库url
 def getRepositoryUrl() {
-    return isReleaseBuild() ? RELEASE_URL : SNAPSHOT_URL;
+    return isReleaseBuild() ? RELEASE_URL : SNAPSHOT_URL
 }
 
 uploadArchives {

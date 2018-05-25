@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<com.cnksi.bdzinspection.view.CustomRadioButton xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rb_defect_reason"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/xs_global_margin_top_px"
-    android:button="@null"
-    android:checked="true"
-    android:clickable="true"
-    android:text="@string/xs_technical_reasons_str"
-    android:textColor="@color/xs_green_radio_button_text_selector"
-    app:drawableLeft="@drawable/xs_radio_button_selector"
-    app:drawableSize="48px" /></layout>
+<com.cnksi.common.view.CustomRadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+                                         xmlns:app="http://schemas.android.com/apk/res-auto"
+                                         android:id="@+id/rb_defect_reason"
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:layout_marginLeft="@dimen/xs_global_margin_top_px"
+                                         android:button="@null"
+                                         android:checked="true"
+                                         android:clickable="true"
+                                         android:text="@string/xs_technical_reasons_str"
+                                         android:textColor="@color/xs_green_radio_button_text_selector"
+                                         app:drawableLeft="@drawable/xs_radio_button_selector"
+                                         app:drawableSize="48px" /></layout>

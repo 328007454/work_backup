@@ -64,12 +64,7 @@ public class CopyMaintenanceDeviceAdapter extends BaseAdapter<CopyItem> {
 			ibCopy.setImageResource(R.drawable.xs_ic_green_finish);
 		}
 
-		holder.getRootView().setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				itemClickListener.onItemClick(v, item, position);
-			}
-		});
+		holder.getRootView().setOnClickListener(v -> itemClickListener.onItemClick(v, item, position));
 	}
 
 	public void pre() {

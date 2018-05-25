@@ -1,12 +1,8 @@
 package com.cnksi.bdzinspection.ywyth;
 
 import android.content.Intent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.ImageDetailsActivity;
 import com.cnksi.bdzinspection.activity.TitleActivity;
 import com.cnksi.bdzinspection.adapter.AudioAdapter;
 import com.cnksi.bdzinspection.adapter.ImageAdapter;
@@ -53,21 +49,9 @@ public class YWWorkflowDescActivity extends TitleActivity {
 			imgs = new ArrayList<String>();
 		}
 		binding.horizonListview.setAdapter(new ImageAdapter(currentActivity, imgs));
-		binding.horizonListview.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(currentActivity, ImageDetailsActivity.class);
-				ArrayList<String> _t = new ArrayList<String>();
-				for (String string : imgs) {
-					_t.add(Config.CUSTOMER_PICTURES_FOLDER + string);
-				}
-				intent.putStringArrayListExtra(Config.IMAGEURL_LIST, _t);
-				intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, false);
-				intent.putExtra(Config.CURRENT_IMAGE_POSITION, position);
-				startActivityForResult(intent, Config.ACTION_SELECT_IMAGE);
-			}
-		});
+		binding.horizonListview.setOnItemClickListener((parent, view, position, id) -> {
+            showImageDetails(currentActivity,position,StringUtils.addStrToListItem(imgs,Config.CUSTOMER_PICTURES_FOLDER),false);
+        });
 		if (bean.audio != null) {
 			audios = Arrays.asList(bean.audio.split(Config.COMMA_SEPARATOR));
 		} else {

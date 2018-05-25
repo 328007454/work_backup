@@ -32,8 +32,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cnksi.bdzinspection.application.XunshiApplication;
+import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.databinding.IncludeTitleBinding;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
@@ -231,7 +232,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         mTitleBinding.rootContainer.addView(view);
         mTitleBinding.btnBack.setOnClickListener(v -> {
             KeyBoardUtils.closeKeybord(_this);
-            onBackPressed();
+            BaseActivity.this.onBackPressed();
         });
 
     }
@@ -279,15 +280,8 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
     public void showImageDetails(Activity context, int position, ArrayList<String> mImageUrlList,
                                  boolean isShowDelete, boolean isDeleteFile) {
-        Intent intent = new Intent(_this, ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, position);
-        intent.putExtra(Config.CANCEL_IMAGEURL_LIST, isShowPicName);
-        if (mImageUrlList != null) {
-            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, mImageUrlList);
-        }
-        intent.putExtra(Config.IS_DELETE_FILE, isDeleteFile);
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, isShowDelete);
-        context.startActivityForResult(intent, CANCEL_RESULT_LOAD_IMAGE);
+        ImageDetailsActivity.with(context).setPosition(position).setImageUrlList(mImageUrlList).setDeleteFile(isDeleteFile).setShowDelete(isShowDelete).start();
+
     }
 
     public void showImageDetails(Activity context, int position, ArrayList<String> mImageUrlList,
@@ -602,7 +596,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
                         e.printStackTrace();
                     }
                     if (null != remoteSjjcAppVersion) {
-                        checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
+                        BaseActivity.this.checkUpdateVersion(Config.BDZ_INSPECTION_FOLDER + apkPath,
                                 Config.PCODE, false, TextUtils.isEmpty(remoteSjjcAppVersion.description) ? "修复bug,优化流畅度" : remoteSjjcAppVersion.description);
                     }
                 } catch (Exception e) {
@@ -619,7 +613,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         ProgressDialog dialog = ProgressDialog.show(this, "提示", "正在加密数据，请稍等...请不要强行取消，耐心等待", false, false);
         ExecutorManager.executeTaskSerially(() -> {
             try {
-                String innerDateBaseFolder = XunshiApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
+                String innerDateBaseFolder = CommonApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
                 File innerFile = new File(innerDateBaseFolder);
                 if (!innerFile.exists()) {
                     innerFile.mkdir();
@@ -628,8 +622,8 @@ public abstract class BaseActivity extends BaseCoreActivity {
                     DatabaseUtils.copyDatabase(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME), "", new File(innerDateBaseFolder + Config.ENCRYPT_DATABASE_NAME), "com.cnksi");
                     FileUtils.deleteFile(Config.DATABASE_FOLDER + Config.DATABASE_NAME);
                 }
-                runOnUiThread(() -> {
-                    checkUpdate();
+                BaseActivity.this.runOnUiThread(() -> {
+                    BaseActivity.this.checkUpdate();
                     KSyncConfig.getInstance().setDept_id("-1");
                 });
             } catch (Exception e) {

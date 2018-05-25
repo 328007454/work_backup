@@ -13,12 +13,9 @@ public class AnimationUtils {
     public static void translateAnimRun(final View view, float... values) {
         ObjectAnimator anim = ObjectAnimator.ofFloat(view, "translate", values).setDuration(2800);
         anim.start();
-        anim.addUpdateListener(new AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float cVal = (Float) animation.getAnimatedValue();
-                view.setTranslationY(cVal);
-            }
+        anim.addUpdateListener(animation -> {
+            float cVal = (Float) animation.getAnimatedValue();
+            view.setTranslationY(cVal);
         });
     }
 

@@ -89,7 +89,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                     selecteDevices.add(location.deviceID);
                 }
             }
-            runOnUiThread(() -> initView());
+            NewHwcwActivity.this.runOnUiThread(() -> NewHwcwActivity.this.initView());
         });
     }
 
@@ -112,12 +112,9 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
         } else {
             mHwcwNewBinding.cbAllYes.setChecked(true);
         }
-        mTitleBinding.btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveData();
-                _this.finish();
-            }
+        mTitleBinding.btnBack.setOnClickListener(view -> {
+            saveData();
+            _this.finish();
         });
     }
 
@@ -137,15 +134,12 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
             case R.id.btn_cancel:
                 String deviceName = mHwcwNewBinding.etHotdeivceName.getText().toString();
                 if (!TextUtils.isEmpty(deviceName)) {
-                    DialogUtils.createTipsDialog(_this, getString(R.string.have_not_save_data), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mHwcwNewBinding.setSetNull(false);
-                            mHwcwNewBinding.llHotPart.removeAllViews();
-                            hotRecordClickPositon = -1;
-                            childItemNum = 0;
-                            mHotPartAdapter.setCurrentClickPosition(true, hotRecordClickPositon);
-                        }
+                    DialogUtils.createTipsDialog(_this, getString(R.string.have_not_save_data), v -> {
+                        mHwcwNewBinding.setSetNull(false);
+                        mHwcwNewBinding.llHotPart.removeAllViews();
+                        hotRecordClickPositon = -1;
+                        childItemNum = 0;
+                        mHotPartAdapter.setCurrentClickPosition(true, hotRecordClickPositon);
                     }, false).show();
                 }
                 break;
@@ -281,11 +275,8 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                     currentDeviceID = currentDevice.getString("deviceid");
                     currentSpaceID = currentDevice.getString("spid");
                     if (selecteDevices.contains(currentDeviceID)) {
-                        DialogUtils.createTipsDialog(_this, "该设备已经被新增为发热设备，请在温度记录里点击编辑", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                        DialogUtils.createTipsDialog(_this, "该设备已经被新增为发热设备，请在温度记录里点击编辑", view -> {
 
-                            }
                         }, false).show();
                     } else {
                         selecteDevices.add(currentDeviceID);
@@ -351,18 +342,15 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
     @Override
     public void onLongItemClick(View v, final Object data, final int position) {
         delteLocation = (HwcwLocation) data;
-        DialogUtils.createTipsDialog(_this, getString(R.string.delete_data), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                delteLocation.dlt = 1;
-                deleteLocations.add(delteLocation);
-                hotLocations.remove(position);
-                mHwcwNewBinding.setSetNull(false);
-                mHwcwNewBinding.llHotPart.removeAllViews();
-                childItemNum = 0;
-                mHotPartAdapter.notifyDataSetChanged();
-                selecteDevices.remove(position);
-            }
+        DialogUtils.createTipsDialog(_this, getString(R.string.delete_data), v1 -> {
+            delteLocation.dlt = 1;
+            deleteLocations.add(delteLocation);
+            hotLocations.remove(position);
+            mHwcwNewBinding.setSetNull(false);
+            mHwcwNewBinding.llHotPart.removeAllViews();
+            childItemNum = 0;
+            mHotPartAdapter.notifyDataSetChanged();
+            selecteDevices.remove(position);
         }, false).show();
     }
 

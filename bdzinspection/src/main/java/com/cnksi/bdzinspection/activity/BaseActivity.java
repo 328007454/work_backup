@@ -35,10 +35,9 @@ import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
-import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
@@ -46,6 +45,9 @@ import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.PlaySound;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -66,7 +68,6 @@ import java.util.List;
 import java.util.Map;
 
 import static android.os.Build.VERSION.SDK_INT;
-import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
 
 @SuppressLint("HandlerLeak")
 public class BaseActivity extends BaseCoreActivity {
@@ -206,10 +207,15 @@ public class BaseActivity extends BaseCoreActivity {
             String userName = intent.getStringExtra(Config.CURRENT_LOGIN_USER);
             String userAccount = intent.getStringExtra(Config.CURRENT_LOGIN_ACCOUNT);
             String bdzId = intent.getStringExtra(Config.LASTTIEM_CHOOSE_BDZNAME);
-            PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, bdzId);
-            PreferencesUtils.put( Config.CURRENT_LOGIN_USER, userName);
-            PreferencesUtils.put( Config.CURRENT_LOGIN_ACCOUNT,
-                    userAccount);
+            if (!TextUtils.isEmpty(bdzId)) {
+                PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdzId);
+            }
+            if (!StringUtilsExt.isHasOneEmpty(userName, userAccount)) {
+                PreferencesUtils.put(Config.CURRENT_LOGIN_USER, userName);
+                PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
+            }
+
+
         }
     }
 
@@ -278,14 +284,14 @@ public class BaseActivity extends BaseCoreActivity {
         // 是否是从巡检任务提醒界面跳转过去的
         isFromTaskRemind = getIntent().getBooleanExtra(Config.IS_FROM_TASK_REMIND, false);
 
-        currentBdzId = PreferencesUtils.get( Config.CURRENT_BDZ_ID, "");
-        currentBdzName = PreferencesUtils.get( Config.CURRENT_BDZ_NAME, "");
-        currentInspectionType = PreferencesUtils.get( Config.CURRENT_INSPECTION_TYPE, "");
-        currentInspectionTypeName = PreferencesUtils.get( Config.CURRENT_INSPECTION_TYPE_NAME,
+        currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
+        currentBdzName = PreferencesUtils.get(Config.CURRENT_BDZ_NAME, "");
+        currentInspectionType = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE, "");
+        currentInspectionTypeName = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE_NAME,
                 "");
-        currentTaskId = PreferencesUtils.get( Config.CURRENT_TASK_ID, "");
-        currentReportId = PreferencesUtils.get( Config.CURRENT_REPORT_ID, "");
-        currentAcounts = PreferencesUtils.get( Config.CURRENT_LOGIN_ACCOUNT, "");
+        currentTaskId = PreferencesUtils.get(Config.CURRENT_TASK_ID, "");
+        currentReportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
+        currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
     }
 
     /**
@@ -300,13 +306,11 @@ public class BaseActivity extends BaseCoreActivity {
      */
     public void showImageDetails(Activity context, int position, ArrayList<String> mImageUrlList,
                                  boolean isShowDelete) {
-        Intent intent = new Intent(currentActivity, ImageDetailsActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_POSITION, position);
-        if (mImageUrlList != null) {
-            intent.putStringArrayListExtra(Config.IMAGEURL_LIST, mImageUrlList);
-        }
-        intent.putExtra(Config.IS_SHOW_PHOTO_FLAG, isShowDelete);
-        context.startActivityForResult(intent, CANCEL_RESULT_LOAD_IMAGE);
+        ImageDetailsActivity.with(context)
+                .setPosition(position)
+                .setShowDelete(isShowDelete)
+                .setImageUrlList(mImageUrlList)
+                .start();
     }
 
     /**
@@ -460,14 +464,12 @@ public class BaseActivity extends BaseCoreActivity {
         tipsDialog.show();
         tipsBinding.btnSure.setOnClickListener(view -> {
             if (isFinishInspection) {
-                updateReportStatus();
+                BaseActivity.this.updateReportStatus();
             }
-            startActivityForResult(intent, requestCode);
+            BaseActivity.this.startActivityForResult(intent, requestCode);
             tipsDialog.dismiss();
         });
-        tipsBinding.btnCancel.setOnClickListener(view -> {
-            tipsDialog.dismiss();
-        });
+        tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
     }
 
     /**
@@ -509,8 +511,8 @@ public class BaseActivity extends BaseCoreActivity {
     protected void createKeyBoardView(ViewGroup root) {
 
         mKeyBoardContainerView = LayoutInflater.from(currentActivity).inflate(R.layout.xs_keyboard_layout, root, false);
-        mKeyBoardView = (KeyboardView) mKeyBoardContainerView.findViewById(R.id.keyboard_view);
-        final LinearLayout mSeekBarContainer = (LinearLayout) mKeyBoardContainerView
+        mKeyBoardView = mKeyBoardContainerView.findViewById(R.id.keyboard_view);
+        final LinearLayout mSeekBarContainer = mKeyBoardContainerView
                 .findViewById(R.id.rl_seekbar_container);
         // 动态获取seekBar的高度
         int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
@@ -547,11 +549,7 @@ public class BaseActivity extends BaseCoreActivity {
         }
         if (currentInspectionType == null) {
             return false;
-        } else if (currentInspectionType.contains("special")) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return currentInspectionType.contains("special");
 
     }
 
@@ -559,11 +557,7 @@ public class BaseActivity extends BaseCoreActivity {
 
         if (TextUtils.isEmpty(deviceWay)) {
             return false;
-        } else if ("by_device_bigtype".equalsIgnoreCase(deviceWay)) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return "by_device_bigtype".equalsIgnoreCase(deviceWay);
 
     }
 
@@ -619,7 +613,7 @@ public class BaseActivity extends BaseCoreActivity {
     public void setWindowOverLayPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (!Settings.canDrawOverlays(getApplicationContext())) {
-                ToastUtils.showMessage( "没有悬浮窗权限");
+                ToastUtils.showMessage("没有悬浮窗权限");
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                 intent.setData(uri);

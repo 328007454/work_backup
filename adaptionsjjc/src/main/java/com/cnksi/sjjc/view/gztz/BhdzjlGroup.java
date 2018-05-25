@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.sjjc.activity.gztz.BHDZJLActivity;
 import com.cnksi.sjjc.bean.gztz.BhyjBean;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjlBhdzjl;
@@ -45,15 +45,11 @@ public class BhdzjlGroup {
         } else {
             binding.sbmc.setVisible(View.GONE, View.VISIBLE);
         }
-        binding.sbmc.setSelectOnClickListener(view -> listener.onSelectListener(this, false));
-        binding.bhsbmc.setSelectOnClickListener(v -> listener.onSelectListener(this, true));
-        binding.sbmc.getAddButton().setOnClickListener(view -> {
-            activity.addOtherDevice();
-        });
+        binding.sbmc.setSelectOnClickListener(view -> listener.onSelectListener(BhdzjlGroup.this, false));
+        binding.bhsbmc.setSelectOnClickListener(v -> listener.onSelectListener(BhdzjlGroup.this, true));
+        binding.sbmc.getAddButton().setOnClickListener(view -> activity.addOtherDevice());
 
-        binding.sbmc.getDeleteButton().setOnClickListener(view -> {
-            activity.removeView(this);
-        });
+        binding.sbmc.getDeleteButton().setOnClickListener(view -> activity.removeView(BhdzjlGroup.this));
         binding.bhqdsj.tvValue.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -166,7 +162,7 @@ public class BhdzjlGroup {
         StringBuilder builder = new StringBuilder();
         String bhxh = binding.bhsbmc.getValueStr();
         if (!TextUtils.isEmpty(bhxh)) {
-            builder.append(bhxh).append("保护").append(StringUtils.BlankToDefault(binding.bhqdsj.getValueStr(), "  "))
+            builder.append(bhxh).append("保护").append(StringUtilsExt.nullTo(binding.bhqdsj.getValueStr(), "  "))
                     .append("启动保护,");
             for (BhdzjlYjGroup list : lists) {
                 builder.append(list.toString());

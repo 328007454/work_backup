@@ -68,7 +68,7 @@ public class PreventAnimalActivity extends BaseActivity {
         getIntentValue();
         mInspectionType = InspectionType.get(currentInspectionType);
         mTitleBinding.btnBack.setOnClickListener(view -> {
-            saveData();
+            PreventAnimalActivity.this.saveData();
             PreventAnimalActivity.this.finish();
         });
         initView();
@@ -149,18 +149,18 @@ public class PreventAnimalActivity extends BaseActivity {
 
     private void initOnClick() {
         binding.btnNext.setOnClickListener(view -> {
-            saveData();
+            PreventAnimalActivity.this.saveData();
             Intent intent = new Intent(_this, PreventAnimalSecondActivity.class);
             intent.putExtra("PreventionRecord", preventionRecord);
-            startActivity(intent);
+            PreventAnimalActivity.this.startActivity(intent);
         });
         mTitleBinding.tvRight.setOnClickListener(view -> {
             Intent intent = new Intent(_this, XianCunHoleActivity.class);
-            startActivityForResult(intent, REFRESH_UI);
+            PreventAnimalActivity.this.startActivityForResult(intent, REFRESH_UI);
         });
         binding.tvFindHole.setOnClickListener(view -> {
             Intent intent = new Intent(_this, DiscoverHoleActivity.class);
-            startActivityForResult(intent, REFRESH_UI);
+            PreventAnimalActivity.this.startActivityForResult(intent, REFRESH_UI);
         });
     }
 

@@ -34,10 +34,10 @@ public class SbxbGroup extends UnderLineLinearLayout {
         setOrientation(HORIZONTAL);
         setDrawUnderLine(true);
         LayoutInflater.from(context).inflate(R.layout.gztz_item_sbxb, this, true);
-        a = (CheckBox) findViewById(R.id.rb_a);
-        b = (CheckBox) findViewById(R.id.rb_b);
-        c = (CheckBox) findViewById(R.id.rb_c);
-        o = (CheckBox) findViewById(R.id.rb_o);
+        a = findViewById(R.id.rb_a);
+        b = findViewById(R.id.rb_b);
+        c = findViewById(R.id.rb_c);
+        o = findViewById(R.id.rb_o);
     }
 
     public String getValueStr() {

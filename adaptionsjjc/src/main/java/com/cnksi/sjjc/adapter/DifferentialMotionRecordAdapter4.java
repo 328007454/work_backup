@@ -7,7 +7,7 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.CdbhclValue;
@@ -79,7 +79,7 @@ public class DifferentialMotionRecordAdapter4 extends BaseLinearLayoutAdapter<Cd
 
         @Override
         public void afterTextChanged(Editable s) {
-            String value = StringUtils.getTransformTep(s.toString());
+            String value = StringUtilsExt.getDecimalPoint(s.toString());
             valueList.get(position).setValue(value);
         }
     }

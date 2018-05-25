@@ -122,11 +122,6 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
-            android:name=".activity.ImageDetailsActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <!--<activity-->
         <!--android:name=".activity.HWCWMainActivity"-->
         <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
@@ -348,14 +343,6 @@
 
 
         <activity android:name="com.cnksi.core.activity.PermissionActivity" />
-
-
-        <receiver android:name=".receiver.NetWorkDisableReceiver">
-            <intent-filter android:priority="2147483647">
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
 
 
         <service

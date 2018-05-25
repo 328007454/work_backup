@@ -21,7 +21,7 @@ public final class GuidUtil {
             _seqGUID = newGuid();
             _seqNumber = 1;
         }
-        return _seqGUID + "-" + String.format("%1$05d", new Object[]{Integer.valueOf(_seqNumber)});
+        return _seqGUID + "-" + String.format("%1$05d", Integer.valueOf(_seqNumber));
     }
 
     public static boolean validateGuid(String str) {

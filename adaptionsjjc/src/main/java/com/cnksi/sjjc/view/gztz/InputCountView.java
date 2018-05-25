@@ -5,10 +5,11 @@ import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.sjjc.databinding.GztzItemAddSubBinding;
-import com.cnksi.sjjc.util.CalcUtils;
 
 
 /**
@@ -36,8 +37,8 @@ public class InputCountView extends LinearLayout {
     public InputCountView(Context context, @Nullable final AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         binding = GztzItemAddSubBinding.inflate(LayoutInflater.from(getContext()), this, true);
-        binding.btAdd.setOnClickListener(v -> add(1));
-        binding.btSub.setOnClickListener(v -> add(-1));
+        binding.btAdd.setOnClickListener(v -> InputCountView.this.add(1));
+        binding.btSub.setOnClickListener(v -> InputCountView.this.add(-1));
     }
 
     public Float getResult() {

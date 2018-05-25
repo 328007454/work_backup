@@ -79,14 +79,14 @@ public class MultipleBackAdapter extends BaseQuickAdapter<DbModel, MultipleBackA
             }
         }
         imageView.setOnClickListener(view -> {
-            if (!checkItemCopy(item.getString(Zzht.ID))) {
+            if (!MultipleBackAdapter.this.checkItemCopy(item.getString(Zzht.ID))) {
                 ToastUtils.showMessage("您还有输入框没有填写！");
                 return;
             }
             if (mClickListener != null) {
-                mClickListener.onItemClick(view, item, getParentPosition(item));
+                mClickListener.onItemClick(view, item, MultipleBackAdapter.this.getParentPosition(item));
                 view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.xs_green_circle_background));
-                notifyItemChanged(getParentPosition(item));
+                MultipleBackAdapter.this.notifyItemChanged(MultipleBackAdapter.this.getParentPosition(item));
                 item.add(ZzhtResult.CONFIRM_TIME, DateUtils.getCurrentLongTime());
             }
         });

@@ -160,12 +160,7 @@ public class BTDemoActivity extends BaseActivity {
                 System.out.println("ByteArray INV:" + x6invtt);
                 System.out.println("handle INV: " + x6EPCstr4);
 
-                try {
-                    ModifyListView(x6EPCstr4);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                ModifyListView(x6EPCstr4);
                 break;
             case MSG_M100CMDRESP:
                 Bundle x6ver = msg.getData();
@@ -193,7 +188,7 @@ public class BTDemoActivity extends BaseActivity {
 
     RFIDReadDataAdapter listAdapter1;
     Intent intent2 = new Intent();
-    public void ModifyListView(String tagdata) throws IOException {
+    public void ModifyListView(String tagdata) {
         HashMap<String, String> maptemp = new HashMap<String, String>();
         HashMap<String, String> mapnew = new HashMap<String, String>();
         boolean inTheList = false;
@@ -227,16 +222,13 @@ public class BTDemoActivity extends BaseActivity {
                     new String[]{"TagData", "CountNum"}, new int[]{
                     R.id.TagData, R.id.CountNum});
             binding.TagList.setAdapter(listAdapter1);
-            binding.TagList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    TextView textView = (TextView) (view.findViewById(R.id.TagData));
-                    String data = textView.getText().toString();
-                    Log.i("TTTTT",data);
-                    intent2.putExtra("spacingId",data);
-                    setResult(Activity.RESULT_OK,intent2);
-                    BTDemoActivity.this.finish();
-                }
+            binding.TagList.setOnItemClickListener((adapterView, view, i, l) -> {
+                TextView textView = view.findViewById(R.id.TagData);
+                String data = textView.getText().toString();
+                Log.i("TTTTT",data);
+                intent2.putExtra("spacingId",data);
+                setResult(Activity.RESULT_OK,intent2);
+                BTDemoActivity.this.finish();
             });
         }
 

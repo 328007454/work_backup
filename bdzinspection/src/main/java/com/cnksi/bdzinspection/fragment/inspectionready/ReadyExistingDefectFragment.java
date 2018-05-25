@@ -108,46 +108,42 @@ public class ReadyExistingDefectFragment extends BaseFragment implements OnAdapt
     }
 
     public void searchData() {
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                if (groupList == null) {
-                    groupList = new LinkedList<>();
-                    groupHashMap = new HashMap<>();
-                } else {
-                    groupList.clear();
-                    groupHashMap.clear();
-                }
-                List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(currentBdzId);
-                if (defectList != null && !defectList.isEmpty()) {
-                    ArrayList<DefectRecord> mCrisisDefectList = new ArrayList<DefectRecord>();
-                    ArrayList<DefectRecord> mSeriousDefectList = new ArrayList<DefectRecord>();
-                    ArrayList<DefectRecord> mGeneralDefectList = new ArrayList<DefectRecord>();
-                    for (DefectRecord mDefectRecord : defectList) {
-                        if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            mCrisisDefectList.add(mDefectRecord);
-                        } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            mSeriousDefectList.add(mDefectRecord);
-                        } else if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
-                            mGeneralDefectList.add(mDefectRecord);
-                        }
-                    }
-                    if (!mCrisisDefectList.isEmpty()) {
-                        groupList.add(Config.CRISIS_LEVEL);
-                        groupHashMap.put(Config.CRISIS_LEVEL, mCrisisDefectList);
-                    }
-                    if (!mSeriousDefectList.isEmpty()) {
-                        groupList.add(Config.SERIOUS_LEVEL);
-                        groupHashMap.put(Config.SERIOUS_LEVEL, mSeriousDefectList);
-                    }
-                    if (!mGeneralDefectList.isEmpty()) {
-                        groupList.add(Config.GENERAL_LEVEL);
-                        groupHashMap.put(Config.GENERAL_LEVEL, mGeneralDefectList);
-                    }
-                }
-                mHandler.sendEmptyMessage(LOAD_DATA);
+        ExecutorManager.executeTask(() -> {
+            if (groupList == null) {
+                groupList = new LinkedList<>();
+                groupHashMap = new HashMap<>();
+            } else {
+                groupList.clear();
+                groupHashMap.clear();
             }
+            List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(currentBdzId);
+            if (defectList != null && !defectList.isEmpty()) {
+                ArrayList<DefectRecord> mCrisisDefectList = new ArrayList<DefectRecord>();
+                ArrayList<DefectRecord> mSeriousDefectList = new ArrayList<DefectRecord>();
+                ArrayList<DefectRecord> mGeneralDefectList = new ArrayList<DefectRecord>();
+                for (DefectRecord mDefectRecord : defectList) {
+                    if (Config.CRISIS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                        mCrisisDefectList.add(mDefectRecord);
+                    } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                        mSeriousDefectList.add(mDefectRecord);
+                    } else if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(mDefectRecord.defectlevel)) {
+                        mGeneralDefectList.add(mDefectRecord);
+                    }
+                }
+                if (!mCrisisDefectList.isEmpty()) {
+                    groupList.add(Config.CRISIS_LEVEL);
+                    groupHashMap.put(Config.CRISIS_LEVEL, mCrisisDefectList);
+                }
+                if (!mSeriousDefectList.isEmpty()) {
+                    groupList.add(Config.SERIOUS_LEVEL);
+                    groupHashMap.put(Config.SERIOUS_LEVEL, mSeriousDefectList);
+                }
+                if (!mGeneralDefectList.isEmpty()) {
+                    groupList.add(Config.GENERAL_LEVEL);
+                    groupHashMap.put(Config.GENERAL_LEVEL, mGeneralDefectList);
+                }
+            }
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
 
     }

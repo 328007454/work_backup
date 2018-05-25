@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.cnksi.common.listener.ItemClickListener;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.ReportSnwsd;
@@ -93,20 +93,14 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         etHumidity.setText(item.sd);
 
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != itemClickListener) {
-                    itemClickListener.itemClick(v, item, position);
-                }
+        imageButton.setOnClickListener(v -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemClick(v, item, position);
             }
         });
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (null != itemClickListener) {
-                    itemClickListener.itemClick(view, item, position);
-                }
+        deleteButton.setOnClickListener(view -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemClick(view, item, position);
             }
         });
 
@@ -144,10 +138,10 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
                 reportSnwsd.location = s.toString();
             }
             if (ReportSnwsd.WD.equalsIgnoreCase(tag)) {
-                reportSnwsd.wd = StringUtils.getTransformTep(s.toString());
+                reportSnwsd.wd = StringUtilsExt.getDecimalPoint(s.toString());
             }
             if (ReportSnwsd.SD.equalsIgnoreCase(tag)) {
-                reportSnwsd.sd = StringUtils.getTransformTep(s.toString());
+                reportSnwsd.sd = StringUtilsExt.getDecimalPoint(s.toString());
             }
         }
     }

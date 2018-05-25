@@ -40,7 +40,7 @@ public class ImageAdapter extends SimpleBaseAdapter {
 		} else {
 			itemBingding = DataBindingUtil.findBinding(convertView);
 		}
-		Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + (String) getItem(position),300);
+		Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.CUSTOMER_PICTURES_FOLDER + getItem(position),300);
 		if (bitmap !=null){
 			itemBingding.img.setImageBitmap(bitmap);
 		}

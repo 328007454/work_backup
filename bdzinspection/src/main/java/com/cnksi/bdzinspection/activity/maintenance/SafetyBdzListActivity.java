@@ -14,7 +14,7 @@ import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyBdzListBinding;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
-import com.cnksi.bdzinspection.utils.TTSUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.model.Bdz;
@@ -53,7 +53,7 @@ public class SafetyBdzListActivity extends BaseActivity {
                 return;
             }
             if (currentItem == null) {
-                ToastUtils.showMessage( "请先选择一个变电站！");
+                ToastUtils.showMessage("请先选择一个变电站！");
                 return;
             }
             TTSUtils.getInstance().startSpeaking("开始" + currentItem.name + "的安全工器具检查作业");
@@ -62,15 +62,10 @@ public class SafetyBdzListActivity extends BaseActivity {
             intent.putExtra(Config.TITLE_NAME, currentItem.name);
             intent.putExtra(SafeToolsInfor.DEPTID, deptId);
             isStart = true;
-            startActivity(intent);
+            SafetyBdzListActivity.this.startActivity(intent);
         });
 
-        binding.ibtnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        binding.ibtnCancel.setOnClickListener(v -> finish());
         initialData();
     }
 
@@ -82,17 +77,9 @@ public class SafetyBdzListActivity extends BaseActivity {
     }
 
     private void reLoadData() {
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                count = SafeToolsInfoService.getInstance().countRemindGroupByBdz(deptId);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        binding.list.setAdapter(new BdzAdapter(bdzList, count));
-                    }
-                });
-            }
+        ExecutorManager.executeTask(() -> {
+            count = SafeToolsInfoService.getInstance().countRemindGroupByBdz(deptId);
+            runOnUiThread(() -> binding.list.setAdapter(new BdzAdapter(bdzList, count)));
         });
     }
 
@@ -124,7 +111,7 @@ public class SafetyBdzListActivity extends BaseActivity {
             holder.setImageResource(R.id.img_check, (currentItem != null && currentItem.bdzid == (item.bdzid)) ? R.drawable.xs_icon_select : R.drawable.xs_icon_unselect);
             holder.getRootView().setOnClickListener(v -> {
                 currentItem = item;
-                notifyDataSetChanged();
+                BdzAdapter.this.notifyDataSetChanged();
             });
         }
     }

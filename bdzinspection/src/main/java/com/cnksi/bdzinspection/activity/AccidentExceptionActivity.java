@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
@@ -70,7 +71,7 @@ public class AccidentExceptionActivity extends BaseActivity implements OnPageCha
 
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> finish());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> AccidentExceptionActivity.this.finish());
 
     }
 

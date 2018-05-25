@@ -16,7 +16,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityOperateTicketReportBinding;
 import com.cnksi.bdzinspection.emnu.OperateType;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.bdzinspection.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.PlaySound;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
@@ -80,9 +80,9 @@ public class OperateTicketReportActivity extends BaseActivity {
         binding.btnConfirm.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
             intent.putExtra(Config.IS_FROM_BATTERY, isFromWorkPage);
-            startActivity(intent);
+            OperateTicketReportActivity.this.startActivity(intent);
             ScreenManager.getScreenManager().popAllActivityExceptOne(TaskRemindActivity.class);
-            this.finish();
+            OperateTicketReportActivity.this.finish();
         });
     }
 	

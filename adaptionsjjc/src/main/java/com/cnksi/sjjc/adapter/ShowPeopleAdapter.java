@@ -36,12 +36,7 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
         nameBinding.tvPeopleName.setText(item);
         nameBinding.deleteImag.setTag(PEOPLE_FLAG);
 
-        nameBinding.deleteImag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClickListener.itemClick(view, item, position);
-            }
-        });
+        nameBinding.deleteImag.setOnClickListener(view -> itemClickListener.itemClick(view, item, position));
         if (position < totoalUserCount) {
             nameBinding.deleteImag.setVisibility(View.GONE);
         } else {

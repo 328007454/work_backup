@@ -65,30 +65,23 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mDetectBinding.rvBatteryDevice.setLayoutManager(layoutManager);
         mDetectBinding.rvBatteryDevice.setAdapter(mDefetcDeviceAdapter);
-        mDefetcDeviceAdapter.setOnItemClickListener(new BaseRecyclerDataBindingAdapter.OnItemClickListener() {
-            @Override
-            public void onAdapterItemClick(View view, Object data, int position) {
-                Intent intent = new Intent();
-                intent.putExtra(BatteryInstrument.CSYQMC, ((BatteryInstrument) data).testName);
-                intent.putExtra(BatteryInstrument.ID, ((BatteryInstrument) data).id);
-                intent.putExtra(BatteryInstrument.SELECT_NUM, (((BatteryInstrument) data).selectNum + 1) + "");
-                setResult(RESULT_OK, intent);
-                finish();
-            }
+        mDefetcDeviceAdapter.setOnItemClickListener((view, data, position) -> {
+            Intent intent = new Intent();
+            intent.putExtra(BatteryInstrument.CSYQMC, ((BatteryInstrument) data).testName);
+            intent.putExtra(BatteryInstrument.ID, ((BatteryInstrument) data).id);
+            intent.putExtra(BatteryInstrument.SELECT_NUM, (((BatteryInstrument) data).selectNum + 1) + "");
+            setResult(RESULT_OK, intent);
+            finish();
         });
     }
 
 
     private void initLoadWidget() {
         mDetectBinding.springviewLayout.setEnableRefresh(false);
-        mDetectBinding.springviewLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                ToastUtils.showMessage("正在加载");
-                loadMoreData(((++pageStart) * 50), 50);
-                mDetectBinding.springviewLayout.finishLoadmore(2000);
-            }
+        mDetectBinding.springviewLayout.setOnLoadmoreListener(refreshlayout -> {
+            ToastUtils.showMessage("正在加载");
+            loadMoreData(((++pageStart) * 50), 50);
+            mDetectBinding.springviewLayout.finishLoadmore(2000);
         });
     }
 
@@ -99,15 +92,12 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
     private void loadMoreData(final int pageStart, final int pageNum) {
         ExecutorManager.executeTaskSerially(() -> {
             final List<BatteryInstrument> instruments = BatteryInstrumentService.getInstance().findAllInstrument(pageStart, pageNum);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (!instruments.isEmpty()) {
-                        datas.addAll(instruments);
-                        mDefetcDeviceAdapter.setList(datas);
-                    } else {
-                        ToastUtils.showMessage("没有配置数据");
-                    }
+            BatteryDeviceDetectActivity.this.runOnUiThread(() -> {
+                if (!instruments.isEmpty()) {
+                    datas.addAll(instruments);
+                    mDefetcDeviceAdapter.setList(datas);
+                } else {
+                    ToastUtils.showMessage("没有配置数据");
                 }
             });
         });
@@ -119,7 +109,7 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setQueryHint("输入设备编号或者名称");
-        SearchView.SearchAutoComplete autoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
+        SearchView.SearchAutoComplete autoComplete = searchView.findViewById(R.id.search_src_text);
         autoComplete.setHintTextColor(getResources().getColor(android.R.color.white));
         autoComplete.setTextColor(getResources().getColor(android.R.color.white));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -152,20 +142,17 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
         mDefetcDeviceAdapter.notifyDataSetChanged();
         ExecutorManager.executeTaskSerially(() -> {
             if (TextUtils.isEmpty(text)) {
-                loadMoreData(pageStart = 0, 50);
+                BatteryDeviceDetectActivity.this.loadMoreData(pageStart = 0, 50);
                 mDetectBinding.springviewLayout.setEnableLoadmore(true);
                 return;
             }
             final List<BatteryInstrument> instrumentList = BatteryInstrumentService.getInstance().findAllLikeName(text);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (!instrumentList.isEmpty()) {
-                        datas.addAll(instrumentList);
-                        mDefetcDeviceAdapter.setList(datas);
-                    } else {
-                        ToastUtils.showMessage("没有配置数据");
-                    }
+            BatteryDeviceDetectActivity.this.runOnUiThread(() -> {
+                if (!instrumentList.isEmpty()) {
+                    datas.addAll(instrumentList);
+                    mDefetcDeviceAdapter.setList(datas);
+                } else {
+                    ToastUtils.showMessage("没有配置数据");
                 }
             });
         });

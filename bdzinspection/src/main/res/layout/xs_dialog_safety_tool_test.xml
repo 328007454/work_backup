@@ -150,7 +150,7 @@
                 android:orientation="horizontal"
                 android:padding="10px">
 
-                <com.cnksi.bdzinspection.view.ContainsEmojiEditText
+                <com.cnksi.common.view.ContainsEmojiEditText
                     android:id="@+id/et_input_person"
                     android:layout_width="0px"
                     android:layout_height="match_parent"

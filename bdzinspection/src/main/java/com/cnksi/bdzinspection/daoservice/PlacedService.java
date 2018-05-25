@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class PlacedService extends BaseService<Placed> {
 
-    private final static PlacedService instance=new PlacedService();;
+    private final static PlacedService instance=new PlacedService();
 
     protected PlacedService() {
         super(Placed.class);

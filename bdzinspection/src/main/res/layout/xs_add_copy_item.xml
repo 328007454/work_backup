@@ -182,7 +182,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/xs_device_item_name_text_size_px" />
 
-                <com.cnksi.bdzinspection.view.ContainsEmojiEditText
+                <com.cnksi.common.view.ContainsEmojiEditText
                     android:id="@+id/et_update_name"
                     android:layout_width="443px"
                     android:layout_height="100px"

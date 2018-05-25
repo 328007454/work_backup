@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.PermissionBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -114,27 +115,21 @@ public class PermissionUtil {
      */
     private void showPermissionDeniedDialog(final Activity activity, final String[] deniedPermissions) {
         int dialogWidth = ScreenUtils.getScreenWidth(activity) * 7 / 9;
-        PermissionBinding permissionBinding = (PermissionBinding) DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.xs_permission_dialog_tips, null, false);
+        PermissionBinding permissionBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.xs_permission_dialog_tips, null, false);
         final Dialog permissionDialog = DialogUtils.createDialog(activity, permissionBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         permissionBinding.tvDialogContent.setText("权限不足");
         permissionBinding.btnCancel.setText("退出程序");
         permissionBinding.btnSure.setText("重新授权");
-        permissionBinding.btnSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
-                    permissionDialog.dismiss();
-                        activity.requestPermissions(deniedPermissions, REQUEST_PERMISSIONS_CODE);
-                    }
-            }
-        });
-        permissionBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                退出系统
+        permissionBinding.btnSure.setOnClickListener(v -> {
+            if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
                 permissionDialog.dismiss();
-                  exitApplication();
-            }
+                    activity.requestPermissions(deniedPermissions, REQUEST_PERMISSIONS_CODE);
+                }
+        });
+        permissionBinding.btnCancel.setOnClickListener(v -> {
+//                退出系统
+            permissionDialog.dismiss();
+              exitApplication();
         });
         permissionDialog.show();
         permissionDialog.setCanceledOnTouchOutside(false);

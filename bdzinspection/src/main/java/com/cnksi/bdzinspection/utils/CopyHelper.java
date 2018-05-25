@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -452,21 +453,12 @@ public class CopyHelper {
                     }
 
                     final int position = index;
-                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            itemClickListener.onItemClick(v, childItem, position);
-                        }
-                    });
+                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.onItemClick(v, childItem, position));
                     // 抄录项如果看不清长按弹出对话框
-                    layoutRoot.setOnLongClickListener(new View.OnLongClickListener() {
-
-                        @Override
-                        public boolean onLongClick(View v) {
-                            CopyResult copyResult = copyResultMap.get(childItem.id);
-                            itemLongClickListener.onItemLongClick(v, copyResult, position, childItem);
-                            return true;
-                        }
+                    layoutRoot.setOnLongClickListener(v -> {
+                        CopyResult copyResult = copyResultMap.get(childItem.id);
+                        itemLongClickListener.onItemLongClick(v, copyResult, position, childItem);
+                        return true;
                     });
                     parentLayout.addView(childHolder.getRootView());
                     index++;

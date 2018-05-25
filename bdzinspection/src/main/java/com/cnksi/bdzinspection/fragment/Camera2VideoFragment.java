@@ -54,9 +54,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.view.AutoFitTextureView;
 import com.cnksi.common.Config;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.ToastUtils;
 
 import java.io.File;
@@ -250,7 +250,7 @@ public class Camera2VideoFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+        mTextureView = view.findViewById(R.id.texture);
     }
 
     @Override
@@ -470,7 +470,7 @@ public class Camera2VideoFragment extends Fragment {
     }
 
     private File getVideoFile() {
-        return new File(Config.VIDEO_FOLDER, videoFileName = FunctionUtil.getPrimarykey() + ".mp4");
+        return new File(Config.VIDEO_FOLDER, videoFileName = BaseModel.getPrimarykey() + ".mp4");
     }
 
     public void startRecordingVideo() {
@@ -525,10 +525,7 @@ public class Camera2VideoFragment extends Fragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Activity activity = getActivity();
-            return new AlertDialog.Builder(activity).setMessage(getArguments().getString(ARG_MESSAGE)).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
+            return new AlertDialog.Builder(activity).setMessage(getArguments().getString(ARG_MESSAGE)).setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
             }).create();
         }
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsVideoAdapterBinding;
-import com.cnksi.bdzinspection.utils.MediaRecorderUtils;
+import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.bdzinspection.ywyth.VideoPlayer;
 import com.cnksi.common.Config;
 import com.cnksi.common.utils.BitmapUtil;
@@ -42,7 +42,7 @@ public class VideoAdapter extends SimpleBaseAdapter {
 		} else {
 		adapterBinding = DataBindingUtil.findBinding(convertView);
 		}
-		final String path = Config.VIDEO_FOLDER + (String) getItem(position);
+		final String path = Config.VIDEO_FOLDER + getItem(position);
 		adapterBinding.img.setImageBitmap(BitmapUtil.getVideoThumbnail(path, 300, 400));
 		adapterBinding.tv.setText(MediaRecorderUtils.getInstance().getVedioDurationString(mContext, path));
 		convertView.setOnClickListener(v -> {

@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.bean.PreventionRecord;
-import com.cnksi.sjjc.util.BitmapUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -99,21 +99,15 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
         }
 
 
-        holder.getView(R.id.iv_take_pic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (null != itemClickListener) {
-                    view.setTag(locations[position]);
-                    itemClickListener.itemClick(view, record, position);
-                }
+        holder.getView(R.id.iv_take_pic).setOnClickListener(view -> {
+            if (null != itemClickListener) {
+                view.setTag(locations[position]);
+                itemClickListener.itemClick(view, record, position);
             }
         });
-        ivShowPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (null != itemClickListener) {
-                    itemClickListener.itemClick(view, record, position);
-                }
+        ivShowPic.setOnClickListener(view -> {
+            if (null != itemClickListener) {
+                itemClickListener.itemClick(view, record, position);
             }
         });
     }

@@ -178,11 +178,7 @@ public class DeviceStandards extends BaseModel {
      * @return
      */
     public boolean isImportant() {
-        if (!TextUtils.isEmpty(kind) && kind.contains(InspectionType.day.name())) {
-            return true;
-        } else {
-            return false;
-        }
+        return !TextUtils.isEmpty(kind) && kind.contains(InspectionType.day.name());
     }
 
 }

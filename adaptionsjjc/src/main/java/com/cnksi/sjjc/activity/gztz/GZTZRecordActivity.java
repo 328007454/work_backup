@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.ReportService;
@@ -88,17 +89,17 @@ public class GZTZRecordActivity extends BaseActivity {
             showPeopleAdapter = new ShowPeopleAdapter(mActivity, showPeopleList, R.layout.name_show_layout);
         }
         mRecordBinding.gvPeople.setAdapter(showPeopleAdapter);
-        mRecordBinding.txtAddPerson.setOnClickListener(view -> showPeopleDialog());
-        mRecordBinding.includeTitle.btnBack.setOnClickListener(view -> this.finish());
+        mRecordBinding.txtAddPerson.setOnClickListener(view -> GZTZRecordActivity.this.showPeopleDialog());
+        mRecordBinding.includeTitle.btnBack.setOnClickListener(view -> GZTZRecordActivity.this.finish());
         mRecordBinding.btnSave.setOnClickListener(view -> {
             if (selectDbModel.size() == 0) {
                 ToastUtils.showMessage("至少选择一个检查人");
                 return;
             }
-            saveData();
-            startActivity(new Intent(this, GZTZReportActivity.class));
-            ScreenManager.getScreenManager().popActivityList(new Class[]{TZQKActivity.class, BHDZJLActivity.class, BHDZQKActivity.class});
-            finish();
+            GZTZRecordActivity.this.saveData();
+            GZTZRecordActivity.this.startActivity(new Intent(GZTZRecordActivity.this, GZTZReportActivity.class));
+            ScreenManager.getScreenManager().popActivityList(TZQKActivity.class, BHDZJLActivity.class, BHDZQKActivity.class);
+            GZTZRecordActivity.this.finish();
         });
         showPeopleAdapter.setClickWidget(new ItemClickListener() {
             @Override
@@ -134,7 +135,7 @@ public class GZTZRecordActivity extends BaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            runOnUiThread(() -> {
+            GZTZRecordActivity.this.runOnUiThread(() -> {
                 showPeopleAdapter.setUserCount(showPeopleList.size());
                 showPeopleAdapter.setList(showPeopleList);
 
@@ -142,7 +143,7 @@ public class GZTZRecordActivity extends BaseActivity {
         });
         ExecutorManager.executeTaskSerially(() -> {
             sbjcGztzjl = Cache.GZTZJL != null ? Cache.GZTZJL : GZTZSbgzjlService.getInstance().findByReportId(currentReportId);
-            runOnUiThread(() -> {
+            GZTZRecordActivity.this.runOnUiThread(() -> {
                 mRecordBinding.txtDeviceName.setText(sbjcGztzjl.dlqmc);
                 mRecordBinding.txtTime.setText(sbjcGztzjl.gzfssj);
                 mRecordBinding.txtProtectInfor.setText(sbjcGztzjl.bhdzqk);

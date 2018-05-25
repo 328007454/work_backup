@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
@@ -64,8 +65,8 @@ public class OperateTaskDetailsActivity extends BaseActivity {
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            if (mCurrentOperateTick==null){
-                runOnUiThread(()->ToastUtils.showMessage("没有找到操作票!"));
+            if (mCurrentOperateTick == null) {
+                OperateTaskDetailsActivity.this.runOnUiThread(() -> ToastUtils.showMessage("没有找到操作票!"));
             }
             mHandler.sendEmptyMessage(LOAD_DATA);
         });
@@ -107,13 +108,11 @@ public class OperateTaskDetailsActivity extends BaseActivity {
     }
 
     private void initOnClick() {
-        binding.tvFlTime.setOnClickListener(view -> showTime());
-        binding.tvFlTimeContainer.setOnClickListener(view -> showTime());
-        binding.ibtnSelectInspectionDate.setOnClickListener(view -> showTime());
-        binding.btnConfirm.setOnClickListener(view -> updateOperateTask());
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.tvFlTime.setOnClickListener(view -> OperateTaskDetailsActivity.this.showTime());
+        binding.tvFlTimeContainer.setOnClickListener(view -> OperateTaskDetailsActivity.this.showTime());
+        binding.ibtnSelectInspectionDate.setOnClickListener(view -> OperateTaskDetailsActivity.this.showTime());
+        binding.btnConfirm.setOnClickListener(view -> OperateTaskDetailsActivity.this.updateOperateTask());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> OperateTaskDetailsActivity.this.onBackPressed());
 
     }
 

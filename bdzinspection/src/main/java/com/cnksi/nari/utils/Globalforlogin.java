@@ -103,18 +103,14 @@ public class Globalforlogin {
         NetworkInfo networkInfo2 = connectivityManager.getNetworkInfo(0);
         if (z) {
             if (i == 0) {
-                if (networkInfo2 != null && networkInfo2.isAvailable() && networkInfo2.isConnected()) {
-                    return true;
-                }
+                return networkInfo2 != null && networkInfo2.isAvailable() && networkInfo2.isConnected();
             } else if (1 == i && networkInfo != null && networkInfo.isAvailable()) {
                 return networkInfo.isConnected();
             }
         } else if ((networkInfo == null || !networkInfo.isAvailable()) && (networkInfo2 == null || !networkInfo2.isAvailable())) {
             return false;
         } else {
-            if (networkInfo.isConnected() || networkInfo2.isConnected()) {
-                return true;
-            }
+            return networkInfo.isConnected() || networkInfo2.isConnected();
         }
         return false;
     }

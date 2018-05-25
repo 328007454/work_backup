@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
 import com.cnksi.bdzinspection.czp.adapter.OperateTaskListAdapter;
@@ -93,25 +94,21 @@ public class OperateTaskListFragment extends BaseFragment {
      * 查询数据
      */
     public void searchData() {
-        ExecutorManager.executeTask(new Runnable() {
-
-            @Override
-            public void run() {
-                mDataList = OperateTicketService.getInstance().getAllOperateTaskListByModel(currentFunctionModel);
-                mHandler.sendEmptyMessage(LOAD_DATA);
-            }
+        ExecutorManager.executeTask(() -> {
+            mDataList = OperateTicketService.getInstance().getAllOperateTaskListByModel(currentFunctionModel);
+            mHandler.sendEmptyMessage(LOAD_DATA);
         });
     }
 
     private void initOnClick() {
-        binding.lvContainer.setOnItemClickListener((parent,view,position,id) ->{
+        binding.lvContainer.setOnItemClickListener((parent, view, position, id) -> {
             DbModel item = (DbModel) parent.getItemAtPosition(position);
             ((OperateTaskListActivity) currentActivity).startOperateTask(item);
         });
-        binding.lvContainer.setOnItemLongClickListener((parent,view,position,id) -> {
+        binding.lvContainer.setOnItemLongClickListener((parent, view, position, id) -> {
             DbModel item = (DbModel) parent.getItemAtPosition(position);
             try {
-                OperateTicketService.getInstance().logicDeleteById( item.getString(OperateTick.ID));
+                OperateTicketService.getInstance().logicDeleteById(item.getString(OperateTick.ID));
             } catch (DbException e) {
                 e.printStackTrace();
             }

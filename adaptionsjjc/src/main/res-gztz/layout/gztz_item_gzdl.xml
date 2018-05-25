@@ -9,7 +9,7 @@
             android:text="*故障电流（KA）："
             />
 
-        <com.cnksi.sjjc.view.ContainsEmojiEditText
+        <com.cnksi.common.view.ContainsEmojiEditText
             android:id="@+id/et_gzdl"
             style="@style/layout_gztz_num_input"
             android:layout_width="wrap_content"

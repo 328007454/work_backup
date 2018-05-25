@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.common.utils;
 
 import android.content.Context;
 import android.media.MediaMetadataRetriever;

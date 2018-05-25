@@ -38,7 +38,7 @@
                 android:text="A相"
                 />
 
-            <com.cnksi.sjjc.view.ContainsEmojiEditText
+            <com.cnksi.common.view.ContainsEmojiEditText
                 android:id="@+id/gxtzcs_a"
                 style="@style/layout_gztz_num_input"
                 android:layout_width="200px"
@@ -65,7 +65,7 @@
                 android:text="B相"
                 />
 
-            <com.cnksi.sjjc.view.ContainsEmojiEditText
+            <com.cnksi.common.view.ContainsEmojiEditText
                 android:id="@+id/gxtzcs_b"
                 style="@style/layout_gztz_num_input"
                 android:layout_width="200px"
@@ -92,7 +92,7 @@
                 android:text="C相"
                 />
 
-            <com.cnksi.sjjc.view.ContainsEmojiEditText
+            <com.cnksi.common.view.ContainsEmojiEditText
                 android:id="@+id/gxtzcs_c"
                 style="@style/layout_gztz_num_input"
                 android:layout_width="200px"
@@ -118,7 +118,7 @@
                 android:text="O相"
                 />
 
-            <com.cnksi.sjjc.view.ContainsEmojiEditText
+            <com.cnksi.common.view.ContainsEmojiEditText
                 android:id="@+id/gxtzcs_o"
                 style="@style/layout_gztz_num_input"
                 android:layout_width="200px"

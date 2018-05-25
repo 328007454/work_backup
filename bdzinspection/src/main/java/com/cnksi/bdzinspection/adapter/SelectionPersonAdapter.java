@@ -30,17 +30,14 @@ public class SelectionPersonAdapter extends BaseRecyclerDataBindingAdapter {
 
     @Override
     public void convert(ItemHolder holder, Object item, final int position, boolean isScrolling) {
-        XsItemTaskUserBinding taskUserBinding = (XsItemTaskUserBinding) holder.getDataBinding();
+        XsItemTaskUserBinding taskUserBinding = holder.getDataBinding();
         final DbModel model = (DbModel) item;
 
         taskUserBinding.txtUsername.setText(model.getString("username"));
         taskUserBinding.ivDelete.setVisibility(TextUtils.equals("true", model.getString("delete")) ? View.VISIBLE : View.INVISIBLE);
-        taskUserBinding.ivDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (null != mClickListener) {
-                    mClickListener.onItemClick(view, model, position);
-                }
+        taskUserBinding.ivDelete.setOnClickListener(view -> {
+            if (null != mClickListener) {
+                mClickListener.onItemClick(view, model, position);
             }
         });
     }

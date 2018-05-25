@@ -197,47 +197,45 @@ public class OperateTaskCheckedActivity extends BaseActivity {
             }
         });
 
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> OperateTaskCheckedActivity.this.onBackPressed());
 
         binding.btnConfirm.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, OperateTaskDetailsActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, currentOperateId);
             intent.putExtra(Config.IS_FROM_BATTERY, true);
-            startActivity(intent);
-            this.finish();
+            OperateTaskCheckedActivity.this.startActivity(intent);
+            OperateTaskCheckedActivity.this.finish();
         });
 
         binding.ivCzfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_czr)) {
-                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr);
+                OperateTaskCheckedActivity.this.showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr);
             }
         });
 
         binding.tvCzrSignContainer.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, SignNameActivity.class);
-            startActivityForResult(intent, CZR_SIGN_CODE);
+            OperateTaskCheckedActivity.this.startActivityForResult(intent, CZR_SIGN_CODE);
         });
 
         binding.ivCzfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_jhr)) {
-                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr);
+                OperateTaskCheckedActivity.this.showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr);
             }
         });
 
         binding.tvJhrContainer.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, SignNameActivity.class);
-            startActivityForResult(intent, CZFZR_SIGN_CODE);
+            OperateTaskCheckedActivity.this.startActivityForResult(intent, CZFZR_SIGN_CODE);
         });
 
         binding.tvYwfzrContainer.setOnClickListener(view -> {
             Intent intent = new Intent(currentActivity, SignNameActivity.class);
-            startActivityForResult(intent, ZBFZR_SIGN_CODE);
+            OperateTaskCheckedActivity.this.startActivityForResult(intent, ZBFZR_SIGN_CODE);
         });
         binding.ivZbfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_ywfzr)) {
-                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr);
+                OperateTaskCheckedActivity.this.showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr);
             }
         });
 

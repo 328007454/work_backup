@@ -125,47 +125,47 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
 
     public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
-                    try {
-                        report = ReportService.getInstance().findById(currentReportId);
-                    } catch (DbException e) {
-                        e.printStackTrace(System.out);
-                    }
-                    if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
-                        listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
-                        copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
-                    }
+            try {
+                report = ReportService.getInstance().findById(currentReportId);
+            } catch (DbException e) {
+                e.printStackTrace(System.out);
+            }
+            if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
+                listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
+                copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
+            }
 
-                    if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
-                        try {
-                            listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
-                            exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(currentBdzId, currentReportId);
-                            for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
-                                CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
-                            }
-                            for (DbModel modle : listDevice) {
-                                if (modle.getString(CopyItem.VAL).equalsIgnoreCase("Y")) {
-                                    countCopyCdbhcl += 1;
-                                }
-                                if (modle.getString(CopyItem.VAL_A).equalsIgnoreCase("Y")) {
-                                    countCopyCdbhcl += 1;
-                                }
-                                if (modle.getString(CopyItem.VAL_B).equalsIgnoreCase("Y")) {
-                                    countCopyCdbhcl += 1;
-                                }
-                                if (modle.getString(CopyItem.VAL_C).equalsIgnoreCase("Y")) {
-                                    countCopyCdbhcl += 1;
-                                }
-                                if (modle.getString(CopyItem.VAL_O).equalsIgnoreCase("Y")) {
-                                    countCopyCdbhcl += 1;
-                                }
-                            }
-                        } catch (DbException e) {
-                            e.printStackTrace();
+            if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
+                try {
+                    listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
+                    exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(currentBdzId, currentReportId);
+                    for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
+                        CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
+                    }
+                    for (DbModel modle : listDevice) {
+                        if (modle.getString(CopyItem.VAL).equalsIgnoreCase("Y")) {
+                            countCopyCdbhcl += 1;
+                        }
+                        if (modle.getString(CopyItem.VAL_A).equalsIgnoreCase("Y")) {
+                            countCopyCdbhcl += 1;
+                        }
+                        if (modle.getString(CopyItem.VAL_B).equalsIgnoreCase("Y")) {
+                            countCopyCdbhcl += 1;
+                        }
+                        if (modle.getString(CopyItem.VAL_C).equalsIgnoreCase("Y")) {
+                            countCopyCdbhcl += 1;
+                        }
+                        if (modle.getString(CopyItem.VAL_O).equalsIgnoreCase("Y")) {
+                            countCopyCdbhcl += 1;
                         }
                     }
-
-                    mHandler.sendEmptyMessage(LOAD_DATA);
+                } catch (DbException e) {
+                    e.printStackTrace();
                 }
+            }
+
+            mHandler.sendEmptyMessage(LOAD_DATA);
+        }
 
         );
     }
@@ -249,7 +249,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
 
 
     private void initOnclick() {
-        mJzlfenjieLayoutBinding.tvContinueInspection.setOnClickListener((v) -> {
+        mJzlfenjieLayoutBinding.tvContinueInspection.setOnClickListener(v -> {
             if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
                 intentDiff = new Intent(_this, DifferentialMotionRecordActivity2.class);
             } else if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
@@ -257,8 +257,8 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
             } else {
                 intentDiff = new Intent(_this, IndoorHumitureRecordActivity.class);
             }
-            startActivity(intentDiff);
-            this.finish();
+            JZLFenJieKaiGuanReportActivity.this.startActivity(intentDiff);
+            JZLFenJieKaiGuanReportActivity.this.finish();
         });
 
     }

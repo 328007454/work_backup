@@ -1,18 +1,19 @@
-package com.cnksi.sjjc.view;
+package com.cnksi.common.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
 
-import com.cnksi.sjjc.R;
+import com.cnksi.common.R;
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * Created by han on 2017/1/8.
  */
 
-public class CustomRadioButton extends android.support.v7.widget.AppCompatRadioButton {
+public class CustomRadioButton extends AppCompatRadioButton {
     private int mDrawableSize;// xml文件中设置的大小
 
     public CustomRadioButton(Context context) {
@@ -33,25 +34,23 @@ public class CustomRadioButton extends android.support.v7.widget.AppCompatRadioB
         int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
-            switch (attr) {
-                case R.styleable.CustomRadioButton_drawableSize:
-                    mDrawableSize = a.getDimensionPixelSize(R.styleable.CustomRadioButton_drawableSize, 50);
-                    mDrawableSize = AutoUtils.getPercentHeightSizeBigger(mDrawableSize);
-                    break;
-                case R.styleable.CustomRadioButton_drawableTop:
-                    drawableTop = a.getDrawable(attr);
-                    break;
-                case R.styleable.CustomRadioButton_drawableBottom:
-                    drawableRight = a.getDrawable(attr);
-                    break;
-                case R.styleable.CustomRadioButton_drawableRight:
-                    drawableBottom = a.getDrawable(attr);
-                    break;
-                case R.styleable.CustomRadioButton_drawableLeft:
-                    drawableLeft = a.getDrawable(attr);
-                    break;
-                default:
-                    break;
+            if (attr == R.styleable.CustomRadioButton_drawableSize) {
+                mDrawableSize = a.getDimensionPixelSize(R.styleable.CustomRadioButton_drawableSize, 50);
+                mDrawableSize = AutoUtils.getPercentHeightSizeBigger(mDrawableSize);
+
+            } else if (attr == R.styleable.CustomRadioButton_drawableTop) {
+                drawableTop = a.getDrawable(attr);
+
+            } else if (attr == R.styleable.CustomRadioButton_drawableBottom) {
+                drawableRight = a.getDrawable(attr);
+
+            } else if (attr == R.styleable.CustomRadioButton_drawableRight) {
+                drawableBottom = a.getDrawable(attr);
+
+            } else if (attr == R.styleable.CustomRadioButton_drawableLeft) {
+                drawableLeft = a.getDrawable(attr);
+
+            } else {
             }
         }
         a.recycle();

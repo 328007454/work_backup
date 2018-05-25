@@ -61,11 +61,11 @@ public abstract class BaseReportActivity extends BaseActivity {
         mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionName));
         mBtnBack.setOnClickListener(v -> {
             ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
-            onBackPressed();
+            BaseReportActivity.this.onBackPressed();
         });
         mBtnRight.setOnClickListener(v -> {
-         ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
-            onBackPressed();
+            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+            BaseReportActivity.this.onBackPressed();
         });
     }
 

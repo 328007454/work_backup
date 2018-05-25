@@ -209,11 +209,7 @@ public class EssSafeUtil {
             os.flush();
             int exitValue = process.waitFor();
             CLog.i("exitValue=" + exitValue);
-            if (exitValue == 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return exitValue == 0;
         } catch (Exception e) {
             CLog.i("Unexpected error - Here is what I know: " + e.getMessage());
             return false;

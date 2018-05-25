@@ -28,13 +28,13 @@ public abstract class TitleActivity extends BaseActivity {
 		_this = this;
 		titlebaseBinding = DataBindingUtil.setContentView(this,R.layout.xs_activity_titlebase);
 		content = findViewById(R.id.mh);
-		back = (ImageView) findViewById(R.id.ibtn_cancel);
+		back = findViewById(R.id.ibtn_cancel);
 		back.setOnClickListener(v -> {
             // TODO Auto-generated method stub
             _this.finish();
         });
-		title = (TextView) findViewById(R.id.tv_title);
-		right = (TextView) findViewById(R.id.right);
+		title = findViewById(R.id.tv_title);
+		right = findViewById(R.id.right);
 
 		SetContentView(setLayout());
 		setTitleText(initialUI());
@@ -98,9 +98,9 @@ public abstract class TitleActivity extends BaseActivity {
 	public void finish() {
 		releaseResAndSaveData();
 		super.finish();
-	};
+	}
 
-	@Override
+    @Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();

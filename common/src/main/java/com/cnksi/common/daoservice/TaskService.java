@@ -419,10 +419,7 @@ public class TaskService extends BaseService<Task> {
     public boolean getTaskStatusForBoolean(String currentTaskId) {
 
         Task task = findById(currentTaskId);
-        if (task != null && TaskStatus.done.name().equalsIgnoreCase(task.status)) {
-            return true;
-        }
-        return false;
+        return task != null && TaskStatus.done.name().equalsIgnoreCase(task.status);
     }
 
     /**

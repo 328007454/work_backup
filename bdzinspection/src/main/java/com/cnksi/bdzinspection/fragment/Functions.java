@@ -44,12 +44,9 @@ public class Functions {
         if (-1 != index[1]) {
             recyclerView.scrollToPosition(index[1]);
         }
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.setShakeAnimation(false, null);
-                adapter.notifyDataSetChanged();
-            }
+        handler.postDelayed(() -> {
+            adapter.setShakeAnimation(false, null);
+            adapter.notifyDataSetChanged();
         }, 2000);
     }
 
@@ -99,12 +96,9 @@ public class Functions {
             adapter.expand(index[0]);
         }
         adapter.expand(index[1]);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.setShakeAnimationDevice(false, null, null);
-                adapter.notifyDataSetChanged();
-            }
+        handler.postDelayed(() -> {
+            adapter.setShakeAnimationDevice(false, null, null);
+            adapter.notifyDataSetChanged();
         }, 2000);
     }
 
@@ -147,13 +141,10 @@ public class Functions {
         data.addAll(rs);
         if (data.size() > 1) {
             //小室排序
-            Collections.sort(data, new Comparator<MultiItemEntity>() {
-                @Override
-                public int compare(MultiItemEntity o1, MultiItemEntity o2) {
-                    int s1 = ((SpaceGroupItem) o1).group.sort;
-                    int s2 = ((SpaceGroupItem) o2).group.sort;
-                    return s1 - s2;
-                }
+            Collections.sort(data, (o1, o2) -> {
+                int s1 = ((SpaceGroupItem) o1).group.sort;
+                int s2 = ((SpaceGroupItem) o2).group.sort;
+                return s1 - s2;
             });
         }
         if (noGroupPG.getSubSize() > 0) {

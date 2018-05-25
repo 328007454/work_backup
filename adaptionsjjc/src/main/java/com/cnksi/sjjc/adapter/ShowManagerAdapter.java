@@ -34,12 +34,7 @@ public class ShowManagerAdapter extends SimpleBindingAdatpter<String>{
         nameBinding.tvPeopleName.setText(item);
         nameBinding.deleteImag.setTag(MANAGER_FLAG);
 
-        nameBinding.deleteImag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClickListener.itemClick(view,item,position);
-            }
-        });
+        nameBinding.deleteImag.setOnClickListener(view -> itemClickListener.itemClick(view,item,position));
     }
 
     private void setNameBinding(ShowNameBinding dataBinding) {

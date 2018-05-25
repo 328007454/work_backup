@@ -16,7 +16,7 @@ import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
-import com.cnksi.common.utils.StringUtils;
+import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -109,9 +109,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
 
 
     public void initOnclick() {
-        binding.btnConfirmSave.setOnClickListener((v) -> {
-            saveData();
-        });
+        binding.btnConfirmSave.setOnClickListener(v -> NewIndoorHumitureRecordActivity.this.saveData());
     }
 
 
@@ -124,11 +122,11 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
             if (TextUtils.isEmpty(reportSnwsd.location) || TextUtils.isEmpty(reportSnwsd.wd) || TextUtils.isEmpty(reportSnwsd.sd)) {
                 ToastUtils.showMessage("请填写完相应的数据");
                 return;
-            } else if ((TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.wd))) || (-99.9f > Float.valueOf(reportSnwsd.wd) || Float.valueOf(reportSnwsd.wd) > 99.99)) {
+            } else if ((TextUtils.isEmpty(StringUtilsExt.getDecimalPoint(reportSnwsd.wd))) || (-99.9f > Float.valueOf(reportSnwsd.wd) || Float.valueOf(reportSnwsd.wd) > 99.99)) {
                 ToastUtils.showMessage("温度在-99.9℃到99.9℃");
                 return;
             }
-            if ((TextUtils.isEmpty(StringUtils.getTransformTep(reportSnwsd.sd))) || (0 > Float.valueOf(reportSnwsd.sd) || Float.valueOf(reportSnwsd.sd) > 100)) {
+            if ((TextUtils.isEmpty(StringUtilsExt.getDecimalPoint(reportSnwsd.sd))) || (0 > Float.valueOf(reportSnwsd.sd) || Float.valueOf(reportSnwsd.sd) > 100)) {
                 ToastUtils.showMessage("湿度在0到100");
                 return;
             }

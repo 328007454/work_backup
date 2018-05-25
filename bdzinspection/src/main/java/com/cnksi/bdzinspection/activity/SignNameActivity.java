@@ -109,9 +109,9 @@ public class SignNameActivity extends BaseActivity {
     }
 
     private void initOnClick() {
-        binding.btnCancel.setOnClickListener(view -> finish());
+        binding.btnCancel.setOnClickListener(view -> SignNameActivity.this.finish());
         binding.btnReset.setOnClickListener(view -> mLinePathView.clear());
-        binding.btnSave.setOnClickListener(view -> save());
+        binding.btnSave.setOnClickListener(view -> SignNameActivity.this.save());
     }
 
     private void save() {

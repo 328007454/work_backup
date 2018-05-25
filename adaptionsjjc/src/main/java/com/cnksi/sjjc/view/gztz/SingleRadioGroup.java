@@ -40,9 +40,9 @@ public class SingleRadioGroup extends UnderLineLinearLayout {
         setDrawUnderLine(true);
         setLineColor(getResources().getColor(R.color.line_color));
         LayoutInflater.from(context).inflate(R.layout.item_single_radio, this, true);
-        buttonA = (RadioButton) findViewById(R.id.bt_a);
-        buttonB = (RadioButton) findViewById(R.id.bt_b);
-        tvName = (TextView) findViewById(R.id.tv_name);
+        buttonA = findViewById(R.id.bt_a);
+        buttonB = findViewById(R.id.bt_b);
+        tvName = findViewById(R.id.tv_name);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.SingleRadioGroup);
         if (attributes != null) {
             String s = attributes.getString(R.styleable.SingleRadioGroup_select_str);

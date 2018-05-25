@@ -102,20 +102,14 @@ public class CopyViewUtil {
                     requestEdtits.add(copyValue);
                     copyItems.add(childItem);
                     copyValue.addTextChangedListener(new CopyTextWatcher(childItem));
-                    copyValue.setOnTouchListener(new OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            CopyResult copyResult = copyResultMap.get(childItem.id);
-                            keyBordListener.onViewFocus((EditText) v, childItem, copyResult, requestEdtits, copyItems);
-                            return false;
-                        }
+                    copyValue.setOnTouchListener((v, event) -> {
+                        CopyResult copyResult = copyResultMap.get(childItem.id);
+                        keyBordListener.onViewFocus((EditText) v, childItem, copyResult, requestEdtits, copyItems);
+                        return false;
                     });
-                    copyValue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                        @Override
-                        public void onFocusChange(View v, boolean hasFocus) {
-                            CopyResult copyResult = copyResultMap.get(childItem.id);
-                            keyBordListener.onViewFocusChange((EditText) v, childItem, copyResult, hasFocus, txtDescript.getText().toString(), requestEdtits);
-                        }
+                    copyValue.setOnFocusChangeListener((v, hasFocus) -> {
+                        CopyResult copyResult = copyResultMap.get(childItem.id);
+                        keyBordListener.onViewFocusChange((EditText) v, childItem, copyResult, hasFocus, txtDescript.getText().toString(), requestEdtits);
                     });
                     // 显示历史抄录
                     if (copyResultMap.keySet().contains(childItem.id)) {
@@ -145,21 +139,12 @@ public class CopyViewUtil {
                     }
 
                     final int position = index;
-                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            itemClickListener.onItemClick(v, childItem, position);
-                        }
-                    });
+                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.onItemClick(v, childItem, position));
                     // 抄录项如果看不清长按弹出对话框
-                    layoutRoot.setOnLongClickListener(new OnLongClickListener() {
-
-                        @Override
-                        public boolean onLongClick(View v) {
-                            CopyResult copyResult = copyResultMap.get(childItem.id);
-                            itemLongClickListener.onItemLongClick(v, copyResult, position, childItem);
-                            return true;
-                        }
+                    layoutRoot.setOnLongClickListener(v -> {
+                        CopyResult copyResult = copyResultMap.get(childItem.id);
+                        itemLongClickListener.onItemLongClick(v, copyResult, position, childItem);
+                        return true;
                     });
                     parentLayout.addView(childHolder.getRootView());
                     index++;

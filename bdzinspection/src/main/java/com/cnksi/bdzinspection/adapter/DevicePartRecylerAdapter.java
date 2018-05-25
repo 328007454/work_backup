@@ -88,12 +88,9 @@ public class DevicePartRecylerAdapter extends BaseRecyclerAdapter<DbModel> {
         mTvDevicePartName.setTag(R.id.xs_first_key, DevicePart.getPic(mDevicePart.getString(DevicePart.PIC)));
         mTvDevicePartName.setTag(R.id.xs_second_key, mDevicePart.getString(DevicePart.NAME));
         mTvDevicePartName.setTag(R.id.xs_thrid_key, mDevicePart.getString(DevicePart.DUID));
-        mTvDevicePartName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickPosition = position;
-                listener.devicePartClick1(v);
-            }
+        mTvDevicePartName.setOnClickListener(v -> {
+            clickPosition = position;
+            listener.devicePartClick1(v);
         });
     }
 }

@@ -21,8 +21,6 @@ public class ResultSet<T> {
     public ResultSet() {
     }
 
-    ;
-
     public ResultSet(int status, String desc, T result, Exception exception) {
         this.status = status;
         this.desc = desc;

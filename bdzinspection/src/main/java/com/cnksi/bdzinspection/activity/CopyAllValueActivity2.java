@@ -25,15 +25,15 @@ import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.fragment.CopyValueFragment2;
 import com.cnksi.bdzinspection.fragment.CopyValueFragment2.FragmentItemClickerListener;
+import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
+import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
 import com.cnksi.bdzinspection.utils.DefectUtils;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
-import com.cnksi.bdzinspection.utils.ShowHistroyDialogUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.enmu.LookUpType;
@@ -42,7 +42,9 @@ import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -125,19 +127,19 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
 
         copyHelper.setKeyBordListener(this);
         copyHelper.setItemLongClickListener((v, result, position, item) -> {
-            final XsActivityCopyDialogBinding notClearDialogBinding = XsActivityCopyDialogBinding.inflate(getLayoutInflater());
+            final XsActivityCopyDialogBinding notClearDialogBinding = XsActivityCopyDialogBinding.inflate(CopyAllValueActivity2.this.getLayoutInflater());
             notClearDialogBinding.btnCancel.setOnClickListener(v12 -> dialog.dismiss());
-            notClearDialogBinding.btnSure.setOnClickListener(v1 -> saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
+            notClearDialogBinding.btnSure.setOnClickListener(v1 -> CopyAllValueActivity2.this.saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
             dialog = DialogUtils.createDialog(currentActivity, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             //隐藏自定义键盘
-            hideKeyBord();
+            CopyAllValueActivity2.this.hideKeyBord();
             dialog.show();
         });
         copyHelper.setItemClickListener((v, item, position) -> {
-            hideKeyBord();
+            CopyAllValueActivity2.this.hideKeyBord();
             // 显示历史曲线
-            ShowHistroyDialogUtils.showHistory(currentActivity, item);
+            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
         });
         initFragment();
         binding.llKeyboardHelpLayout.setVisibility(View.GONE);
@@ -210,7 +212,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         });
         binding.btnNext.setOnClickListener(view -> {
             if (isFinish) {
-                finish();
+                CopyAllValueActivity2.this.finish();
             } else {
                 if (!currentFragment.getAdapter().isLast()) {
                     currentFragment.getAdapter().next();
@@ -243,12 +245,8 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
                 binding.btnNext.setText(R.string.xs_next_str);
             }
         });
-        binding.ibtnSpread.setOnClickListener(view -> {
-            setDeviceListDisplay();
-        });
-        binding.ibtnCancel.setOnClickListener(view -> {
-            finish();
-        });
+        binding.ibtnSpread.setOnClickListener(view -> CopyAllValueActivity2.this.setDeviceListDisplay());
+        binding.ibtnCancel.setOnClickListener(view -> CopyAllValueActivity2.this.finish());
     }
 
 
@@ -333,7 +331,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
 
     private void loadCopyItem() {// 查询抄录标准
         ExecutorManager.executeTask(() -> {
-            searchDefect();
+            CopyAllValueActivity2.this.searchDefect();
             final List<TreeNode> newData = copyHelper.loadItem();
             // 设置当前抄录设备集合,判断当前设备是否抄录
             mHandler.post(() -> {
@@ -385,11 +383,11 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         tipsBinding.btnSure.setText("是");
         tipsBinding.btnCancel.setOnClickListener(v -> defectDialog.dismiss());
         tipsBinding.btnSure.setOnClickListener(v -> {
-            hideKeyBord();
+            CopyAllValueActivity2.this.hideKeyBord();
             defectDialog.dismiss();
             Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
-            setIntentValue(intent);
-            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+            CopyAllValueActivity2.this.setIntentValue(intent);
+            CopyAllValueActivity2.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
     }
 

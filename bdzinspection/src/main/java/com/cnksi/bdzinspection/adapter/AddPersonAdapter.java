@@ -41,8 +41,8 @@ public class AddPersonAdapter extends SimpleBaseAdapter {
 		}
 		itemBinding.tvChildItem.setText(model.getString(Users.USERNAME));
 		itemBinding.llContainer.setOnClickListener(view -> {
-            if(mClickListener!=null){
-                mClickListener.onItemClick(view,model,position);
+            if (mClickListener != null) {
+                mClickListener.onItemClick(view, model, position);
             }
         });
 		return itemBinding.getRoot();

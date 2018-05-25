@@ -20,9 +20,10 @@ import com.cnksi.bdzinspection.daoservice.ReportToolService;
 import com.cnksi.bdzinspection.daoservice.ToolService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
+import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -52,8 +53,8 @@ public class ToolFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.xs_fragment_tool, null);
-        linearLayout = (LinearLayout) v.findViewById(R.id.ll_container);
-        scrollView = (ScrollView) v.findViewById(R.id.scrollView);
+        linearLayout = v.findViewById(R.id.ll_container);
+        scrollView = v.findViewById(R.id.scrollView);
         getBundleValue();
         initKeyBoard();
         return v;
@@ -61,16 +62,13 @@ public class ToolFragment extends BaseFragment {
 
     private void initKeyBoard() {
         final View myLayout = currentActivity.getWindow().getDecorView();
-        myLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect r = new Rect();
-                myLayout.getWindowVisibleDisplayFrame(r);
-                int screenHeight = myLayout.getRootView().getHeight();
-                int heightDiff = screenHeight - (r.bottom - r.top);
-                //154为底部Button占用高度
-                scrollView.setPadding(0, 0, 0, heightDiff - AutoUtils.getPercentHeightSize(154));
-            }
+        myLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            myLayout.getWindowVisibleDisplayFrame(r);
+            int screenHeight = myLayout.getRootView().getHeight();
+            int heightDiff = screenHeight - (r.bottom - r.top);
+            //154为底部Button占用高度
+            scrollView.setPadding(0, 0, 0, heightDiff - AutoUtils.getPercentHeightSize(154));
         });
     }
 
@@ -101,8 +99,8 @@ public class ToolFragment extends BaseFragment {
                         e.printStackTrace();
                     }
                 }
-                getActivity().runOnUiThread(() -> {
-                    toolsAdapter = new ToolsAdapter(currentActivity, mToolsList, linearLayout, (v, o, position) -> showToolStandardDialog((Tool) o));
+                ToolFragment.this.getActivity().runOnUiThread(() -> {
+                    toolsAdapter = new ToolsAdapter(currentActivity, mToolsList, linearLayout, (v, o, position) -> ToolFragment.this.showToolStandardDialog((Tool) o));
                     toolsAdapter.setToolMap(toolHashMap);
                     toolsAdapter.notifyDataSetChanged();
                     isPrepared = true;
@@ -121,7 +119,7 @@ public class ToolFragment extends BaseFragment {
         }
         for (int i = 0; i < toolsAdapter.getCount(); i++) {
             View v = linearLayout.getChildAt(i);
-            EditText et = (EditText) v.findViewById(R.id.et_input_values);
+            EditText et = v.findViewById(R.id.et_input_values);
             String num = et.getText().toString();
             Tool t = mToolsList.get(i);
             ReportTool reportTool = toolHashMap.get(t.toolid);

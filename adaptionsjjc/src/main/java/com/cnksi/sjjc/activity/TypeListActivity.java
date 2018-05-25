@@ -138,12 +138,7 @@ public class TypeListActivity extends BaseActivity {
                 int maxPosition = Integer.valueOf(s.substring(index + 1, s.length()));
                 s = s.substring(0, index);
                 if (position >= maxPosition) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtils.showMessage("该功能暂未激活");
-                        }
-                    });
+                    mHandler.post(() -> ToastUtils.showMessage("该功能暂未激活"));
                     return;
                 }
                 Intent intent = new Intent();

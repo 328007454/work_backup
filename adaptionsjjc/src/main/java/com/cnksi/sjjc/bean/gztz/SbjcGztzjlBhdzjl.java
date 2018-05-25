@@ -1,12 +1,12 @@
 package com.cnksi.sjjc.bean.gztz;
 
-import com.cnksi.sjjc.util.FunctionUtil;
+import com.cnksi.common.model.BaseModel;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = SbjcGztzjlBhdzjl._TABLE_NAME_)
-public class SbjcGztzjlBhdzjl{
+public class SbjcGztzjlBhdzjl extends BaseModel{
 	public static final String _TABLE_NAME_="sbjc_gztzjl_bhdzjl";
 
 	public static final String _PK_NAME_ = "id";
@@ -68,7 +68,7 @@ public class SbjcGztzjlBhdzjl{
 	
 	public static SbjcGztzjlBhdzjl create(){
 		SbjcGztzjlBhdzjl s=new SbjcGztzjlBhdzjl();
-		s.id= FunctionUtil.getPrimarykey();
+		s.id= getPrimarykey();
 		return s;
 	}
 }

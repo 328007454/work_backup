@@ -80,7 +80,9 @@ public class TTSUtils {
     }
 
     public void stopSpeak() {
-        if (!isConnect()) return;
+        if (!isConnect()) {
+            return;
+        }
         try {
             speakInterface.stopSpeak();
         } catch (RemoteException e) {
@@ -91,7 +93,9 @@ public class TTSUtils {
 
 
     public boolean isConnect() {
-        if (!isConnect) ToastUtils.showMessage("没有连接到TTS服务。");
+        if (!isConnect) {
+            ToastUtils.showMessage("没有连接到TTS服务。");
+        }
         return isConnect;
     }
 }

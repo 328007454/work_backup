@@ -253,11 +253,7 @@ public class AppUtils {
         List<RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
         for (RunningAppProcessInfo appProcess : appProcesses) {
             if (packageName.equals(appProcess.processName)) {
-                if (appProcess.importance != RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return appProcess.importance != RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
             }
         }
         return false;

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 
 import com.cnksi.bdzinspection.activity.AddTaskActivity;
 import com.cnksi.bdzinspection.databinding.XsFragmentExpadableListBinding;
@@ -97,7 +98,7 @@ public class YunweiTypeListFragment extends BaseFragment {
                 groupList = new LinkedList<Project>(projectList);
                 if (groupList != null && !groupList.isEmpty()) {
                     for (Project mProject : groupList) {
-                        List<Project> childProjectList =  BaseService.getInstance(Project.class).selector().and(Project.PARENT_ID, "=", mProject.id).findAll();
+                        List<Project> childProjectList = BaseService.getInstance(Project.class).selector().and(Project.PARENT_ID, "=", mProject.id).findAll();
                         ArrayList<Project> childList = null;
                         if (childProjectList == null || childProjectList.isEmpty()) {
                             childList = new ArrayList<Project>();
@@ -116,19 +117,19 @@ public class YunweiTypeListFragment extends BaseFragment {
 
 	private void initOnClick() {
 		binding.elvContainer.setOnChildClickListener((expandableListView, view, groupPosition, childPosition, l) -> {
-			Project mProject = mYunAdapter.getChild(groupPosition, childPosition);
-			backResult(mProject);
-			return false;
-		});
+            Project mProject = mYunAdapter.getChild(groupPosition, childPosition);
+            YunweiTypeListFragment.this.backResult(mProject);
+            return false;
+        });
 
 		binding.elvContainer.setOnGroupClickListener((expandableListView, view, groupPosition, id) -> {
-			int childCount = mYunAdapter.getChildrenCount(groupPosition);
-			Project mProject = mYunAdapter.getGroup(groupPosition);
-			if (childCount <= 0) {
-				backResult(mProject);
-			}
-			return false;
-		});
+            int childCount = mYunAdapter.getChildrenCount(groupPosition);
+            Project mProject = mYunAdapter.getGroup(groupPosition);
+            if (childCount <= 0) {
+                YunweiTypeListFragment.this.backResult(mProject);
+            }
+            return false;
+        });
 
 	}
 

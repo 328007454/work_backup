@@ -108,13 +108,5 @@ public class FunctionUtil{
 
 
 
-	/**
-	 * 得到以时间戳的字符串
-	 *
-	 * @return String HHmmssSSS+UUID
-	 */
-	public static String getPrimarykey() {
-		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.ssSSS, Locale.CHINA);
-		return formatter.format(new Date()) + UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
-	}
+
 }

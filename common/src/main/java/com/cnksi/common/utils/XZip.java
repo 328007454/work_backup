@@ -10,6 +10,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -151,8 +152,9 @@ public class XZip {
 	private static void ZipFiles(String folderString, String fileString, ZipOutputStream zipOutputSteam)throws Exception{
 		android.util.Log.v("XZip", "ZipFiles(String, String, ZipOutputStream)");
 
-		if(zipOutputSteam == null)
+		if(zipOutputSteam == null) {
 			return;
+		}
 
 		File file = new File(folderString+fileString);
 
@@ -195,8 +197,25 @@ public class XZip {
 
 	}//end of func
 
-	public void finalize() throws Throwable {
 
+	public static void createZip(String zipName, File... files) {
+		File zipFile = new File(zipName);
+		InputStream input;
+		try {
+			//ZipOutputStream:此类为以 ZIP 文件格式写入文件实现输出流过滤器。包括对已压缩和未压缩条目的支持。
+			ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile));
+			for (File f : files) {
+				input = new FileInputStream(f);
+				zipOut.putNextEntry(new ZipEntry(f.getName()));
+				int temp = 0;
+				while ((temp = input.read()) != -1) {
+					zipOut.write(temp);
+				}
+				input.close();
+			}
+
+			zipOut.close();
+		} catch (Exception e) {
+		}
 	}
-
 }

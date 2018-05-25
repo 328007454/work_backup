@@ -25,11 +25,7 @@ import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
-import com.cnksi.bdzinspection.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.MyUUID;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
-import com.cnksi.bdzinspection.utils.XZip;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.BdzService;
@@ -37,15 +33,19 @@ import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.XZip;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
@@ -71,7 +71,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -127,16 +126,16 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
 
     public void initialUI() {
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> initialData());
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> NariActivity.this.initialData());
         adapter = new ItemAdapter(null);
-        binding.ibtnCancel.setOnClickListener(v -> finish());
+        binding.ibtnCancel.setOnClickListener(v -> NariActivity.this.finish());
         binding.listZyb.setAdapter(adapter);
         binding.btnVpn.setOnClickListener(v -> {
             try {
                 Intent intent = new Intent();
                 ComponentName componentName = new ComponentName("com.sgcc.vpn_client", "com.sgcc.vpn_client.MainActivity");
                 intent.setComponent(componentName);
-                startActivity(intent);
+                NariActivity.this.startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 ToastUtils.showMessage("没有安装VPN客户端。");
             }
@@ -145,7 +144,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         binding.btnDownAll.setOnClickListener(v -> {
             final BDPackage[] nodowns = adapter.getStatus(PackageStatus.nodown);
             if (nodowns.length == 0) {
-                Toast("没有需要下载的离线作业包！");
+                NariActivity.this.Toast("没有需要下载的离线作业包！");
                 return;
             }
             DialogUtils.showSureTipsDialog(currentActivity, null, "本次将会下载" + nodowns.length + "个离线作业包！", new OnViewClickListener() {
@@ -157,9 +156,9 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         });
         binding.btnUploadAll.setOnClickListener(v -> {
             final BDPackage[] dones = adapter.getStatus(PackageStatus.done);
-            bindServiceFun();
+            NariActivity.this.bindServiceFun();
             if (dones.length == 0) {
-                Toast("没有需要上传的离线作业包！");
+                NariActivity.this.Toast("没有需要上传的离线作业包！");
                 return;
             }
             DialogUtils.showSureTipsDialog(currentActivity, null, "本次将会有" + dones.length + "个离线作业包上传到PMS！", new OnViewClickListener() {
@@ -177,12 +176,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         if (isNeedUpdateStatus) {
             HashMap<String, BDPackage> packageHashMap = NariDataManager.getPackageByUser(account);
             final List<BDPackage> result = new ArrayList<>(packageHashMap.values());
-            Collections.sort(result, new Comparator<BDPackage>() {
-                @Override
-                public int compare(BDPackage o1, BDPackage o2) {
-                    return o1.createTime.compareTo(o2.createTime);
-                }
-            });
+            Collections.sort(result, (o1, o2) -> o1.createTime.compareTo(o2.createTime));
             runOnUiThread(() -> {
                 adapter.setList(result);
                 binding.swipeRefreshLayout.setRefreshing(false);
@@ -226,28 +220,28 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                     }
                 }
                 if (!isRefreshStatus) {
-                    Toast(tips);
+                    NariActivity.this.Toast(tips);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
                 if (NARIHelper.isNetWorkException(e)) {
-                    Toast("网络错误!参考错误代码：" + e.getMessage());
+                    NariActivity.this.Toast("网络错误!参考错误代码：" + e.getMessage());
                 } else {
-                    Toast("请求发生错误：" + e.getMessage());
+                    NariActivity.this.Toast("请求发生错误：" + e.getMessage());
                 }
                 LogUtil.writeLog("Nari", e);
                 e.printStackTrace();
                 LogUtil.writeLog("Nari", e);
-                Toast("数据错误！参考错误代码：" + e.getClass().getSimpleName());
+                NariActivity.this.Toast("数据错误！参考错误代码：" + e.getClass().getSimpleName());
             } catch (PMSException e) {
                 e.printStackTrace();
                 LogUtil.writeLog("Nari", e);
-                Toast("PMS异常：" + e.getMessage());
+                NariActivity.this.Toast("PMS异常：" + e.getMessage());
             }
             final List<BDPackage> result = new ArrayList<>(packageHashMap.values());
 
             Collections.sort(result, (o1, o2) -> o1.createTime.compareTo(o2.createTime));
-            runOnUiThread(() -> {
+            NariActivity.this.runOnUiThread(() -> {
                 adapter.setList(result);
                 binding.swipeRefreshLayout.setRefreshing(false);
             });
@@ -358,48 +352,45 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     private void upload(final BDPackage... bdPackages) {
         CustomerDialog.showProgress(currentActivity, "正在上传...");
-        ExecutorManager.executeTask(new Runnable() {
-            @Override
-            public void run() {
-                for (BDPackage bdPackage : bdPackages) {
-                    Report report;
+        ExecutorManager.executeTask(() -> {
+            for (BDPackage bdPackage : bdPackages) {
+                Report report;
+                try {
+                    report = ReportService.getInstance().getReportByTask(bdPackage.taskId);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                    LogUtil.writeLog("Nari", e);
+                    Toast("查询报告失败！参考异常：" + e.getMessage());
+                    return;
+                }
+                if (report == null) {
+                    Toast("没有查询到关联的报告!");
+                    return;
+                }
+                String zipFile = Config.NARI_BASEFOLDER + bdPackage.packageID + "/uploadFile/data.zip";
+                final File f = new File(zipFile);
+                if (f.exists()) {
+                    f.delete();
+                }
+                genData(bdPackage, report);
+                if (uploadFile(f, bdPackage)) {
+                    Toast("上传数据包成功");
+                    bdPackage.status = PackageStatus.upload.name();
                     try {
-                        report = ReportService.getInstance().getReportByTask(bdPackage.taskId);
+                        NariDataManager.getPackageManager().update(bdPackage, "status");
                     } catch (DbException e) {
                         e.printStackTrace();
-                        LogUtil.writeLog("Nari", e);
-                        Toast("查询报告失败！参考异常：" + e.getMessage());
-                        return;
                     }
-                    if (report == null) {
-                        Toast("没有查询到关联的报告!");
-                        return;
-                    }
-                    String zipFile = Config.NARI_BASEFOLDER + bdPackage.packageID + "/uploadFile/data.zip";
-                    final File f = new File(zipFile);
-                    if (f.exists()) {
-                        f.delete();
-                    }
-                    genData(bdPackage, report);
-                    if (uploadFile(f, bdPackage)) {
-                        Toast("上传数据包成功");
-                        bdPackage.status = PackageStatus.upload.name();
-                        try {
-                            NariDataManager.getPackageManager().update(bdPackage, "status");
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
-                        //更新提交时间
-                        report.submittime = DateUtils.getCurrentLongTime();
-                        try {
-                            ReportService.getInstance().update(report, "submittime");
-                        } catch (DbException e) {
-                            e.printStackTrace();
-                        }
+                    //更新提交时间
+                    report.submittime = DateUtils.getCurrentLongTime();
+                    try {
+                        ReportService.getInstance().update(report, "submittime");
+                    } catch (DbException e) {
+                        e.printStackTrace();
                     }
                 }
-                dismissLoading();
             }
+            dismissLoading();
         });
 
     }
@@ -431,29 +422,29 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             for (BDPackage bdPackage : bdPackages) {
                 File f = new File(bdPackage.getDatabasePath());
                 if (f.exists() && f.length() > 5 * 1024) {
-                    createTask(bdPackage);
+                    NariActivity.this.createTask(bdPackage);
                 } else {
                     ResultSet<String> rs = NARIHelper.downloadBDPackage(bdPackage);
                     if (rs.getStatus() == ResultSet.SUCCESS) {
-                        Toast("下载完成！");
+                        NariActivity.this.Toast("下载完成！");
                         bdPackage.downloadTime = DateUtils.getCurrentLongTime();
-                        createTask(bdPackage);
+                        NariActivity.this.createTask(bdPackage);
                     } else {
                         if (NARIHelper.isNetWorkException(rs.getException())) {
-                            Toast("网络错误!参考错误异常：" + rs.getException().getMessage());
+                            NariActivity.this.Toast("网络错误!参考错误异常：" + rs.getException().getMessage());
                         } else {
-                            Toast(rs.getDesc() + " 参考错误：" + rs.getException().getMessage());
+                            NariActivity.this.Toast(rs.getDesc() + " 参考错误：" + rs.getException().getMessage());
                         }
                     }
                 }
                 i++;
                 if (i <= bdPackages.length) {
                     final int finalI = i;
-                    runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.tv_tips)).setText("正在下载第" + finalI + "个, 共" + bdPackages.length + "个..."));
+                    NariActivity.this.runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.tv_tips)).setText("正在下载第" + finalI + "个, 共" + bdPackages.length + "个..."));
                 }
             }
-            runOnUiThread(() -> adapter.notifyDataSetChanged());
-            dismissLoading();
+            NariActivity.this.runOnUiThread(() -> adapter.notifyDataSetChanged());
+            NariActivity.this.dismissLoading();
         });
     }
 
@@ -525,12 +516,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     }
 
     private void dismissLoading() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                CustomerDialog.dismissProgress();
-            }
-        });
+        runOnUiThread(() -> CustomerDialog.dismissProgress());
     }
 
     @Override
@@ -598,8 +584,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
             holder.setText(R.id.tv_date, TextUtils.isEmpty(item.createTime) ? "" : item.createTime);
             holder.getRootView().setOnLongClickListener(view -> {
-                int width = ScreenUtils.getScreenWidth(getApplicationContext()) * 9 / 10;
-                XsDialogSelectBinding selectBinding = XsDialogSelectBinding.inflate(getLayoutInflater());
+                int width = ScreenUtils.getScreenWidth(NariActivity.this.getApplicationContext()) * 9 / 10;
+                XsDialogSelectBinding selectBinding = XsDialogSelectBinding.inflate(NariActivity.this.getLayoutInflater());
                 Dialog dialog = DialogUtils.createDialog(currentActivity, selectBinding.getRoot(), width, LinearLayout.LayoutParams.WRAP_CONTENT);
                 selectBinding.tvDialogContent.setText(R.string.xs_pms_task_delete_tips);
                 dialog.show();
@@ -607,9 +593,9 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 selectBinding.btnSure.setOnClickListener(view1 -> {
                     if (selectBinding.checkboxLeft.isChecked() || selectBinding.checkboxRight.isChecked()) {
                         if (selectBinding.checkboxLeft.isChecked()) {
-                            deltePacage(item, 0, dialog);
+                            NariActivity.this.deltePacage(item, 0, dialog);
                         } else {
-                            deltePacage(item, 1, dialog);
+                            NariActivity.this.deltePacage(item, 1, dialog);
                         }
                     } else {
                         ToastUtils.showMessage("请选择需要删除的范围");
@@ -618,52 +604,49 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 });
                 return true;
             });
-            holder.getRootView().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PackageStatus packageStatus = PackageStatus.find(item.status);
-                    if (packageStatus == null) {
-                        Toast("离线作业包状态错误！");
-                        return;
-                    }
-                    switch (packageStatus) {
-                        case nodown:
-                            //ToDown;
-                            DialogUtils.showSureTipsDialog(currentActivity, null, "是否要下载该离线作业包？", new OnViewClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    downLoad(item);
-                                }
-                            });
-                            break;
-                        case undo:
-                            startTask(item);
-                            break;
-                        case done:
-                            DialogUtils.showSureTipsDialog(currentActivity, null, StringUtils.formatPartTextColor("是否要上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    upload(item);
-                                }
-                            });
-                            break;
-                        case upload_error:
-                            DialogUtils.showSureTipsDialog(currentActivity, null, StringUtils.formatPartTextColor("是否要重新上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    upload(item);
-                                }
-                            });
-                            break;
-                        case upload:
-                            Toast("该记录已经上传到PMS，快去PMS查看吧！");
-                            break;
-                        case notopt:
-                            Toast("暂时不支持" + item.inspectionType + "类型作业计划！");
-                            break;
-                        default:
-                            break;
-                    }
+            holder.getRootView().setOnClickListener(v -> {
+                PackageStatus packageStatus = PackageStatus.find(item.status);
+                if (packageStatus == null) {
+                    Toast("离线作业包状态错误！");
+                    return;
+                }
+                switch (packageStatus) {
+                    case nodown:
+                        //ToDown;
+                        DialogUtils.showSureTipsDialog(currentActivity, null, "是否要下载该离线作业包？", new OnViewClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                downLoad(item);
+                            }
+                        });
+                        break;
+                    case undo:
+                        startTask(item);
+                        break;
+                    case done:
+                        DialogUtils.showSureTipsDialog(currentActivity, null, StringUtils.formatPartTextColor("是否要上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                upload(item);
+                            }
+                        });
+                        break;
+                    case upload_error:
+                        DialogUtils.showSureTipsDialog(currentActivity, null, StringUtils.formatPartTextColor("是否要重新上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                upload(item);
+                            }
+                        });
+                        break;
+                    case upload:
+                        Toast("该记录已经上传到PMS，快去PMS查看吧！");
+                        break;
+                    case notopt:
+                        Toast("暂时不支持" + item.inspectionType + "类型作业计划！");
+                        break;
+                    default:
+                        break;
                 }
             });
         }
@@ -676,24 +659,24 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         ExecutorManager.executeTask(() -> {
             try {
                 if (delteNum == 1) {
-                    deleteLocalData(item);
+                    NariActivity.this.deleteLocalData(item);
                     delResult = "本地删除成功";
                 } else {
                     delResult = NARIHelper.deletePackageFromServer(item.packageID);
                     FileUtils.deleteAllFiles(Config.NARI_BASEFOLDER + item.packageID);
-                    deleteLocalData(item);
+                    NariActivity.this.deleteLocalData(item);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 delResult = "任务删除失败,请检查网络，稍后重试。";
             }
-            runOnUiThread(() -> {
+            NariActivity.this.runOnUiThread(() -> {
                 ToastUtils.showMessage(delResult);
                 dialog.dismiss();
                 List<BDPackage> packages = (List<BDPackage>) adapter.getData();
                 packages.remove(item);
                 adapter.setList(packages);
-                dismissLoading();
+                NariActivity.this.dismissLoading();
             });
         });
     }

@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsItemSignBinding;
-import com.cnksi.common.model.ReportSignname;
-import com.cnksi.bdzinspection.utils.ScreenUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.model.ReportSignname;
 import com.cnksi.core.utils.BitmapUtils;
+import com.cnksi.core.utils.ScreenUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -69,25 +69,15 @@ public class SignNameAdapter extends SimpleBaseAdapter {
            itemBinding.del.setVisibility(View.VISIBLE);
         }
 
-        itemBinding.del.setOnClickListener(v -> {
-            listener.OnAdapterClick(v, position, MASK | 0);
-        });
+        itemBinding.del.setOnClickListener(v -> listener.OnAdapterClick(v, position, MASK | 0));
 
-        itemBinding.tvCzrSign.setOnClickListener(v -> {
-            listener.OnAdapterClick(v, position, MASK | 1);
-        });
+        itemBinding.tvCzrSign.setOnClickListener(v -> listener.OnAdapterClick(v, position, MASK | 1));
 
-        itemBinding.signImgPic.setOnClickListener(v -> {
-            listener.OnAdapterClick(v, position, MASK | 1);
-        });
+        itemBinding.signImgPic.setOnClickListener(v -> listener.OnAdapterClick(v, position, MASK | 1));
 
-        itemBinding.llContainerSign.setOnClickListener(view -> {
-            listener.OnAdapterClick(view, position, MASK | 1);
-        });
+        itemBinding.llContainerSign.setOnClickListener(view -> listener.OnAdapterClick(view, position, MASK | 1));
 
-        itemBinding.signImg.setOnClickListener(view -> {
-            listener.OnAdapterClick(view, position, MASK | 2);
-        });
+        itemBinding.signImg.setOnClickListener(view -> listener.OnAdapterClick(view, position, MASK | 2));
 
 
         return itemBinding.getRoot();

@@ -4,14 +4,14 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cnksi.common.model.BaseModel;
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.sjjc.util.FunctionUtil;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 @Table(name = SbjcGztzjl._TABLE_NAME_)
-public class SbjcGztzjl {
+public class SbjcGztzjl extends BaseModel {
     public static final String _TABLE_NAME_ = "sbjc_gztzjl";
 
     public static final String _PK_NAME_ = "id";
@@ -428,16 +428,13 @@ public class SbjcGztzjl {
     @Column(name = CREATE_TIME)
     public String createTime;
 
-    /***/
-    public static final String DLT = "dlt";
-    @Column(name = DLT)
-    public int dlt = 0;
+
 
 
     public static SbjcGztzjl create(String currentReportId, String currentBdzId) {
         SbjcGztzjl rs = new SbjcGztzjl();
         rs.bdzid = currentBdzId;
-        rs.id = FunctionUtil.getPrimarykey();
+        rs.id = getPrimarykey();
         rs.reportid = currentReportId;
         rs.createTime = DateUtils.getCurrentLongTime();
         return rs;
@@ -518,9 +515,6 @@ public class SbjcGztzjl {
         if (xb[2] == 1 && TextUtils.isEmpty(c)) {
             return false;
         }
-        if (xb[3] == 1 && TextUtils.isEmpty(o)) {
-            return false;
-        }
-        return true;
+        return xb[3] != 1 || !TextUtils.isEmpty(o);
     }
 }

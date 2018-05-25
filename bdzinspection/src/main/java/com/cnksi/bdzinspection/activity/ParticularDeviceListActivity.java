@@ -19,17 +19,17 @@ import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsActivityParticularInspectionBinding;
 import com.cnksi.bdzinspection.fragment.ParticularDevicesFragment;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.bdzinspection.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.OnViewClickListener;
-import com.cnksi.bdzinspection.utils.PlaySound;
 import com.cnksi.bdzinspection.utils.ShakeListener;
-import com.cnksi.bdzinspection.utils.TTSUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.LookUpType;
+import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.PlaySound;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
@@ -164,32 +164,35 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
 
     private void initOnClick() {
 
-        binding.ibtnCancel.setOnClickListener(view -> onBackPressed());
+        binding.ibtnCancel.setOnClickListener(view -> ParticularDeviceListActivity.this.onBackPressed());
 
-        binding.btnFinishInspection.setOnClickListener(view -> {
-            if (SystemConfig.isDevicePlaced()) {
-                fragmentList.get(0).handleSpaceArrivedData();
-            }
+        binding.btnFinishInspection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SystemConfig.isDevicePlaced()) {
+                    fragmentList.get(0).handleSpaceArrivedData();
+                }
 
-            if (currentTask.isMember()) {
-                DialogUtils.showSureTipsDialog(currentActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        super.onClick(v);
-                        CustomerDialog.showProgress(currentActivity, "正在上传任务", true, false);
-                        KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).upload();
-                    }
-                });
-            } else {
-                Intent intent = new Intent(currentActivity, GenerateReportActivity.class);
-                showTipsDialog(binding.llRootContainer, intent);
+                if (currentTask.isMember()) {
+                    DialogUtils.showSureTipsDialog(currentActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            super.onClick(v);
+                            CustomerDialog.showProgress(currentActivity, "正在上传任务", true, false);
+                            KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).upload();
+                        }
+                    });
+                } else {
+                    Intent intent = new Intent(currentActivity, GenerateReportActivity.class);
+                    ParticularDeviceListActivity.this.showTipsDialog(binding.llRootContainer, intent);
+                }
             }
         });
 
         binding.ibtnAdd.setOnClickListener(view -> {
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             Intent intent = new Intent(currentActivity, CopyAllValueActivity2.class);
-            startActivity(intent);
+            ParticularDeviceListActivity.this.startActivity(intent);
         });
 
 
@@ -299,7 +302,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
             if (saveList.size() > 0) {
                 ExecutorManager.executeTask(() -> {
                     try {
-                       SpacingLastlyService.getInstance().saveOrUpdate(saveList);
+                        SpacingLastlyService.getInstance().saveOrUpdate(saveList);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }

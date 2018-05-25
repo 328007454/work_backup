@@ -17,8 +17,6 @@ public class BluetoothBroardCastReceiver extends BroadcastReceiver {
     public BluetoothBroardCastReceiver() {
     }
 
-    ;
-
     public interface BluetoothDeviceListener {
         void boundDevice(ArrayList<BluetoothDevice> deviceArrayList);
     }

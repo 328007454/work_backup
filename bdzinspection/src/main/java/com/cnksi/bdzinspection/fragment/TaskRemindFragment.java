@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -15,7 +16,7 @@ import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.TaskRemindAdapter;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
-import com.cnksi.bdzinspection.utils.DialogUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
@@ -136,7 +137,7 @@ public class TaskRemindFragment extends BaseFragment {
         ExecutorManager.executeTask(() -> {
             try {
                 if (currentInspectionType == null) {
-                    ToastUtils.showMessage( "没有正确的获取巡检类型，请重启程序再尝试！");
+                    ToastUtils.showMessage("没有正确的获取巡检类型，请重启程序再尝试！");
                     return;
                 }
                 if (TextUtils.isEmpty(inspectionName)) {
@@ -148,7 +149,7 @@ public class TaskRemindFragment extends BaseFragment {
                     deptId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
                 }
                 String[] accoutArray = currentAcounts.split(",");
-                Selector selector =TaskService.getInstance().selector().expr(" and  bdzid in (select bdzid  from bdz where dept_id = '" + deptId + "' )");
+                Selector selector = TaskService.getInstance().selector().expr(" and  bdzid in (select bdzid  from bdz where dept_id = '" + deptId + "' )");
                 selector.expr("and (pms_jh_source ='pms_pc' or " + CommonUtils.buildWhereTaskContainMe(accoutArray) + " or create_account is NULL or create_account = '')");
                 // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                 if (Config.UNFINISH_MODEL.equalsIgnoreCase(currentFunctionModel)) {
@@ -197,7 +198,7 @@ public class TaskRemindFragment extends BaseFragment {
                 }
                 selector = selector.orderBy(Task.SCHEDULE_TIME);
 
-                mDataList =selector.findAll();
+                mDataList = selector.findAll();
 
                 List<Users> users = UserService.getInstance().findAll();
                 for (Users user : users) {
@@ -258,7 +259,7 @@ public class TaskRemindFragment extends BaseFragment {
             mInspectionTaskAdapter.notifyDataSetChanged();
             if (mOnFragmentEventListener != null) {
                 mOnFragmentEventListener.updateTaskStatus();
-                onResume();
+                TaskRemindFragment.this.onResume();
             }
             mFinishOptionDialog.dismiss();
         });
@@ -278,16 +279,16 @@ public class TaskRemindFragment extends BaseFragment {
         binding.lvContainer.setOnItemLongClickListener((parent, view, position, id) -> {
             Task mTask = (Task) parent.getItemAtPosition(position);
             if (!mTask.isMyCreate()) {
-                ToastUtils.showMessage( "您不是任务创建者，无法删除");
+                ToastUtils.showMessage("您不是任务创建者，无法删除");
                 return true;
             }
             if (mTask.isPMS()) {
-                ToastUtils.showMessage( "与PMS关联的计划不能删除！");
+                ToastUtils.showMessage("与PMS关联的计划不能删除！");
                 return true;
             }
             if (TaskStatus.done.name().equalsIgnoreCase(mTask.status)) {
                 // 已完成的长按弹出dialog选择是上传或是删除
-                showDefectDialog(mTask);
+                TaskRemindFragment.this.showDefectDialog(mTask);
             } else {
                 if (TaskService.getInstance().deleteTaskAndReportById(mTask.taskid)) {
                     mDataList.remove(mTask);

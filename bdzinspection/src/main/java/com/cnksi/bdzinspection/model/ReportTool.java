@@ -18,7 +18,6 @@ public class ReportTool extends BaseModel {
     public final static String ID = "id";
     @Column(name = "id",isId = true)
     public String id = UUID.randomUUID().toString();
-    ;
     public final static String REPORTID = "reportId";
     @Column(name = REPORTID)
     public String reportId;
