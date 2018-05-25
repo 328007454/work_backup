@@ -83,7 +83,7 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
         if (currentSelectedPosition == position) {
             txtDevice.setTextColor(mContext.getResources().getColor(R.color.xs_white));
 //			txtDevice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_white_unfinish, 0, 0, 0);
-            ibCopy.setImageResource(R.drawable.xs_ic_white_unfinish);
+            ibCopy.setImageResource(R.drawable.ic_white_unfinish);
             helper.getView(R.id.rl_device_container)
                     .setBackgroundResource(R.drawable.xs_copy_all_value_item_selected_background);
         } else {
@@ -95,7 +95,7 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
             } else {
                 relativeLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.xs_device_green_border_background_selector));
                 txtDevice.setTextColor(mContext.getResources().getColor(R.color.xs_green_color));
-                ibCopy.setImageResource(R.drawable.xs_ic_green_unfinish);
+                ibCopy.setImageResource(R.drawable.ic_green_unfinish);
                 helper.getView(R.id.rl_device_container)
                         .setBackgroundResource(R.drawable.xs_copy_all_value_item_unselected_background_selector);
             }

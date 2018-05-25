@@ -57,7 +57,7 @@
         android:contentDescription="@null"
         android:scaleType="centerInside"
         android:visibility="gone"
-        app:srcCompat="@drawable/xs_ic_green_unfinish"/>
+        app:srcCompat="@drawable/ic_green_unfinish"/>
 
     <ImageView
         android:id="@+id/iv_haslocationed"

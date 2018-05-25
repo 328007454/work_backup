@@ -50,18 +50,18 @@ public class CopyMaintenanceDeviceAdapter extends BaseAdapter<CopyItem> {
 		relativeLayout.setMinimumWidth(AutoUtils.getPercentWidthSizeBigger(270));
 		if (currentSelectedPosition == position) {
 			txtDevice.setTextColor(context.getResources().getColor(R.color.xs_white));
-			ibCopy.setImageResource(R.drawable.xs_ic_white_unfinish);
+			ibCopy.setImageResource(R.drawable.ic_white_unfinish);
 			holder.getView(R.id.rl_device_container)
 					.setBackgroundResource(R.drawable.xs_copy_all_value_item_selected_background);
 		} else {
 			txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));
-			ibCopy.setImageResource(R.drawable.xs_ic_green_unfinish);
+			ibCopy.setImageResource(R.drawable.ic_green_unfinish);
 			holder.getView(R.id.rl_device_container)
 					.setBackgroundResource(R.drawable.xs_copy_all_value_item_unselected_background_selector);
 		}
 		// 有一项抄录变绿
 		if(null!=copyHashMap&& !TextUtils.isEmpty(copyHashMap.get(item.id))){
-			ibCopy.setImageResource(R.drawable.xs_ic_green_finish);
+			ibCopy.setImageResource(R.drawable.ic_green_finish);
 		}
 
 		holder.getRootView().setOnClickListener(v -> itemClickListener.onItemClick(v, item, position));

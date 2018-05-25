@@ -70,7 +70,7 @@ public class TaskRemindAdapter extends SimpleBaseAdapter {
                 itemBinding.ivUpload.setVisibility(View.VISIBLE);
             }
             itemBinding.ivUpload.setImageResource(
-                    "Y".equalsIgnoreCase(mTask.isUpload) ? R.drawable.xs_ic_upload : R.drawable.xs_ic_no_upload);
+                    "Y".equalsIgnoreCase(mTask.isUpload) ? R.drawable.ic_upload : R.drawable.xs_ic_no_upload);
         } else {
             itemBinding.ivUpload.setVisibility(View.GONE);
         }

@@ -138,9 +138,9 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         ImageView imgOpen = helper.getView(R.id.img_open);
         imgOpen.setImageResource(groupItem.isExpanded() ? R.drawable.xs_ic_shrink : R.drawable.xs_ic_open);
         if (groupSnwsds.contains(group.id)) {
-            imgCopy.setImageResource(R.drawable.xs_ic_green_finish);
+            imgCopy.setImageResource(R.drawable.ic_green_finish);
         } else {
-            imgCopy.setImageResource(R.drawable.xs_ic_green_unfinish);
+            imgCopy.setImageResource(R.drawable.ic_green_unfinish);
         }
         if (!TextUtils.isEmpty(SystemConfig.getCopyInspection()) && SystemConfig.getCopyInspection().contains(currentInspection) && group.copy) {
             imgCopy.setVisibility(View.VISIBLE);
@@ -197,9 +197,9 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         if ("Y".equals(space.getString("hasCopy"))) {
             imgSpaceCopy.setVisibility(View.VISIBLE);
             if ("Y".equals(space.getString("copyFinish"))) {
-                imgSpaceCopy.setImageResource(R.drawable.xs_ic_green_finish);
+                imgSpaceCopy.setImageResource(R.drawable.ic_green_finish);
             } else {
-                imgSpaceCopy.setImageResource(R.drawable.xs_ic_green_unfinish);
+                imgSpaceCopy.setImageResource(R.drawable.ic_green_unfinish);
             }
         } else {
             imgSpaceCopy.setVisibility(View.GONE);
@@ -370,7 +370,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         if ("Y".equals(item.getString("hasCopy"))) {
             ibCopy.setVisibility(View.VISIBLE);
             btCopy.setVisibility(View.VISIBLE);
-            ibCopy.setImageResource("Y".equals(item.getString("isCopy")) ? R.drawable.xs_ic_black_finish : R.drawable.xs_ic_green_unfinish);
+            ibCopy.setImageResource("Y".equals(item.getString("isCopy")) ? R.drawable.xs_ic_black_finish : R.drawable.ic_green_unfinish);
         } else {
             ibCopy.setVisibility(View.INVISIBLE);
             btCopy.setVisibility(View.GONE);

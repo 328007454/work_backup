@@ -56,7 +56,7 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
         if (currentSelectedPosition == position) {
             txtDevice.setTextColor(context.getResources().getColor(R.color.xs_white));
 //			txtDevice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_white_unfinish, 0, 0, 0);
-            ibCopy.setImageResource(R.drawable.xs_ic_white_unfinish);
+            ibCopy.setImageResource(R.drawable.ic_white_unfinish);
             holder.getView(R.id.rl_device_container)
                     .setBackgroundResource(R.drawable.xs_copy_all_value_item_selected_background);
         } else {
@@ -68,7 +68,7 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
             } else {
                 relativeLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.xs_device_green_border_background_selector));
                 txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));
-                ibCopy.setImageResource(R.drawable.xs_ic_green_unfinish);
+                ibCopy.setImageResource(R.drawable.ic_green_unfinish);
                 holder.getView(R.id.rl_device_container)
                         .setBackgroundResource(R.drawable.xs_copy_all_value_item_unselected_background_selector);
             }

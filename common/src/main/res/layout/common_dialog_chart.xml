@@ -19,7 +19,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/xs_fillet_white">
+            android:background="@drawable/fillet_white">
 
             <TextView
                 android:layout_width="match_parent"

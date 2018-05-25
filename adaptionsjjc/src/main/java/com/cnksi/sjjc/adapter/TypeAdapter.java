@@ -2,7 +2,6 @@ package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.cnksi.common.enmu.InspectionType;
@@ -40,7 +39,7 @@ public class TypeAdapter extends BaseAdapter<String> {
 //            context.getResources().getColor(R.color.global_gray_text_color)
             holder.getRootView().setBackgroundColor(ContextCompat.getColor(context, R.color.global_gray_text_color));
         } else {
-            holder.getRootView().setBackgroundResource(R.drawable.task_item_background_selector);
+            holder.getRootView().setBackgroundResource(R.drawable.list_item_background_selector);
         }
         holder.getRootView().setOnClickListener(v -> {
             if (null != itemClickListener) {
