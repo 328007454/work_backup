@@ -22,7 +22,6 @@ import com.cnksi.bdzinspection.adapter.base.GridSpacingItemDecoration;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsActivitySingleSpaceCopyBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
@@ -113,7 +112,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCopyBinding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_single_space_copy);
+        mCopyBinding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_single_space_copy);
         setDeviceListDisplay();
         initialUI();
         initialData();
@@ -136,7 +135,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
 
     private void initialUI() {
         getIntentValue();
-        copyHelper = new CopyHelper(currentActivity, currentReportId, currentBdzId, currentInspectionType);
+        copyHelper = new CopyHelper(mActivity, currentReportId, currentBdzId, currentInspectionType);
         mCopyBinding.llKeyboardHelpLayout.setVisibility(View.GONE);
         createDefectDialog();
         Intent intent = getIntent();
@@ -145,11 +144,11 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         mCopyBinding.includeTitle.tvTitle.setText(TextUtils.isEmpty(spaceName) ? "" : spaceName);
         adapter = new CopyRcvDeviceAdapter(deviceData, R.layout.xs_device_item);
         adapter.setItemClickListener(this);
-        mCopyBinding.rcv.setLayoutManager(new GridLayoutManager(currentActivity, 2));
+        mCopyBinding.rcv.setLayoutManager(new GridLayoutManager(mActivity, 2));
         mCopyBinding.rcv.addItemDecoration(new GridSpacingItemDecoration(2, 20, 8, true));
         adapter.bindToRecyclerView(mCopyBinding.rcv);
         mCopyBinding.includeTitle.ibtnCancel.setOnClickListener(view -> {
-            KeyBoardUtils.closeKeybord(currentActivity);
+            KeyBoardUtils.closeKeybord(mActivity);
             finish();
         });
         mCopyBinding.ibtnSpread.setOnClickListener(view -> setDeviceListDisplay());
@@ -188,7 +187,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
             final XsActivityCopyDialogBinding notClearDialogBinding = XsActivityCopyDialogBinding.inflate(getLayoutInflater());
             notClearDialogBinding.btnCancel.setOnClickListener(v12 -> dialog.dismiss());
             notClearDialogBinding.btnSure.setOnClickListener(v1 -> saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
-            dialog = DialogUtils.createDialog(currentActivity, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialog = DialogUtils.createDialog(mActivity, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             //隐藏自定义键盘
             hideKeyBord();
@@ -197,7 +196,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         copyHelper.setItemClickListener((v, item, position) -> {
             SingleSpaceCopyActivity.this.hideKeyBord();
             // 显示历史曲线
-            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
+            ShowCopyHistroyDialogUtils.showHistory(mActivity, item);
         });
     }
 
@@ -239,7 +238,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         }
         result.remark = TextUtils.isEmpty(etInput.getText().toString()) ? "" : (TextUtils.isEmpty(result.remark) ? etInput.getText().toString() + "," : etInput.getText().toString());
         dialog.dismiss();
-        copyHelper.createCopyView(currentActivity, data, mCopyBinding.copyContainer);
+        copyHelper.createCopyView(mActivity, data, mCopyBinding.copyContainer);
     }
 
     /**
@@ -405,9 +404,9 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
     }
 
     public void createDefectDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
         tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-        defectDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        defectDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");
         tipsBinding.btnSure.setText("是");
@@ -418,7 +417,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
             if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
                 mKeyBoardUtil.hideKeyboard();
             }
-            Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
+            Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
             SingleSpaceCopyActivity.this.setIntentValue(intent);
             SingleSpaceCopyActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });

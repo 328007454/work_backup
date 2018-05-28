@@ -25,8 +25,6 @@ import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.fragment.CopyValueFragment2;
 import com.cnksi.bdzinspection.fragment.CopyValueFragment2.FragmentItemClickerListener;
-import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
@@ -109,7 +107,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_copy_all2);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_copy_all2);
         setDeviceListDisplay();
         initialUI();
         initLocation();
@@ -121,7 +119,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
     private void initialUI() {
         getIntentValue();
         createDefectDialog();
-        copyHelper = new CopyHelper(currentActivity, currentReportId, currentBdzId, currentInspectionType);
+        copyHelper = new CopyHelper(mActivity, currentReportId, currentBdzId, currentInspectionType);
         binding.tvTitle.setText(R.string.xs_copy_all_value_str);
         data = new ArrayList<>();
 
@@ -130,7 +128,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
             final XsActivityCopyDialogBinding notClearDialogBinding = XsActivityCopyDialogBinding.inflate(CopyAllValueActivity2.this.getLayoutInflater());
             notClearDialogBinding.btnCancel.setOnClickListener(v12 -> dialog.dismiss());
             notClearDialogBinding.btnSure.setOnClickListener(v1 -> CopyAllValueActivity2.this.saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
-            dialog = DialogUtils.createDialog(currentActivity, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialog = DialogUtils.createDialog(mActivity, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             //隐藏自定义键盘
             CopyAllValueActivity2.this.hideKeyBord();
@@ -139,7 +137,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         copyHelper.setItemClickListener((v, item, position) -> {
             CopyAllValueActivity2.this.hideKeyBord();
             // 显示历史曲线
-            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
+            ShowCopyHistroyDialogUtils.showHistory(mActivity, item);
         });
         initFragment();
         binding.llKeyboardHelpLayout.setVisibility(View.GONE);
@@ -375,9 +373,9 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
     }
 
     public void createDefectDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
         tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-        defectDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        defectDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");
         tipsBinding.btnSure.setText("是");
@@ -385,7 +383,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         tipsBinding.btnSure.setOnClickListener(v -> {
             CopyAllValueActivity2.this.hideKeyBord();
             defectDialog.dismiss();
-            Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
+            Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
             CopyAllValueActivity2.this.setIntentValue(intent);
             CopyAllValueActivity2.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
@@ -534,7 +532,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
         }
         result.remark = TextUtils.isEmpty(etInput.getText().toString()) ? "" : (TextUtils.isEmpty(result.remark) ? etInput.getText().toString() + "," : etInput.getText().toString());
         dialog.dismiss();
-        copyHelper.createCopyView(currentActivity, data, binding.copyContainer);
+        copyHelper.createCopyView(mActivity, data, binding.copyContainer);
     }
 
     @Override

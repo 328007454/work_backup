@@ -117,41 +117,41 @@ public class AnimalReportActivity extends BaseReportActivity {
                 if (0 == preventionRecord.switchStatus) {
                     binding.tvKaiguangui.setText("正常");
                     //getResources().getColor(R.color.green_color)
-                    binding.tvKaiguangui.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                    binding.tvKaiguangui.setTextColor(ContextCompat.getColor(mActivity, R.color.green_color));
                 } else {
                     binding.tvKaiguangui.setText("不正常");
                     binding.tvKaiguangui.setTextColor(Color.RED);
                 }
                 if (0 == preventionRecord.inroomStatus) {
-                    binding.tvShineikongdong.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                    binding.tvShineikongdong.setTextColor(ContextCompat.getColor(mActivity, R.color.green_color));
                     binding.tvShineikongdong.setText("正常");
                 } else {
                     binding.tvShineikongdong.setText("不正常");
                     binding.tvShineikongdong.setTextColor(Color.RED);
                 }
                 if (0 == preventionRecord.outroomStatus) {
-                    binding.tvShiwaikongdong.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                    binding.tvShiwaikongdong.setTextColor(ContextCompat.getColor(mActivity, R.color.green_color));
                     binding.tvShiwaikongdong.setText("正常");
                 } else {
                     binding.tvShiwaikongdong.setText("不正常");
                     binding.tvShiwaikongdong.setTextColor(Color.RED);
                 }
                 if (0 == preventionRecord.doorWindowStatus) {
-                    binding.tvMenchuang.setTextColor(ContextCompat.getColor(_this, R.color.green_color));
+                    binding.tvMenchuang.setTextColor(ContextCompat.getColor(mActivity, R.color.green_color));
                     binding.tvMenchuang.setText("正常");
                 } else {
                     binding.tvMenchuang.setText("不正常");
                     binding.tvMenchuang.setTextColor(Color.RED);
                 }
 //                if (0==preventionRecord.ratsbaneStatus) {
-//                    binding.tvShuyaoqi.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+//                    binding.tvShuyaoqi.setTextColor(ContextCompat.getColor(mActivity,R.color.green_color));
 //                    binding.tvShuyaoqi.setText("正常");
 //                } else {
 //                    binding.tvShuyaoqi.setText("不正常");
 //                    binding.tvShuyaoqi.setTextColor(Color.RED);
 //                }
 //                if (0==preventionRecord.mousetrapStatus) {
-//                    binding.tvBushuqi.setTextColor(ContextCompat.getColor(_this,R.color.green_color));
+//                    binding.tvBushuqi.setTextColor(ContextCompat.getColor(mActivity,R.color.green_color));
 //                    binding.tvBushuqi.setText("正常");
 //                } else {
 //                    binding.tvBushuqi.setText("不正常");
@@ -273,7 +273,7 @@ public class AnimalReportActivity extends BaseReportActivity {
 
     private void initOnClick() {
         binding.tvContinueInspection.setOnClickListener(view -> {
-            Intent intent1 = new Intent(_this, PreventAnimalActivity.class);
+            Intent intent1 = new Intent(mActivity, PreventAnimalActivity.class);
             AnimalReportActivity.this.startActivity(intent1);
             AnimalReportActivity.this.finish();
         });

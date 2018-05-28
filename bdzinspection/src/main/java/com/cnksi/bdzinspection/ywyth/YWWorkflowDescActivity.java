@@ -48,22 +48,22 @@ public class YWWorkflowDescActivity extends TitleActivity {
 		} else {
 			imgs = new ArrayList<String>();
 		}
-		binding.horizonListview.setAdapter(new ImageAdapter(currentActivity, imgs));
+		binding.horizonListview.setAdapter(new ImageAdapter(mActivity, imgs));
 		binding.horizonListview.setOnItemClickListener((parent, view, position, id) -> {
-            showImageDetails(currentActivity,position,StringUtils.addStrToListItem(imgs,Config.CUSTOMER_PICTURES_FOLDER),false);
+            showImageDetails(mActivity,position,StringUtils.addStrToListItem(imgs,Config.CUSTOMER_PICTURES_FOLDER),false);
         });
 		if (bean.audio != null) {
 			audios = Arrays.asList(bean.audio.split(Config.COMMA_SEPARATOR));
 		} else {
 			audios = new ArrayList<String>();
 		}
-		binding.audioList.setAdapter(new AudioAdapter(currentActivity, audios));
+		binding.audioList.setAdapter(new AudioAdapter(mActivity, audios));
 		if (bean.video != null) {
 			videos = Arrays.asList(bean.video.split(Config.COMMA_SEPARATOR));
 		} else {
 			videos = new ArrayList<String>();
 		}
-		binding.videolist.setAdapter(new VideoAdapter(currentActivity, videos));
+		binding.videolist.setAdapter(new VideoAdapter(mActivity, videos));
 	}
 
 	@Override

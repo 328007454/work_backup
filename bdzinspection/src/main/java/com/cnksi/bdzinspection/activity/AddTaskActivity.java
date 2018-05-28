@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
@@ -128,7 +127,7 @@ public class AddTaskActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_add_inspection_task);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_add_inspection_task);
         initialUI();
         initialData();
         initOnClick();
@@ -262,7 +261,7 @@ public class AddTaskActivity extends BaseActivity {
         binding.includeTitle.ibtnCancel.setOnClickListener(view -> AddTaskActivity.this.finish());
         binding.btnCancel.setOnClickListener(view -> AddTaskActivity.this.finish());
         binding.btnConfirm.setOnClickListener(view -> AddTaskActivity.this.saveTask());
-        binding.ibtnSelectInspectionDate.setOnClickListener(view -> CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> binding.tvInspectionDate.setText(result)));
+        binding.ibtnSelectInspectionDate.setOnClickListener(view -> CustomerDialog.showDatePickerDialog(mActivity, (result, position) -> binding.tvInspectionDate.setText(result)));
         binding.bdzContanier.setOnClickListener(view -> {
             binding.bdzContanier.setPressed(true);
             if (isBdzDataPrepared) {
@@ -320,7 +319,7 @@ public class AddTaskActivity extends BaseActivity {
                 binding.tvSelectInspectionType.setText(mInspectionType.v);
                 break;
             case INIT_PERSONS:
-                SelectPersonUtil.getInstance().setRecyWidget(currentActivity, binding.recPersonContainer, selectPersons, R.layout.xs_item_task_user, new GridLayoutManager(getApplicationContext(), 4))
+                SelectPersonUtil.getInstance().setRecyWidget(mActivity, binding.recPersonContainer, selectPersons, R.layout.xs_item_task_user, new GridLayoutManager(getApplicationContext(), 4))
                         .disPlayAllPerson(allPersons, binding.ibSelectPerson);
                 break;
             default:
@@ -335,17 +334,17 @@ public class AddTaskActivity extends BaseActivity {
 
     private void showInspectionTypeDialog() {
         if (mXunJianTypeAdapter == null) {
-            mXunJianTypeAdapter = new XunJianTypeAdapter(currentActivity, childList);
+            mXunJianTypeAdapter = new XunJianTypeAdapter(mActivity, childList);
         } else {
             mXunJianTypeAdapter.setList(childList);
         }
         mXunJianTypeAdapter.setType(currentTypeStr);
         if (mInspectionTypeDialog == null) {
-            int screenWidth = ScreenUtils.getScreenWidth(currentActivity);
+            int screenWidth = ScreenUtils.getScreenWidth(mActivity);
             int dialogWidth = screenWidth * 7 / 9;
             int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
             typeDialogBinding = XsActivityAddinpsectionTypeDialogBinding.inflate(getLayoutInflater());
-            mInspectionTypeDialog = DialogUtils.createDialog(currentActivity, typeDialogBinding.getRoot(), dialogWidth, dialogHeight);
+            mInspectionTypeDialog = DialogUtils.createDialog(mActivity, typeDialogBinding.getRoot(), dialogWidth, dialogHeight);
         }
         if (currentTypeStr.contains(InspectionType.switchover.name()) || currentTypeStr.contains(InspectionType.maintenance.name())) {
             typeDialogBinding.btnConfirm.setVisibility(View.VISIBLE);
@@ -410,13 +409,13 @@ public class AddTaskActivity extends BaseActivity {
     private XsContentListDialogBinding dialogBinding;
 
     private void showPowerStationDialog(List<Bdz> powerStationList) {
-        BdzDialogAdapter mPowerStationAdapter = new BdzDialogAdapter(currentActivity, powerStationList);
+        BdzDialogAdapter mPowerStationAdapter = new BdzDialogAdapter(mActivity, powerStationList);
         if (mPowerStationDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            int dialogHeight = powerStationList.size() > 8 ? ScreenUtils.getScreenHeight(currentActivity) * 3 / 5
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            int dialogHeight = powerStationList.size() > 8 ? ScreenUtils.getScreenHeight(mActivity) * 3 / 5
                     : LinearLayout.LayoutParams.WRAP_CONTENT;
             dialogBinding = XsContentListDialogBinding.inflate(getLayoutInflater());
-            mPowerStationDialog = DialogUtils.createDialog(currentActivity, dialogBinding.getRoot(), dialogWidth, dialogHeight);
+            mPowerStationDialog = DialogUtils.createDialog(mActivity, dialogBinding.getRoot(), dialogWidth, dialogHeight);
         }
         dialogBinding.lvContainer.setAdapter(mPowerStationAdapter);
         dialogBinding.tvDialogTitle.setText(R.string.xs_please_select_power_station_str);
@@ -512,7 +511,7 @@ public class AddTaskActivity extends BaseActivity {
                 ReportService.getInstance().saveOrUpdate(mReport);
                 if ("select_device".equalsIgnoreCase(mInspectionType.deviceWay)) {
                     // 手动选择设备
-                    Intent intent = new Intent(currentActivity, DeviceSelectActivity.class);
+                    Intent intent = new Intent(mActivity, DeviceSelectActivity.class);
                     intent.putExtra(Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
 
                     intent.putExtra(DeviceSelectActivity.SELECT_TYPE, DeviceSelectActivity.SELECT_TYPE_MULT);
@@ -532,7 +531,7 @@ public class AddTaskActivity extends BaseActivity {
                     this.finish();
                 } else if (InspectionType.operation.name().equalsIgnoreCase(mInspectionType.k)) {
                     // 运维一体化
-                    Intent intent = new Intent(currentActivity, YWDeviceListActivity.class);
+                    Intent intent = new Intent(mActivity, YWDeviceListActivity.class);
                     startActivityForResult(intent, ADD_YUNWEI_TASK_CODE);
                 } else {
                     TaskService.getInstance().saveOrUpdate(mCurrentTask);

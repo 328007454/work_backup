@@ -118,7 +118,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
         switch (msg.what) {
             case LOAD_DATA:
                 if (mXCHoleAdapter == null) {
-                    mXCHoleAdapter = new XianCunHoleAdapter(_this, holeRecords, R.layout.xiancun_hole_adapter);
+                    mXCHoleAdapter = new XianCunHoleAdapter(mActivity, holeRecords, R.layout.xiancun_hole_adapter);
                     binding.lvExamineProcess.setAdapter(mXCHoleAdapter);
                     mXCHoleAdapter.setItemClickListener(this);
                 } else {
@@ -141,7 +141,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
                     String pictureContent = DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) + "\n" + currentHole + "\n" + PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                 }
-            } else if (requestCode == CANCEL_RESULT_LOAD_IMAGE) {//删除照片请求
+            } else if (requestCode == Config.CANCEL_RESULT_LOAD_IMAGE) {//删除照片请求
                 ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
                 ArrayList<String> allPicList = StringUtils.stringToList(item.clear_images);
                 for (String imageUrl : cancleImagList) {
@@ -171,7 +171,7 @@ public class XianCunHoleActivity extends BaseActivity implements ItemClickListen
             case R.id.iv_take_pic:
                 item = (HoleRecord) o;
                 currentHole = item.location + "_" + item.hole_detail;
-                FunctionUtils.takePicture(this, imgName = FunctionUtil.getCurrentImageName(_this), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
+                FunctionUtils.takePicture(this, imgName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
                 break;
             default:
                 break;

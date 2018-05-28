@@ -5,7 +5,6 @@ package com.cnksi.bdzinspection.ywyth;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -16,9 +15,6 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -90,7 +86,7 @@ public class YWWorkflowActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_ywyth_workflow);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_ywyth_workflow);
         init();
         initOnClick();
     }
@@ -124,7 +120,7 @@ public class YWWorkflowActivity extends BaseActivity {
         if (dlist == null) {
             dlist = new ArrayList<>();
         }
-        adapter = new YWWorkflowAdapter(currentActivity, dlist);
+        adapter = new YWWorkflowAdapter(mActivity, dlist);
         binding.list.setAdapter(adapter);
         if ("17".equals(currentInspectionType)) {
             binding.btnReport.setVisibility(View.VISIBLE);
@@ -132,7 +128,7 @@ public class YWWorkflowActivity extends BaseActivity {
 
         binding.list.setOnItemClickListener((parent, view, position, id) -> {
 
-            Intent intent = new Intent(currentActivity, YWWorkflowDescActivity.class);
+            Intent intent = new Intent(mActivity, YWWorkflowDescActivity.class);
             intent.putExtra(PLANDATA, plan.get(position));
             intent.putExtra(PROCESSDATA, dlist.get(position));
             startActivity(intent);
@@ -152,11 +148,11 @@ public class YWWorkflowActivity extends BaseActivity {
     private void initOnClick() {
         binding.ibtnCancel.setOnClickListener(view -> YWWorkflowActivity.this.onBackPressed());
         binding.btnReport.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, YWBatteryActivity.class);
+            Intent intent = new Intent(mActivity, YWBatteryActivity.class);
             YWWorkflowActivity.this.startActivity(intent);
         });
         binding.gqj.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, YWGQJActivity.class);
+            Intent intent = new Intent(mActivity, YWGQJActivity.class);
             intent.putExtra(Config.YWYTHPROTYPE, 5);
             YWWorkflowActivity.this.startActivity(intent);
         });
@@ -166,7 +162,7 @@ public class YWWorkflowActivity extends BaseActivity {
                 YWWorkflowActivity.this.finish();
             } else {
                 inputBinding = XsDialogInputBinding.inflate(YWWorkflowActivity.this.getLayoutInflater());
-                dialog = DialogUtils.createDialog(currentActivity, inputBinding.getRoot(), (int) (ScreenUtils.getScreenWidth(currentActivity) * 0.9),
+                dialog = DialogUtils.createDialog(mActivity, inputBinding.getRoot(), (int) (ScreenUtils.getScreenWidth(mActivity) * 0.9),
                         LinearLayout.LayoutParams.WRAP_CONTENT);
                 dialog.show();
 
@@ -185,10 +181,10 @@ public class YWWorkflowActivity extends BaseActivity {
                         TaskService.getInstance().finishTask(currentTaskId);
 
                     }
-                    YWWorkflowActivity.this.startActivity(new Intent(currentActivity, YunweiReportActivity.class));
+                    YWWorkflowActivity.this.startActivity(new Intent(mActivity, YunweiReportActivity.class));
                     if (isfinish) {
                         YWWorkflowActivity.this.setResult(RESULT_OK);
-                        currentActivity.finish();
+                        mActivity.finish();
 
                     }
                 });
@@ -344,8 +340,8 @@ public class YWWorkflowActivity extends BaseActivity {
                 selectIndex = position;
                 switch (index) {
                     case 0: // 拍照
-                        FunctionUtil.takePicture(currentActivity,
-                                (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
+                        FunctionUtil.takePicture(mActivity,
+                                (currentImageName = FunctionUtil.getCurrentImageName(mActivity)),
                                 Config.CUSTOMER_PICTURES_FOLDER);
                         break;
                     case 1:
@@ -390,9 +386,9 @@ public class YWWorkflowActivity extends BaseActivity {
 
     private void showRecordAudioDialog() {
         if (mRecordAudioDialg == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) / 2;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) / 2;
             audioDialogBinding = XsRecordAudioDialogBinding.inflate(getLayoutInflater());
-            mRecordAudioDialg = DialogUtils.createDialog(currentActivity, audioDialogBinding.getRoot(), dialogWidth, dialogWidth);
+            mRecordAudioDialg = DialogUtils.createDialog(mActivity, audioDialogBinding.getRoot(), dialogWidth, dialogWidth);
             mRecordAudioDialg.setOnDismissListener(dialog -> {
                 MediaRecorderUtils.getInstance().stopRecordAudio();
                 if (mRecorderTimer != null) {

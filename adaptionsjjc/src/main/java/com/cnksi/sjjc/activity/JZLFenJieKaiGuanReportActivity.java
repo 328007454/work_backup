@@ -200,7 +200,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                         mJzlfenjieLayoutBinding.tvContinueInspection.setText("继续记录");
                     }
                     if (fenJieKaiGuanContentAdapter == null) {
-                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, listDbModel, currentInspectionType, R.layout.jzlfenjiekaiguan_adapter);
+                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(mActivity, listDbModel, currentInspectionType, R.layout.jzlfenjiekaiguan_adapter);
                         mJzlfenjieLayoutBinding.lvReportContent.setAdapter(fenJieKaiGuanContentAdapter);
                     } else {
                         fenJieKaiGuanContentAdapter.setListModel(listDbModel);
@@ -233,7 +233,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                         mJzlfenjieLayoutBinding.tvContinueInspection.setText("继续记录");
                     }
                     if (fenJieKaiGuanContentAdapter == null) {
-                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(_this, cdbhclValueList, currentInspectionType, R.layout.jzlfenjiekaiguan_adapter);
+                        fenJieKaiGuanContentAdapter = new JZLFenJieKaiGuanContentAdapter(mActivity, cdbhclValueList, currentInspectionType, R.layout.jzlfenjiekaiguan_adapter);
                         mJzlfenjieLayoutBinding.lvReportContent.setAdapter(fenJieKaiGuanContentAdapter);
                     } else {
                         fenJieKaiGuanContentAdapter.setListBean(cdbhclValueList);
@@ -251,11 +251,11 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
     private void initOnclick() {
         mJzlfenjieLayoutBinding.tvContinueInspection.setOnClickListener(v -> {
             if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
-                intentDiff = new Intent(_this, DifferentialMotionRecordActivity2.class);
+                intentDiff = new Intent(mActivity, DifferentialMotionRecordActivity2.class);
             } else if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
-                intentDiff = new Intent(_this, NewTransformRecordActivity.class);
+                intentDiff = new Intent(mActivity, NewTransformRecordActivity.class);
             } else {
-                intentDiff = new Intent(_this, IndoorHumitureRecordActivity.class);
+                intentDiff = new Intent(mActivity, IndoorHumitureRecordActivity.class);
             }
             JZLFenJieKaiGuanReportActivity.this.startActivity(intentDiff);
             JZLFenJieKaiGuanReportActivity.this.finish();

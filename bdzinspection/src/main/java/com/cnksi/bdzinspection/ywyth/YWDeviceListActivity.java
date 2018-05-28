@@ -32,7 +32,7 @@ public class YWDeviceListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_yw_device_list);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_yw_device_list);
         initialUI();
         initialData();
         initOncLick();

@@ -11,7 +11,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.databinding.XsActivityYunweiReportBinding;
-import com.cnksi.bdzinspection.utils.AnimationUtils;
+import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DepartmentService;
@@ -57,7 +57,7 @@ public class YunweiReportActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		binding = DataBindingUtil.setContentView(currentActivity,R.layout.xs_activity_yunwei_report);
+		binding = DataBindingUtil.setContentView(mActivity,R.layout.xs_activity_yunwei_report);
 		initialUI();
 		initialData();
 		initOnClick();
@@ -72,7 +72,7 @@ public class YunweiReportActivity extends BaseActivity {
 
 		binding.includeTitle.tvTitle.setText(getString(R.string.xs_report_title_format_str, currentBdzName + currentInspectionTypeName));
 		binding.tvDashLine.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-		PlaySound.getIntance(currentActivity).play(R.raw.printing);
+		PlaySound.getIntance(mActivity).play(R.raw.printing);
 		mHandler.sendEmptyMessageDelayed(VIBRATOR, 500);
 		mHandler.sendEmptyMessageDelayed(ANIMATION, 2000);
 
@@ -97,7 +97,7 @@ public class YunweiReportActivity extends BaseActivity {
 	}
 	private void initOnClick() {
 		
-		binding.tvContinueInspection.setOnClickListener(view -> YunweiReportActivity.this.startActivity(new Intent(currentActivity, YWWorkflowActivity.class)));
+		binding.tvContinueInspection.setOnClickListener(view -> YunweiReportActivity.this.startActivity(new Intent(mActivity, YWWorkflowActivity.class)));
 		
 		binding.includeTitle.ibtnCancel.setOnClickListener(view -> YunweiReportActivity.this.ExitThisAndGoLauncher());
 		binding.includeTitle.ibtnExit.setOnClickListener(view -> YunweiReportActivity.this.ExitThisAndGoLauncher());
@@ -109,7 +109,7 @@ public class YunweiReportActivity extends BaseActivity {
 		switch (msg.what) {
 		case ANIMATION:
 
-			PlaySound.getIntance(currentActivity).play(R.raw.print_out);
+			PlaySound.getIntance(mActivity).play(R.raw.print_out);
 			AnimationUtils.translateAnimRun(binding.llReportContentContainer, 0.0f,
 					binding.llReportContentContainer.getHeight() * 92 / 100);
 
@@ -120,7 +120,7 @@ public class YunweiReportActivity extends BaseActivity {
 		case LOAD_DATA:
 
 			String result = getString(R.string.xs_inspection_status_format_str, status);
-			binding.tvInspectionResult.setText(StringUtils.changePartTextColor(currentActivity, result, R.color.xs_red_color,
+			binding.tvInspectionResult.setText(StringUtils.changePartTextColor(mActivity, result, R.color.xs_red_color,
 					result.length() - status.length(), result.length()));
 
 			if (report != null) {
@@ -147,7 +147,7 @@ public class YunweiReportActivity extends BaseActivity {
 
 	@Override
 	protected void onDestroy() {
-		PlaySound.getIntance(currentActivity).stop();
+		PlaySound.getIntance(mActivity).stop();
 		super.onDestroy();
 	}
 

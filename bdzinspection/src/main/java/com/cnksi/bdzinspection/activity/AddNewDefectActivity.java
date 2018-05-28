@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DefectDefineAdapter;
@@ -73,7 +72,7 @@ public class AddNewDefectActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_add_new_defect);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_add_new_defect);
         initialUI();
         initOnClick();
     }
@@ -158,7 +157,7 @@ public class AddNewDefectActivity extends BaseActivity {
                 binding.rbGeneralDefect.setChecked(true);
             }
             binding.etInputDefectContent.setText(mCurrentDbModel.getString(Defect.DESCRIPTION));
-            KeyBoardUtils.closeKeybord(currentActivity);
+            KeyBoardUtils.closeKeybord(mActivity);
         });
     }
 
@@ -229,7 +228,7 @@ public class AddNewDefectActivity extends BaseActivity {
 
                 if (mDefectDefineAdapter == null) {
 
-                    mDefectDefineAdapter = new DefectDefineAdapter(currentActivity, dataList);
+                    mDefectDefineAdapter = new DefectDefineAdapter(mActivity, dataList);
                     binding.lvContainer.setAdapter(mDefectDefineAdapter);
                 } else {
                     mDefectDefineAdapter.setList(dataList);
@@ -250,7 +249,7 @@ public class AddNewDefectActivity extends BaseActivity {
 
                     // 拍摄的缺陷照片 进行圆圈标记操作
                     mDefectImageList.add(currentImageName);
-                    Intent intent = new Intent(currentActivity, DrawCircleImageActivity.class);
+                    Intent intent = new Intent(mActivity, DrawCircleImageActivity.class);
                     intent.putExtra(Config.CURRENT_IMAGE_NAME, Config.RESULT_PICTURES_FOLDER + currentImageName);
                     intent.putExtra(Config.PICTURE_CONTENT, currentDeviceName + "\n" + binding.etInputDefectContent.getText().toString() + "\n"
                             + DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm));

@@ -55,7 +55,7 @@ public class SelectPersonUtil implements ItemClickListener {
             mPersonAdapter = new SelectionPersonAdapter(view, selecModels, layoutID);
             mPersonAdapter.setOnItemClickListener(this);
         }
-        this.mActivity = activity;
+       mActivity = activity;
         view.setLayoutManager(layoutManager);
         view.setAdapter(mPersonAdapter);
         this.selectRecy = view;

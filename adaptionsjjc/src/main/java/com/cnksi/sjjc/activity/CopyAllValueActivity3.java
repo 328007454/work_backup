@@ -166,15 +166,15 @@ public class CopyAllValueActivity3 extends BaseActivity {
             final ActivityCopyDialogBinding notClearDialogBinding = ActivityCopyDialogBinding.inflate(CopyAllValueActivity3.this.getLayoutInflater());
             notClearDialogBinding.btnCancel.setOnClickListener(v1 -> dialog.dismiss());
             notClearDialogBinding.btnSure.setOnClickListener(v12 -> CopyAllValueActivity3.this.saveNotClearCopyInfo(result, notClearDialogBinding.etCopyValues, item));
-            dialog = DialogUtils.creatDialog(_this, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialog = DialogUtils.creatDialog(mActivity, notClearDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             dialog.show();
         });
         copyViewUtil.setItemClickListener(new ItemClickListener<CopyItem>() {
             @Override
             public void itemClick(View v, CopyItem copyItem, int position) {
-                KeyBoardUtils.closeKeybord(_this);
-                CopyDataInterface.showHistory(_this, copyItem);
+                KeyBoardUtils.closeKeybord(mActivity);
+                CopyDataInterface.showHistory(mActivity, copyItem);
             }
 
             @Override
@@ -421,17 +421,17 @@ public class CopyAllValueActivity3 extends BaseActivity {
     private DialogCopyTipsBinding mTipsBinding;
 
     protected void showTipsDialog(ViewGroup mRootContainer, CharSequence copytips) {
-        int dialogWidth = ScreenUtils.getScreenWidth(_this) * 9 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         if (tipsDialog == null) {
             mTipsBinding = DialogCopyTipsBinding.inflate(getLayoutInflater());
-            tipsDialog = DialogUtils.creatDialog(_this, mTipsBinding.getRoot(), dialogWidth, dialogHeight);
+            tipsDialog = DialogUtils.creatDialog(mActivity, mTipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         mTipsBinding.tvCopy.setText(copytips);
         mTipsBinding.tvTips.setVisibility(View.GONE);
         tipsDialog.show();
         mTipsBinding.btnSure.setOnClickListener(view -> {
-            KeyBoardUtils.closeKeybord(_this);
+            KeyBoardUtils.closeKeybord(mActivity);
             try {
                 String checkRs = "";
                 checkRs = mTipsBinding.rbYes.isChecked() ? "正常" : "不正常";
@@ -440,13 +440,13 @@ public class CopyAllValueActivity3 extends BaseActivity {
                 e.printStackTrace();
             }
             isNeedUpdateTaskState = true;
-            Intent intent = new Intent(_this, CopyValueReportActivity.class);
+            Intent intent = new Intent(mActivity, CopyValueReportActivity.class);
             CopyAllValueActivity3.this.startActivity(intent);
             ScreenManager.getScreenManager().popActivityList(CopyBaseDataActivity.class);
-            _this.finish();
+            mActivity.finish();
         });
         mTipsBinding.btnCancel.setOnClickListener(view -> {
-            KeyBoardUtils.closeKeybord(_this);
+            KeyBoardUtils.closeKeybord(mActivity);
             tipsDialog.dismiss();
         });
     }
@@ -526,7 +526,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
         }
         result.remark = TextUtils.isEmpty(etInput.getText().toString()) ? "" : (TextUtils.isEmpty(result.remark) ? etInput.getText().toString() + "," : etInput.getText().toString());
         dialog.dismiss();
-        copyViewUtil.createCopyView(_this, data, binding.copyContainer);
+        copyViewUtil.createCopyView(mActivity, data, binding.copyContainer);
     }
 
 }

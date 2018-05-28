@@ -201,7 +201,7 @@ public class AddTaskActivity extends BaseActivity {
                 ToastUtils.showMessageLong("变电站为空");
             }
         });
-        mTaskBinding.ibtnSelectInspectionDate.setOnClickListener(v -> DialogUtils.showDatePickerDialog(_this, (result, position) -> mTaskBinding.tvInspectionDate.setText(result)));
+        mTaskBinding.ibtnSelectInspectionDate.setOnClickListener(v -> DialogUtils.showDatePickerDialog(mActivity, (result, position) -> mTaskBinding.tvInspectionDate.setText(result)));
         mTitleBinding.btnBack.setOnClickListener(v -> AddTaskActivity.this.onBackPressed());
         mTaskBinding.btnConfirm.setOnClickListener(v -> AddTaskActivity.this.saveTask());
         mTaskBinding.btnCancel.setOnClickListener(v -> AddTaskActivity.this.onBackPressed());

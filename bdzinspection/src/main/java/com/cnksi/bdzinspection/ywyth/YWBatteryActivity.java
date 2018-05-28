@@ -2,7 +2,6 @@ package com.cnksi.bdzinspection.ywyth;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,11 +10,9 @@ import android.text.InputType;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -108,7 +105,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_yw_battery);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_yw_battery);
         initialUI();
         initialData();
         initOnClick();
@@ -121,8 +118,8 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         TTSUtils.getInstance().startSpeaking(getString(R.string.xs_speak_content_format_str, getString(R.string.xs_yw_battery_title)));
         binding.includeTitle.tvTitle.setText(R.string.xs_yw_battery_title);
         String _t = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
-        binding.time.append(StringUtils.changePartTextColor(currentActivity, _t, R.color.xs_green_color, 0, _t.length()));
-        binding.clr.append(StringUtils.changePartTextColor(currentActivity, getUsers().username, R.color.xs_green_color, 0, getUsers().username.length()));
+        binding.time.append(StringUtils.changePartTextColor(mActivity, _t, R.color.xs_green_color, 0, _t.length()));
+        binding.clr.append(StringUtils.changePartTextColor(mActivity, getUsers().username, R.color.xs_green_color, 0, getUsers().username.length()));
     }
 
     private void initialData() {
@@ -188,7 +185,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         switch (msg.what) {
             case LOAD_DATA:
                 if (mBatteryAdapter == null) {
-                    mBatteryAdapter = new BatteryDetailsAdapter(currentActivity, mBatteryDetailsList);
+                    mBatteryAdapter = new BatteryDetailsAdapter(mActivity, mBatteryDetailsList);
                     mBatteryAdapter.setNeedResistance(true);
                     binding.gvContainer.setAdapter(mBatteryAdapter);
                 } else {
@@ -229,7 +226,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     private void showBatteryDialog(BatteryDetails mBatteryDetails) {
         if (mBatteryDialog == null) {
             dialogBinding = XsBatteryInputValueDialogBinding.inflate(getLayoutInflater());
-            mBatteryDialog = DialogUtils.createDialog(currentActivity, dialogBinding.getRoot(), ScreenUtils.getScreenWidth(currentActivity) * 9 / 10, LinearLayout.LayoutParams.WRAP_CONTENT);
+            mBatteryDialog = DialogUtils.createDialog(mActivity, dialogBinding.getRoot(), ScreenUtils.getScreenWidth(mActivity) * 9 / 10, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
         dialogBinding.tvDialogTitle.setText(mBatteryDetails.battery_number);
         dialogBinding.unit.setText(R.string.xs_resistance_munit_str);
@@ -276,7 +273,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
 
     public void jumpToDefect(BatteryDetails mBatteryDetails) {
         saveBatteryCopyValue(dialogBinding.etVoltage, dialogBinding.etResistance, mBatteryDetails);
-        Intent intent = new Intent(currentActivity, DefectControlActivity.class);
+        Intent intent = new Intent(mActivity, DefectControlActivity.class);
         intent.putExtra(Config.IS_FROM_BATTERY, true);
         intent.putExtra(Config.CURRENT_DEVICE_ID, mBatteryDetails.battery_number);
         intent.putExtra(Config.CURRENT_DEVICE_PART_NAME, mBatteryDetails.battery_number);
@@ -347,7 +344,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             e1.printStackTrace();
         }
         mBatteryAdapter.notifyDataSetChanged();
-        KeyBoardUtils.closeKeybord(mEtVoltage, currentActivity);
+        KeyBoardUtils.closeKeybord(mEtVoltage, mActivity);
         // 如果电压或者电阻超过标准 则提示保存缺陷
         try {
             boolean isValueNormal = true;
@@ -405,10 +402,10 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     public void showBatteryTipsDialog(String defectLevel, String defectContent) {
         if (!isShowTipsDialog) {
             if (tipsDialog == null) {
-                int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-                int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) * 3 / 10;// LinearLayout.LayoutParams.WRAP_CONTENT
+                int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+                int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 3 / 10;// LinearLayout.LayoutParams.WRAP_CONTENT
                 tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-                tipsDialog = DialogUtils.createDialog(currentActivity,tipsBinding.getRoot(),dialogWidth,dialogHeight);
+                tipsDialog = DialogUtils.createDialog(mActivity,tipsBinding.getRoot(),dialogWidth,dialogHeight);
             }
             tipsBinding.tvDialogTitle.setText(R.string.xs_dialog_tips_str);
            tipsBinding.tvDialogContent.setText(getString(R.string.xs_dialog_tips_record_format_defect_str, defectContent, defectLevel));

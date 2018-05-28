@@ -160,27 +160,27 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
             selectmodels.clear();
             if (checkedId == R.id.bt_all) {
                 toolsBinding.btAll.setPadding(0, 0, 20, 0);
-                toolsBinding.btAll.setCompoundDrawablesWithIntrinsicBounds(null, null, currentActivity.getResources().getDrawable(R.drawable.xs_icon_check), null);
+                toolsBinding.btAll.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.drawable.xs_icon_check), null);
                 selectItem = "";
                 initData("");
 
             } else if (checkedId == R.id.bt_inmaintenance) {
                 toolsBinding.btInmaintenance.setPadding(0, 0, 20, 0);
-                toolsBinding.btInmaintenance.setCompoundDrawablesWithIntrinsicBounds(null, null, currentActivity.getResources().getDrawable(R.drawable.xs_icon_check), null);
+                toolsBinding.btInmaintenance.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.drawable.xs_icon_check), null);
                 group.check(R.id.bt_inmaintenance);
                 selectItem = String.valueOf(checkedId);
                 initData(String.valueOf(checkedId));
 
             } else if (checkedId == R.id.bt_overdate) {
                 toolsBinding.btOverdate.setPadding(0, 0, 20, 0);
-                toolsBinding.btOverdate.setCompoundDrawablesWithIntrinsicBounds(null, null, currentActivity.getResources().getDrawable(R.drawable.xs_icon_check), null);
+                toolsBinding.btOverdate.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.drawable.xs_icon_check), null);
                 group.check(R.id.bt_overdate);//超期
                 selectItem = String.valueOf(checkedId);
                 initData(String.valueOf(checkedId));
 
             } else if (checkedId == R.id.bt_inmonth) {
                 toolsBinding.btInmonth.setPadding(0, 0, 20, 0);
-                toolsBinding.btInmonth.setCompoundDrawablesWithIntrinsicBounds(null, null, currentActivity.getResources().getDrawable(R.drawable.xs_icon_check), null);
+                toolsBinding.btInmonth.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.drawable.xs_icon_check), null);
                 initData(String.valueOf(checkedId));
                 selectItem = String.valueOf(checkedId);
                 group.check(R.id.bt_inmonth);
@@ -192,7 +192,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolsBinding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_safety_tools);
+        toolsBinding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_safety_tools);
         deptId = getIntent().getStringExtra(Department.DEPT_ID);
         currentBdzId = getIntent().getStringExtra(Bdz.BDZID);
         initialUI();
@@ -201,7 +201,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
 
     public void initialUI() {
         getIntentValue();
-        PersonListUtils.getInsance().initPopWindow(currentActivity).initPersonData(deptId);
+        PersonListUtils.getInsance().initPopWindow(mActivity).initPersonData(deptId);
         PersonListUtils.getInsance().setPersonRatioListener(this);
         toolsBinding.lvTools.setVerticalScrollBarEnabled(false);
         toolsBinding.btnStop.setVisibility(View.GONE);
@@ -213,7 +213,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         toolsBinding.lvTools.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         toolsBinding.lvTools.setAdapter(infoAdapter);
         infoAdapter.setListener(this);
-        keyBoardUtils = new QWERKeyBoardUtils(currentActivity);
+        keyBoardUtils = new QWERKeyBoardUtils(mActivity);
         keyBoardUtils.init(toolsBinding.keyoardContainer,
                 (view, oldKey, newKey) -> {
                     toolsBinding.rgContainer.clearCheck();
@@ -222,7 +222,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         toolsBinding.rgContainer.check(R.id.bt_all);
         creatStopDialog();
         creatTestDialog();
-        toolsBinding.titleInclude.ibtnCancel.setOnClickListener(v -> currentActivity.finish());
+        toolsBinding.titleInclude.ibtnCancel.setOnClickListener(v -> mActivity.finish());
         initToolCityData();
     }
 
@@ -300,8 +300,8 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
      */
     public void creatStopDialog() {
         stopBinding = XsDialogSafetyToolStopBinding.inflate(getLayoutInflater());
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
-        stopDialog = DialogUtils.createDialog(currentActivity, stopBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
+        stopDialog = DialogUtils.createDialog(mActivity, stopBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         stopDialog.setCanceledOnTouchOutside(false);
         stopBinding.rgStop.setOnCheckedChangeListener(stopDialogCheckListener);
         stopBinding.btnCancel.setOnClickListener(v -> {
@@ -363,8 +363,8 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
 
     public void creatTestDialog() {
         testBinding = XsDialogSafetyToolTestBinding.inflate(getLayoutInflater());
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
-        testDialog = DialogUtils.createDialog(currentActivity, testBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
+        testDialog = DialogUtils.createDialog(mActivity, testBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         testDialog.setCanceledOnTouchOutside(false);
         testBinding.rgTest.setOnCheckedChangeListener(testChangeListener);
         testBinding.btnCancel.setOnClickListener(v -> {
@@ -382,15 +382,15 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
             testDialog.dismiss();
             SafetyToolsControlActivity.this.saveTestData();
         });
-        testBinding.ibtnSelectInspectionDate.setOnClickListener(v -> CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> testBinding.txtTestTime.setText(result)));
-        testBinding.ibtnTakePicture.setOnClickListener(v -> FunctionUtil.takePicture(currentActivity, currentImageName = toolPicPath + FunctionUtil.getCurrentImageName(), Config.BDZ_INSPECTION_FOLDER));
+        testBinding.ibtnSelectInspectionDate.setOnClickListener(v -> CustomerDialog.showDatePickerDialog(mActivity, (result, position) -> testBinding.txtTestTime.setText(result)));
+        testBinding.ibtnTakePicture.setOnClickListener(v -> FunctionUtil.takePicture(mActivity, currentImageName = toolPicPath + FunctionUtil.getCurrentImageName(), Config.BDZ_INSPECTION_FOLDER));
         testBinding.ivReportPhoto.setOnClickListener(v -> {
             if (!reportPicList.isEmpty()) {
                 ArrayList<String> mImageUrlList = new ArrayList<>();
                 for (int i = 0, count = reportPicList.size(); i < count; i++) {
                     mImageUrlList.add(Config.BDZ_INSPECTION_FOLDER + reportPicList.get(i));
                 }
-                showImageDetails(currentActivity, mImageUrlList, true);
+                showImageDetails(mActivity, mImageUrlList, true);
             }
         });
         testBinding.ivArrow.setOnClickListener(view -> {
@@ -420,9 +420,9 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
      * 加水印在图片上
      */
     private void addWaterTextToBitmap() {
-        CustomerDialog.showProgress(currentActivity, "正在处理图片...");
+        CustomerDialog.showProgress(mActivity, "正在处理图片...");
         ExecutorManager.executeTask(() -> {
-            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
+            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(mActivity));
             if (null == currentBitmap) {
                 ToastUtils.showMessage("很抱歉，因意外需要您再次拍照。");
                 return;
@@ -443,7 +443,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
     private void saveStopData() {
         final List<OperateToolResult> resultList = new ArrayList<>();
         if (selectmodels.size() > 50) {
-            CustomerDialog.showProgress(currentActivity);
+            CustomerDialog.showProgress(mActivity);
         }
         ExecutorManager.executeTask(() -> {
             for (DbModel dbModel : selectmodels) {
@@ -491,7 +491,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         final String time = testBinding.txtTestTime.getText().toString().trim();
         final List<OperateToolResult> resultList = new ArrayList<>();
         if (selectmodels.size() > 50) {
-            CustomerDialog.showProgress(currentActivity);
+            CustomerDialog.showProgress(mActivity);
         }
         ExecutorManager.executeTask(() -> {
             for (DbModel dbModel : selectmodels) {
@@ -588,7 +588,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         String selectPersons = PreferencesUtils.get( Config.SELECT_PERSONS, "");
         int i = v.getId();
         if (i == R.id.txt_stop) {
-            CharSequence txtToolName = StringUtils.formatPartTextColor("请选择停用%s的原因", currentActivity.getResources().getColor(R.color.xs_color_5dbf19), "工器具");
+            CharSequence txtToolName = StringUtils.formatPartTextColor("请选择停用%s的原因", mActivity.getResources().getColor(R.color.xs_color_5dbf19), "工器具");
             stopBinding.txtToolName.setText(txtToolName);
             selectmodels.add(stopDbmodel);
             stopBinding.rgStop.clearCheck();
@@ -622,7 +622,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                     isSelectAll = true;
                 }
             } else {
-                Intent intent = new Intent(currentActivity, SafeToolsInformationActivity.class);
+                Intent intent = new Intent(mActivity, SafeToolsInformationActivity.class);
                 DbModel dbModel = toolsInforList.get(position);
                 String title = dbModel.getString("name");
                 intent.putExtra("title", title);
@@ -648,7 +648,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         int i = view.getId();
         if (i == R.id.btn_stop) {
             selectToolCount = selectmodels.size();
-            CharSequence txtToolName = StringUtils.formatPartTextColor("请选择停用%s的原因", currentActivity.getResources().getColor(R.color.xs_color_5dbf19), String.valueOf(selectToolCount) + "个工器具");
+            CharSequence txtToolName = StringUtils.formatPartTextColor("请选择停用%s的原因", mActivity.getResources().getColor(R.color.xs_color_5dbf19), String.valueOf(selectToolCount) + "个工器具");
             stopBinding.txtToolName.setText(txtToolName);
             stopBinding.rgStop.clearCheck();
             stopBinding.etInputReason.setText("");

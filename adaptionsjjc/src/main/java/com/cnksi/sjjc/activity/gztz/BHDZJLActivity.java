@@ -67,7 +67,7 @@ public class BHDZJLActivity extends BaseActivity {
     private void initView() {
         binding.btnNext.setOnClickListener(v -> {
             if (BHDZJLActivity.this.saveData(true)) {
-                Intent intent = new Intent(_this, GZTZRecordActivity.class);
+                Intent intent = new Intent(mActivity, GZTZRecordActivity.class);
                 BHDZJLActivity.this.startActivity(intent);
             }
         });
@@ -101,7 +101,7 @@ public class BHDZJLActivity extends BaseActivity {
         BhdzjlGroup group = new BhdzjlGroup(this, binding.itemDevice);
         group.setListener((group1, isBhsb) -> {
             selectGroup = group1;
-            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, isBhsb ? PMSDeviceType.one : PMSDeviceType.second);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
 

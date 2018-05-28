@@ -102,7 +102,7 @@ public class DiscoverHoleActivity extends BaseActivity {
             @Override
             public void itemClick(View v, String s, int position) {
                 binding.tvDiscoverholePosition.setText(s);
-                binding.tvDiscoverholePosition.setTextColor(_this.getResources().getColor(R.color.green_color));
+                binding.tvDiscoverholePosition.setTextColor(mActivity.getResources().getColor(R.color.green_color));
                 positionDialog.dismiss();
             }
 
@@ -134,8 +134,8 @@ public class DiscoverHoleActivity extends BaseActivity {
                 positionDialog.show();
             }
         });
-        binding.ivTakePic.setOnClickListener(view -> FunctionUtils.takePicture(DiscoverHoleActivity.this, imgName = FunctionUtil.getCurrentImageName(_this), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST));
-        binding.imgDiscoverholePic.setOnClickListener(view -> DiscoverHoleActivity.this.showImageDetails(_this, 0, StringUtils.addStrToListItem(picList, Config.RESULT_PICTURES_FOLDER), true, false));
+        binding.ivTakePic.setOnClickListener(view -> FunctionUtils.takePicture(DiscoverHoleActivity.this, imgName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST));
+        binding.imgDiscoverholePic.setOnClickListener(view -> DiscoverHoleActivity.this.showImageDetails(mActivity, 0, StringUtils.addStrToListItem(picList, Config.RESULT_PICTURES_FOLDER), true, false));
         binding.btnSave.setOnClickListener(view -> {
             String picAll = StringUtils.arrayListToString(picList);
             if (TextUtils.isEmpty(binding.tvDiscoverholePosition.getText().toString())) {
@@ -176,7 +176,7 @@ public class DiscoverHoleActivity extends BaseActivity {
                     picList.add(imgName);
                 }
 
-            } else if (requestCode == CANCEL_RESULT_LOAD_IMAGE) {
+            } else if (requestCode == Config.CANCEL_RESULT_LOAD_IMAGE) {
                 ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
                 for (String imageUrl : cancleImagList) {
                     picList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
@@ -192,7 +192,7 @@ public class DiscoverHoleActivity extends BaseActivity {
 
     @Override
     public void drawCircle(String pictureName, String pictureContent) {
-        Intent intent = new Intent(_this, DrawCircleImageActivity.class);
+        Intent intent = new Intent(mActivity, DrawCircleImageActivity.class);
         intent.putExtra(Config.CURRENT_IMAGE_NAME, pictureName);
         intent.putExtra(Config.PICTURE_CONTENT, pictureContent);
         startActivityForResult(intent, LOAD_DATA);

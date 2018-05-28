@@ -70,10 +70,10 @@ public class DrawCircleImageActivity extends BaseActivity {
      * 初始化画布
      */
     private void initBitmap() {
-        CustomerDialog.showProgress(_this, "正在初始化图片...");
+        CustomerDialog.showProgress(mActivity, "正在初始化图片...");
         ExecutorManager.executeTaskSerially(() -> {
-            int screenWidth = ScreenUtils.getScreenWidth(_this);
-            int screenHeight = ScreenUtils.getScreenHeight(_this);
+            int screenWidth = ScreenUtils.getScreenWidth(mActivity);
+            int screenHeight = ScreenUtils.getScreenHeight(mActivity);
             // 首先压缩图片
             File file = new File(currentImagePath);
             if (file.exists()) {
@@ -81,7 +81,7 @@ public class DrawCircleImageActivity extends BaseActivity {
             }
             final Bitmap bitmapTemp = BitmapUtils.getImageThumbnail(BitmapUtils.postRotateBitmap(currentImagePath, true), screenWidth, screenHeight);
             if (bitmapTemp != null) {
-                mPicturePaintView = new PicturePaintView(_this, bitmapTemp);
+                mPicturePaintView = new PicturePaintView(mActivity, bitmapTemp);
             }
             mHandler.sendEmptyMessage(SAVE_DATA);
         });
@@ -91,7 +91,7 @@ public class DrawCircleImageActivity extends BaseActivity {
         mTitleBinding.btnBack.setOnClickListener(view -> DrawCircleImageActivity.this.onBackPressed());
         binding.btnSaveMark.setOnClickListener(view -> DrawCircleImageActivity.this.saveMarkAndExit());
         binding.btnAddMark.setOnClickListener(view -> PicturePaintView.saveMark());
-        binding.btnClearMark.setOnClickListener(view -> CustomerDialog.showSelectDialog(_this, "确认要清除所有标记吗?", new DialogClickListener() {
+        binding.btnClearMark.setOnClickListener(view -> CustomerDialog.showSelectDialog(mActivity, "确认要清除所有标记吗?", new DialogClickListener() {
             @Override
             public void confirm() {
                 initBitmap();
@@ -130,7 +130,7 @@ public class DrawCircleImageActivity extends BaseActivity {
      */
     private void saveMarkAndExit() {
         isSavePicture = true;
-        CustomerDialog.showProgress(_this, "正在保存图片...");
+        CustomerDialog.showProgress(mActivity, "正在保存图片...");
         ExecutorManager.executeTaskSerially(() -> {
             PicturePaintView.saveMark();
             if (DrawCircleImageActivity.this.saveEditPicture(binding.rlCirclePicture, currentImagePath)) {

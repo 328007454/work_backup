@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.New1RegularSwitchListAdapter1;
 import com.cnksi.bdzinspection.adapter.SwitchMenuAudioAdapter;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
@@ -152,7 +150,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                         mImageUrlList.add(Config.RESULT_PICTURES_FOLDER + mPictureArray[i]);
                         mPictureList.add(mPictureArray[i]);
                     }
-                    showImageDetails(currentActivity, mImageUrlList, true);
+                    showImageDetails(mActivity, mImageUrlList, true);
                 }
             }
         }
@@ -173,13 +171,13 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
 
         @Override
         public void defectClick(View v, DbModel data, int position) {
-            CustomerDialog.showProgress(currentActivity, "加载缺陷中");
+            CustomerDialog.showProgress(mActivity, "加载缺陷中");
             dbModel = data;
             String deviceId = dbModel.getString(DefectRecord.DEVICEID);
             String standId = dbModel.getString(StandardSwitchover.ID);
             String defectLevel = dbModel.getString(DefectRecord.DEFECTLEVEL);
             if (!TextUtils.isEmpty(defectLevel)) {
-                Intent intent = new Intent(currentActivity, DefectControlActivity.class);
+                Intent intent = new Intent(mActivity, DefectControlActivity.class);
                 intent.putExtra(Config.CURRENT_DEVICE_ID, deviceId);
                 intent.putExtra(Config.IS_NEED_SEARCH_DEFECT_REASON, true);
                 intent.putExtra(Config.CURRENT_STANDARD_ID, standId);
@@ -193,7 +191,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSwitch1Binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_regular_switch1);
+        mSwitch1Binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_regular_switch1);
         initialUI();
         initialData();
         popMenu = new ToolPop();
@@ -304,7 +302,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
         switch (msg.what) {
             case LOAD_DATA:
                 if (mRegularSwitchAdapter == null) {
-                    mRegularSwitchAdapter = new New1RegularSwitchListAdapter1(currentActivity);
+                    mRegularSwitchAdapter = new New1RegularSwitchListAdapter1(mActivity);
                     mRegularSwitchAdapter.setClickListener(itemClickListener);
                     mSwitch1Binding.lvContainer.setAdapter(mRegularSwitchAdapter);
                     if (!TextUtils.isEmpty(inspectionTips)) {
@@ -319,9 +317,9 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                     String audioUrl = report.audioUrl;
                     audioUrls = StringUtils.stringToList(audioUrl, ",");
                     mAudioAdapter = new SwitchMenuAudioAdapter(R.layout.xs_item_audio, audioUrls);
-                    mSwitch1Binding.recyAudio.setLayoutManager(new GridLayoutManager(currentActivity, 4));
+                    mSwitch1Binding.recyAudio.setLayoutManager(new GridLayoutManager(mActivity, 4));
                     mSwitch1Binding.recyAudio.setAdapter(mAudioAdapter);
-                    mAudioAdapter.setItemClicListener((view, data, position) -> DialogUtils.showSureTipsDialog(currentActivity, null, "确定要删除吗？", new OnViewClickListener() {
+                    mAudioAdapter.setItemClicListener((view, data, position) -> DialogUtils.showSureTipsDialog(mActivity, null, "确定要删除吗？", new OnViewClickListener() {
                         @Override
                         public void onClick(View v) {
                             FileUtils.deleteFile(Config.AUDIO_FOLDER + audioUrls.get(position));
@@ -352,7 +350,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                 } else {
                     showStr = R.string.xs_dialog_tips_content_special;
                 }
-                final Intent intent = new Intent(currentActivity, GenerateReportActivity.class);
+                final Intent intent = new Intent(mActivity, GenerateReportActivity.class);
                 intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentInspectionType);
                 boolean xudianchi = currentInspectionTypeName.contains(Config.XUDIANCHI) && (currentInspectionTypeName.contains(Config.DIANYA) || currentInspectionTypeName.contains(Config.NEIZU));
                 if (xudianchi) {
@@ -418,7 +416,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
         });
 
         mSwitch1Binding.includeTitle.ibtnAdd.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, ChangeDeviceStandardActivity.class);
+            Intent intent = new Intent(mActivity, ChangeDeviceStandardActivity.class);
             intent.putExtra(Config.IS_ADD_DEVICE_STANDARD, true);
             intent.putExtra(Config.CURRENT_DEVICE_PART_ID, currentDevicePartId);
             New1RegularSwitchActivity1.this.startActivityForResult(intent, UPDATE_DEVICE_STANDARD_REQUEST_CODE);
@@ -439,9 +437,9 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                 intent1.setComponent(componentName);
                 New1RegularSwitchActivity1.this.startActivity(intent1);
             } else if ("maintenance_blqdzcs".equalsIgnoreCase(currentInspectionType)) {
-                New1RegularSwitchActivity1.this.startActivity(new Intent(currentActivity, CopyAllValueActivity3.class));
+                New1RegularSwitchActivity1.this.startActivity(new Intent(mActivity, CopyAllValueActivity3.class));
             } else if (currentInspectionTypeName.contains("压板")) {
-                New1RegularSwitchActivity1.this.startActivity(new Intent(currentActivity, CopyMaintenanceDeviceActivity.class));
+                New1RegularSwitchActivity1.this.startActivity(new Intent(mActivity, CopyMaintenanceDeviceActivity.class));
             }
         });
 
@@ -508,9 +506,9 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
      * 加水印在图片上
      */
     private void addWaterTextToBitmap() {
-        CustomerDialog.showProgress(currentActivity, "正在处理图片...");
+        CustomerDialog.showProgress(mActivity, "正在处理图片...");
         ExecutorManager.executeTask(() -> {
-            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.RESULT_PICTURES_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
+            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.RESULT_PICTURES_FOLDER + currentImageName), ScreenUtils.getScreenWidth(mActivity));
             currentBitmap = BitmapUtil.addText2Bitmap(currentBitmap, DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm_ss), getResources().getDimensionPixelOffset(R.dimen.xs_global_text_size));
             BitmapUtil.saveBitmap(currentBitmap, Config.RESULT_PICTURES_FOLDER + currentImageName, 60);
             String pics = dbModel.getString(SwitchPic.PIC);
@@ -596,13 +594,13 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                 dbModel = model;
                 int i = v.getId();
                 if (i == R.id.id_camera) {
-                    FunctionUtil.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER);
+                    FunctionUtil.takePicture(mActivity, currentImageName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER);
 
                 } else if (i == R.id.id_defect) {
                     saveOrUpdateInputValue(0x00);
                     String deviceId = dbModel.getString(DefectRecord.DEVICEID);
                     String standId = dbModel.getString(StandardSwitchover.ID);
-                    Intent intent = new Intent(currentActivity, DefectControlActivity.class);
+                    Intent intent = new Intent(mActivity, DefectControlActivity.class);
                     intent.putExtra(Config.CURRENT_DEVICE_ID, deviceId);
                     intent.putExtra(Config.CURRENT_STANDARD_ID, standId);
                     intent.putExtra(Config.IS_NEED_SEARCH_DEFECT_REASON, true);

@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
@@ -36,7 +35,7 @@ public class AccidentExceptionActivity extends BaseActivity implements OnPageCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_accident_exception);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_accident_exception);
         initialUI();
         initFragments();
         initOnClick();
@@ -97,7 +96,7 @@ public class AccidentExceptionActivity extends BaseActivity implements OnPageCha
     public void setPagerTabStripValue(PagerSlidingTabStrip tabStrip) {
 
         // 当前屏幕密度
-        DisplayMetrics mDisplayMetrics = currentActivity.getResources().getDisplayMetrics();
+        DisplayMetrics mDisplayMetrics = mActivity.getResources().getDisplayMetrics();
         // 设置Tab的分割线是透明的
         tabStrip.setDividerColor(Color.TRANSPARENT);
         // 设置Tab底部线的高度
@@ -105,12 +104,12 @@ public class AccidentExceptionActivity extends BaseActivity implements OnPageCha
         // 设置Tab Indicator的高度
         tabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics));
         // 设置Tab标题文字的大小
-        int textSize = AutoUtils.getPercentHeightSizeBigger((int) currentActivity.getResources().getDimension(R.dimen.xs_accidential_tab_strip_text_size_px));
+        int textSize = AutoUtils.getPercentHeightSizeBigger((int) mActivity.getResources().getDimension(R.dimen.xs_accidential_tab_strip_text_size_px));
         tabStrip.setTextSize(textSize);
         // 设置Tab Indicator的颜色
-        tabStrip.setIndicatorColor(currentActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
+        tabStrip.setIndicatorColor(mActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-        tabStrip.setSelectedTextColor(currentActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
+        tabStrip.setSelectedTextColor(mActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
         // 取消点击Tab时的背景色
         tabStrip.setTabBackground(0);
     }

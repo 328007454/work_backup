@@ -147,7 +147,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 NariActivity.this.Toast("没有需要下载的离线作业包！");
                 return;
             }
-            DialogUtils.showSureTipsDialog(currentActivity, null, "本次将会下载" + nodowns.length + "个离线作业包！", new OnViewClickListener() {
+            DialogUtils.showSureTipsDialog(mActivity, null, "本次将会下载" + nodowns.length + "个离线作业包！", new OnViewClickListener() {
                 @Override
                 public void onClick(View v) {
                     downLoad(nodowns);
@@ -161,7 +161,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 NariActivity.this.Toast("没有需要上传的离线作业包！");
                 return;
             }
-            DialogUtils.showSureTipsDialog(currentActivity, null, "本次将会有" + dones.length + "个离线作业包上传到PMS！", new OnViewClickListener() {
+            DialogUtils.showSureTipsDialog(mActivity, null, "本次将会有" + dones.length + "个离线作业包上传到PMS！", new OnViewClickListener() {
                 @Override
                 public void onClick(View v) {
                     upload(dones);
@@ -266,7 +266,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             return;
         }
         try {
-            NARIHelper.init(currentActivity, users.account, AESUtil.decode(users.pwd), Config.NARI_BASEFOLDER);
+            NARIHelper.init(mActivity, users.account, AESUtil.decode(users.pwd), Config.NARI_BASEFOLDER);
         } catch (Exception e) {
             ToastUtils.showMessage("密码解密失败！");
             e.printStackTrace();
@@ -278,7 +278,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     private void Toast(final String str) {
         runOnUiThread(() -> {
             if (toast == null) {
-                toast = Toast.makeText(currentActivity, "", Toast.LENGTH_LONG);
+                toast = Toast.makeText(mActivity, "", Toast.LENGTH_LONG);
             }
             toast.setText(str);
             toast.show();
@@ -351,7 +351,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
 
     private void upload(final BDPackage... bdPackages) {
-        CustomerDialog.showProgress(currentActivity, "正在上传...");
+        CustomerDialog.showProgress(mActivity, "正在上传...");
         ExecutorManager.executeTask(() -> {
             for (BDPackage bdPackage : bdPackages) {
                 Report report;
@@ -416,7 +416,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
 
     private void downLoad(final BDPackage... bdPackages) {
-        final Dialog dialog = CustomerDialog.showProgress(currentActivity, "正在下载第1个,共" + bdPackages.length + "个...");
+        final Dialog dialog = CustomerDialog.showProgress(mActivity, "正在下载第1个,共" + bdPackages.length + "个...");
         ExecutorManager.executeTask(() -> {
             int i = 1;
             for (BDPackage bdPackage : bdPackages) {
@@ -450,7 +450,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
     private void startTask(BDPackage bdPackage) {
         if (!TextUtils.isEmpty(bdPackage.taskId)) {
-            Intent intent = new Intent(currentActivity, TaskRemindActivity.class);
+            Intent intent = new Intent(mActivity, TaskRemindActivity.class);
             intent.putExtra("task_id", bdPackage.taskId);
             startActivity(intent);
             return;
@@ -533,7 +533,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     class ItemAdapter extends BaseAdapter<BDPackage> {
 
         public ItemAdapter(Collection<BDPackage> data) {
-            super(currentActivity, data, R.layout.xs_item_list_nari);
+            super(mActivity, data, R.layout.xs_item_list_nari);
         }
 
         public BDPackage[] getStatus(PackageStatus status) {
@@ -586,7 +586,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             holder.getRootView().setOnLongClickListener(view -> {
                 int width = ScreenUtils.getScreenWidth(NariActivity.this.getApplicationContext()) * 9 / 10;
                 XsDialogSelectBinding selectBinding = XsDialogSelectBinding.inflate(NariActivity.this.getLayoutInflater());
-                Dialog dialog = DialogUtils.createDialog(currentActivity, selectBinding.getRoot(), width, LinearLayout.LayoutParams.WRAP_CONTENT);
+                Dialog dialog = DialogUtils.createDialog(mActivity, selectBinding.getRoot(), width, LinearLayout.LayoutParams.WRAP_CONTENT);
                 selectBinding.tvDialogContent.setText(R.string.xs_pms_task_delete_tips);
                 dialog.show();
                 selectBinding.btnCancel.setOnClickListener(view1 -> dialog.dismiss());
@@ -613,7 +613,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 switch (packageStatus) {
                     case nodown:
                         //ToDown;
-                        DialogUtils.showSureTipsDialog(currentActivity, null, "是否要下载该离线作业包？", new OnViewClickListener() {
+                        DialogUtils.showSureTipsDialog(mActivity, null, "是否要下载该离线作业包？", new OnViewClickListener() {
                             @Override
                             public void onClick(View v) {
                                 downLoad(item);
@@ -624,7 +624,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                         startTask(item);
                         break;
                     case done:
-                        DialogUtils.showSureTipsDialog(currentActivity, null, StringUtils.formatPartTextColor("是否要上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
+                        DialogUtils.showSureTipsDialog(mActivity, null, StringUtils.formatPartTextColor("是否要上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
                             @Override
                             public void onClick(View v) {
                                 upload(item);
@@ -632,7 +632,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                         });
                         break;
                     case upload_error:
-                        DialogUtils.showSureTipsDialog(currentActivity, null, StringUtils.formatPartTextColor("是否要重新上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
+                        DialogUtils.showSureTipsDialog(mActivity, null, StringUtils.formatPartTextColor("是否要重新上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
                             @Override
                             public void onClick(View v) {
                                 upload(item);
@@ -655,7 +655,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     private String delResult;
 
     private void deltePacage(BDPackage item, int delteNum, Dialog dialog) {
-        CustomerDialog.showProgress(currentActivity, "正在删除该离线任务，请稍后...");
+        CustomerDialog.showProgress(mActivity, "正在删除该离线任务，请稍后...");
         ExecutorManager.executeTask(() -> {
             try {
                 if (delteNum == 1) {

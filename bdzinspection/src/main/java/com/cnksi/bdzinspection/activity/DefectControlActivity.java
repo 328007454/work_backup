@@ -68,7 +68,7 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity,R.layout.xs_activity_defect_control);
+        binding = DataBindingUtil.setContentView(mActivity,R.layout.xs_activity_defect_control);
         
         initialUI();
         initOnClick();
@@ -172,7 +172,7 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
 
     @Override
     public void onFunctionClick(View view, DefectRecord mDefect) {
-        PlaySound.getIntance(currentActivity).play(R.raw.control_click);
+        PlaySound.getIntance(mActivity).play(R.raw.control_click);
         int i = view.getId();
         if (i == R.id.tv_track_defect) {
             binding.viewPager.setCurrentItem(1, false);
@@ -192,7 +192,7 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
 
 
         } else if (i == R.id.tv_report_defect) {
-            Intent intent = new Intent(currentActivity, ReportToLeaderActivity.class);
+            Intent intent = new Intent(mActivity, ReportToLeaderActivity.class);
             intent.putExtra(Config.CURRENT_DEVICE_NAME, mDefect.devcie);
             intent.putExtra(DefectRecord.DESCRIPTION, mDefect.description);
             intent.putExtra(DefectRecord.DEFECTLEVEL, mDefect.defectlevel);
@@ -208,8 +208,8 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
         setResult(RESULT_OK);
 
 //		}
-        if (KeyBoardUtils.getInputMethodStatus(currentActivity)) {
-            KeyBoardUtils.closeKeybord(currentActivity);
+        if (KeyBoardUtils.getInputMethodStatus(mActivity)) {
+            KeyBoardUtils.closeKeybord(mActivity);
         }
         super.onBackPressed();
     }
@@ -249,7 +249,7 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
 
     @Override
     public void drawCircle(String pictureName, String pictureContent) {
-        Intent intent = new Intent(currentActivity, DrawCircleImageActivity.class);
+        Intent intent = new Intent(mActivity, DrawCircleImageActivity.class);
         intent.putExtra(Config.CURRENT_IMAGE_NAME, pictureName);
         intent.putExtra(Config.PICTURE_CONTENT, pictureContent);
         startActivityForResult(intent, LOAD_DATA);

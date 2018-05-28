@@ -10,10 +10,10 @@ import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
 import com.cnksi.common.BuildConfig;
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.InspectionType;
+import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.defect.activity.DefectControlActivity;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseActivity;
 import com.cnksi.sjjc.activity.NewLauncherActivity;
 import com.cnksi.sjjc.activity.TypeListActivity;
 import com.cnksi.sjjc.sync.KSyncConfig;
@@ -94,10 +94,9 @@ public class ActivityUtil {
         } else {
             KSyncConfig.getInstance().startUsbWorkSync(activity);
         }
-
     }
 
-    public static void startDefectControlActivity(BaseActivity activity) {
+    public static void startDefectControlActivity(BaseCoreActivity activity) {
         Intent intent = new Intent(activity, DefectControlActivity.class);
         activity.startActivity(intent);
     }

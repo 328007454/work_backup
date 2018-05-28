@@ -84,7 +84,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        informationBinding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_safetytool_information);
+        informationBinding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_safetytool_information);
 
         initialData();
         creatTestDialog();
@@ -99,7 +99,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         String title = getIntent().getStringExtra("title");
         informationBinding.tvInclude.tvTitle.setText(title);
 
-        PersonListUtils.getInsance().initPopWindow(currentActivity).initPersonData(dept);
+        PersonListUtils.getInsance().initPopWindow(mActivity).initPersonData(dept);
         PersonListUtils.getInsance().setPersonRatioListener(this);
 
         ExecutorManager.executeTask(() -> {
@@ -120,7 +120,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
     private void initialUI() {
         informationBinding.btnStop.setOnClickListener(this);
         informationBinding.btnTest.setOnClickListener(this);
-        informationBinding.tvInclude.ibtnCancel.setOnClickListener(v -> currentActivity.finish());
+        informationBinding.tvInclude.ibtnCancel.setOnClickListener(v -> mActivity.finish());
         addResutUI();
 
     }
@@ -164,7 +164,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
                         for (int i = 0, count = toolPic.length; i < count; i++) {
                             mImageUrlList.add(Config.BDZ_INSPECTION_FOLDER + toolPic[i]);
                         }
-                        showImageDetails(currentActivity, mImageUrlList, false);
+                        showImageDetails(mActivity, mImageUrlList, false);
                     }
                 });
             }
@@ -182,8 +182,8 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
 
     public void creatStopDialog() {
         stopBinding = XsDialogSafetyToolStopBinding.inflate(getLayoutInflater());
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
-        stopDialog = DialogUtils.createDialog(currentActivity, stopBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
+        stopDialog = DialogUtils.createDialog(mActivity, stopBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         stopBinding.rgStop.setOnCheckedChangeListener(stopDialogCheckListener);
         stopBinding.btnCancel.setOnClickListener(v -> stopDialog.dismiss());
         stopBinding.btnSure.setOnClickListener(v -> {
@@ -240,8 +240,8 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
 
     public void creatTestDialog() {
         testBinding = XsDialogSafetyToolTestBinding.inflate(getLayoutInflater());
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
-        testDialog = DialogUtils.createDialog(currentActivity, testBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
+        testDialog = DialogUtils.createDialog(mActivity, testBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         testBinding.rgTest.setOnCheckedChangeListener(testChangeListener);
         testBinding.btnCancel.setOnClickListener(v -> testDialog.dismiss());
         testBinding.btnSure.setOnClickListener(v -> {
@@ -252,7 +252,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             testDialog.dismiss();
             saveTestData();
         });
-        testBinding.ibtnSelectInspectionDate.setOnClickListener(v -> CustomerDialog.showDatePickerDialog(currentActivity, (result, position) -> {
+        testBinding.ibtnSelectInspectionDate.setOnClickListener(v -> CustomerDialog.showDatePickerDialog(mActivity, (result, position) -> {
             String productTime = dbModel.getString("produce_time");
             if (!TextUtils.isEmpty(productTime) && !DateUtils.compareDate(result, productTime, DateUtils.yyyy_MM_dd)) {
                 ToastUtils.showMessage("试验时间必须大于出厂时间");
@@ -262,7 +262,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         }));
         testBinding.ibtnTakePicture.setOnClickListener(v -> {
             currentImageName = toolPicPath + FunctionUtil.getCurrentImageName();
-            FunctionUtil.takePicture(currentActivity, currentImageName, Config.BDZ_INSPECTION_FOLDER);
+            FunctionUtil.takePicture(mActivity, currentImageName, Config.BDZ_INSPECTION_FOLDER);
         });
         testBinding.ivReportPhoto.setOnClickListener(v -> {
             if (!reportPicList.isEmpty()) {
@@ -270,7 +270,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
                 for (int i = 0, count = reportPicList.size(); i < count; i++) {
                     mImageUrlList.add(Config.BDZ_INSPECTION_FOLDER + reportPicList.get(i));
                 }
-                showImageDetails(currentActivity, mImageUrlList, true);
+                showImageDetails(mActivity, mImageUrlList, true);
             }
         });
 
@@ -301,9 +301,9 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
      * 加水印在图片上
      */
     private void addWaterTextToBitmap() {
-        CustomerDialog.showProgress(currentActivity, "正在处理图片...");
+        CustomerDialog.showProgress(mActivity, "正在处理图片...");
         ExecutorManager.executeTask(() -> {
-            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(currentActivity));
+            Bitmap currentBitmap = BitmapUtil.createScaledBitmapByWidth(BitmapUtil.postRotateBitmap(Config.BDZ_INSPECTION_FOLDER + currentImageName), ScreenUtils.getScreenWidth(mActivity));
             if (null == currentBitmap) {
                 ToastUtils.showMessage( "很抱歉，因意外需要您再次拍照。");
                 return;
@@ -456,7 +456,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         int i = v.getId();
         if (i == R.id.btn_stop) {
             String name = dbModel.getString("name");
-            CharSequence txtToolName = StringUtils.formatPartTextColor("请选择停用%s的原因", currentActivity.getResources().getColor(R.color.xs_color_5dbf19), name + "工器具");
+            CharSequence txtToolName = StringUtils.formatPartTextColor("请选择停用%s的原因", mActivity.getResources().getColor(R.color.xs_color_5dbf19), name + "工器具");
             stopBinding.txtToolName.setText(txtToolName);
             stopBinding.tvDialogTitle.setText("停用原因");
             stopBinding.rgStop.clearCheck();

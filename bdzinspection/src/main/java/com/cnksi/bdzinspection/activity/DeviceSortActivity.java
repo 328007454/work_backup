@@ -8,7 +8,6 @@ import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.PreferencesUtils;
-import com.cnksi.core.view.swipemenulist.SwipeMenuDragSortListView;
 
 import org.xutils.ex.DbException;
 
@@ -63,7 +62,7 @@ public class DeviceSortActivity extends TitleActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        spaceAdapter = new DeviceSortAdapter(currentActivity, mData);
+        spaceAdapter = new DeviceSortAdapter(mActivity, mData);
         binding.swlvContainer.setAdapter(spaceAdapter);
     }
 

@@ -68,7 +68,6 @@ import static android.os.Build.VERSION.SDK_INT;
 @SuppressLint("HandlerLeak")
 public class BaseActivity extends BaseCoreActivity {
 
-    public static final int INIT_SPEECH = -0x101001;
     public static final int ACTION_RECORDVIDEO = 0x500;
     public static final int PERMISSION_WINDOW = ACTION_RECORDVIDEO + 1;
 
@@ -182,7 +181,6 @@ public class BaseActivity extends BaseCoreActivity {
 
     public String currentAcounts;
 
-    protected BaseActivity currentActivity;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -191,7 +189,7 @@ public class BaseActivity extends BaseCoreActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentActivity = this;
+
         mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         mWindowLayoutParams = getWindowManagerParams();
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -386,7 +384,7 @@ public class BaseActivity extends BaseCoreActivity {
     protected void exitSystem() {
         if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
             currentBackPressedTime = System.currentTimeMillis();
-            Toast.makeText(currentActivity, R.string.xs_one_more_click_exit_str, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, R.string.xs_one_more_click_exit_str, Toast.LENGTH_SHORT).show();
         } else {
             compeletlyExitSystem();
         }
@@ -404,7 +402,7 @@ public class BaseActivity extends BaseCoreActivity {
 
     protected void showTipsDialog(ViewGroup mRootContainer, Intent intent) {
 
-        if (currentInspectionType.contains("special") || currentActivity.equals(InspectionType.routine.name())) {
+        if (currentInspectionType.contains("special") || mActivity.equals(InspectionType.routine.name())) {
             showTipsDialog(mRootContainer, intent, -1, R.string.xs_dialog_tips_content_special, false);
         } else {
             showTipsDialog(mRootContainer, intent, -1, R.string.xs_dialog_tips_content_str, false);
@@ -423,11 +421,11 @@ public class BaseActivity extends BaseCoreActivity {
 
     protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, int requestCode, CharSequence text,
                                   boolean isFinishInspection) {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         if (tipsDialog == null) {
             tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-            tipsDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
+            tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         tipsBinding.tvDialogContent.setText(text);
         tipsDialog.show();
@@ -479,7 +477,7 @@ public class BaseActivity extends BaseCoreActivity {
      */
     protected void createKeyBoardView(ViewGroup root) {
 
-        mKeyBoardContainerView = LayoutInflater.from(currentActivity).inflate(R.layout.xs_keyboard_layout, root, false);
+        mKeyBoardContainerView = LayoutInflater.from(mActivity).inflate(R.layout.xs_keyboard_layout, root, false);
         mKeyBoardView = mKeyBoardContainerView.findViewById(R.id.keyboard_view);
         final LinearLayout mSeekBarContainer = mKeyBoardContainerView
                 .findViewById(R.id.rl_seekbar_container);
@@ -498,14 +496,14 @@ public class BaseActivity extends BaseCoreActivity {
         mWindowLayoutParams.x = 0;
         mWindowLayoutParams.y = 0;
         // 设置悬浮窗口长宽数据
-        mWindowLayoutParams.width = ScreenUtils.getScreenWidth(currentActivity);
+        mWindowLayoutParams.width = ScreenUtils.getScreenWidth(mActivity);
         // 动态获取键盘的高度 键盘的高度加上seekBar的高度
         int height = getResources().getDimensionPixelSize(R.dimen.xs_key_height) * 4
                 + getResources().getDimensionPixelSize(R.dimen.xs_key_vertical_gap) * 5 + seekBarHeight;
         mWindowLayoutParams.height = height;
 //        mWindowManager.addView(mKeyBoardContainerView, mWindowLayoutParams);
 
-        mKeyBoardUtil = new KeyBoardUtil(mKeyBoardContainerView, currentActivity, null, mWindowManager, mWindowLayoutParams);
+        mKeyBoardUtil = new KeyBoardUtil(mKeyBoardContainerView, mActivity, null, mWindowManager, mWindowLayoutParams);
     }
 
     public void ExitThisAndGoLauncher() {
@@ -544,7 +542,7 @@ public class BaseActivity extends BaseCoreActivity {
     protected void setPagerTabStripValue(PagerSlidingTabStrip mPagerTabStrip) {
 
         // 当前屏幕密度
-        DisplayMetrics mDisplayMetrics = currentActivity.getResources().getDisplayMetrics();
+        DisplayMetrics mDisplayMetrics = mActivity.getResources().getDisplayMetrics();
         // 设置Tab的分割线是透明的
         mPagerTabStrip.setDividerColor(Color.TRANSPARENT);
         // 设置Tab底部线的高度
@@ -552,13 +550,13 @@ public class BaseActivity extends BaseCoreActivity {
         // 设置Tab Indicator的高度
         mPagerTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics));
         // 设置Tab标题文字的大小
-        int textSize = AutoUtils.getPercentHeightSizeBigger((int) currentActivity.getResources().getDimension(R.dimen.xs_tab_strip_text_size_px));
+        int textSize = AutoUtils.getPercentHeightSizeBigger((int) mActivity.getResources().getDimension(R.dimen.xs_tab_strip_text_size_px));
         mPagerTabStrip.setTextSize(textSize);
 //        mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, currentActivity.getResources().getDimensionPixelOffset(R.dimen.tab_strip_text_size), mDisplayMetrics));
         // 设置Tab Indicator的颜色
-        mPagerTabStrip.setIndicatorColor(currentActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
+        mPagerTabStrip.setIndicatorColor(mActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-        mPagerTabStrip.setSelectedTextColor(currentActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
+        mPagerTabStrip.setSelectedTextColor(mActivity.getResources().getColor(R.color.xs_tab_strip_text_color));
         // 取消点击Tab时的背景色
         mPagerTabStrip.setTabBackground(0);
     }

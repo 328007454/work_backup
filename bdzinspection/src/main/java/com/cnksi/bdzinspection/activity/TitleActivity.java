@@ -1,6 +1,5 @@
 package com.cnksi.bdzinspection.activity;
 
-import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -19,20 +18,15 @@ public abstract class TitleActivity extends BaseActivity {
 	public TextView title;
 	public TextView right;
 	private FrameLayout content;
-	private Activity _this;
 	public XsActivityTitlebaseBinding titlebaseBinding;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		_this = this;
 		titlebaseBinding = DataBindingUtil.setContentView(this,R.layout.xs_activity_titlebase);
 		content = findViewById(R.id.mh);
 		back = findViewById(R.id.ibtn_cancel);
-		back.setOnClickListener(v -> {
-            // TODO Auto-generated method stub
-            _this.finish();
-        });
+		back.setOnClickListener(v -> finish());
 		title = findViewById(R.id.tv_title);
 		right = findViewById(R.id.right);
 

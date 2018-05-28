@@ -4,8 +4,6 @@
 package com.cnksi.bdzinspection.ywyth;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 
 import com.cnksi.bdzinspection.R;
@@ -77,7 +75,7 @@ public class YWGQJActivity extends TitleActivity {
 		if (flag == null) {
 			flag = new HashMap<Integer, Boolean>();
 		}
-		binding.list.setAdapter(new YWGQJAdapter(currentActivity, dlist, flag));
+		binding.list.setAdapter(new YWGQJAdapter(mActivity, dlist, flag));
 		if (!taskStatus) {
 			binding.list.setOnItemClickListener((parent, view, position, id) -> {
                 // TODO Auto-generated method stub

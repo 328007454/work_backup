@@ -81,7 +81,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_device_select);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_device_select);
 
         initialUI();
         initOnClick();
@@ -162,8 +162,8 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
     }
 
     private void showConfig(final List<DbModel> selectDeviceList) {
-        final Dialog dialog = new Dialog(currentActivity, R.style.dialog);
-        ViewHolder viewHolder = new ViewHolder(currentActivity, null, R.layout.xs_dialog_tips, false);
+        final Dialog dialog = new Dialog(mActivity, R.style.dialog);
+        ViewHolder viewHolder = new ViewHolder(mActivity, null, R.layout.xs_dialog_tips, false);
         ListView listView = viewHolder.getView(R.id.lv_container);
         listView.setVisibility(View.VISIBLE);
         viewHolder.getView(R.id.tv_dialog_content).setVisibility(View.GONE);
@@ -171,7 +171,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
         title.setPadding(getResources().getDimensionPixelSize(R.dimen.xs_exclusive_media_margin_bottom), 0, 0, 0);
         title.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         viewHolder.setText(R.id.tv_dialog_title, "你选择的设备如下：");
-        listView.setAdapter(new BaseAdapter<DbModel>(currentActivity, selectDeviceList, R.layout.xs_item_location_spacing) {
+        listView.setAdapter(new BaseAdapter<DbModel>(mActivity, selectDeviceList, R.layout.xs_item_location_spacing) {
             @Override
             public void convert(ViewHolder holder, DbModel item, int position) {
                 holder.setText(R.id.name, item.getString("deviceName"));
@@ -197,7 +197,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
         dialog.setContentView(viewHolder.getRootView());
         Window mWindow = dialog.getWindow();
         WindowManager.LayoutParams lp = mWindow.getAttributes();
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         lp.width = dialogWidth;
         lp.height = dialogHeight;

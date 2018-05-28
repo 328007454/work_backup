@@ -50,7 +50,7 @@ public class WorkPlanInformationActivity extends BaseActivity {
     public void initView() {
         mTitleBinding.tvTitle.setText("变电站（发电厂）第一种工作票");
         binding.webView.getSettings().setJavaScriptEnabled(true);
-        jsInterface = new JSObject(_this);
+        jsInterface = new JSObject(mActivity);
         // binding.webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         binding.webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         // binding.webView.getSettings().setLoadWithOverviewMode(true);
@@ -85,7 +85,7 @@ public class WorkPlanInformationActivity extends BaseActivity {
 //        public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
 //            mUploadMessage = uploadMsg;
 //
-//            Intent intent=new Intent(_this,SignNameActivity.class);
+//            Intent intent=new Intent(mActivity,SignNameActivity.class);
 //            imageName= FunctionUtils.getPrimarykey()+".jpg";
 //            intent.putExtra("name",imageName);
 //            // TODO Auto-generated method stub
@@ -100,7 +100,7 @@ public class WorkPlanInformationActivity extends BaseActivity {
 //                uploadMessage = null;
 //            }
 //            uploadMessage = filePathCallback;
-//            Intent intent=new Intent(_this,SignNameActivity.class);
+//            Intent intent=new Intent(mActivity,SignNameActivity.class);
 //            imageName=FunctionUtils.getPrimarykey()+".jpg";
 //            intent.putExtra("name",imageName);
 //            // TODO Auto-generated method stub

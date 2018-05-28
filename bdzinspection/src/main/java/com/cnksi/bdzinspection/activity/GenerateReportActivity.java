@@ -1,6 +1,5 @@
 package com.cnksi.bdzinspection.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -294,9 +293,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 e.printStackTrace();
             }
             GenerateReportActivity.this.runOnUiThread(() -> {
-                adapterGzr = new SignNameAdapter(currentActivity, mDataCzr, GenerateReportActivity.this, MASKGzr);
+                adapterGzr = new SignNameAdapter(mActivity, mDataCzr, GenerateReportActivity.this, MASKGzr);
                 adapterGzr.setUserCount(totalCountUser);
-                adapterFzr = new SignNameAdapter(currentActivity, mDataFzr, GenerateReportActivity.this, MASKFzr);
+                adapterFzr = new SignNameAdapter(mActivity, mDataFzr, GenerateReportActivity.this, MASKFzr);
                 binding.signList.setAdapter(adapterGzr);
                 binding.signList1.setAdapter(adapterFzr);
             });
@@ -312,17 +311,17 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
      */
     private void showDefectDialog(List<DefectRecord> mDefectList, int dialogTitle) {
         if (mDefectList != null && !mDefectList.isEmpty()) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            int dialogHeight = mDefectList.size() > 5 ? ScreenUtils.getScreenHeight(currentActivity) / 2
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            int dialogHeight = mDefectList.size() > 5 ? ScreenUtils.getScreenHeight(mActivity) / 2
                     : LinearLayout.LayoutParams.WRAP_CONTENT;
             if (mHistoryDefectAdapter == null) {
-                mHistoryDefectAdapter = new HistoryDefectAdapter(currentActivity, mDefectList);
+                mHistoryDefectAdapter = new HistoryDefectAdapter(mActivity, mDefectList);
                 mHistoryDefectAdapter.setTrackHistory(true);
             } else {
                 mHistoryDefectAdapter.setList(mDefectList);
             }
             XsContentListDialogBinding listDialogBinding = XsContentListDialogBinding.inflate(getLayoutInflater());
-            mDefectDialog = DialogUtils.createDialog(currentActivity, listDialogBinding.getRoot(), dialogWidth, dialogHeight);
+            mDefectDialog = DialogUtils.createDialog(mActivity, listDialogBinding.getRoot(), dialogWidth, dialogHeight);
             listDialogBinding.lvContainer.setAdapter(mHistoryDefectAdapter);
             listDialogBinding.tvDialogTitle.setText(dialogTitle);
             mDefectDialog.show();
@@ -351,8 +350,8 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
         binding.btnComplete.setOnClickListener(view -> GenerateReportActivity.this.finishReport());
         binding.llCopyResult.setOnClickListener(view -> {
-            PlaySound.getIntance(currentActivity).play(R.raw.input);
-            Intent intent = new Intent(currentActivity, CopyAllValueActivity2.class);
+            PlaySound.getIntance(mActivity).play(R.raw.input);
+            Intent intent = new Intent(mActivity, CopyAllValueActivity2.class);
             GenerateReportActivity.this.startActivityForResult(intent, LOAD_DATA);
         });
         binding.llNewDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
@@ -406,9 +405,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 NariActivity.isNeedUpdateStatus = true;
             }
             if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
-                intent = new Intent(currentActivity, NewRegularReportActivity.class);
+                intent = new Intent(mActivity, NewRegularReportActivity.class);
             } else {
-                intent = new Intent(currentActivity, InspectionReportActivity.class);
+                intent = new Intent(mActivity, InspectionReportActivity.class);
             }
             PushNewTaskUtil.getTaskUtilInstance().createNewTaskByPeriod(currentTaskId, currentInspectionType);
             ScreenManager.getScreenManager().popAllActivityExceptOne(null);
@@ -422,11 +421,11 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     private void initOnLongClick() {
 
         binding.txtStartTime.setOnLongClickListener(view -> {
-            TimePickerUtils.getPickerUtils().showDialog(currentActivity, currentReport.starttime, currentReport.endtime, true);
+            TimePickerUtils.getPickerUtils().showDialog(mActivity, currentReport.starttime, currentReport.endtime, true);
             return true;
         });
         binding.txtEndTime.setOnLongClickListener(view -> {
-            TimePickerUtils.getPickerUtils().showDialog(currentActivity, currentReport.endtime, currentReport.starttime, false);
+            TimePickerUtils.getPickerUtils().showDialog(mActivity, currentReport.endtime, currentReport.starttime, false);
             return true;
         });
 
@@ -460,10 +459,10 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     public void showSignDetails(int position, boolean isShowDelete, List<ReportSignname> list) {
         final ReportSignname bean = list.get(position);
         if (mSignDetailDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
             int dialogHeight = LayoutParams.WRAP_CONTENT;
             signViewBinding = XsDialogSignViewBinding.inflate(getLayoutInflater());
-            mSignDetailDialog = DialogUtils.createDialog(currentActivity, signViewBinding.getRoot(), dialogWidth, dialogHeight);
+            mSignDetailDialog = DialogUtils.createDialog(mActivity, signViewBinding.getRoot(), dialogWidth, dialogHeight);
         }
         if (isShowDelete) {
             signViewBinding.btnResign.setVisibility(View.VISIBLE);
@@ -487,9 +486,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         signViewBinding.btnResign.setOnClickListener(view -> {
             currentSign = list.get(position);
             if (list == mDataCzr) {
-                GenerateReportActivity.this.takeSignName(currentActivity, currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(currentActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(currentActivity, currentSign.getName()), SIGNCODEGzr);
+                GenerateReportActivity.this.takeSignName( currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEGzr);
             } else {
-                GenerateReportActivity.this.takeSignName(currentActivity, currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(currentActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(currentActivity, currentSign.getName()), SIGNCODEFzr);
+                GenerateReportActivity.this.takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEFzr);
             }
             mSignDetailDialog.dismiss();
         });
@@ -497,12 +496,12 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
     public void showAddPersonDialog(final List<ReportSignname> list) {
         if (mAddPersonDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) * 6 / 10;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 6 / 10;
             mPersonBinding = XsDialogAddPersonBinding.inflate(getLayoutInflater());
-            mAddPersonDialog = DialogUtils.createDialog(currentActivity, mPersonBinding.getRoot(), dialogWidth, dialogHeight);
+            mAddPersonDialog = DialogUtils.createDialog(mActivity, mPersonBinding.getRoot(), dialogWidth, dialogHeight);
         }
-        dialogAdpeter = new AddPersonAdapter(currentActivity, persons);
+        dialogAdpeter = new AddPersonAdapter(mActivity, persons);
         mPersonBinding.lvContainer.setAdapter(dialogAdpeter);
         dialogAdpeter.setOnItemClickListener(this);
         mAddPersonDialog.show();
@@ -558,7 +557,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
     public void removeSign(final List<ReportSignname> list, final int position) {
         if (list.size() > 1) {
-            DialogUtils.showSureTipsDialog(currentActivity, null, "提示", "您确认要删除该人员吗？", "确认", "取消", new OnViewClickListener() {
+            DialogUtils.showSureTipsDialog(mActivity, null, "提示", "您确认要删除该人员吗？", "确认", "取消", new OnViewClickListener() {
                 @Override
                 public void onClick(View v) {
                     ReportSignname reportSignname = list.remove(position);
@@ -594,7 +593,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 break;
             case MASKGzr | 1:
                 currentSign = mDataCzr.get(position);
-                takeSignName(currentActivity, currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(currentActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(currentActivity, currentSign.getName()), SIGNCODEGzr);
+                takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEGzr);
                 break;
             case MASKGzr | 2:
                 showSignDetails(position, true, mDataCzr);
@@ -606,7 +605,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 break;
             case MASKFzr | 1:
                 currentSign = mDataFzr.get(position);
-                takeSignName(currentActivity, currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(currentActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(currentActivity, currentSign.getName()), SIGNCODEFzr);
+                takeSignName( currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEFzr);
                 break;
             case MASKFzr | 2:
                 showSignDetails(position, true, mDataFzr);
@@ -647,8 +646,8 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         }
     }
 
-    public void takeSignName(Activity context, String signer, String signPath, String headPath, int requestCode) {
-        LandSignNameActivity.with(currentActivity).setHeadPath(Config.CUSTOMER_PICTURES_FOLDER + headPath)
+    public void takeSignName(String signer, String signPath, String headPath, int requestCode) {
+        LandSignNameActivity.with(mActivity).setHeadPath(Config.CUSTOMER_PICTURES_FOLDER + headPath)
                 .setRequestCode(requestCode)
                 .setSigner(signer)
                 .setSignPath(Config.CUSTOMER_PICTURES_FOLDER + signPath)

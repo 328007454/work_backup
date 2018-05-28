@@ -187,7 +187,7 @@ public class GetSendLetterActivity extends BaseActivity {
 
     private void initOnclick() {
         mTitleBinding.btnBack.setOnClickListener(view -> {
-            KeyBoardUtils.closeKeybord(_this);
+            KeyBoardUtils.closeKeybord(mActivity);
             GetSendLetterActivity.this.onBackPressed();
             GetSendLetterActivity.this.finish();
         });
@@ -405,7 +405,7 @@ public class GetSendLetterActivity extends BaseActivity {
                 task.status = TaskStatus.done.name();
                 TaskService.getInstance().saveOrUpdate(task);
                 isNeedUpdateTaskState = true;
-                Intent intent = new Intent(_this, GetSendLetterReportActivity.class);
+                Intent intent = new Intent(mActivity, GetSendLetterReportActivity.class);
                 startActivity(intent);
                 finish();
             } catch (DbException e) {

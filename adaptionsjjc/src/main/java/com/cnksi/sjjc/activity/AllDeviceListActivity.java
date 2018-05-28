@@ -60,7 +60,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     protected void onCreate(Bundle savedInstanceState) {
         isDefaultTitle = false;
         super.onCreate(savedInstanceState);
-        mExpadableListBinding = DataBindingUtil.setContentView(_this, R.layout.activity_devices_expadable_list);
+        mExpadableListBinding = DataBindingUtil.setContentView(mActivity, R.layout.activity_devices_expadable_list);
         setSupportActionBar(mExpadableListBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -148,7 +148,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
         switch (msg.what) {
             case LOAD_DATA:
                 if (mDeviceExpandableAdapater == null) {
-                    mDeviceExpandableAdapater = new DeviceExpandabelListAdapter(_this);
+                    mDeviceExpandableAdapater = new DeviceExpandabelListAdapter(mActivity);
                     mDeviceExpandableAdapater.setOnAdapterViewClickListener(this);
                     mExpadableListBinding.elvContainer.setAdapter(mDeviceExpandableAdapater);
                 }
@@ -168,7 +168,7 @@ public class AllDeviceListActivity extends BaseActivity implements DeviceExpanda
     public void OnAdapterViewClick(View view, DbModel mDevice) {
         dataMap.put(Config.DEVICE_DATA, mDevice);
         setResult(RESULT_OK);
-        _this.finish();
+        mActivity.finish();
     }
 
     @Override

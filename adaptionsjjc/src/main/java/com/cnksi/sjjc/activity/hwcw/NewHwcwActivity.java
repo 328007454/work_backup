@@ -97,7 +97,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
     public void initView() {
         mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionName + "记录");
         mHotPartAdapter = new HwcwNewHotPartAdapter(mHwcwNewBinding.rlHotrecord, hotLocations, R.layout.item_hwcw_hot_part);
-        mHwcwNewBinding.rlHotrecord.setLayoutManager(new LinearLayoutManager(_this));
+        mHwcwNewBinding.rlHotrecord.setLayoutManager(new LinearLayoutManager(mActivity));
         mHwcwNewBinding.rlHotrecord.setAdapter(mHotPartAdapter);
         mHotPartAdapter.setOnItemClickListener(this);
         mHotPartAdapter.setOnLongItemClickListener(this);
@@ -114,7 +114,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
         }
         mTitleBinding.btnBack.setOnClickListener(view -> {
             saveData();
-            _this.finish();
+            mActivity.finish();
         });
     }
 
@@ -126,7 +126,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.et_hotdeivce_name:
-                Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+                Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
                 intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
                 intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
                 startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
@@ -134,7 +134,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
             case R.id.btn_cancel:
                 String deviceName = mHwcwNewBinding.etHotdeivceName.getText().toString();
                 if (!TextUtils.isEmpty(deviceName)) {
-                    DialogUtils.createTipsDialog(_this, getString(R.string.have_not_save_data), v -> {
+                    DialogUtils.createTipsDialog(mActivity, getString(R.string.have_not_save_data), v -> {
                         mHwcwNewBinding.setSetNull(false);
                         mHwcwNewBinding.llHotPart.removeAllViews();
                         hotRecordClickPositon = -1;
@@ -148,7 +148,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                 break;
             case R.id.btn_confirm_save:
                 if (saveData()) {
-                    Intent intent = new Intent(_this, NewHwcwInforActivity.class);
+                    Intent intent = new Intent(mActivity, NewHwcwInforActivity.class);
                     startActivityForResult(intent, TO_NEWINFORACTIVITY);
                 } else {
                     ToastUtils.showMessage("请完成所有的基本信息填写！");
@@ -176,10 +176,10 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                 break;
             case R.id.txt_baseinfo:
                 if (mHwcwNewBinding.containerBaseinfo.getVisibility() == View.VISIBLE) {
-                    mHwcwNewBinding.txtBaseinfo.setCompoundDrawablesWithIntrinsicBounds(null, null, _this.getResources().getDrawable(R.mipmap.icon_down), null);
+                    mHwcwNewBinding.txtBaseinfo.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.mipmap.icon_down), null);
                     mHwcwNewBinding.containerBaseinfo.setVisibility(View.GONE);
                 } else {
-                    mHwcwNewBinding.txtBaseinfo.setCompoundDrawablesWithIntrinsicBounds(null, null, _this.getResources().getDrawable(R.mipmap.icon_up), null);
+                    mHwcwNewBinding.txtBaseinfo.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.mipmap.icon_up), null);
                     mHwcwNewBinding.containerBaseinfo.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -275,7 +275,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
                     currentDeviceID = currentDevice.getString("deviceid");
                     currentSpaceID = currentDevice.getString("spid");
                     if (selecteDevices.contains(currentDeviceID)) {
-                        DialogUtils.createTipsDialog(_this, "该设备已经被新增为发热设备，请在温度记录里点击编辑", view -> {
+                        DialogUtils.createTipsDialog(mActivity, "该设备已经被新增为发热设备，请在温度记录里点击编辑", view -> {
 
                         }, false).show();
                     } else {
@@ -342,7 +342,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
     @Override
     public void onLongItemClick(View v, final Object data, final int position) {
         delteLocation = (HwcwLocation) data;
-        DialogUtils.createTipsDialog(_this, getString(R.string.delete_data), v1 -> {
+        DialogUtils.createTipsDialog(mActivity, getString(R.string.delete_data), v1 -> {
             delteLocation.dlt = 1;
             deleteLocations.add(delteLocation);
             hotLocations.remove(position);

@@ -2,7 +2,6 @@ package com.cnksi.bdzinspection.ywyth;
 
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -29,7 +28,7 @@ public class VideoPlayer extends BaseActivity {
 		params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
 		window.setAttributes(params);
 		str = getIntent().getStringExtra("video");
-		binding = DataBindingUtil.setContentView(currentActivity,R.layout.xs_videoview);
+		binding = DataBindingUtil.setContentView(mActivity,R.layout.xs_videoview);
 		binding.video.setOnErrorListener((mp, what, extra) -> {
             VideoPlayer.this.finish();
             return false;

@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -132,7 +129,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                 break;
             case LOAD_MORE_DATA:
                 if (mDefectDefineAdapter == null) {
-                    mDefectDefineAdapter = new StandardDefectDefineAdapter(currentActivity);
+                    mDefectDefineAdapter = new StandardDefectDefineAdapter(mActivity);
                     mDefectDefineAdapter.setOnAdapterViewClickListener(this);
                     binding.elvContainer.setAdapter(mDefectDefineAdapter);
                 }
@@ -153,7 +150,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     private void initDeviceStandard() {
         if (mCurrentDeviceStandard != null) {
             int maxHeight = getResources().getDimensionPixelSize(R.dimen.xs_standard_image_minheight);
-            int maxWidth = ScreenUtils.getScreenWidth(currentActivity) / 2
+            int maxWidth = ScreenUtils.getScreenWidth(mActivity) / 2
                     - getResources().getDimensionPixelSize(R.dimen.xs_global_padding_left_right) * 2;
             String picPath = CommonUtils.getDefaultPicPath(mCurrentDeviceStandard.change_pic,
                     mCurrentDeviceStandard.pics);
@@ -214,11 +211,11 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
             }
         });
 
-        binding.rlTakeStandardImage.setOnClickListener(view -> FunctionUtil.takePicture(currentActivity,
-                (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
+        binding.rlTakeStandardImage.setOnClickListener(view -> FunctionUtil.takePicture(mActivity,
+                (currentImageName = FunctionUtil.getCurrentImageName(mActivity)),
                 Config.CUSTOMER_PICTURES_FOLDER));
-        binding.btnTakeStandardImage.setOnClickListener(view -> FunctionUtil.takePicture(currentActivity,
-                (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
+        binding.btnTakeStandardImage.setOnClickListener(view -> FunctionUtil.takePicture(mActivity,
+                (currentImageName = FunctionUtil.getCurrentImageName(mActivity)),
                 Config.CUSTOMER_PICTURES_FOLDER));
 
         binding.ivStandardImage.setOnLongClickListener(view -> {
@@ -274,12 +271,12 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         if (mListContentDialogAdapter == null) {
             List<String> functionArray = Arrays.asList(getResources()
                     .getStringArray(isAddDeviceStandard ? R.array.XS_AddStandardArray : R.array.XS_ChangStandardArray));
-            mListContentDialogAdapter = new ListContentDialogAdapter(currentActivity, functionArray);
+            mListContentDialogAdapter = new ListContentDialogAdapter(mActivity, functionArray);
         }
         if (mChangePictureDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
             listDialogBinding = XsContentListDialogBinding.inflate(getLayoutInflater());
-            mChangePictureDialog = DialogUtils.createDialog(currentActivity, listDialogBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+            mChangePictureDialog = DialogUtils.createDialog(mActivity, listDialogBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
         listDialogBinding.lvContainer.setAdapter(mListContentDialogAdapter);
         listDialogBinding.tvDialogTitle.setText(R.string.xs_picture_function_str);
@@ -288,7 +285,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
             switch (position) {
                 case 2: // 恢复默认照片
                     int maxHeight = ChangeDeviceStandardActivity.this.getResources().getDimensionPixelSize(R.dimen.xs_standard_image_minheight);
-                    int maxWidth = ScreenUtils.getScreenWidth(currentActivity) / 2
+                    int maxWidth = ScreenUtils.getScreenWidth(mActivity) / 2
                             - ChangeDeviceStandardActivity.this.getResources().getDimensionPixelSize(R.dimen.xs_global_padding_left_right) * 2;
                     String picPath = CommonUtils.getDefaultPicPath("", mCurrentDeviceStandard.pics);
                     if (FileUtils.isFileExists(picPath)) {
@@ -300,20 +297,20 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                     break;
                 case 1: // 更换图片
 
-                    FunctionUtil.takePicture(currentActivity,
-                            (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)),
+                    FunctionUtil.takePicture(mActivity,
+                            (currentImageName = FunctionUtil.getCurrentImageName(mActivity)),
                             Config.CUSTOMER_PICTURES_FOLDER);
 
                     break;
                 case 0:// 查看大图片
                     if (isAddDeviceStandard) {
-                        ChangeDeviceStandardActivity.this.showImageDetails(currentActivity,
+                        ChangeDeviceStandardActivity.this.showImageDetails(mActivity,
                                 Config.CUSTOMER_PICTURES_FOLDER + binding.ivStandardImage.getTag().toString());
                     } else {
                         picPath = CommonUtils.getDefaultPicPath(mCurrentDeviceStandard.change_pic,
                                 mCurrentDeviceStandard.pics);
                         if (FileUtils.isFileExists(picPath)) {
-                            ChangeDeviceStandardActivity.this.showImageDetails(currentActivity, picPath);
+                            ChangeDeviceStandardActivity.this.showImageDetails(mActivity, picPath);
                         }
                     }
                     break;
@@ -332,7 +329,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                     // 更换照片 切割照片
                     if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)) {
                         cropImageUri(Uri.fromFile(new File(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)),
-                                ScreenUtils.getScreenHeight(currentActivity), ScreenUtils.getScreenHeight(currentActivity),
+                                ScreenUtils.getScreenHeight(mActivity), ScreenUtils.getScreenHeight(mActivity),
                                 CROP_PICTURE, currentImageName);
                     }
                     break;
@@ -343,7 +340,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                     }
                     // 更换设备部件图片
                     int maxHeight = getResources().getDimensionPixelSize(R.dimen.xs_standard_image_minheight);
-                    int maxWidth = ScreenUtils.getScreenWidth(currentActivity) / 2
+                    int maxWidth = ScreenUtils.getScreenWidth(mActivity) / 2
                             - getResources().getDimensionPixelSize(R.dimen.xs_global_padding_left_right) * 2;
                     if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)) {
                         binding.ivStandardImage.setImageBitmap(BitmapUtil.getImageThumbnail(
@@ -373,10 +370,10 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
 
     private void showSureTipsDialog() {
         if (tipsDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
             int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
             tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-            tipsDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
+            tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         tipsBinding.tvDialogTitle.setText(R.string.xs_dialog_tips_str);
         tipsBinding.tvDialogContent.setText(isDeleteDeviceStandard ? R.string.xs_dialog_tips_delete_standard_content
@@ -396,7 +393,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
                 intent.putExtra(Config.CURRENT_STANDARD_ID, currentStandardId);
                 setResult(RESULT_OK, intent);
             }
-            currentActivity.finish();
+            mActivity.finish();
         } else {
             // TODO:删除缺陷定义
             if (DefectDefineService.getInstance().deleteDefectDefine(mCurrentDefectDefine)) {
@@ -428,10 +425,10 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
 
     private void showAddDefectDefineDialog() {
         if (mAddDefectDefineDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
             int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
             defectDefineBinding = XsDialogAddDefectDefineBinding.inflate(getLayoutInflater());
-            mAddDefectDefineDialog = DialogUtils.createDialog(currentActivity, defectDefineBinding.getRoot(), dialogWidth, dialogHeight);
+            mAddDefectDefineDialog = DialogUtils.createDialog(mActivity, defectDefineBinding.getRoot(), dialogWidth, dialogHeight);
         }
         defectDefineBinding.tvDialogTitle.setText(R.string.xs_add_defect_define_title_str);
         // 恢复缺陷定义
@@ -447,11 +444,11 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
         } else {
             defectDefineBinding.etContent.setText("");
             defectDefineBinding.rbGeneralDefect.setChecked(true);
-            KeyBoardUtils.openKeybord(defectDefineBinding.etContent, currentActivity);
+            KeyBoardUtils.openKeybord(defectDefineBinding.etContent, mActivity);
         }
         mAddDefectDefineDialog.show();
         defectDefineBinding.btnCancel.setOnClickListener(view -> {
-            KeyBoardUtils.closeKeybord(defectDefineBinding.etContent, currentActivity);
+            KeyBoardUtils.closeKeybord(defectDefineBinding.etContent, mActivity);
             mAddDefectDefineDialog.dismiss();
         });
 

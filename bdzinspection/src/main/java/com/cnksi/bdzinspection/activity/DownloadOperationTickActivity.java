@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -51,8 +50,8 @@ public class DownloadOperationTickActivity extends TitleActivity {
     @Override
     protected String initialUI() {
         binding = (XsActivityDownloadOptrTickBinding) getDataBinding();
-        final Animation animation1 = AnimationUtils.loadAnimation(currentActivity, R.anim.xs_slide_in_right2);
-        final Animation animation2 = AnimationUtils.loadAnimation(currentActivity, R.anim.xs_slide_in_left2);
+        final Animation animation1 = AnimationUtils.loadAnimation(mActivity, R.anim.xs_slide_in_right2);
+        final Animation animation2 = AnimationUtils.loadAnimation(mActivity, R.anim.xs_slide_in_left2);
 
         animation1.setAnimationListener(new AnimationListener() {
             @Override
@@ -87,9 +86,7 @@ public class DownloadOperationTickActivity extends TitleActivity {
             }
         });
         binding.img2.startAnimation(animation1);
-
         initOnClick();
-
         return getResources().getString(R.string.xs_czp_download_title);
     }
 
@@ -190,20 +187,20 @@ public class DownloadOperationTickActivity extends TitleActivity {
     XsDialogTipsBinding tipsBinding;
 
     protected void showTipsDialog(String content) {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         if (tipsDialog == null) {
             tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-            tipsDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
+            tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         tipsBinding.tvDialogContent.setText(content);
         tipsDialog.show();
         tipsBinding.btnSure.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, OperateTaskCheckedActivity.class);
+            Intent intent = new Intent(mActivity, OperateTaskCheckedActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, mOperateTick.id);
             intent.putExtra(Config.IS_FROM_BATTERY, true);
             DownloadOperationTickActivity.this.startActivity(intent);
-            currentActivity.finish();
+           mActivity.finish();
         });
         tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
     }

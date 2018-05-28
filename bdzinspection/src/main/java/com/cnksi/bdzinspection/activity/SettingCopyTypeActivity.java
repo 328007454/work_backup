@@ -114,7 +114,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         currentPersonId = PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, "");
         settingCopyBinding.tvTitle.setText(TextUtils.isEmpty(currentDeviceName) ? "" : currentDeviceName);
         if (itemParentAdapter == null) {
-            itemParentAdapter = new ChangeCopyItemParentAdapter(currentActivity, parentTypes);
+            itemParentAdapter = new ChangeCopyItemParentAdapter(mActivity, parentTypes);
         }
         itemParentAdapter.setItemClickListener(this);
         settingCopyBinding.tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -340,10 +340,10 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
     private XsDialogInput1Binding input1Binding;
 
     private void creatCopyNameDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
         input1Binding = XsDialogInput1Binding.inflate(getLayoutInflater());
         input1Binding.tvDialogTitle.setText("确定抄录项名称");
-        copyNameDialog = DialogUtils.createDialog(currentActivity, input1Binding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        copyNameDialog = DialogUtils.createDialog(mActivity, input1Binding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         input1Binding.btnCancel.setOnClickListener(v -> copyNameDialog.dismiss());
         input1Binding.btnSure.setOnClickListener(v -> {
             String updateName = TextUtils.isEmpty(input1Binding.edit.getText().toString().trim()) ? clickCopyType.name : input1Binding.edit.getText().toString().trim();
@@ -367,7 +367,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
      * 弹出新增抄录项对话框
      */
     private void creatAddItemDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
         itemBinding = XsAddCopyItemBinding.inflate(LayoutInflater.from(getApplicationContext()));
         boolean specialNeedCopy = currentInspectionType.contains(InspectionType.special.name()) && SystemConfig.isSpecialInspectionNeedCopy();
         if (specialNeedCopy) {
@@ -377,14 +377,14 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
         itemBinding.tvDevieName.append(TextUtils.isEmpty(currentDeviceName) ? "" : currentDeviceName);
         itemBinding.tvSpaceName.append(TextUtils.isEmpty(currentSpacingName) ? "" : currentSpacingName);
         if (null == typeAdapter) {
-            typeAdapter = new CopyTypeAdapter(currentActivity, copyTypes, R.layout.xs_copy_type, "0");
+            typeAdapter = new CopyTypeAdapter(mActivity, copyTypes, R.layout.xs_copy_type, "0");
         }
         itemBinding.typeSpinner.setAdapter(typeAdapter);
         if (null == typeCountAdapter) {
-            typeCountAdapter = new CopyTypeAdapter(currentActivity, typeCounts, R.layout.xs_copy_type, "1");
+            typeCountAdapter = new CopyTypeAdapter(mActivity, typeCounts, R.layout.xs_copy_type, "1");
         }
         itemBinding.countSipnner.setAdapter(typeCountAdapter);
-        dialog = DialogUtils.createDialog(currentActivity, itemBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog = DialogUtils.createDialog(mActivity, itemBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
         itemBinding.btnSave.setOnClickListener(v -> {
             if (specialNeedCopy) {
@@ -744,7 +744,7 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             itemParentAdapter.notifyDataSetChanged();
 
         } else if (i == R.id.item_delete) {
-            DialogUtils.showSureTipsDialog(currentActivity, null, "提示", "确定删除该项？", "是", "否", new OnViewClickListener() {
+            DialogUtils.showSureTipsDialog(mActivity, null, "提示", "确定删除该项？", "是", "否", new OnViewClickListener() {
                 @Override
                 public void onClick(View v) {
                     super.onClick(v);

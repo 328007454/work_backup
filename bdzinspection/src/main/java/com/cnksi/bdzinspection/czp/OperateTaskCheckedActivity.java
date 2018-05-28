@@ -64,7 +64,7 @@ public class OperateTaskCheckedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_task_checked);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_operate_task_checked);
 
         initialUI();
         initialData();
@@ -146,7 +146,7 @@ public class OperateTaskCheckedActivity extends BaseActivity {
             case LOAD_DATA:
 
                 if (mAdapter == null) {
-                    mAdapter = new OperateWorkItemAdapter(currentActivity, dataList);
+                    mAdapter = new OperateWorkItemAdapter(mActivity, dataList);
                     mAdapter.isCheckedOperate = true;
                     binding.lvContainer.setAdapter(mAdapter);
                 } else {
@@ -170,15 +170,15 @@ public class OperateTaskCheckedActivity extends BaseActivity {
             binding.tvCode.setText(mCurrentOperateTick.code);
             String content = dataList == null ? getString(R.string.xs_czp_all_operate_item_format_str, String.valueOf(0)) : getString(R.string.xs_czp_all_operate_item_format_str, String.valueOf(dataList.size()));
             int endOffset = dataList == null ? 1 : String.valueOf(dataList.size()).length();
-            binding.tvOperateItemCount.setText(StringUtils.changePartTextColor(currentActivity, content, R.color.xs_red_color, 1, 1 + endOffset));
+            binding.tvOperateItemCount.setText(StringUtils.changePartTextColor(mActivity, content, R.color.xs_red_color, 1, 1 + endOffset));
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_czr)) {
-                binding.ivCzrSign.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr, ScreenUtils.getScreenWidth(currentActivity) / 3));
+                binding.ivCzrSign.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr, ScreenUtils.getScreenWidth(mActivity) / 3));
             }
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_jhr)) {
-                binding.ivCzfzrSign.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr, ScreenUtils.getScreenWidth(currentActivity) / 3));
+                binding.ivCzfzrSign.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr, ScreenUtils.getScreenWidth(mActivity) / 3));
             }
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_ywfzr)) {
-                binding.ivZbfzrSign.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr, ScreenUtils.getScreenWidth(currentActivity) / 3));
+                binding.ivZbfzrSign.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr, ScreenUtils.getScreenWidth(mActivity) / 3));
             }
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_czr) && !TextUtils.isEmpty(mCurrentOperateTick.person_jhr) && !TextUtils.isEmpty(mCurrentOperateTick.person_ywfzr)) {
                 binding.btnConfirm.setEnabled(true);
@@ -201,7 +201,7 @@ public class OperateTaskCheckedActivity extends BaseActivity {
         binding.includeTitle.ibtnCancel.setOnClickListener(view -> onBackPressed());
 
         binding.btnConfirm.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, OperateTaskDetailsActivity.class);
+            Intent intent = new Intent(mActivity, OperateTaskDetailsActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, currentOperateId);
             intent.putExtra(Config.IS_FROM_BATTERY, true);
             startActivity(intent);
@@ -210,12 +210,12 @@ public class OperateTaskCheckedActivity extends BaseActivity {
 
         binding.ivCzfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_czr)) {
-                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr);
+                showImageDetails(mActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_czr);
             }
         });
 
         binding.tvCzrSignContainer.setOnClickListener(view -> {
-            LandSignNameActivity.with(currentActivity)
+            LandSignNameActivity.with(mActivity)
                     .setRequestCode(CZR_SIGN_CODE)
                     .setSignPath(Config.SIGN_PICTURE_FOLDER + (signPath = FunctionUtil.getCurrentImageName()))
                     .start();
@@ -223,26 +223,26 @@ public class OperateTaskCheckedActivity extends BaseActivity {
 
         binding.ivCzfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_jhr)) {
-                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr);
+                showImageDetails(mActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_jhr);
             }
         });
 
         binding.tvJhrContainer.setOnClickListener(view -> {
-            LandSignNameActivity.with(currentActivity)
+            LandSignNameActivity.with(mActivity)
                     .setRequestCode(CZFZR_SIGN_CODE)
                     .setSignPath(Config.SIGN_PICTURE_FOLDER + (signPath = FunctionUtil.getCurrentImageName()))
                     .start();
         });
 
         binding.tvYwfzrContainer.setOnClickListener(view -> {
-            LandSignNameActivity.with(currentActivity)
+            LandSignNameActivity.with(mActivity)
                     .setRequestCode(ZBFZR_SIGN_CODE)
                     .setSignPath(Config.SIGN_PICTURE_FOLDER + (signPath = FunctionUtil.getCurrentImageName()))
                     .start();
         });
         binding.ivZbfzrSign.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(mCurrentOperateTick.person_ywfzr)) {
-                showImageDetails(currentActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr);
+                showImageDetails(mActivity, Config.SIGN_PICTURE_FOLDER + mCurrentOperateTick.person_ywfzr);
             }
         });
 
@@ -307,14 +307,14 @@ public class OperateTaskCheckedActivity extends BaseActivity {
      */
     private String initSignPicture(ImageView mImageView) {
         mImageView.setImageBitmap(BitmapUtil.getImageThumbnailByWidth(Config.SIGN_PICTURE_FOLDER + signPath,
-                ScreenUtils.getScreenWidth(currentActivity) / 3));
+                ScreenUtils.getScreenWidth(mActivity) / 3));
         return signPath;
     }
 
     @Override
     public void onBackPressed() {
         if (isUpdateStatus) {
-            Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
+            Intent intent = new Intent(mActivity, OperateTaskListActivity.class);
             intent.putExtra(Config.IS_FROM_BATTERY, true);
             startActivity(intent);
         }

@@ -82,7 +82,7 @@ public class CopyValueReportActivity extends BaseReportActivity {
     }
 
     private void initOnClick() {
-        binding.tvContinueInspection.setOnClickListener(view -> processor.gotoInspection(_this));
+        binding.tvContinueInspection.setOnClickListener(view -> processor.gotoInspection(mActivity));
     }
 
     @Override
@@ -93,7 +93,7 @@ public class CopyValueReportActivity extends BaseReportActivity {
             case LOAD_DATA:
                 
                 String result = getString(R.string.work_status_format_str, status);
-                binding.tvInspectionResult.setText(StringUtils.changePartTextColor(_this, result, R.color.red_color, result.length() - status.length(), result.length()));
+                binding.tvInspectionResult.setText(StringUtils.changePartTextColor(mActivity, result, R.color.red_color, result.length() - status.length(), result.length()));
                 if (currentInspectionType.contains(InspectionType.SBJC_06.name())) {
                     binding.llInspectionType.setVisibility(View.VISIBLE);
                     binding.tvInspectionType.setText(currentInspectionName);

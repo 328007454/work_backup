@@ -124,7 +124,7 @@ public class DifferentialMotionRecordActivity2 extends BaseActivity {
     private void initOnclick() {
         mRecordBinding.btnConfirmSave.setOnClickListener(v -> {
             if (DifferentialMotionRecordActivity2.this.saveData()) {
-                Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
+                Intent intent = new Intent(mActivity, JZLFenJieKaiGuanReportActivity.class);
                 DifferentialMotionRecordActivity2.this.startActivity(intent);
                 DifferentialMotionRecordActivity2.this.setResult(RESULT_OK);
                 DifferentialMotionRecordActivity2.this.finish();

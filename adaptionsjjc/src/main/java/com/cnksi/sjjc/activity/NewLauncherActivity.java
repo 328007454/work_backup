@@ -73,12 +73,12 @@ public class NewLauncherActivity extends BaseActivity {
                     break;
                 case R.id.menu_operate:
                     isFromHomeActivity = false;
-                    ActivityUtil.startOperateActivity(_this);
+                    ActivityUtil.startOperateActivity(mActivity);
                     break;
 
                 case R.id.menu_unify:
                     isFromHomeActivity = false;
-                    ActivityUtil.startUnifyActivity(_this);
+                    ActivityUtil.startUnifyActivity(mActivity);
                     break;
                 default:
                     break;
@@ -112,11 +112,11 @@ public class NewLauncherActivity extends BaseActivity {
         launcherBinding.lancherTitle.exitSystem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogUtils.showSureTipsDialog(_this, null, "是否退出登录?", "确定", "取消", new OnViewClickListener() {
+                DialogUtils.showSureTipsDialog(mActivity, null, "是否退出登录?", "确定", "取消", new OnViewClickListener() {
                     @Override
                     public void onClick(View v) {
                         super.onClick(v);
-                        Intent intent = new Intent(_this, LoginActivity.class);
+                        Intent intent = new Intent(mActivity, LoginActivity.class);
                         startActivity(intent);
                         mActivity.finish();
                     }

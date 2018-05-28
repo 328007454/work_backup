@@ -15,7 +15,7 @@ import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTicketReportBinding;
 import com.cnksi.bdzinspection.emnu.OperateType;
 import com.cnksi.bdzinspection.model.OperateTick;
-import com.cnksi.bdzinspection.utils.AnimationUtils;
+import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.core.common.ExecutorManager;
@@ -43,7 +43,7 @@ public class OperateTicketReportActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_ticket_report);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_operate_ticket_report);
         initialUI();
         initialData();
         initOnClick();
@@ -56,7 +56,7 @@ public class OperateTicketReportActivity extends BaseActivity {
           binding.includeTitle.tvTitle.setText(getString(R.string.xs_operate_report_str));
         binding.includeTitle.ibtnCancel.setVisibility(View.GONE);
         binding.tvDashLine.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        PlaySound.getIntance(currentActivity).play(R.raw.printing);
+        PlaySound.getIntance(mActivity).play(R.raw.printing);
         mHandler.sendEmptyMessageDelayed(VIBRATOR, 500);
         mHandler.sendEmptyMessageDelayed(ANIMATION, 2000);
 
@@ -78,7 +78,7 @@ public class OperateTicketReportActivity extends BaseActivity {
 
     private void initOnClick() {
         binding.btnConfirm.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
+            Intent intent = new Intent(mActivity, OperateTaskListActivity.class);
             intent.putExtra(Config.IS_FROM_BATTERY, isFromWorkPage);
             OperateTicketReportActivity.this.startActivity(intent);
             ScreenManager.getScreenManager().popAllActivityExceptOne(TaskRemindActivity.class);
@@ -91,7 +91,7 @@ public class OperateTicketReportActivity extends BaseActivity {
         switch (msg.what) {
             case ANIMATION:
 
-                PlaySound.getIntance(currentActivity).play(R.raw.print_out);
+                PlaySound.getIntance(mActivity).play(R.raw.print_out);
                 AnimationUtils.translateAnimRun(binding.llReportContentContainer, 0.0f,
                         binding.llReportContentContainer.getHeight() * 92 / 100);
 
@@ -135,7 +135,7 @@ public class OperateTicketReportActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        PlaySound.getIntance(currentActivity).stop();
+        PlaySound.getIntance(mActivity).stop();
         super.onDestroy();
     }
 

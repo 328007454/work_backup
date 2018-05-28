@@ -2,6 +2,7 @@ package com.cnksi.sjjc.activity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
@@ -18,12 +19,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.cnksi.bdloc.LocationUtil;
+import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
@@ -39,12 +43,16 @@ import com.cnksi.sjjc.util.AppUtils;
 import com.cnksi.sjjc.util.DateUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 
+import org.xutils.common.util.DatabaseUtils;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * 登录界面
+ * @author Wastrel
  */
 public class LoginActivity extends BaseActivity implements GrantPermissionListener {
 
@@ -103,7 +111,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
     public void inUI() {
         //设置版本信息
-        binding.tvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(_this)));
+        binding.tvVersion.setText(getString(R.string.sys_copyrights_format_str, AppUtils.getVersionName(mActivity)));
         String userName = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         if (!TextUtils.isEmpty(userName)) {
             String[] userNames = userName.split(",");
@@ -113,7 +121,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 binding.etPassword.setText(pwd);
             }
         }
-        arrayAdapter = new ArrayAdapter<String>(_this, R.layout.user_name_drop_down_item, R.id.tv_user_name);
+        arrayAdapter = new ArrayAdapter<>(mActivity, R.layout.user_name_drop_down_item, R.id.tv_user_name);
         binding.etAutoUsername.setAdapter(arrayAdapter);
         binding.etAutoUsername.addTextChangedListener(new TextWatcher() {
             @Override
@@ -166,7 +174,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 boolean maskWifi = !PreferencesUtils.get(Config.MASK_WIFI, true);
                 PreferencesUtils.put(Config.MASK_WIFI, maskWifi);
                 if (maskWifi) {
-                    com.cnksi.core.utils.NetWorkUtils.disableNetWork(_this);
+                    com.cnksi.core.utils.NetWorkUtils.disableNetWork(mActivity);
                     ToastUtils.showMessage("打开WIFI屏蔽");
                 } else {
                     ToastUtils.showMessage("关闭WIFI屏蔽");
@@ -331,7 +339,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 binding.txtLogginFirst.setVisibility(View.VISIBLE);
                 binding.txtLogginFirst.setText(mCurrentUserOne.username);
                 binding.txtUserLayout.setVisibility(View.VISIBLE);
-                hideKeyboard();
+                KeyBoardUtils.closeKeybord(mActivity);
                 break;
             // 用户2登陆成功
             case USER_TWO_LOGIN_SUCCESS:
@@ -340,7 +348,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
                 binding.txtLogginSecond.setVisibility(View.VISIBLE);
                 binding.txtLogginSecond.setText(mCurrentUserTwo.username);
                 binding.txtUserLayout.setVisibility(View.VISIBLE);
-                hideKeyboard();
+                KeyBoardUtils.closeKeybord(mActivity);
                 break;
             // 没有对应账号
             case NO_SUCH_USER:
@@ -446,7 +454,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         PreferencesUtils.put(Config.OTHER_DEPT_USER,mCurrentUserOne.type);
         PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, mCurrentUserOne.deptName);
         //保存登录班组和账号
-        Intent intent = new Intent(_this, HomeActivity.class);
+        Intent intent = new Intent(mActivity, HomeActivity.class);
         startActivity(intent);
         LoginActivity.this.finish();
         final String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
@@ -475,7 +483,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionUtil.getInstance().onRequestPermissionsResult(_this, requestCode, permissions, grantResults);
+        PermissionUtil.getInstance().onRequestPermissionsResult(mActivity, requestCode, permissions, grantResults);
     }
 
     @Override
@@ -490,5 +498,34 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
         }
         inUI();
         initOnClick();
+    }
+    /**
+     * 备份数据库
+     */
+    public void copyBdzInspectionDb() {
+        ProgressDialog dialog = ProgressDialog.show(this, "提示", "正在加密数据，请稍等...请不要强行取消，耐心等待", false, false);
+        ExecutorManager.executeTaskSerially(() -> {
+            try {
+                String innerDateBaseFolder = CommonApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
+                File innerFile = new File(innerDateBaseFolder);
+                if (!innerFile.exists()) {
+                    innerFile.mkdir();
+                }
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + Config.DATABASE_NAME)) {
+                    DatabaseUtils.copyDatabase(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME), "", new File(innerDateBaseFolder + Config.ENCRYPT_DATABASE_NAME), "com.cnksi");
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + Config.DATABASE_NAME);
+                }
+                runOnUiThread(() -> {
+                    checkUpdate();
+                    KSyncConfig.getInstance().setDept_id("-1");
+                });
+            } catch (Exception e) {
+                ToastUtils.showMessage("加密失败，请重新同步数据，继续使用");
+                e.printStackTrace();
+            } finally {
+                dialog.cancel();
+            }
+        });
+
     }
 }

@@ -215,7 +215,7 @@ public class BatteryTestActivity extends BaseActivity {
                 intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
                 BatteryTestActivity.this.startActivity(intent);
             }
-            KeyBoardUtils.closeKeybord(_this);
+            KeyBoardUtils.closeKeybord(mActivity);
             BatteryTestActivity.this.finish();
         });
         batteryCodeList = new ArrayList<String>();
@@ -328,10 +328,10 @@ public class BatteryTestActivity extends BaseActivity {
                     SpannableString spanVoltage = new SpannableString(voltage);
                     SpannableString spanResistance = new SpannableString(resistance);
 //                    getResources().getColor(R.color.radio_text_checked_color)
-                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.red_unpressed_color)), 3, spanVoltage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.red_unpressed_color)), 3, resistance.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mActivity, R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mActivity, R.color.radio_text_checked_color)), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanVoltage.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mActivity, R.color.red_unpressed_color)), 3, spanVoltage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spanResistance.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mActivity, R.color.red_unpressed_color)), 3, resistance.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     binding.resistanceTotal.setText(spanResistance);
                     binding.voltageTotal.setText(spanVoltage);
 
@@ -657,7 +657,7 @@ public class BatteryTestActivity extends BaseActivity {
             }
         });
         binding.ivGoBtdefect.setOnClickListener(view -> {
-            Intent intent = new Intent(_this, BatteryDeviceDetectActivity.class);
+            Intent intent = new Intent(mActivity, BatteryDeviceDetectActivity.class);
             BatteryTestActivity.this.startActivityForResult(intent, BATTERY_DEVICEDEFECT_ACTIVITY);
         });
     }

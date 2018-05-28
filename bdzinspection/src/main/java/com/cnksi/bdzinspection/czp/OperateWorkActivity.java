@@ -9,10 +9,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -74,7 +71,7 @@ public class OperateWorkActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_work);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_operate_work);
 
 
         initialUI();
@@ -136,7 +133,7 @@ public class OperateWorkActivity extends BaseActivity {
         switch (msg.what) {
             case LOAD_DATA:
                 if (mAdapter == null) {
-                    mAdapter = new OperateWorkItemAdapter(currentActivity, dataList);
+                    mAdapter = new OperateWorkItemAdapter(mActivity, dataList);
                     mAdapter.currentOperateItemPosition = currentOperateItemPosition;
                     binding.lvContainer.setAdapter(mAdapter);
                     binding.lvContainer.setSelection(currentOperateItemPosition);
@@ -172,7 +169,7 @@ public class OperateWorkActivity extends BaseActivity {
         binding.ibtnStart.setOnClickListener(view -> OperateWorkActivity.this.startOperateTask());
         binding.btnPause.setOnClickListener(view -> OperateWorkActivity.this.pauseOperateTask());
 
-        binding.btnStop.setOnClickListener(view -> DialogUtils.showSureTipsDialog(currentActivity, binding.llRootContainer,
+        binding.btnStop.setOnClickListener(view -> DialogUtils.showSureTipsDialog(mActivity, binding.llRootContainer,
                 OperateWorkActivity.this.getString(R.string.xs_sure_stop_operate_task_str), new OnViewClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -208,11 +205,11 @@ public class OperateWorkActivity extends BaseActivity {
     XsDialogOperateTipsBinding tipsBinding;
 
     private void showOperateContentTips(OperateItem item) {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         if (tipsDialog == null) {
             tipsBinding = XsDialogOperateTipsBinding.inflate(getLayoutInflater());
-            tipsDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
+            tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         tipsBinding.tvDialogContent.setText(item.content);
         tipsDialog.show();
@@ -299,7 +296,7 @@ public class OperateWorkActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (OperateTaskStatus.yzt.name().equalsIgnoreCase(mCurrentOperateTick.status)) {
-            Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
+            Intent intent = new Intent(mActivity, OperateTaskListActivity.class);
             intent.putExtra(Config.IS_FROM_BATTERY, true);
             startActivity(intent);
         } else {
@@ -368,7 +365,7 @@ public class OperateWorkActivity extends BaseActivity {
         } catch (DbException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
+        Intent intent = new Intent(mActivity, OperateTaskListActivity.class);
         intent.putExtra(Config.IS_FROM_BATTERY, true);
         startActivity(intent);
         this.finish();
@@ -451,7 +448,7 @@ public class OperateWorkActivity extends BaseActivity {
             e.printStackTrace();
         }
         // TODO:完成操作
-        Intent intent = new Intent(currentActivity, OperateTicketReportActivity.class);
+        Intent intent = new Intent(mActivity, OperateTicketReportActivity.class);
         intent.putExtra(Config.CURRENT_TASK_ID, currentOperateId);
         startActivity(intent);
         ScreenManager.getScreenManager().popActivity(OperateTaskDetailsActivity.class);

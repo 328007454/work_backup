@@ -76,7 +76,7 @@ public class BHDZQKActivity extends BaseActivity {
     private void initView() {
         binding.btnNext.setOnClickListener(v -> {
             if (BHDZQKActivity.this.save(true)) {
-                Intent intent = new Intent(_this, BHDZJLActivity.class);
+                Intent intent = new Intent(mActivity, BHDZJLActivity.class);
                 BHDZQKActivity.this.startActivity(intent);
             }
         });
@@ -111,14 +111,14 @@ public class BHDZQKActivity extends BaseActivity {
         binding.ivTakePic.setOnClickListener(v -> FunctionUtil.takePicture(BHDZQKActivity.this, imageName = FunctionUtil.getCurrentImageName(BHDZQKActivity.this), Config.RESULT_PICTURES_FOLDER));
         binding.ivShowPic.setOnClickListener(v -> BHDZQKActivity.this.showImageDetails(BHDZQKActivity.this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
         binding.bhsbmc.setSelectOnClickListener(v -> {
-            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.second);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
             intentDevices.putExtra(Config.TITLE_NAME, "请选择二次设备");
             BHDZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
         });
         binding.gzlbqmc.setSelectOnClickListener(v -> {
-            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.second);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
             String bigIds = DeviceService.getInstance().findBigId("GZLBQ");
@@ -350,7 +350,7 @@ public class BHDZQKActivity extends BaseActivity {
                         });
                     });
                     break;
-                case CANCEL_RESULT_LOAD_IMAGE:
+                case Config.CANCEL_RESULT_LOAD_IMAGE:
                     ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
                     for (String imageUrl : cancelList) {
                         photos.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
@@ -371,6 +371,7 @@ public class BHDZQKActivity extends BaseActivity {
                         binding.gzlbqfx.setMustInput(true);
                     }
                     break;
+                default:
             }
         }
     }
