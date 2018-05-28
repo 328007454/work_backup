@@ -1,2 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cnksi.defect" />
+    package="com.cnksi.defect">
+
+    <application>
+        <activity android:name="com.cnksi.common.activity.ImageDetailsActivity" />
+
+    </application>
+</manifest>

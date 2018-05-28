@@ -204,7 +204,7 @@
     </string-array>
 
     <string-array name="DefectTypeArray">
-        <item>全部缺陷</item>
+        <item>全部</item>
         <item>一般缺陷</item>
         <item>严重缺陷</item>
         <item>危急缺陷</item>

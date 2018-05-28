@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DefectDefineAdapter;
@@ -228,13 +227,11 @@ public class AddNewDefectActivity extends BaseActivity {
             case LOAD_DATA:
 
                 if (mDefectDefineAdapter == null) {
-
                     mDefectDefineAdapter = new DefectDefineAdapter(currentActivity, dataList);
                     binding.lvContainer.setAdapter(mDefectDefineAdapter);
                 } else {
                     mDefectDefineAdapter.setList(dataList);
                 }
-
                 break;
             default:
                 break;

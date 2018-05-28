@@ -8,24 +8,24 @@
             type="com.cnksi.defect.activity.DefectControlActivity" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <include
             android:id="@+id/include_title"
             layout="@layout/include_title" />
 
         <LinearLayout
+            android:id="@+id/type_container"
             android:layout_width="match_parent"
             android:layout_height="170px"
+            android:layout_below="@id/include_title"
             android:background="#fef0ef"
             android:orientation="horizontal"
             android:padding="30px">
 
             <LinearLayout
-                android:paddingLeft="@dimen/_20px"
                 android:id="@+id/bdz_contanier"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -36,7 +36,8 @@
                 android:background="@drawable/home_include_background"
                 android:gravity="center"
                 android:onClick="onClick"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_20px">
 
                 <TextView
                     android:id="@+id/bdz_name"
@@ -56,7 +57,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="@dimen/_20px"
                 android:id="@+id/defect_type_container"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
@@ -67,7 +67,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/home_include_background"
                 android:onClick="onClick"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_20px">
 
 
                 <TextView
@@ -84,7 +85,6 @@
 
 
             <LinearLayout
-                android:paddingLeft="@dimen/_20px"
                 android:id="@+id/container_people"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -94,7 +94,8 @@
                 android:background="@drawable/home_include_background"
                 android:gravity="center"
                 android:onClick="onClick"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_20px">
 
                 <TextView
                     android:id="@+id/txt_people_name"
@@ -110,15 +111,36 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/add_defect"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="118px"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="18px"
+            android:layout_marginEnd="@dimen/xs__30px"
+            android:layout_marginStart="@dimen/xs__30px"
+            android:layout_marginTop="18px"
+            android:background="@drawable/xs_grass_green_button_background_selector"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="新建缺陷"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
         <ListView
             android:id="@+id/lv_defect"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            android:layout_above="@id/add_defect"
+            android:layout_below="@id/type_container"
+            android:layout_marginBottom="@dimen/_20px"
             android:layout_weight="1"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@color/line_color"
             android:dividerHeight="2px"
             android:listSelector="@android:color/transparent" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

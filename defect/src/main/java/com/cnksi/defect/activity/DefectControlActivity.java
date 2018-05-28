@@ -32,16 +32,18 @@ import java.util.List;
 
 public class DefectControlActivity extends BaseCoreActivity {
     private ActivityDefectControlBinding defectControlBinding;
-    private List<DbModel> bdzList = new ArrayList<>();
+    private List<Bdz> bdzList = new ArrayList<>();
     private DefectContentAdapter defectContentAdapter;
     /**
      * 变电站实体model
      */
-    private DbModel bdzModel;
+    private Bdz bdzModel;
     private int defectLevel = 0;
     private List<DefectRecord> defectRecords = new ArrayList<>();
     private List<String> defectTypes;
     private List<DbModel> userModels;
+    private String userName = "全部";
+    private String departmentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,20 +74,21 @@ public class DefectControlActivity extends BaseCoreActivity {
 
     private void search() {
         ExecutorManager.executeTaskSerially(() -> {
-            defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.getString(Bdz.BDZID), defectLevel);
+            defectRecords.clear();
+            defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.bdzid, userName, defectLevel, departmentName);
             runOnUiThread(() -> {
                 if (defectContentAdapter == null) {
                     defectContentAdapter = new DefectContentAdapter(this, defectRecords);
                     defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
                 } else {
-                    defectContentAdapter.notifyDataSetChanged();
+                    defectContentAdapter.setList(defectRecords);
                 }
             });
         });
     }
 
     public void initView() {
-
+        departmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
         defectControlBinding.setEvent(this);
         defectControlBinding.includeTitle.tvTitle.setText("缺陷管理");
         defectControlBinding.includeTitle.btnBack.setImageResource(R.drawable.ic_hompage_selector);
@@ -96,14 +99,22 @@ public class DefectControlActivity extends BaseCoreActivity {
 
     public void loadData() {
         defectTypes = Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray));
+
         ExecutorManager.executeTaskSerially(() -> {
-            bdzList = BdzService.getInstance().findAllBdzByDpDbmodel(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
+            bdzList = BdzService.getInstance().findAllBdzByDp(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
+            bdzList.add(new Bdz("-1", "全部"));
             userModels = UserService.getInstance().getAllUserByDeptId(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
+            DbModel userModel = new DbModel();
+            userModel.add(Users.USERNAME, "全部");
+            userModel.add(Users.ACCOUNT, "-1");
+            userModels.add(userModel);
             mHandler.post(() -> {
                 if (bdzList.size() > 0) {
-                    bdzModel = bdzList.get(0);
-                    defectControlBinding.bdzName.setText(bdzModel.getString(Bdz.NAME));
+                    bdzModel = bdzList.get(bdzList.size() - 1);
+                    defectControlBinding.bdzName.setText(bdzModel.name);
                 }
+                defectControlBinding.txtPeopleName.setText(userModels.get(userModels.size() - 1).getString(Users.USERNAME));
+                defectControlBinding.defectType.setText(defectTypes.get(0));
                 search();
             });
         });
@@ -114,24 +125,39 @@ public class DefectControlActivity extends BaseCoreActivity {
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.bdz_contanier) {
-            new PopWindowCustom.PopWindowBuilder<Bdz>(this).setWidth(defectControlBinding.bdzContanier.getWidth() + 60).setList(bdzList).setOutSideCancelable(true).setDbmodelKey(Bdz.NAME).setItemClickListener((adapter, view1, position) -> {
-                ToastUtils.showMessage(bdzList.get(position).getString(Bdz.NAME));
-                bdzModel = bdzList.get(position);
-                search();
-                defectControlBinding.bdzName.setText(bdzModel.getString(Bdz.NAME));
-            }).setDropDownOfView(defectControlBinding.bdzContanier).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
+            new PopWindowCustom.PopWindowBuilder<Bdz>(this).setPopWindowBuilder(bdz -> bdz.name)
+                    .setWidth(defectControlBinding.bdzContanier.getWidth() + 60)
+                    .setList(bdzList)
+                    .setOutSideCancelable(true).
+                    setItemClickListener((adapter, view1, position) -> {
+                        ToastUtils.showMessage(bdzList.get(position).name);
+                        bdzModel = bdzList.get(position);
+                        defectControlBinding.bdzName.setText(bdzModel.name);
+                        search();
+                    }).setDropDownOfView(defectControlBinding.bdzContanier).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
         } else if (i == R.id.defect_type_container) {
-            new PopWindowCustom.PopWindowBuilder<Bdz>(this).setWidth(defectControlBinding.defectTypeContainer.getWidth() + 60).setList(defectTypes).setOutSideCancelable(true).setItemClickListener((adapter, view1, position) -> {
-                ToastUtils.showMessage(defectTypes.get(position));
-                defectControlBinding.defectType.setText(defectTypes.get(position));
-
-            }).setDropDownOfView(defectControlBinding.defectTypeContainer).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
+            new PopWindowCustom.PopWindowBuilder<String>(this).setPopWindowBuilder(s -> s)
+                    .setWidth(defectControlBinding.defectTypeContainer.getWidth() + 60)
+                    .setList(defectTypes).setOutSideCancelable(true)
+                    .setItemClickListener((adapter, view1, position) -> {
+                        String defectType = defectTypes.get(position);
+                        defectLevel = 2 * position;
+                        ToastUtils.showMessage(defectType);
+                        defectControlBinding.defectType.setText(defectTypes.get(position));
+                        search();
+                    }).setDropDownOfView(defectControlBinding.defectTypeContainer).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
         } else if (i == R.id.container_people) {
-            new PopWindowCustom.PopWindowBuilder<Bdz>(this).setWidth(defectControlBinding.containerPeople.getWidth() + 60).setList(userModels).setOutSideCancelable(true).setDbmodelKey(Users.USERNAME).setItemClickListener((adapter, view1, position) -> {
-                ToastUtils.showMessage(userModels.get(position).getString(Users.USERNAME));
-                defectControlBinding.txtPeopleName.setText(userModels.get(position).getString(Users.USERNAME));
-
-            }).setDropDownOfView(defectControlBinding.containerPeople).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
+            new PopWindowCustom.PopWindowBuilder<DbModel>(this).setPopWindowBuilder(model -> model.getString(Users.USERNAME))
+                    .setWidth(defectControlBinding.containerPeople.getWidth() + 60)
+                    .setList(userModels).setOutSideCancelable(true)
+                    .setItemClickListener((adapter, view1, position) -> {
+                        DbModel userModel = userModels.get(position);
+                        userName = userModel.getString(Users.USERNAME);
+                        ToastUtils.showMessage(userModel.getString(Users.USERNAME));
+                        defectControlBinding.txtPeopleName.setText(userModels.get(position).getString(Users.USERNAME));
+                        search();
+                    }).setDropDownOfView(defectControlBinding.containerPeople).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
+        }else if (i==R.id.add_defect){
 
         }
     }

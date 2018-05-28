@@ -19,6 +19,7 @@ import com.cnksi.defect.databinding.AdapterDefectItemBinding;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Mr.K  on 2017/4/25.
@@ -78,13 +79,13 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         itemBinding.tvDefectDevice.setText("设备：" + (TextUtils.isEmpty(item.devcie) ? "" : item.devcie));
         final ArrayList<String> listPicDis = StringUtils.stringToList(item.pics);
         if (listPicDis.size() > 0 && !TextUtils.isEmpty(listPicDis.get(0))) {
-            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)));
+            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)), 280);
             if (bitmap != null) {
                 itemBinding.ivDefectImage.setImageBitmap(bitmap);
             }
             itemBinding.ivDefectImage.setOnClickListener(v -> {
 
-                ImageDetailsActivity.with(activity).setPosition(0).setImageUrlList(StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER))
+                        ImageDetailsActivity.with(activity).setPosition(0).setImageUrlList(StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER))
                                 .setDeleteFile(false).setShowDelete(false).start();
                     }
             );
@@ -99,5 +100,10 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         itemBinding.tvDefectDiscoverTime.setText("时间：" + (TextUtils.isEmpty(item.discovered_date) ? "" : (DateUtils.getFormatterTime(item.insertTime, DateUtils.yyyy_MM_dd))));
         itemBinding.tvDefectRemindTime.setText(calculateRemindTime(item));
 
+    }
+
+    public void setList(List<DefectRecord> defectRecords) {
+        realDatas = defectRecords;
+        notifyDataSetChanged();
     }
 }

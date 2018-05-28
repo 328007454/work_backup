@@ -45,7 +45,7 @@ public class DefectRecordService extends BaseService<DefectRecord> {
     public List<DefectRecord> queryDefectByDeviceid(String deviceid, String bdzid) {
         List<DefectRecord> defects = null;
         try {
-            Selector selector =selector().and(DefectRecord.DEVICEID, "=", deviceid)
+            Selector selector = selector().and(DefectRecord.DEVICEID, "=", deviceid)
                     .and(DefectRecord.HAS_REMOVE, "=", "N").and(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.BDZID, "=", bdzid).and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)  AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
@@ -145,7 +145,6 @@ public class DefectRecordService extends BaseService<DefectRecord> {
         }
         return batteryDbModel;
     }
-
 
 
     /**
@@ -329,15 +328,22 @@ public class DefectRecordService extends BaseService<DefectRecord> {
      *
      * @return
      */
-    public List<DefectRecord> queryCurrentBdzExistDefectList(String bdzId, int level) {
+    public List<DefectRecord> queryCurrentBdzExistDefectList(String bdzId, String userName, int level, String deptName) {
         List<DefectRecord> defects = null;
         try {
             Selector<DefectRecord> selector = selector().and(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.HAS_REMOVE, "=", "N")
                     .and(DefectRecord.IS_COPY, "<>", "Y");
-            if (!TextUtils.isEmpty(bdzId)) {
+            if (!TextUtils.isEmpty(bdzId) && !TextUtils.equals("-1", bdzId)) {
                 selector.and(DefectRecord.BDZID, "=", bdzId);
+            } else {
+                selector.and(DefectRecord.DISCOVERER_UNIT, "=", deptName);
             }
+
+            if (!TextUtils.equals(userName, "全部")) {
+                selector.expr(" and discoverer  like '%" + userName + "%'");
+            }
+
             if (level > 0) {
                 selector.and(DefectRecord.DEFECTLEVEL, "=", level);
             }
@@ -358,7 +364,7 @@ public class DefectRecordService extends BaseService<DefectRecord> {
     public List<DefectRecord> queryCurrentBdzExistDefectList() {
         List<DefectRecord> defects = null;
         try {
-            defects =selector().and(DefectRecord.HAS_TRACK, "=", "N")
+            defects = selector().and(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.HAS_REMOVE, "=", "N")
                     .and(DefectRecord.IS_COPY, "<>", "Y")
                     .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL) AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
