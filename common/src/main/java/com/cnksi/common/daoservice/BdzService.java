@@ -16,31 +16,14 @@ import java.util.List;
  * @date 2016/7/7
  */
 public class BdzService extends BaseService<Bdz> {
-    private static BdzService instance;
+    private final static BdzService instance = new BdzService();
 
     private BdzService() {
         super(Bdz.class);
     }
 
     public static BdzService getInstance() {
-        if (null == instance)
-            instance = new BdzService();
         return instance;
-    }
-
-    public List<String> findUpdloadPictureFolder() {
-        List<String> folder = new ArrayList<>();
-        try {
-            SqlInfo sqlInfo = new SqlInfo("select distinct(folder_name) from bdz where dlt='0'");
-            List<DbModel> folderList = findDbModelAll(sqlInfo);
-            if (null != folderList && !folderList.isEmpty()) {
-                for (DbModel model : folderList)
-                    folder.add(model.getString("folder_name"));
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return folder;
     }
 
     public Bdz findByPmsId(String pms_id) throws DbException {
@@ -56,7 +39,7 @@ public class BdzService extends BaseService<Bdz> {
         return null;
     }
 
-    public List<DbModel> findAllBdzByDpDbmodel(String deptId) {
+    public List<DbModel> findAllBdzByDpDbModel(String deptId) {
         List<DbModel> models = new ArrayList<>();
         String sql = "select * from bdz where dept_id = ? and dlt = 0";
         SqlInfo sqlInfo = new SqlInfo(sql);
@@ -67,7 +50,6 @@ public class BdzService extends BaseService<Bdz> {
             e.printStackTrace();
             return models;
         }
-
         return models;
     }
 }

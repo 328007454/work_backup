@@ -17,7 +17,6 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -47,19 +46,6 @@ public class DeviceService extends BaseService<Device> {
      */
     public List<Device> findDeviceBySpacing(Spacing mSpacing, String deviceType) throws DbException {
         return selector().and(Device.SPID, "=", mSpacing.spid).and(Device.DEVICE_TYPE, "=", deviceType).findAll();
-    }
-    /**
-     * 通过“保护设备关键词查询deviece表中的数据”
-     */
-
-    public List<Device> getDevicesProtect(String bdzId) {
-        List<Device> deviceList = new ArrayList<Device>();
-        try {
-            deviceList = selector().and(Device.NAME, "like", "%保护%").and(Device.BDZID, "=", bdzId).and(Device.DLT, "<>", "1").findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return deviceList;
     }
 
     public List<DbModel> findAllDevice(String bdzId, String keyWord, String deviceType, String inspectionType, String deviceWay) {
@@ -182,22 +168,6 @@ public class DeviceService extends BaseService<Device> {
         return null;
     }
 
-    /**
-     * 通过“保护设备关键词查询deviece表中的数据”
-     */
-
-    public List<DbModel> getDevicesByName(String bdzId, String name) {
-        List<DbModel> dbModelList = null;
-        try {
-            SqlInfo sqlInfo = new SqlInfo("SELECT d.deviceid,d.name FROM device d WHERE d.bdzid = '" + bdzId + "' and d.dlt='0' AND dtid IN ( SELECT dtid FROM device_unit WHERE dlt='0' and  duid IN ( SELECT s.duid FROM standards s WHERE dlt='0' and s.description LIKE " +
-                    "'%" + name + "%')) order by d.deviceid ");
-            dbModelList = findDbModelAll(sqlInfo);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return dbModelList;
-    }
-
     public List<DbModel> findSpaceDeviceByKeyWord(String bdzId, String keyWord, String deviceType, String... bigtypes) {
         StringBuffer sb = new StringBuffer("(");
         for (String bigId : bigtypes) {
@@ -222,47 +192,6 @@ public class DeviceService extends BaseService<Device> {
     }
 
     /**
-     * 根据设备型号来查询 所有有抄录数据的设备
-     *
-     * @param deviceType 设备型号
-     * @param bdzId      变电站ID
-     * @param nameFilter 设备名字过滤器,如果为空就是筛选全部设备
-     * @return
-     * @throws DbException
-     */
-    public List<DbModel> findAllDeviceHasCopyValue(String deviceType, String bdzId, String nameFilter) throws DbException {
-        String sort = "one".equals(deviceType) ? Spacing.SORT_ONE
-                : "second".equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
-        String filter = TextUtils.isEmpty(nameFilter) ? "" : " and d.name LIKE '%" + nameFilter + "%'";
-        SqlInfo sqlInfo = new SqlInfo(
-                "SELECT d.* FROM device d LEFT JOIN spacing s on s.spid=d.spid WHERE dtid IN " +
-                        "( SELECT DISTINCT dt.dtid FROM ( SELECT duid FROM standards WHERE resulttype = 1 AND dlt = '0' ) AS ds" +
-                        " LEFT JOIN device_unit dp ON ds.duid = dp.duid LEFT JOIN device_type dt ON dt.dtid = dp.dtid " +
-                        " where dp.dlt<>'1' and dt.dlt<>'1') AND d.bdzid = ? AND d.dlt='0' AND d.device_type = ?" + filter +
-                        " ORDER BY s." + sort + ", d.sort");
-        sqlInfo.addBindArg(new KeyValue("bdzid", bdzId));
-        sqlInfo.addBindArg(new KeyValue("deviceType", deviceType));
-        List<DbModel> mDeviceList = findDbModelAll(sqlInfo);
-        return mDeviceList;
-    }
-
-    /**
-     * 根据条件查询设备
-     *
-     * @param deviceType
-     * @param bdzId
-     * @param selector
-     * @return
-     * @throws DbException
-     */
-    public List<DbModel> findDeviceHasCopyValueBySelector(String deviceType, String selector, String bdzId) throws DbException {
-        SqlInfo sqlInfo = new SqlInfo(" SELECT * from device WHERE dlt='0' and  bdzid=? and device_type=? and has_copy='Y' " + selector);
-        sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
-        sqlInfo.addBindArg(new KeyValue("deviceType", deviceType));
-        return findDbModelAll(sqlInfo);
-    }
-
-    /**
      * 根据条件查询设备
      *
      * @param bdzId
@@ -274,38 +203,6 @@ public class DeviceService extends BaseService<Device> {
         SqlInfo sqlInfo = new SqlInfo(" SELECT * from device WHERE dlt='0' and  bdzid=? " + selector);
         sqlInfo.addBindArg(new KeyValue("bdzId", bdzId));
         return findDbModelAll(sqlInfo);
-    }
-
-    /**
-     * 根据条件查询当前设备需要抄录的总项数目是否与当前record表中该设备已经抄录的总数据数目是否相等。
-     *
-     * @param reportId
-     * @return
-     */
-    public Map<String, List<String>> getCopyDevice(String reportId, String bdzid, String deviceType) {
-        Map<String, List<String>> map = new HashMap<String, List<String>>();
-        // String sql = "SELECT d.spid,d.deviceid FROM device d WHERE d.device_type=? and d.deviceid IN ( SELECT DISTINCT (dr.deviceid) FROM defect_record dr WHERE dr.reportid = ? AND dr.val IS NOT NULL )";
-        // SqlInfo sqlInfo = new SqlInfo(sql, deviceType,reportId);
-        try {
-            List<DbModel> dataList = getCopyDeviceDbModels(reportId, bdzid, deviceType, null);
-            if (null != dataList && !dataList.isEmpty()) {
-                for (DbModel dbModel : dataList) {
-                    String spid = dbModel.getString(Device.SPID);
-                    String deviceId = dbModel.getString(Device.DEVICEID);
-                    if (map.keySet().contains(spid)) {
-                        map.get(spid).add(deviceId);
-                    } else {
-                        List<String> list = new ArrayList<String>();
-                        list.add(deviceId);
-                        map.put(spid, list);
-                    }
-
-                }
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return map;
     }
 
     public List<DbModel> getCopyDeviceDbModels(String reportId, String bdzid, String deviceType, String filter) throws DbException {
@@ -465,22 +362,6 @@ public class DeviceService extends BaseService<Device> {
         return dbModelList;
     }
 
-
-    /**
-     * 交直流分接开关查询方式
-     *
-     * @param bdzid,
-     */
-    public List<DbModel> getDevicesById(String bdzid, String deviceId, String kaiGuanKey, String dangWeiKey) {
-        List<DbModel> dbModelList = null;
-        String sql = "select d.description description,d.type_key key from copy_item d where d.dlt='0' and d.bdzid = '" + bdzid + "' and d.deviceid = '" + deviceId + "' and ( d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "' )";
-        try {
-            dbModelList = findDbModelAll(new SqlInfo(sql));
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return dbModelList;
-    }
 
     //建议服务器处理 否则会引起同步问题 这里关掉触发器避免大范围的跟踪
     public boolean refreshDeviceHasCopy() {

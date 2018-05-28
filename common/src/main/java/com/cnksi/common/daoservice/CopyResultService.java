@@ -42,17 +42,6 @@ public class CopyResultService extends BaseService<CopyResult> {
         }
     }
 
-    public CopyResult getResult(String reportId, String itemId) {
-        try {
-            Selector<CopyResult> selector = selector().and(CopyResult.REPORTID, "=", reportId)
-                    .and(CopyResult.ITEM_ID, "=", itemId).orderBy(CopyResult.UPDATE_TIME);
-            return selector.findFirst();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     /**
      * 查询设备先最新的抄录项
      */
@@ -176,15 +165,6 @@ public class CopyResultService extends BaseService<CopyResult> {
         List<CopyResult> copyResults = null;
         copyResults = selector().and(CopyResult.TYPE_KEY, "=", currentInspectionType).and(CopyResult.REPORTID, "=", reportId).and(CopyResult.BDZID, "=", currentBdzId).findAll();
         return copyResults;
-    }
-
-    /**
-     * 查询差动保护差流的记录值
-     */
-    public List<CopyResult> getDifferentialRecord(String bdzId, String reportId) throws DbException {
-
-        return selector().and(CopyResult.REPORTID, "=", reportId)
-                .and(CopyResult.BDZID, "=", bdzId).orderBy(CopyResult.DEVICEID, false).findAll();
     }
 
     public void clearNULLData() {

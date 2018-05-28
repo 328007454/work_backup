@@ -261,10 +261,10 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
             });
         } else {
             if (isRoutineNotCopy()) {
-                showTipsDialog(null, new Intent(this, GenerateReportActivity.class));
+                showTipsDialog( new Intent(this, GenerateReportActivity.class));
             } else {
                 tip = tip + (currentTask.isGroupTask() ? "\n" + "确保分组成员已经获取过该任务，否则需通知其获取" : "");
-                showTipsDialog(null, new Intent(this, GenerateReportActivity.class), -1, tip, false);
+                showTipsDialog( new Intent(this, GenerateReportActivity.class), -1, tip, false);
             }
         }
     }

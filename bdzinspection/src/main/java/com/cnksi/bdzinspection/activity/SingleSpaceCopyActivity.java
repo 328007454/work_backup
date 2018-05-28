@@ -28,7 +28,7 @@ import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
@@ -59,7 +59,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  */
 public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickListener, CopyViewUtil.KeyBordListener {
     public final int LOAD_COPY_FINISH = 0x10;
-    protected int currentKeyBoardState = KeyBoardUtil.KEYBORAD_HIDE;
+    protected int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
     private XsActivitySingleSpaceCopyBinding mCopyBinding;
     /**
      * 设备列表是否全部展开
@@ -130,7 +130,6 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
     protected void onResume() {
         super.onResume();
         initLocation();
-        setWindowOverLayPermission();
     }
 
     private void initialUI() {
@@ -338,16 +337,18 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         } else {
             if (null == mKeyBoardUtil) {
                 createKeyBoardView(mCopyBinding.llKeyboardHelpLayout);
-                mKeyBoardUtil.setOnValueChangeListener(new KeyBoardUtil.OnKeyBoardStateChangeListener() {
+                mKeyBoardUtil.setOnValueChangeListener(new CopyKeyBoardUtil.OnKeyBoardStateChangeListener() {
                     @Override
                     public void onKeyBoardStateChange(int state) {
                         if (currentKeyBoardState != state) {
                             currentKeyBoardState = state;
                             switch (state) {
-                                case KeyBoardUtil.KEYBORAD_HIDE: // 键盘隐藏
+                                // 键盘隐藏
+                                case CopyKeyBoardUtil.KEYBORAD_HIDE:
                                     mCopyBinding.llKeyboardHelpLayout.setVisibility(View.GONE);
                                     break;
-                                case KeyBoardUtil.KEYBORAD_SHOW: // 键盘显示
+                                // 键盘显示
+                                case CopyKeyBoardUtil.KEYBORAD_SHOW:
                                     mCopyBinding.llKeyboardHelpLayout.setVisibility(View.VISIBLE);
                                     break;
                                 default:
@@ -380,7 +381,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
 
     @Override
     public void hideKeyBord() {
-        if (null != mKeyBoardUtil && currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+        if (null != mKeyBoardUtil && currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
             mKeyBoardUtil.hideKeyboard();
         }
     }
@@ -414,7 +415,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         tipsBinding.btnSure.setOnClickListener(v -> {
             SingleSpaceCopyActivity.this.hideKeyBord();
             defectDialog.dismiss();
-            if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+            if (currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
                 mKeyBoardUtil.hideKeyboard();
             }
             Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
@@ -498,7 +499,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
 
     @Override
     public void finish() {
-        if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+        if (currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
             mKeyBoardUtil.hideKeyboard();
         }
         if (copyHelper != null) {

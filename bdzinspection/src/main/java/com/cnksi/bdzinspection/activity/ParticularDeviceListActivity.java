@@ -137,7 +137,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                     case 4:
                         signalIcon = R.drawable.xs_ic_signal4;
                         break;
-                        default:
+                    default:
                 }
                 binding.tvTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, signalIcon, 0);
                 currentFragment.locationSuccess(location);
@@ -172,7 +172,6 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                 if (SystemConfig.isDevicePlaced()) {
                     fragmentList.get(0).handleSpaceArrivedData();
                 }
-
                 if (currentTask.isMember()) {
                     DialogUtils.showSureTipsDialog(mActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
                         @Override
@@ -184,7 +183,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                     });
                 } else {
                     Intent intent = new Intent(mActivity, GenerateReportActivity.class);
-                    ParticularDeviceListActivity.this.showTipsDialog(binding.llRootContainer, intent);
+                    showTipsDialog(intent);
                 }
             }
         });
@@ -192,7 +191,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         binding.ibtnAdd.setOnClickListener(view -> {
             PlaySound.getIntance(mActivity).play(R.raw.input);
             Intent intent = new Intent(mActivity, CopyAllValueActivity2.class);
-            ParticularDeviceListActivity.this.startActivity(intent);
+            startActivity(intent);
         });
 
 
@@ -202,7 +201,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
     @Override
     synchronized public void onShake() {
         if (currentPosition != 0) {
-            ToastUtils.showMessage( "摇一摇功能只能在一次设备列表使用");
+            ToastUtils.showMessage("摇一摇功能只能在一次设备列表使用");
         } else {
             if (!shaking) {
                 shaking = true;
@@ -222,7 +221,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                         if (code == -16) {
                             shaking = false;
                             CustomerDialog.dismissProgress();
-                            ToastUtils.showMessage( "摇一摇定位失败！");
+                            ToastUtils.showMessage("摇一摇定位失败！");
                         }
                     }
                 }).setTimeout(10).start();
@@ -264,18 +263,18 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         switch (msg.what) {
             case SYNC_START:
                 String messageStart = (String) msg.obj;
-                ToastUtils.showMessage( messageStart);
+                ToastUtils.showMessage(messageStart);
                 break;
             case SYNC_INFO:
                 break;
             case SYNC_SUCCESS:
                 String messageSuccess = (String) msg.obj;
-                ToastUtils.showMessage( messageSuccess);
+                ToastUtils.showMessage(messageSuccess);
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;
             case SYNC_ERROR:
-                ToastUtils.showMessage( "请检查网络，在主页手动同步");
+                ToastUtils.showMessage("请检查网络，在主页手动同步");
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;

@@ -26,8 +26,8 @@ import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
 import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
@@ -64,7 +64,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
 public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListener {
     private static final int LOAD_COPY_FINISIH = 0x10;
     private static final int LOAD_COPY_MAP = LOAD_COPY_FINISIH + 1;
-    protected int currentKeyBoardState = KeyBoardUtil.KEYBORAD_HIDE;
+    protected int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
     Dialog defectDialog;
     XsDialogTipsBinding tipsBinding;
     private CopyDeviceAdapter deviceAdapter;
@@ -80,8 +80,6 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
     private CopyViewUtil copyViewUtil;
     // 抄录看不清弹出备注对话框
     private Dialog dialog;
-    //看不清标记
-    private String remarkInfor = "";
     //点击下一步后时间
     private long mAfterTime;
     //点击下一步的累计次数
@@ -159,7 +157,6 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         copyViewUtil = new CopyViewUtil();
         copyViewUtil.setKeyBordListener(this);
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
-            remarkInfor = "";
             XsActivityCopyDialogBinding copyDialogBinding = XsActivityCopyDialogBinding.inflate(CopyAllValueActivity3.this.getLayoutInflater());
             copyDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             dialog = DialogUtils.createDialog(mActivity, copyDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -215,7 +212,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
 
     private void initialData() {
         ExecutorManager.executeTask(() -> {
-            List<DbModel> deviceList = null;
+            List<DbModel> deviceList;
             try {
                 searchDefect();
                 deviceList = CopyItemService.getInstance().findAllDeviceHasCopyValue(currentInspectionType, currentBdzId);
@@ -256,7 +253,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
                 }
             }
             // 查询当前设备抄录项
-            List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItem1(currentBdzId, currentDeviceId, CopyItemService.getInstance().getCopyType());
+            List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItemByKey(currentBdzId, currentDeviceId, CopyItemService.getInstance().getCopyType());
             // 抄录结构map
             copyResultMap = new HashMap<>();
             // 按照抄录类型-抄录项转换结果
@@ -451,7 +448,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
     private void initOnClick() {
         binding.tvBatteryTestStep.setOnClickListener(view -> {
             CopyAllValueActivity3.this.saveAll();
-            String tip = String.format(CopyAllValueActivity3.this.getText(R.string.xs_dialog_tips_finish_str) + "", CopyResultService.getInstance().getCopyResult(currentBdzId, currentReportId, CopyItemService.getInstance().getCopyType()));
+            String tip = String.format(getText(R.string.xs_dialog_tips_finish_str) + "", CopyResultService.getInstance().getCopyResult(currentBdzId, currentReportId, CopyItemService.getInstance().getCopyType()));
             CopyAllValueActivity3.this.showTipsDialog(binding.llRootContainer, tip);
         });
 
@@ -494,7 +491,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         clickIndex++;
         if (1000 >= diffTime && 3 <= clickIndex) {
             binding.shadom1.setVisibility(View.VISIBLE);
-            ToastUtils.showMessageLong( "不要作弊哟，5秒后继续操作。");
+            ToastUtils.showMessageLong("不要作弊哟，5秒后继续操作。");
             timer.start();
             return true;
         } else {
@@ -548,7 +545,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
 
     @Override
     public void finish() {
-        if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+        if (currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
             mKeyBoardUtil.hideKeyboard();
         }
         saveAll();
@@ -598,7 +595,8 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         this.v = v;
         this.editTextList = editTexts;
         this.copyItemList = copyItems;
-        if (item.type_key.contains("youwei") || "maintenance_7144".equalsIgnoreCase(item.type_key)) {// 如果有油温抄录项则直接弹出系统键盘可以输入分数-----yangjun
+        // 如果有油温抄录项则直接弹出系统键盘可以输入分数-----yangjun
+        if (item.type_key.contains("youwei") || "maintenance_7144".equalsIgnoreCase(item.type_key)) {
             v.setRawInputType(InputType.TYPE_CLASS_NUMBER);
             KeyBoardUtils.openKeybord(v, getApplicationContext());
             hideKeyBord();
@@ -612,13 +610,15 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
                             currentKeyBoardState = state;
                             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.llKeyboardHelpLayout.getLayoutParams();
                             switch (state) {
-                                case KeyBoardUtil.KEYBORAD_HIDE: // 键盘隐藏
+                                // 键盘隐藏
+                                case CopyKeyBoardUtil.KEYBORAD_HIDE:
                                     params.height = 0;
                                     params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
                                     binding.llKeyboardHelpLayout.setLayoutParams(params);
                                     break;
-                                case KeyBoardUtil.KEYBORAD_SHOW: // 键盘显示
-                                    params.height = mWindowLayoutParams.height - getResources().getDimensionPixelSize(R.dimen.xs_button_minheight);
+                                // 键盘显示
+                                case CopyKeyBoardUtil.KEYBORAD_SHOW:
+                                    params.height = mKeyBoardUtil.getHeight() - getResources().getDimensionPixelSize(R.dimen.xs_button_minheight);
                                     params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
                                     binding.llKeyboardHelpLayout.setLayoutParams(params);
                                     break;
@@ -653,7 +653,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
 
     @Override
     public void hideKeyBord() {
-        if (null != mKeyBoardUtil && currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+        if (null != mKeyBoardUtil && currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
             mKeyBoardUtil.hideKeyboard();
         }
     }

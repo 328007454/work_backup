@@ -1,7 +1,6 @@
 package com.cnksi.bdzinspection.activity;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -10,45 +9,37 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.inputmethodservice.KeyboardView;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
-import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
-import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.activity.BaseCoreActivity;
-import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -59,9 +50,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static android.os.Build.VERSION.SDK_INT;
 
@@ -160,24 +149,13 @@ public class BaseActivity extends BaseCoreActivity {
     /**
      * 自定义键盘 输入法
      */
-    protected KeyBoardUtil mKeyBoardUtil = null;
+    protected CopyKeyBoardUtil mKeyBoardUtil = null;
 
     protected Dialog tipsDialog = null;
     /**
      * 振动器
      */
     protected Vibrator mVibrator;
-    /**
-     * 键盘布局
-     */
-    protected View mKeyBoardContainerView = null;
-    private int seekBarHeight = 0;
-    /**
-     * 键盘View
-     */
-    protected KeyboardView mKeyBoardView = null;
-    protected WindowManager mWindowManager = null;
-    protected WindowManager.LayoutParams mWindowLayoutParams = null;
 
     public String currentAcounts;
 
@@ -190,8 +168,6 @@ public class BaseActivity extends BaseCoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        mWindowLayoutParams = getWindowManagerParams();
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Intent intent = getIntent();
         if (null != intent) {
@@ -231,9 +207,6 @@ public class BaseActivity extends BaseCoreActivity {
 
     }
 
-    public WindowManager.LayoutParams getWindowManagerParams() {
-        return new WindowManager.LayoutParams();
-    }
 
     /**
      * 得到Intent传过来的值
@@ -261,12 +234,7 @@ public class BaseActivity extends BaseCoreActivity {
         currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
     }
 
-    /**
-     * 刷新数据
-     */
-    @Override
-    protected void onRefresh(android.os.Message msg) {
-    }
+
 
     /**
      * 显示大图片
@@ -356,15 +324,7 @@ public class BaseActivity extends BaseCoreActivity {
         startActivityForResult(intent, requestCode);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
     @Override
     protected void onDestroy() {
@@ -384,34 +344,26 @@ public class BaseActivity extends BaseCoreActivity {
     protected void exitSystem() {
         if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
             currentBackPressedTime = System.currentTimeMillis();
-            Toast.makeText(mActivity, R.string.xs_one_more_click_exit_str, Toast.LENGTH_SHORT).show();
+            ToastUtils.showMessage(R.string.xs_one_more_click_exit_str);
         } else {
             compeletlyExitSystem();
         }
     }
 
-    /**
-     * 完全退出应用
-     */
-    @Override
-    protected void compeletlyExitSystem() {
-        ScreenManager.getScreenManager().popAllActivityExceptOne(null);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(0);
-    }
 
-    protected void showTipsDialog(ViewGroup mRootContainer, Intent intent) {
+
+    protected void showTipsDialog(Intent intent) {
 
         if (currentInspectionType.contains("special") || mActivity.equals(InspectionType.routine.name())) {
-            showTipsDialog(mRootContainer, intent, -1, R.string.xs_dialog_tips_content_special, false);
+            showTipsDialog(intent, -1, R.string.xs_dialog_tips_content_special, false);
         } else {
-            showTipsDialog(mRootContainer, intent, -1, R.string.xs_dialog_tips_content_str, false);
+            showTipsDialog( intent, -1, R.string.xs_dialog_tips_content_str, false);
         }
     }
 
-    protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, int requestCode, int dialogContentResId,
+    protected void showTipsDialog(Intent intent, int requestCode, int dialogContentResId,
                                   boolean isFinishInspection) {
-        showTipsDialog(mRootContainer, intent, requestCode, getText(dialogContentResId), isFinishInspection);
+        showTipsDialog( intent, requestCode, getText(dialogContentResId), isFinishInspection);
     }
 
     /**
@@ -419,7 +371,7 @@ public class BaseActivity extends BaseCoreActivity {
      */
     XsDialogTipsBinding tipsBinding;
 
-    protected void showTipsDialog(ViewGroup mRootContainer, Intent intent, int requestCode, CharSequence text,
+    protected void showTipsDialog( Intent intent, int requestCode, CharSequence text,
                                   boolean isFinishInspection) {
         int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -476,34 +428,7 @@ public class BaseActivity extends BaseCoreActivity {
      * 创建keyBoardView
      */
     protected void createKeyBoardView(ViewGroup root) {
-
-        mKeyBoardContainerView = LayoutInflater.from(mActivity).inflate(R.layout.xs_keyboard_layout, root, false);
-        mKeyBoardView = mKeyBoardContainerView.findViewById(R.id.keyboard_view);
-        final LinearLayout mSeekBarContainer = mKeyBoardContainerView
-                .findViewById(R.id.rl_seekbar_container);
-        // 动态获取seekBar的高度
-        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        mSeekBarContainer.measure(w, h);
-        seekBarHeight = mSeekBarContainer.getMeasuredHeight();
-        seekBarHeight = 0;
-        mWindowLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
-        // wmParams.format=1;
-        mWindowLayoutParams.flags |= 8;
-        // 调整悬浮窗口至底部
-        mWindowLayoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-        // 以屏幕左上角为原点，设置x、y初始值
-        mWindowLayoutParams.x = 0;
-        mWindowLayoutParams.y = 0;
-        // 设置悬浮窗口长宽数据
-        mWindowLayoutParams.width = ScreenUtils.getScreenWidth(mActivity);
-        // 动态获取键盘的高度 键盘的高度加上seekBar的高度
-        int height = getResources().getDimensionPixelSize(R.dimen.xs_key_height) * 4
-                + getResources().getDimensionPixelSize(R.dimen.xs_key_vertical_gap) * 5 + seekBarHeight;
-        mWindowLayoutParams.height = height;
-//        mWindowManager.addView(mKeyBoardContainerView, mWindowLayoutParams);
-
-        mKeyBoardUtil = new KeyBoardUtil(mKeyBoardContainerView, mActivity, null, mWindowManager, mWindowLayoutParams);
+        mKeyBoardUtil = new CopyKeyBoardUtil( mActivity,root, null);
     }
 
     public void ExitThisAndGoLauncher() {
@@ -570,72 +495,8 @@ public class BaseActivity extends BaseCoreActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
     }
-
-    /**
-     * 检查应用是否设置悬浮窗权限
-     */
-    @TargetApi(23)
-    public void setWindowOverLayPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (!Settings.canDrawOverlays(getApplicationContext())) {
-                ToastUtils.showMessage("没有悬浮窗权限");
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivityForResult(intent, PERMISSION_WINDOW);
-            }
-        }
-    }
-
-
-    private Users one, two;
-
-    public Users getUsers() {
-        if (one != null) {
-            return one;
-        }
-        if (two != null) {
-            return two;
-        } else {
-            String[] account = PreferencesUtils.get(Users.ACCOUNT, "").split(Config.COMMA_SEPARATOR);
-            for (int i = 0; i < account.length; i++) {
-                Users _t = null;
-                if (!TextUtils.isEmpty(account[i])) {
-                    {
-                        _t = UserService.getInstance().findUserByAccount(account[i]);
-                    }
-                }
-                if (one != null) {
-                    two = _t;
-                } else {
-                    one = _t;
-                }
-            }
-        }
-        return one;
-    }
-
-    /**
-     * 工器具零时状态保存
-     */
-    private Map<String, Map<Integer, Boolean>> gqjcheck = null;
-
-
-    /**
-     * @return the gqjcheck
-     */
-    public Map<String, Map<Integer, Boolean>> getGqjcheck() {
-        if (gqjcheck == null) {
-            gqjcheck = new HashMap<>();
-        }
-        return gqjcheck;
-    }
-
-
 }

@@ -251,7 +251,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
             }
             // 查询当前设备抄录项
 //				List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItem1(currentBdzId, currentDeviceId, CopyItemService.getInstance().getCopyType());
-            List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItem(currentBdzId,
+            List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItemByKey(currentBdzId,
                     currentDeviceId, processor.getCopyType());
             // 抄录结构map
             copyResultMap = new HashMap<>();

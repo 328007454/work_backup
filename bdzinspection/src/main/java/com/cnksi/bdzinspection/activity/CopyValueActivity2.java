@@ -24,8 +24,8 @@ import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
 import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DeviceService;
@@ -55,7 +55,7 @@ import static com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity.UPDATE_D
 public class CopyValueActivity2 extends BaseActivity implements KeyBordListener {
 
     public final int LOAD_COPY_FINSIH = 0x10;
-    protected int currentKeyBoardState = KeyBoardUtil.KEYBORAD_HIDE;
+    protected int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
     LocationUtil.LocationHelper locationHelper;
     private List<TreeNode> data;
 
@@ -183,7 +183,6 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     @Override
     protected void onResume() {
         super.onResume();
-        setWindowOverLayPermission();
     }
 
     @Override
@@ -251,10 +250,12 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
                         if (currentKeyBoardState != state) {
                             currentKeyBoardState = state;
                             switch (state) {
-                                case KeyBoardUtil.KEYBORAD_HIDE: // 键盘隐藏
+                                // 键盘隐藏
+                                case CopyKeyBoardUtil.KEYBORAD_HIDE:
                                     binding.llKeyboardHelpLayout.setVisibility(View.GONE);
                                     break;
-                                case KeyBoardUtil.KEYBORAD_SHOW: // 键盘显示
+                                // 键盘显示
+                                case CopyKeyBoardUtil.KEYBORAD_SHOW:
                                     binding.llKeyboardHelpLayout.setVisibility(View.VISIBLE);
                                     break;
                                 default:
@@ -288,7 +289,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
 
     @Override
     public void hideKeyBord() {
-        if (null != mKeyBoardUtil && currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+        if (null != mKeyBoardUtil && currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
             mKeyBoardUtil.hideKeyboard();
             mKeyBoardUtil = null;
         }

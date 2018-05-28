@@ -38,7 +38,7 @@ import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyboardChangeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
@@ -105,7 +105,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     /**
      * 当前键盘的状态
      */
-    private int currentKeyBoardState = KeyBoardUtil.KEYBORAD_HIDE;
+    private int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
     private LinkedList<DbModel> groupList;
     private HashMap<DbModel, ArrayList<DbModel>> childMapLists;
     private ArrayList<DbModel> dbModelArrayList = new ArrayList<>();
@@ -478,7 +478,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                 mRegularSwitchAdapter.notifyDataSetChanged();
                 break;
             case ONBACKPRESSED_CODE:
-                if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+                if (currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
                     mKeyBoardUtil.hideKeyboard();
                 }
                 setResult(RESULT_OK);
@@ -506,11 +506,11 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                         batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
                         runOnUiThread(() -> {
                             int showStr1 = R.string.xs_dialog_tips_content_maintance;
-                            showTipsDialog(mSwitch1Binding.llRootContainer, intent, -1, "本次蓄电池抄录:" + (TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? 0 : batteryCopyTotal.getString("count")) + "/" + sumBatteryCode + "。" + getText(showStr1), false);
+                            showTipsDialog( intent, -1, "本次蓄电池抄录:" + (TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? 0 : batteryCopyTotal.getString("count")) + "/" + sumBatteryCode + "。" + getText(showStr1), false);
                         });
                     });
                 } else {
-                    showTipsDialog(mSwitch1Binding.llRootContainer, intent, -1, showStr, false);
+                    showTipsDialog( intent, -1, showStr, false);
                 }
                 break;
             default:

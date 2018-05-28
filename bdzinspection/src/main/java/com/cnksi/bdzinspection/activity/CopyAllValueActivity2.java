@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.baidu.location.BDLocation;
 import com.cnksi.bdloc.LocationListener;
@@ -27,11 +26,10 @@ import com.cnksi.bdzinspection.fragment.CopyValueFragment2;
 import com.cnksi.bdzinspection.fragment.CopyValueFragment2.FragmentItemClickerListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
 import com.cnksi.bdzinspection.utils.DefectUtils;
-import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.enmu.LookUpType;
@@ -39,6 +37,7 @@ import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Lookup;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
@@ -63,7 +62,7 @@ import static com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity.UPDATE_D
 public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeListener, FragmentItemClickerListener<DbModel>, KeyBordListener {
 
     public final int LOAD_COPY_FINISH = 0x10;
-    protected int currentKeyBoardState = KeyBoardUtil.KEYBORAD_HIDE;
+    protected int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
     boolean unchecked = true;
     LocationUtil.LocationHelper locationHelper;
     CopyHelper copyHelper;
@@ -153,7 +152,6 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
     protected void onResume() {
         super.onResume();
         locationHelper.resume();
-        setWindowOverLayPermission();
     }
 
     private void initFragment() {
@@ -420,7 +418,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
 
     @Override
     public void finish() {
-        if (currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+        if (currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
             mKeyBoardUtil.hideKeyboard();
         }
         copyHelper.saveAll();
@@ -451,12 +449,13 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
                     public void onKeyBoardStateChange(int state) {
                         if (currentKeyBoardState != state) {
                             currentKeyBoardState = state;
-                            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.llKeyboardHelpLayout.getLayoutParams();
                             switch (state) {
-                                case KeyBoardUtil.KEYBORAD_HIDE: // 键盘隐藏
+                                // 键盘隐藏
+                                case CopyKeyBoardUtil.KEYBORAD_HIDE:
                                     binding.llKeyboardHelpLayout.setVisibility(View.GONE);
                                     break;
-                                case KeyBoardUtil.KEYBORAD_SHOW: // 键盘显示
+                                // 键盘显示
+                                case CopyKeyBoardUtil.KEYBORAD_SHOW:
                                     binding.llKeyboardHelpLayout.setVisibility(View.VISIBLE);
                                     break;
                                 default:
@@ -489,7 +488,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
 
     @Override
     public void hideKeyBord() {
-        if (null != mKeyBoardUtil && currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+        if (null != mKeyBoardUtil && currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
             mKeyBoardUtil.hideKeyboard();
         }
     }

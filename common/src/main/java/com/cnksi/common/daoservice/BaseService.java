@@ -1,5 +1,6 @@
 package com.cnksi.common.daoservice;
 
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -21,8 +22,7 @@ import org.xutils.ex.DbException;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Executor;
 
 /**
  * Created by luoxy on 16/4/29.
@@ -36,7 +36,7 @@ public class BaseService<T> {
     }
 
     protected Handler mHandler = new Handler(Looper.getMainLooper());
-    protected static ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    protected static Executor executor = AsyncTask.THREAD_POOL_EXECUTOR;
 
     protected Class<T> clz;
 

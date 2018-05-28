@@ -97,7 +97,7 @@ public class DefectControlActivity extends BaseCoreActivity {
     public void loadData() {
         defectTypes = Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray));
         ExecutorManager.executeTaskSerially(() -> {
-            bdzList = BdzService.getInstance().findAllBdzByDpDbmodel(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
+            bdzList = BdzService.getInstance().findAllBdzByDpDbModel(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
             userModels = UserService.getInstance().getAllUserByDeptId(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
             mHandler.post(() -> {
                 if (bdzList.size() > 0) {
