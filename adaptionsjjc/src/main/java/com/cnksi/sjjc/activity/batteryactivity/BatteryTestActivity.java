@@ -44,7 +44,7 @@ import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseTitleActivity;
 import com.cnksi.sjjc.adapter.BatteryAdapter;
 import com.cnksi.sjjc.adapter.BatteryImageAdapter;
 import com.cnksi.sjjc.bean.BatteryInstrument;
@@ -67,7 +67,7 @@ import java.util.Map;
  * 蓄电池检测界面
  * 2016/8/9 15:56
  */
-public class BatteryTestActivity extends BaseActivity {
+public class BatteryTestActivity extends BaseTitleActivity {
     public static final String TAG = "BatteryTestActivity";
     public static final int LOAD_BATTERY_SUCCESS = 0x001;
     public static final int LOAD_BATTERY_FAILURE = LOAD_BATTERY_SUCCESS + 1;

@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseTitleActivity;
 import com.cnksi.sjjc.adapter.BatteryDefetcDeviceAdapter;
 import com.cnksi.sjjc.bean.BatteryInstrument;
 import com.cnksi.sjjc.databinding.ActivityBatteryDeviceDetectBinding;
@@ -26,7 +26,7 @@ import java.util.List;
  * @author kkk on 2017/12/1.
  */
 
-public class BatteryDeviceDetectActivity extends BaseActivity {
+public class BatteryDeviceDetectActivity extends BaseTitleActivity {
     private ActivityBatteryDeviceDetectBinding mDetectBinding;
     private BatteryDefetcDeviceAdapter mDefetcDeviceAdapter;
     private List<BatteryInstrument> datas = new ArrayList<>();

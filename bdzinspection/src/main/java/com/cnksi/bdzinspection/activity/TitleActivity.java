@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityTitlebaseBinding;
+import com.cnksi.common.base.BaseActivity;
 
 public abstract class TitleActivity extends BaseActivity {
 	public ImageView back;

@@ -12,11 +12,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <!-- 摄像头相关权限 -->
@@ -34,6 +31,12 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,android:label">
 
+        <meta-data
+            android:name="design_width"
+            android:value="1080" />
+        <meta-data
+            android:name="design_height"
+            android:value="1920" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -151,20 +154,7 @@
             android:name=".activity.WorkPlanInformationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <!--<activity-->
-        <!--android:name=".activity.JYHPJActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
-        <!--<activity-->
-        <!--android:name=".activity.PJMainActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
-        <!--<activity-->
-        <!--android:name=".activity.HongWaiCeWenReportActivity"-->
-        <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
-        <!--android:launchMode="singleTop"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
+
         <activity
             android:name=".activity.TypeListActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -188,22 +178,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <!-- dialogActivity -->
 
-        <!--<activity-->
-        <!--android:name=".activity.DialogActivity"-->
-        <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@style/MyDialogStyle"-->
-        <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
-
-        <!-- 播放视频Activity -->
-
-        <!--<activity-->
-        <!--android:name=".activity.QinYouShiByqYanShouActivity"-->
-        <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:windowSoftInputMode="adjustPan"/>-->
         <activity
             android:name=".activity.GetSendLetterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -292,13 +267,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden" />
 
-        <!--保护动作记录设备选择-->
-        <activity
-            android:name=".activity.gztz.BHDZJLXZSBActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/BatteryDefect"
-            android:windowSoftInputMode="adjustUnspecified|stateAlwaysHidden" />
         <!--故障跳闸生成报告界面-->
         <activity
             android:name=".activity.gztz.GZTZRecordActivity"
@@ -325,27 +293,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!-- 连接数据线后打开数据同步端口 -->
-
 
         <activity android:name="com.cnksi.core.activity.PermissionActivity" />
 
-
-        <service
-            android:name=".aidlservice.UpLoadDataService"
-            android:exported="true"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="android.intent.action.LoadData" />
-            </intent-filter>
-        </service>
-
-        <meta-data
-            android:name="design_width"
-            android:value="1080" />
-        <meta-data
-            android:name="design_height"
-            android:value="1920" />
 
         <activity
             android:name=".activity.TJWTActivity"

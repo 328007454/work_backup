@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;

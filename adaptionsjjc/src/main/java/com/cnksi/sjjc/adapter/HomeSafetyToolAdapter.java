@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.cnksi.sjjc.util.DateUtils;
+
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ItemHomeSafetyToolBinding;
 import com.cnksi.sjjc.util.ActivityUtil;
@@ -38,7 +39,7 @@ public class HomeSafetyToolAdapter extends BaseLinearBindingAdapter<ItemHomeSafe
         holder.tvToolName.setText(item.getString("name"));
         String num = item.getString("num");
         holder.tvSerial.setText("编号：" + ("-1".equals(num) ? "" : num));
-        String date = DateUtils.formatDateTime(item.getString("next_check_time"), "yyyy/MM/dd");
+        String date = DateUtils.getFormatterTime(item.getString("next_check_time"), "yyyy/MM/dd");
         holder.tvDate.setText("下次试验时间：" + (TextUtils.isEmpty(date) ? "未知" : date));
         if ("-1".equals(item.getString("bdz_id"))) {
             holder.tvBdzShort.setText("班");

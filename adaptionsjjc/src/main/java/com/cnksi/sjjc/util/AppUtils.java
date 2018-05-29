@@ -95,19 +95,7 @@ public class AppUtils {
         return null;
     }
 
-    /**
-     * 获取应用程序名称
-     */
-    public static String getVersionCode(Context context) {
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
-            return String.valueOf(packageInfo.versionCode);
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     /**
      * 获取APK包的信息

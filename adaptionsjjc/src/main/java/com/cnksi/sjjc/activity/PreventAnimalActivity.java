@@ -20,7 +20,6 @@ import com.cnksi.sjjc.bean.PreventionRecord;
 import com.cnksi.sjjc.databinding.ActivityPreventAnimalBinding;
 import com.cnksi.sjjc.service.HoleReportService;
 import com.cnksi.sjjc.service.PreventionService;
-import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.FunctionUtil;
 import com.cnksi.sjjc.util.FunctionUtils;
 
@@ -31,12 +30,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * Created by ironGe on 2016/6/7.
  * <p/>
  * 防小动物措施检查界面
  */
-public class PreventAnimalActivity extends BaseActivity {
+public class PreventAnimalActivity extends BaseTitleActivity {
     private static final int TAKEPIC_REQUEST = LOAD_DATA + 1;
     private static final int VIDEO_REQUEST = TAKEPIC_REQUEST + 1;
     private static final int REFRESH_UI = VIDEO_REQUEST + 1;
@@ -172,7 +173,7 @@ public class PreventAnimalActivity extends BaseActivity {
                 File file = new File(Config.RESULT_PICTURES_FOLDER, imgName);
                 if (file.exists()) {
                     BitmapUtils.compressImage(file.getAbsolutePath(), 3);
-                    String pictureContent = DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) + "\n" + currentHole + "\n" + PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
+                    String pictureContent = DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm) + "\n" + currentHole + "\n" + PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                 }
 

@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BaseService;
@@ -19,7 +18,7 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseTitleActivity;
 import com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.databinding.ActivityIndoorHumitureBinding;
@@ -32,7 +31,7 @@ import org.xutils.ex.DbException;
 /**
  * 室内温湿度界面
  */
-public class IndoorHumitureRecordActivity extends BaseActivity {
+public class IndoorHumitureRecordActivity extends BaseTitleActivity {
 
     //报告id
     private String reportId;

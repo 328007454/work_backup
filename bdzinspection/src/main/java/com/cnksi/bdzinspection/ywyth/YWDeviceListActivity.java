@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwDeviceListBinding;

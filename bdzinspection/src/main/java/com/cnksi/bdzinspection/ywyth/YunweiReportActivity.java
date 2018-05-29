@@ -9,7 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.databinding.XsActivityYunweiReportBinding;
 import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.common.utils.PlaySound;

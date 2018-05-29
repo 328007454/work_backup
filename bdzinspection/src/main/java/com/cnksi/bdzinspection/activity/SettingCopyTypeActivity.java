@@ -24,6 +24,7 @@ import com.cnksi.bdzinspection.model.ChangeCopyItem;
 import com.cnksi.bdzinspection.model.Logs;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;

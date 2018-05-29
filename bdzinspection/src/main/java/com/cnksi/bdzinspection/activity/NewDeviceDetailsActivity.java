@@ -40,6 +40,7 @@ import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.activity.ImageDetailsActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DevicePartService;

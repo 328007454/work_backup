@@ -8,6 +8,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
 import com.cnksi.core.common.ExecutorManager;
@@ -19,7 +20,6 @@ import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityNewHwcwReportBinding;
 import com.cnksi.sjjc.service.NewHwcwService;
-import com.cnksi.sjjc.util.GsonUtil;
 
 import org.xutils.ex.DbException;
 
@@ -65,7 +65,7 @@ public class NewHwcwReportActivity extends BaseReportActivity {
 
 
     public void initView() {
-        mTvTitle.setText(currentBdzName + currentInspectionName + "报告");
+        mTvTitle.setText(currentBdzName + currentInspectionTypeName + "报告");
         mBtnRight.setVisibility(View.VISIBLE);
     }
 
@@ -98,7 +98,7 @@ public class NewHwcwReportActivity extends BaseReportActivity {
                     spaceBuilder.append(loopTime == hotLocations.size() ? location.spacingName : location.spacingName + "\n");
                 }
                 stringBuilder.append("发热设备:").append(deviceName).append("\n");
-                HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(location.hotPart);
+                HwcwHotPart hotParts = JSONObject.parseObject(location.hotPart, HwcwHotPart.class);
                 if (hotParts != null && hotParts.result != null && !hotParts.result.isEmpty()) {
                     for (HwcwHotPart.Result result : hotParts.result) {
                         stringBuilder.append("发热部位名称：").append(result.bw_name).append("\n温度：").append(result.wd).append("\n");

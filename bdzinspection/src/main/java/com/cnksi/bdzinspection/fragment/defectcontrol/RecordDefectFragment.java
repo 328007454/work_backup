@@ -13,13 +13,8 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -31,24 +26,24 @@ import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.adapter.infrared.DevicePartAdapter;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
-import com.cnksi.common.daoservice.DevicePartService;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogDefectSourceBinding;
-import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Defect;
-import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.DevicePartService;
+import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -239,7 +234,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
 
     private void initDeleteDialog() {
         int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-        XsDialogTipsBinding tipsBinding = XsDialogTipsBinding.inflate(currentActivity.getLayoutInflater());
+        CommonInspectionTipsBinding tipsBinding = CommonInspectionTipsBinding.inflate(currentActivity.getLayoutInflater());
         deleteDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogContent.setText("确认要删除本次缺陷？");
         tipsBinding.btnSure.setOnClickListener(view -> {

@@ -17,7 +17,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 /**
  * @author wastrel
  */
-public abstract class BaseReportActivity extends BaseActivity {
+public abstract class BaseReportActivity extends BaseTitleActivity {
     public static final int ANIMATION = 0x2000;
     public static final int VIBRATOR = 0x2001;
     protected RelativeLayout rlContainer;
@@ -59,7 +59,7 @@ public abstract class BaseReportActivity extends BaseActivity {
         mBtnRight = findViewById(R.id.btn_right);
         mBtnRight.setVisibility(View.GONE);
         mBtnBack = findViewById(R.id.btn_back);
-        mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionName));
+        mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionTypeName));
         mBtnBack.setOnClickListener(v -> {
             ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
             BaseReportActivity.this.onBackPressed();

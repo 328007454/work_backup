@@ -11,7 +11,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageView;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.czp.adapter.OperateWorkItemAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateItemService;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;

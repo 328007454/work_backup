@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
@@ -36,10 +35,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * @author nothing 2017/12/11
  */
-public class AllDeviceListActivity extends BaseActivity implements DeviceExpandabelListAdapter.OnAdapterViewClickListener {
+public class AllDeviceListActivity extends BaseTitleActivity implements DeviceExpandabelListAdapter.OnAdapterViewClickListener {
 
     public static final String FUNCTION_MODEL = "fuction";
     public static final String BDZID = "bdzid";

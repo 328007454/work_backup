@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.daoservice.PlanProcessStatusService;
 import com.cnksi.bdzinspection.daoservice.ProcessService;
@@ -80,7 +80,7 @@ public class YWWorkflowActivity extends BaseActivity {
 
     /*
      * (non-Javadoc)
-     * @see com.cnksi.bdzinspection.activity.BaseActivity#onCreate(android.os.Bundle)
+     * @see com.cnksi.common.base.BaseActivity#onCreate(android.os.Bundle)
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -272,7 +272,7 @@ public class YWWorkflowActivity extends BaseActivity {
 
     /*
      * (non-Javadoc)
-     * @see com.cnksi.bdzinspection.activity.BaseActivity#onDestroy()
+     * @see com.cnksi.common.base.BaseActivity#onDestroy()
      */
     @Override
     protected void onDestroy() {

@@ -7,7 +7,6 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.cnksi.common.Config;
@@ -53,7 +52,6 @@ import com.cnksi.sjjc.adapter.ListContentDialogAdapter;
 import com.cnksi.sjjc.adapter.TaskRemindAdapter;
 import com.cnksi.sjjc.databinding.FragmentListBinding;
 import com.cnksi.sjjc.inter.OnFragmentEventListener;
-import com.cnksi.sjjc.util.CoreConfig;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -64,6 +62,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 
 /**
  * 巡检任务提醒
@@ -71,7 +71,7 @@ import java.util.List;
  * @author terry
  */
 public class TaskRemindFragment extends BaseCoreFragment {
-    public static final int LOAD_DATA = 0x01;
+
     /**
      * 巡检任务的数据集合
      */
@@ -164,7 +164,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         DbModel model = ReportService.getInstance().findDbModelFirst(new SqlInfo("SELECT group_concat(taskid) as rs FROM report where is_upload='N'"));
                         String rs = model.getString("rs");
                         if (!TextUtils.isEmpty(rs)) {
-                            String taskIds[] = rs.split(CoreConfig.COMMA_SEPARATOR);
+                            String taskIds[] = rs.split(Config.COMMA_SEPARATOR);
                             List<String> arr = Arrays.asList(taskIds);
                             for (int i = 0, count = mDataList.size(); i < count; i++) {
                                 mDataList.get(i).isUpload = arr.contains(mDataList.get(i).taskid) ? "N" : "Y";

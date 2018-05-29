@@ -21,21 +21,22 @@ import com.cnksi.bdzinspection.adapter.CopyRcvDeviceAdapter;
 import com.cnksi.bdzinspection.adapter.base.GridSpacingItemDecoration;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsActivitySingleSpaceCopyBinding;
-import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.bdzinspection.utils.DefectUtils;
-import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.utils.CopyKeyBoardUtil;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
@@ -85,7 +86,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
     private boolean isFinish;
 
     private Dialog defectDialog;
-    private XsDialogTipsBinding tipsBinding;
+    private CommonInspectionTipsBinding tipsBinding;
 
     //传递预设缺陷内容
     private String transDefectContent = "";
@@ -406,7 +407,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
 
     public void createDefectDialog() {
         int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
-        tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
+        tipsBinding = CommonInspectionTipsBinding.inflate(getLayoutInflater());
         defectDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");

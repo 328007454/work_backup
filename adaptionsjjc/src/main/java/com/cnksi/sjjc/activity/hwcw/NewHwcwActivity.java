@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
@@ -17,7 +18,7 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseTitleActivity;
 import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
 import com.cnksi.sjjc.adapter.hwcw.HwcwNewHotPartAdapter;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
@@ -26,7 +27,6 @@ import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityHwcwNewBinding;
 import com.cnksi.sjjc.databinding.ItemHotDeviceHwcwBinding;
 import com.cnksi.sjjc.service.NewHwcwService;
-import com.cnksi.sjjc.util.GsonUtil;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -42,7 +42,7 @@ import java.util.List;
  * @author kkk on 2017/12/7.
  */
 
-public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBindingAdapter.OnItemClickListener, HwcwNewHotPartAdapter.OnLongItemListener {
+public class NewHwcwActivity extends BaseTitleActivity implements BaseRecyclerDataBindingAdapter.OnItemClickListener, HwcwNewHotPartAdapter.OnLongItemListener {
     private ActivityHwcwNewBinding mHwcwNewBinding;
     private int realHeight;
     private int childItemNum;
@@ -95,7 +95,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
 
 
     public void initView() {
-        mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionName + "记录");
+        mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionTypeName + "记录");
         mHotPartAdapter = new HwcwNewHotPartAdapter(mHwcwNewBinding.rlHotrecord, hotLocations, R.layout.item_hwcw_hot_part);
         mHwcwNewBinding.rlHotrecord.setLayoutManager(new LinearLayoutManager(mActivity));
         mHwcwNewBinding.rlHotrecord.setAdapter(mHotPartAdapter);
@@ -312,7 +312,7 @@ public class NewHwcwActivity extends BaseActivity implements BaseRecyclerDataBin
         mHwcwNewBinding.setSetNull(true);
         mHwcwNewBinding.setLocation(currentLocatoin);
         if (!TextUtils.isEmpty(currentLocatoin.hotPart)) {
-            HwcwHotPart hotPart = (HwcwHotPart) GsonUtil.resolveJson(currentLocatoin.hotPart);
+            HwcwHotPart hotPart = JSONObject.parseObject(currentLocatoin.hotPart, HwcwHotPart.class);
             for (HwcwHotPart.Result result : hotPart.result) {
                 ItemHotDeviceHwcwBinding itemHotDeviceHwcwBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_hot_device_hwcw, null, false);
                 itemHotDeviceHwcwBinding.aibDeleteHotpart.setTag(childItemNum);

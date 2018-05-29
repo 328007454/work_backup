@@ -26,6 +26,7 @@ import com.cnksi.bdzinspection.fragment.DeviceSelectFragment;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment.DeviceClickListener;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Lookup;
@@ -163,7 +164,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
 
     private void showConfig(final List<DbModel> selectDeviceList) {
         final Dialog dialog = new Dialog(mActivity, R.style.dialog);
-        ViewHolder viewHolder = new ViewHolder(mActivity, null, R.layout.xs_dialog_tips, false);
+        ViewHolder viewHolder = new ViewHolder(mActivity, null, R.layout.common_inspection_tips, false);
         ListView listView = viewHolder.getView(R.id.lv_container);
         listView.setVisibility(View.VISIBLE);
         viewHolder.getView(R.id.tv_dialog_content).setVisibility(View.GONE);

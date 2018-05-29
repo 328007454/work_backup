@@ -14,6 +14,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityAccidentExceptionBinding;
 import com.cnksi.bdzinspection.fragment.AccidentDealFragment;
 import com.cnksi.bdzinspection.fragment.MotionRuleFragment;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.zhy.autolayout.utils.AutoUtils;
 

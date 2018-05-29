@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -44,7 +43,7 @@ import java.util.UUID;
  *
  * @author kkk
  */
-public class AddTaskActivity extends BaseActivity {
+public class AddTaskActivity extends BaseTitleActivity {
     @Override
     public void initUI() {
 

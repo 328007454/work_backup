@@ -21,7 +21,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseTitleActivity;
 import com.cnksi.sjjc.adapter.IndoorWeathearAdapter;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.databinding.IndoorBinding;
@@ -32,12 +32,13 @@ import org.xutils.ex.DbException;
 
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
 import static com.cnksi.sjjc.R.id.add_indoor_weather;
 
 /**
  * 修改后的室内温湿度界面
  */
-public class NewIndoorHumitureRecordActivity extends BaseActivity implements ItemClickListener {
+public class NewIndoorHumitureRecordActivity extends BaseTitleActivity implements ItemClickListener {
 
     //报告表
     private List<ReportSnwsd> mReportList;

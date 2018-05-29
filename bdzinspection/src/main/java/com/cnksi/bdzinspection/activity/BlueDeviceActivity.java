@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityBluedeviceBinding;
+import com.cnksi.common.base.BaseActivity;
 
 /**
  *

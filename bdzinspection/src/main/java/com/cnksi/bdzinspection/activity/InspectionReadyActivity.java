@@ -24,6 +24,7 @@ import com.cnksi.bdzinspection.model.InspectionPrepared;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.ReportSignnameService;

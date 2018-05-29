@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.daoservice.OperateToolResultService;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetytoolInformationBinding;

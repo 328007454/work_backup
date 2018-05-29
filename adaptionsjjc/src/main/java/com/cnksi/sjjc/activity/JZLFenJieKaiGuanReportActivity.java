@@ -30,6 +30,8 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * Created by han on 2016/6/7.
  * 交直流分接开关、差动保护、室内温湿度报告

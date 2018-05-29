@@ -7,7 +7,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskDetailsBinding;
 import com.cnksi.bdzinspection.emnu.OperateType;

@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.activity.DownloadOperationTickActivity;
 import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;

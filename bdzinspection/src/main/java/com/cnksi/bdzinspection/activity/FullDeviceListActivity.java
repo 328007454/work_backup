@@ -31,6 +31,7 @@ import com.cnksi.bdzinspection.utils.ShakeListener;
 import com.cnksi.bdzinspection.utils.ShakeListener.OnShakeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DepartmentService;

@@ -19,6 +19,8 @@ import org.xutils.ex.DbException;
 
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 室内温湿度报告界面
  */

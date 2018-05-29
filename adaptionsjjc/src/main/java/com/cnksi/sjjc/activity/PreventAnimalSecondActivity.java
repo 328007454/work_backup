@@ -35,12 +35,14 @@ import org.xutils.ex.DbException;
 
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * Created by ironGe on 2016/6/7.
  * <p/>
  * 防小动物措施检查界面
  */
-public class PreventAnimalSecondActivity extends BaseActivity {
+public class PreventAnimalSecondActivity extends BaseTitleActivity {
 
 
     private PreventionRecord preventionRecord;
@@ -167,7 +169,7 @@ public class PreventAnimalSecondActivity extends BaseActivity {
                 e.printStackTrace();
             }
             Intent intent = new Intent(mActivity, AnimalReportActivity.class);
-            isNeedUpdateTaskState = true;
+            isNeedUpdateTaskStatus = true;
             PreventAnimalSecondActivity.this.startActivity(intent);
             mActivity.finish();
             mSureDialog.dismiss();
