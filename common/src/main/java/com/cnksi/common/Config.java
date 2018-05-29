@@ -14,7 +14,7 @@ import com.cnksi.core.utils.SDCardUtils;
  */
 public class Config implements Cst {
     public static boolean DEBUG = BuildConfig.DEBUG;
-
+    public static final  int START_ACTIVITY_FORRESULT=0x0;
     public static final int SUCCESS = 0x100;
 
     public static final int FAILURE = 0x101;
