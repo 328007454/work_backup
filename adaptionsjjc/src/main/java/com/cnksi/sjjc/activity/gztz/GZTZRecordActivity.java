@@ -66,7 +66,7 @@ public class GZTZRecordActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRecordBinding = DataBindingUtil.setContentView(_this, R.layout.activity_gztz_record);
+        mRecordBinding = DataBindingUtil.setContentView(mActivity, R.layout.activity_gztz_record);
         initView();
         loadData();
     }
@@ -192,13 +192,13 @@ public class GZTZRecordActivity extends BaseActivity {
         int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
         int dialogheight = ScreenUtils.getScreenHeight(mActivity) * 6 / 10;
         if (null == peopleDialog) {
-            peopleBinding = DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.dialog_add_person, null, false);
+            peopleBinding = DataBindingUtil.inflate(LayoutInflater.from(mActivity), R.layout.dialog_add_person, null, false);
         }
         if (peopleDialog == null) {
             peopleDialog = DialogUtils.creatDialog(mActivity, peopleBinding.getRoot(), dialogWidth, dialogheight);
         }
         if (peopleAdapter == null) {
-            peopleAdapter = new AddPeopleAdapter(_this, peopleList, R.layout.text_view_layout);
+            peopleAdapter = new AddPeopleAdapter(mActivity, peopleList, R.layout.text_view_layout);
         }
         peopleBinding.lvPeople.setAdapter(peopleAdapter);
 

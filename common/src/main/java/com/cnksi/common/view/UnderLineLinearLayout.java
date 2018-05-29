@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.view;
+package com.cnksi.common.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.cnksi.bdzinspection.R;
+import com.cnksi.common.R;
 
 
 /**
@@ -26,7 +26,6 @@ public class UnderLineLinearLayout extends LinearLayout {
     private int lineColor;
     private int lineHeight;
     private Paint linePaint;
-    private Rect invalidateRect = new Rect();
 
     public UnderLineLinearLayout(Context context) {
         super(context);
@@ -44,12 +43,12 @@ public class UnderLineLinearLayout extends LinearLayout {
     }
 
     private void init(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.XS_UnderLineLinearLayout, defStyleAttr, defStyleRes);
-        lineColor = a.getColor(R.styleable.XS_UnderLineLinearLayout_lineColor, getResources().getColor(R.color.xs_line_color));
-        marginLeft = a.getDimensionPixelSize(R.styleable.XS_UnderLineLinearLayout_marginLeft, 0);
-        marginRight = a.getDimensionPixelSize(R.styleable.XS_UnderLineLinearLayout_marginRight, 0);
-        lineHeight = a.getDimensionPixelSize(R.styleable.XS_UnderLineLinearLayout_lineHeight, 2);
-        drawUnderLine = a.getBoolean(R.styleable.XS_UnderLineLinearLayout_drawUnderLine, false);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.UnderLineLinearLayout, defStyleAttr, defStyleRes);
+        lineColor = a.getColor(R.styleable.UnderLineLinearLayout_lineColor, getResources().getColor(R.color.line_color));
+        marginLeft = a.getDimensionPixelSize(R.styleable.UnderLineLinearLayout_marginLeft, 0);
+        marginRight = a.getDimensionPixelSize(R.styleable.UnderLineLinearLayout_marginRight, 0);
+        lineHeight = a.getDimensionPixelSize(R.styleable.UnderLineLinearLayout_lineHeight, 2);
+        drawUnderLine = a.getBoolean(R.styleable.UnderLineLinearLayout_drawUnderLine, false);
         linePaint = new Paint();
         linePaint.setAntiAlias(true);
         linePaint.setStrokeWidth(lineHeight);
@@ -58,14 +57,16 @@ public class UnderLineLinearLayout extends LinearLayout {
         a.recycle();
     }
 
+
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
         if (drawUnderLine && lineHeight > 0) {
             canvas.drawLine(marginLeft, getHeight() - lineHeight, getWidth() - marginRight, getHeight() - lineHeight, linePaint);
         }
-
     }
+
+    private Rect invalidateRect = new Rect();
 
     private void calcInvalidateRect() {
         invalidateRect.left = 0;

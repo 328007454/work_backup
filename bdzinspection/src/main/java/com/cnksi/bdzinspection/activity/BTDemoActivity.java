@@ -11,7 +11,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,13 +54,13 @@ public class BTDemoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_btdemo);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_btdemo);
         HashMap<String, String> map1 = new HashMap<String, String>();
         map1.put("TagData", "                      "
                 + getResources().getString(R.string.xs_Tagdata));
         map1.put("CountNum", getResources().getString(R.string.xs_Tagcount));
         list.add(map1);
-        RFIDReadDataAdapter listAdapter = new RFIDReadDataAdapter(currentActivity, list, R.layout.xs_rfid_user,
+        RFIDReadDataAdapter listAdapter = new RFIDReadDataAdapter(mActivity, list, R.layout.xs_rfid_user,
                 new String[]{"TagData", "CountNum"}, new int[]{
                 R.id.TagData, R.id.CountNum});
         binding.TagList.setAdapter(listAdapter);

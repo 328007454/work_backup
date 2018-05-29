@@ -19,7 +19,6 @@ import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.LocationSpacingAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityLocationSpacingBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.view.CircleBar;
 import com.cnksi.bdzinspection.view.CircleBar.OnProgressChangeListener;
 import com.cnksi.common.Config;
@@ -30,7 +29,6 @@ import com.cnksi.core.utils.PreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -58,7 +56,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(currentActivity,R.layout.xs_activity_location_spacing);
+        binding= DataBindingUtil.setContentView(mActivity,R.layout.xs_activity_location_spacing);
         
         initialUI();
         initialData();
@@ -69,7 +67,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
             startAnimotion();
         } else {
             // rlAnim.setVisibility(View.GONE);
-            Toast.makeText(currentActivity, "当前巡检类型没有一次设备间隔，仅一次间隔支持摇一摇。", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "当前巡检类型没有一次设备间隔，仅一次间隔支持摇一摇。", Toast.LENGTH_SHORT).show();
         }
         initOnClick();
     }

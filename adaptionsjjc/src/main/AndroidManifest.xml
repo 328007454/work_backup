@@ -118,11 +118,6 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
-            android:name=".activity.DrawCircleImageActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <!--<activity-->
         <!--android:name=".activity.HWCWMainActivity"-->
         <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
@@ -171,11 +166,6 @@
         <!--android:screenOrientation="portrait"-->
         <!--android:windowSoftInputMode="adjustUnspecified|stateHidden"/>-->
         <activity
-            android:name=".activity.SignNameActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
             android:name=".activity.TypeListActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
@@ -209,11 +199,6 @@
 
         <!-- 播放视频Activity -->
 
-        <activity
-            android:name=".activity.PlayVideoActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <!--<activity-->
         <!--android:name=".activity.QinYouShiByqYanShouActivity"-->
         <!--android:configChanges="keyboardHidden|screenSize|orientation"-->

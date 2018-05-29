@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -24,29 +23,28 @@ import com.cnksi.bdzinspection.activity.CopyValueActivity2;
 import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
 import com.cnksi.bdzinspection.daoservice.SpacingGroupService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsDialogCopySnwsdBinding;
-import com.cnksi.bdzinspection.inter.ItemLongClickListener;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
 import com.cnksi.bdzinspection.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
 import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
 import com.cnksi.bdzinspection.model.tree.SpaceItem;
-import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
-import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.model.vo.DefectInfo;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.GPSUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -199,7 +197,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         if (isPrepared && isVisible && isFirstLoad) {
             searChData("");
             queryInfo();
-            isFirstLoad = false;
+
         }
     }
 
@@ -215,6 +213,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     }
 
     private void queryInfo() {
+        CLog.a(this.hashCode());
         ExecutorManager.executeTask(() -> {
             // 查寻缺陷
             final HashMap<String, DefectInfo> defectmap = DeviceService.getInstance().findDeviceDefect(currentBdzId);
@@ -245,6 +244,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             }
 
             mHandler.post(() -> {
+                isFirstLoad = false;
                 adapter.setCopyDeviceIdList(copyDeviceIdList);
                 adapter.setDefectMap(defectmap);
                 adapter.setCopyDeviceMap(copyedMap);

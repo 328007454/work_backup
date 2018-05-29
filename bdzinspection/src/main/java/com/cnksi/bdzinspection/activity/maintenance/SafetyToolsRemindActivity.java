@@ -6,8 +6,6 @@ import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ExpandableListView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
@@ -53,7 +51,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_safety_tools_remind);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_safety_tools_remind);
         initialUI();
     }
 
@@ -64,7 +62,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
         binding.ibtnCancel.setOnClickListener(v -> SafetyToolsRemindActivity.this.finish());
         binding.lvTools.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
             DbModel model = adapter.getChild(groupPosition, childPosition);
-            Intent intent = new Intent(currentActivity, SafeToolsInformationActivity.class);
+            Intent intent = new Intent(mActivity, SafeToolsInformationActivity.class);
             intent.putExtra(SafeToolsInfor.ID, model.getString(SafeToolsInfor.ID));
             intent.putExtra(Bdz.BDZID, model.getString("bdz_id"));
             String title = model.getString("name");
@@ -75,13 +73,13 @@ public class SafetyToolsRemindActivity extends BaseActivity {
         });
         binding.lvTools.setOnGroupClickListener((parent, v, groupPosition, id) -> {
             Bdz bdz = adapter.getGroup(groupPosition);
-            Intent intent = new Intent(currentActivity, SafetyToolsControlActivity.class);
+            Intent intent = new Intent(mActivity, SafetyToolsControlActivity.class);
             intent.putExtra(Bdz.BDZID, bdz.bdzid);
             intent.putExtra(SafeToolsInfor.DEPTID, dept_id);
             SafetyToolsRemindActivity.this.startActivity(intent);
             return true;
         });
-        qwerKeyBoardUtils = new QWERKeyBoardUtils(currentActivity);
+        qwerKeyBoardUtils = new QWERKeyBoardUtils(mActivity);
         qwerKeyBoardUtils.init(binding.keyboardContainer,
                 (view, oldKey, newKey) -> adapter.search(newKey));
     }
@@ -133,7 +131,7 @@ public class SafetyToolsRemindActivity extends BaseActivity {
         private String searchKey = "";
 
         public SafetyToolAdapter() {
-            super(currentActivity, null, R.layout.xs_item_safety_tool_bdz, R.layout.xs_item_safe_toolsinfo_remind);
+            super(mActivity, null, R.layout.xs_item_safety_tool_bdz, R.layout.xs_item_safe_toolsinfo_remind);
         }
 
         @Override

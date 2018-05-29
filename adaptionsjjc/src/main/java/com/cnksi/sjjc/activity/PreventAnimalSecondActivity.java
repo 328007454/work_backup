@@ -166,10 +166,10 @@ public class PreventAnimalSecondActivity extends BaseActivity {
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(_this, AnimalReportActivity.class);
+            Intent intent = new Intent(mActivity, AnimalReportActivity.class);
             isNeedUpdateTaskState = true;
             PreventAnimalSecondActivity.this.startActivity(intent);
-            _this.finish();
+            mActivity.finish();
             mSureDialog.dismiss();
             ScreenManager.getScreenManager().popActivity(PreventAnimalActivity.class);
 

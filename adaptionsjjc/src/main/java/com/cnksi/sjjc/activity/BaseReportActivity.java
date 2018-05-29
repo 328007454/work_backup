@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.sjjc.R;
 import com.cnksi.common.utils.PlaySound;
@@ -42,7 +43,7 @@ public abstract class BaseReportActivity extends BaseActivity {
         isDefaultTitle = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_report);
-        rlContainer = FindViewById(R.id.llbase);
+        rlContainer = findViewById(R.id.llbase);
         reportView = setReportView();
         rlContainer.addView(reportView, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         AutoUtils.autoSize(reportView);
@@ -54,10 +55,10 @@ public abstract class BaseReportActivity extends BaseActivity {
     }
 
     private void initTitleBar() {
-        mTvTitle = FindViewById(R.id.tv_title);
-        mBtnRight = FindViewById(R.id.btn_right);
+        mTvTitle = findViewById(R.id.tv_title);
+        mBtnRight = findViewById(R.id.btn_right);
         mBtnRight.setVisibility(View.GONE);
-        mBtnBack = FindViewById(R.id.btn_back);
+        mBtnBack = findViewById(R.id.btn_back);
         mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionName));
         mBtnBack.setOnClickListener(v -> {
             ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
@@ -78,7 +79,7 @@ public abstract class BaseReportActivity extends BaseActivity {
             case ANIMATION:
                 PlaySound.getIntance(mActivity).play(R.raw.print_out);
                 reportView.setVisibility(View.VISIBLE);
-                translateAnimRun(reportView, -reportView.getHeight() * 92 / 100, 0.0f);
+                AnimationUtils.translateAnimRun(reportView, -reportView.getHeight() * 92 / 100, 0.0f);
                 break;
             case VIBRATOR:
                 mVibrator.vibrate(735);
@@ -88,14 +89,10 @@ public abstract class BaseReportActivity extends BaseActivity {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    protected <T extends View> T FindViewById(int id) {
-        return (T) findViewById(id);
-    }
 
     @Override
     protected void onDestroy() {
-        PlaySound.getIntance(_this).stop();
+        PlaySound.getIntance(mActivity).stop();
         super.onDestroy();
     }
 
@@ -115,7 +112,6 @@ public abstract class BaseReportActivity extends BaseActivity {
             default:
                 break;
         }
-
         return true;
     }
 }

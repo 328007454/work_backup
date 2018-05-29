@@ -221,8 +221,8 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         binding.ibtnCancel.setOnClickListener(view -> FullDeviceListActivity.this.onBackPressed());
 
         binding.ibtnAdd.setOnClickListener(view -> {
-            PlaySound.getIntance(currentActivity).play(R.raw.input);
-            Intent intent = new Intent(currentActivity, CopyAllValueActivity2.class);
+            PlaySound.getIntance(mActivity).play(R.raw.input);
+            Intent intent = new Intent(mActivity, CopyAllValueActivity2.class);
             FullDeviceListActivity.this.startActivity(intent);
         });
 
@@ -251,20 +251,20 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         String tip = String.format(getText(R.string.xs_dialog_tips_finish_str1) + "", copyCount + "", totalCount + "", s);
 
         if (currentTask.isMember()) {
-            DialogUtils.showSureTipsDialog(currentActivity, null, tip + "\n" + "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
+            DialogUtils.showSureTipsDialog(mActivity, null, tip + "\n" + "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
                 @Override
                 public void onClick(View v) {
                     super.onClick(v);
-                    CustomerDialog.showProgress(currentActivity, "正在上传任务", true, false);
-                    KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).upload();
+                    CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
+                    KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
                 }
             });
         } else {
             if (isRoutineNotCopy()) {
-                showTipsDialog(null, new Intent(this, GenerateReportActivity.class));
+                showTipsDialog( new Intent(this, GenerateReportActivity.class));
             } else {
                 tip = tip + (currentTask.isGroupTask() ? "\n" + "确保分组成员已经获取过该任务，否则需通知其获取" : "");
-                showTipsDialog(null, new Intent(this, GenerateReportActivity.class), -1, tip, false);
+                showTipsDialog( new Intent(this, GenerateReportActivity.class), -1, tip, false);
             }
         }
     }
@@ -299,10 +299,10 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
                     @Override
                     public void locationSuccess(BDLocation location) {
                         CustomerDialog.dismissProgress();
-                        Intent intent = new Intent(currentActivity, LocationSpacingActivity.class);
+                        Intent intent = new Intent(mActivity, LocationSpacingActivity.class);
                         intent.putExtra(Config.CURRENT_FUNCTION_MODEL, "one");
                         intent.putExtra(Config.CURRENT_LATLNG, new LatLng(location));
-                        currentActivity.startActivityForResult(intent, Config.SHAKE_SPACE);
+                        mActivity.startActivityForResult(intent, Config.SHAKE_SPACE);
                     }
 
                     @Override
@@ -407,7 +407,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
     public void onBackPressed() {
         if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
             currentBackPressedTime = System.currentTimeMillis();
-            Toast.makeText(currentActivity, "再点一次，退出巡视页面", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "再点一次，退出巡视页面", Toast.LENGTH_SHORT).show();
         } else {
             final List<SpacingLastly> saveList = new ArrayList<>();
             for (DeviceListFragment fragment : fragmentList) {

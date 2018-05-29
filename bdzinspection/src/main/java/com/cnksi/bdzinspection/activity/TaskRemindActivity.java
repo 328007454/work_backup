@@ -152,11 +152,11 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
     public void initOnClick() {
         binding.includeTitle.ibtnCancel.setOnClickListener(v -> TaskRemindActivity.this.onBackPressed());
         binding.includeTitle.ibtnExit.setOnClickListener(view -> {
-            CustomerDialog.showProgress(currentActivity, "正在同步任务...", true, false);
-            KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).upload();
+            CustomerDialog.showProgress(mActivity, "正在同步任务...", true, false);
+            KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
         });
         binding.addTask.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, AddTaskActivity.class);
+            Intent intent = new Intent(mActivity, AddTaskActivity.class);
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentSelectInspectionType.name());
             TaskRemindActivity.this.startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
         });
@@ -235,7 +235,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                 String messageSuccess = (String) msg.obj;
                 Log.d("Tag", messageSuccess);
                 if (messageSuccess.contains("上传完成")) {
-                    KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).downLoad();
+                    KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).downLoad();
                 } else if (messageSuccess.contains("同步完成")) {
                     ToastUtils.showMessage("数据同步完成");
                     CustomerDialog.dismissProgress();
@@ -319,7 +319,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
             intent.putExtra(Config.IS_FROM_TASK_REMIND, true);
             if (!TextUtils.isEmpty(mTask.type) && InspectionType.operation.name().equalsIgnoreCase(mTask.type)) {
                 // TODO:跳转到运维一体化报告界面
-                intent.setClass(currentActivity, YunweiReportActivity.class);
+                intent.setClass(mActivity, YunweiReportActivity.class);
             } else {
                 // 蓄电池电压检测,跳转数据监测蓄电池检测
                 if (MAINTENANCE_XDCDYJC.equals(mTask.inspection)) {
@@ -336,15 +336,15 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                     intent.setComponent(componentName);
                 }
                 if (mTask.inspection.contains(InspectionType.switchover.name()) || mTask.inspection.contains(InspectionType.maintenance.name())) {
-                    intent.setClass(currentActivity, NewRegularReportActivity.class);
+                    intent.setClass(mActivity, NewRegularReportActivity.class);
                 } else {
-                    intent.setClass(currentActivity, InspectionReportActivity.class);
+                    intent.setClass(mActivity, InspectionReportActivity.class);
                 }
             }
         } else {
             if (InspectionType.operation.name().equalsIgnoreCase(mTask.type)) {
                 // 运维一体化
-                intent.setClass(currentActivity, YWWorkflowActivity.class);
+                intent.setClass(mActivity, YWWorkflowActivity.class);
                 generateReport(mTask);
             } else {
                 // 定期切换试验、定期维护不显示巡检前准备的界面；
@@ -353,9 +353,9 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                 generateReport(mTask);
                 if (mTask.inspection.contains(InspectionType.switchover.name()) || mTask.inspection.contains(InspectionType.maintenance.name()) || mTask.inspection.equalsIgnoreCase(InspectionType.battery.name())) {
                     if (SystemConfig.getSwitchMenuConfirmStyle().equalsIgnoreCase(SystemConfig.NONE)) {
-                        intent.setClass(currentActivity, New1RegularSwitchActivity1.class);
+                        intent.setClass(mActivity, New1RegularSwitchActivity1.class);
                     } else {
-                        intent.setClass(currentActivity, New1RegularSwitchActivity2.class);
+                        intent.setClass(mActivity, New1RegularSwitchActivity2.class);
                     }
                 } else {
                     boolean containsUser = false;
@@ -380,12 +380,12 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
                     if (containsUser && !TextUtils.isEmpty(reportId)) {
                         PreferencesUtils.put(Config.CURRENT_REPORT_ID, reportId);
                         if (mTask.inspection.contains("special")) {
-                            intent.setClass(currentActivity, ParticularDeviceListActivity.class);
+                            intent.setClass(mActivity, ParticularDeviceListActivity.class);
                         } else {
-                            intent.setClass(currentActivity, FullDeviceListActivity.class);
+                            intent.setClass(mActivity, FullDeviceListActivity.class);
                         }
                     } else {
-                        intent.setClass(currentActivity, InspectionReadyActivity.class);
+                        intent.setClass(mActivity, InspectionReadyActivity.class);
                     }
                 }
             }
@@ -397,7 +397,7 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         PreferencesUtils.put(Config.CURRENT_TASK_ID, mTask.taskid);
         PreferencesUtils.put(Task.SCHEDULE_TIME, mTask.schedule_time);
         PreferencesUtils.put(Task.SCHEDULE_ENDTIME, mTask.schedule_endtime);
-        currentActivity.startActivityForResult(intent, Config.TURN_SUCCESS);
+        mActivity.startActivityForResult(intent, Config.TURN_SUCCESS);
     }
 
 

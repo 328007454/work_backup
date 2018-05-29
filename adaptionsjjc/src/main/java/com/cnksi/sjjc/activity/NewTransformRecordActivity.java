@@ -187,7 +187,7 @@ public class NewTransformRecordActivity extends BaseActivity {
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
+            Intent intent = new Intent(mActivity, JZLFenJieKaiGuanReportActivity.class);
             NewTransformRecordActivity.this.startActivity(intent);
             NewTransformRecordActivity.this.finish();
         });

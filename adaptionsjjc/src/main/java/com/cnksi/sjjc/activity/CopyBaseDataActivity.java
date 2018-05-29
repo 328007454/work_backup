@@ -112,7 +112,7 @@ public class CopyBaseDataActivity extends BaseActivity {
             } catch (DbException e) {
                 Log.i("Tag", e.getMessage());
             }
-            CopyBaseDataActivity.this.startActivity(new Intent(_this, CopyAllValueActivity3.class));
+            CopyBaseDataActivity.this.startActivity(new Intent(mActivity, CopyAllValueActivity3.class));
         });
         mTitleBinding.btnBack.setOnClickListener(view -> CopyBaseDataActivity.this.finish());
     }

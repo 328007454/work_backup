@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/xs_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_title_bar_minheight_px"
+            android:background="@color/xs_global_base_color">
+
+            <ImageButton
+                android:id="@+id/ibtn_cancel"
+                style="@style/svgButtonBack"
+                android:layout_width="@dimen/xs_title_bar_minheight_px"
+                android:layout_height="@dimen/xs_title_bar_minheight_px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@null"
+                android:visibility="visible"
+                app:srcCompat="@drawable/xs_cancel_button_background"/>
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
+                android:layout_marginRight="@dimen/xs_title_bar_minheight_px"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_title_text_size_px"/>
+
+            <TextView
+                android:id="@+id/right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:background="@drawable/xs_textview_grass_conner"
+                android:padding="@dimen/xs_yw_title_gqj_padding_px"
+                android:textColor="@color/xs_white_text"
+                android:textSize="@dimen/xs_yw_title_gqj_size_px"
+                android:visibility="invisible"/>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 签名的dialog -->
+
+            <RelativeLayout
+                android:id="@+id/ll_sign_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+
+                <com.cnksi.common.view.SignaturePad
+                    android:id="@+id/pathView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"/>
+
+                <TextView
+                    android:id="@+id/tv_person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                    android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+                    android:text="张山"
+                    android:textColor="@color/xs_global_base_color"
+                    android:textSize="@dimen/xs_global_text_small_size_px"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/xs_global_btn_margin_px"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_quxiao"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/xs_button_minheight"
+                    android:layout_weight="1"
+                    android:background="@drawable/xs_red_button_background_selector"
+                    android:minHeight="@dimen/xs_button_minheight"
+                    android:text="@string/xs_dialog_cancel_text_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_small_size_px"/>
+
+                <Button
+                    android:id="@+id/btn_reset"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/xs_button_minheight"
+                    android:layout_marginLeft="@dimen/xs_global_padding_half_left_right_px"
+                    android:layout_weight="1"
+                    android:background="@drawable/xs_grass_green_button_background_selector"
+                    android:minHeight="@dimen/xs_button_minheight"
+                    android:text="@string/xs_reset_sign_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_small_size_px"/>
+
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/xs_button_minheight"
+                    android:layout_marginLeft="@dimen/xs_global_padding_half_left_right_px"
+                    android:layout_weight="1.6"
+                    android:background="@drawable/xs_green_background_selector"
+                    android:minHeight="@dimen/xs_button_minheight"
+                    android:text="@string/xs_sign_finish_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_small_size_px"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

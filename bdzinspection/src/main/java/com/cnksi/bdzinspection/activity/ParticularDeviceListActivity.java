@@ -68,7 +68,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_particular_inspection);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_particular_inspection);
         getIntentValue();
         initialUI();
         initialData();
@@ -137,7 +137,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                     case 4:
                         signalIcon = R.drawable.xs_ic_signal4;
                         break;
-                        default:
+                    default:
                 }
                 binding.tvTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, signalIcon, 0);
                 currentFragment.locationSuccess(location);
@@ -172,27 +172,26 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                 if (SystemConfig.isDevicePlaced()) {
                     fragmentList.get(0).handleSpaceArrivedData();
                 }
-
                 if (currentTask.isMember()) {
-                    DialogUtils.showSureTipsDialog(currentActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
+                    DialogUtils.showSureTipsDialog(mActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
                         @Override
                         public void onClick(View v) {
                             super.onClick(v);
-                            CustomerDialog.showProgress(currentActivity, "正在上传任务", true, false);
-                            KSyncConfig.getInstance().getKNConfig(currentActivity, mHandler).upload();
+                            CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
+                            KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
                         }
                     });
                 } else {
-                    Intent intent = new Intent(currentActivity, GenerateReportActivity.class);
-                    ParticularDeviceListActivity.this.showTipsDialog(binding.llRootContainer, intent);
+                    Intent intent = new Intent(mActivity, GenerateReportActivity.class);
+                    showTipsDialog(intent);
                 }
             }
         });
 
         binding.ibtnAdd.setOnClickListener(view -> {
-            PlaySound.getIntance(currentActivity).play(R.raw.input);
-            Intent intent = new Intent(currentActivity, CopyAllValueActivity2.class);
-            ParticularDeviceListActivity.this.startActivity(intent);
+            PlaySound.getIntance(mActivity).play(R.raw.input);
+            Intent intent = new Intent(mActivity, CopyAllValueActivity2.class);
+            startActivity(intent);
         });
 
 
@@ -202,7 +201,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
     @Override
     synchronized public void onShake() {
         if (currentPosition != 0) {
-            ToastUtils.showMessage( "摇一摇功能只能在一次设备列表使用");
+            ToastUtils.showMessage("摇一摇功能只能在一次设备列表使用");
         } else {
             if (!shaking) {
                 shaking = true;
@@ -211,10 +210,10 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                     @Override
                     public void locationSuccess(BDLocation location) {
                         CustomerDialog.dismissProgress();
-                        Intent intent = new Intent(currentActivity, LocationSpacingActivity.class);
+                        Intent intent = new Intent(mActivity, LocationSpacingActivity.class);
                         intent.putExtra(Config.CURRENT_FUNCTION_MODEL, "one");
                         intent.putExtra(Config.CURRENT_LATLNG, new LatLng(location));
-                        currentActivity.startActivityForResult(intent, Config.SHAKE_SPACE);
+                        mActivity.startActivityForResult(intent, Config.SHAKE_SPACE);
                     }
 
                     @Override
@@ -222,7 +221,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
                         if (code == -16) {
                             shaking = false;
                             CustomerDialog.dismissProgress();
-                            ToastUtils.showMessage( "摇一摇定位失败！");
+                            ToastUtils.showMessage("摇一摇定位失败！");
                         }
                     }
                 }).setTimeout(10).start();
@@ -264,18 +263,18 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         switch (msg.what) {
             case SYNC_START:
                 String messageStart = (String) msg.obj;
-                ToastUtils.showMessage( messageStart);
+                ToastUtils.showMessage(messageStart);
                 break;
             case SYNC_INFO:
                 break;
             case SYNC_SUCCESS:
                 String messageSuccess = (String) msg.obj;
-                ToastUtils.showMessage( messageSuccess);
+                ToastUtils.showMessage(messageSuccess);
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;
             case SYNC_ERROR:
-                ToastUtils.showMessage( "请检查网络，在主页手动同步");
+                ToastUtils.showMessage("请检查网络，在主页手动同步");
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;
@@ -288,7 +287,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
     public void onBackPressed() {
         if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
             currentBackPressedTime = System.currentTimeMillis();
-            Toast.makeText(currentActivity, "再点一次，退出巡视页面", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "再点一次，退出巡视页面", Toast.LENGTH_SHORT).show();
         } else {
             final List<SpacingLastly> saveList = new ArrayList<>();
             for (ParticularDevicesFragment fragment : fragmentList) {

@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.view;
+package com.cnksi.common.view;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,7 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.cnksi.bdzinspection.R;
+import com.cnksi.common.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -67,18 +67,15 @@ public class SignaturePad extends View {
 
     public SignaturePad(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.XS_SignaturePad,
-                0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SignaturePad, 0, 0);
 
         //Configurable parameters
         try {
-            mMinWidth = a.getDimensionPixelSize(R.styleable.XS_SignaturePad_penMinWidth, convertDpToPx(DEFAULT_ATTR_PEN_MIN_WIDTH_PX));
-            mMaxWidth = a.getDimensionPixelSize(R.styleable.XS_SignaturePad_penMaxWidth, convertDpToPx(DEFAULT_ATTR_PEN_MAX_WIDTH_PX));
-            mPaint.setColor(a.getColor(R.styleable.XS_SignaturePad_penColor, DEFAULT_ATTR_PEN_COLOR));
-            mVelocityFilterWeight = a.getFloat(R.styleable.XS_SignaturePad_velocityFilterWeight, DEFAULT_ATTR_VELOCITY_FILTER_WEIGHT);
-            mClearOnDoubleClick = a.getBoolean(R.styleable.XS_SignaturePad_clearOnDoubleClick, DEFAULT_ATTR_CLEAR_ON_DOUBLE_CLICK);
+            mMinWidth = a.getDimensionPixelSize(R.styleable.SignaturePad_penMinWidth, convertDpToPx(DEFAULT_ATTR_PEN_MIN_WIDTH_PX));
+            mMaxWidth = a.getDimensionPixelSize(R.styleable.SignaturePad_penMaxWidth, convertDpToPx(DEFAULT_ATTR_PEN_MAX_WIDTH_PX));
+            mPaint.setColor(a.getColor(R.styleable.SignaturePad_penColor, DEFAULT_ATTR_PEN_COLOR));
+            mVelocityFilterWeight = a.getFloat(R.styleable.SignaturePad_velocityFilterWeight, DEFAULT_ATTR_VELOCITY_FILTER_WEIGHT);
+            mClearOnDoubleClick = a.getBoolean(R.styleable.SignaturePad_clearOnDoubleClick, DEFAULT_ATTR_CLEAR_ON_DOUBLE_CLICK);
         } finally {
             a.recycle();
         }

@@ -20,6 +20,9 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Wastrel
+ */
 public class CopyItemService extends BaseService<CopyItem> {
     public static CopyItemService mInstance;
 
@@ -32,24 +35,6 @@ public class CopyItemService extends BaseService<CopyItem> {
             mInstance = new CopyItemService();
         }
         return mInstance;
-    }
-
-    /**
-     * 查询设备下的抄录项目
-     *
-     * @param bdzId
-     * @param deviceId
-     * @return
-     */
-    public List<CopyItem> getDeviceCopyItem(String bdzId, String deviceId) {
-        try {
-            Selector<CopyItem> selector = selector().and(CopyItem.BDZID, "=", bdzId)
-                    .and(CopyItem.DEVICEID, "=", deviceId).orderBy(CopyItem.ID);
-            return selector.findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     /**
@@ -85,6 +70,7 @@ public class CopyItemService extends BaseService<CopyItem> {
         }
         return null;
     }
+
     /**
      * 查询变电站下所有抄录项目
      *
@@ -122,7 +108,8 @@ public class CopyItemService extends BaseService<CopyItem> {
         }
         return null;
     }
-    public List<CopyItem> getDeviceCopyItem(String bdzId, String deviceId, String copyType) {
+
+    public List<CopyItem> getDeviceCopyItemByKey(String bdzId, String deviceId, String copyType) {
         try {
             Selector<CopyItem> selector = selector().and(CopyItem.BDZID, "=", bdzId)
                     .and(CopyItem.DEVICEID, "=", deviceId).expr(" and " + CopyItem.TYPE_KEY + " in('" + copyType + "') ").orderBy(CopyItem.ID);
@@ -132,35 +119,17 @@ public class CopyItemService extends BaseService<CopyItem> {
         }
         return null;
     }
-    /**
-     * 查询设备下的避雷器抄录项目
-     *
-     * @param bdzId
-     * @param deviceId
-     * @return
-     */
-    public List<CopyItem> getDeviceCopyItem1(String bdzId, String deviceId, String inspection) {
+
+    public List<CopyItem> getDeviceCopyItemByInspectionType(String bdzId, String deviceId, String inspectionType) {
         try {
-            return selector().and(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).expr("and " + CopyItem.TYPE_KEY + " in ('" + inspection + "')")
-                    .orderBy(CopyItem.ID).findAll();
+            return selector().and(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).
+                    and(CopyItem.KIND, "like", "%" + inspectionType + "%").and(CopyItem.DLT, "=", 0).orderBy(CopyItem.ID).findAll();
         } catch (DbException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<DbModel> getCopyDeviceList(String bdzId, String deviceType) {
-        String sql = "select d.deviceid,d.name,d.latitude,d.longitude from device d where d.deviceid in( SELECT DISTINCT(deviceid) from copy_item WHERE bdzid=? and dlt='0') and device_type=? and d.dlt='0'";
-        SqlInfo sqlInfo = new SqlInfo(sql);
-        sqlInfo.addBindArg(new KeyValue("", bdzId));
-        sqlInfo.addBindArg(new KeyValue("", deviceType));
-        try {
-            return findDbModelAll(sqlInfo);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public List<DbModel> getCopyDeviceList(String bdzId, String deviceType, String inspection, String deviceWay, String reportId) {
 
@@ -177,7 +146,7 @@ public class CopyItemService extends BaseService<CopyItem> {
         if (!TextUtils.isEmpty(deviceWay) && "select_device".equalsIgnoreCase(deviceWay)) {
             Report currentReport = null;
             try {
-                currentReport = ReportService.getInstance().findById( reportId);
+                currentReport = ReportService.getInstance().findById(reportId);
             } catch (DbException e) {
                 e.getMessage();
             }
@@ -208,6 +177,7 @@ public class CopyItemService extends BaseService<CopyItem> {
         }
         return null;
     }
+
     /**
      * 查寻变电站抄录设备
      *
@@ -241,6 +211,7 @@ public class CopyItemService extends BaseService<CopyItem> {
     public String getCopyType() {
         return "blqdzcs_dzcs','blqdzcs_xldlz";
     }
+
     /**
      * 查询变电站下所有抄录项目
      *
@@ -309,41 +280,6 @@ public class CopyItemService extends BaseService<CopyItem> {
         return 0;
     }
 
-    /**
-     * 修改后的查询抄录方式
-     *
-     * @param
-     */
-    public List<CopyItem> getDevicesByNameWays1(String bdzId, String key) {
-        List<CopyItem> items = null;
-        try {
-            items = selector().and(CopyItem.BDZID, "=", bdzId).and(CopyItem.TYPE_KEY, "=", key).orderBy(CopyItem.DEVICEID, false).findAll();
-            for (CopyItem item : items) {
-                item.focus = false;
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return items;
-    }
-
-
-    /**
-     * 得到当前变电站以及当前deviceId下的设备
-     */
-    public List<CopyItem> getAllCopyItem(String bdzId, String deviceId, String kaiGaunKey, String dangWeiKey) {
-        List<CopyItem> copyItemList = null;
-        try {
-            copyItemList = selector().and(CopyItem.BDZID, "=", bdzId).and(CopyItem.DEVICEID, "=", deviceId).and(CopyItem.TYPE_KEY, "=", kaiGaunKey).or(CopyItem.TYPE_KEY, "=", dangWeiKey).findAll();
-            if (null == copyItemList) {
-                copyItemList = new ArrayList<>();
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return copyItemList;
-
-    }
 
     public List<CopyItem> findAllMaintenanceHasCopyValue(String currentInspectionType, String currentBdzId) throws DbException {
 

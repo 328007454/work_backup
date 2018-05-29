@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -75,7 +74,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -201,7 +199,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changedStatusColor();
-        devicedetailsBinding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_new_devicedetails);
+        devicedetailsBinding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_new_devicedetails);
         getIntentValue();
         initialUI();
         initialData();
@@ -214,11 +212,11 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         devicedetailsBinding.deviceStandardLv.setOnItemClickListener((parent, view, position, id) -> {
             mCurrentStandard = mStandardList.get(position);
             if (NewDeviceDetailsActivity.this.isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) || (InspectionType.special_xideng.equals(currentInspectionType))) {
-                Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
+                Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
                 NewDeviceDetailsActivity.this.setIntentValue(intent);
                 NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
             } else {
-                Intent intent = new Intent(currentActivity, DefectControlActivity.class);
+                Intent intent = new Intent(mActivity, DefectControlActivity.class);
                 NewDeviceDetailsActivity.this.setIntentValue(intent);
                 intent.putExtra(Config.IS_SHOW_DEFECT_REASON, true);
                 // 传递巡视标准ID
@@ -230,10 +228,10 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             NewDeviceDetailsActivity.this.showStandardSource(mStandardList.get(position));
             return true;
         });
-        devicedetailsBinding.btPhotoSign.setOnClickListener(v -> FunctionUtil.takePicture(currentActivity, currentImageName = FunctionUtil.getCurrentImageName(currentActivity), Config.RESULT_PICTURES_FOLDER, PHOTO_SIGN_IMAGE));
+        devicedetailsBinding.btPhotoSign.setOnClickListener(v -> FunctionUtil.takePicture(mActivity, currentImageName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, PHOTO_SIGN_IMAGE));
         devicedetailsBinding.imgArrived.setOnClickListener(v -> {
 //                showImageDetails(currentActivity, Config.RESULT_PICTURES_FOLDER + placedDevice.pic, true);
-            NewDeviceDetailsActivity.this.showImageDetails(currentActivity, Config.RESULT_PICTURES_FOLDER, imgList, true);
+            NewDeviceDetailsActivity.this.showImageDetails(mActivity, Config.RESULT_PICTURES_FOLDER, imgList, true);
         });
     }
 
@@ -357,7 +355,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 break;
             case DEVICE_EXIST_DEFECT:
                 String defectCount = getString(R.string.xs_defect_count_message, StringUtils.cleanString(mExistDefectList.size() + "个"));
-                devicedetailsBinding.tvDefectCount.setText(StringUtils.changePartTextColor(currentActivity, defectCount, R.color.xs_light_red_color, defectCount.length() - StringUtils.cleanString(mExistDefectList.size() + "个").length(), defectCount.length()));
+                devicedetailsBinding.tvDefectCount.setText(StringUtils.changePartTextColor(mActivity, defectCount, R.color.xs_light_red_color, defectCount.length() - StringUtils.cleanString(mExistDefectList.size() + "个").length(), defectCount.length()));
                 if (mExistDefectList.isEmpty()) {
                     devicedetailsBinding.tvDefectCount.setText("当前设备无现存缺陷");
                 }
@@ -391,7 +389,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     });
                 }
                 if (mInspectionStandardAdapter == null) {
-                    mInspectionStandardAdapter = new StandardAdapter(currentActivity, mStandardList);
+                    mInspectionStandardAdapter = new StandardAdapter(mActivity, mStandardList);
                     devicedetailsBinding.deviceStandardLv.setAdapter(mInspectionStandardAdapter);
                 } else {
                     mInspectionStandardAdapter.setList(mStandardList);
@@ -445,8 +443,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
 
     private void initOnClick() {
         devicedetailsBinding.ibtnCopy.setOnClickListener(view -> {
-            PlaySound.getIntance(currentActivity).play(R.raw.input);
-            Intent intent = new Intent(currentActivity, CopyValueActivity2.class);
+            PlaySound.getIntance(mActivity).play(R.raw.input);
+            Intent intent = new Intent(mActivity, CopyValueActivity2.class);
             intent.putExtra(Config.CURRENT_DEVICE_NAME, mCurrentDevice.name);
             intent.putExtra(Config.CURRENT_DEVICE_ID, mCurrentDevice.deviceid);
             intent.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
@@ -463,7 +461,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         });
 
         devicedetailsBinding.btAccidentDeal.setOnClickListener(view -> {
-            Intent intentAccident = new Intent(currentActivity, AccidentExceptionActivity.class);
+            Intent intentAccident = new Intent(mActivity, AccidentExceptionActivity.class);
             intentAccident.putExtra(Config.CURRENT_DEVICE_ID, currentDeviceId);
             NewDeviceDetailsActivity.this.startActivity(intentAccident);
         });
@@ -473,7 +471,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             if (null == mExistDefectList || mExistDefectList.isEmpty()) {
                 return;
             }
-            intent = new Intent(currentActivity, DefectControlActivity.class);
+            intent = new Intent(mActivity, DefectControlActivity.class);
             NewDeviceDetailsActivity.this.setIntentValue(intent);
             intent.putExtra(Config.ADD_NEW_DEFECT_RECORD, true);
             intent.putExtra(Config.IS_TRACK_DEFECT, true);
@@ -484,13 +482,13 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
 
         devicedetailsBinding.tvAddNewDefect.setOnClickListener(view -> {
             Intent intent;
-            intent = new Intent(currentActivity, AddNewDefectActivity.class);
+            intent = new Intent(mActivity, AddNewDefectActivity.class);
             NewDeviceDetailsActivity.this.setIntentValue(intent);
             NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
         devicedetailsBinding.ibtnCancel.setOnClickListener(view -> NewDeviceDetailsActivity.this.onBackPressed());
         devicedetailsBinding.ibtnSetting.setOnClickListener(view -> {
-            Intent intent1 = new Intent(currentActivity, SettingCopyTypeActivity.class);
+            Intent intent1 = new Intent(mActivity, SettingCopyTypeActivity.class);
             intent1.putExtra(Config.CURRENT_DEVICE_NAME, mCurrentDevice.name);
             intent1.putExtra(Config.CURRENT_DEVICE_ID, mCurrentDevice.deviceid);
             intent1.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
@@ -502,9 +500,9 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
     private void showStandardSource(final DbModel standard) {
         if (mStandardSourceDialog == null) {
             sourceBinding = XsDialogStandardSourceBinding.inflate(getLayoutInflater(), devicedetailsBinding.llContainer, false);
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) * 5 / 10;
-            mStandardSourceDialog = DialogUtils.createDialog(currentActivity, sourceBinding.getRoot(), dialogWidth, dialogHeight);
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 5 / 10;
+            mStandardSourceDialog = DialogUtils.createDialog(mActivity, sourceBinding.getRoot(), dialogWidth, dialogHeight);
         }
         String source = StringUtilsExt.nullTo(standard.getString(Standards.ORIGIN), getString(R.string.xs_no_source_str));
         final String staid = standard.getString("staid");
@@ -527,7 +525,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     tips = "是否撤销不适用标注?";
                     mark.dlt = "1";
                 }
-                DialogUtils.showSureTipsDialog(currentActivity, devicedetailsBinding.llContainer, tips, new OnViewClickListener() {
+                DialogUtils.showSureTipsDialog(mActivity, devicedetailsBinding.llContainer, tips, new OnViewClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
@@ -560,14 +558,14 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
     private void showChangePictureDialog(View view) {
         mVibrator.vibrate(100);
         if (mListContentDialogAdapter == null) {
-            mListContentDialogAdapter = new ListContentDialogAdapter(currentActivity, Arrays.asList(getResources().getStringArray(R.array.XS_ChangStandardArray)));
+            mListContentDialogAdapter = new ListContentDialogAdapter(mActivity, Arrays.asList(getResources().getStringArray(R.array.XS_ChangStandardArray)));
         } else {
             mListContentDialogAdapter.setList(Arrays.asList(getResources().getStringArray(R.array.XS_ChangStandardArray)));
         }
         if (mChangePictureDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            changeHolder = new ViewHolder(currentActivity, null, R.layout.xs_content_list_dialog, false);
-            mChangePictureDialog = DialogUtils.createDialog(currentActivity,changeHolder.getRootView(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            changeHolder = new ViewHolder(mActivity, null, R.layout.xs_content_list_dialog, false);
+            mChangePictureDialog = DialogUtils.createDialog(mActivity,changeHolder.getRootView(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         }
         ((ListView) changeHolder.getView(R.id.lv_container)).setAdapter(mListContentDialogAdapter);
         ((TextView) changeHolder.getView(R.id.tv_dialog_title)).setText(R.string.xs_picture_function_str);
@@ -583,7 +581,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     break;
                 // 更换图片
                 case 1:
-                    FunctionUtil.takePicture(currentActivity, (currentImageName = FunctionUtil.getCurrentImageName(currentActivity)), Config.CUSTOMER_PICTURES_FOLDER);
+                    FunctionUtil.takePicture(mActivity, (currentImageName = FunctionUtil.getCurrentImageName(mActivity)), Config.CUSTOMER_PICTURES_FOLDER);
                     break;
                 // 查看大图片
                 case 0:
@@ -591,7 +589,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     picPath = TextUtils.isEmpty(mCurrentDevice.change_pic) ? (TextUtils.isEmpty(mCurrentDevice.pic) ? "" : mCurrentDevice.pic) : mCurrentDevice.change_pic;
                     picPath = mCurrentDevice.getPic(picPath);
                     if (FileUtils.isFileExists(picPath)) {
-                        NewDeviceDetailsActivity.this.showImageDetails(currentActivity, picPath);
+                        NewDeviceDetailsActivity.this.showImageDetails(mActivity, picPath);
                     }
                     break;
                 case 3:
@@ -625,13 +623,13 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
      */
     private void showDangerPointDialog() {
         if (mDangerPointDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) * 2 / 3;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 2 / 3;
             List<String> data = new ArrayList<>();
             data.add(bigTypeModel.getString("identification_prevent_measures"));
-            holder = new ViewHolder(currentActivity, null, R.layout.xs_content_list_dialog, false);
-            BigTypePreventAdapter adapter = new BigTypePreventAdapter(currentActivity, data, R.layout.xs_danger_point_item2);
-            mDangerPointDialog = DialogUtils.createDialog(currentActivity,  holder.getRootView(), dialogWidth, (data != null && data.size() > 4) ? dialogHeight : LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            holder = new ViewHolder(mActivity, null, R.layout.xs_content_list_dialog, false);
+            BigTypePreventAdapter adapter = new BigTypePreventAdapter(mActivity, data, R.layout.xs_danger_point_item2);
+            mDangerPointDialog = DialogUtils.createDialog(mActivity,  holder.getRootView(), dialogWidth, (data != null && data.size() > 4) ? dialogHeight : LinearLayout.LayoutParams.WRAP_CONTENT, true);
             ((TextView) holder.getView(R.id.tv_dialog_title)).setText("危险点及控制措施");
             ((ListView) holder.getView(R.id.lv_container)).setAdapter(adapter);
         }
@@ -657,7 +655,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 case ACTION_IMAGE:
                     // 更换照片 切割照片
                     if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)) {
-                        cropImageUri(Uri.fromFile(new File(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)), ScreenUtils.getScreenHeight(currentActivity), ScreenUtils.getScreenHeight(currentActivity), CROP_PICTURE, currentImageName);
+                        cropImageUri(Uri.fromFile(new File(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)), ScreenUtils.getScreenHeight(mActivity), ScreenUtils.getScreenHeight(mActivity), CROP_PICTURE, currentImageName);
                     }
                     break;
                 case CROP_PICTURE:
@@ -682,7 +680,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 case PHOTO_SIGN_IMAGE:
                     CustomerDialog.showProgress(this, "处理水印中...");
                     ExecutorManager.executeTask(() -> {
-                        Bitmap bitmap = BitmapUtil.createScaledBitmapByHeight(Config.RESULT_PICTURES_FOLDER + currentImageName, ScreenUtils.getScreenHeight(currentActivity));
+                        Bitmap bitmap = BitmapUtil.createScaledBitmapByHeight(Config.RESULT_PICTURES_FOLDER + currentImageName, ScreenUtils.getScreenHeight(mActivity));
                         String tips = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                         tips = tips + "\n" + DateUtils.getCurrentLongTime();
                         bitmap = BitmapUtil.addText2Bitmap(bitmap, tips, 60);
@@ -763,7 +761,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
     @Override
     public void onBackPressed() {
         if (mCurrentDevice.isImportant() && SystemConfig.isMustPicImportantDevice() && (placedDevice == null || !placedDevice.isHasPhoto())) {
-            DialogUtils.showSureTipsDialog(currentActivity, null, "当前设备是关键设备，按照规定应拍照确认！是否返回？", new OnViewClickListener() {
+            DialogUtils.showSureTipsDialog(mActivity, null, "当前设备是关键设备，按照规定应拍照确认！是否返回？", new OnViewClickListener() {
                 @Override
                 public void onClick(View v) {
                     NewDeviceDetailsActivity.super.onBackPressed();
@@ -866,7 +864,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         private void jumpDevice(DbModel model, int anim1) {
             currentDeviceId = model.getString("deviceId");
             currentDeviceName = model.getString("name");
-            devicedetailsBinding.getRoot().startAnimation(android.view.animation.AnimationUtils.loadAnimation(currentActivity, anim1));
+            devicedetailsBinding.getRoot().startAnimation(android.view.animation.AnimationUtils.loadAnimation(mActivity, anim1));
             if (devicePartRecylerAdapter != null) {
                 devicePartRecylerAdapter.setClickPosition(0);
             }

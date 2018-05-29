@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -124,7 +123,7 @@ public class CopyHelper {
             }
         }
         // 查询当前设备抄录项
-        List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItem(currentBdzId, currentDeviceId, currentInspectionType);
+        List<CopyItem> copyItemList = CopyItemService.getInstance().getDeviceCopyItemByInspectionType(currentBdzId, currentDeviceId, currentInspectionType);
         // 抄录结构map
         copyResultMap = new HashMap<>();
         // 按照抄录类型-抄录项转换结果
@@ -482,14 +481,6 @@ public class CopyHelper {
 
     public List<EditText> getAllEditText() {
         return requestEdtits;
-    }
-
-    public interface KeyBordListener {
-        void onViewFocus(EditText v, CopyItem item, CopyResult result, List<EditText> editTexts, List<CopyItem> copyItems);
-
-        void hideKeyBord();
-
-        void onViewFocusChange(EditText v, CopyItem item, CopyResult result, boolean hasFocus, String descript, List<EditText> editTexts);
     }
 
     public class CopyTextWatcher implements TextWatcher {

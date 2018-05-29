@@ -61,7 +61,7 @@ public class TZQKActivity extends BaseActivity {
 
     private void initView() {
         binding.kgdlqbh.setSelectOnClickListener(v -> {
-            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
             String bigIds = DeviceService.getInstance().findBigId("DLQ");
@@ -83,7 +83,7 @@ public class TZQKActivity extends BaseActivity {
                 ToastUtils.showMessage("全站设备均停运，无需选择！");
                 return;
             }
-            Intent intentDevices = new Intent(_this, AllDeviceListActivity.class);
+            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
             intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
             intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
             if ("主变".equals(keyValue.getValueStr())) {
@@ -107,7 +107,7 @@ public class TZQKActivity extends BaseActivity {
         binding.tyfw.setType("gztyfw");
         binding.btnSure.setOnClickListener(v -> {
             if (TZQKActivity.this.save(true)) {
-                Intent intent = new Intent(_this, BHDZQKActivity.class);
+                Intent intent = new Intent(mActivity, BHDZQKActivity.class);
                 TZQKActivity.this.startActivity(intent);
             }
         });

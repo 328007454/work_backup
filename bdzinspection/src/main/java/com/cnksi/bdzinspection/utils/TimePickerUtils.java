@@ -104,7 +104,7 @@ public class TimePickerUtils implements View.OnClickListener {
         this.secondTime = secondTime;
         this.isStartTime = isStartTime;
         if (pvCustomTime == null) {
-            this.mActivity = activity;
+           mActivity = activity;
             initCustomTimePicker();
             initWidget = false;
         } else {

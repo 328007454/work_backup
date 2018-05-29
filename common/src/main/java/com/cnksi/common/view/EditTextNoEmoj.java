@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.view;
+package com.cnksi.common.view;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.R;
+
 
 /**
  * Created by kkk on 2017/9/21.
@@ -33,7 +33,7 @@ public class EditTextNoEmoj extends AppCompatEditText {
     }
 
     private void addOnTextChangeListen() {
-        setBackground(getResources().getDrawable(R.color.white));
+        setBackground(null);
         this.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence sequence, int i, int i1, int i2) {

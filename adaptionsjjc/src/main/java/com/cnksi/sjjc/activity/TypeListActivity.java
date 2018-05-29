@@ -122,7 +122,7 @@ public class TypeListActivity extends BaseActivity {
                 typeList = titleList;
                 break;
             case operation:
-
+            default:
         }
         if (null != typeList && !typeList.isEmpty()) {
             data.clear();
@@ -183,7 +183,7 @@ public class TypeListActivity extends BaseActivity {
                         }
                         break;
                     case SBJC:
-                        intent.setClass(_this, TaskRemindActivity.class);
+                        intent.setClass(mActivity, TaskRemindActivity.class);
                         intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, SBJCInspectionMap.get(s));
                         break;
                     case switchover:
@@ -227,23 +227,23 @@ public class TypeListActivity extends BaseActivity {
                         return;
                     case JYHYS:
 //                        if (position == 0) {
-//                            intent.setClass(_this, QinYouShiByqYanShouActivity.class);
+//                            intent.setClass(mActivity, QinYouShiByqYanShouActivity.class);
 //                            startActivity(intent);
 //                        }
                         return;
                     case JYHPJ:
-//                        if (position == 0) intent.setClass(_this, JYHPJActivity.class);
+//                        if (position == 0) intent.setClass(mActivity, JYHPJActivity.class);
 //                        else return;
 //                        break;
                     case GZP:
                         if (position == 0) {
-                            intent.setClass(_this, WorkPlanInformationActivity.class);
+                            intent.setClass(mActivity, WorkPlanInformationActivity.class);
                         } else {
                             return;
                         }
                         break;
                     case TJWT: //图解五通
-                        intent.setClass(_this, TJWTActivity.class);
+                        intent.setClass(mActivity, TJWTActivity.class);
                         intent.putExtra("title", titleList.get(position));
                         intent.putExtra("pic", tjwtList.get(position).pic);
                         break;

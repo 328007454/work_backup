@@ -37,6 +37,7 @@ import static com.cnksi.common.Config.IS_SHOW_PHOTO_FLAG;
 
 /**
  * 查看大图的Activity界面。
+ *
  * @author Wastrel
  */
 public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChangeListener {
@@ -75,6 +76,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
     @Override
     public void getRootDataBinding() {
         mImageDetailsBinding = ActivityImageDetailsBinding.inflate(getLayoutInflater());
+        setContentView(mImageDetailsBinding.getRoot());
         imageList = getIntent().getStringArrayListExtra(IMAGEURL_LIST);
         currentPosition = position = getIntent().getIntExtra(CURRENT_IMAGE_POSITION, 0);
         isShowDeleteFlag = getIntent().getBooleanExtra(IS_SHOW_PHOTO_FLAG, true);
@@ -253,7 +255,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
 
     @Override
     public void onBackPressed() {
-        if (isShowDeleteFlag ||isSelectFlag) {
+        if (isShowDeleteFlag || isSelectFlag) {
             Intent intent = getIntent();
             intent.putStringArrayListExtra(CANCEL_IMAGEURL_LIST, cancelImageList);
             setResult(RESULT_OK, intent);
@@ -262,21 +264,21 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
     }
 
 
-
-    public static Builder with(Activity activity){
+    public static Builder with(Activity activity) {
         return new Builder(activity);
     }
 
-    public static class Builder{
+    public static class Builder {
 
         Activity context;
-        int position=0;
-        ArrayList<String> imageUrlList =new ArrayList<>();
-        boolean isDeleteFile=false;
-        boolean isShowDelete=false;
-        boolean isSelect=false;
-        int requestCode=CANCEL_RESULT_LOAD_IMAGE;
-        String title="查看图片";
+        int position = 0;
+        ArrayList<String> imageUrlList = new ArrayList<>();
+        boolean isDeleteFile = false;
+        boolean isShowDelete = false;
+        boolean isSelect = false;
+        int requestCode = CANCEL_RESULT_LOAD_IMAGE;
+        String title = "查看图片";
+
         public Builder(Activity context) {
             this.context = context;
         }
@@ -316,7 +318,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
             return this;
         }
 
-        public void start(){
+        public void start() {
             Intent intent = new Intent(context, ImageDetailsActivity.class);
             intent.putExtra(CURRENT_IMAGE_POSITION, position);
             if (imageUrlList != null) {
@@ -324,7 +326,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
             }
             intent.putExtra(IS_DELETE_FILE, isDeleteFile);
             intent.putExtra(IS_SHOW_PHOTO_FLAG, isShowDelete);
-            intent.putExtra(Config.TITLE_NAME,title);
+            intent.putExtra(Config.TITLE_NAME, title);
             intent.putExtra("select", isSelect);
             context.startActivityForResult(intent, requestCode);
         }

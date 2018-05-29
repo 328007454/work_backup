@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SpaceSortAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
 import com.cnksi.common.Config;
@@ -16,7 +15,6 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
-import com.cnksi.core.view.swipemenulist.SwipeMenuDragSortListView;
 
 import org.xutils.ex.DbException;
 
@@ -77,13 +75,13 @@ public class SpaceSortActivity extends TitleActivity {
             e.printStackTrace();
         }
         deviceCountMap = SpacingService.getInstance().groupBySpacingCount(currentBdzId, functionMode);
-        spaceAdapter = new SpaceSortAdapter(currentActivity, mData, deviceCountMap);
+        spaceAdapter = new SpaceSortAdapter(mActivity, mData, deviceCountMap);
         spaceAdapter.setClickListener((v, data, position) -> {
             if (data.isSubPlace()) {
-                DialogUtils.showSureTipsDialog(currentActivity, null, "是否恢复设备到原间隔？", new OnViewClickListener() {
+                DialogUtils.showSureTipsDialog(mActivity, null, "是否恢复设备到原间隔？", new OnViewClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CustomerDialog.showProgress(currentActivity, "恢复中...");
+                        CustomerDialog.showProgress(mActivity, "恢复中...");
                         ExecutorManager.executeTask(() -> {
                             final boolean rs = restore(data);
                             runOnUiThread(() -> {
@@ -105,14 +103,14 @@ public class SpaceSortActivity extends TitleActivity {
                 });
             } else {
                 currentPosition = position;
-                Intent intent = new Intent(currentActivity, SpaceSplitActivity.class);
+                Intent intent = new Intent(mActivity, SpaceSplitActivity.class);
                 intent.putExtra("space", data);
                 intent.putExtra("mode", functionMode);
                 SpaceSortActivity.this.startActivityForResult(intent, LOAD_DATA);
             }
         });
         spaceAdapter.setSortListener((v, data, position) -> {
-            Intent intent = new Intent(currentActivity, DeviceSortActivity.class);
+            Intent intent = new Intent(mActivity, DeviceSortActivity.class);
             intent.putExtra("space", data);
             intent.putExtra(Config.CURRENT_FUNCTION_MODEL, functionMode);
             startActivity(intent);

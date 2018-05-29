@@ -19,15 +19,13 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityCopy2Binding;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
 import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DeviceService;
@@ -57,7 +55,7 @@ import static com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity.UPDATE_D
 public class CopyValueActivity2 extends BaseActivity implements KeyBordListener {
 
     public final int LOAD_COPY_FINSIH = 0x10;
-    protected int currentKeyBoardState = KeyBoardUtil.KEYBORAD_HIDE;
+    protected int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
     LocationUtil.LocationHelper locationHelper;
     private List<TreeNode> data;
 
@@ -79,7 +77,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_copy2);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_copy2);
 
         initLocation();
         initialUI();
@@ -93,12 +91,12 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         getIntentValue();
         creatDefectDialog();
         data = new ArrayList<>();
-        copyViewUtil = new CopyHelper(currentActivity, currentReportId, currentBdzId, currentInspectionType);
+        copyViewUtil = new CopyHelper(mActivity, currentReportId, currentBdzId, currentInspectionType);
         copyViewUtil.setKeyBordListener(this);
         // 抄录项长按弹出看不清输入对话框
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
             copyDialogBinding = XsActivityCopyDialogBinding.inflate(CopyValueActivity2.this.getLayoutInflater());
-            dialog = DialogUtils.createDialog(currentActivity, copyDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialog = DialogUtils.createDialog(mActivity, copyDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             copyDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             // holder.etInput.setText("看不清");
 //            holder.remark = holder.etInput.getText().toString();
@@ -111,7 +109,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         copyViewUtil.setItemClickListener((v, item, position) -> {
             // 显示历史曲线
             CopyValueActivity2.this.hideKeyBord();
-            ShowCopyHistroyDialogUtils.showHistory(currentActivity, item);
+            ShowCopyHistroyDialogUtils.showHistory(mActivity, item);
         });
 
         DbModel device = DeviceService.getInstance().findDeviceById(currentDeviceId);
@@ -123,7 +121,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
             if (!Device.hasGPSInfo(device)) {
                 ToastUtils.showMessage( "设备没有定位");
             } else {
-                if (GPSUtils.isOPen(currentActivity)) {
+                if (GPSUtils.isOPen(mActivity)) {
                     locationHelper.start();
                 } else {
                     ToastUtils.showMessage( "请开启GPS定位");
@@ -170,7 +168,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         }
         result.remark = TextUtils.isEmpty(etInput.getText().toString()) ? "" : (TextUtils.isEmpty(result.remark) ? etInput.getText().toString() + "," : etInput.getText().toString());
         dialog.dismiss();
-        copyViewUtil.createCopyView(currentActivity, data, binding.copyContainer);
+        copyViewUtil.createCopyView(mActivity, data, binding.copyContainer);
     }
 
     private void initialData() {
@@ -185,7 +183,6 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     @Override
     protected void onResume() {
         super.onResume();
-        setWindowOverLayPermission();
     }
 
     @Override
@@ -233,7 +230,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
             onViewFocusChange(editTextList.get(editFocusPosition), copyItemList.get(editFocusPosition), null, false, "抄录" + description, editTextList);
         }
         onBackPressed();
-        KeyBoardUtils.closeKeybord(currentActivity);
+        KeyBoardUtils.closeKeybord(mActivity);
     }
 
 
@@ -253,10 +250,12 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
                         if (currentKeyBoardState != state) {
                             currentKeyBoardState = state;
                             switch (state) {
-                                case KeyBoardUtil.KEYBORAD_HIDE: // 键盘隐藏
+                                // 键盘隐藏
+                                case CopyKeyBoardUtil.KEYBORAD_HIDE:
                                     binding.llKeyboardHelpLayout.setVisibility(View.GONE);
                                     break;
-                                case KeyBoardUtil.KEYBORAD_SHOW: // 键盘显示
+                                // 键盘显示
+                                case CopyKeyBoardUtil.KEYBORAD_SHOW:
                                     binding.llKeyboardHelpLayout.setVisibility(View.VISIBLE);
                                     break;
                                 default:
@@ -290,7 +289,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
 
     @Override
     public void hideKeyBord() {
-        if (null != mKeyBoardUtil && currentKeyBoardState == KeyBoardUtil.KEYBORAD_SHOW) {
+        if (null != mKeyBoardUtil && currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
             mKeyBoardUtil.hideKeyboard();
             mKeyBoardUtil = null;
         }
@@ -316,9 +315,9 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     }
 
     public void creatDefectDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 7 / 9;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
         tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-        defectDialog = DialogUtils.createDialog(currentActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        defectDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");
         tipsBinding.btnSure.setText("是");
@@ -326,7 +325,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         tipsBinding.btnSure.setOnClickListener(v -> {
             hideKeyBord();
             defectDialog.dismiss();
-            Intent intent = new Intent(currentActivity, AddNewDefectActivity.class);
+            Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
             setIntentValue(intent);
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });

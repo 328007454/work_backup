@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                         android:id="@+id/jzl_title_container"
-                                         android:layout_width="match_parent"
-                                         android:layout_height="wrap_content"
-                                         android:background="@color/special_tips_background_color"
-                                         android:orientation="vertical">
+    <com.zhy.autolayout.AutoLinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/jzl_title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/special_tips_background_color"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/jzl_title"

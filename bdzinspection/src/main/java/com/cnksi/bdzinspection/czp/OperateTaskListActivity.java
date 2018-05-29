@@ -55,7 +55,7 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
       
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_task_list);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_operate_task_list);
         String id = getIntent().getStringExtra("task_id");
         if (!TextUtils.isEmpty(id)) {
             try {
@@ -96,7 +96,7 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
 
     private void searchTitleArray() {
         ExecutorManager.executeTask(() -> {
-            List<String> titleList = OperateTicketService.getInstance().getTaskCount(currentActivity);
+            List<String> titleList = OperateTicketService.getInstance().getTaskCount(mActivity);
             mHandler.sendMessage(mHandler.obtainMessage(LOAD_DATA, titleList));
         });
 
@@ -133,7 +133,7 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
     private void initOnClick() {
         binding.includeTitle.ibtnCancel.setOnClickListener(view -> OperateTaskListActivity.this.finish());
         binding.includeTitle.tvBatteryTestStep.setOnClickListener(view -> {
-            Intent intent = new Intent(currentActivity, DownloadOperationTickActivity.class);
+            Intent intent = new Intent(mActivity, DownloadOperationTickActivity.class);
             OperateTaskListActivity.this.startActivityForResult(intent, DOWNLOAD_OPERATION_CODE);
         });
 
@@ -180,17 +180,17 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
     public void startOperateTask(DbModel item) {
         if (OperateTaskStatus.wwc.name().equalsIgnoreCase(item.getString(OperateTick.STATUS)) || OperateTaskStatus.yzt.name().equalsIgnoreCase(item.getString(OperateTick.STATUS))) {
             // 已暂停和未完成 状态跳转到任务详情界面
-            Intent intent = new Intent(currentActivity, OperateTaskDetailsActivity.class);
+            Intent intent = new Intent(mActivity, OperateTaskDetailsActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, item.getString(OperateTick.ID));
             startActivity(intent);
         } else if (OperateTaskStatus.dsh.name().equalsIgnoreCase(item.getString(OperateTick.STATUS))) {
             // 跳转到待审核界面
-            Intent intent = new Intent(currentActivity, OperateTaskCheckedActivity.class);
+            Intent intent = new Intent(mActivity, OperateTaskCheckedActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, item.getString(OperateTick.ID));
             startActivityForResult(intent, START_OPERATE_CODE);
         } else if (OperateTaskStatus.ywc.name().equalsIgnoreCase(item.getString(OperateTick.STATUS))) {
             // 跳转到待审核界面
-            Intent intent = new Intent(currentActivity, OperateTicketReportActivity.class);
+            Intent intent = new Intent(mActivity, OperateTicketReportActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, item.getString(OperateTick.ID));
             intent.putExtra(Config.IS_FROM_BATTERY, false);
             startActivity(intent);

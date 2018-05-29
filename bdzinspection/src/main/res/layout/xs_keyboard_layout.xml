@@ -1,63 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <layout>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_keyboard_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:visibility="gone"
-    android:orientation="vertical" >
+<layout>
 
-    <android.inputmethodservice.KeyboardView
-        android:id="@+id/keyboard_view"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rl_keyboard_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/xs_keyboard_background_color"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:keyBackground="@drawable/xs_keyboard_key_button_selector"
-        android:keyTextColor="@android:color/white"
-        android:paddingBottom="@dimen/xs_keyboard_padding_top"
-        android:paddingTop="@dimen/xs_keyboard_padding_top"
-        android:visibility="visible" />
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-    <LinearLayout
-        android:id="@+id/rl_seekbar_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/keyboard_view"
-        android:background="@drawable/xs_seek_bar_background"
-        android:paddingLeft="@dimen/xs_global_margin_top"
-        android:paddingRight="@dimen/xs_global_margin_top"
-        android:visibility="gone" >
-
-        <TextView
-            android:id="@+id/tv_min_value"
-            android:layout_width="wrap_content"
+        <android.inputmethodservice.KeyboardView
+            android:id="@+id/keyboard_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="bottom"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/xs_min_max_value_text_size" />
+            android:layout_alignParentBottom="true"
+            android:background="@color/xs_keyboard_background_color"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:keyBackground="@drawable/xs_keyboard_key_button_selector"
+            android:keyTextColor="@android:color/white"
+            android:paddingBottom="@dimen/xs_keyboard_padding_top"
+            android:paddingTop="@dimen/xs_keyboard_padding_top"
+            android:visibility="visible"/>
 
-        <com.cnksi.bdzinspection.view.NumberSeekBar
-            android:id="@+id/number_seekbar"
-            style="@style/Widget.SeekBar.Normal"
-            android:layout_width="0dp"
-            android:layout_marginBottom="@dimen/xs_drawable_padding"
+        <LinearLayout
+            android:id="@+id/rl_seekbar_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_above="@id/keyboard_view"
+            android:background="@drawable/xs_seek_bar_background"
+            android:paddingLeft="@dimen/xs_global_margin_top"
+            android:paddingRight="@dimen/xs_global_margin_top"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/tv_max_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="bottom"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/xs_min_max_value_text_size" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_min_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_min_max_value_text_size"/>
 
-</RelativeLayout>
-    </layout>
+            <com.cnksi.bdzinspection.view.NumberSeekBar
+                android:id="@+id/number_seekbar"
+                style="@style/Widget.SeekBar.Normal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/xs_drawable_padding"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_max_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_min_max_value_text_size"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

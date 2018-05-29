@@ -2,7 +2,6 @@ package com.cnksi.bdzinspection.ywyth;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,11 +10,9 @@ import android.text.InputType;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -30,9 +27,11 @@ import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.bdzinspection.model.BatteryReport;
 import com.cnksi.bdzinspection.utils.DefectUtils;
+import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil;
-import com.cnksi.bdzinspection.utils.KeyBoardUtil.OnKeyBoardStateChangeListener;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
+import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.DefectRecordService;
@@ -108,7 +107,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_yw_battery);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_yw_battery);
         initialUI();
         initialData();
         initOnClick();
@@ -121,8 +120,8 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         TTSUtils.getInstance().startSpeaking(getString(R.string.xs_speak_content_format_str, getString(R.string.xs_yw_battery_title)));
         binding.includeTitle.tvTitle.setText(R.string.xs_yw_battery_title);
         String _t = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
-        binding.time.append(StringUtils.changePartTextColor(currentActivity, _t, R.color.xs_green_color, 0, _t.length()));
-        binding.clr.append(StringUtils.changePartTextColor(currentActivity, getUsers().username, R.color.xs_green_color, 0, getUsers().username.length()));
+        binding.time.append(StringUtils.changePartTextColor(mActivity, _t, R.color.xs_green_color, 0, _t.length()));
+        binding.clr.append(StringUtils.changePartTextColor(mActivity, getUsers().username, R.color.xs_green_color, 0, getUsers().username.length()));
     }
 
     private void initialData() {
@@ -188,7 +187,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         switch (msg.what) {
             case LOAD_DATA:
                 if (mBatteryAdapter == null) {
-                    mBatteryAdapter = new BatteryDetailsAdapter(currentActivity, mBatteryDetailsList);
+                    mBatteryAdapter = new BatteryDetailsAdapter(mActivity, mBatteryDetailsList);
                     mBatteryAdapter.setNeedResistance(true);
                     binding.gvContainer.setAdapter(mBatteryAdapter);
                 } else {
@@ -205,6 +204,32 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         }
     }
 
+    private Users one, two;
+
+    public Users getUsers() {
+        if (one != null) {
+            return one;
+        }
+        if (two != null) {
+            return two;
+        } else {
+            String[] account = PreferencesUtils.get(Users.ACCOUNT, "").split(Config.COMMA_SEPARATOR);
+            for (int i = 0; i < account.length; i++) {
+                Users user = null;
+                if (!TextUtils.isEmpty(account[i])) {
+                    {
+                        user = UserService.getInstance().findUserByAccount(account[i]);
+                    }
+                }
+                if (one != null) {
+                    two = user;
+                } else {
+                    one = user;
+                }
+            }
+        }
+        return one;
+    }
 
     public void initOnClick() {
         binding.includeTitle.ibtnCancel.setOnClickListener(view -> YWBatteryActivity.this.onBackPressed());
@@ -229,7 +254,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     private void showBatteryDialog(BatteryDetails mBatteryDetails) {
         if (mBatteryDialog == null) {
             dialogBinding = XsBatteryInputValueDialogBinding.inflate(getLayoutInflater());
-            mBatteryDialog = DialogUtils.createDialog(currentActivity, dialogBinding.getRoot(), ScreenUtils.getScreenWidth(currentActivity) * 9 / 10, LinearLayout.LayoutParams.WRAP_CONTENT);
+            mBatteryDialog = DialogUtils.createDialog(mActivity, dialogBinding.getRoot(), ScreenUtils.getScreenWidth(mActivity) * 9 / 10, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
         dialogBinding.tvDialogTitle.setText(mBatteryDetails.battery_number);
         dialogBinding.unit.setText(R.string.xs_resistance_munit_str);
@@ -276,7 +301,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
 
     public void jumpToDefect(BatteryDetails mBatteryDetails) {
         saveBatteryCopyValue(dialogBinding.etVoltage, dialogBinding.etResistance, mBatteryDetails);
-        Intent intent = new Intent(currentActivity, DefectControlActivity.class);
+        Intent intent = new Intent(mActivity, DefectControlActivity.class);
         intent.putExtra(Config.IS_FROM_BATTERY, true);
         intent.putExtra(Config.CURRENT_DEVICE_ID, mBatteryDetails.battery_number);
         intent.putExtra(Config.CURRENT_DEVICE_PART_NAME, mBatteryDetails.battery_number);
@@ -288,10 +313,11 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
      * 显示自定义键盘
      */
     private void showCustomerKeyBoard(EditText mEditText, String smallValue, String bigValue) {
-        if (taskStatus) {// 如果任务已完成 直接return；
+        if (taskStatus) {
+            // 如果任务已完成 直接return；
             return;
         }
-        if (mKeyBoardContainerView == null) {
+        if (mKeyBoardUtil == null) {
             createKeyBoardView(binding.llRootContainer);
             mKeyBoardUtil.setOnValueChangeListener(this);
         }
@@ -299,7 +325,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         mKeyBoardUtil.showKeyboard();
         showCursor(mEditText);
     }
-    
+
 
     /**
      * 保存电池的抄录数据
@@ -311,8 +337,8 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         String resistance = mEtResistance.getText().toString().trim();
         lastVoltage = mBatteryDetails.voltage = voltage;
         lastResistance = mBatteryDetails.resistance = resistance;
-        PreferencesUtils.put( "V" + mBatteryDetails.battery_number, lastVoltage);
-        PreferencesUtils.put( "R" + mBatteryDetails.battery_number, lastResistance);
+        PreferencesUtils.put("V" + mBatteryDetails.battery_number, lastVoltage);
+        PreferencesUtils.put("R" + mBatteryDetails.battery_number, lastResistance);
         // 判断电池数据是否抄录
         if (isCopyInternalResistance) {
             if (!TextUtils.isEmpty(mBatteryDetails.resistance) && !TextUtils.isEmpty(mBatteryDetails.voltage)) {
@@ -320,9 +346,9 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             } else {
                 mBatteryDetails.hasCopyed = false;
                 if (TextUtils.isEmpty(mBatteryDetails.resistance)) {
-                    ToastUtils.showMessage( R.string.xs_please_copy_resistance_data_str);
+                    ToastUtils.showMessage(R.string.xs_please_copy_resistance_data_str);
                 } else {
-                    ToastUtils.showMessage( R.string.xs_please_copy_voltage_data_str);
+                    ToastUtils.showMessage(R.string.xs_please_copy_voltage_data_str);
                 }
                 return;
             }
@@ -331,7 +357,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
                 mBatteryDetails.hasCopyed = true;
             } else {
                 mBatteryDetails.hasCopyed = false;
-                ToastUtils.showMessage( R.string.xs_please_copy_voltage_data_str);
+                ToastUtils.showMessage(R.string.xs_please_copy_voltage_data_str);
                 return;
             }
         }
@@ -342,12 +368,12 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             }
             mBatteryDetails.reportid = currentReportId;
             BatteryDetailsService.getInstance().saveOrUpdate(mBatteryDetails);
-            PreferencesUtils.put( Config.CURRENT_REPORT_ID + currentReportId, true);
+            PreferencesUtils.put(Config.CURRENT_REPORT_ID + currentReportId, true);
         } catch (DbException e1) {
             e1.printStackTrace();
         }
         mBatteryAdapter.notifyDataSetChanged();
-        KeyBoardUtils.closeKeybord(mEtVoltage, currentActivity);
+        KeyBoardUtils.closeKeybord(mEtVoltage, mActivity);
         // 如果电压或者电阻超过标准 则提示保存缺陷
         try {
             boolean isValueNormal = true;
@@ -375,7 +401,7 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
             }
             if (!isValueNormal) {
                 // 保存有缺陷的电压到SharePreference
-                PreferencesUtils.put( mBatteryDetails.battery_number, voltage);
+                PreferencesUtils.put(mBatteryDetails.battery_number, voltage);
                 showBatteryTipsDialog(defectLevel, defectContent);
                 TTSUtils.getInstance().startSpeaking(getString(R.string.xs_found_defect_str));
                 isShowTipsDialog = true;
@@ -402,22 +428,23 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
      * 抄录数据后提示是否记录缺陷信息
      */
     private XsDialogTipsBinding tipsBinding;
+
     public void showBatteryTipsDialog(String defectLevel, String defectContent) {
         if (!isShowTipsDialog) {
             if (tipsDialog == null) {
-                int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-                int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) * 3 / 10;// LinearLayout.LayoutParams.WRAP_CONTENT
+                int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+                int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 3 / 10;// LinearLayout.LayoutParams.WRAP_CONTENT
                 tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
-                tipsDialog = DialogUtils.createDialog(currentActivity,tipsBinding.getRoot(),dialogWidth,dialogHeight);
+                tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
             }
             tipsBinding.tvDialogTitle.setText(R.string.xs_dialog_tips_str);
-           tipsBinding.tvDialogContent.setText(getString(R.string.xs_dialog_tips_record_format_defect_str, defectContent, defectLevel));
-           tipsBinding.btnSure.setText("是");
-           tipsBinding.btnCancel.setText("否");
+            tipsBinding.tvDialogContent.setText(getString(R.string.xs_dialog_tips_record_format_defect_str, defectContent, defectLevel));
+            tipsBinding.btnSure.setText("是");
+            tipsBinding.btnCancel.setText("否");
             tipsDialog.show();
             tipsDialog.setOnDismissListener(dialog -> isShowTipsDialog = false);
         }
-        
+
         tipsBinding.btnCancel.setOnClickListener(view -> {
             YWBatteryActivity.this.saveDefect(defectLevel, defectContent);
 
@@ -427,7 +454,6 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         tipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
     }
 
-  
 
     /**
      * 保存电池的缺陷信息
@@ -505,11 +531,11 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
         Window mWindow = mBatteryDialog.getWindow();
         WindowManager.LayoutParams lp = mWindow.getAttributes();
         switch (state) {
-            case KeyBoardUtil.KEYBORAD_HIDE:
+            case CopyKeyBoardUtil.KEYBORAD_HIDE:
                 lp.gravity = Gravity.CENTER;
                 lp.y = 0;
                 break;
-            case KeyBoardUtil.KEYBORAD_SHOW:
+            case CopyKeyBoardUtil.KEYBORAD_SHOW:
                 lp.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
                 lp.y = 400;
                 break;

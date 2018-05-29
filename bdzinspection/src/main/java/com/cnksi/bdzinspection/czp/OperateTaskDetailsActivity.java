@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
@@ -42,7 +41,7 @@ public class OperateTaskDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_operate_task_details);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_operate_task_details);
 
         initialUI();
         initialData();
@@ -117,7 +116,7 @@ public class OperateTaskDetailsActivity extends BaseActivity {
     }
 
     private void showTime() {
-        CustomerDialog.showDatePickerDialog(currentActivity, true, (result, position) -> binding.tvFlTime.setText(result));
+        CustomerDialog.showDatePickerDialog(mActivity, true, (result, position) -> binding.tvFlTime.setText(result));
     }
 
     /**
@@ -170,7 +169,7 @@ public class OperateTaskDetailsActivity extends BaseActivity {
         }
         if (isSuccess) {
             // TODO:跳转到操作票工作界面
-            Intent intent = new Intent(currentActivity, OperateWorkActivity.class);
+            Intent intent = new Intent(mActivity, OperateWorkActivity.class);
             intent.putExtra(Config.CURRENT_TASK_ID, currentOperateId);
             startActivity(intent);
         }
@@ -179,7 +178,7 @@ public class OperateTaskDetailsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (isFromCheckedActivity) {
-            Intent intent = new Intent(currentActivity, OperateTaskListActivity.class);
+            Intent intent = new Intent(mActivity, OperateTaskListActivity.class);
             intent.putExtra(Config.IS_FROM_BATTERY, true);
             startActivity(intent);
         }

@@ -10,8 +10,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.telephony.SmsManager;
-import android.view.View;
-import android.widget.AdapterView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
@@ -43,7 +41,7 @@ public class ReportToLeaderActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_report_to_leader);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_report_to_leader);
         initialUI();
         initOnClick();
     }
@@ -71,7 +69,7 @@ public class ReportToLeaderActivity extends BaseActivity {
             case LOAD_DATA:
 
                 if (mReportLeaderAdapter == null) {
-                    mReportLeaderAdapter = new ReportLeaderAdapter(currentActivity, dataList);
+                    mReportLeaderAdapter = new ReportLeaderAdapter(mActivity, dataList);
                     binding.lvContainer.setAdapter(mReportLeaderAdapter);
                 } else {
                     mReportLeaderAdapter.setList(dataList);
@@ -90,7 +88,7 @@ public class ReportToLeaderActivity extends BaseActivity {
         binding.btnCancel.setOnClickListener(view -> ReportToLeaderActivity.this.finish());
 
         binding.btnReport.setOnClickListener(view -> {
-            PlaySound.getIntance(currentActivity).play(R.raw.send);
+            PlaySound.getIntance(mActivity).play(R.raw.send);
             List<String> phoneNumberList = new ArrayList<String>();
             phoneNumberList.add("13981308155");
             ReportToLeaderActivity.this.sendMessage(phoneNumberList, binding.etReportContent.getText().toString().trim());
@@ -113,8 +111,8 @@ public class ReportToLeaderActivity extends BaseActivity {
      */
     private void sendMessage(List<String> phoneNumList, String msgContent) {
         Intent sentIntent = new Intent("SENT_SMS_ACTION");
-        PendingIntent sentPI = PendingIntent.getBroadcast(currentActivity, 0, sentIntent, 0);
-        currentActivity.registerReceiver(new BroadcastReceiver() {
+        PendingIntent sentPI = PendingIntent.getBroadcast(mActivity, 0, sentIntent, 0);
+        mActivity.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context _context, Intent _intent) {
                 switch (getResultCode()) {
@@ -135,8 +133,8 @@ public class ReportToLeaderActivity extends BaseActivity {
 
         // create the deilverIntent parameter
         Intent deliverIntent = new Intent("DELIVERED_SMS_ACTION");
-        PendingIntent deliverPI = PendingIntent.getBroadcast(currentActivity, 0, deliverIntent, 0);
-        currentActivity.registerReceiver(new BroadcastReceiver() {
+        PendingIntent deliverPI = PendingIntent.getBroadcast(mActivity, 0, deliverIntent, 0);
+        mActivity.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context _context, Intent _intent) {
                 ToastUtils.showMessage("收信人已经成功接收");

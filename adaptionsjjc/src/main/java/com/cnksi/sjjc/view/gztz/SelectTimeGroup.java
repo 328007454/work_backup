@@ -6,13 +6,12 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.view.UnderLineLinearLayout;
+import com.cnksi.common.view.UnderLineLinearLayout;
 
 /**
  * @version 1.0

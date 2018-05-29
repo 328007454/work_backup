@@ -77,10 +77,10 @@ public class SpaceSplitActivity extends TitleActivity {
                 ToastUtils.showMessage("新间隔名称与原间隔名称一致，建议修改便于区分！");
             }
             CharSequence tips = StringUtils.formatPartTextColor("您是否要将选中的%s个设备拆分到新间隔 %s ?", Color.RED, selectDevice.size() + "", newName);
-            DialogUtils.showSureTipsDialog(currentActivity, null, tips, new OnViewClickListener() {
+            DialogUtils.showSureTipsDialog(mActivity, null, tips, new OnViewClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CustomerDialog.showProgress(currentActivity, "保存数据中...");
+                    CustomerDialog.showProgress(mActivity, "保存数据中...");
                     ExecutorManager.executeTask(() -> {
                         final boolean rs = saveData(new ArrayList<>(selectDevice));
                         runOnUiThread(() -> {
@@ -129,7 +129,7 @@ public class SpaceSplitActivity extends TitleActivity {
         }
         adapter = new SpaceSplitAdapter(binding.rcv, devices);
         adapter.setCopyDeviceIds(copyDeviceId);
-        binding.rcv.setLayoutManager(new GridLayoutManager(currentActivity, 2));
+        binding.rcv.setLayoutManager(new GridLayoutManager(mActivity, 2));
         binding.rcv.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
         binding.rcv.setAdapter(adapter);
     }

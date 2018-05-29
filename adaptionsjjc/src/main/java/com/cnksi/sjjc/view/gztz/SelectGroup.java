@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
+import com.cnksi.common.view.UnderLineLinearLayout;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.BaseAdapter;
@@ -34,7 +34,7 @@ import java.util.List;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class SelectGroup extends com.cnksi.sjjc.view.UnderLineLinearLayout {
+public class SelectGroup extends UnderLineLinearLayout {
 
     private TextView tvName, tvValue;
     private KeyValue keyValue;

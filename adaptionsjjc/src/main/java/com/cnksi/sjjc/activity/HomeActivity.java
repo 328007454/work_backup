@@ -139,7 +139,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 HomeActivity.this.runOnUiThread(() -> {
                     HomeActivity.this.initBDZDialog();
                     if (bdzAdapter == null) {
-                        bdzAdapter = new BdzAdapter(_this, bdzList, R.layout.dialog_content_child_item);
+                        bdzAdapter = new BdzAdapter(mActivity, bdzList, R.layout.dialog_content_child_item);
                         bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
                     } else {
                         bdzAdapter.setList(bdzList);
@@ -264,27 +264,27 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             //跳转到设备巡视或者设备维护界面
             case R.id.device_xunshi:
             case R.id.device_weihu:
-                ActivityUtil.startDeviceTourActivity(_this, view.getId());
+                ActivityUtil.startDeviceTourActivity(mActivity, view.getId());
                 break;
             //跳转到操作篇
             case R.id.device_operate:
-                ActivityUtil.startOperateActivity(_this);
+                ActivityUtil.startOperateActivity(mActivity);
                 break;
             //跳转到安全工器具
             case R.id.safety_tool:
-                ActivityUtil.startSafetyToolActivity(_this);
+                ActivityUtil.startSafetyToolActivity(mActivity);
                 break;
             //跳转到设备缺陷
             case R.id.device_defect:
-                ActivityUtil.startDefectControlActivity(_this);
+                ActivityUtil.startDefectControlActivity(mActivity);
                 break;
             //跳转到数据抄录
             case R.id.device_copy:
-                ActivityUtil.startShuJuJianCe(_this);
+                ActivityUtil.startShuJuJianCe(mActivity);
                 break;
             //教育培训五通一措
             case R.id.device_tjwt:
-                ActivityUtil.startWTYCActiviy(_this);
+                ActivityUtil.startWTYCActiviy(mActivity);
                 break;
             //跳转到数据同步
             case R.id.device_sycn:
@@ -319,7 +319,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 defectAdapter.setList(mCrisisMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCrisisMap.get(currentSelectBdzId));
                 break;
             case R.id.txt_ticket_launcher:
-                ActivityUtil.startTicketDateModel(_this);
+                ActivityUtil.startTicketDateModel(mActivity);
                 break;
             default:
                 break;
@@ -377,9 +377,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     currentSelectBdzId = bdzList.get(0).bdzid;
                 }
             }
-            defectAdapter = new DefectAdapter(_this, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
+            defectAdapter = new DefectAdapter(mActivity, mCommonMap.get(currentSelectBdzId) == null ? new ArrayList<DefectRecord>() : mCommonMap.get(currentSelectBdzId), R.layout.exits_defect_layout);
             defectAdapter.setItemClickListener(this);
-            homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(_this, LinearLayout.HORIZONTAL, false));
+            homePageBinding.recyDefect.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayout.HORIZONTAL, false));
             homePageBinding.recyDefect.setAdapter(defectAdapter);
         } else {
             if (TextUtils.isEmpty(currentSelectBdzId) && !bdzList.isEmpty()) {
@@ -395,7 +395,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         DefectRecord defectRecord = (DefectRecord) o;
         if (!TextUtils.isEmpty(defectRecord.pics)) {
             ArrayList<String> listPicDis = StringUtils.stringToList(defectRecord.pics, ",");
-            showImageDetails(_this, StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
+            showImageDetails(mActivity, StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
         }
     }
 

@@ -3,8 +3,6 @@ package com.cnksi.bdzinspection.activity;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -126,7 +124,7 @@ public class InspectionReportActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_inspection_report);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_inspection_report);
         initialUI();
         initialData();
         initOnClick();
@@ -141,7 +139,7 @@ public class InspectionReportActivity extends BaseActivity {
         }
         binding.tvTitle.setText(getString(R.string.xs_report_title_format_str, currentBdzName + currentInspectionTypeName));
         binding.tvDashLine.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        PlaySound.getIntance(currentActivity).play(R.raw.printing);
+        PlaySound.getIntance(mActivity).play(R.raw.printing);
         mHandler.sendEmptyMessageDelayed(VIBRATOR, 500);
         mHandler.sendEmptyMessageDelayed(ANIMATION, 2000);
         binding.ibtnExit.setVisibility(View.GONE);
@@ -238,7 +236,7 @@ public class InspectionReportActivity extends BaseActivity {
         float scale = DisplayUtils.getInstance().getDensity();
         if (mReportSignnameListCzr != null) {
             for (ReportSignname bean : mReportSignnameListCzr) {
-                ImageView v = new ImageView(currentActivity);
+                ImageView v = new ImageView(mActivity);
                 v.setLayoutParams(new LayoutParams((int) (scale * 90), (int) (scale * 40)));
                 v.setPadding((int) (scale * 5), (int) (scale * 5), (int) (scale * 5), (int) (scale * 5));
                 v.setScaleType(ScaleType.FIT_CENTER);
@@ -251,7 +249,7 @@ public class InspectionReportActivity extends BaseActivity {
         }
         if (mReportSignnameListFzr != null) {
             for (ReportSignname bean : mReportSignnameListFzr) {
-                ImageView v = new ImageView(currentActivity);
+                ImageView v = new ImageView(mActivity);
                 v.setLayoutParams(new LayoutParams((int) (scale * 90), (int) (scale * 40)));
                 v.setPadding((int) (scale * 5), (int) (scale * 5), (int) (scale * 5), (int) (scale * 5));
                 v.setScaleType(ScaleType.FIT_CENTER);
@@ -287,17 +285,17 @@ public class InspectionReportActivity extends BaseActivity {
 
     private void showXunJianLineDialog() {
         if (!spacingList.isEmpty()) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 4 / 5;
-            int dialogHeight = ScreenUtils.getScreenHeight(currentActivity) * 3 / 5;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 4 / 5;
+            int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 3 / 5;
             if (roadMapAdapter == null) {
-                roadMapAdapter = new RoadMapAdapter(currentActivity, spacingList);
+                roadMapAdapter = new RoadMapAdapter(mActivity, spacingList);
             } else {
                 roadMapAdapter.setList(spacingList);
             }
             roadMapAdapter.setSpacingRecord(placedSpacing);
             roadMapAdapter.setIsReport(true);
             dialogBinding = XsContentListDialogBinding.inflate(getLayoutInflater());
-            mDefectDialog = DialogUtils.createDialog(currentActivity, dialogBinding.getRoot(), dialogWidth, dialogHeight);
+            mDefectDialog = DialogUtils.createDialog(mActivity, dialogBinding.getRoot(), dialogWidth, dialogHeight);
             dialogBinding.lvContainer.setAdapter(roadMapAdapter);
             dialogBinding.tvDialogTitle.setText("巡检路线");
             mDefectDialog.show();
@@ -309,7 +307,7 @@ public class InspectionReportActivity extends BaseActivity {
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case ANIMATION:
-                PlaySound.getIntance(currentActivity).play(R.raw.print_out);
+                PlaySound.getIntance(mActivity).play(R.raw.print_out);
 //			translateAnimRun(binding.llReportContentContainer, 0.0f, binding.llReportContentContainer.getHeight() * 92 / 100);
                 LinearLayout.MarginLayoutParams marginLayoutParams = (LinearLayout.MarginLayoutParams) binding.llReportContentContainer.getLayoutParams();
                 translateAnimRun(binding.llReportContentContainer, 0.0f, Math.abs(marginLayoutParams.topMargin));
@@ -333,12 +331,12 @@ public class InspectionReportActivity extends BaseActivity {
                 } else {
                     if (!TextUtils.isEmpty(currentInspectionType)) {
                         result = getString(R.string.xs_inspection_status_format_str, "已完成");
-                        binding.tvInspectionResult.setText(StringUtils.changePartTextColor(currentActivity, result,
+                        binding.tvInspectionResult.setText(StringUtils.changePartTextColor(mActivity, result,
                                 R.color.xs_red_color, result.length() - status.length(), result.length()));
 //                        mTvContinueXunJian.setText("查看详情");
                     } else {
                         result = getString(R.string.xs_inspection_status_format_str, status);
-                        binding.tvInspectionResult.setText(StringUtils.changePartTextColor(currentActivity, result,
+                        binding.tvInspectionResult.setText(StringUtils.changePartTextColor(mActivity, result,
                                 R.color.xs_red_color, result.length() - status.length(), result.length()));
                     }
                 }
@@ -416,10 +414,10 @@ public class InspectionReportActivity extends BaseActivity {
     private XsHistoryDataDialogBinding dataDialogBinding;
 
     private void showPlaybackDialog() {
-        int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
+        int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         if (mPlayBackDialog == null) {
             dataDialogBinding = XsHistoryDataDialogBinding.inflate(getLayoutInflater());
-            mPlayBackDialog = DialogUtils.createDialog(currentActivity, dataDialogBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+            mPlayBackDialog = DialogUtils.createDialog(mActivity, dataDialogBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
         dataDialogBinding.tvDialogTitle.setText(R.string.xs_playback_str);
         dataDialogBinding.btnCancel.setText(R.string.xs_back_str);
@@ -438,17 +436,17 @@ public class InspectionReportActivity extends BaseActivity {
 
     private void showDefectDialog(List<DefectRecord> mDefectList, int dialogTitle) {
         if (mDefectList != null && !mDefectList.isEmpty()) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            int dialogHeight = mDefectList.size() > 5 ? ScreenUtils.getScreenHeight(currentActivity) / 2
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            int dialogHeight = mDefectList.size() > 5 ? ScreenUtils.getScreenHeight(mActivity) / 2
                     : LinearLayout.LayoutParams.WRAP_CONTENT;
             if (mHistoryDefectAdapter == null) {
-                mHistoryDefectAdapter = new HistoryDefectAdapter(currentActivity, mDefectList);
+                mHistoryDefectAdapter = new HistoryDefectAdapter(mActivity, mDefectList);
                 mHistoryDefectAdapter.setTrackHistory(true);
             } else {
                 mHistoryDefectAdapter.setList(mDefectList);
             }
             defectBinding = XsContentListDialogBinding.inflate(getLayoutInflater());
-            mDefectDialog = DialogUtils.createDialog(currentActivity, defectBinding.getRoot(), dialogWidth, dialogHeight);
+            mDefectDialog = DialogUtils.createDialog(mActivity, defectBinding.getRoot(), dialogWidth, dialogHeight);
             defectBinding.lvContainer.setAdapter(mHistoryDefectAdapter);
             defectBinding.tvDialogTitle.setText(dialogTitle);
             mDefectDialog.show();
@@ -487,7 +485,7 @@ public class InspectionReportActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
-        PlaySound.getIntance(currentActivity).stop();
+        PlaySound.getIntance(mActivity).stop();
         mHandler.removeCallbacks(null);
         super.onStop();
     }

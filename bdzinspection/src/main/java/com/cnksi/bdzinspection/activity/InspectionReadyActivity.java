@@ -295,9 +295,9 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentInspectionType);
             if (isParticularInspection()) {
                 // 大风 大雾 下雪 雷雨 高温 夜间 熄灯
-                intent.setClass(currentActivity, ParticularDeviceListActivity.class);
+                intent.setClass(mActivity, ParticularDeviceListActivity.class);
             } else {
-                intent.setClass(currentActivity, FullDeviceListActivity.class);
+                intent.setClass(mActivity, FullDeviceListActivity.class);
             }
             saveInspectionAlready();
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
@@ -422,7 +422,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         generateReport();
         setResult(RESULT_OK);
         this.finish();
-        currentActivity.overridePendingTransition(R.anim.xs_slide_in_right, R.anim.xs_slide_out_right);
+        mActivity.overridePendingTransition(R.anim.xs_slide_in_right, R.anim.xs_slide_out_right);
     }
 
     /**
@@ -459,6 +459,6 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
      */
     @Override
     public void onDefectItemClick(Intent intent, int requestCode) {
-        currentActivity.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+        mActivity.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
     }
 }

@@ -99,7 +99,7 @@ public class PreventAnimalActivity extends BaseActivity {
                 takePicPosition = position;
                 if (v.getId() == R.id.iv_take_pic) {
                     currentHole = (String) v.getTag();
-                    FunctionUtils.takePicture(mActivity, imgName = FunctionUtil.getCurrentImageName(_this), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
+                    FunctionUtils.takePicture(mActivity, imgName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
                 } else if (v.getId() == R.id.iv_show_pic) {
                     isWatchPics = true;
                     setResultImages();
@@ -150,16 +150,16 @@ public class PreventAnimalActivity extends BaseActivity {
     private void initOnClick() {
         binding.btnNext.setOnClickListener(view -> {
             PreventAnimalActivity.this.saveData();
-            Intent intent = new Intent(_this, PreventAnimalSecondActivity.class);
+            Intent intent = new Intent(mActivity, PreventAnimalSecondActivity.class);
             intent.putExtra("PreventionRecord", preventionRecord);
             PreventAnimalActivity.this.startActivity(intent);
         });
         mTitleBinding.tvRight.setOnClickListener(view -> {
-            Intent intent = new Intent(_this, XianCunHoleActivity.class);
+            Intent intent = new Intent(mActivity, XianCunHoleActivity.class);
             PreventAnimalActivity.this.startActivityForResult(intent, REFRESH_UI);
         });
         binding.tvFindHole.setOnClickListener(view -> {
-            Intent intent = new Intent(_this, DiscoverHoleActivity.class);
+            Intent intent = new Intent(mActivity, DiscoverHoleActivity.class);
             PreventAnimalActivity.this.startActivityForResult(intent, REFRESH_UI);
         });
     }
@@ -176,7 +176,7 @@ public class PreventAnimalActivity extends BaseActivity {
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                 }
 
-            } else if (requestCode == CANCEL_RESULT_LOAD_IMAGE) {//删除照片返回请求
+            } else if (requestCode == Config.CANCEL_RESULT_LOAD_IMAGE) {//删除照片返回请求
                 ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
                 ArrayList<String> allPicList = StringUtils.stringToList(allPics);
                 for (String imageUrl : cancleImagList) {

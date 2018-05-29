@@ -17,7 +17,7 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5"/>
 
-        <com.cnksi.sjjc.view.EditTextNoEmoj
+        <com.cnksi.common.view.EditTextNoEmoj
             android:id="@+id/et_hot_part_name"
             style="@style/NewHeatPointEditTextStyle"
             android:layout_width="0px"
@@ -29,7 +29,7 @@
             app:layout_constraintEnd_toStartOf="@id/center_guideline"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <com.cnksi.sjjc.view.EditTextNoEmoj
+        <com.cnksi.common.view.EditTextNoEmoj
             android:id="@+id/et_hot_part_temp"
             style="@style/NewHeatPointEditTextStyle"
             android:layout_width="0px"

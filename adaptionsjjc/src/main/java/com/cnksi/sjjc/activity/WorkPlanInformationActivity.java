@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 
+import com.cnksi.common.activity.LandSignNameActivity;
 import com.cnksi.core.utils.UriUtils;
 import com.cnksi.common.Config;
 import com.cnksi.sjjc.JSObject;
@@ -49,7 +50,7 @@ public class WorkPlanInformationActivity extends BaseActivity {
     public void initView() {
         mTitleBinding.tvTitle.setText("变电站（发电厂）第一种工作票");
         binding.webView.getSettings().setJavaScriptEnabled(true);
-        jsInterface = new JSObject(_this);
+        jsInterface = new JSObject(mActivity);
         // binding.webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         binding.webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         // binding.webView.getSettings().setLoadWithOverviewMode(true);
@@ -84,7 +85,7 @@ public class WorkPlanInformationActivity extends BaseActivity {
 //        public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
 //            mUploadMessage = uploadMsg;
 //
-//            Intent intent=new Intent(_this,SignNameActivity.class);
+//            Intent intent=new Intent(mActivity,SignNameActivity.class);
 //            imageName= FunctionUtils.getPrimarykey()+".jpg";
 //            intent.putExtra("name",imageName);
 //            // TODO Auto-generated method stub
@@ -99,7 +100,7 @@ public class WorkPlanInformationActivity extends BaseActivity {
 //                uploadMessage = null;
 //            }
 //            uploadMessage = filePathCallback;
-//            Intent intent=new Intent(_this,SignNameActivity.class);
+//            Intent intent=new Intent(mActivity,SignNameActivity.class);
 //            imageName=FunctionUtils.getPrimarykey()+".jpg";
 //            intent.putExtra("name",imageName);
 //            // TODO Auto-generated method stub
@@ -156,15 +157,12 @@ public class WorkPlanInformationActivity extends BaseActivity {
         @Override
         public void signName(String id) {
             jsId = id;
-            Intent intent = new Intent(_this, SignNameActivity.class);
             imageName = jsId + ".jpg";
             File file = new File(Config.WORKTICKIT_PIC + imageName);
             if (file.exists()) {
                 file.delete();
             }
-            intent.putExtra(Config.SIGN_FILENAME, Config.WORKTICKIT_PIC + imageName);
-            // TODO Auto-generated method stub
-            startActivityForResult(intent, 100);
+            LandSignNameActivity.with(mActivity).setRequestCode(100).setSignPath(Config.WORKTICKIT_PIC + imageName).start();
         }
 
         @Override

@@ -90,7 +90,7 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
     private void initOnClick() {
         binding.tvLookDetails.setOnClickListener(view -> {
             //查看详情
-            Intent intent1 = new Intent(_this, GetSendLetterActivity.class);
+            Intent intent1 = new Intent(mActivity, GetSendLetterActivity.class);
             GetSendLetterReportActivity.this.startActivity(intent1);
             GetSendLetterReportActivity.this.finish();
         });
@@ -153,7 +153,7 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
                         for (int i = 0; i < imageList.size(); i++) {
                             imgs.add(Config.RESULT_PICTURES_FOLDER + imageList.get(i));
                         }
-                        holder.getView(R.id.iv_exception_pic).setOnClickListener(view -> showImageDetails(_this, imgs));
+                        holder.getView(R.id.iv_exception_pic).setOnClickListener(view -> showImageDetails(mActivity, imgs));
                     }
                 }
             }
@@ -188,7 +188,7 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
 
         while (index >= 0) {
 //            getResources().getColor(R.color.red_unpressed_color)
-            ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(_this, R.color.red_unpressed_color));
+            ForegroundColorSpan redSpan = new ForegroundColorSpan(ContextCompat.getColor(mActivity, R.color.red_unpressed_color));
             builder.setSpan(redSpan, index, index + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             index = str.indexOf(filter, index + 2);
         }

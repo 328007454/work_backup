@@ -2,6 +2,7 @@ package com.cnksi.sync;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Handler;
 
 import com.cnksi.bdzinspection.BuildConfig;
@@ -12,8 +13,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Executor;
 
 /**
  * @author kkk on 2018/1/2.
@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 
 public class KSyncConfig {
     final static KSyncConfig instance = new KSyncConfig();
-    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    Executor executorService = AsyncTask.THREAD_POOL_EXECUTOR;
     private KSync ksync;
     Activity mActivity;
 

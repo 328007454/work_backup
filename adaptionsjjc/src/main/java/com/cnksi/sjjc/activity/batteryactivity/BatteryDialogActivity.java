@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.utils.StringUtilsExt;
@@ -24,7 +25,6 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.DrawCircleImageActivity;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.ActivityBatteryItemDialogBinding;
 import com.cnksi.sjjc.service.BatteryRecordService;
@@ -335,10 +335,8 @@ public class BatteryDialogActivity extends AppCompatActivity {
                     } else {
                         sb.append("---内阻异常");
                     }
-                    Intent intent = new Intent(this, DrawCircleImageActivity.class);
-                    intent.putExtra(Config.CURRENT_IMAGE_NAME, Config.RESULT_PICTURES_FOLDER + imageName);
-                    intent.putExtra(Config.PICTURE_CONTENT, sb.toString());
-                    startActivityForResult(intent, DRAW_IMAGE);
+                    DrawCircleImageActivity.with(this).setPath(Config.RESULT_PICTURES_FOLDER + imageName)
+                            .setTxtContent(sb.toString()).setRequestCode(DRAW_IMAGE).start();
                     break;
                 case DRAW_IMAGE://图片标记
                     showImageThumb();

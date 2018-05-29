@@ -98,23 +98,7 @@
         <attr name="pstsTextAllCaps" format="boolean" />
         <attr name="pstsIndicatorLeftRightPadding" format="dimension" />
     </declare-styleable>
-    <!-- 签名view -->
-    <declare-styleable name="XS_SignaturePad">
-        <attr name="penMinWidth" format="dimension" />
-        <attr name="penMaxWidth" format="dimension" />
-        <attr name="penColor" format="color" />
-        <attr name="velocityFilterWeight" format="float" />
-        <attr name="clearOnDoubleClick" format="boolean" />
-    </declare-styleable>
 
-
-    <declare-styleable name="XS_UnderLineLinearLayout">
-        <attr name="drawUnderLine" format="boolean" />
-        <attr name="marginLeft" format="dimension" />
-        <attr name="marginRight" format="dimension" />
-        <attr name="lineColor" format="color" />
-        <attr name="lineHeight" format="dimension" />
-    </declare-styleable>
     <declare-styleable name="XS_SwipeMenuLayout">
         <attr name="swipeEnable" format="boolean" />
         <attr name="ios" format="boolean" />

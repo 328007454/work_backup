@@ -15,7 +15,6 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyMaintenanceDeviceAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyAll3Binding;
 import com.cnksi.bdzinspection.databinding.XsMaintenanceCopyItemBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
@@ -72,7 +71,7 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_copy_all3);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_copy_all3);
         setDeviceListDisplay();
         initialUI();
         initialData();
@@ -298,6 +297,6 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
         if (null != XsMaintenanceCopyItemBinding) {
             XsMaintenanceCopyItemBinding.etCopyValues.clearFocus();
         }
-        KeyBoardUtils.closeKeybord(currentActivity);
+        KeyBoardUtils.closeKeybord(mActivity);
     }
 }

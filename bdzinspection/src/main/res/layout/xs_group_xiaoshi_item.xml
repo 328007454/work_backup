@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <layout>
-<com.cnksi.bdzinspection.view.UnderLineLinearLayout
+<com.cnksi.common.view.UnderLineLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_container"
@@ -61,4 +61,4 @@
         android:layout_gravity="center_vertical"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/xs_ic_open"/>
-</com.cnksi.bdzinspection.view.UnderLineLinearLayout></layout>
+</com.cnksi.common.view.UnderLineLinearLayout></layout>

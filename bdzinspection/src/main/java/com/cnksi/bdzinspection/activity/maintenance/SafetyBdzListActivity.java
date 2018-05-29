@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.BaseActivity;
@@ -46,7 +45,7 @@ public class SafetyBdzListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_safety_bdz_list);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_safety_bdz_list);
         deptId = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_ID);
         binding.btnStart.setOnClickListener(v -> {
             if (isStart) {
@@ -57,7 +56,7 @@ public class SafetyBdzListActivity extends BaseActivity {
                 return;
             }
             TTSUtils.getInstance().startSpeaking("开始" + currentItem.name + "的安全工器具检查作业");
-            Intent intent = new Intent(currentActivity, SafetyToolsControlActivity.class);
+            Intent intent = new Intent(mActivity, SafetyToolsControlActivity.class);
             intent.putExtra(Bdz.BDZID, currentItem.bdzid == null ? "-1" : currentItem.bdzid);
             intent.putExtra(Config.TITLE_NAME, currentItem.name);
             intent.putExtra(SafeToolsInfor.DEPTID, deptId);
@@ -100,7 +99,7 @@ public class SafetyBdzListActivity extends BaseActivity {
         Map<String, String> countMap;
 
         public BdzAdapter(Collection<Bdz> data, Map<String, String> count) {
-            super(currentActivity, data, R.layout.xs_item_safety_bdz);
+            super(mActivity, data, R.layout.xs_item_safety_bdz);
             this.countMap = count;
         }
 

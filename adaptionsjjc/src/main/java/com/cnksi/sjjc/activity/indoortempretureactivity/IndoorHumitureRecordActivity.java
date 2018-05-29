@@ -125,7 +125,7 @@ public class IndoorHumitureRecordActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-        Intent intent = new Intent(_this, JZLFenJieKaiGuanReportActivity.class);
+        Intent intent = new Intent(mActivity, JZLFenJieKaiGuanReportActivity.class);
         startActivity(intent);
         setResult(RESULT_OK);
         this.finish();

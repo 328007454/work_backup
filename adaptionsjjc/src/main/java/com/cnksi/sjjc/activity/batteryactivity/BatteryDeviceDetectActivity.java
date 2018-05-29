@@ -37,7 +37,7 @@ public class BatteryDeviceDetectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changedStatusColor();
-        mDetectBinding = DataBindingUtil.setContentView(_this, R.layout.activity_battery_device_detect);
+        mDetectBinding = DataBindingUtil.setContentView(mActivity, R.layout.activity_battery_device_detect);
         setSupportActionBar(mDetectBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

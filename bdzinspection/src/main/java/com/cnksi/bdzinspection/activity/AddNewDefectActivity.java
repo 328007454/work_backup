@@ -17,6 +17,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityAddNewDefectBinding;
 import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.DevicePart;
@@ -72,7 +73,7 @@ public class AddNewDefectActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_add_new_defect);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_add_new_defect);
         initialUI();
         initOnClick();
     }
@@ -157,7 +158,7 @@ public class AddNewDefectActivity extends BaseActivity {
                 binding.rbGeneralDefect.setChecked(true);
             }
             binding.etInputDefectContent.setText(mCurrentDbModel.getString(Defect.DESCRIPTION));
-            KeyBoardUtils.closeKeybord(currentActivity);
+            KeyBoardUtils.closeKeybord(mActivity);
         });
     }
 
@@ -227,7 +228,7 @@ public class AddNewDefectActivity extends BaseActivity {
             case LOAD_DATA:
 
                 if (mDefectDefineAdapter == null) {
-                    mDefectDefineAdapter = new DefectDefineAdapter(currentActivity, dataList);
+                    mDefectDefineAdapter = new DefectDefineAdapter(mActivity, dataList);
                     binding.lvContainer.setAdapter(mDefectDefineAdapter);
                 } else {
                     mDefectDefineAdapter.setList(dataList);
@@ -247,12 +248,9 @@ public class AddNewDefectActivity extends BaseActivity {
 
                     // 拍摄的缺陷照片 进行圆圈标记操作
                     mDefectImageList.add(currentImageName);
-                    Intent intent = new Intent(currentActivity, DrawCircleImageActivity.class);
-                    intent.putExtra(Config.CURRENT_IMAGE_NAME, Config.RESULT_PICTURES_FOLDER + currentImageName);
-                    intent.putExtra(Config.PICTURE_CONTENT, currentDeviceName + "\n" + binding.etInputDefectContent.getText().toString() + "\n"
-                            + DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm));
-                    startActivityForResult(intent, LOAD_DATA);
-
+                    DrawCircleImageActivity.with(mActivity).setTxtContent(currentDeviceName + "\n" + binding.etInputDefectContent.getText().toString() + "\n"
+                            + DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm))
+                            .setPath(Config.RESULT_PICTURES_FOLDER + currentImageName).start();
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
 

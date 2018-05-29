@@ -49,7 +49,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.inflate(LayoutInflater.from(_this), R.layout.activity_new_indoor_humiture, null, false);
+        binding = DataBindingUtil.inflate(LayoutInflater.from(mActivity), R.layout.activity_new_indoor_humiture, null, false);
         setChildView(binding.getRoot());
         getIntentValue();
         initView();
@@ -98,7 +98,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
         super.onRefresh(msg);
         switch (msg.what) {
             case LOAD_DATA:
-                indoorWeatherAdapter = new IndoorWeathearAdapter(_this, mReportList, binding.llContainer, R.layout.adapter_indoor_item);
+                indoorWeatherAdapter = new IndoorWeathearAdapter(mActivity, mReportList, binding.llContainer, R.layout.adapter_indoor_item);
                 indoorWeatherAdapter.setItemClickListener(this);
                 indoorWeatherAdapter.setLocation("全站");
                 break;
@@ -149,7 +149,7 @@ public class NewIndoorHumitureRecordActivity extends BaseActivity implements Ite
         } catch (DbException e) {
             Log.d("Tag", e.getMessage());
         }
-        Intent intent = new Intent(_this, IndoorHumitureReportActivity.class);
+        Intent intent = new Intent(mActivity, IndoorHumitureReportActivity.class);
         startActivity(intent);
         setResult(RESULT_OK);
         this.finish();

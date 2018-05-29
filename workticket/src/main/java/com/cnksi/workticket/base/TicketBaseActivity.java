@@ -91,7 +91,7 @@ public abstract class TicketBaseActivity extends BaseCoreActivity {
         mPagerTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics));
         // 设置Tab标题文字的大小
         mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelOffset(R.dimen.tab_strip_text_size), mDisplayMetrics));
-        // 设置Tab Indicator的颜色  _this.getResources().getColor(R.color.tab_strip_text_color)
+        // 设置Tab Indicator的颜色  mActivity.getResources().getColor(R.color.tab_strip_text_color)
         mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(this, R.color.tab_strip_text_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)_this.getResources().getColor(R.color.tab_strip_text_color)
         mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(this, R.color.tab_strip_text_color));

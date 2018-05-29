@@ -5,7 +5,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.text.TextUtils;
@@ -361,6 +360,7 @@ public class DialogUtils {
         WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();
         windowParams.width = width;
         windowParams.height = height;
+        windowParams.alpha=0;
         dialogWindow.setAttributes(windowParams);
 
         return dialog;
@@ -377,29 +377,5 @@ public class DialogUtils {
         }
     }
 
-
-    /**
-     * @param context
-     * @param maxLength
-     * @param inputType
-     * @param title
-     * @param hint
-     * @param ok
-     * @param cancel
-     * @param onClickListener
-     */
-    public static void showInputCancelDialog(Context context, int maxLength, int inputType, String title, String oldValue, String hint, String ok, String cancel, final DialogInputClickListener onClickListener) {
-        setDialogNull();
-
-    }
-
-    public interface DialogInputClickListener {
-        /**
-         * @param dialog
-         * @param which
-         * @param result
-         */
-        void onClick(DialogInterface dialog, int which, String result);
-    }
 
 }

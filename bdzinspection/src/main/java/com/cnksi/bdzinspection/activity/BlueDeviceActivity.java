@@ -42,7 +42,7 @@ public class BlueDeviceActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         binding = DataBindingUtil.setContentView(currentActivity,R.layout.xs_activity_bluedevice);
+         binding = DataBindingUtil.setContentView(mActivity,R.layout.xs_activity_bluedevice);
         setResult(Activity.RESULT_CANCELED);
         binding.buttonScan.setOnClickListener(view -> {
             doDiscovery();

@@ -1,19 +1,22 @@
-package com.cnksi.bdzinspection.activity;
+package com.cnksi.common.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.databinding.XsActivityLandsignNameBinding;
+import com.cnksi.common.R;
+import com.cnksi.common.databinding.CommonActivityLandsignNameBinding;
+import com.cnksi.core.activity.BaseCoreActivity;
+import com.cnksi.core.utils.ToastUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import static com.cnksi.core.utils.Cst.CROP_PICTURE;
 
@@ -21,7 +24,7 @@ import static com.cnksi.core.utils.Cst.CROP_PICTURE;
  * @author Wastrel
  * @date 创建时间：2016年8月8日 下午6:28:54 TODO
  */
-public class LandSignNameActivity extends TitleActivity {
+public class LandSignNameActivity extends BaseCoreActivity {
 
     public static final String TAG = LandSignNameActivity.class.getSimpleName();
 
@@ -35,30 +38,8 @@ public class LandSignNameActivity extends TitleActivity {
     private String signHeadPath;
     private String signer;
 
-    private XsActivityLandsignNameBinding binding;
+    private CommonActivityLandsignNameBinding binding;
 
-    @Override
-    protected int setLayout() {
-        return R.layout.xs_activity_landsign_name;
-    }
-
-    @Override
-    protected String initialUI() {
-        binding = (XsActivityLandsignNameBinding) getDataBinding();
-        binding.pathView.clear();
-        initOnClick();
-        return "签名确认";
-    }
-
-    @Override
-    protected void initialData() {
-
-        Intent data = getIntent();
-        signHeadPath = data.getStringExtra(HEAD_PATH);
-        signNamePath = data.getStringExtra(SIGNNAME_PATH);
-        signer = data.getStringExtra(SIGNER);
-        binding.tvPersonName.setText(signer);
-    }
 
     private void initOnClick() {
         binding.btnQuxiao.setOnClickListener(view -> LandSignNameActivity.this.finish());
@@ -77,7 +58,7 @@ public class LandSignNameActivity extends TitleActivity {
                     LandSignNameActivity.this.setResult(RESULT_OK);
                     LandSignNameActivity.this.finish();
                 } else {
-                    LandSignNameActivity.this.Toast("您还没有签名，请先签名！");
+                    ToastUtils.showMessage("您还没有签名，请先签名！");
                 }
 
             } catch (IOException e) {
@@ -89,7 +70,26 @@ public class LandSignNameActivity extends TitleActivity {
 
 
     @Override
-    protected void releaseResAndSaveData() {
+    public int getLayoutResId() {
+        return R.layout.common_activity_landsign_name;
+    }
+
+    @Override
+    public void initUI() {
+        binding = (CommonActivityLandsignNameBinding) rootDataBinding;
+        binding.tvTitle.setText("签名确认");
+        binding.pathView.clear();
+        initOnClick();
+
+    }
+
+    @Override
+    public void initData() {
+        Intent data = getIntent();
+        signHeadPath = data.getStringExtra(HEAD_PATH);
+        signNamePath = data.getStringExtra(SIGNNAME_PATH);
+        signer = data.getStringExtra(SIGNER);
+        binding.tvPersonName.setText(signer);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class LandSignNameActivity extends TitleActivity {
                     finish();
                     break;
                 case CROP_PICTURE:
-                    Toast("拍摄成功");
+                    ToastUtils.showMessage("拍摄成功");
                     setResult(RESULT_OK);
                     finish();
                     break;
@@ -119,10 +119,6 @@ public class LandSignNameActivity extends TitleActivity {
 
     }
 
-
-    public void Toast(String str) {
-        Toast.makeText(currentActivity, str, Toast.LENGTH_SHORT).show();
-    }
 
     /**
      * 裁剪图片
@@ -146,6 +142,52 @@ public class LandSignNameActivity extends TitleActivity {
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         // intent.putExtra("noFaceDetection", false);
         startActivityForResult(intent, requestCode);
+    }
+
+    public static Builder with(Activity activity) {
+        return new Builder(activity);
+    }
+
+    public static class Builder {
+        Activity activity;
+        String signer = "";
+        @NonNull
+        String signPath;
+        String headPath;
+        int requestCode;
+
+        private Builder(Activity activity) {
+            this.activity = activity;
+        }
+
+        public Builder setSigner(String signer) {
+            this.signer = signer;
+            return this;
+        }
+
+        public Builder setSignPath(@NonNull String signPath) {
+            this.signPath = signPath;
+            return this;
+        }
+
+        public Builder setHeadPath(String headPath) {
+            this.headPath = headPath;
+            return this;
+        }
+
+        public Builder setRequestCode(int requestCode) {
+            this.requestCode = requestCode;
+            return this;
+        }
+
+        public void start() {
+            Objects.requireNonNull(signPath);
+            Intent intent = new Intent(activity, LandSignNameActivity.class);
+            intent.putExtra(LandSignNameActivity.SIGNER, signer);
+            intent.putExtra(LandSignNameActivity.SIGNNAME_PATH, signPath);
+            intent.putExtra(LandSignNameActivity.HEAD_PATH, headPath);
+            activity.startActivityForResult(intent, requestCode);
+        }
     }
 
 }

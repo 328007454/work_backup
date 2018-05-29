@@ -1,5 +1,6 @@
 package com.cnksi.bdzinspection.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -7,11 +8,15 @@ import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -21,10 +26,14 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.view.NumberSeekBar;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.PlaySound;
+import com.cnksi.core.utils.ScreenUtils;
 
 import java.math.BigDecimal;
 
-public class KeyBoardUtil {
+/**
+ * @author Wastrel
+ */
+public class CopyKeyBoardUtil {
 
     public static final int KEYBORAD_HIDE = 0;
     public static final int KEYBORAD_SHOW = 1;
@@ -41,7 +50,7 @@ public class KeyBoardUtil {
      * 文本输入框
      */
     private EditText mEditText;
-    private Context mContext;
+    private Activity mContext;
     /**
      * 振动器
      */
@@ -63,13 +72,17 @@ public class KeyBoardUtil {
     private BigDecimal maxValue = null;
     private BigDecimal progressValue = null;
     private BigDecimal currentProgress = null;
-    private WindowManager mWindowManager;
+
+    private FrameLayout rootView;
+
+    private int height;
+
     /**
      * 是不是第一点获取焦点
      */
     private boolean isFirstFocus = false;
     private boolean isOnKey = false;
-    private WindowManager.LayoutParams layoutParams;
+
     public OnKeyBoardStateChangeListener mOnKeyBoardStateChangeListener;
 
     public interface OnKeyBoardStateChangeListener {
@@ -82,11 +95,10 @@ public class KeyBoardUtil {
         this.mOnKeyBoardStateChangeListener = mOnKeyBoardStateChangeListener;
     }
 
-    public KeyBoardUtil(View mRootContainer, Context context, EditText mEditText, WindowManager windowManager, WindowManager.LayoutParams layoutParams) {
-        this.layoutParams = layoutParams;
-        this.mWindowManager = windowManager;
-        this.mContext = context;
-        this.mRootContainer = mRootContainer;
+
+    public CopyKeyBoardUtil(Activity activity, ViewGroup root, EditText mEditText) {
+        this.mContext = activity;
+        this.mRootContainer = LayoutInflater.from(mContext).inflate(R.layout.xs_keyboard_layout, root, false);
         this.mKeyBoardView = mRootContainer.findViewById(R.id.keyboard_view);
         this.mNumberSeekBar = mRootContainer.findViewById(R.id.number_seekbar);
         this.mRlSeekBarContainer = mRootContainer.findViewById(R.id.rl_seekbar_container);
@@ -94,12 +106,34 @@ public class KeyBoardUtil {
         this.mTvMaxValue = mRootContainer.findViewById(R.id.tv_max_value);
         this.mNumberSeekBar.setOnSeekBarChangeListener(mSeekBarChangeListener);
         this.mEditText = mEditText;
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        mKeyBoardNumber = new Keyboard(context, R.xml.symbols);
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        mKeyBoardNumber = new Keyboard(mContext, R.xml.symbols);
         mKeyBoardView.setKeyboard(mKeyBoardNumber);
         mKeyBoardView.setEnabled(true);
         mKeyBoardView.setPreviewEnabled(false);
         mKeyBoardView.setOnKeyboardActionListener(listener);
+        initLayoutParams(new WindowManager.LayoutParams());
+        rootView = activity.findViewById(android.R.id.content);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, getHeight());
+        layoutParams.gravity = Gravity.BOTTOM;
+        rootView.addView(mRootContainer, layoutParams);
+    }
+
+    private void initLayoutParams(WindowManager.LayoutParams layoutParams) {
+        final LinearLayout mSeekBarContainer = mRootContainer.findViewById(R.id.rl_seekbar_container);
+        // 动态获取seekBar的高度
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        mSeekBarContainer.measure(w, h);
+        int seekBarHeight = 0;
+        layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+        // 设置悬浮窗口长宽数据
+        layoutParams.width = ScreenUtils.getScreenWidth(mContext);
+        // 动态获取键盘的高度 键盘的高度加上seekBar的高度
+        int height = mContext.getResources().getDimensionPixelSize(R.dimen.xs_key_height) * 4
+                + mContext.getResources().getDimensionPixelSize(R.dimen.xs_key_vertical_gap) * 5 + seekBarHeight;
+        layoutParams.height = height;
+        this.height = height;
     }
 
     public void setCurrentEditText(EditText mEditText, String minValue, String maxValue, String unit) {
@@ -370,7 +404,6 @@ public class KeyBoardUtil {
     public void showKeyboard() {
         int visibility = mRootContainer.getVisibility();
         if (visibility == View.GONE || visibility == View.INVISIBLE) {
-            mWindowManager.addView(mRootContainer, layoutParams);
             mRootContainer.setVisibility(View.VISIBLE);
             mRootContainer.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.xsdialog_show));
         }
@@ -391,8 +424,10 @@ public class KeyBoardUtil {
         if (mEditText != null) {
             mEditText.clearFocus();
             KeyBoardUtils.closeKeybord(mEditText, mContext);
-            mWindowManager.removeViewImmediate(mRootContainer);
         }
+    }
 
+    public int getHeight() {
+        return height;
     }
 }

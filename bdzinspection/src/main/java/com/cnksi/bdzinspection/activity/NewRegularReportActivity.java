@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -21,7 +20,7 @@ import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.bdzinspection.utils.AnimationUtils;
+import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
@@ -94,7 +93,7 @@ public class NewRegularReportActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(currentActivity, R.layout.xs_activity_inspection_report);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_inspection_report);
         initialUI();
         initialData();
         initOnClick();
@@ -125,7 +124,7 @@ public class NewRegularReportActivity extends BaseActivity {
         binding.tvTitle.setText(getString(R.string.xs_report_title_format_str, currentBdzName + currentInspectionTypeName));
         binding.tvInspectionType.setText(currentInspectionTypeName);
         binding.tvDashLine.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        PlaySound.getIntance(currentActivity).play(R.raw.printing);
+        PlaySound.getIntance(mActivity).play(R.raw.printing);
         mHandler.sendEmptyMessageDelayed(VIBRATOR, 500);
         mHandler.sendEmptyMessageDelayed(ANIMATION, 2000);
     }
@@ -181,7 +180,7 @@ public class NewRegularReportActivity extends BaseActivity {
     protected void onRefresh(Message msg) {
         switch (msg.what) {
             case ANIMATION:
-                PlaySound.getIntance(currentActivity).play(R.raw.print_out);
+                PlaySound.getIntance(mActivity).play(R.raw.print_out);
 //			translateAnimRun(binding.llReportContentContainer, 0.0f, binding.llReportContentContainer.getHeight() * 92 / 100);
                 LinearLayout.MarginLayoutParams marginLayoutParams = (LinearLayout.MarginLayoutParams) binding.llReportContentContainer.getLayoutParams();
                 AnimationUtils.translateAnimRun(binding.llReportContentContainer, 0.0f, Math.abs(marginLayoutParams.topMargin));
@@ -227,7 +226,7 @@ public class NewRegularReportActivity extends BaseActivity {
         float scale = DisplayUtils.getInstance().getDensity();
         if (mReportSignnameListCzr != null) {
             for (ReportSignname bean : mReportSignnameListCzr) {
-                ImageView v = new ImageView(currentActivity);
+                ImageView v = new ImageView(mActivity);
                 v.setLayoutParams(new LayoutParams((int) (scale * 90), (int) (scale * 40)));
                 v.setPadding((int) (scale * 5), (int) (scale * 5), (int) (scale * 5), (int) (scale * 5));
                 v.setScaleType(ScaleType.FIT_CENTER);
@@ -239,7 +238,7 @@ public class NewRegularReportActivity extends BaseActivity {
         }
         if (mReportSignnameListFzr != null) {
             for (ReportSignname bean : mReportSignnameListFzr) {
-                ImageView v = new ImageView(currentActivity);
+                ImageView v = new ImageView(mActivity);
                 v.setLayoutParams(new LayoutParams((int) (scale * 90), (int) (scale * 40)));
                 v.setPadding((int) (scale * 5), (int) (scale * 5), (int) (scale * 5), (int) (scale * 5));
                 v.setScaleType(ScaleType.FIT_CENTER);
@@ -280,23 +279,23 @@ public class NewRegularReportActivity extends BaseActivity {
 
     private void showDefectDialog(List<DefectRecord> mDefectList, int dialogTitle) {
         if (mDefectList != null && !mDefectList.isEmpty()) {
-            int dialogWidth = ScreenUtils.getScreenWidth(currentActivity) * 9 / 10;
-            int dialogHeight = mDefectList.size() > 5 ? ScreenUtils.getScreenHeight(currentActivity) / 2 : LinearLayout.LayoutParams.WRAP_CONTENT;
+            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
+            int dialogHeight = mDefectList.size() > 5 ? ScreenUtils.getScreenHeight(mActivity) / 2 : LinearLayout.LayoutParams.WRAP_CONTENT;
             if (mHistoryDefectAdapter == null) {
-                mHistoryDefectAdapter = new HistoryDefectAdapter(currentActivity, mDefectList);
+                mHistoryDefectAdapter = new HistoryDefectAdapter(mActivity, mDefectList);
                 mHistoryDefectAdapter.setTrackHistory(true);
             } else {
                 mHistoryDefectAdapter.setList(mDefectList);
             }
             defectBinding = XsContentListDialogBinding.inflate(getLayoutInflater());
-            mDefectDialog = DialogUtils.createDialog(currentActivity, defectBinding.getRoot(), dialogWidth, dialogHeight);
+            mDefectDialog = DialogUtils.createDialog(mActivity, defectBinding.getRoot(), dialogWidth, dialogHeight);
             defectBinding.lvContainer.setAdapter(mHistoryDefectAdapter);
             defectBinding.tvDialogTitle.setText(dialogTitle);
             mDefectDialog.show();
 
             defectBinding.lvContainer.setOnItemClickListener((parent, v, position, id) -> {
                 DefectRecord mDefectRecord = (DefectRecord) parent.getItemAtPosition(position);
-                Intent intent = new Intent(currentActivity, DefectControlActivity.class);
+                Intent intent = new Intent(mActivity, DefectControlActivity.class);
                 intent.putExtra(Config.TRACK_DEFECT_RECORD_ID, mDefectRecord.defectid);
                 intent.putExtra(Config.CURRENT_DEVICE_ID, mDefectRecord.deviceid);
                 intent.putExtra(Config.CURRENT_DEVICE_NAME, mDefectRecord.devcie);
