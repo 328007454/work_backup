@@ -1,6 +1,6 @@
 package com.cnksi.common.activity;
 
-import com.cnksi.core.activity.BaseCoreActivity;
+import com.cnksi.common.base.BaseActivity;
 
 /**
  * @author Wastrel
@@ -9,7 +9,7 @@ import com.cnksi.core.activity.BaseCoreActivity;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class SelectDeviceActivity extends BaseCoreActivity {
+public class SelectDeviceActivity extends BaseActivity {
     @Override
     public int getLayoutResId() {
         return 0;

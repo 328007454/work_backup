@@ -227,7 +227,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
         currentDevicePartName = getIntent().getStringExtra(Config.CURRENT_DEVICE_PART_NAME);
         currentSpacingId = getIntent().getStringExtra(Config.CURRENT_SPACING_ID);
         currentSpacingName = getIntent().getStringExtra(Config.CURRENT_SPACING_NAME);
-        currentStandardId = getIntent().getStringExtra(Config.CURRENT_STANDARD_ID); // 巡视标准ID
+        // 巡视标准ID
+        currentStandardId = getIntent().getStringExtra(Config.CURRENT_STANDARD_ID);
+
         // 是否是从巡检任务提醒界面跳转过去的
         isFromTaskRemind = getIntent().getBooleanExtra(Config.IS_FROM_TASK_REMIND, false);
 
