@@ -1,9 +1,11 @@
 package com.cnksi.defect.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cnksi.bdzinspection.activity.AddNewDefectActivity;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DefectRecordService;
@@ -157,8 +159,8 @@ public class DefectControlActivity extends BaseCoreActivity {
                         defectControlBinding.txtPeopleName.setText(userModels.get(position).getString(Users.USERNAME));
                         search();
                     }).setDropDownOfView(defectControlBinding.containerPeople).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
-        }else if (i==R.id.add_defect){
-
+        } else if (i == R.id.add_defect) {
+            Intent intent = new Intent(this, AddDefecctActivity.class);
         }
     }
 }

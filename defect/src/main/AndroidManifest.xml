@@ -4,5 +4,7 @@
     <application>
         <activity android:name="com.cnksi.common.activity.ImageDetailsActivity" />
 
+        <activity android:name="com.cnksi.defect.activity.AddDefecctActivity" />
+
     </application>
 </manifest>

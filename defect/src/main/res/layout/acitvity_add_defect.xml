@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1920px">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/core_bg_white_ffffff">
+
+                <include
+                    android:id="@+id/include_title"
+                    layout="@layout/include_title"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_bdz_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_120px"
+                    android:background="@drawable/xs_bottom_line_background_selector"
+                    android:drawableRight="@drawable/ic_arrow_right"
+                    android:gravity="center_vertical"
+                    android:hint="请选择变电站"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    android:textColor="@color/xs_global_text_color"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_global_text_size_px"
+                    app:layout_constraintTop_toBottomOf="@+id/include_title" />
+
+                <TextView
+                    android:id="@+id/txt_space_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_120px"
+                    android:background="@drawable/xs_bottom_line_background_selector"
+                    android:drawableRight="@drawable/ic_arrow_right"
+                    android:gravity="center_vertical"
+                    android:hint="请选择间隔"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    android:textColor="@color/xs_global_text_color"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_global_text_size_px"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_bdz_name" />
+
+                <LinearLayout
+                    android:id="@+id/container_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_120px"
+                    android:background="@drawable/xs_bottom_line_background_selector"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_space_name">
+
+                    <com.cnksi.common.view.EditTextNoEmoj
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="请选择（按箭头）或者输入设备名称"
+                        android:inputType="textMultiLine"
+                        android:paddingLeft="@dimen/core_padding_30px"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="false"
+                        android:textColor="@color/xs_global_text_color"
+                        android:textColorHint="@color/xs_global_gray_text_color"
+                        android:textSize="@dimen/xs_global_text_size_px" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/txt_device_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_120px"
+                        android:paddingBottom="@dimen/core_padding_30px"
+                        android:paddingLeft="120px"
+                        android:paddingRight="@dimen/core_padding_30px"
+                        android:paddingTop="@dimen/core_padding_30px"
+                        app:srcCompat="@drawable/ic_arrow_right" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_device_part_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_120px"
+                    android:background="@drawable/xs_bottom_line_background_selector"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/core_padding_30px"
+                    android:paddingRight="@dimen/core_padding_30px"
+                    android:textColor="@color/xs_global_text_color"
+                    android:textColorHint="@color/xs_global_gray_text_color"
+                    android:textSize="@dimen/xs_global_text_size_px"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/container_device" />
+
+                <RelativeLayout
+                    android:id="@+id/container_defect"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/xs_content_minheight_px"
+                    android:background="@drawable/xs_bottom_line_background_selector"
+                    android:paddingStart="@dimen/core_padding_30px"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_device_part_name">
+
+                    <com.cnksi.common.view.EditTextNoEmoj
+                        android:id="@+id/et_input_defect_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical|left"
+                        android:hint="@string/xs_please_input_defect_content_str"
+                        android:inputType="textMultiLine"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="false"
+                        android:textColor="@color/xs_global_text_color"
+                        android:textColorHint="@color/xs_global_gray_text_color"
+                        android:textSize="@dimen/xs_global_text_size_px" />
+
+                    <ImageButton
+                        android:id="@+id/ibtn_take_picture"
+                        style="@style/svgButtonCamera"
+                        android:layout_width="@dimen/xs_content_minheight_px"
+                        android:layout_height="@dimen/xs_content_minheight_px"
+                        android:layout_alignParentRight="true"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@null"
+                        android:minHeight="@dimen/xs_content_minheight_px"
+                        android:minWidth="@dimen/xs_content_minheight_px"
+                        app:srcCompat="@drawable/xs_camera_button_background" />
+
+                    <ImageView
+                        android:id="@+id/iv_new_defect_photo"
+                        android:layout_width="@dimen/xs_new_defect_photo_height"
+                        android:layout_height="@dimen/xs_new_defect_photo_height_px"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/core_padding_30px"
+                        android:layout_toLeftOf="@+id/ibtn_take_picture"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/tv_defect_count"
+                        android:layout_width="@dimen/xs_defect_count_width_px"
+                        android:layout_height="@dimen/xs_defect_count_width_px"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10px"
+                        android:layout_toLeftOf="@+id/ibtn_take_picture"
+                        android:background="@drawable/xs_circle_text_background"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_defect_count_text_size_px"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+
+                <com.cnksi.common.view.AutoRadioGroup
+                    android:id="@+id/container_rb_general_defect"
+                    android:layout_width="match_parent"
+                    android:layout_height="120px"
+                    android:background="@color/core_bg_white_ffffff"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                    app:layout_constraintTop_toBottomOf="@+id/container_defect">
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/rb_general_defect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:text="@string/xs_general_defect_str"
+                        android:textColor="@color/xs_radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px" />
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/rb_serious_defect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:text="@string/xs_serious_defect_str"
+                        android:textColor="@color/xs_radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px" />
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/rb_crisis_defect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:text="@string/xs_crisis_defect_str"
+                        android:textColor="@color/xs_radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px" />
+                </com.cnksi.common.view.AutoRadioGroup>
+
+                <com.cnksi.common.view.AutoRadioGroup
+                    android:id="@+id/container_rb_general_defect_other"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_bottom_line_background_selector"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="20px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                    android:weightSum="3"
+                    app:layout_constraintTop_toBottomOf="@+id/container_rb_general_defect">
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/rb_problem_defect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:text="问题"
+                        android:textColor="@color/xs_radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px" />
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/rb_hidden_defect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:text="隐患"
+                        android:textColor="@color/xs_radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px" />
+                </com.cnksi.common.view.AutoRadioGroup>
+
+                <TextView
+                    android:id="@+id/title_ele_internet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_green_color"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                    android:text="是否影响电网运行"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size_px"
+                    app:layout_constraintTop_toBottomOf="@+id/container_rb_general_defect_other" />
+
+                <com.cnksi.common.view.AutoRadioGroup
+                    android:id="@+id/container_rg_ele_internet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xs_bottom_line_background_selector"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/xs_content_minheight_px"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                    android:weightSum="3"
+                    app:layout_constraintTop_toBottomOf="@+id/title_ele_internet">
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/rb_influnce_yes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:text="是"
+                        android:textColor="@color/xs_radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px" />
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/rb_influnce_no"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:text="否"
+                        android:textColor="@color/xs_radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px" />
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/rb_influnce_nothing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:text="不清楚"
+                        android:textColor="@color/xs_radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px"
+                        app:drawableLeft="@drawable/xs_radio_button_selector"
+                        app:drawableSize="48px" />
+                </com.cnksi.common.view.AutoRadioGroup>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rc_defect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/container_rg_ele_internet" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/include_title">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/xs_green_color"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                        android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                        android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                        android:text="是否影响电网运行"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_size_px" />
+
+
+                    <ListView
+                        android:id="@+id/lv_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:cacheColorHint="@android:color/transparent"
+                        android:divider="@color/xs_line_color"
+                        android:dividerHeight="@dimen/xs_line_half_width_px"
+                        android:listSelector="@android:color/transparent" />
+
+                    <Button
+                        android:id="@+id/btn_confirm"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="118px"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
+                        android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                        android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                        android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
+                        android:background="@drawable/xs_grass_green_button_background_selector"
+                        android:gravity="center"
+                        android:minHeight="@dimen/xs_button_minheight"
+                        android:text="@string/xs_confirm_str"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xs_global_text_size_px" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+
+            <LinearLayout
+                android:id="@+id/container_sure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10px"
+                android:background="@color/xs_gray_background_color"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+                android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="118px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                    android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                    android:layout_weight="1"
+                    android:background="@drawable/xs_red_button_background_selector"
+                    android:gravity="center"
+                    android:minHeight="@dimen/xs_button_minheight"
+                    android:text="@string/xs_dialog_cancle_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size_px" />
+
+                <Button
+                    android:id="@+id/btn_sure"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="118px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                    android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                    android:layout_weight="1"
+                    android:background="@drawable/xs_button_background_blue_selector"
+                    android:gravity="center"
+                    android:minHeight="@dimen/xs_button_minheight"
+                    android:text="@string/xs_dialog_sure_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size_px" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</layout>
