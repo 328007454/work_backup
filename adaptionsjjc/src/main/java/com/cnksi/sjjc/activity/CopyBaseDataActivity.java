@@ -21,7 +21,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
 /**
  * 抄录温湿度界面
  */
-public class CopyBaseDataActivity extends BaseTitleActivity {
+public class CopyBaseDataActivity extends BaseSjjcActivity {
     //报告表
     private Report mReport;
     private ActivityCopybasedataBinding binding;

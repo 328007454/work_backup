@@ -37,7 +37,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * <p/>
  * 防小动物措施检查界面
  */
-public class PreventAnimalActivity extends BaseTitleActivity {
+public class PreventAnimalActivity extends BaseSjjcActivity {
     private static final int TAKEPIC_REQUEST = LOAD_DATA + 1;
     private static final int VIDEO_REQUEST = TAKEPIC_REQUEST + 1;
     private static final int REFRESH_UI = VIDEO_REQUEST + 1;

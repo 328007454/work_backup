@@ -25,7 +25,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseTitleActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
@@ -48,7 +48,7 @@ import java.util.UUID;
  * @author kkk on 2018/3/7.
  */
 
-public class GZTZRecordActivity extends BaseTitleActivity {
+public class GZTZRecordActivity extends BaseSjjcActivity {
 
     private ActivityGztzRecordBinding mRecordBinding;
     private ShowPeopleAdapter showPeopleAdapter;

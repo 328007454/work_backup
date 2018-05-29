@@ -69,7 +69,7 @@ import java.util.Map;
  *
  * @author han on 2017/3/24.
  */
-public class HomeActivity extends BaseTitleActivity implements View.OnClickListener, ItemClickListener {
+public class HomeActivity extends BaseSjjcActivity implements View.OnClickListener, ItemClickListener {
     private ActivityHomePageBinding homePageBinding;
     //变电站弹出popwindow
     private BdzPopwindowBinding bdzPopwindowBinding;

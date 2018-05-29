@@ -38,7 +38,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/9/6.
  * 修改过后的交直流分接开关
  */
-public class NewTransformRecordActivity extends BaseTitleActivity {
+public class NewTransformRecordActivity extends BaseSjjcActivity {
     private List<DbModel> listDbModel;
     //本次读数填写的EditText
     List<EditText> listBcds = new ArrayList<EditText>();

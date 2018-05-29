@@ -21,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by han on 2016/5/5.
  */
-public class WorkPlanInformationActivity extends BaseTitleActivity {
+public class WorkPlanInformationActivity extends BaseSjjcActivity {
     private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> uploadMessage;
     private String imageName;

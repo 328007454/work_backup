@@ -18,7 +18,7 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
-import com.cnksi.sjjc.activity.BaseTitleActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
 import com.cnksi.sjjc.adapter.hwcw.HwcwNewHotPartAdapter;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
@@ -42,7 +42,7 @@ import java.util.List;
  * @author kkk on 2017/12/7.
  */
 
-public class NewHwcwActivity extends BaseTitleActivity implements BaseRecyclerDataBindingAdapter.OnItemClickListener, HwcwNewHotPartAdapter.OnLongItemListener {
+public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDataBindingAdapter.OnItemClickListener, HwcwNewHotPartAdapter.OnLongItemListener {
     private ActivityHwcwNewBinding mHwcwNewBinding;
     private int realHeight;
     private int childItemNum;

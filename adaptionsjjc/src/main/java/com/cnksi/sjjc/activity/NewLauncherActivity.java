@@ -49,7 +49,7 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewLauncherActivity extends BaseTitleActivity {
+public class NewLauncherActivity extends BaseSjjcActivity {
     private ActivityLauncherNewBinding launcherBinding;
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
     private int currentSelectPosition;

@@ -49,7 +49,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  *
  * @author terry
  */
-public class CopyAllValueActivity3 extends BaseTitleActivity {
+public class CopyAllValueActivity3 extends BaseSjjcActivity {
     private static final int LOAD_COPY_FINISIH = 0x10;
     private static final int LOAD_COPY_MAP = LOAD_COPY_FINISIH + 1;
     String remarkInfor = "";

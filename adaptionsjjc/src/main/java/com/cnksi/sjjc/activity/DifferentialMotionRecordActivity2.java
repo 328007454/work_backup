@@ -39,7 +39,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * creat by han 2016/05/30
  * 差动保护差流界面
  */
-public class DifferentialMotionRecordActivity2 extends BaseTitleActivity {
+public class DifferentialMotionRecordActivity2 extends BaseSjjcActivity {
     //根据变电站id，报告id查询出差动保护相应的数据
     private Map<String, ReportCdbhcl> reportCdbhclsMap = new HashMap<String, ReportCdbhcl>();
     //当前报告id

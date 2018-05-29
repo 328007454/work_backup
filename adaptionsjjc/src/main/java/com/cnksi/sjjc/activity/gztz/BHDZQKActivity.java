@@ -21,7 +21,7 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
-import com.cnksi.sjjc.activity.BaseTitleActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzqkBinding;
 import com.cnksi.sjjc.inter.SimpleTextWatcher;
@@ -46,7 +46,7 @@ import static com.cnksi.sjjc.activity.gztz.TZQKActivity.NULL;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class BHDZQKActivity extends BaseTitleActivity {
+public class BHDZQKActivity extends BaseSjjcActivity {
     ActivityGztzBhdzqkBinding binding;
     private SbjcGztzjl sbjcGztzjl;
     private String imageName;

@@ -7,7 +7,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.common.Config;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
-import com.cnksi.sjjc.activity.BaseTitleActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjlBhdzjl;
@@ -33,7 +33,7 @@ import java.util.List;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class BHDZJLActivity extends BaseTitleActivity {
+public class BHDZJLActivity extends BaseSjjcActivity {
     ActivityGztzBhdzjlBinding binding;
     List<BhdzjlGroup> groups = new ArrayList<>();
     BhdzjlGroup selectGroup;

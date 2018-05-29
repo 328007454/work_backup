@@ -42,7 +42,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * <p/>
  * 防小动物措施检查界面
  */
-public class PreventAnimalSecondActivity extends BaseTitleActivity {
+public class PreventAnimalSecondActivity extends BaseSjjcActivity {
 
 
     private PreventionRecord preventionRecord;

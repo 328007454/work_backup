@@ -42,7 +42,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/6/13.
  * 发现孔洞
  */
-public class DiscoverHoleActivity extends BaseTitleActivity {
+public class DiscoverHoleActivity extends BaseSjjcActivity {
     //所有孔洞位置集合
     private List<String> areaList;
     private ListView positionLv;

@@ -43,16 +43,8 @@ import java.util.UUID;
  *
  * @author kkk
  */
-public class AddTaskActivity extends BaseTitleActivity {
-    @Override
-    public void initUI() {
+public class AddTaskActivity extends BaseSjjcActivity {
 
-    }
-
-    @Override
-    public void initData() {
-
-    }
 
     public static final int LOAD_BDZ_DATA = 0x01;
     private String mPressureDetectionType = "";
@@ -99,11 +91,16 @@ public class AddTaskActivity extends BaseTitleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTaskBinding = ActivityAddTaskBinding.inflate(getLayoutInflater());
-        setChildView(mTaskBinding.getRoot());
+
         initView();
         loadData();
         initOnclick();
+    }
+
+    @Override
+    protected View getChildContentView() {
+        mTaskBinding = ActivityAddTaskBinding.inflate(getLayoutInflater());
+        return mTaskBinding.getRoot();
     }
 
     public void initView() {
@@ -363,5 +360,6 @@ public class AddTaskActivity extends BaseTitleActivity {
             e.printStackTrace();
         }
     }
+
 
 }

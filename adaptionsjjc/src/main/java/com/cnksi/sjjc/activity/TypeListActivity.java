@@ -28,7 +28,7 @@ import static com.cnksi.common.Config.CURRENT_DEPARTMENT_ID;
  *
  * @author kkk
  */
-public class TypeListActivity extends BaseTitleActivity {
+public class TypeListActivity extends BaseSjjcActivity {
 
     private InspectionType mInspectionType;
     private List<String> data;

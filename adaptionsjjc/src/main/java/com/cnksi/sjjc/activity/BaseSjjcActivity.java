@@ -3,28 +3,20 @@ package com.cnksi.sjjc.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.pm.PackageInfo;
-import android.databinding.DataBindingUtil;
 import android.text.Html;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.activity.ImageDetailsActivity;
-import com.cnksi.common.base.BaseActivity;
-import com.cnksi.common.databinding.IncludeTitleBinding;
+import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.core.common.ExecutorManager;
-import com.cnksi.core.utils.NetWorkUtils;
-import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.CustomApplication;
-import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.AppVersion;
 import com.cnksi.sjjc.databinding.DialogCopyTipsBinding;
 import com.cnksi.sjjc.util.AppUtils;
@@ -37,7 +29,6 @@ import org.xutils.db.table.DbModel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import static com.cnksi.sjjc.activity.LoginActivity.SHOW_UPDATE_LOG_DIALOG;
 
@@ -46,57 +37,14 @@ import static com.cnksi.sjjc.activity.LoginActivity.SHOW_UPDATE_LOG_DIALOG;
  * @version 1.0
  * @date 16/4/23
  */
-public abstract class BaseTitleActivity extends BaseActivity {
+public abstract class BaseSjjcActivity extends BaseTitleActivity {
 
-    public boolean isDefaultTitle = true;
+
 
     protected static HashMap<String, Object> dataMap = new HashMap<>();
 
-    protected IncludeTitleBinding mTitleBinding;
 
 
-    @Override
-    public int getLayoutResId() {
-        if (isDefaultTitle) {
-            mTitleBinding = DataBindingUtil.setContentView(mActivity, R.layout.include_title);
-        }
-        return 0;
-    }
-
-
-    /**
-     * 设置container内容
-     *
-     * @param layoutResID
-     */
-    public void setChildView(int layoutResID) {
-        View view = LayoutInflater.from(this).inflate(layoutResID, mTitleBinding.rootContainer, false);
-        setChildView(view);
-    }
-
-    /**
-     * 设置container内容
-     *
-     * @param
-     */
-    public void setChildView(View view) {
-        mTitleBinding.rootContainer.addView(view);
-        mTitleBinding.btnBack.setOnClickListener(v -> {
-            KeyBoardUtils.closeKeybord(mActivity);
-            onBackPressed();
-        });
-
-    }
-
-    /**
-     * 设置container内容
-     *
-     * @param view
-     * @param params
-     */
-    public void setChildView(View view, ViewGroup.LayoutParams params) {
-        mTitleBinding.rootContainer.addView(view, params);
-    }
 
 
     /**
@@ -110,17 +58,6 @@ public abstract class BaseTitleActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void getIntentValue() {
-        super.getIntentValue();
-        currentInspectionTypeName = PreferencesUtils.get(Config.CURRENT_INSPECTION_NAME, "");
-    }
-
-
-
-    public void setTitleText(CharSequence str) {
-        mTitleBinding.tvTitle.setText(str);
-    }
 
     /**
      * 可以标记图片
@@ -160,11 +97,6 @@ public abstract class BaseTitleActivity extends BaseActivity {
                 } else if (null == localUpdateFile) {
                     CustomerDialog.dismissProgress();
                     return;
-                } else {
-                    if (NetWorkUtils.isNetworkConnected(mActivity)) {
-                        // 上传用户信息 检查升级
-                        Map<String, String> params = UpdateUtils.getDeviceInforMapParams(mActivity, appCode);
-                    }
                 }
             } else {
                 CustomerDialog.dismissProgress();
@@ -243,12 +175,5 @@ public abstract class BaseTitleActivity extends BaseActivity {
                 }
             });
         }
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        DialogUtils.setDialogNull();
     }
 }

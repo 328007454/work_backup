@@ -40,7 +40,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
 /**
  * @author nothing 2017/12/11
  */
-public class AllDeviceListActivity extends BaseTitleActivity implements DeviceExpandabelListAdapter.OnAdapterViewClickListener {
+public class AllDeviceListActivity extends BaseSjjcActivity implements DeviceExpandabelListAdapter.OnAdapterViewClickListener {
 
     public static final String FUNCTION_MODEL = "fuction";
     public static final String BDZID = "bdzid";

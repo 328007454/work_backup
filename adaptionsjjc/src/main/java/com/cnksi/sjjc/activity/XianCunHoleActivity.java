@@ -42,7 +42,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/6/13.
  * 防小动物措施检查现存孔洞界面
  */
-public class XianCunHoleActivity extends BaseTitleActivity implements ItemClickListenerPicture {
+public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickListenerPicture {
 
 
     private XianCunHoleAdapter mXCHoleAdapter;

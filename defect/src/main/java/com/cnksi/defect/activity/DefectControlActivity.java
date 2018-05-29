@@ -1,17 +1,15 @@
 package com.cnksi.defect.activity;
 
-import android.databinding.DataBindingUtil;
-import android.os.Bundle;
 import android.view.View;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Users;
-import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -30,7 +28,7 @@ import java.util.List;
  * @author Mr.K  on 2017/4/25.
  */
 
-public class DefectControlActivity extends BaseCoreActivity {
+public class DefectControlActivity extends BaseTitleActivity {
     private ActivityDefectControlBinding defectControlBinding;
     private List<DbModel> bdzList = new ArrayList<>();
     private DefectContentAdapter defectContentAdapter;
@@ -43,31 +41,34 @@ public class DefectControlActivity extends BaseCoreActivity {
     private List<String> defectTypes;
     private List<DbModel> userModels;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initView();
-        loadData();
-    }
 
     @Override
-    public int getLayoutResId() {
-        return 0;
+    protected View getChildContentView() {
+        defectControlBinding = ActivityDefectControlBinding.inflate(getLayoutInflater());
+        return defectControlBinding.getRoot();
     }
 
-    @Override
-    public void getRootDataBinding() {
-        defectControlBinding = DataBindingUtil.setContentView(this, R.layout.activity_defect_control);
-    }
 
     @Override
     public void initUI() {
-
+        defectControlBinding.setEvent(this);
+        setTitleText("缺陷管理");
     }
 
     @Override
     public void initData() {
-
+        defectTypes = Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray));
+        ExecutorManager.executeTaskSerially(() -> {
+            bdzList = BdzService.getInstance().findAllBdzByDpDbModel(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
+            userModels = UserService.getInstance().getAllUserByDeptId(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
+            mHandler.post(() -> {
+                if (bdzList.size() > 0) {
+                    bdzModel = bdzList.get(0);
+                    defectControlBinding.bdzName.setText(bdzModel.getString(Bdz.NAME));
+                }
+                search();
+            });
+        });
     }
 
     private void search() {
@@ -82,32 +83,6 @@ public class DefectControlActivity extends BaseCoreActivity {
                 }
             });
         });
-    }
-
-    public void initView() {
-
-        defectControlBinding.setEvent(this);
-        defectControlBinding.includeTitle.tvTitle.setText("缺陷管理");
-        defectControlBinding.includeTitle.btnBack.setImageResource(R.drawable.ic_hompage_selector);
-        defectControlBinding.includeTitle.btnBack.setVisibility(View.GONE);
-        defectControlBinding.includeTitle.btnBackDefect.setVisibility(View.VISIBLE);
-        defectControlBinding.includeTitle.btnBackDefect.setOnClickListener((View.OnClickListener) view -> onBackPressed());
-    }
-
-    public void loadData() {
-        defectTypes = Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray));
-        ExecutorManager.executeTaskSerially(() -> {
-            bdzList = BdzService.getInstance().findAllBdzByDpDbModel(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
-            userModels = UserService.getInstance().getAllUserByDeptId(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
-            mHandler.post(() -> {
-                if (bdzList.size() > 0) {
-                    bdzModel = bdzList.get(0);
-                    defectControlBinding.bdzName.setText(bdzModel.getString(Bdz.NAME));
-                }
-                search();
-            });
-        });
-
     }
 
 
@@ -135,4 +110,6 @@ public class DefectControlActivity extends BaseCoreActivity {
 
         }
     }
+
+
 }

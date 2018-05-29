@@ -56,7 +56,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * 登录界面
  * @author Wastrel
  */
-public class LoginActivity extends BaseTitleActivity implements GrantPermissionListener {
+public class LoginActivity extends BaseSjjcActivity implements GrantPermissionListener {
 
     private static final String TAG = "LoginActivity";
     public static final int SAME_ACCOUNT = 0x01111;

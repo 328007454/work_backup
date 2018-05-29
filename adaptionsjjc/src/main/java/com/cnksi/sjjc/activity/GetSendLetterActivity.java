@@ -57,7 +57,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by ironGe on 2016/6/12.
  * 收发信息界面
  */
-public class GetSendLetterActivity extends BaseTitleActivity {
+public class GetSendLetterActivity extends BaseSjjcActivity {
     public static final String TAG = GetSendLetterActivity.class.getSimpleName();
     public static final int LOAD_DEVICE_SUCCESS = 0x100;
     public static final int LOAD_DEVICE_FAILURE = 0x101;

@@ -28,7 +28,7 @@ import java.util.Arrays;
 /**
  * 任务列表
  */
-public class TaskRemindActivity extends BaseTitleActivity {
+public class TaskRemindActivity extends BaseSjjcActivity {
     public static final int ADD_TASK_REQUEST_CODE = 0x01;
 
     public static final int FINISH_TASK = 0x777;

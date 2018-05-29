@@ -27,7 +27,7 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseTitleActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
@@ -49,7 +49,7 @@ import java.util.List;
  * @author kkk on 2017/12/13.
  */
 
-public class NewHwcwInforActivity extends BaseTitleActivity implements ItemClickListener {
+public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickListener {
     ActivityNewhwcwInforBinding mInforBinding;
     private List<HwcwLocation> hotLocations = new ArrayList<>();
     private HwcwBaseInfo mHwcwBaseInfo;

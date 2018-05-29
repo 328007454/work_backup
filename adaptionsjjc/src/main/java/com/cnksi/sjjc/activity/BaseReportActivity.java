@@ -17,7 +17,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 /**
  * @author wastrel
  */
-public abstract class BaseReportActivity extends BaseTitleActivity {
+public abstract class BaseReportActivity extends BaseSjjcActivity {
     public static final int ANIMATION = 0x2000;
     public static final int VIBRATOR = 0x2001;
     protected RelativeLayout rlContainer;

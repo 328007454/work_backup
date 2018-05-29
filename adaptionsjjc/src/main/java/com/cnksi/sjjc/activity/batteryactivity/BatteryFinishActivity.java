@@ -28,7 +28,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseTitleActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowManagerAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
@@ -49,7 +49,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/8/10.
  * 蓄电池选择人员界面
  */
-public class BatteryFinishActivity extends BaseTitleActivity implements ItemClickListener {
+public class BatteryFinishActivity extends BaseSjjcActivity implements ItemClickListener {
     public static String MANAGER_FLAG = "manager_flag";
     public static String PEOPLE_FLAG = "people_flag";
     public static String BATTERY_FINISH_ACTIVITY = "battery_finish_activity";

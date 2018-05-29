@@ -18,7 +18,7 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseTitleActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.activity.JZLFenJieKaiGuanReportActivity;
 import com.cnksi.sjjc.bean.ReportSnwsd;
 import com.cnksi.sjjc.databinding.ActivityIndoorHumitureBinding;
@@ -31,7 +31,7 @@ import org.xutils.ex.DbException;
 /**
  * 室内温湿度界面
  */
-public class IndoorHumitureRecordActivity extends BaseTitleActivity {
+public class IndoorHumitureRecordActivity extends BaseSjjcActivity {
 
     //报告id
     private String reportId;

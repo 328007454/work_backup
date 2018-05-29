@@ -12,7 +12,7 @@ import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
-import com.cnksi.sjjc.activity.BaseTitleActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
@@ -29,7 +29,7 @@ import org.xutils.ex.DbException;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class TZQKActivity extends BaseTitleActivity {
+public class TZQKActivity extends BaseSjjcActivity {
     ActivityGztzBaseBinding binding;
     SbjcGztzjl sbgzjl;
 
