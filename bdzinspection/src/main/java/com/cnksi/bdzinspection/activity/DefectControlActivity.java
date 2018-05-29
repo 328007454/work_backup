@@ -17,16 +17,15 @@ import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment.On
 import com.cnksi.bdzinspection.fragment.defectcontrol.RecordDefectFragment;
 import com.cnksi.bdzinspection.fragment.defectcontrol.TrackDefectFragment;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.common.utils.PlaySound;
-import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
+import com.cnksi.common.utils.PlaySound;
+import com.cnksi.common.utils.TTSUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * 缺陷管控
@@ -249,10 +248,7 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
 
     @Override
     public void drawCircle(String pictureName, String pictureContent) {
-        Intent intent = new Intent(mActivity, DrawCircleImageActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_NAME, pictureName);
-        intent.putExtra(Config.PICTURE_CONTENT, pictureContent);
-        startActivityForResult(intent, LOAD_DATA);
+        DrawCircleImageActivity.with(mActivity).setTxtContent(pictureContent).setPath(pictureName).start();
     }
 
     @Override

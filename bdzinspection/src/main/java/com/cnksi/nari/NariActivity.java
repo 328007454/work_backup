@@ -3,13 +3,10 @@ package com.cnksi.nari;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.View;
@@ -59,6 +56,7 @@ import com.cnksi.nari.utils.LogUtil;
 import com.cnksi.nari.utils.NariDataManager;
 import com.cnksi.nari.utils.PMSException;
 import com.cnksi.nari.utils.ResultSet;
+import com.cnksi.sync.KSyncConfig;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -93,29 +91,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     ItemAdapter adapter;
     boolean isInit = false;
     Toast toast;
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder binder) {
-//            UpDataToReportManager manager = UpDataToReportManager.Stub.asInterface(binder);
-//            try {
-//                manager.upDataWithUpPMS();
-//            } catch (RemoteException e) {
-//                e.printStackTrace();
-//            }
-        }
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
 
-        }
-    };
-
-    private void bindServiceFun() {
-        Intent intent = new Intent();
-        intent.setPackage("com.cnksi.sjjc");
-        intent.setAction("android.intent.action.LoadData");
-        getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,9 +103,9 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
 
     public void initialUI() {
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> NariActivity.this.initialData());
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> initialData());
         adapter = new ItemAdapter(null);
-        binding.ibtnCancel.setOnClickListener(v -> NariActivity.this.finish());
+        binding.ibtnCancel.setOnClickListener(v -> finish());
         binding.listZyb.setAdapter(adapter);
         binding.btnVpn.setOnClickListener(v -> {
             try {
@@ -156,7 +133,6 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         });
         binding.btnUploadAll.setOnClickListener(v -> {
             final BDPackage[] dones = adapter.getStatus(PackageStatus.done);
-            NariActivity.this.bindServiceFun();
             if (dones.length == 0) {
                 NariActivity.this.Toast("没有需要上传的离线作业包！");
                 return;
@@ -388,6 +364,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
+                    KSyncConfig.getInstance().upload();
                 }
             }
             dismissLoading();
@@ -443,8 +420,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                     NariActivity.this.runOnUiThread(() -> ((TextView) dialog.findViewById(R.id.tv_tips)).setText("正在下载第" + finalI + "个, 共" + bdPackages.length + "个..."));
                 }
             }
-            NariActivity.this.runOnUiThread(() -> adapter.notifyDataSetChanged());
-            NariActivity.this.dismissLoading();
+            runOnUiThread(() -> adapter.notifyDataSetChanged());
+            dismissLoading();
         });
     }
 
@@ -522,12 +499,6 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try {
-            unbindService(mConnection);
-        } catch (Exception e) {
-
-        }
-
     }
 
     class ItemAdapter extends BaseAdapter<BDPackage> {

@@ -3,7 +3,6 @@ package com.cnksi.sjjc.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -29,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.databinding.IncludeTitleBinding;
 import com.cnksi.common.utils.DialogUtils;
@@ -167,7 +167,6 @@ public abstract class BaseActivity extends BaseCoreActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -381,10 +380,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
 
     public void drawCircle(String pictureName, String pictureContent) {
-        Intent intent = new Intent(mActivity, DrawCircleImageActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_NAME, pictureName);
-        intent.putExtra(Config.PICTURE_CONTENT, pictureContent);
-        startActivityForResult(intent, LOAD_DATA);
+        DrawCircleImageActivity.with(mActivity).setTxtContent(pictureContent).setPath(pictureName).start();
     }
 
     /**

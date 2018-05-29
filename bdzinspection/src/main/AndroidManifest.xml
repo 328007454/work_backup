@@ -80,7 +80,7 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.cnksi.bdzinspection.activity.DrawCircleImageActivity"
+            android:name="com.cnksi.bdzinspection.com.cnksi.common.activity.DrawCircleImageActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity

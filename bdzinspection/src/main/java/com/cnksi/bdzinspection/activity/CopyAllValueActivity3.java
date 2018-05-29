@@ -536,7 +536,6 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         } else {
             binding.ibtnSpread.setImageResource(R.drawable.xs_ic_amplify);
             binding.copyContainer.setVisibility(View.VISIBLE);
-//            params.height = getResources().getDimensionPixelSize(R.dimen.copy_all_value_container_height);
             params.height = AutoUtils.getPercentHeightSizeBigger((int) getResources().getDimension(R.dimen.xs_copy_all_value_container_height_px));
         }
         binding.rlCopyAllValueContainer.setLayoutParams(params);

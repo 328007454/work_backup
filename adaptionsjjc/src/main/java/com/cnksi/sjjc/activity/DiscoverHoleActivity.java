@@ -190,14 +190,6 @@ public class DiscoverHoleActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void drawCircle(String pictureName, String pictureContent) {
-        Intent intent = new Intent(mActivity, DrawCircleImageActivity.class);
-        intent.putExtra(Config.CURRENT_IMAGE_NAME, pictureName);
-        intent.putExtra(Config.PICTURE_CONTENT, pictureContent);
-        startActivityForResult(intent, LOAD_DATA);
-    }
-
     private void showPicture() {
         if (picList.size() != 0) {
             imgName = picList.get(0);

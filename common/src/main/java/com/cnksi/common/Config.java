@@ -353,12 +353,7 @@ public class Config implements Cst {
     public static final String IS_DEVICE_PART = "is_device_part";
     public static final String TASK_SELECT_PERSONS = "task_select_persons";
 
-    //验收类型
-    public static final String TYPE_NAME = "type_name";
-    public static final String VIDEO_NAME = "video_name";
-    public static final String PIC_NAME = "pic_name";
-    public static final String AUDIO_NAME = "audio_name";
-    public static final String ACCPETCARD_ITEM = "accpetcard_item";
+
     public static final String REPORT_ID = "report_id";
 
     public static final int LOAD_DATA = 0x01;
