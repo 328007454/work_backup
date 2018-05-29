@@ -22,6 +22,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityLocationSpacingBinding;
 import com.cnksi.bdzinspection.view.CircleBar;
 import com.cnksi.bdzinspection.view.CircleBar.OnProgressChangeListener;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.CLog;

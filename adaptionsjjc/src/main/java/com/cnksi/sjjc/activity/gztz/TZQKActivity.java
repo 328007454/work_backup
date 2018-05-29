@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CompoundButton;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DeviceService;
@@ -13,18 +12,15 @@ import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.activity.AllDeviceListActivity;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.service.gztz.PmsXianluService;
-import com.cnksi.sjjc.view.gztz.SelectGroup;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
-
-import java.util.List;
 
 /**
  * @version 1.0
@@ -33,7 +29,7 @@ import java.util.List;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class TZQKActivity extends BaseActivity {
+public class TZQKActivity extends BaseSjjcActivity {
     ActivityGztzBaseBinding binding;
     SbjcGztzjl sbgzjl;
 

@@ -19,6 +19,7 @@ import com.cnksi.bdzinspection.fragment.defectcontrol.TrackDefectFragment;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DrawCircleImageActivity;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.PlaySound;

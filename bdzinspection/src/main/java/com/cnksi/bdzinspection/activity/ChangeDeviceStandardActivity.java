@@ -19,15 +19,16 @@ import com.cnksi.bdzinspection.daoservice.DeviceStandardsService;
 import com.cnksi.bdzinspection.databinding.XsActivityChangeStandardBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddDefectDefineBinding;
-import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.Defect;
-import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DeviceStandards;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.FileUtils;
@@ -366,13 +367,13 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     /**
      * 是否删除巡检标准
      */
-    private XsDialogTipsBinding tipsBinding;
+    private CommonInspectionTipsBinding tipsBinding;
 
     private void showSureTipsDialog() {
         if (tipsDialog == null) {
             int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
             int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
-            tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
+            tipsBinding = CommonInspectionTipsBinding.inflate(getLayoutInflater());
             tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         tipsBinding.tvDialogTitle.setText(R.string.xs_dialog_tips_str);

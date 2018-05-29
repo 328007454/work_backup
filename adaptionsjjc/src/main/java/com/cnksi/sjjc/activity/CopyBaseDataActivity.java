@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.model.Report;
@@ -17,10 +16,12 @@ import com.cnksi.sjjc.databinding.ActivityCopybasedataBinding;
 
 import org.xutils.ex.DbException;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 抄录温湿度界面
  */
-public class CopyBaseDataActivity extends BaseActivity {
+public class CopyBaseDataActivity extends BaseSjjcActivity {
     //报告表
     private Report mReport;
     private ActivityCopybasedataBinding binding;
@@ -48,7 +49,7 @@ public class CopyBaseDataActivity extends BaseActivity {
 
 
     public void initView() {
-        mTitleBinding.tvTitle.setText(currentInspectionName);
+        mTitleBinding.tvTitle.setText(currentInspectionTypeName);
     }
 
     public void loadData() {

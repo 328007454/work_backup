@@ -23,6 +23,7 @@ import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.model.Users;
+import com.cnksi.common.utils.DateCalcUtils;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.TTSUtils;
@@ -40,7 +41,6 @@ import com.cnksi.sjjc.util.AESUtil;
 import com.cnksi.sjjc.util.AccountUtil;
 import com.cnksi.sjjc.util.ActivityUtil;
 import com.cnksi.sjjc.util.AppUtils;
-import com.cnksi.sjjc.util.DateUtils;
 import com.cnksi.sjjc.util.PermissionUtil;
 
 import org.xutils.common.util.DatabaseUtils;
@@ -49,21 +49,30 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 
 /**
  * 登录界面
  * @author Wastrel
  */
-public class LoginActivity extends BaseActivity implements GrantPermissionListener {
+public class LoginActivity extends BaseSjjcActivity implements GrantPermissionListener {
 
     private static final String TAG = "LoginActivity";
-    public static final int SAME_ACCOUNT = 0x01111;//添加账号相同
-    public static final int NO_SUCH_USER = SAME_ACCOUNT + 1;//没有对应账号
-    public static final int PWD_ERROR = NO_SUCH_USER + 1;//密码错误
-    public static final int USER_ONE_LOGIN_SUCCESS = PWD_ERROR + 1;//添加第一个登录人员成功
-    public static final int USER_TWO_LOGIN_SUCCESS = USER_ONE_LOGIN_SUCCESS + 1;//添加第二个登录人员成功
-    public static final int NO_LOGIN_USER = USER_TWO_LOGIN_SUCCESS + 1;//没人登录人员
-    public static final int USER_LOGIN_SUCCESS = NO_LOGIN_USER + 1;//登录成功
+    public static final int SAME_ACCOUNT = 0x01111;
+    //添加账号相同
+    public static final int NO_SUCH_USER = SAME_ACCOUNT + 1;
+    //没有对应账号
+    public static final int PWD_ERROR = NO_SUCH_USER + 1;
+    //密码错误
+    public static final int USER_ONE_LOGIN_SUCCESS = PWD_ERROR + 1;
+    //添加第一个登录人员成功
+    public static final int USER_TWO_LOGIN_SUCCESS = USER_ONE_LOGIN_SUCCESS + 1;
+    //添加第二个登录人员成功
+    public static final int NO_LOGIN_USER = USER_TWO_LOGIN_SUCCESS + 1;
+    //没人登录人员
+    public static final int USER_LOGIN_SUCCESS = NO_LOGIN_USER + 1;
+    //登录成功
     public static final int SHOW_UPDATE_LOG_DIALOG = USER_LOGIN_SUCCESS + 1;
     public static final int USER_COUNT_NOT_ACTIVITE = SHOW_UPDATE_LOG_DIALOG + 1;
     private Users mCurrentUserOne, mCurrentUserTwo;
@@ -117,7 +126,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             String[] userNames = userName.split(",");
             binding.etAutoUsername.setText(userNames[0]);
             String pwd = PreferencesUtils.get(userNames[0], "");
-            if (!DateUtils.timeNormal(pwd)) {
+            if (!DateCalcUtils.timeNormal(pwd)) {
                 binding.etPassword.setText(pwd);
             }
         }
@@ -137,7 +146,7 @@ public class LoginActivity extends BaseActivity implements GrantPermissionListen
             @Override
             public void afterTextChanged(final Editable s) {
                 String pwd = PreferencesUtils.get(s.toString(), "");
-                if (!DateUtils.timeNormal(pwd)) {
+                if (!DateCalcUtils.timeNormal(pwd)) {
                     binding.etPassword.setText(pwd);
                 }
                 ExecutorManager.executeTaskSerially(() -> {

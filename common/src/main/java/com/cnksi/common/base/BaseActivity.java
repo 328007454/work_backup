@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.activity;
+package com.cnksi.common.base;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -25,17 +25,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
-import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.R;
 import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.utils.StringUtilsExt;
@@ -51,11 +52,12 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.os.Build.VERSION.SDK_INT;
 
 @SuppressLint("HandlerLeak")
-public class BaseActivity extends BaseCoreActivity {
+public abstract class BaseActivity extends BaseCoreActivity {
 
     public static final int ACTION_RECORDVIDEO = 0x500;
     public static final int PERMISSION_WINDOW = ACTION_RECORDVIDEO + 1;
@@ -160,6 +162,9 @@ public class BaseActivity extends BaseCoreActivity {
     public String currentAcounts;
 
 
+    /**
+     * 开启svg格式图片兼容
+     * */
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -167,11 +172,12 @@ public class BaseActivity extends BaseCoreActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (!Config.DEBUG) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        }
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Intent intent = getIntent();
         if (null != intent) {
-            // 获取从数据检测传过来的登陆用户
             String userName = intent.getStringExtra(Config.CURRENT_LOGIN_USER);
             String userAccount = intent.getStringExtra(Config.CURRENT_LOGIN_ACCOUNT);
             String bdzId = intent.getStringExtra(Config.LASTTIEM_CHOOSE_BDZNAME);
@@ -182,14 +188,15 @@ public class BaseActivity extends BaseCoreActivity {
                 PreferencesUtils.put(Config.CURRENT_LOGIN_USER, userName);
                 PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
             }
-
-
         }
     }
 
+
     @Override
     public void getRootDataBinding() {
-
+        if (getLayoutResId() != 0) {
+            super.getRootDataBinding();
+        }
     }
 
     @Override
@@ -220,7 +227,9 @@ public class BaseActivity extends BaseCoreActivity {
         currentDevicePartName = getIntent().getStringExtra(Config.CURRENT_DEVICE_PART_NAME);
         currentSpacingId = getIntent().getStringExtra(Config.CURRENT_SPACING_ID);
         currentSpacingName = getIntent().getStringExtra(Config.CURRENT_SPACING_NAME);
-        currentStandardId = getIntent().getStringExtra(Config.CURRENT_STANDARD_ID); // 巡视标准ID
+        // 巡视标准ID
+        currentStandardId = getIntent().getStringExtra(Config.CURRENT_STANDARD_ID);
+
         // 是否是从巡检任务提醒界面跳转过去的
         isFromTaskRemind = getIntent().getBooleanExtra(Config.IS_FROM_TASK_REMIND, false);
 
@@ -234,7 +243,16 @@ public class BaseActivity extends BaseCoreActivity {
         currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
     }
 
+    public boolean isEmpty(TextView tv) {
+        Objects.requireNonNull(tv);
+        return TextUtils.isEmpty(tv.getText().toString().trim());
 
+    }
+
+    public String getText(TextView tv) {
+        Objects.requireNonNull(tv);
+        return tv.getText().toString();
+    }
 
     /**
      * 显示大图片
@@ -325,7 +343,6 @@ public class BaseActivity extends BaseCoreActivity {
     }
 
 
-
     @Override
     protected void onDestroy() {
         CustomerDialog.dismissProgress();
@@ -351,32 +368,31 @@ public class BaseActivity extends BaseCoreActivity {
     }
 
 
-
     protected void showTipsDialog(Intent intent) {
 
         if (currentInspectionType.contains("special") || mActivity.equals(InspectionType.routine.name())) {
             showTipsDialog(intent, -1, R.string.xs_dialog_tips_content_special, false);
         } else {
-            showTipsDialog( intent, -1, R.string.xs_dialog_tips_content_str, false);
+            showTipsDialog(intent, -1, R.string.xs_dialog_tips_content_str, false);
         }
     }
 
     protected void showTipsDialog(Intent intent, int requestCode, int dialogContentResId,
                                   boolean isFinishInspection) {
-        showTipsDialog( intent, requestCode, getText(dialogContentResId), isFinishInspection);
+        showTipsDialog(intent, requestCode, getText(dialogContentResId), isFinishInspection);
     }
 
     /**
      * 完成巡检提示框
      */
-    XsDialogTipsBinding tipsBinding;
+    CommonInspectionTipsBinding tipsBinding;
 
-    protected void showTipsDialog( Intent intent, int requestCode, CharSequence text,
+    protected void showTipsDialog(Intent intent, int requestCode, CharSequence text,
                                   boolean isFinishInspection) {
         int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         if (tipsDialog == null) {
-            tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
+            tipsBinding = CommonInspectionTipsBinding.inflate(getLayoutInflater());
             tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         tipsBinding.tvDialogContent.setText(text);
@@ -428,7 +444,7 @@ public class BaseActivity extends BaseCoreActivity {
      * 创建keyBoardView
      */
     protected void createKeyBoardView(ViewGroup root) {
-        mKeyBoardUtil = new CopyKeyBoardUtil( mActivity,root, null);
+        mKeyBoardUtil = new CopyKeyBoardUtil(mActivity, root, null);
     }
 
     public void ExitThisAndGoLauncher() {

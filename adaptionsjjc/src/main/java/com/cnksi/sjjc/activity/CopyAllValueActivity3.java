@@ -42,12 +42,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * 集中抄录数据 (集中抄录设备) 从设备列表界面跳转过来
  *
  * @author terry
  */
-public class CopyAllValueActivity3 extends BaseActivity {
+public class CopyAllValueActivity3 extends BaseSjjcActivity {
     private static final int LOAD_COPY_FINISIH = 0x10;
     private static final int LOAD_COPY_MAP = LOAD_COPY_FINISIH + 1;
     String remarkInfor = "";
@@ -123,7 +125,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
     public void initView() {
         getIntentValue();
         processor = ProcessorFactory.getProcessor(currentInspectionType, currentReportId);
-        mTitleBinding.tvTitle.setText(currentInspectionName + "记录" + "");
+        mTitleBinding.tvTitle.setText(currentInspectionTypeName + "记录" + "");
         mTitleBinding.tvRight.setText("完成记录");
         mTitleBinding.tvRight.setVisibility(View.VISIBLE);
         mTitleBinding.tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
@@ -439,7 +441,7 @@ public class CopyAllValueActivity3 extends BaseActivity {
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            isNeedUpdateTaskState = true;
+            isNeedUpdateTaskStatus = true;
             Intent intent = new Intent(mActivity, CopyValueReportActivity.class);
             CopyAllValueActivity3.this.startActivity(intent);
             ScreenManager.getScreenManager().popActivityList(CopyBaseDataActivity.class);

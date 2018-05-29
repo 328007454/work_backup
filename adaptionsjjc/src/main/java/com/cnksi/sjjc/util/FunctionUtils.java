@@ -12,7 +12,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.cnksi.common.Config;
 import com.cnksi.core.utils.AppUtils;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.ToastUtils;
 
@@ -34,12 +36,12 @@ public class FunctionUtils {
      * @return yyyyMMddHHmmssSSSadfdfdsfwei.jpg
      */
     public static String getCurrentImageName() {
-        SimpleDateFormat formatter = new SimpleDateFormat(CoreConfig.dateFormat6, Locale.CHINA);
-        String uuidStr = UUID.randomUUID().toString().replace(CoreConfig.DASH_SEPARATOR, "");
+        SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyyMMddHHmmssSSS, Locale.CHINA);
+        String uuidStr = UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
         if (uuidStr.length() > 8) {
             uuidStr = uuidStr.substring(0, 8);
         }
-        return String.valueOf(formatter.format(new Date()) + uuidStr + CoreConfig.IMAGE_JPG_POSTFIX);
+        return String.valueOf(formatter.format(new Date()) + uuidStr + Config.IMAGE_JPG_POSTFIX);
     }
 
 
@@ -52,7 +54,7 @@ public class FunctionUtils {
      * @param imageFolder      文件夹
      */
     public static void takePicture(Activity activity, String currentImageName, String imageFolder) {
-        takePicture(activity, currentImageName, imageFolder, CoreConfig.ACTION_IMAGE);
+        takePicture(activity, currentImageName, imageFolder, Config.ACTION_IMAGE);
     }
 
     /**

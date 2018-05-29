@@ -20,6 +20,7 @@ import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.PlaySound;

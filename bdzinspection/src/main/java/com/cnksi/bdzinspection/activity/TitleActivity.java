@@ -3,15 +3,13 @@ package com.cnksi.bdzinspection.activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsActivityTitlebaseBinding;
+import com.cnksi.common.base.BaseActivity;
 
 public abstract class TitleActivity extends BaseActivity {
 	public ImageView back;
@@ -73,19 +71,6 @@ public abstract class TitleActivity extends BaseActivity {
 
 	protected void setTitleText(String t) {
 		title.setText(t);
-	}
-
-	protected void setLeftButtonInvisable() {
-		back.setVisibility(View.INVISIBLE);
-	}
-
-	/**
-	 * 重定义back按钮的功能 如果为NULL 将取消back的点击事件
-	 *
-	 * @param listener
-	 */
-	protected void setBackListener(@Nullable OnClickListener listener) {
-		back.setOnClickListener(listener);
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityInspectionReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsHistoryDataDialogBinding;
 import com.cnksi.bdzinspection.model.Placed;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;

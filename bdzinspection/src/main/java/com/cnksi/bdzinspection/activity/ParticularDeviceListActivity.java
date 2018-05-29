@@ -22,6 +22,7 @@ import com.cnksi.bdzinspection.model.SpacingLastly;
 import com.cnksi.bdzinspection.utils.ShakeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.listener.OnViewClickListener;

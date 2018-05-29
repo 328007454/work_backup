@@ -427,6 +427,10 @@ public class Config implements Cst {
      * 取消选择的图片
      */
     public static final int CANCEL_RESULT_LOAD_IMAGE = PAIZHAO_LUXIANG_REQUSET + 1;
+    /**
+     * 画圈
+     */
+    public static final int DRAW_IMAGE = CANCEL_RESULT_LOAD_IMAGE + 1;
 
     public static final String SYNC_COME_FROM = "sync_come_from";
 

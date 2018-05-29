@@ -21,6 +21,7 @@ import com.cnksi.bdzinspection.daoservice.SwitchMenuService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddInspectionTaskBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityAddinpsectionTypeDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.bdzinspection.utils.SelectPersonUtil;

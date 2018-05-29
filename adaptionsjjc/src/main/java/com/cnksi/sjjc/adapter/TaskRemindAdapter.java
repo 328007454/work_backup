@@ -12,7 +12,6 @@ import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.util.CoreConfig;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -64,7 +63,7 @@ public class TaskRemindAdapter extends BaseAdapter<Task> {
         String taskName = item.bdzname + "(" + item.inspection_name + ")";
         holder.setText(R.id.tv_task_name, StringUtils.changePartTextColor(context, taskName, R.color.green_color, taskName.length() - item.inspection_name.length() - 2, taskName.length()).toString());
         // 设置巡视时间
-        holder.setText(R.id.tv_inspection_time, DateUtils.getFormatterTime(item.schedule_time, CoreConfig.dateFormat1));
+        holder.setText(R.id.tv_inspection_time, DateUtils.getFormatterTime(item.schedule_time, DateUtils.yyyy_MM_dd));
 
         holder.getRootView().setOnClickListener(v -> {
             if (null != itemClickListener) {

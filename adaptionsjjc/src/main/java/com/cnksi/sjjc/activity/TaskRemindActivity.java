@@ -19,7 +19,6 @@ import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
 import com.cnksi.sjjc.databinding.ActivityTaskRemindBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.sjjc.fragment.TaskRemindFragment;
-import com.cnksi.sjjc.inter.OnFragmentEventListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
 
@@ -29,7 +28,7 @@ import java.util.Arrays;
 /**
  * 任务列表
  */
-public class TaskRemindActivity extends BaseActivity {
+public class TaskRemindActivity extends BaseSjjcActivity {
     public static final int ADD_TASK_REQUEST_CODE = 0x01;
 
     public static final int FINISH_TASK = 0x777;
@@ -49,7 +48,7 @@ public class TaskRemindActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //如果直接启动的TaskRemind则不需要在OnResume执行更新，因为是全新加载数据。
-        isNeedUpdateTaskState = false;
+        isNeedUpdateTaskStatus = false;
         mRemindBinding = ActivityTaskRemindBinding.inflate(getLayoutInflater());
         
         setChildView(mRemindBinding.getRoot());
@@ -140,7 +139,7 @@ public class TaskRemindActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (isNeedUpdateTaskState) {
+        if (isNeedUpdateTaskStatus) {
             updateTaskStatus();
         }
     }
@@ -189,7 +188,7 @@ public class TaskRemindActivity extends BaseActivity {
     }
 
     public void updateTaskStatus() {
-        isNeedUpdateTaskState = false;
+        isNeedUpdateTaskStatus = false;
         for (int i = 0, count = mFragmentList.size(); i < count; i++) {
             if (mFragmentList.get(i) instanceof TaskRemindFragment) {
                 if (i == currentSelectedPosition) {

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.ReportService;
@@ -26,7 +25,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
@@ -49,7 +48,7 @@ import java.util.UUID;
  * @author kkk on 2018/3/7.
  */
 
-public class GZTZRecordActivity extends BaseActivity {
+public class GZTZRecordActivity extends BaseSjjcActivity {
 
     private ActivityGztzRecordBinding mRecordBinding;
     private ShowPeopleAdapter showPeopleAdapter;

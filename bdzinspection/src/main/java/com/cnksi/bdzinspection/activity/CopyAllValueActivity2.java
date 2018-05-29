@@ -21,22 +21,23 @@ import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyAll2Binding;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
-import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.fragment.CopyValueFragment2;
 import com.cnksi.bdzinspection.fragment.CopyValueFragment2.FragmentItemClickerListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
-import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
-import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.bdzinspection.utils.CopyViewUtil.KeyBordListener;
 import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Lookup;
+import com.cnksi.common.utils.CopyKeyBoardUtil;
+import com.cnksi.common.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
@@ -100,7 +101,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
     private String transDefectContent = "";
     private List<DefectRecord> mExistDefectList = new ArrayList<>();
     private Dialog defectDialog;
-    private XsDialogTipsBinding tipsBinding;
+    private CommonInspectionTipsBinding tipsBinding;
     private XsActivityCopyAll2Binding binding;
 
     @Override
@@ -372,7 +373,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
 
     public void createDefectDialog() {
         int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 7 / 9;
-        tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
+        tipsBinding = CommonInspectionTipsBinding.inflate(getLayoutInflater());
         defectDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         tipsBinding.tvDialogTitle.setText("警告");
         tipsBinding.btnCancel.setText("否");

@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.common.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,10 +22,8 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.view.NumberSeekBar;
-import com.cnksi.common.utils.KeyBoardUtils;
-import com.cnksi.common.utils.PlaySound;
+import com.cnksi.common.R;
+import com.cnksi.common.view.NumberSeekBar;
 import com.cnksi.core.utils.ScreenUtils;
 
 import java.math.BigDecimal;
@@ -98,7 +96,7 @@ public class CopyKeyBoardUtil {
 
     public CopyKeyBoardUtil(Activity activity, ViewGroup root, EditText mEditText) {
         this.mContext = activity;
-        this.mRootContainer = LayoutInflater.from(mContext).inflate(R.layout.xs_keyboard_layout, root, false);
+        this.mRootContainer = LayoutInflater.from(mContext).inflate(R.layout.copy_keyboard_layout, root, false);
         this.mKeyBoardView = mRootContainer.findViewById(R.id.keyboard_view);
         this.mNumberSeekBar = mRootContainer.findViewById(R.id.number_seekbar);
         this.mRlSeekBarContainer = mRootContainer.findViewById(R.id.rl_seekbar_container);

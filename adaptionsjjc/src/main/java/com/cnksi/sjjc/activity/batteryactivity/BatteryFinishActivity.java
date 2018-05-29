@@ -8,7 +8,6 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
@@ -29,7 +28,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowManagerAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
@@ -44,11 +43,13 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * Created by han on 2016/8/10.
  * 蓄电池选择人员界面
  */
-public class BatteryFinishActivity extends BaseActivity implements ItemClickListener {
+public class BatteryFinishActivity extends BaseSjjcActivity implements ItemClickListener {
     public static String MANAGER_FLAG = "manager_flag";
     public static String PEOPLE_FLAG = "people_flag";
     public static String BATTERY_FINISH_ACTIVITY = "battery_finish_activity";
@@ -193,7 +194,7 @@ public class BatteryFinishActivity extends BaseActivity implements ItemClickList
             Intent intent = new Intent(mActivity, BatteryTestReportActivity.class);
             BatteryFinishActivity.this.startActivity(intent);
             ScreenManager.getScreenManager().popActivity(BatteryTestActivity.class);
-            isNeedUpdateTaskState = true;
+            isNeedUpdateTaskStatus = true;
             BatteryFinishActivity.this.finish();
         });
     }

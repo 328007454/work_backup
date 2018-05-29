@@ -11,12 +11,12 @@ import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.DevicePart;
 import com.cnksi.sjjc.bean.Lookup;
 import com.cnksi.sjjc.service.DevicePartService;
 import com.cnksi.sjjc.service.StandardService;
-import com.cnksi.sjjc.util.DateUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;

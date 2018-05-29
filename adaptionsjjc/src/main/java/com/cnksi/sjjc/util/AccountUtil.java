@@ -5,10 +5,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.cnksi.common.utils.DateCalcUtils;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author kkk on 2018/1/19.
@@ -40,10 +43,10 @@ public class AccountUtil {
         if (TextUtils.isEmpty(oldTime)) {
             return false;
         } else {
-            if (!DateUtils.timeNormal(oldTime)) {
+            if (!DateCalcUtils.timeNormal(oldTime)) {
                 return false;
             }
-            boolean larger = DateUtils.compareDate(oldTime, DateUtils.getPreHour(1, CoreConfig.dateFormat2), CoreConfig.dateFormat2);
+            boolean larger = DateUtils.compareDate(oldTime, DateCalcUtils.getNowPre(1, TimeUnit.HOURS,DateUtils.yyyy_MM_dd_HH_mm_ss), DateUtils.yyyy_MM_dd_HH_mm_ss);
             if (larger) {
                 ToastUtils.showMessage("您的帐号已被锁定,请于一个小时之后重试");
             } else {

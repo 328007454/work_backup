@@ -61,7 +61,6 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
 
             }
         }));
-
     }
 
     @Override
@@ -98,9 +97,7 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
         CustomerDialog.dismissProgress();
         switch (msg.what) {
             case SAVE_DATA:
-
                 onBackPressed();
-
                 break;
             case LOAD_DATA:
                 binding.llImageContainer.removeAllViews();

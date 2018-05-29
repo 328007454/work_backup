@@ -25,7 +25,6 @@ import com.cnksi.sjjc.adapter.DiscoverHoleAdapter;
 import com.cnksi.sjjc.bean.HoleRecord;
 import com.cnksi.sjjc.databinding.ActivityDiscoverHoleBinding;
 import com.cnksi.sjjc.service.HoleReportService;
-import com.cnksi.sjjc.util.CoreConfig;
 import com.cnksi.sjjc.util.FunctionUtil;
 import com.cnksi.sjjc.util.FunctionUtils;
 
@@ -37,11 +36,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * Created by han on 2016/6/13.
  * 发现孔洞
  */
-public class DiscoverHoleActivity extends BaseActivity {
+public class DiscoverHoleActivity extends BaseSjjcActivity {
     //所有孔洞位置集合
     private List<String> areaList;
     private ListView positionLv;
@@ -170,7 +171,7 @@ public class DiscoverHoleActivity extends BaseActivity {
                 File file = new File(Config.RESULT_PICTURES_FOLDER, imgName);
                 if (file.exists()) {
                     BitmapUtils.compressImage(file.getAbsolutePath(), 3);
-                    String pictureContent = DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) + "\n" + binding.tvDiscoverholePosition.getText()
+                    String pictureContent = DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm) + "\n" + binding.tvDiscoverholePosition.getText()
                             + binding.etInputInforposition.getText().toString() + "\n" + PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                     picList.add(imgName);

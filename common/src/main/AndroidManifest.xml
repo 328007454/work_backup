@@ -18,5 +18,8 @@
         <activity
             android:name=".activity.LandSignNameActivity"
             android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activity.DrawCircleImageActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

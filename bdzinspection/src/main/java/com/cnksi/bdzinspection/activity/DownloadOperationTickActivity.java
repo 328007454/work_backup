@@ -14,13 +14,13 @@ import com.cnksi.bdzinspection.czp.OperateTaskCheckedActivity;
 import com.cnksi.bdzinspection.daoservice.OperateItemService;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityDownloadOptrTickBinding;
-import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.OperateItem;
-import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.bdzinspection.utils.OpearTickParser;
 import com.cnksi.bdzinspection.utils.OperateTick;
-import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.Config;
+import com.cnksi.common.databinding.CommonInspectionTipsBinding;
+import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.utils.ScreenUtils;
 
 import org.xutils.ex.DbException;
@@ -184,13 +184,13 @@ public class DownloadOperationTickActivity extends TitleActivity {
     /**
      * 接收到操作任务提示
      */
-    XsDialogTipsBinding tipsBinding;
+    CommonInspectionTipsBinding tipsBinding;
 
     protected void showTipsDialog(String content) {
         int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
         int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
         if (tipsDialog == null) {
-            tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
+            tipsBinding = CommonInspectionTipsBinding.inflate(getLayoutInflater());
             tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
         }
         tipsBinding.tvDialogContent.setText(content);

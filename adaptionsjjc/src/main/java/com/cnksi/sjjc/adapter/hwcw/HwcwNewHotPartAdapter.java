@@ -5,13 +5,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
 import com.cnksi.sjjc.adapter.holder.ItemHolder;
 import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ItemHotpartBinding;
 import com.cnksi.sjjc.databinding.ItemHwcwHotPartBinding;
-import com.cnksi.sjjc.util.GsonUtil;
 
 import java.util.Collection;
 
@@ -47,7 +47,7 @@ public class HwcwNewHotPartAdapter extends BaseRecyclerDataBindingAdapter<HwcwLo
         hotPartBinding.txtLoadElectricityValue.setText(item.fhdl + "(A)");
         hotPartBinding.txtElectrcityValue.setText(item.ratedCurrent + "(A)");
         if (!TextUtils.isEmpty(item.hotPart)) {
-            HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(item.hotPart);
+            HwcwHotPart hotParts = JSONObject.parseObject(item.hotPart, HwcwHotPart.class);
             ItemHotpartBinding partBinding = null;
             for (HwcwHotPart.Result result : hotParts.result) {
                 if (i % 2 == 0) {

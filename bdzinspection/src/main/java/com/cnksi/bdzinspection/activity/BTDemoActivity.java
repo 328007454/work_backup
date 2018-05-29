@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.BluetoothAdapter.RFIDReadDataAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityBtdemoBinding;
+import com.cnksi.common.base.BaseActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;

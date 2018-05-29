@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.view;
+package com.cnksi.common.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,7 +15,7 @@ import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.cnksi.bdzinspection.R;
+import com.cnksi.common.R;
 
 import java.math.BigDecimal;
 

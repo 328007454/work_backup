@@ -14,7 +14,7 @@ import com.cnksi.sjjc.databinding.ActivityTjwtBinding;
 /**
  * 图解五通图片详情Activity
  */
-public class TJWTActivity extends BaseActivity {
+public class TJWTActivity extends BaseSjjcActivity {
     private ActivityTjwtBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,6 +16,7 @@ import com.cnksi.bdzinspection.adapter.CopyMaintenanceDeviceAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyAll3Binding;
 import com.cnksi.bdzinspection.databinding.XsMaintenanceCopyItemBinding;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.model.CopyItem;

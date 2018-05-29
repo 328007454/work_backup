@@ -2,6 +2,7 @@ package com.cnksi.sjjc.util;
 
 import android.content.Context;
 
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.common.Config;
 
@@ -26,12 +27,12 @@ public class FunctionUtil extends FunctionUtils {
         //获取图片目录
         String picPrefix = PreferencesUtils.get( Config.PICTURE_PREFIX, "");
         //生成图片名称
-        SimpleDateFormat formatter = new SimpleDateFormat(CoreConfig.dateFormat6, Locale.CHINA);
-        String uuidStr = UUID.randomUUID().toString().replace(CoreConfig.DASH_SEPARATOR, "");
+        SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyyMMddHHmmssSSS, Locale.CHINA);
+        String uuidStr = UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
         if (uuidStr.length() > 8) {
             uuidStr = uuidStr.substring(0, 8);
         }
-        String imageName = String.valueOf(formatter.format(new Date()) + uuidStr + CoreConfig.IMAGE_JPG_POSTFIX);
+        String imageName = String.valueOf(formatter.format(new Date()) + uuidStr + Config.IMAGE_JPG_POSTFIX);
         return picPrefix + imageName;
     }
 

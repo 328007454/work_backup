@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -44,16 +43,8 @@ import java.util.UUID;
  *
  * @author kkk
  */
-public class AddTaskActivity extends BaseActivity {
-    @Override
-    public void initUI() {
+public class AddTaskActivity extends BaseSjjcActivity {
 
-    }
-
-    @Override
-    public void initData() {
-
-    }
 
     public static final int LOAD_BDZ_DATA = 0x01;
     private String mPressureDetectionType = "";
@@ -100,11 +91,16 @@ public class AddTaskActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTaskBinding = ActivityAddTaskBinding.inflate(getLayoutInflater());
-        setChildView(mTaskBinding.getRoot());
+
         initView();
         loadData();
         initOnclick();
+    }
+
+    @Override
+    protected View getChildContentView() {
+        mTaskBinding = ActivityAddTaskBinding.inflate(getLayoutInflater());
+        return mTaskBinding.getRoot();
     }
 
     public void initView() {
@@ -364,5 +360,6 @@ public class AddTaskActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
+
 
 }

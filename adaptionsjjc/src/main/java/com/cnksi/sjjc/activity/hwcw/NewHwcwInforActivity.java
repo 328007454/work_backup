@@ -8,8 +8,8 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
@@ -27,7 +27,7 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.BaseActivity;
+import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
 import com.cnksi.sjjc.adapter.ShowPeopleAdapter;
 import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
@@ -36,7 +36,6 @@ import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityNewhwcwInforBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
 import com.cnksi.sjjc.service.NewHwcwService;
-import com.cnksi.sjjc.util.GsonUtil;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -50,7 +49,7 @@ import java.util.List;
  * @author kkk on 2017/12/13.
  */
 
-public class NewHwcwInforActivity extends BaseActivity implements ItemClickListener {
+public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickListener {
     ActivityNewhwcwInforBinding mInforBinding;
     private List<HwcwLocation> hotLocations = new ArrayList<>();
     private HwcwBaseInfo mHwcwBaseInfo;
@@ -98,7 +97,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
     }
 
     public void initView() {
-        mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionName + "记录");
+        mTitleBinding.tvTitle.setText(currentBdzName + currentInspectionTypeName + "记录");
         resolveHotPart();
         String[] users;
         if (TextUtils.isEmpty(mHwcwBaseInfo.testPerson)) {
@@ -139,7 +138,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
                 }
                 String deviceName = location.deviceName;
                 stringBuilder.append("\n发热设备:").append(deviceName).append("\n");
-                HwcwHotPart hotParts = (HwcwHotPart) GsonUtil.resolveJson(location.hotPart);
+                HwcwHotPart hotParts = JSONObject.parseObject(location.hotPart, HwcwHotPart.class);
                 if (hotParts != null && hotParts.result != null && !hotParts.result.isEmpty()) {
                     for (HwcwHotPart.Result result : hotParts.result) {
                         stringBuilder.append("发热部位名称：").append(result.bw_name).append("\n温度：").append(result.wd).append("(℃)\n");
@@ -168,7 +167,7 @@ public class NewHwcwInforActivity extends BaseActivity implements ItemClickListe
             case R.id.btn_produce_record:
                 isUpdateReport = true;
                 saveData();
-                isNeedUpdateTaskState = true;
+                isNeedUpdateTaskStatus = true;
                 Intent intent = new Intent(mActivity, NewHwcwReportActivity.class);
                 startActivity(intent);
                 mActivity.finish();

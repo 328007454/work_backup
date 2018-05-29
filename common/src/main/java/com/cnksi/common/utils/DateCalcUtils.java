@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /**
  * 时间格式化工具类
@@ -328,6 +330,8 @@ public class DateCalcUtils {
         return calendar;
     }
 
+
+
     public static Calendar getCalendar(String currentTime,String formatter) {
         SimpleDateFormat df = new SimpleDateFormat(formatter, Locale.CHINA);
         Date date = null;
@@ -339,5 +343,18 @@ public class DateCalcUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
+    }
+    /**
+     * yyyy-MM-dd HH:mm:ss
+     */
+    private static String dateN = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}";
+
+    public static boolean timeNormal(String time) {
+        boolean date = Pattern.compile(dateN).matcher(time).matches();
+        return date;
+    }
+
+    public static String getNowPre(int t, TimeUnit unit,String format){
+      return getFormatterTime(new Date(System.currentTimeMillis()+unit.toMillis(t)),format);
     }
 }

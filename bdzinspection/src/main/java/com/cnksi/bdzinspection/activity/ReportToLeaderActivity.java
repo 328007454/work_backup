@@ -16,6 +16,7 @@ import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityReportToLeaderBinding;
 import com.cnksi.bdzinspection.model.TestPerson;
 import com.cnksi.bdzinspection.utils.DefectUtils;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;

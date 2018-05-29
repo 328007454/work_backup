@@ -15,11 +15,12 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ReportCopyvalueBinding;
 import com.cnksi.sjjc.processor.CopyDataInterface;
 import com.cnksi.sjjc.processor.ProcessorFactory;
-import com.cnksi.sjjc.util.CoreConfig;
 
 import org.xutils.ex.DbException;
 
 import java.util.Date;
+
+import static com.cnksi.common.Config.LOAD_DATA;
 
 /**
  * 抄录报告
@@ -96,12 +97,12 @@ public class CopyValueReportActivity extends BaseReportActivity {
                 binding.tvInspectionResult.setText(StringUtils.changePartTextColor(mActivity, result, R.color.red_color, result.length() - status.length(), result.length()));
                 if (currentInspectionType.contains(InspectionType.SBJC_06.name())) {
                     binding.llInspectionType.setVisibility(View.VISIBLE);
-                    binding.tvInspectionType.setText(currentInspectionName);
+                    binding.tvInspectionType.setText(currentInspectionTypeName);
                 }
                 
                 if (report != null) {
-                    binding.tvInspectionStartTime.setText(DateUtils.getFormatterTime(report.starttime, CoreConfig.dateFormat8));
-                    binding.tvInspectionEndTime.setText(TextUtils.isEmpty(report.endtime) ? DateUtils.getFormatterTime(new Date(), CoreConfig.dateFormat8) : DateUtils.getFormatterTime(report.endtime, CoreConfig.dateFormat8));
+                    binding.tvInspectionStartTime.setText(DateUtils.getFormatterTime(report.starttime, DateUtils.yyyy_MM_dd_HH_mm));
+                    binding.tvInspectionEndTime.setText(TextUtils.isEmpty(report.endtime) ? DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm) : DateUtils.getFormatterTime(report.endtime, DateUtils.yyyy_MM_dd_HH_mm));
                     binding.tvInspectionPerson.setText(report.persons);
                     if (processor.isHasCheckResult()) {
                         binding.tvCheck.setVisibility(View.VISIBLE);

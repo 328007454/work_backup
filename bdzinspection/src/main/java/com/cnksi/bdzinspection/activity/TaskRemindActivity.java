@@ -26,6 +26,7 @@ import com.cnksi.bdzinspection.ywyth.YWWorkflowActivity;
 import com.cnksi.bdzinspection.ywyth.YunweiReportActivity;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.daoservice.ReportService;

@@ -5,15 +5,14 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cnksi.bdzinspection.activity.AddNewDefectActivity;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Users;
-import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -32,7 +31,7 @@ import java.util.List;
  * @author Mr.K  on 2017/4/25.
  */
 
-public class DefectControlActivity extends BaseCoreActivity {
+public class DefectControlActivity extends BaseTitleActivity {
     private ActivityDefectControlBinding defectControlBinding;
     private List<Bdz> bdzList = new ArrayList<>();
     private DefectContentAdapter defectContentAdapter;
@@ -47,26 +46,18 @@ public class DefectControlActivity extends BaseCoreActivity {
     private String userName = "全部";
     private String departmentName;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initView();
-        loadData();
-    }
 
     @Override
-    public int getLayoutResId() {
-        return 0;
+    protected View getChildContentView() {
+        defectControlBinding = ActivityDefectControlBinding.inflate(getLayoutInflater());
+        return defectControlBinding.getRoot();
     }
 
-    @Override
-    public void getRootDataBinding() {
-        defectControlBinding = DataBindingUtil.setContentView(this, R.layout.activity_defect_control);
-    }
 
     @Override
     public void initUI() {
-
+        defectControlBinding.setEvent(this);
+        setTitleText("缺陷管理");
     }
 
     @Override
@@ -120,7 +111,20 @@ public class DefectControlActivity extends BaseCoreActivity {
                 search();
             });
         });
+    }
 
+    private void search() {
+        ExecutorManager.executeTaskSerially(() -> {
+            defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.getString(Bdz.BDZID), defectLevel);
+            runOnUiThread(() -> {
+                if (defectContentAdapter == null) {
+                    defectContentAdapter = new DefectContentAdapter(this, defectRecords);
+                    defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
+                } else {
+                    defectContentAdapter.notifyDataSetChanged();
+                }
+            });
+        });
     }
 
 
@@ -163,4 +167,6 @@ public class DefectControlActivity extends BaseCoreActivity {
             Intent intent = new Intent(this, AddDefecctActivity.class);
         }
     }
+
+
 }

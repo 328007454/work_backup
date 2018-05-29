@@ -42,6 +42,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import static com.cnksi.common.Config.LOAD_DATA;
+
 /**
  * Created by han on 2016/6/17.
  * 蓄电池检测报告
@@ -78,7 +80,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
             currentBdzName = bundle.getString(Config.CURRENT_BDZ_NAME);
             currentReportId = bundle.getString(Config.CURRENT_REPORT_ID);
             currentTaskId = bundle.getString(Config.CURRENT_TASK_ID);
-            currentInspectionName = InspectionType.get(currentInspectionType).value;
+            currentInspectionTypeName = InspectionType.get(currentInspectionType).value;
             type = bundle.getString(Config.CURRENT_INSPECTION_TYPE);
             String currentFolder = bundle.getString(Config.CURRENT_FILENAME);
             PreferencesUtils.put(Config.PICTURE_PREFIX, currentFolder);

@@ -1,4 +1,4 @@
-package com.cnksi.sjjc.util.util;
+package com.cnksi.sjjc.util;
 
 import android.Manifest;
 import android.app.Activity;
@@ -9,23 +9,18 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
+import com.cnksi.common.Config;
 import com.cnksi.core.common.DeviceInfor;
-import com.cnksi.core.common.UpdateInfor;
 import com.cnksi.core.utils.DeviceUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.BuildConfig;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.util.CoreConfig;
-import com.cnksi.sjjc.util.FunctionUtils;
 import com.cnksi.sjjc.view.CustomerDialog;
-
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,54 +57,12 @@ public class UpdateUtils {
 
     }
 
-    /**
-     * 检测是否有新的APK
-     *
-     * @param context
-     * @param appFloder
-     * @return
-     */
-    public static File hasUpdateApk(Context context, String appFloder) {
-        return hasUpdateApk(context, null, appFloder);
-    }
 
     public static File hasUpdateApk(Context context, String appFloder, boolean isPms) {
         return hasUpdateApk(context, null, appFloder, isPms);
     }
 
-    /**
-     * 检测是否有新的APK
-     *
-     * @param context
-     * @param file
-     * @param appFloder apk包的路径
-     * @return
-     */
-    public static File hasUpdateApk(Context context, File file, String appFloder) {
-        if (file == null) {
-            PackageInfo localPackageInfo = AppUtils.getLocalPackageInfo(context);
-            if (localPackageInfo==null){
-                return null;
-            }
-            file = getTheNewApkFile(context, appFloder,localPackageInfo.packageName, localPackageInfo.versionCode);
-        }
-        if (file != null && file.exists()) {
-            PackageInfo remotePackageInfo = AppUtils.getAPKPackageInfo(context, file);
-            PackageInfo localPackageInfo = AppUtils.getLocalPackageInfo(context);
-            int remoteVersionCode = 0;
-            int localVersionCode = 0;
-            if (remotePackageInfo != null && localPackageInfo != null) {
-                remoteVersionCode = remotePackageInfo.versionCode;
-                localVersionCode = localPackageInfo.versionCode;
-            }
-            if (remoteVersionCode > localVersionCode) {
-                return file;
-            } else {
-                return null;
-            }
-        }
-        return file;
-    }
+
 
     /**
      * 检测是否有新的APK
@@ -151,14 +104,13 @@ public class UpdateUtils {
      */
     public static File getTheNewApkFile(Context context, String path, String packageName, int currentVersionCode) {
         File newApkFile = null;
-        PackageInfo newAPkPackageInfo;
         List<File> apkFileList = new ArrayList<>();
         if (!TextUtils.isEmpty(path)) {
             File file = new File(path);
             if (file != null && file.exists() && file.isDirectory()) {
                 File[] children = file.listFiles();
                 for (File f : children) {
-                    if (f != null && f.exists() && f.isFile() && f.getName().toLowerCase(Locale.US).endsWith(CoreConfig.APK_POSTFIX)) {
+                    if (f != null && f.exists() && f.isFile() && f.getName().toLowerCase(Locale.US).endsWith(Config.APK_POSTFIX)) {
                         apkFileList.add(f);
                     }
                 }
@@ -188,50 +140,6 @@ public class UpdateUtils {
         return newApkFile;
     }
 
-//    /**
-//     * 显示升级对话框
-//     *
-//     * @param downloadUrl
-//     * @param updateContent
-//     */
-//    public static void showUpdateDialog(final Activity mContext, final String downloadUrl, String updateContent, final String targetFileFolder, final String targetFileName) {
-//        mDialog = CustomerDialog.showUpdateDialog(mContext, R.string.version_update_str, updateContent, new DialogClickListener() {
-//            @Override
-//            public void confirm() {
-//                mDialog.dismiss();
-//                Intent intent = new Intent(mContext, Task.class);
-//                intent.putExtra(CoreConfig.DOWNLOAD_APK_URL_KEY, downloadUrl);
-//                intent.putExtra(CoreConfig.DOWNLOAD_FILE_FOLDER_KEY, targetFileFolder);
-//                intent.putExtra(CoreConfig.DOWNLOAD_FILE_NAME_KEY, targetFileName);
-//                mContext.startService(intent);
-//            }
-
-//            @Override
-//            public void cancel() {
-//
-//            }
-//        });
-//    }
-
-    /**
-     * 新版本已下载 提示安装dialog
-     *
-     * @param file
-     */
-    public static Dialog showInstallNewApkDialog(final Activity mContext, final File file) {
-        Dialog mDialog = CustomerDialog.showSelectDialog(mContext, R.string.find_newversion_str, new CustomerDialog.DialogClickListener() {
-            @Override
-            public void confirm() {
-                UpdateUtils.installNewApk(mContext, file);
-            }
-
-            @Override
-            public void cancel() {
-
-            }
-        }, R.string.install_now_str, R.string.cancel_install_str);
-        return mDialog;
-    }
 
     /**
      * 新版本已下载 提示安装dialog
@@ -267,52 +175,7 @@ public class UpdateUtils {
         return mDialog;
     }
 
-    /**
-     * 解析升级数据
-     *
-     * @param mContext
-     * @param mHandler
-     * @param result
-     * @param requestCode
-     */
-    public static void resolveData(Context mContext, Handler mHandler, String result, int requestCode) {
-        try {
-            UpdateInfor updateInfo = JSON.toJavaObject(JSON.parseObject(result), UpdateInfor.class);
-            if (updateInfo != null) {
-                if (Integer.valueOf(updateInfo.vcode) > AppUtils.getLocalPackageInfo(mContext).versionCode) {
-                    mHandler.sendMessage(mHandler.obtainMessage(requestCode, updateInfo));
-                }
-            }
-        } catch (Exception e) {
-        }
-    }
 
-    /**
-     * 得到设备的信息
-     *
-     * @param mContext
-     * @param appCode
-     * @return
-     */
-//    public static RequestParams getDeviceInforParams(Context mContext, String appCode) {
-//        RequestParams params = new RequestParams();
-//        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_STATE) == PermissionChecker.PERMISSION_GRANTED) {
-//            DeviceInfor deviceInfor = DeviceUtils.getPhoneInfor(mContext);
-//            params.addBodyParameter(DeviceInfor.PID, TextUtils.isEmpty(appCode) ? FunctionUtils.getMetaValue(mContext, "com.cnksi.core.PROGRAM_CODE") : appCode);
-//            params.addBodyParameter(DeviceInfor.ANDROID, deviceInfor.android);
-//            params.addBodyParameter(DeviceInfor.BRAND, deviceInfor.brand);
-//            params.addBodyParameter(DeviceInfor.DENSITY, deviceInfor.density);
-//            params.addBodyParameter(DeviceInfor.DEVICE_ID, deviceInfor.deviceid);
-//            params.addBodyParameter(DeviceInfor.FACTORY, deviceInfor.factory);
-//            params.addBodyParameter(DeviceInfor.LASTVIST, deviceInfor.lastvist);
-//            params.addBodyParameter(DeviceInfor.MEMORY, deviceInfor.memory);
-//            params.addBodyParameter(DeviceInfor.MODEL, deviceInfor.model);
-//            params.addBodyParameter(DeviceInfor.PHONE_NUM, deviceInfor.phone);
-//            params.addBodyParameter(DeviceInfor.RESOLUTION, deviceInfor.resolution);
-//            params.addBodyParameter(DeviceInfor.VER, deviceInfor.ver);
-//        }
-//        return params;
-//    }
 
     /**
      * 得到设备的信息

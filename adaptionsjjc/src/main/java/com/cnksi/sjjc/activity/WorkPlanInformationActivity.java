@@ -8,14 +8,12 @@ import android.provider.MediaStore;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 
+import com.cnksi.common.Config;
 import com.cnksi.common.activity.LandSignNameActivity;
 import com.cnksi.core.utils.UriUtils;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.JSObject;
 import com.cnksi.sjjc.MyWebChromeClient;
 import com.cnksi.sjjc.databinding.ActivityWebviewBinding;
-import com.cnksi.sjjc.util.CoreConfig;
-
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by han on 2016/5/5.
  */
-public class WorkPlanInformationActivity extends BaseActivity {
+public class WorkPlanInformationActivity extends BaseSjjcActivity {
     private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> uploadMessage;
     private String imageName;
@@ -119,12 +117,13 @@ public class WorkPlanInformationActivity extends BaseActivity {
                     Uri result = UriUtils.getImageContentUri(this, Config.WORKTICKIT_PIC + imageName);
                     callJsSign(jsId, result.toString());
                     break;
-                case CoreConfig.ACTION_IMAGE:
+                case Config.ACTION_IMAGE:
                     Uri pic = UriUtils.getImageContentUri(this, Config.WORKTICKIT_PIC + imageName);
                     File file = new File(Config.WORKTICKIT_PIC + imageName);
                     callJs(jsId, file.getAbsolutePath());
 
                     break;
+                    default:
             }
         }
     }
@@ -179,7 +178,7 @@ public class WorkPlanInformationActivity extends BaseActivity {
             Uri imageUri = Uri.fromFile(new File(Config.WORKTICKIT_PIC, imageName));
 //指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(intent, CoreConfig.ACTION_IMAGE);
+            startActivityForResult(intent, Config.ACTION_IMAGE);
         }
 
         @Override

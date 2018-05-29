@@ -17,27 +17,27 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.BaseActivity;
 import com.cnksi.bdzinspection.activity.DefectControlActivity;
 import com.cnksi.bdzinspection.adapter.BatteryDetailsAdapter;
 import com.cnksi.bdzinspection.daoservice.BatteryDetailsService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwBatteryBinding;
 import com.cnksi.bdzinspection.databinding.XsBatteryInputValueDialogBinding;
-import com.cnksi.bdzinspection.databinding.XsDialogTipsBinding;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.bdzinspection.model.BatteryReport;
 import com.cnksi.bdzinspection.utils.DefectUtils;
-import com.cnksi.common.daoservice.UserService;
-import com.cnksi.common.model.Users;
-import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil;
-import com.cnksi.bdzinspection.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.TaskService;
+import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Users;
+import com.cnksi.common.utils.CopyKeyBoardUtil;
+import com.cnksi.common.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.core.common.ExecutorManager;
@@ -427,14 +427,14 @@ public class YWBatteryActivity extends BaseActivity implements OnKeyBoardStateCh
     /**
      * 抄录数据后提示是否记录缺陷信息
      */
-    private XsDialogTipsBinding tipsBinding;
+    private CommonInspectionTipsBinding tipsBinding;
 
     public void showBatteryTipsDialog(String defectLevel, String defectContent) {
         if (!isShowTipsDialog) {
             if (tipsDialog == null) {
                 int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
                 int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 3 / 10;// LinearLayout.LayoutParams.WRAP_CONTENT
-                tipsBinding = XsDialogTipsBinding.inflate(getLayoutInflater());
+                tipsBinding = CommonInspectionTipsBinding.inflate(getLayoutInflater());
                 tipsDialog = DialogUtils.createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, dialogHeight);
             }
             tipsBinding.tvDialogTitle.setText(R.string.xs_dialog_tips_str);
