@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/include_title" />
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="1920px">
-
+            android:layout_height="match_parent"
+            android:layout_marginTop="135px">
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/core_bg_white_ffffff">
-
-                <include
-                    android:id="@+id/include_title"
-                    layout="@layout/include_title"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txt_bdz_name"
@@ -33,7 +34,7 @@
                     android:textColor="@color/xs_global_text_color"
                     android:textColorHint="@color/xs_global_gray_text_color"
                     android:textSize="@dimen/xs_global_text_size_px"
-                    app:layout_constraintTop_toBottomOf="@+id/include_title" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txt_space_name"
@@ -320,103 +321,51 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/container_rg_ele_internet" />
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@+id/include_title">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/xs_green_color"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="@dimen/xs_text_button_padding_top_px"
-                        android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-                        android:paddingTop="@dimen/xs_text_button_padding_top_px"
-                        android:text="是否影响电网运行"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/xs_global_text_size_px" />
-
-
-                    <ListView
-                        android:id="@+id/lv_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:cacheColorHint="@android:color/transparent"
-                        android:divider="@color/xs_line_color"
-                        android:dividerHeight="@dimen/xs_line_half_width_px"
-                        android:listSelector="@android:color/transparent" />
-
-                    <Button
-                        android:id="@+id/btn_confirm"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="118px"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/xs_global_padding_top_bottom_px"
-                        android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                        android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-                        android:layout_marginTop="@dimen/xs_global_padding_top_bottom_px"
-                        android:background="@drawable/xs_grass_green_button_background_selector"
-                        android:gravity="center"
-                        android:minHeight="@dimen/xs_button_minheight"
-                        android:text="@string/xs_confirm_str"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/xs_global_text_size_px" />
-
-                </LinearLayout>
-
             </android.support.constraint.ConstraintLayout>
+        </ScrollView>
 
+        <LinearLayout
+            android:id="@+id/container_sure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10px"
+            android:background="@color/xs_gray_background_color"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+            android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
 
-            <LinearLayout
-                android:id="@+id/container_sure"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10px"
-                android:background="@color/xs_gray_background_color"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
-                android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_cancle_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
 
-                <Button
-                    android:id="@+id/btn_cancel"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="118px"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                    android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-                    android:layout_weight="1"
-                    android:background="@drawable/xs_red_button_background_selector"
-                    android:gravity="center"
-                    android:minHeight="@dimen/xs_button_minheight"
-                    android:text="@string/xs_dialog_cancle_str"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/xs_global_text_size_px" />
-
-                <Button
-                    android:id="@+id/btn_sure"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="118px"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                    android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-                    android:layout_weight="1"
-                    android:background="@drawable/xs_button_background_blue_selector"
-                    android:gravity="center"
-                    android:minHeight="@dimen/xs_button_minheight"
-                    android:text="@string/xs_dialog_sure_str"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/xs_global_text_size_px" />
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="118px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+                android:layout_weight="1"
+                android:background="@drawable/xs_button_background_blue_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/xs_button_minheight"
+                android:text="@string/xs_dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

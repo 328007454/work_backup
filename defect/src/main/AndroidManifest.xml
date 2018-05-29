@@ -4,7 +4,9 @@
     <application>
         <activity android:name="com.cnksi.common.activity.ImageDetailsActivity" />
 
-        <activity android:name="com.cnksi.defect.activity.AddDefecctActivity" />
+        <activity
+            android:name="com.cnksi.defect.activity.AddDefecctActivity"
+            android:windowSoftInputMode="stateHidden" />
 
     </application>
 </manifest>
