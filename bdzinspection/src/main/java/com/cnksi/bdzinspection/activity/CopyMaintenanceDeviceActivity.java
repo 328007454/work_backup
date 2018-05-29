@@ -86,7 +86,7 @@ public class CopyMaintenanceDeviceActivity extends BaseActivity implements CopyV
         binding.tvBatteryTestStep.setVisibility(View.GONE);
         binding.llKeyboardHelpLayout.setVisibility(View.GONE);
         binding.tvBatteryTestStep.setBackgroundResource(R.drawable.xs_red_button_background_selector);
-        deviceAdapter = new CopyMaintenanceDeviceAdapter(this, copyItems, R.layout.xs_device_item);
+        deviceAdapter = new CopyMaintenanceDeviceAdapter(this, copyItems, R.layout.select_device_item);
         binding.gvContainer.setAdapter(deviceAdapter);
         deviceAdapter.setItemClickListener((v, copyItem, position) -> {
             if (isSpread) {

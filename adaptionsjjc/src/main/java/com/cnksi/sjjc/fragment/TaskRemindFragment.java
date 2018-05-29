@@ -16,7 +16,7 @@ import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.databinding.ContentListDialogBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
@@ -189,14 +189,14 @@ public class TaskRemindFragment extends BaseCoreFragment {
                 }
                 if (mInspectionTaskAdapter == null) {
                     mInspectionTaskAdapter = new TaskRemindAdapter(getActivity(), mDataList, R.layout.inspection_task_item_remind);
-                    mInspectionTaskAdapter.setItemClickListener(new ItemClickListener<Task>() {
+                    mInspectionTaskAdapter.setItemClickListener(new ItemClickOrLongClickListener<Task>() {
                         @Override
-                        public void itemClick(View v, Task task, int position) {
+                        public void onClick(View v, Task task, int position) {
                             generateReport(task);
                         }
 
                         @Override
-                        public void itemLongClick(View v, Task task, int position) {
+                        public void onLongClick(View v, Task task, int position) {
                             deleteReport(task);
                         }
                     });

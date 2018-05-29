@@ -1,13 +1,14 @@
-package com.cnksi.bdzinspection.model.tree;
+package com.cnksi.common.model.vo;
 
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 
 import org.xutils.db.table.DbModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cnksi.common.model.vo.SpaceGroupItem.SPACE_ITEM;
 
 /**
  * @version 1.0
@@ -34,7 +35,7 @@ public class SpaceItem extends AbstractExpandableItem<DeviceItem> implements Mul
 
     @Override
     public int getItemType() {
-        return DeviceAdapter.SPACE_ITEM;
+        return SPACE_ITEM;
     }
 
     public void addAll(List<DbModel> models) {
@@ -71,7 +72,7 @@ public class SpaceItem extends AbstractExpandableItem<DeviceItem> implements Mul
 
     public List<DbModel> getAllSubDevices(){
         if (null==deviceDbModels) {
-            return new ArrayList<DbModel>();
+            return new ArrayList<>();
         } else {
             return deviceDbModels;
         }

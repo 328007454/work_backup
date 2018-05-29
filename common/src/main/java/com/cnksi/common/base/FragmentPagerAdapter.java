@@ -1,7 +1,4 @@
-package com.cnksi.sjjc.adapter;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.cnksi.common.base;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,9 +6,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-	private ArrayList<Fragment> fragmentList;
+	private List<? extends  Fragment> fragmentList;
 	private List<String> titleArray;
 	private FragmentManager fm;
 
@@ -20,9 +20,9 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 		this.fm = fm;
 	}
 
-	public FragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragmentList, List<String> titleArray) {
+	public FragmentPagerAdapter(FragmentManager fm, List<? extends Fragment> fragmentList2, List<String> titleArray) {
 		this(fm);
-		this.fragmentList = fragmentList;
+		this.fragmentList = fragmentList2;
 		this.titleArray = titleArray;
 	}
 

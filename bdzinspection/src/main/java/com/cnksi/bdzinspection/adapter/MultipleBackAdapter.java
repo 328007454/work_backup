@@ -18,9 +18,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.databinding.XsItemMultipleContentBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.cnksi.bdzinspection.model.zzht.ZzhtResult;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ToastUtils;
 
@@ -84,7 +84,7 @@ public class MultipleBackAdapter extends BaseQuickAdapter<DbModel, MultipleBackA
                 return;
             }
             if (mClickListener != null) {
-                mClickListener.onItemClick(view, item, MultipleBackAdapter.this.getParentPosition(item));
+                mClickListener.onClick(view, item, MultipleBackAdapter.this.getParentPosition(item));
                 view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.xs_green_circle_background));
                 MultipleBackAdapter.this.notifyItemChanged(MultipleBackAdapter.this.getParentPosition(item));
                 item.add(ZzhtResult.CONFIRM_TIME, DateUtils.getCurrentLongTime());

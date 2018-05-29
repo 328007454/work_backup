@@ -17,7 +17,7 @@ import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.model.Task;
@@ -49,7 +49,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Created by han on 2016/8/10.
  * 蓄电池选择人员界面
  */
-public class BatteryFinishActivity extends BaseSjjcActivity implements ItemClickListener {
+public class BatteryFinishActivity extends BaseSjjcActivity implements ItemClickOrLongClickListener {
     public static String MANAGER_FLAG = "manager_flag";
     public static String PEOPLE_FLAG = "people_flag";
     public static String BATTERY_FINISH_ACTIVITY = "battery_finish_activity";
@@ -293,7 +293,7 @@ public class BatteryFinishActivity extends BaseSjjcActivity implements ItemClick
     }
 
     @Override
-    public void itemClick(final View view, final Object o, final int position) {
+    public void onClick(final View view, final Object o, final int position) {
         if (view.getTag().equals(MANAGER_FLAG)) {
             if (showManagerList.size() == 1) {
                 ToastUtils.showMessage( "至少要有一个测试负责人!");
@@ -322,7 +322,7 @@ public class BatteryFinishActivity extends BaseSjjcActivity implements ItemClick
     }
 
     @Override
-    public void itemLongClick(View v, Object o, int position) {
+    public void onLongClick(View v, Object o, int position) {
 
     }
 }

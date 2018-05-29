@@ -3,11 +3,9 @@ package com.cnksi.sjjc.activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
@@ -130,133 +128,125 @@ public class TypeListActivity extends BaseSjjcActivity {
             adapter.notifyDataSetChanged();
         }
 
-        adapter.setItemClickListener(new ItemClickListener<String>() {
-            @Override
-            public void itemClick(View v, String s, int position) {
-                int index = s.lastIndexOf(" ");
+        adapter.setItemClickListener((v, s, position) -> {
+            int index = s.lastIndexOf(" ");
 
-                int maxPosition = Integer.valueOf(s.substring(index + 1, s.length()));
-                s = s.substring(0, index);
-                if (position >= maxPosition) {
-                    mHandler.post(() -> ToastUtils.showMessage("该功能暂未激活"));
-                    return;
-                }
-                Intent intent = new Intent();
-                intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
-                intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
-                intent.putExtra(CURRENT_DEPARTMENT_ID, PreferencesUtils.get(CURRENT_DEPARTMENT_ID, ""));
-                ComponentName componentName;
-                switch (mInspectionType) {
-                    case SBXS:
+            int maxPosition = Integer.valueOf(s.substring(index + 1, s.length()));
+            s = s.substring(0, index);
+            if (position >= maxPosition) {
+                mHandler.post(() -> ToastUtils.showMessage("该功能暂未激活"));
+                return;
+            }
+            Intent intent = new Intent();
+            intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
+            intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
+            intent.putExtra(CURRENT_DEPARTMENT_ID, PreferencesUtils.get(CURRENT_DEPARTMENT_ID, ""));
+            ComponentName componentName;
+            switch (mInspectionType) {
+                case SBXS:
 
-                        componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
-                        //正常巡视
-                        if ("正常巡视".equals(s)) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.day.name());
-                            intent.setComponent(componentName);
-                        }
-                        //特殊巡视
-                        else if ("特殊巡视".equals(s)) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.special.name());
-                            intent.setComponent(componentName);
-                        } else if ("全面巡视".equals(s)) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.full.name());
-                            intent.setComponent(componentName);
-                        }
-                        //例行巡视
-                        else if ("例行巡视".equals(s)) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.routine.name());
-                            intent.setComponent(componentName);
-                        } else if ("熄灯巡视".equals(s)) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.special_xideng.name());
-                            intent.setComponent(componentName);
-                        } else if ("夜间巡视".equals(s)) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.special_nighttime.name());
-                            intent.setComponent(componentName);
-                        }
+                    componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
+                    //正常巡视
+                    if ("正常巡视".equals(s)) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.day.name());
+                        intent.setComponent(componentName);
+                    }
+                    //特殊巡视
+                    else if ("特殊巡视".equals(s)) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.special.name());
+                        intent.setComponent(componentName);
+                    } else if ("全面巡视".equals(s)) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.full.name());
+                        intent.setComponent(componentName);
+                    }
+                    //例行巡视
+                    else if ("例行巡视".equals(s)) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.routine.name());
+                        intent.setComponent(componentName);
+                    } else if ("熄灯巡视".equals(s)) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.special_xideng.name());
+                        intent.setComponent(componentName);
+                    } else if ("夜间巡视".equals(s)) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.special_nighttime.name());
+                        intent.setComponent(componentName);
+                    }
 //                        else if("故障巡视".equals(s)){
 //                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.special_guzhang.name());
 //                            intent.setComponent(componentName);
 //                        }
-                        else {
-                            return;
-                        }
-                        break;
-                    case SBJC:
-                        intent.setClass(mActivity, TaskRemindActivity.class);
-                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, SBJCInspectionMap.get(s));
-                        break;
-                    case switchover:
+                    else {
                         return;
-                    case maintenance:
-                        componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
-                        //全站卫生清洁
-                        if (position == 0) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_01.name());
-                            intent.setComponent(componentName);
-                        }
-                        //交、直流空开、保险检查
-                        else if (position == 1) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_02.name());
-                            intent.setComponent(componentName);
-                        }
-                        //全站照明检查
-                        else if (position == 2) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_03.name());
-                            intent.setComponent(componentName);
-                        }
-                        //消防设施检查、清洁
-                        else if (position == 3) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_04.name());
-                            intent.setComponent(componentName);
-                        }
-                        //蓄电池清扫
-                        else if (position == 4) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_05.name());
-                            intent.setComponent(componentName);
-                        }
-                        //备品、备件、工器具、仪表清洁
-                        else if (position == 5) {
-                            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_06.name());
-                            intent.setComponent(componentName);
-                        } else {
-                            return;
-                        }
-                        break;
-                    case exclusive:
+                    }
+                    break;
+                case SBJC:
+                    intent.setClass(mActivity, TaskRemindActivity.class);
+                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, SBJCInspectionMap.get(s));
+                    break;
+                case switchover:
+                    return;
+                case maintenance:
+                    componentName = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
+                    //全站卫生清洁
+                    if (position == 0) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_01.name());
+                        intent.setComponent(componentName);
+                    }
+                    //交、直流空开、保险检查
+                    else if (position == 1) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_02.name());
+                        intent.setComponent(componentName);
+                    }
+                    //全站照明检查
+                    else if (position == 2) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_03.name());
+                        intent.setComponent(componentName);
+                    }
+                    //消防设施检查、清洁
+                    else if (position == 3) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_04.name());
+                        intent.setComponent(componentName);
+                    }
+                    //蓄电池清扫
+                    else if (position == 4) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_05.name());
+                        intent.setComponent(componentName);
+                    }
+                    //备品、备件、工器具、仪表清洁
+                    else if (position == 5) {
+                        intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.maintenance_06.name());
+                        intent.setComponent(componentName);
+                    } else {
                         return;
-                    case JYHYS:
+                    }
+                    break;
+                case exclusive:
+                    return;
+                case JYHYS:
 //                        if (position == 0) {
 //                            intent.setClass(mActivity, QinYouShiByqYanShouActivity.class);
 //                            startActivity(intent);
 //                        }
-                        return;
-                    case JYHPJ:
+                    return;
+                case JYHPJ:
 //                        if (position == 0) intent.setClass(mActivity, JYHPJActivity.class);
 //                        else return;
 //                        break;
-                    case GZP:
-                        if (position == 0) {
-                            intent.setClass(mActivity, WorkPlanInformationActivity.class);
-                        } else {
-                            return;
-                        }
-                        break;
-                    case TJWT: //图解五通
-                        intent.setClass(mActivity, TJWTActivity.class);
-                        intent.putExtra("title", titleList.get(position));
-                        intent.putExtra("pic", tjwtList.get(position).pic);
-                        break;
-                    default:
-                        break;
-                }
-                startActivity(intent);
+                case GZP:
+                    if (position == 0) {
+                        intent.setClass(mActivity, WorkPlanInformationActivity.class);
+                    } else {
+                        return;
+                    }
+                    break;
+                case TJWT: //图解五通
+                    intent.setClass(mActivity, TJWTActivity.class);
+                    intent.putExtra("title", titleList.get(position));
+                    intent.putExtra("pic", tjwtList.get(position).pic);
+                    break;
+                default:
+                    break;
             }
-
-            @Override
-            public void itemLongClick(View v, String s, int position) {
-
-            }
+            startActivity(intent);
         });
 
     }

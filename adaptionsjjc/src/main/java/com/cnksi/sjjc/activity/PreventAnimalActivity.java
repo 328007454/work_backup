@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
@@ -94,9 +94,9 @@ public class PreventAnimalActivity extends BaseSjjcActivity {
 
         data = new ArrayList<PreventionRecord>();
         adapter = new ExamineProcessAdapter(this, data, R.layout.item_examine_process);
-        adapter.setItemClickListener(new ItemClickListener<PreventionRecord>() {
+        adapter.setItemClickListener(new ItemClickOrLongClickListener<PreventionRecord>() {
             @Override
-            public void itemClick(View v, PreventionRecord preventionRecord, int position) {
+            public void onClick(View v, PreventionRecord preventionRecord, int position) {
                 takePicPosition = position;
                 if (v.getId() == R.id.iv_take_pic) {
                     currentHole = (String) v.getTag();
@@ -110,7 +110,7 @@ public class PreventAnimalActivity extends BaseSjjcActivity {
             }
 
             @Override
-            public void itemLongClick(View v, PreventionRecord preventionRecord, int position) {
+            public void onLongClick(View v, PreventionRecord preventionRecord, int position) {
 
             }
         });

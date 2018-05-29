@@ -16,10 +16,11 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.DeviceSelectActivity;
-import com.cnksi.bdzinspection.model.SpacingGroup;
-import com.cnksi.bdzinspection.model.tree.DeviceItem;
-import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
-import com.cnksi.bdzinspection.model.tree.SpaceItem;
+import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.model.SpacingGroup;
+import com.cnksi.common.model.vo.DeviceItem;
+import com.cnksi.common.model.vo.SpaceGroupItem;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.common.view.UnderLineLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -61,9 +62,9 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
     public DeviceSelectAdapter(Activity context, List<MultiItemEntity> data) {
         super(data);
         this.context = context;
-        addItemType(SPACE_GROUP_ITEM, R.layout.xs_group_xiaoshi_item);
-        addItemType(SPACE_ITEM, R.layout.xs_group_item);
-        addItemType(DEVICE_ITEM, R.layout.xs_device_item);
+        addItemType(SPACE_GROUP_ITEM, R.layout.select_xiaoshi_item);
+        addItemType(SPACE_ITEM, R.layout.select_space_item);
+        addItemType(DEVICE_ITEM, R.layout.select_device_item);
     }
 
     @Override

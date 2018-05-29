@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <layout>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/xs_list_item_background_selector"
-   >
+<layout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="150px"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@drawable/xs_list_item_background_selector"
+                  android:orientation="vertical"
+        >
 
-        <TextView
-            android:id="@+id/name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="150px"
             android:gravity="center_vertical"
-            android:paddingLeft="30px"
-            android:layout_weight="1"
-            android:textSize="48px" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingRight="30px"
-            android:gravity="center_vertical"
-            android:textColor="@color/xs_global_base_color"
-            android:textSize="48px" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px"
+                android:textSize="48px"/>
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingRight="30px"
+                android:textColor="@color/xs_global_base_color"
+                android:textSize="48px"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3px"
+            android:background="@color/xs_line_color"/>
     </LinearLayout>
-	<View android:layout_width="match_parent"
-	    android:background="@color/xs_line_color"
-	    android:layout_height="3px"/>
-</LinearLayout></layout>
+</layout>

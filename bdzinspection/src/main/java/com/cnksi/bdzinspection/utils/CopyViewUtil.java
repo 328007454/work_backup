@@ -5,11 +5,7 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,8 +14,8 @@ import android.widget.TextView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.utils.CommonUtils;
@@ -139,7 +135,7 @@ public class CopyViewUtil {
                     }
 
                     final int position = index;
-                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.onItemClick(v, childItem, position));
+                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.onClick(v, childItem, position));
                     // 抄录项如果看不清长按弹出对话框
                     layoutRoot.setOnLongClickListener(v -> {
                         CopyResult copyResult = copyResultMap.get(childItem.id);

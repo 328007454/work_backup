@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.inter;
+package com.cnksi.common.listener;
 
 import android.view.View;
 
@@ -10,5 +10,5 @@ import android.view.View;
  * @param <T>
  */
 public interface ItemLongClickListener<T> {
-	void onItemLongClick(View v, T t, int position);
+	void onLongClick(View v, T t, int position);
 }

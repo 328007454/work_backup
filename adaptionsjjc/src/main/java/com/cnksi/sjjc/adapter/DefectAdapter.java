@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.common.Config;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private List<DefectRecord> data;
-    private ItemClickListener clickListener;
+    private ItemClickOrLongClickListener clickListener;
     private Context context;
 
     private int layoutId;
@@ -40,7 +40,7 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         this.layoutId = layoutId;
     }
 
-    public void setItemClickListener(ItemClickListener clickListener) {
+    public void setItemClickListener(ItemClickOrLongClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
@@ -71,7 +71,7 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         ((TextView) holder.getView(R.id.tv_defect_discover_time)).setText(DateUtils.getFormatterTime(defectRecord.discovered_date));
         defectImage.setOnClickListener(view -> {
             if (clickListener != null) {
-                clickListener.itemClick(view, defectRecord, position);
+                clickListener.onClick(view, defectRecord, position);
             }
         });
     }

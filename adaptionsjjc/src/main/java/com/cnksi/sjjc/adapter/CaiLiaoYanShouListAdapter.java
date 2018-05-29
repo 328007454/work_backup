@@ -141,7 +141,7 @@
 //
 //        @Event({R.id.btn_yanshou, R.id.btn_extra_function, R.id.iv_show_qianming})
 //        private void onViewClick(View view) {
-//            itemClickListener.itemClick(view, acceptCardItem, position, totalCount, ivQianMing, btOtherFuction, btYanshou);
+//            itemClickListener.onClick(view, acceptCardItem, position, totalCount, ivQianMing, btOtherFuction, btYanshou);
 //        }
 //    }
 //}

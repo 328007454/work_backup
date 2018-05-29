@@ -15,7 +15,6 @@ import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.TaskExtend;
@@ -238,21 +237,13 @@ public class AddTaskActivity extends BaseSjjcActivity {
         holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
         DialogBDZAdapter adapter = new DialogBDZAdapter(this, mBdzList, R.layout.dialog_content_child_item);
         //设置adapter的listView点击事件
-        adapter.setItemClickListener(new ItemClickListener<Bdz>() {
-            @Override
-            public void itemClick(View v, Bdz bdz, int position) {
-                if (!bdz.name.contains("未激活")) {
-                    mTaskBDZ = bdz;
-                    mTaskBinding.tvSelectPowerStation.setText(bdz.name);
-                    mPowerStationDialog.dismiss();
-                } else {
-                    ToastUtils.showMessage("该变电站未激活");
-                }
-            }
-
-            @Override
-            public void itemLongClick(View v, Bdz bdz, int position) {
-
+        adapter.setItemClickListener((v, bdz, position) -> {
+            if (!bdz.name.contains("未激活")) {
+                mTaskBDZ = bdz;
+                mTaskBinding.tvSelectPowerStation.setText(bdz.name);
+                mPowerStationDialog.dismiss();
+            } else {
+                ToastUtils.showMessage("该变电站未激活");
             }
         });
         mPowerStationListView.setAdapter(adapter);

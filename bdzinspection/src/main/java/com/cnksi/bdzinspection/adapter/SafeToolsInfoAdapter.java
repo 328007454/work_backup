@@ -4,13 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerAdapter;
 import com.cnksi.bdzinspection.emnu.ToolStatus;
 import com.cnksi.bdzinspection.view.SwipeMenuLayout;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.table.DbModel;

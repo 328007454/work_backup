@@ -1,9 +1,10 @@
-package com.cnksi.bdzinspection.model.tree;
+package com.cnksi.common.model.vo;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 
 import org.xutils.db.table.DbModel;
+
+import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
 
 /**
  * @version 1.0
@@ -21,7 +22,7 @@ public class DeviceItem extends DbModel implements MultiItemEntity, LinkItem<Spa
 
     @Override
     public int getItemType() {
-        return DeviceAdapter.DEVICE_ITEM;
+        return DEVICE_ITEM;
     }
 
     @Override

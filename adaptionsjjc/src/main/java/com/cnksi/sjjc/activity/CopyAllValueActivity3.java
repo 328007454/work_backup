@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.utils.DialogUtils;
@@ -131,9 +131,9 @@ public class CopyAllValueActivity3 extends BaseSjjcActivity {
         mTitleBinding.tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
         copyDeviceList = new ArrayList<>();
         deviceAdapter = new CopyDeviceAdapter(this, copyDeviceList, R.layout.device_item);
-        deviceAdapter.setItemClickListener(new ItemClickListener<DbModel>() {
+        deviceAdapter.setItemClickListener(new ItemClickOrLongClickListener<DbModel>() {
             @Override
-            public void itemClick(View v, DbModel dbModel, int position) {
+            public void onClick(View v, DbModel dbModel, int position) {
                 if (isSpread) {
                     setDeviceListDisplay();
                 }
@@ -156,7 +156,7 @@ public class CopyAllValueActivity3 extends BaseSjjcActivity {
             }
 
             @Override
-            public void itemLongClick(View v, DbModel dbModel, int position) {
+            public void onLongClick(View v, DbModel dbModel, int position) {
 
             }
         });
@@ -172,15 +172,15 @@ public class CopyAllValueActivity3 extends BaseSjjcActivity {
             notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             dialog.show();
         });
-        copyViewUtil.setItemClickListener(new ItemClickListener<CopyItem>() {
+        copyViewUtil.setItemClickListener(new ItemClickOrLongClickListener<CopyItem>() {
             @Override
-            public void itemClick(View v, CopyItem copyItem, int position) {
+            public void onClick(View v, CopyItem copyItem, int position) {
                 KeyBoardUtils.closeKeybord(mActivity);
                 CopyDataInterface.showHistory(mActivity, copyItem);
             }
 
             @Override
-            public void itemLongClick(View v, CopyItem copyItem, int position) {
+            public void onLongClick(View v, CopyItem copyItem, int position) {
 
             }
         });

@@ -25,7 +25,7 @@ import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
@@ -68,7 +68,7 @@ import java.util.Map;
  *
  * @author han on 2017/3/24.
  */
-public class HomeActivity extends BaseSjjcActivity implements View.OnClickListener, ItemClickListener {
+public class HomeActivity extends BaseSjjcActivity implements View.OnClickListener, ItemClickOrLongClickListener {
     private ActivityHomePageBinding homePageBinding;
     //变电站弹出popwindow
     private BdzPopwindowBinding bdzPopwindowBinding;
@@ -217,14 +217,14 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         mPop.setOutsideTouchable(true);
         homePageBinding.setTypeClick(this);
         taskItemAdapter = new HomeTaskItemAdapter(mActivity, null, homePageBinding.dataContainer);
-        taskItemAdapter.setItemClickListener(new ItemClickListener<Task>() {
+        taskItemAdapter.setItemClickListener(new ItemClickOrLongClickListener<Task>() {
             @Override
-            public void itemClick(View v, Task task, int position) {
+            public void onClick(View v, Task task, int position) {
                 startTask(task);
             }
 
             @Override
-            public void itemLongClick(View v, Task task, int position) {
+            public void onLongClick(View v, Task task, int position) {
 
             }
         });
@@ -343,25 +343,17 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         mPowerStationListView = holder.getView(R.id.lv_container);
         holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
         DialogBDZAdapter adapter = new DialogBDZAdapter(this, bdzList, R.layout.dialog_content_child_item);
-        adapter.setItemClickListener(new ItemClickListener<Bdz>() {
-            @Override
-            public void itemClick(View v, Bdz bdz, int position) {
-                if (!bdz.name.contains("未激活")) {
-                    homePageBinding.bdzName.setText(bdz.name);
-                    mPowerStationDialog.dismiss();
-                    currentSelectBdzId = bdzList.get(position).bdzid;
-                    homePageBinding.common.setSelected(true);
-                    homePageBinding.serious.setSelected(false);
-                    homePageBinding.crisis.setSelected(false);
-                    loadDefect();
-                } else {
-                    ToastUtils.showMessage("该变电站未激活");
-                }
-            }
-
-            @Override
-            public void itemLongClick(View v, Bdz bdz, int position) {
-
+        adapter.setItemClickListener((v, bdz, position) -> {
+            if (!bdz.name.contains("未激活")) {
+                homePageBinding.bdzName.setText(bdz.name);
+                mPowerStationDialog.dismiss();
+                currentSelectBdzId = bdzList.get(position).bdzid;
+                homePageBinding.common.setSelected(true);
+                homePageBinding.serious.setSelected(false);
+                homePageBinding.crisis.setSelected(false);
+                loadDefect();
+            } else {
+                ToastUtils.showMessage("该变电站未激活");
             }
         });
         mPowerStationListView.setAdapter(adapter);
@@ -390,7 +382,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
     }
 
     @Override
-    public void itemClick(View v, Object o, int position) {
+    public void onClick(View v, Object o, int position) {
         DefectRecord defectRecord = (DefectRecord) o;
         if (!TextUtils.isEmpty(defectRecord.pics)) {
             ArrayList<String> listPicDis = StringUtils.stringToList(defectRecord.pics, ",");
@@ -399,7 +391,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
     }
 
     @Override
-    public void itemLongClick(View v, Object o, int position) {
+    public void onLongClick(View v, Object o, int position) {
 
     }
 

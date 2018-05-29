@@ -7,8 +7,8 @@ import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseActivity;
-import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
-import com.cnksi.bdzinspection.daoservice.LookupService;
+import com.cnksi.common.base.FragmentPagerAdapter;
+import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.bdzinspection.databinding.XsActivityYwDeviceListBinding;
 import com.cnksi.bdzinspection.fragment.YunweiTypeListFragment;
 import com.cnksi.common.Config;

@@ -14,7 +14,7 @@ import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
@@ -49,7 +49,7 @@ import java.util.List;
  * @author kkk on 2017/12/13.
  */
 
-public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickListener {
+public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickOrLongClickListener {
     ActivityNewhwcwInforBinding mInforBinding;
     private List<HwcwLocation> hotLocations = new ArrayList<>();
     private HwcwBaseInfo mHwcwBaseInfo;
@@ -200,7 +200,7 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
     }
 
     @Override
-    public void itemClick(View v, final Object o, final int position) {
+    public void onClick(View v, final Object o, final int position) {
         if (showPeopleList.size() == 1) {
             ToastUtils.showMessage("至少要有一个负责人!");
             return;
@@ -216,7 +216,7 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
     }
 
     @Override
-    public void itemLongClick(View v, Object o, int position) {
+    public void onLongClick(View v, Object o, int position) {
 
     }
 

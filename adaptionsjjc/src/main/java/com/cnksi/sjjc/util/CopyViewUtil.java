@@ -5,14 +5,11 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.utils.StringUtilsExt;
@@ -33,7 +30,7 @@ public class CopyViewUtil {
     private Map<String, CopyResult> copyResultMap;
     private KeyBordListener keyBordListener;
 
-    private ItemClickListener<CopyItem> itemClickListener;
+    private ItemClickOrLongClickListener<CopyItem> itemClickListener;
     private CopyItemLongClickListener<CopyResult> itemLongClickListener;
 
     public interface KeyBordListener {
@@ -50,7 +47,7 @@ public class CopyViewUtil {
         this.keyBordListener = keyBordListener;
     }
 
-    public void setItemClickListener(ItemClickListener<CopyItem> itemClickListener) {
+    public void setItemClickListener(ItemClickOrLongClickListener<CopyItem> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -131,7 +128,7 @@ public class CopyViewUtil {
                     }
 
                     final int position = index;
-                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.itemClick(v, childItem, position));
+                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.onClick(v, childItem, position));
                     //抄录项如果看不清长按弹出对话框
                     layoutRoot.setOnLongClickListener(v -> {
                         CopyResult copyResult = copyResultMap.get(childItem.id);

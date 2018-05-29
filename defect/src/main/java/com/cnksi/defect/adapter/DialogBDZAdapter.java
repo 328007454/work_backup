@@ -34,7 +34,7 @@ public class DialogBDZAdapter extends BaseAdapter<Bdz> {
         binding.tvChildItem.setText(item.name);
         binding.getRoot().setOnClickListener(v -> {
             if (null != itemClickListener) {
-                itemClickListener.itemClick(v, item, position);
+                itemClickListener.onClick(v, item, position);
             }
         });
 

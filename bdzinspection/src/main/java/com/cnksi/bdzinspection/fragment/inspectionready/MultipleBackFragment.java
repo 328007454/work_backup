@@ -14,8 +14,8 @@ import com.cnksi.bdzinspection.daoservice.ZzhtResultService;
 import com.cnksi.bdzinspection.daoservice.ZzhtService;
 import com.cnksi.bdzinspection.databinding.XsFragmentMultipleBackBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.zzht.ZzhtResult;
+import com.cnksi.common.listener.ItemClickListener;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -74,7 +74,7 @@ public class MultipleBackFragment extends BaseFragment implements ItemClickListe
     }
 
     @Override
-    public void onItemClick(View v, Object o, int position) {
+    public void onClick(View v, Object o, int position) {
         if (!mObjects.contains(o)) {
             mObjects.add(o);
         }

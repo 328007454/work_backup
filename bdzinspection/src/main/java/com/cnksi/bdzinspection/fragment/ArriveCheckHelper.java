@@ -13,7 +13,7 @@ import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
-import com.cnksi.bdzinspection.model.tree.SpaceItem;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DeviceService;
@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import static com.cnksi.common.model.vo.SpaceGroupItem.SPACE_ITEM;
 
 /**
  * @version 1.0
@@ -306,7 +308,7 @@ public class ArriveCheckHelper {
         if (SystemConfig.isDevicePlaced() && "one".equals(currentFunctionModel)) {
             List<Placed> saveList = new ArrayList<>();
             for (MultiItemEntity node : deviceAdapter.getData()) {
-                if (node.getItemType() == DeviceAdapter.SPACE_ITEM && deviceAdapter.handleDevicePlaced((SpaceItem) node)) {
+                if (node.getItemType() == SPACE_ITEM && deviceAdapter.handleDevicePlaced((SpaceItem) node)) {
                     DbModel model = ((SpaceItem) node).spacing;
                     String spid = model.getString("spid");
                     if (arrivedPlaces.containsKey(spid)) {

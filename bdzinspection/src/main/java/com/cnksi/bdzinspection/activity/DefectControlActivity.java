@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
+import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityDefectControlBinding;
 import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment;
 import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment.OnFunctionButtonClickListener;

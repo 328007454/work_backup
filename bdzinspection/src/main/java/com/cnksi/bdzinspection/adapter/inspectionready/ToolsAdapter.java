@@ -8,9 +8,9 @@ import android.widget.LinearLayout;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.adapter.base.BaseLinearLayoutAdapter;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.ReportTool;
 import com.cnksi.bdzinspection.model.Tool;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.StringUtilsExt;
 
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class ToolsAdapter extends BaseLinearLayoutAdapter<Tool> {
         holder.setText(R.id.tv_tools_tips, item.tips);
         holder.getView(R.id.tv_tools_name).setOnClickListener(v -> {
             if (toolsClick != null) {
-                toolsClick.onItemClick(v, item, position);
+                toolsClick.onClick(v, item, position);
             }
         });
     }

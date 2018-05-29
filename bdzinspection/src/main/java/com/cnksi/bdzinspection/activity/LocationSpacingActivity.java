@@ -84,7 +84,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
     private void initialUI() {
         binding.includeTitle.tvTitle.setText(R.string.xs_near_spacing);
         data = new ArrayList<Spacing>();
-        adapter = new LocationSpacingAdapter(this, data, R.layout.xs_item_location_spacing);
+        adapter = new LocationSpacingAdapter(this, data, R.layout.list_item_name);
         adapter.setItemClickListener((v, item, position) -> {
             Intent data = new Intent();
             data.putExtra("spacingId", item.spid);

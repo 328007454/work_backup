@@ -4,7 +4,7 @@ import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.view.View;
 
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.sjjc.databinding.ShowNameBinding;
 
 import java.util.Collection;
@@ -16,7 +16,7 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
     public static String MANAGER_FLAG = "manager_flag";
     public static String PEOPLE_FLAG = "people_flag";
 
-    private ItemClickListener itemClickListener;
+    private ItemClickOrLongClickListener itemClickListener;
     private ShowNameBinding nameBinding;
     private int totoalUserCount;
 
@@ -24,7 +24,7 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
         super(context, list, layoutId);
     }
 
-    public void setClickWidget(ItemClickListener itemClickListener) {
+    public void setClickWidget(ItemClickOrLongClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -36,7 +36,7 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
         nameBinding.tvPeopleName.setText(item);
         nameBinding.deleteImag.setTag(PEOPLE_FLAG);
 
-        nameBinding.deleteImag.setOnClickListener(view -> itemClickListener.itemClick(view, item, position));
+        nameBinding.deleteImag.setOnClickListener(view -> itemClickListener.onClick(view, item, position));
         if (position < totoalUserCount) {
             nameBinding.deleteImag.setVisibility(View.GONE);
         } else {

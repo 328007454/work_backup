@@ -124,12 +124,12 @@
 //
 //
 //    @Override
-//    public void itemClick(View v, AcceptCardItem acceptCardItem, int position, int total, ImageView imageView, Button btYanShou, ImageView ivOther) {
-//        itemClickListener.itemClick(v, acceptCardItem, position, total, imageView, btYanShou, ivOther);
+//    public void onClick(View v, AcceptCardItem acceptCardItem, int position, int total, ImageView imageView, Button btYanShou, ImageView ivOther) {
+//        itemClickListener.onClick(v, acceptCardItem, position, total, imageView, btYanShou, ivOther);
 //    }
 //
 //    @Override
-//    public void itemClick(View v, AcceptCardItem acceptCardItem, int position) {
+//    public void onClick(View v, AcceptCardItem acceptCardItem, int position) {
 //
 //    }
 //

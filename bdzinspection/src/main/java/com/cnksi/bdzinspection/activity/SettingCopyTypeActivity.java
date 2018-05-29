@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ChangeCopyItemParentAdapter;
 import com.cnksi.bdzinspection.adapter.CopyTypeAdapter;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.bdzinspection.daoservice.LogsService;
 import com.cnksi.bdzinspection.databinding.XsActivitySettingCopyBinding;
 import com.cnksi.bdzinspection.databinding.XsAddCopyItemBinding;

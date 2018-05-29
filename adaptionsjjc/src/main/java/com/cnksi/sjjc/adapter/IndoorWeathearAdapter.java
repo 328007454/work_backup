@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> {
     private String location;
-    private ItemClickListener itemClickListener;
+    private ItemClickOrLongClickListener itemClickListener;
 
     private final static String TAG = "indoor_weather_adapter";
 
@@ -33,11 +33,11 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         super(context, data, container, layoutId);
     }
 
-    public ItemClickListener getItemClickListener() {
+    public ItemClickOrLongClickListener getItemClickListener() {
         return itemClickListener;
     }
 
-    public void setItemClickListener(ItemClickListener itemClickListener) {
+    public void setItemClickListener(ItemClickOrLongClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -95,12 +95,12 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
 
         imageButton.setOnClickListener(v -> {
             if (null != itemClickListener) {
-                itemClickListener.itemClick(v, item, position);
+                itemClickListener.onClick(v, item, position);
             }
         });
         deleteButton.setOnClickListener(view -> {
             if (null != itemClickListener) {
-                itemClickListener.itemClick(view, item, position);
+                itemClickListener.onClick(view, item, position);
             }
         });
 

@@ -21,7 +21,6 @@ import com.cnksi.bdzinspection.adapter.CopyRcvDeviceAdapter;
 import com.cnksi.bdzinspection.adapter.base.GridSpacingItemDecoration;
 import com.cnksi.bdzinspection.databinding.XsActivityCopyDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsActivitySingleSpaceCopyBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
@@ -32,6 +31,7 @@ import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.databinding.CommonInspectionTipsBinding;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
@@ -58,7 +58,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * Time: 2018/1/8
  * Description: 本类操作具有抄录设备的间隔，展示方式类似于全面/例行的集中抄录，但是不存在一次二次设备
  */
-public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickListener, CopyViewUtil.KeyBordListener {
+public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickListener<DbModel>, CopyViewUtil.KeyBordListener {
     public final int LOAD_COPY_FINISH = 0x10;
     protected int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
     private XsActivitySingleSpaceCopyBinding mCopyBinding;
@@ -142,7 +142,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
         String spaceName = intent.getStringExtra(Config.CURRENT_SPACING_NAME);
         spid = intent.getStringExtra(Config.CURRENT_SPACING_ID);
         mCopyBinding.includeTitle.tvTitle.setText(TextUtils.isEmpty(spaceName) ? "" : spaceName);
-        adapter = new CopyRcvDeviceAdapter(deviceData, R.layout.xs_device_item);
+        adapter = new CopyRcvDeviceAdapter(deviceData, R.layout.select_device_item);
         adapter.setItemClickListener(this);
         mCopyBinding.rcv.setLayoutManager(new GridLayoutManager(mActivity, 2));
         mCopyBinding.rcv.addItemDecoration(new GridSpacingItemDecoration(2, 20, 8, true));
@@ -292,7 +292,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
                 break;
             case LOAD_DATA:
                 adapter.notifyDataSetChanged();
-                this.onItemClick(new View(this), deviceData.get(0), 0);
+                this.onClick(new View(this), deviceData.get(0), 0);
                 break;
             default:
                 break;
@@ -444,7 +444,7 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
     }
 
     @Override
-    public void onItemClick(View v, Object dbModel, int position) {
+    public void onClick(View v, DbModel dbModel, int position) {
 
         if (isSpread) {
             setDeviceListDisplay();

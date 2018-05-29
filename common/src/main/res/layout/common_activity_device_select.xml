@@ -6,9 +6,6 @@
                   android:layout_height="match_parent"
                   android:orientation="vertical">
 
-        <include
-            android:id="@+id/include_title"
-            layout="@layout/xs_include_title" />
 
         <com.cnksi.core.view.PagerSlidingTabStrip
             android:id="@+id/tab_strip"

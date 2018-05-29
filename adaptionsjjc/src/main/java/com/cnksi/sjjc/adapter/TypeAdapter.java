@@ -44,7 +44,7 @@ public class TypeAdapter extends BaseAdapter<String> {
         holder.getRootView().setOnClickListener(v -> {
             if (null != itemClickListener) {
                 //通过字符串传递maxPosition
-                itemClickListener.itemClick(v, item + " " + maxPosition, position);
+                itemClickListener.onClick(v, item + " " + maxPosition, position);
             }
         });
     }

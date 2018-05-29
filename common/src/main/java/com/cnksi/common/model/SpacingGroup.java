@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.model;
+package com.cnksi.common.model;
 
 
 import org.xutils.db.annotation.Column;

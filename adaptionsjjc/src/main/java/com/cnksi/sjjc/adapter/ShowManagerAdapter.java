@@ -2,9 +2,8 @@ package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
 import android.databinding.ViewDataBinding;
-import android.view.View;
 
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.sjjc.databinding.ShowNameBinding;
 
 import java.util.Collection;
@@ -16,13 +15,13 @@ public class ShowManagerAdapter extends SimpleBindingAdatpter<String>{
     public static  String MANAGER_FLAG = "manager_flag";
     public static String PEOPLE_FLAG = "people_flag";
 
-    private ItemClickListener itemClickListener;
+    private ItemClickOrLongClickListener itemClickListener;
     private ShowNameBinding nameBinding;
     public ShowManagerAdapter(Context context, Collection<String> list, int layoutId) {
         super(context, list, layoutId);
     }
 
-    public void setClickWidget(ItemClickListener itemClickListener){
+    public void setClickWidget(ItemClickOrLongClickListener itemClickListener){
         this.itemClickListener = itemClickListener;
     }
 
@@ -34,7 +33,7 @@ public class ShowManagerAdapter extends SimpleBindingAdatpter<String>{
         nameBinding.tvPeopleName.setText(item);
         nameBinding.deleteImag.setTag(MANAGER_FLAG);
 
-        nameBinding.deleteImag.setOnClickListener(view -> itemClickListener.itemClick(view,item,position));
+        nameBinding.deleteImag.setOnClickListener(view -> itemClickListener.onClick(view,item,position));
     }
 
     private void setNameBinding(ShowNameBinding dataBinding) {

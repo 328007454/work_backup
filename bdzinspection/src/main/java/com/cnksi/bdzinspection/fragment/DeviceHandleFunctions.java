@@ -6,9 +6,9 @@ import android.text.TextUtils;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
-import com.cnksi.bdzinspection.model.SpacingGroup;
-import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
-import com.cnksi.bdzinspection.model.tree.SpaceItem;
+import com.cnksi.common.model.SpacingGroup;
+import com.cnksi.common.model.vo.SpaceGroupItem;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.common.enmu.SpaceType;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.ToastUtils;
@@ -16,7 +16,6 @@ import com.cnksi.core.utils.ToastUtils;
 import org.xutils.db.table.DbModel;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,7 @@ import java.util.Map;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class Functions {
+public class DeviceHandleFunctions {
 
     public static void animationMethodSpace(String spid, List<MultiItemEntity> data, final DeviceAdapter adapter, Handler handler, RecyclerView recyclerView) {
         int[] index = findSpaceIndex(spid, data);

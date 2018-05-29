@@ -11,7 +11,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.AddPersonAdapter;
 import com.cnksi.bdzinspection.adapter.SelectionPersonAdapter;
 import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -106,7 +106,7 @@ public class SelectPersonUtil implements ItemClickListener {
     }
 
     @Override
-    public void onItemClick(View v, Object o, int position) {
+    public void onClick(View v, Object o, int position) {
         DbModel model = (DbModel) o;
         int i = v.getId();
         if (i == R.id.ll_container) {
