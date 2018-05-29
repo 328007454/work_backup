@@ -2,7 +2,6 @@ package com.cnksi.sjjc.activity;
 
 
 import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.BitmapDrawable;
@@ -549,7 +548,6 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         Intent intent = new Intent();
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
-        ComponentName componentName;
         if ("workticket".equals(task.inspection)) {
             intent.setClass(this, OperateTaskListActivity.class);
         } else {

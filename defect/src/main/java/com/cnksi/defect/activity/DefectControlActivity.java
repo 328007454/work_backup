@@ -1,8 +1,6 @@
 package com.cnksi.defect.activity;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.os.Bundle;
 import android.view.View;
 
 import com.cnksi.common.Config;
@@ -44,7 +42,6 @@ public class DefectControlActivity extends BaseTitleActivity {
     private List<String> defectTypes;
     private List<DbModel> userModels;
     private String userName = "全部";
-    private String departmentName;
 
 
     @Override
@@ -52,7 +49,6 @@ public class DefectControlActivity extends BaseTitleActivity {
         defectControlBinding = ActivityDefectControlBinding.inflate(getLayoutInflater());
         return defectControlBinding.getRoot();
     }
-
 
     @Override
     public void initUI() {
@@ -62,35 +58,7 @@ public class DefectControlActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-
-    }
-
-    private void search() {
-        ExecutorManager.executeTaskSerially(() -> {
-            defectRecords.clear();
-            defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.bdzid, userName, defectLevel, departmentName);
-            runOnUiThread(() -> {
-                if (defectContentAdapter == null) {
-                    defectContentAdapter = new DefectContentAdapter(this, defectRecords);
-                    defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
-                } else {
-                    defectContentAdapter.setList(defectRecords);
-                }
-            });
-        });
-    }
-
-    public void initView() {
-        departmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
-        defectControlBinding.setEvent(this);
-        defectControlBinding.includeTitle.tvTitle.setText("缺陷管理");
-        defectControlBinding.includeTitle.btnBack.setImageResource(R.drawable.ic_hompage_selector);
-        defectControlBinding.includeTitle.btnBack.setVisibility(View.GONE);
-        defectControlBinding.includeTitle.btnBackDefect.setVisibility(View.VISIBLE);
-        defectControlBinding.includeTitle.btnBackDefect.setOnClickListener((View.OnClickListener) view -> onBackPressed());
-    }
-
-    public void loadData() {
+        currentDepartmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
         defectTypes = Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray));
 
         ExecutorManager.executeTaskSerially(() -> {
@@ -113,9 +81,11 @@ public class DefectControlActivity extends BaseTitleActivity {
         });
     }
 
+
     private void search() {
         ExecutorManager.executeTaskSerially(() -> {
-            defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.getString(Bdz.BDZID), defectLevel);
+            defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.bdzid, userName
+                    , defectLevel, currentDepartmentName);
             runOnUiThread(() -> {
                 if (defectContentAdapter == null) {
                     defectContentAdapter = new DefectContentAdapter(this, defectRecords);
