@@ -241,6 +241,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         currentTaskId = PreferencesUtils.get(Config.CURRENT_TASK_ID, "");
         currentReportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
         currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
+        currentDepartmentName=PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME,"");
     }
 
     public boolean isEmpty(TextView tv) {

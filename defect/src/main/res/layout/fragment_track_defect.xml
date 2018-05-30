@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/xs_global_padding_left_right_px"
+            android:background="@drawable/xs_grass_green_button_background_selector"
+            android:gravity="center"
+            android:minHeight="@dimen/xs_button_minheight"
+            android:text="@string/xs_confirm_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_confirm">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/include_defect"
+                    layout="@layout/layout_defect_common"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_defect_deal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_green_color"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                    android:text="@string/xs_add_defect_str"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xs_global_text_size_px"
+                    app:layout_constraintTop_toBottomOf="@+id/include_defect" />
+
+                <RelativeLayout
+                    android:id="@+id/container_defect_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_20px"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_defect_deal">
+
+                    <include
+                        android:id="@+id/include_add"
+                        layout="@layout/layout_defect_input_common" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/contanier_sf6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/container_defect_input" />
+
+                <TextView
+                    android:id="@+id/tv_track_history_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_gray_background_color"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                    android:text="@string/xs_track_history_str"
+                    android:textColor="@color/xs_green_color"
+                    android:textSize="@dimen/xs_global_text_size_px"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/contanier_sf6" />
+
+                <com.cnksi.core.view.InnerListView
+                    android:id="@+id/lv_track_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:divider="@color/xs_line_color"
+                    android:dividerHeight="@dimen/xs_line_half_width_px"
+                    android:listSelector="@android:color/transparent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_track_history_count" />
+
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+
+
+    </RelativeLayout>
+</layout>

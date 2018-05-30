@@ -329,7 +329,7 @@ public class DefectRecordService extends BaseService<DefectRecord> {
      * @return
      */
     public List<DefectRecord> queryCurrentBdzExistDefectList(String bdzId, String userName, int level, String deptName) {
-        List<DefectRecord> defects = null;
+        List<DefectRecord> defects = new ArrayList<>();
         try {
             Selector<DefectRecord> selector = selector().and(DefectRecord.HAS_TRACK, "=", "N")
                     .and(DefectRecord.HAS_REMOVE, "=", "N")

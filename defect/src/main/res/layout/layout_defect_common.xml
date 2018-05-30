@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/xs_history_defect_item_background_color"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+        android:paddingTop="@dimen/xs_global_padding_top_bottom_px">
+
+        <TextView
+            android:id="@+id/txt_current_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/xs_exist_defect_title_background_color"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/xs_text_button_padding_top_px"
+            android:text="@string/xs_current_device_exist_defect_str"
+            android:textColor="@color/xs_exist_defect_title_text_color"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <com.cnksi.core.view.InnerListView
+            android:id="@+id/lv_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/xs_line_color"
+            android:dividerHeight="@dimen/xs_line_half_width_px"
+            android:listSelector="@android:color/transparent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_line_eight_width_px"
+            android:background="@color/xs_line_color" />
+
+    </LinearLayout>
+</layout>

@@ -88,10 +88,6 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String taskId = getIntent().getStringExtra("task_id");
-        String deparmentId = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_ID);
-        currentDepartmentName = getIntent().getStringExtra(Config.CURRENT_DEPARTMENT_NAME);
-        PreferencesUtils.put(Config.CURRENT_DEPARTMENT_ID, deparmentId);
-        PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, currentDepartmentName);
         if (!TextUtils.isEmpty(taskId)) {
             Task task = TaskService.getInstance().findById(taskId);
             if (task != null) {

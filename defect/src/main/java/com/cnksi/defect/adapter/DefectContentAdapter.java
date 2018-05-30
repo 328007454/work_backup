@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.ImageDetailsActivity;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.adapter.BaseAdapter;
 import com.cnksi.core.utils.BitmapUtils;
@@ -27,6 +28,12 @@ import java.util.List;
 
 public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
     DefectControlActivity activity;
+    private ItemClickListener itemClickListener;
+
+
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     public DefectContentAdapter(DefectControlActivity context, Collection data) {
         super(context, data, R.layout.adapter_defect_item);
@@ -99,6 +106,11 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         itemBinding.tvRecordPerson.setText("记录人员：" + (TextUtils.isEmpty(item.discoverer) ? "" : item.discoverer));
         itemBinding.tvDefectDiscoverTime.setText("时间：" + (TextUtils.isEmpty(item.discovered_date) ? "" : (DateUtils.getFormatterTime(item.insertTime, DateUtils.yyyy_MM_dd))));
         itemBinding.tvDefectRemindTime.setText(calculateRemindTime(item));
+        itemBinding.getRoot().setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.itemClick(v, item, position);
+            }
+        });
 
     }
 

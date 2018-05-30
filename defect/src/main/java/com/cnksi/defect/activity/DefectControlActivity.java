@@ -8,6 +8,7 @@ import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.UserService;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Users;
@@ -29,7 +30,7 @@ import java.util.List;
  * @author Mr.K  on 2017/4/25.
  */
 
-public class DefectControlActivity extends BaseTitleActivity {
+public class DefectControlActivity extends BaseTitleActivity implements ItemClickListener<DefectRecord> {
     private ActivityDefectControlBinding defectControlBinding;
     private List<Bdz> bdzList = new ArrayList<>();
     private DefectContentAdapter defectContentAdapter;
@@ -42,7 +43,6 @@ public class DefectControlActivity extends BaseTitleActivity {
     private List<String> defectTypes;
     private List<DbModel> userModels;
     private String userName = "全部";
-    private String departmentName;
 
 
     @Override
@@ -51,17 +51,16 @@ public class DefectControlActivity extends BaseTitleActivity {
         return defectControlBinding.getRoot();
     }
 
-
     @Override
     public void initUI() {
         setTitleText("缺陷管理");
-        departmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
         mTitleBinding.btnBack.setImageResource(R.drawable.ic_hompage_selector);
         mTitleBinding.btnBack.setVisibility(View.GONE);
     }
 
     @Override
     public void initData() {
+        currentDepartmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
         defectTypes = Arrays.asList(getResources().getStringArray(R.array.DefectTypeArray));
         ExecutorManager.executeTaskSerially(() -> {
             bdzList = BdzService.getInstance().findAllBdzByDp(PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
@@ -83,11 +82,17 @@ public class DefectControlActivity extends BaseTitleActivity {
         });
     }
 
+
     private void search() {
+
         ExecutorManager.executeTaskSerially(() -> {
-            defectRecords.clear();
-            defectRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.bdzid, userName, defectLevel, departmentName);
+            List<DefectRecord> finalRecords = DefectRecordService.getInstance().queryCurrentBdzExistDefectList(bdzModel == null ? "" : bdzModel.bdzid, userName
+                    , defectLevel, currentDepartmentName);
             runOnUiThread(() -> {
+                defectRecords.clear();
+                if (finalRecords != null && !finalRecords.isEmpty()) {
+                    defectRecords.addAll(finalRecords);
+                }
                 if (defectContentAdapter == null) {
                     defectContentAdapter = new DefectContentAdapter(this, defectRecords);
                     defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
@@ -135,10 +140,19 @@ public class DefectControlActivity extends BaseTitleActivity {
                         search();
                     }).setDropDownOfView(defectControlBinding.containerPeople).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
         } else if (i == R.id.add_defect) {
-            Intent intent = new Intent(this, AddDefecctActivity.class);
+            Intent intent = new Intent(this, AddDefectActivity.class);
             startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
         }
     }
 
 
+    @Override
+    public void itemClick(View v, DefectRecord defectRecord, int position) {
+
+    }
+
+    @Override
+    public void itemLongClick(View v, DefectRecord defectRecord, int position) {
+
+    }
 }

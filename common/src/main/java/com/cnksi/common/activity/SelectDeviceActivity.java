@@ -1,6 +1,8 @@
 package com.cnksi.common.activity;
 
-import com.cnksi.common.base.BaseActivity;
+import android.view.View;
+
+import com.cnksi.common.base.BaseTitleActivity;
 
 /**
  * @author Wastrel
@@ -9,19 +11,10 @@ import com.cnksi.common.base.BaseActivity;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class SelectDeviceActivity extends BaseActivity {
-    @Override
-    public int getLayoutResId() {
-        return 0;
-    }
+public class SelectDeviceActivity extends BaseTitleActivity {
 
     @Override
-    public void initUI() {
-
-    }
-
-    @Override
-    public void initData() {
-
+    protected View getChildContentView() {
+        return super.getChildContentView();
     }
 }

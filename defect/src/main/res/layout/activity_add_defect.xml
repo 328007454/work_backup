@@ -7,15 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <include
-            android:id="@+id/include_title"
-            layout="@layout/include_title" />
-
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="135px">
+            android:layout_height="match_parent">
+
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -29,6 +24,7 @@
                     android:drawableRight="@drawable/ic_arrow_right"
                     android:gravity="center_vertical"
                     android:hint="请选择变电站"
+                    android:onClick="onClick"
                     android:paddingLeft="@dimen/core_padding_30px"
                     android:paddingRight="@dimen/core_padding_30px"
                     android:textColor="@color/xs_global_text_color"
@@ -44,6 +40,7 @@
                     android:drawableRight="@drawable/ic_arrow_right"
                     android:gravity="center_vertical"
                     android:hint="请选择间隔"
+                    android:onClick="onClick"
                     android:paddingLeft="@dimen/core_padding_30px"
                     android:paddingRight="@dimen/core_padding_30px"
                     android:textColor="@color/xs_global_text_color"
@@ -74,9 +71,10 @@
                         android:textSize="@dimen/xs_global_text_size_px" />
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/txt_device_name"
+                        android:id="@+id/iv_select_device"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_120px"
+                        android:onClick="onClick"
                         android:paddingBottom="@dimen/core_padding_30px"
                         android:paddingLeft="120px"
                         android:paddingRight="@dimen/core_padding_30px"
@@ -122,7 +120,7 @@
                         android:textSize="@dimen/xs_global_text_size_px" />
 
                     <ImageButton
-                        android:id="@+id/ibtn_take_picture"
+                        android:id="@+id/ib_take_picture"
                         style="@style/svgButtonCamera"
                         android:layout_width="@dimen/xs_content_minheight_px"
                         android:layout_height="@dimen/xs_content_minheight_px"
@@ -134,13 +132,14 @@
                         app:srcCompat="@drawable/xs_camera_button_background" />
 
                     <ImageView
-                        android:id="@+id/iv_new_defect_photo"
+                        android:id="@+id/iv_defect_pic"
                         android:layout_width="@dimen/xs_new_defect_photo_height"
                         android:layout_height="@dimen/xs_new_defect_photo_height_px"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/core_padding_30px"
-                        android:layout_toLeftOf="@+id/ibtn_take_picture"
-                        android:contentDescription="@null" />
+                        android:layout_toLeftOf="@+id/ib_take_picture"
+                        android:contentDescription="@null"
+                        android:onClick="onClick" />
 
                     <TextView
                         android:id="@+id/tv_defect_count"
@@ -148,7 +147,7 @@
                         android:layout_height="@dimen/xs_defect_count_width_px"
                         android:layout_alignParentTop="true"
                         android:layout_marginRight="10px"
-                        android:layout_toLeftOf="@+id/ibtn_take_picture"
+                        android:layout_toLeftOf="@+id/ib_take_picture"
                         android:background="@drawable/xs_circle_text_background"
                         android:gravity="center"
                         android:textColor="@android:color/white"
@@ -156,22 +155,25 @@
                         android:visibility="invisible" />
                 </RelativeLayout>
 
-                <com.cnksi.common.view.AutoRadioGroup
+                <com.cnksi.defect.view.FlowRadioGroup
+                    android:paddingLeft="@dimen/core_padding_30px"
                     android:id="@+id/container_rb_general_defect"
                     android:layout_width="match_parent"
-                    android:layout_height="120px"
+                    android:layout_height="wrap_content"
                     android:background="@color/core_bg_white_ffffff"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:columnCount="3"
+                    android:paddingBottom="@dimen/_20px"
                     android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                    android:paddingTop="@dimen/_20px"
+                    android:rowCount="2"
                     app:layout_constraintTop_toBottomOf="@+id/container_defect">
 
                     <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/rb_general_defect"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
                         android:button="@null"
                         android:checked="true"
                         android:clickable="true"
@@ -183,9 +185,10 @@
 
                     <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/rb_serious_defect"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
                         android:button="@null"
                         android:clickable="true"
                         android:text="@string/xs_serious_defect_str"
@@ -196,9 +199,11 @@
 
                     <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/rb_crisis_defect"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
                         android:button="@null"
                         android:clickable="true"
                         android:text="@string/xs_crisis_defect_str"
@@ -206,26 +211,15 @@
                         android:textSize="@dimen/xs_dialog_title_textsize_px"
                         app:drawableLeft="@drawable/xs_radio_button_selector"
                         app:drawableSize="48px" />
-                </com.cnksi.common.view.AutoRadioGroup>
-
-                <com.cnksi.common.view.AutoRadioGroup
-                    android:id="@+id/container_rb_general_defect_other"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/xs_bottom_line_background_selector"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="20px"
-                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
-                    android:weightSum="3"
-                    app:layout_constraintTop_toBottomOf="@+id/container_rb_general_defect">
 
                     <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/rb_problem_defect"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_marginTop="@dimen/_20px"
+                        android:layout_rowWeight="1"
                         android:button="@null"
                         android:clickable="true"
                         android:text="问题"
@@ -236,9 +230,12 @@
 
                     <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/rb_hidden_defect"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_marginTop="@dimen/_20px"
+                        android:layout_rowWeight="1"
                         android:button="@null"
                         android:clickable="true"
                         android:text="隐患"
@@ -246,7 +243,9 @@
                         android:textSize="@dimen/xs_dialog_title_textsize_px"
                         app:drawableLeft="@drawable/xs_radio_button_selector"
                         app:drawableSize="48px" />
-                </com.cnksi.common.view.AutoRadioGroup>
+
+                </com.cnksi.defect.view.FlowRadioGroup>
+
 
                 <TextView
                     android:id="@+id/title_ele_internet"
@@ -260,7 +259,7 @@
                     android:text="是否影响电网运行"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/xs_global_text_size_px"
-                    app:layout_constraintTop_toBottomOf="@+id/container_rb_general_defect_other" />
+                    app:layout_constraintTop_toBottomOf="@+id/container_rb_general_defect" />
 
                 <com.cnksi.common.view.AutoRadioGroup
                     android:id="@+id/container_rg_ele_internet"
@@ -347,6 +346,7 @@
                 android:background="@drawable/xs_red_button_background_selector"
                 android:gravity="center"
                 android:minHeight="@dimen/xs_button_minheight"
+                android:onClick="onClick"
                 android:text="@string/xs_dialog_cancle_str"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/xs_global_text_size_px" />
@@ -363,6 +363,7 @@
                 android:background="@drawable/xs_button_background_blue_selector"
                 android:gravity="center"
                 android:minHeight="@dimen/xs_button_minheight"
+                android:onClick="onClick"
                 android:text="@string/xs_dialog_sure_str"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/xs_global_text_size_px" />
