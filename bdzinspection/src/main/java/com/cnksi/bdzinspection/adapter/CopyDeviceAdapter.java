@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.utils.ViewHolder;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
@@ -34,17 +35,8 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
         super(context, data, layoutId);
     }
 
-    public void setCurrentSelectedPosition(int currentSelectedPosition) {
-        this.currentSelectedPosition = currentSelectedPosition;
-        this.notifyDataSetChanged();
-    }
-
-    public void setItemClickListener(ItemClickListener<DbModel> itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
     @Override
-    public void convert(ViewHolder holder, final DbModel item, final int position) {
+    public void convert(ViewHolder holder, DbModel item, int position) {
         TextView txtDevice = holder.getView(R.id.tv_device_name);
         ImageView ibCopy = holder.getView(R.id.ibt_copy_pen);
         holder.getView(R.id.tv_device_defect_count).setVisibility(View.GONE);
@@ -77,6 +69,16 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
 
         holder.getRootView().setOnClickListener(v -> itemClickListener.onClick(v, item, position));
     }
+
+    public void setCurrentSelectedPosition(int currentSelectedPosition) {
+        this.currentSelectedPosition = currentSelectedPosition;
+        this.notifyDataSetChanged();
+    }
+
+    public void setItemClickListener(ItemClickListener<DbModel> itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
 
     public void pre() {
         if (currentSelectedPosition > 0) {

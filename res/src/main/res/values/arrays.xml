@@ -224,4 +224,9 @@
         <item>逾期文件删除</item>
         <item>删除其他班组数据</item>
     </string-array>
+
+    <string-array name="Defect_Indicator">
+        <item>跟踪缺陷</item>
+        <item>验收缺陷</item>
+    </string-array>
 </resources>

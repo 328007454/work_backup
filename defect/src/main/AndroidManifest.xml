@@ -6,6 +6,12 @@
 
         <activity
             android:name="com.cnksi.defect.activity.AddDefectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name="com.cnksi.defect.activity.OperateDefectActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
     </application>

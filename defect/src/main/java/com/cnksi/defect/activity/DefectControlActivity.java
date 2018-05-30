@@ -147,12 +147,9 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
 
 
     @Override
-    public void itemClick(View v, DefectRecord defectRecord, int position) {
-
-    }
-
-    @Override
-    public void itemLongClick(View v, DefectRecord defectRecord, int position) {
-
+    public void onClick(View v, DefectRecord data, int position) {
+        Intent intent = new Intent(this, OperateDefectActivity.class);
+        intent.putExtra(DefectRecord.DEFECTID,data);
+        startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
     }
 }

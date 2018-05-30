@@ -15,9 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cnksi.common.utils.ViewHolder;
+
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment.DeviceClickListener;
@@ -92,7 +93,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
     private void initialUI() {
         getIntentValue();
         currentInspectionType = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE);
-       // binding.includeTitle.tvTitle.setText(R.string.xs_device_select);
+        // binding.includeTitle.tvTitle.setText(R.string.xs_device_select);
         selectType = getIntent().getStringExtra(SELECT_TYPE);
         if (SELECT_TYPE_MULT.equals(selectType)) {
             binding.btnStartInspection.setVisibility(View.VISIBLE);
@@ -127,7 +128,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
 
     private void initOnClick() {
 
-     //   binding.includeTitle.ibtnCancel.setOnClickListener(view -> DeviceSelectActivity.this.onBackPressed());
+        //   binding.includeTitle.ibtnCancel.setOnClickListener(view -> DeviceSelectActivity.this.onBackPressed());
 
         binding.btnStartInspection.setOnClickListener(view -> {
             List<DbModel> selectDeviceList = new ArrayList<>();

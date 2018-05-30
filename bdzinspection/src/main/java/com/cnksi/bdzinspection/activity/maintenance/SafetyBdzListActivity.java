@@ -5,10 +5,9 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseActivity;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.bdzinspection.databinding.XsActivitySafetyBdzListBinding;

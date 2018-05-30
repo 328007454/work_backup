@@ -9,8 +9,10 @@ import com.cnksi.core.utils.PreferencesUtils;
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
+import java.io.Serializable;
+
 @Table(name = "defect_record")
-public class DefectRecord extends BaseModel {
+public class DefectRecord extends BaseModel implements Serializable{
 
     // 结果ID
     public static final String DEFECTID = "defectid";

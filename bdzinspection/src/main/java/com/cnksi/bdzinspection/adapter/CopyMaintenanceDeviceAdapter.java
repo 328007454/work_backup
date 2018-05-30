@@ -12,7 +12,7 @@ import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.zhy.autolayout.utils.AutoUtils;
-
+import com.cnksi.common.utils.ViewHolder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

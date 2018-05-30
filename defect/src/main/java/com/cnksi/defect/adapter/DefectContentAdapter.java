@@ -108,7 +108,7 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         itemBinding.tvDefectRemindTime.setText(calculateRemindTime(item));
         itemBinding.getRoot().setOnClickListener(v -> {
             if (itemClickListener != null) {
-                itemClickListener.itemClick(v, item, position);
+                itemClickListener.onClick(v, item, position);
             }
         });
 
