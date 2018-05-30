@@ -7,13 +7,11 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.StringUtilsExt;
@@ -38,7 +36,7 @@ import static com.cnksi.sjjc.R.id.add_indoor_weather;
 /**
  * 修改后的室内温湿度界面
  */
-public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity implements ItemClickListener {
+public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity {
 
     //报告表
     private List<ReportSnwsd> mReportList;
@@ -100,7 +98,20 @@ public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity implements
         switch (msg.what) {
             case LOAD_DATA:
                 indoorWeatherAdapter = new IndoorWeathearAdapter(mActivity, mReportList, binding.llContainer, R.layout.adapter_indoor_item);
-                indoorWeatherAdapter.setItemClickListener(this);
+                indoorWeatherAdapter.setImgClickListener((v, o, position) -> {
+                    switch (v.getId()) {
+                        case add_indoor_weather:
+                            mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
+                            break;
+                        case R.id.delete_indoor_weather:
+                            mReportList.remove(position);
+                            break;
+                        default:
+                            break;
+                    }
+                    indoorWeatherAdapter.setList(mReportList);
+
+                });
                 indoorWeatherAdapter.setLocation("全站");
                 break;
             default:
@@ -156,20 +167,6 @@ public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity implements
         this.finish();
     }
 
-    @Override
-    public void onClick(View v, Object o, int position) {
-        switch (v.getId()) {
-            case add_indoor_weather:
-                mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
-                break;
-            case R.id.delete_indoor_weather:
-                mReportList.remove(position);
-                break;
-            default:
-                break;
-        }
-        indoorWeatherAdapter.setList(mReportList);
 
-    }
 
 }

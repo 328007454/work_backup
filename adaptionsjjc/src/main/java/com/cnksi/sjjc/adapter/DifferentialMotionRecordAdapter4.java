@@ -11,29 +11,15 @@ import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.CdbhclValue;
-import com.cnksi.sjjc.bean.ReportCdbhcl;
+import com.cnksi.sjjc.databinding.InfraedThermometerItemBinding;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class DifferentialMotionRecordAdapter4 extends BaseLinearLayoutAdapter<CdbhclValue> {
+public class DifferentialMotionRecordAdapter4 extends BaseLinearBindingAdapter<InfraedThermometerItemBinding, CdbhclValue> {
 
-    //根据设备id，以及变电站id
-    private Map<String, ReportCdbhcl> recordMap;
 
     private List<CdbhclValue> valueList;
-    private ReportCdbhcl report;
-    private String value;
 
-
-    public void setRecordList(Map<String, ReportCdbhcl> recordMap) {
-        this.recordMap = recordMap;
-        if (recordMap == null) {
-            this.recordMap = new HashMap<String, ReportCdbhcl>();
-        }
-        notifyDataSetChanged();
-    }
 
     public DifferentialMotionRecordAdapter4(Context context, List<CdbhclValue> data, int layoutId, LinearLayout linearLayout) {
         super(context, data, linearLayout, layoutId);
@@ -42,29 +28,20 @@ public class DifferentialMotionRecordAdapter4 extends BaseLinearLayoutAdapter<Cd
 
     }
 
-    @Override
-    public void convert(ViewHolder holder, final CdbhclValue item, final int position) {
-        holder.setText(R.id.tv_defect_degree_item, item.getDeviceName());
-        final EditText editText = holder.getView(R.id.et_test_instrument);
 
+    @Override
+    public void convert(InfraedThermometerItemBinding holder, CdbhclValue item, int position) {
+        holder.tvDefectDegreeItem.setText(item.getDeviceName());
+        final EditText editText = holder.etTestInstrument;
         editText.setHint("请输入大差流值");
-//        editText.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         editText.setText(TextUtils.isEmpty(item.getValue()) ? "" : item.getValue());
-//        if (null != recordMap && !recordMap.isEmpty()) {
-//            ReportCdbhcl report = recordMap.get(item.deviceid);
-//            value = (report == null) ? "" : recordMap.get(item.deviceid).dclz;
-//            editText.setText(value);
-//        }
         editText.addTextChangedListener(new MyTextWatcher(item.getId(), position));
     }
 
     class MyTextWatcher implements TextWatcher {
-        private EditText mEditText;
-        private String deviceId;
         private int position;
 
         public MyTextWatcher(String deviceId, int position) {
-            this.deviceId = deviceId;
             this.position = position;
         }
 
@@ -84,10 +61,5 @@ public class DifferentialMotionRecordAdapter4 extends BaseLinearLayoutAdapter<Cd
         }
     }
 
-
-    public Map<String, ReportCdbhcl> getMap() {
-
-        return recordMap;
-    }
 
 }

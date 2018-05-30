@@ -14,7 +14,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseSjjcActivity;
-import com.cnksi.sjjc.adapter.BatteryDefetcDeviceAdapter;
+import com.cnksi.sjjc.adapter.BatteryDefectDeviceAdapter;
 import com.cnksi.sjjc.bean.BatteryInstrument;
 import com.cnksi.sjjc.databinding.ActivityBatteryDeviceDetectBinding;
 import com.cnksi.sjjc.service.BatteryInstrumentService;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class BatteryDeviceDetectActivity extends BaseSjjcActivity {
     private ActivityBatteryDeviceDetectBinding mDetectBinding;
-    private BatteryDefetcDeviceAdapter mDefetcDeviceAdapter;
+    private BatteryDefectDeviceAdapter mDefectDeviceAdapter;
     private List<BatteryInstrument> datas = new ArrayList<>();
     private int pageStart;
 
@@ -57,15 +57,16 @@ public class BatteryDeviceDetectActivity extends BaseSjjcActivity {
     }
 
     public void initView() {
-        mDefetcDeviceAdapter = new BatteryDefetcDeviceAdapter(mDetectBinding.rvBatteryDevice, datas, R.layout.item_battery_defdevice);
+        mDefectDeviceAdapter = new BatteryDefectDeviceAdapter(R.layout.item_battery_defdevice, datas);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mDetectBinding.rvBatteryDevice.setLayoutManager(layoutManager);
-        mDetectBinding.rvBatteryDevice.setAdapter(mDefetcDeviceAdapter);
-        mDefetcDeviceAdapter.setOnItemClickListener((view, data, position) -> {
+        mDefectDeviceAdapter.bindToRecyclerView(mDetectBinding.rvBatteryDevice);
+        mDefectDeviceAdapter.setOnItemClickListener((helper, v, position) -> {
             Intent intent = new Intent();
-            intent.putExtra(BatteryInstrument.CSYQMC, ((BatteryInstrument) data).testName);
-            intent.putExtra(BatteryInstrument.ID, ((BatteryInstrument) data).id);
-            intent.putExtra(BatteryInstrument.SELECT_NUM, (((BatteryInstrument) data).selectNum + 1) + "");
+            BatteryInstrument data = (BatteryInstrument) helper.getItem(position);
+            intent.putExtra(BatteryInstrument.CSYQMC, data.testName);
+            intent.putExtra(BatteryInstrument.ID, data.id);
+            intent.putExtra(BatteryInstrument.SELECT_NUM, (data.selectNum + 1) + "");
             setResult(RESULT_OK, intent);
             finish();
         });
@@ -91,7 +92,7 @@ public class BatteryDeviceDetectActivity extends BaseSjjcActivity {
             BatteryDeviceDetectActivity.this.runOnUiThread(() -> {
                 if (!instruments.isEmpty()) {
                     datas.addAll(instruments);
-                    mDefetcDeviceAdapter.setList(datas);
+                    mDefectDeviceAdapter.setNewData(datas);
                 } else {
                     ToastUtils.showMessage("没有配置数据");
                 }
@@ -135,7 +136,7 @@ public class BatteryDeviceDetectActivity extends BaseSjjcActivity {
     private void loadData(final String text) {
         mDetectBinding.springviewLayout.setEnableLoadmore(false);
         datas.clear();
-        mDefetcDeviceAdapter.notifyDataSetChanged();
+        mDefectDeviceAdapter.notifyDataSetChanged();
         ExecutorManager.executeTaskSerially(() -> {
             if (TextUtils.isEmpty(text)) {
                 BatteryDeviceDetectActivity.this.loadMoreData(pageStart = 0, 50);
@@ -146,7 +147,7 @@ public class BatteryDeviceDetectActivity extends BaseSjjcActivity {
             BatteryDeviceDetectActivity.this.runOnUiThread(() -> {
                 if (!instrumentList.isEmpty()) {
                     datas.addAll(instrumentList);
-                    mDefetcDeviceAdapter.setList(datas);
+                    mDefectDeviceAdapter.setNewData(datas);
                 } else {
                     ToastUtils.showMessage("没有配置数据");
                 }

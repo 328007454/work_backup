@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;

@@ -11,9 +11,8 @@ import android.widget.LinearLayout;
 
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.StringUtilsExt;
-import com.cnksi.common.utils.ViewHolder;
-import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.ReportSnwsd;
+import com.cnksi.sjjc.databinding.AdapterIndoorItemBinding;
 
 import java.util.List;
 
@@ -23,9 +22,9 @@ import java.util.List;
  * 室内温湿度适配器
  */
 
-public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> {
+public class IndoorWeathearAdapter extends BaseLinearBindingAdapter<AdapterIndoorItemBinding,ReportSnwsd> {
     private String location;
-    private ItemClickListener itemClickListener;
+    private ItemClickListener imgClickListener;
 
     private final static String TAG = "indoor_weather_adapter";
 
@@ -33,21 +32,13 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
         super(context, data, container, layoutId);
     }
 
-    public ItemClickListener getItemClickListener() {
-        return itemClickListener;
-    }
-
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
     @Override
-    public void convert(ViewHolder holder, final ReportSnwsd item, final int position) {
-        EditText etLocation = holder.getView(R.id.et_location);
-        EditText etTempreture = holder.getView(R.id.et_tempreture);
-        EditText etHumidity = holder.getView(R.id.et_current_humidity);
-        ImageButton imageButton = holder.getView(R.id.add_indoor_weather);
-        ImageButton deleteButton = holder.getView(R.id.delete_indoor_weather);
+    public void convert(AdapterIndoorItemBinding holder, ReportSnwsd item, int position) {
+        EditText etLocation =holder.etLocation;
+        EditText etTempreture =holder.etTempreture;
+        EditText etHumidity = holder.etCurrentHumidity;
+        ImageButton imageButton = holder.addIndoorWeather;
+        ImageButton deleteButton =holder.deleteIndoorWeather;
 
         MyTextWatcher watcherLocation = (MyTextWatcher) etLocation.getTag();
         if (watcherLocation == null) {
@@ -94,17 +85,25 @@ public class IndoorWeathearAdapter extends BaseLinearLayoutAdapter<ReportSnwsd> 
 
 
         imageButton.setOnClickListener(v -> {
-            if (null != itemClickListener) {
-                itemClickListener.onClick(v, item, position);
+            if (null != imgClickListener) {
+                imgClickListener.onClick(v, item, position);
             }
         });
         deleteButton.setOnClickListener(view -> {
-            if (null != itemClickListener) {
-                itemClickListener.onClick(view, item, position);
+            if (null != imgClickListener) {
+                imgClickListener.onClick(view, item, position);
             }
         });
-
     }
+
+    public ItemClickListener getImgClickListener() {
+        return imgClickListener;
+    }
+
+    public void setImgClickListener(ItemClickListener imgClickListener) {
+        this.imgClickListener = imgClickListener;
+    }
+
 
     class MyTextWatcher implements TextWatcher {
         private int position;

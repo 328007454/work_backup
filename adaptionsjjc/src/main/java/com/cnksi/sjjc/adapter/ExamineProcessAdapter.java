@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.ViewHolder;
@@ -20,7 +21,6 @@ import com.cnksi.sjjc.bean.PreventionRecord;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 /**
  * Created by zhou on 2016/6/8.
  */

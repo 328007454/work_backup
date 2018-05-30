@@ -4,11 +4,11 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 
 import java.util.Collection;
-
 public class ListContentDialogAdapter extends BaseAdapter<String> {
 
     public static final String LIST_STRING_TYPE = "list_string_type";

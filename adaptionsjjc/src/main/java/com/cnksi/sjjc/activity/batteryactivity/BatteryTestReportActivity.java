@@ -36,6 +36,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
     private BatteryGroup batteryGroups;
     private String type;
     private String typeName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -258,7 +260,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                         holder.getView(R.id.layout_resistance).setVisibility(View.GONE);
                     }
                 }
-                
+
                 binding.layoutBattery.addView(holder.getRootView());
                 if (i == size - 1) {
                     holder.getView(R.id.line).setVisibility(View.GONE);
@@ -270,9 +272,9 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                     recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
                     TreeSet<String> keys = new TreeSet<String>();
                     keys.addAll(imageList.keySet());
-                    BatteryReportImageAdapter imageAdapter = new BatteryReportImageAdapter(recyclerView, keys, R.layout.battery_pictures_item);
+                    BatteryReportImageAdapter imageAdapter = new BatteryReportImageAdapter(R.layout.battery_pictures_item, new ArrayList<>(keys));
                     imageAdapter.setItemClickListener((v, imageList1, position) -> ImageDetailsActivity.with(mActivity).setImageUrlList(StringUtils.addStrToListItem(imageList1, Config.RESULT_PICTURES_FOLDER)).start());
-                    recyclerView.setAdapter(imageAdapter);
+                    imageAdapter.bindToRecyclerView(recyclerView);
                     imageAdapter.setBatteryImageMap(imageList);
                 } else {
                     holder.getView(R.id.label_image).setVisibility(View.GONE);

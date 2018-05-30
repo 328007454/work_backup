@@ -3,7 +3,7 @@ package com.cnksi.bdzinspection.adapter;
 import android.content.Context;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
+import com.cnksi.common.base.BaseAdapter;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.Collection;

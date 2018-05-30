@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.ViewHolder;
@@ -16,7 +17,6 @@ import com.cnksi.sjjc.R;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-
 /**
  * Created by luoxy on 16/4/28.
  */

@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.utils.CalcUtils;

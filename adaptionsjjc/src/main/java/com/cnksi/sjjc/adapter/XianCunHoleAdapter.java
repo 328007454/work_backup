@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -20,7 +21,6 @@ import com.cnksi.sjjc.inter.ItemClickListenerPicture;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 /**
  * Created by han on 2016/6/13.
  */

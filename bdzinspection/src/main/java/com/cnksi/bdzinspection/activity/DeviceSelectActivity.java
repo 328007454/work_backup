@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment.DeviceClickListener;
 import com.cnksi.common.Config;

@@ -4,12 +4,12 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 
 import java.util.Collection;
-
 /**
  * Created by han on 2016/6/13.
  */

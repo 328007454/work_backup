@@ -1,26 +1,26 @@
 package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
-import android.databinding.ViewDataBinding;
 import android.view.View;
 
+import com.cnksi.common.base.BaseBindingAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.sjjc.databinding.ShowNameBinding;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by han on 2016/8/10.
  */
-public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
+public class ShowPeopleAdapter extends BaseBindingAdapter<ShowNameBinding, String> {
     public static String MANAGER_FLAG = "manager_flag";
     public static String PEOPLE_FLAG = "people_flag";
 
     private ItemClickListener itemClickListener;
-    private ShowNameBinding nameBinding;
+
     private int totoalUserCount;
 
-    public ShowPeopleAdapter(Context context, Collection<String> list, int layoutId) {
+    public ShowPeopleAdapter(Context context, List<String> list, int layoutId) {
         super(context, list, layoutId);
     }
 
@@ -29,13 +29,9 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void convert(ViewDataBinding dataBinding, final String item, final int position) {
-        setNameBinding((ShowNameBinding) dataBinding);
-        nameBinding.getRoot().setTag(nameBinding);
+    public void convert(ShowNameBinding nameBinding, final String item, final int position) {
         nameBinding.tvPeopleName.setText(item);
         nameBinding.deleteImag.setTag(PEOPLE_FLAG);
-
         nameBinding.deleteImag.setOnClickListener(view -> itemClickListener.onClick(view, item, position));
         if (position < totoalUserCount) {
             nameBinding.deleteImag.setVisibility(View.GONE);
@@ -44,9 +40,6 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
         }
     }
 
-    private void setNameBinding(ShowNameBinding dataBinding) {
-        this.nameBinding = dataBinding;
-    }
 
     public void setUserCount(int user) {
         totoalUserCount = user;

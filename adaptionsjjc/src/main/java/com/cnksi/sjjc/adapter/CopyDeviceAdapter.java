@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
@@ -15,7 +16,6 @@ import org.xutils.db.table.DbModel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 
 /**
  * Created by lyndon on 2016/9/5.

@@ -1,17 +1,17 @@
 package com.cnksi.sjjc.adapter;
 
 import android.graphics.Bitmap;
-import android.support.v7.widget.RecyclerView;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.common.Config;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.holder.RecyclerHolder;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +20,13 @@ import java.util.Map;
  * @date 2016/6/21
  * @copyRight
  */
-public class BatteryReportImageAdapter extends BaseRecyclerAdapter<String> {
+public class BatteryReportImageAdapter extends BaseQuickAdapter<String,BaseViewHolder> {
 
     private ItemClickListener<List<String>> itemClickListener;
+
+    public BatteryReportImageAdapter(int layoutResId, @Nullable List<String> data) {
+        super(layoutResId, data);
+    }
 
     public void setItemClickListener(ItemClickListener<List<String>> itemClickListener) {
         this.itemClickListener = itemClickListener;
@@ -35,14 +39,9 @@ public class BatteryReportImageAdapter extends BaseRecyclerAdapter<String> {
         notifyDataSetChanged();
     }
 
-    public BatteryReportImageAdapter(RecyclerView v, Collection<String> datas, int itemLayoutId) {
-        super(v, datas, itemLayoutId);
-
-    }
-
 
     @Override
-    public void convert(RecyclerHolder holder, String item, final int position, boolean isScrolling) {
+    protected void convert(BaseViewHolder holder, String item) {
         holder.setText(R.id.tv_battery_number, item);
         if (null != batteryImageMap && !batteryImageMap.isEmpty()) {
             final List<String> batteryImageList = batteryImageMap.get(item);
@@ -56,7 +55,7 @@ public class BatteryReportImageAdapter extends BaseRecyclerAdapter<String> {
             ((ImageView) holder.getView(R.id.img_battery)).setImageBitmap(bitmap);
             holder.getView(R.id.img_battery).setOnClickListener(v -> {
                 if (null != itemClickListener) {
-                    itemClickListener.onClick(v, batteryImageList, position);
+                    itemClickListener.onClick(v, batteryImageList, holder.getAdapterPosition());
                 }
             });
         }
