@@ -16,7 +16,6 @@ import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.TaskExtend;
@@ -272,17 +271,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                     TreeSet<String> keys = new TreeSet<String>();
                     keys.addAll(imageList.keySet());
                     BatteryReportImageAdapter imageAdapter = new BatteryReportImageAdapter(recyclerView, keys, R.layout.battery_pictures_item);
-                    imageAdapter.setItemClickListener(new ItemClickOrLongClickListener<List<String>>() {
-                        @Override
-                        public void onClick(View v, List<String> imageList, int position) {
-                            ImageDetailsActivity.with(mActivity).setImageUrlList(StringUtils.addStrToListItem(imageList, Config.RESULT_PICTURES_FOLDER)).start();
-                        }
-
-                        @Override
-                        public void onLongClick(View v, List<String> strings, int position) {
-
-                        }
-                    });
+                    imageAdapter.setItemClickListener((v, imageList1, position) -> ImageDetailsActivity.with(mActivity).setImageUrlList(StringUtils.addStrToListItem(imageList1, Config.RESULT_PICTURES_FOLDER)).start());
                     recyclerView.setAdapter(imageAdapter);
                     imageAdapter.setBatteryImageMap(imageList);
                 } else {

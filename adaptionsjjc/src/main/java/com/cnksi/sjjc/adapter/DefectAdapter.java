@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.common.Config;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private List<DefectRecord> data;
-    private ItemClickOrLongClickListener clickListener;
+    private ItemClickListener clickListener;
     private Context context;
 
     private int layoutId;
@@ -40,7 +40,7 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         this.layoutId = layoutId;
     }
 
-    public void setItemClickListener(ItemClickOrLongClickListener clickListener) {
+    public void setItemClickListener(ItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 

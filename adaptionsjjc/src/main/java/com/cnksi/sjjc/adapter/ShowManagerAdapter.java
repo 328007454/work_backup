@@ -3,7 +3,7 @@ package com.cnksi.sjjc.adapter;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
 
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.sjjc.databinding.ShowNameBinding;
 
 import java.util.Collection;
@@ -15,13 +15,13 @@ public class ShowManagerAdapter extends SimpleBindingAdatpter<String>{
     public static  String MANAGER_FLAG = "manager_flag";
     public static String PEOPLE_FLAG = "people_flag";
 
-    private ItemClickOrLongClickListener itemClickListener;
+    private ItemClickListener itemClickListener;
     private ShowNameBinding nameBinding;
     public ShowManagerAdapter(Context context, Collection<String> list, int layoutId) {
         super(context, list, layoutId);
     }
 
-    public void setClickWidget(ItemClickOrLongClickListener itemClickListener){
+    public void setClickWidget(ItemClickListener itemClickListener){
         this.itemClickListener = itemClickListener;
     }
 

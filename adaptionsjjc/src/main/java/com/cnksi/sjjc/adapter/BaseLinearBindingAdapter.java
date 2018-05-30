@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.LinkedList;
@@ -31,11 +31,11 @@ public abstract class BaseLinearBindingAdapter<D extends ViewDataBinding, T> ext
 
     public LinearLayout container;
 
-    public void setItemClickListener(ItemClickOrLongClickListener<T> itemClickListener) {
+    public void setItemClickListener(ItemClickListener<T> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
-    ItemClickOrLongClickListener<T> itemClickListener;
+    ItemClickListener<T> itemClickListener;
 
     public BaseLinearBindingAdapter(Context context, List<T> data, LinearLayout container, int layoutId) {
         this.context = context;
@@ -77,10 +77,6 @@ public abstract class BaseLinearBindingAdapter<D extends ViewDataBinding, T> ext
         final T t = getItem(position);
         if (itemClickListener != null) {
             binding.getRoot().setOnClickListener(v -> itemClickListener.onClick(v, t, position));
-            binding.getRoot().setOnLongClickListener(v -> {
-                itemClickListener.onLongClick(v, t, position);
-                return false;
-            });
         }
         convert(binding, t, position);
         return binding.getRoot();

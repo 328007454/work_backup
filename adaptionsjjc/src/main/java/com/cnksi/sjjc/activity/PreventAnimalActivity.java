@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
@@ -94,24 +93,16 @@ public class PreventAnimalActivity extends BaseSjjcActivity {
 
         data = new ArrayList<PreventionRecord>();
         adapter = new ExamineProcessAdapter(this, data, R.layout.item_examine_process);
-        adapter.setItemClickListener(new ItemClickOrLongClickListener<PreventionRecord>() {
-            @Override
-            public void onClick(View v, PreventionRecord preventionRecord, int position) {
-                takePicPosition = position;
-                if (v.getId() == R.id.iv_take_pic) {
-                    currentHole = (String) v.getTag();
-                    FunctionUtils.takePicture(mActivity, imgName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
-                } else if (v.getId() == R.id.iv_show_pic) {
-                    isWatchPics = true;
-                    setResultImages();
-                    ArrayList<String> listPic = StringUtils.stringToList(allPics);
-                    showImageDetails(mActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPic, Config.RESULT_PICTURES_FOLDER), true, false);
-                }
-            }
-
-            @Override
-            public void onLongClick(View v, PreventionRecord preventionRecord, int position) {
-
+        adapter.setItemClickListener((v, preventionRecord, position) -> {
+            takePicPosition = position;
+            if (v.getId() == R.id.iv_take_pic) {
+                currentHole = (String) v.getTag();
+                FunctionUtils.takePicture(mActivity, imgName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
+            } else if (v.getId() == R.id.iv_show_pic) {
+                isWatchPics = true;
+                setResultImages();
+                ArrayList<String> listPic = StringUtils.stringToList(allPics);
+                showImageDetails(mActivity, 0, StringUtils.addStrToListItem(listPic, Config.RESULT_PICTURES_FOLDER), true, false);
             }
         });
         binding.lvExamineProcess.setAdapter(adapter);

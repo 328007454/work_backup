@@ -13,7 +13,7 @@ import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
@@ -100,18 +100,10 @@ public class GZTZRecordActivity extends BaseSjjcActivity {
             ScreenManager.getScreenManager().popActivityList(TZQKActivity.class, BHDZJLActivity.class, BHDZQKActivity.class);
             GZTZRecordActivity.this.finish();
         });
-        showPeopleAdapter.setClickWidget(new ItemClickOrLongClickListener() {
-            @Override
-            public void onClick(View v, Object o, int position) {
-                showPeopleList.remove(position);
-                selectDbModel.remove(position);
-                showPeopleAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onLongClick(View v, Object o, int position) {
-
-            }
+        showPeopleAdapter.setClickWidget((v, o, position) -> {
+            showPeopleList.remove(position);
+            selectDbModel.remove(position);
+            showPeopleAdapter.notifyDataSetChanged();
         });
     }
 

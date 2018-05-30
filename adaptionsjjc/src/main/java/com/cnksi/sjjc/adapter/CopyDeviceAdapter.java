@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 
@@ -26,7 +26,7 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
 
     private List<String> copyDeviceList = new ArrayList<>();
 
-    private ItemClickOrLongClickListener<DbModel> itemClickListener;
+    private ItemClickListener<DbModel> itemClickListener;
 
 
     public CopyDeviceAdapter(Context context, Collection<DbModel> data, int layoutId) {
@@ -42,7 +42,7 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
         }
     }
 
-    public void setItemClickListener(ItemClickOrLongClickListener<DbModel> itemClickListener) {
+    public void setItemClickListener(ItemClickListener<DbModel> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.common.Config;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.StringUtils;
@@ -28,7 +28,7 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
 
     private String[] locations = new String[]{"主控室", "高压室", "一次设备", "保护室", "电缆层", "二次设备", "其它地点"};
 
-    private ItemClickOrLongClickListener<PreventionRecord> itemClickListener;
+    private ItemClickListener<PreventionRecord> itemClickListener;
 
     private List<HoleRecord> exitHoleRecords;
 
@@ -41,7 +41,7 @@ public class ExamineProcessAdapter extends BaseAdapter<PreventionRecord> {
         super(context, data, layoutId);
     }
 
-    public void setItemClickListener(ItemClickOrLongClickListener<PreventionRecord> itemClickListener) {
+    public void setItemClickListener(ItemClickListener<PreventionRecord> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 

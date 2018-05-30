@@ -25,7 +25,7 @@ import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
@@ -68,7 +68,7 @@ import java.util.Map;
  *
  * @author han on 2017/3/24.
  */
-public class HomeActivity extends BaseSjjcActivity implements View.OnClickListener, ItemClickOrLongClickListener {
+public class HomeActivity extends BaseSjjcActivity implements View.OnClickListener, ItemClickListener {
     private ActivityHomePageBinding homePageBinding;
     //变电站弹出popwindow
     private BdzPopwindowBinding bdzPopwindowBinding;
@@ -217,17 +217,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         mPop.setOutsideTouchable(true);
         homePageBinding.setTypeClick(this);
         taskItemAdapter = new HomeTaskItemAdapter(mActivity, null, homePageBinding.dataContainer);
-        taskItemAdapter.setItemClickListener(new ItemClickOrLongClickListener<Task>() {
-            @Override
-            public void onClick(View v, Task task, int position) {
-                startTask(task);
-            }
-
-            @Override
-            public void onLongClick(View v, Task task, int position) {
-
-            }
-        });
+        taskItemAdapter.setItemClickListener((v, task, position) -> startTask(task));
         safetyToolAdapter = new HomeSafetyToolAdapter(mActivity, null, homePageBinding.dataContainer);
     }
 
@@ -390,10 +380,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         }
     }
 
-    @Override
-    public void onLongClick(View v, Object o, int position) {
 
-    }
 
 
     /**

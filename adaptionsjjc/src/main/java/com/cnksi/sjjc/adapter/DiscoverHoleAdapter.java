@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 
@@ -14,9 +14,9 @@ import java.util.Collection;
  * Created by han on 2016/6/13.
  */
 public class DiscoverHoleAdapter extends BaseAdapter<String> {
-    private ItemClickOrLongClickListener<String> itemClickListener;
+    private ItemClickListener<String> itemClickListener;
 
-    public void setItemClickListener(ItemClickOrLongClickListener<String> itemClickListener) {
+    public void setItemClickListener(ItemClickListener<String> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
     public DiscoverHoleAdapter(Context context, Collection<String> data, int layoutId) {

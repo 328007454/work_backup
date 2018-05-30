@@ -4,7 +4,7 @@ import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.view.View;
 
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.sjjc.databinding.ShowNameBinding;
 
 import java.util.Collection;
@@ -16,7 +16,7 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
     public static String MANAGER_FLAG = "manager_flag";
     public static String PEOPLE_FLAG = "people_flag";
 
-    private ItemClickOrLongClickListener itemClickListener;
+    private ItemClickListener itemClickListener;
     private ShowNameBinding nameBinding;
     private int totoalUserCount;
 
@@ -24,7 +24,7 @@ public class ShowPeopleAdapter extends SimpleBindingAdatpter<String> {
         super(context, list, layoutId);
     }
 
-    public void setClickWidget(ItemClickOrLongClickListener itemClickListener) {
+    public void setClickWidget(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 

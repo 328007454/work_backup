@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cnksi.common.Config;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.adapter.holder.RecyclerHolder;
@@ -22,9 +22,9 @@ import java.util.Map;
  */
 public class BatteryReportImageAdapter extends BaseRecyclerAdapter<String> {
 
-    private ItemClickOrLongClickListener<List<String>> itemClickListener;
+    private ItemClickListener<List<String>> itemClickListener;
 
-    public void setItemClickListener(ItemClickOrLongClickListener<List<String>> itemClickListener) {
+    public void setItemClickListener(ItemClickListener<List<String>> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 

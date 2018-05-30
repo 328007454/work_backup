@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.utils.DialogUtils;
@@ -131,33 +130,25 @@ public class CopyAllValueActivity3 extends BaseSjjcActivity {
         mTitleBinding.tvRight.setBackgroundResource(R.drawable.red_button_background_selector);
         copyDeviceList = new ArrayList<>();
         deviceAdapter = new CopyDeviceAdapter(this, copyDeviceList, R.layout.device_item);
-        deviceAdapter.setItemClickListener(new ItemClickOrLongClickListener<DbModel>() {
-            @Override
-            public void onClick(View v, DbModel dbModel, int position) {
-                if (isSpread) {
-                    setDeviceListDisplay();
-                }
-                if (!showShadom()) {
-                    if (null != dbModel) {
-                        saveAll();
-                        deviceAdapter.setCurrentSelectedPosition(position);
-                        currentDevice = dbModel;
-                        if (!deviceAdapter.isLast()) {
-                            isFinish = false;
-                            binding.btnNext.setText(R.string.next);
-                        }
-                        setCurrentDevice(position);
-
-                    } else {
-                        data.clear();
-                        binding.copyContainer.removeAllViews();
-                    }
-                }
+        deviceAdapter.setItemClickListener((v, dbModel, position) -> {
+            if (isSpread) {
+                setDeviceListDisplay();
             }
+            if (!showShadom()) {
+                if (null != dbModel) {
+                    saveAll();
+                    deviceAdapter.setCurrentSelectedPosition(position);
+                    currentDevice = dbModel;
+                    if (!deviceAdapter.isLast()) {
+                        isFinish = false;
+                        binding.btnNext.setText(R.string.next);
+                    }
+                    setCurrentDevice(position);
 
-            @Override
-            public void onLongClick(View v, DbModel dbModel, int position) {
-
+                } else {
+                    data.clear();
+                    binding.copyContainer.removeAllViews();
+                }
             }
         });
         binding.gvContainer.setAdapter(deviceAdapter);
@@ -172,17 +163,9 @@ public class CopyAllValueActivity3 extends BaseSjjcActivity {
             notClearDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             dialog.show();
         });
-        copyViewUtil.setItemClickListener(new ItemClickOrLongClickListener<CopyItem>() {
-            @Override
-            public void onClick(View v, CopyItem copyItem, int position) {
-                KeyBoardUtils.closeKeybord(mActivity);
-                CopyDataInterface.showHistory(mActivity, copyItem);
-            }
-
-            @Override
-            public void onLongClick(View v, CopyItem copyItem, int position) {
-
-            }
+        copyViewUtil.setItemClickListener((v, copyItem, position) -> {
+            KeyBoardUtils.closeKeybord(mActivity);
+            CopyDataInterface.showHistory(mActivity, copyItem);
         });
     }
 

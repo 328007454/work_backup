@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.utils.StringUtilsExt;
@@ -30,7 +30,7 @@ public class CopyViewUtil {
     private Map<String, CopyResult> copyResultMap;
     private KeyBordListener keyBordListener;
 
-    private ItemClickOrLongClickListener<CopyItem> itemClickListener;
+    private ItemClickListener<CopyItem> itemClickListener;
     private CopyItemLongClickListener<CopyResult> itemLongClickListener;
 
     public interface KeyBordListener {
@@ -47,7 +47,7 @@ public class CopyViewUtil {
         this.keyBordListener = keyBordListener;
     }
 
-    public void setItemClickListener(ItemClickOrLongClickListener<CopyItem> itemClickListener) {
+    public void setItemClickListener(ItemClickListener<CopyItem> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 

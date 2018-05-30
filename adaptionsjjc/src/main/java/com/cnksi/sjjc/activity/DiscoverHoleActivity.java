@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.cnksi.common.Config;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
@@ -98,19 +97,10 @@ public class DiscoverHoleActivity extends BaseSjjcActivity {
         holder.setText(R.id.tv_dialog_title, "请选择孔洞位置");
         DiscoverHoleAdapter adapter = new DiscoverHoleAdapter(this, areaList, R.layout.dialog_content_child_item);
         //设置adapter的listView点击事件
-        adapter.setItemClickListener(new ItemClickOrLongClickListener<String>() {
-
-            @Override
-            public void onClick(View v, String s, int position) {
-                binding.tvDiscoverholePosition.setText(s);
-                binding.tvDiscoverholePosition.setTextColor(mActivity.getResources().getColor(R.color.green_color));
-                positionDialog.dismiss();
-            }
-
-            @Override
-            public void onLongClick(View v, String s, int position) {
-
-            }
+        adapter.setItemClickListener((v, s, position) -> {
+            binding.tvDiscoverholePosition.setText(s);
+            binding.tvDiscoverholePosition.setTextColor(mActivity.getResources().getColor(R.color.green_color));
+            positionDialog.dismiss();
         });
         positionLv.setAdapter(adapter);
         positionDialog = DialogUtils.createDialog(this, holder, dialogWidth, dialogHeight, true);

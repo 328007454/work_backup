@@ -13,7 +13,7 @@ import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.StringUtilsExt;
@@ -38,7 +38,7 @@ import static com.cnksi.sjjc.R.id.add_indoor_weather;
 /**
  * 修改后的室内温湿度界面
  */
-public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity implements ItemClickOrLongClickListener {
+public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity implements ItemClickListener {
 
     //报告表
     private List<ReportSnwsd> mReportList;
@@ -172,8 +172,4 @@ public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity implements
 
     }
 
-    @Override
-    public void onLongClick(View v, Object o, int position) {
-
-    }
 }

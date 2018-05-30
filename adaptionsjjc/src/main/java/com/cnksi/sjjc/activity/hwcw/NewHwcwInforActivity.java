@@ -14,7 +14,7 @@ import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.ItemClickOrLongClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
@@ -49,7 +49,7 @@ import java.util.List;
  * @author kkk on 2017/12/13.
  */
 
-public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickOrLongClickListener {
+public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickListener {
     ActivityNewhwcwInforBinding mInforBinding;
     private List<HwcwLocation> hotLocations = new ArrayList<>();
     private HwcwBaseInfo mHwcwBaseInfo;
@@ -215,10 +215,7 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickO
         });
     }
 
-    @Override
-    public void onLongClick(View v, Object o, int position) {
 
-    }
 
     private Dialog peopleDialog;
     private DialogPeople peopleBinding;
