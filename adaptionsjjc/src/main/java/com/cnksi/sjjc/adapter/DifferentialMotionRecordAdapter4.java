@@ -8,8 +8,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.cnksi.common.utils.StringUtilsExt;
-import com.cnksi.common.utils.ViewHolder;
-import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.bean.CdbhclValue;
 import com.cnksi.sjjc.databinding.InfraedThermometerItemBinding;
 

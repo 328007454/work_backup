@@ -13,13 +13,14 @@ import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
-import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.SpacingService;
+import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Spacing;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 
@@ -142,7 +143,7 @@ public class ArriveCheckHelper {
     }
 
     public synchronized void checkArrived(final BDLocation location) {
-        if (!Config.PmsDeviceType.one.name().equals(currentFunctionModel)) {
+        if (!PMSDeviceType.one.equals(currentFunctionModel)) {
             return;
         }
         cacheLatLng.add(new LatLng(location));

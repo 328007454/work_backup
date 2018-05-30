@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;

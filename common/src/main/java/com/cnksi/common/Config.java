@@ -477,20 +477,5 @@ public class Config implements Cst {
             Config.WWWROOT_FOLDER};
     public static String DELETED="1";
 
-    /**
-     * Pms设备型号
-     */
-    public enum PmsDeviceType {
-        one("一次设备"), second("二次设备"), auto("自动化屏"), secondP("二次屏");
-        private final String value;
 
-        PmsDeviceType(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return this.value;
-        }
-    }
 }

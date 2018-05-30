@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.utils.ViewHolder;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;

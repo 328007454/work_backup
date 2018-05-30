@@ -5,7 +5,7 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.common.base.BaseAdapter;
 
 import java.util.ArrayList;

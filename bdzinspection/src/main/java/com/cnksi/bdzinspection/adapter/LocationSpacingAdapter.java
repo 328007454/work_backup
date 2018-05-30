@@ -10,6 +10,7 @@ import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.utils.CalcUtils;
+import com.cnksi.common.utils.ViewHolder;
 
 import java.util.Collection;
 import java.util.regex.Matcher;

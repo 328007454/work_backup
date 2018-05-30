@@ -122,11 +122,11 @@ public class NewTransformRecordActivity extends BaseSjjcActivity {
                     listDzcs.add(txtDzcs);
                     if (keys.size() == 1) {
                         if (key.equalsIgnoreCase(Config.TANSFORMADJUSTMENT_DANGWEI)) {
-                            holder.setVisable(R.id.ll_dongzuo_container, View.GONE);
+                            holder.setVisibility(R.id.ll_dongzuo_container, View.GONE);
                             holder.setText(R.id.copy_part_one, description);
                             holder.setText(R.id.et_put_bcds, bcds == null ? "" : bcds);
                         } else {
-                            holder.setVisable(R.id.ll_bcds_container, View.GONE);
+                            holder.setVisibility(R.id.ll_bcds_container, View.GONE);
                             holder.setText(R.id.copy_part_two, description);
                             holder.setText(R.id.et_put_dzcs, TextUtils.isEmpty(dzcs) ? "" : dzcs);
                         }

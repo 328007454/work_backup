@@ -1,9 +1,9 @@
 package com.cnksi.common.utils;
 
 import android.content.Context;
-import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +11,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by lyndon on 2016/9/1.
+ * 创建一个viewHolder
  */
 public class ViewHolder {
+
     public static final String TAG = "ViewHolder";
+
+    private SparseArray<View> childViews;
 
     private View rootView;
 
     private int position;
 
-    private ViewDataBinding dataBinding;
-
     private Object tag;
+
+    public void setTag(Object tag) {
+        this.tag = tag;
+    }
+
+    public Object getTag() {
+        return tag;
+    }
 
     /**
      * 生成一个adapter的ViewHolder
@@ -34,6 +43,7 @@ public class ViewHolder {
      */
     private ViewHolder(Context context, ViewGroup parent, int layoutId, int position) {
         this.rootView = LayoutInflater.from(context).inflate(layoutId, parent, false);
+        this.childViews = new SparseArray<View>();
         this.position = position;
         rootView.setTag(this);
     }
@@ -48,6 +58,7 @@ public class ViewHolder {
      */
     public ViewHolder(Context context, ViewGroup parent, int layoutId, boolean attachToRoot) {
         this.rootView = LayoutInflater.from(context).inflate(layoutId, parent, attachToRoot);
+        this.childViews = new SparseArray<View>();
         rootView.setTag(this);
     }
 
@@ -69,14 +80,6 @@ public class ViewHolder {
             holder = (ViewHolder) convertView.getTag();
         }
         return holder;
-    }
-
-    public Object getTag() {
-        return tag;
-    }
-
-    public void setTag(Object tag) {
-        this.tag = tag;
     }
 
     /**
@@ -102,6 +105,7 @@ public class ViewHolder {
             Log.e(TAG, "没有找到id为" + rootView.getContext().getResources().getResourceEntryName(id) + "的控件");
             return null;
         } else {
+            childViews.put(id, view);
             return (T) view;
         }
     }
@@ -118,7 +122,6 @@ public class ViewHolder {
         view.setText(text);
         return this;
     }
-
 
     /**
      * 为ImageView设置图片
@@ -147,18 +150,6 @@ public class ViewHolder {
     }
 
     /**
-     * 为ImageView设置图片
-     *
-     * @param viewId
-     * @param url
-     * @return
-     */
-    public ViewHolder setImageByUrl(int viewId, String url) {
-        ImageView imageView = getView(viewId);
-        return this;
-    }
-
-    /**
      * 获取item中list中的位置
      *
      * @return
@@ -180,12 +171,5 @@ public class ViewHolder {
         }
     }
 
-    public ViewDataBinding getDataBinding() {
-        return dataBinding;
-    }
 
-    public void setVisable(int viewId, int visible) {
-        getView(viewId).setVisibility(visible);
-
-    }
 }
