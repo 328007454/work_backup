@@ -14,13 +14,11 @@ import com.cnksi.bdzinspection.adapter.AddPersonAdapter;
 import com.cnksi.bdzinspection.adapter.SignNameAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
-import com.cnksi.bdzinspection.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.XsActivityGenerateReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSignViewBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
@@ -33,11 +31,13 @@ import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.DefectRecord;
@@ -525,7 +525,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     }
 
     @Override
-    public void onItemClick(View v, Object o, int position) {
+    public void onClick(View v, Object o, int position) {
         DbModel model = persons.get(position);
         boolean hasUser = false;
         if (clickCzr) {

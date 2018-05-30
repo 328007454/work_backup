@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
+import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.daoservice.InspectionPreparedService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionTaskRemindBinding;
 import com.cnksi.bdzinspection.fragment.TaskRemindFragment;

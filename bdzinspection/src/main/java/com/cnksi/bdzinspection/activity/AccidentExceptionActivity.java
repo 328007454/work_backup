@@ -9,7 +9,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
+import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityAccidentExceptionBinding;
 import com.cnksi.bdzinspection.fragment.AccidentDealFragment;
 import com.cnksi.bdzinspection.fragment.MotionRuleFragment;

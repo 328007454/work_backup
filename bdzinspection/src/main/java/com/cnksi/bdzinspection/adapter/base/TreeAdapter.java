@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.base.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

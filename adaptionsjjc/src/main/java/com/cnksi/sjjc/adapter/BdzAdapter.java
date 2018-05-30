@@ -3,6 +3,7 @@ package com.cnksi.sjjc.adapter;
 import android.content.Context;
 import android.widget.TextView;
 
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;

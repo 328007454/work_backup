@@ -5,9 +5,6 @@ import android.app.Activity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -131,7 +128,7 @@ public class CopyViewUtil {
                     }
 
                     final int position = index;
-                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.itemClick(v, childItem, position));
+                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.onClick(v, childItem, position));
                     //抄录项如果看不清长按弹出对话框
                     layoutRoot.setOnLongClickListener(v -> {
                         CopyResult copyResult = copyResultMap.get(childItem.id);

@@ -2,7 +2,6 @@ package com.cnksi.bdzinspection.adapter;
 
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
@@ -47,14 +46,14 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
 
     public void pre() {
         if (currentSelectedPosition > 0) {
-            itemClickListener.onItemClick(null, getData().get(--currentSelectedPosition),
+            itemClickListener.onClick(null, getData().get(--currentSelectedPosition),
                     currentSelectedPosition);
         }
     }
 
     public void next() {
         if (currentSelectedPosition < getItemCount() - 1) {
-            itemClickListener.onItemClick(null, getData().get(++currentSelectedPosition), currentSelectedPosition);
+            itemClickListener.onClick(null, getData().get(++currentSelectedPosition), currentSelectedPosition);
         }
     }
 
@@ -103,7 +102,7 @@ public class CopyRcvDeviceAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
 
 
         helper.itemView.setOnClickListener(v -> {
-            itemClickListener.onItemClick(v, item, position);
+            itemClickListener.onClick(v, item, position);
             currentSelectedPosition = position;
         });
     }

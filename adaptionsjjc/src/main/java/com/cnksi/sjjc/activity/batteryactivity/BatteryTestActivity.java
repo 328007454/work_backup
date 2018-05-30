@@ -27,7 +27,6 @@ import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.databinding.DialogTipsBinding;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
@@ -220,25 +219,17 @@ public class BatteryTestActivity extends BaseSjjcActivity {
         });
         batteryCodeList = new ArrayList<String>();
         batteryCodeAdapter = new BatteryAdapter(this, batteryCodeList, R.layout.battery_item, currentCheckType);
-        batteryCodeAdapter.setItemClickListener(new ItemClickListener<String>() {
-            @Override
-            public void itemClick(View v, String batteryCode, int position) {
-                Intent intent = new Intent(mActivity, BatteryDialogActivity.class);
-                intent.putExtra(Config.CURRENT_TASK_ID, currentTaskId);
-                intent.putExtra(Config.CURRENT_BATTERY_NUM, batteryCode);
-                intent.putExtra(Config.CURRENT_FUNCTION_MODEL, currentCheckType);
-                intent.putExtra(Config.CURRENT_BDZ_NAME, currentBdzName);
-                intent.putExtra(Config.CURRENT_BATTERY_ZU, currentBattery);
-                intent.putExtra(Config.CURRENT_REPORT_ID, currentReportId);
-                intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-                intent.putExtra(Config.CURRENT_TEST_TYPE, taskExpand.sbjcIsAllCheck);
-                startActivityForResult(intent, EDIT_BATTERY_INFO);
-            }
-
-            @Override
-            public void itemLongClick(View v, String s, int position) {
-
-            }
+        batteryCodeAdapter.setItemClickListener((v, batteryCode, position) -> {
+            Intent intent = new Intent(mActivity, BatteryDialogActivity.class);
+            intent.putExtra(Config.CURRENT_TASK_ID, currentTaskId);
+            intent.putExtra(Config.CURRENT_BATTERY_NUM, batteryCode);
+            intent.putExtra(Config.CURRENT_FUNCTION_MODEL, currentCheckType);
+            intent.putExtra(Config.CURRENT_BDZ_NAME, currentBdzName);
+            intent.putExtra(Config.CURRENT_BATTERY_ZU, currentBattery);
+            intent.putExtra(Config.CURRENT_REPORT_ID, currentReportId);
+            intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
+            intent.putExtra(Config.CURRENT_TEST_TYPE, taskExpand.sbjcIsAllCheck);
+            startActivityForResult(intent, EDIT_BATTERY_INFO);
         });
 
         binding.batteryCordGrid.setAdapter(batteryCodeAdapter);
@@ -256,17 +247,7 @@ public class BatteryTestActivity extends BaseSjjcActivity {
         });
         batteryImageList = new ArrayList<BatteryRecord>();
         batteryImageAdapter = new BatteryImageAdapter(this, batteryImageList, R.layout.battery_pictures_item);
-        batteryImageAdapter.setItemClickListener(new ItemClickListener<BatteryRecord>() {
-            @Override
-            public void itemClick(View v, BatteryRecord batteryRecord, int position) {
-                showImage(batteryRecord);
-            }
-
-            @Override
-            public void itemLongClick(View v, BatteryRecord batteryRecord, int position) {
-
-            }
-        });
+        batteryImageAdapter.setItemClickListener((v, batteryRecord, position) -> showImage(batteryRecord));
 
         binding.batteryImageGrid.setAdapter(batteryImageAdapter);
     }

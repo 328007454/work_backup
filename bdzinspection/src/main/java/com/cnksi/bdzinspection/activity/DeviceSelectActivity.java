@@ -17,19 +17,19 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.daoservice.LookupService;
-import com.cnksi.bdzinspection.databinding.XsActivityDeviceSelectBinding;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment;
 import com.cnksi.bdzinspection.fragment.DeviceSelectFragment.DeviceClickListener;
-import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.common.Config;
 import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.base.FragmentPagerAdapter;
+import com.cnksi.common.daoservice.LookupService;
+import com.cnksi.common.databinding.CommonActivityDeviceSelectBinding;
 import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Lookup;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 
@@ -66,7 +66,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
 
     private String selectType;
 
-    private XsActivityDeviceSelectBinding binding;
+    private CommonActivityDeviceSelectBinding binding;
 
     public static DbModel getSelectDevice(List<DbModel> selectDeviceList, String deviceId) {
         if (selectDeviceList != null && !selectDeviceList.isEmpty()) {
@@ -82,7 +82,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_device_select);
+        binding = DataBindingUtil.setContentView(mActivity, R.layout.common_activity_device_select);
 
         initialUI();
         initOnClick();
@@ -92,7 +92,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
     private void initialUI() {
         getIntentValue();
         currentInspectionType = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE);
-        binding.includeTitle.tvTitle.setText(R.string.xs_device_select);
+       // binding.includeTitle.tvTitle.setText(R.string.xs_device_select);
         selectType = getIntent().getStringExtra(SELECT_TYPE);
         if (SELECT_TYPE_MULT.equals(selectType)) {
             binding.btnStartInspection.setVisibility(View.VISIBLE);
@@ -127,7 +127,7 @@ public class DeviceSelectActivity extends BaseActivity implements OnPageChangeLi
 
     private void initOnClick() {
 
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> DeviceSelectActivity.this.onBackPressed());
+     //   binding.includeTitle.ibtnCancel.setOnClickListener(view -> DeviceSelectActivity.this.onBackPressed());
 
         binding.btnStartInspection.setOnClickListener(view -> {
             List<DbModel> selectDeviceList = new ArrayList<>();

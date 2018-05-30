@@ -1,7 +1,6 @@
-package com.cnksi.bdzinspection.daoservice;
+package com.cnksi.common.daoservice;
 
-import com.cnksi.bdzinspection.model.SpacingGroup;
-import com.cnksi.common.daoservice.BaseService;
+import com.cnksi.common.model.SpacingGroup;
 
 import org.xutils.db.Selector;
 import org.xutils.ex.DbException;

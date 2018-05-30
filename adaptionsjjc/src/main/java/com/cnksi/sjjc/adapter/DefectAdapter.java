@@ -71,7 +71,7 @@ public class DefectAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         ((TextView) holder.getView(R.id.tv_defect_discover_time)).setText(DateUtils.getFormatterTime(defectRecord.discovered_date));
         defectImage.setOnClickListener(view -> {
             if (clickListener != null) {
-                clickListener.itemClick(view, defectRecord, position);
+                clickListener.onClick(view, defectRecord, position);
             }
         });
     }

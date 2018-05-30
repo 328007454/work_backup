@@ -76,11 +76,7 @@ public abstract class BaseLinearBindingAdapter<D extends ViewDataBinding, T> ext
         }
         final T t = getItem(position);
         if (itemClickListener != null) {
-            binding.getRoot().setOnClickListener(v -> itemClickListener.itemClick(v, t, position));
-            binding.getRoot().setOnLongClickListener(v -> {
-                itemClickListener.itemLongClick(v, t, position);
-                return false;
-            });
+            binding.getRoot().setOnClickListener(v -> itemClickListener.onClick(v, t, position));
         }
         convert(binding, t, position);
         return binding.getRoot();

@@ -293,7 +293,7 @@ public class BatteryFinishActivity extends BaseSjjcActivity implements ItemClick
     }
 
     @Override
-    public void itemClick(final View view, final Object o, final int position) {
+    public void onClick(final View view, final Object o, final int position) {
         if (view.getTag().equals(MANAGER_FLAG)) {
             if (showManagerList.size() == 1) {
                 ToastUtils.showMessage( "至少要有一个测试负责人!");
@@ -321,8 +321,4 @@ public class BatteryFinishActivity extends BaseSjjcActivity implements ItemClick
         });
     }
 
-    @Override
-    public void itemLongClick(View v, Object o, int position) {
-
-    }
 }

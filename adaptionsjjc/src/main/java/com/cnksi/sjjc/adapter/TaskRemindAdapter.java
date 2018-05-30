@@ -6,7 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.base.BaseAdapter;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DateUtils;
@@ -16,15 +17,14 @@ import com.cnksi.sjjc.R;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-
 /**
  * Created by luoxy on 16/4/28.
  */
 public class TaskRemindAdapter extends BaseAdapter<Task> {
 
-    private ItemClickListener<Task> itemClickListener;
+    private ItemClickOrLongClickListener<Task> itemClickListener;
 
-    public void setItemClickListener(ItemClickListener<Task> itemClickListener) {
+    public void setItemClickListener(ItemClickOrLongClickListener<Task> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -67,12 +67,12 @@ public class TaskRemindAdapter extends BaseAdapter<Task> {
 
         holder.getRootView().setOnClickListener(v -> {
             if (null != itemClickListener) {
-                itemClickListener.itemClick(v, item, position);
+                itemClickListener.onClick(v, item, position);
             }
         });
         holder.getRootView().setOnLongClickListener(view -> {
             if (null != itemClickListener) {
-                itemClickListener.itemLongClick(view, item, position);
+                itemClickListener.onLongClick(view, item, position);
             }
             return false;
         });

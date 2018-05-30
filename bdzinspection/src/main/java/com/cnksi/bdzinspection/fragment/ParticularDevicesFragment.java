@@ -18,16 +18,15 @@ import com.cnksi.bdzinspection.activity.CopyValueActivity2;
 import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.daoservice.SpacingGroupService;
+import com.cnksi.common.daoservice.SpacingGroupService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
-import com.cnksi.bdzinspection.model.SpacingGroup;
+import com.cnksi.common.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
 import com.cnksi.bdzinspection.model.SpecialMenu;
-import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
-import com.cnksi.bdzinspection.model.tree.SpaceItem;
+import com.cnksi.common.model.vo.SpaceGroupItem;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
@@ -47,6 +46,8 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
 
 /**
  * Created by han on 2017/2/27.
@@ -70,7 +71,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         isFirstLoad = true;
-        rootHolder = new ViewHolder(currentActivity, container, R.layout.xs_fragment_expadable_list_1, false);
+        rootHolder = new ViewHolder(currentActivity, container, R.layout.common_recycler_view, false);
         initialUI();
         initSpacingGroup();
         lazyLoad();
@@ -124,7 +125,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return adapter.getItemViewType(position) == DeviceAdapter.DEVICE_ITEM ? 1 : manager.getSpanCount();
+                return adapter.getItemViewType(position) == DEVICE_ITEM ? 1 : manager.getSpanCount();
             }
         });
         recyclerView.setAdapter(adapter);
@@ -258,7 +259,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                 NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
             }
             if ("second".equals(currentFunctionModel)) {
-                Functions.buildTreeData(data, spaceGroupMap);
+                DeviceHandleFunctions.buildTreeData(data, spaceGroupMap);
             }
         }
         if (!data.isEmpty()) {
@@ -267,7 +268,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                 adapter.expandAll();
             } else {
                 if (spacingLastly != null && !qwerKeyBoardUtils.isCharMode()) {
-                    int[] index = Functions.findSpaceIndex(spacingLastly.spid, data);
+                    int[] index = DeviceHandleFunctions.findSpaceIndex(spacingLastly.spid, data);
                     if (-1 != index[0]) {
                         adapter.expand(index[0]);
                     }
@@ -303,7 +304,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                 // 摇一摇选定间隔刷新
                 case Config.SHAKE_SPACE:
                     String spaceId = data.getStringExtra("spacingId");
-                    Functions.animationMethodSpace(spaceId, this.data, adapter, mHandler,recyclerView);
+                    DeviceHandleFunctions.animationMethodSpace(spaceId, this.data, adapter, mHandler,recyclerView);
                     break;
                 default:
                     break;

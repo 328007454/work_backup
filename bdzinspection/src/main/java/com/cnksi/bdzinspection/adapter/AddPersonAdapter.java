@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsAddPersonItemBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Users;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -25,7 +25,7 @@ public class AddPersonAdapter extends SimpleBaseAdapter {
 	}
 
 
-	public void setOnItemClickListener(com.cnksi.bdzinspection.inter.ItemClickListener clickListener){
+	public void setOnItemClickListener(ItemClickListener clickListener){
 		this.mClickListener = clickListener;
 	}
 
@@ -42,7 +42,7 @@ public class AddPersonAdapter extends SimpleBaseAdapter {
 		itemBinding.tvChildItem.setText(model.getString(Users.USERNAME));
 		itemBinding.llContainer.setOnClickListener(view -> {
             if (mClickListener != null) {
-                mClickListener.onItemClick(view, model, position);
+                mClickListener.onClick(view, model, position);
             }
         });
 		return itemBinding.getRoot();

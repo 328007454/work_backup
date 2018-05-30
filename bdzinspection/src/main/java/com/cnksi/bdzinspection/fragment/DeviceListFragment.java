@@ -25,14 +25,14 @@ import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
-import com.cnksi.bdzinspection.daoservice.SpacingGroupService;
+import com.cnksi.common.daoservice.SpacingGroupService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsDialogCopySnwsdBinding;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
-import com.cnksi.bdzinspection.model.SpacingGroup;
+import com.cnksi.common.model.SpacingGroup;
 import com.cnksi.bdzinspection.model.SpacingLastly;
-import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
-import com.cnksi.bdzinspection.model.tree.SpaceItem;
+import com.cnksi.common.model.vo.SpaceGroupItem;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.CopyItemService;
@@ -61,6 +61,8 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
 
 
 /**
@@ -93,7 +95,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         isFirstLoad = true;
-        rootHolder = new ViewHolder(currentActivity, container, R.layout.xs_fragment_expadable_list_1, false);
+        rootHolder = new ViewHolder(currentActivity, container, R.layout.common_recycler_view, false);
         initialUI();
         initSpacingGroup();
         lazyLoad();
@@ -159,7 +161,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return adapter.getItemViewType(position) == DeviceAdapter.DEVICE_ITEM ? 1 : manager.getSpanCount();
+                return adapter.getItemViewType(position) == DEVICE_ITEM ? 1 : manager.getSpanCount();
             }
         });
         adapter.bindToRecyclerView(recyclerView);
@@ -305,7 +307,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
             }
             if ("second".equals(currentFunctionModel)) {
-                Functions.buildTreeData(data, spaceGroupMap);
+                DeviceHandleFunctions.buildTreeData(data, spaceGroupMap);
                 reportSnwsds = ReportSnwsd.getAllCopySNWSD(currentReportId);
                 adapter.setCopySNWSD(reportSnwsds);
             }
@@ -317,7 +319,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             } else {
                 adapter.setShowOnly(true);
                 if (!qwerKeyBoardUtils.isCharMode() && spacingLastly != null) {
-                    int[] index = Functions.findSpaceIndex(spacingLastly.spid, data);
+                    int[] index = DeviceHandleFunctions.findSpaceIndex(spacingLastly.spid, data);
                     if (-1 != index[0]) {
                         adapter.expand(index[0]);
                     }
@@ -362,12 +364,12 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     }
 
     public void animationMethodSpace(String spid) {
-        Functions.animationMethodSpace(spid, data, adapter, mHandler, recyclerView);
+        DeviceHandleFunctions.animationMethodSpace(spid, data, adapter, mHandler, recyclerView);
     }
 
     public void animationDeviceMethod(String rfId) {
         DbModel model = deviceDbModelMap.get(rfId);
-        Functions.animationDeviceMethod(model, data, adapter, mHandler);
+        DeviceHandleFunctions.animationDeviceMethod(model, data, adapter, mHandler);
     }
 
     public void locationSuccess(BDLocation location) {

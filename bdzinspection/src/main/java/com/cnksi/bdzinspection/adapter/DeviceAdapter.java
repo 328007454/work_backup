@@ -17,13 +17,14 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.inter.ItemLongClickListener;
+import com.cnksi.common.listener.ItemLongClickListener;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
-import com.cnksi.bdzinspection.model.SpacingGroup;
-import com.cnksi.bdzinspection.model.tree.DeviceItem;
-import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
-import com.cnksi.bdzinspection.model.tree.SpaceItem;
+import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.model.SpacingGroup;
+import com.cnksi.common.model.vo.DeviceItem;
+import com.cnksi.common.model.vo.SpaceGroupItem;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.common.view.UnderLineLinearLayout;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
@@ -41,6 +42,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
+import static com.cnksi.common.model.vo.SpaceGroupItem.SPACE_GROUP_ITEM;
+import static com.cnksi.common.model.vo.SpaceGroupItem.SPACE_ITEM;
+
 /**
  * @version 1.0
  * @auth wastrel
@@ -49,9 +54,7 @@ import java.util.Set;
  * @since 1.0
  */
 public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
-    public final static int SPACE_GROUP_ITEM = 0;
-    public final static int SPACE_ITEM = 1;
-    public final static int DEVICE_ITEM = 2;
+
     public Context context;
     private HashSet<String> copyDeviceIdList = new HashSet<>();
     // 抄录完成的设备
@@ -80,7 +83,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     private String shakeSpaceId;
     private String shakeDeviceId;
 
-    private String currentFunctionModel;
     private boolean isOneDevice;
     private boolean isSecondDevice;
     private boolean isOnlyExpandOne = true;
@@ -105,9 +107,9 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     public DeviceAdapter(Activity context, List<MultiItemEntity> data) {
         super(data);
         this.context = context;
-        addItemType(SPACE_GROUP_ITEM, R.layout.xs_group_xiaoshi_item);
-        addItemType(SPACE_ITEM, R.layout.xs_group_item);
-        addItemType(DEVICE_ITEM, R.layout.xs_device_item);
+        addItemType(SPACE_GROUP_ITEM, R.layout.select_xiaoshi_item);
+        addItemType(SPACE_ITEM, R.layout.select_space_item);
+        addItemType(DEVICE_ITEM, R.layout.select_device_item);
     }
 
     @Override
@@ -241,7 +243,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         // 间隔长按
         helper.itemView.setOnLongClickListener(v -> {
             if (groupItemLongClickListener != null) {
-                groupItemLongClickListener.onItemLongClick(v, space, position);
+                groupItemLongClickListener.onLongClick(v, space, position);
             }
             return false;
         });
@@ -314,7 +316,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
 
         helper.getView(R.id.rl_device_container).setOnLongClickListener(v -> {
             if (deviceItemLongClickListener != null) {
-                deviceItemLongClickListener.onItemLongClick(v, item, position);
+                deviceItemLongClickListener.onLongClick(v, item, position);
             }
             return false;
         });
@@ -454,7 +456,6 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     }
 
     public void setCurrentFunctionMode(String currentFunctionMode) {
-        this.currentFunctionModel = currentFunctionMode;
         isOneDevice = "one".equals(currentFunctionMode);
         isSecondDevice = "second".equals(currentFunctionMode);
     }

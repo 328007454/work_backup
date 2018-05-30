@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.BitmapUtils;
@@ -62,7 +63,7 @@ public class BatteryImageAdapter extends BaseAdapter<BatteryRecord> {
 //        ((ImageView) holder.getView(R.id.img_battery)).setImageURI(Uri.fromFile(new File(Config.RESULT_PICTURES_FOLDER + voltageList.get(0))));
         holder.getView(R.id.img_battery).setOnClickListener(v -> {
             if (itemClickListener != null) {
-                itemClickListener.itemClick(v, item, position);
+                itemClickListener.onClick(v, item, position);
             }
         });
     }

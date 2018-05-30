@@ -100,18 +100,10 @@ public class GZTZRecordActivity extends BaseSjjcActivity {
             ScreenManager.getScreenManager().popActivityList(TZQKActivity.class, BHDZJLActivity.class, BHDZQKActivity.class);
             GZTZRecordActivity.this.finish();
         });
-        showPeopleAdapter.setClickWidget(new ItemClickListener() {
-            @Override
-            public void itemClick(View v, Object o, int position) {
-                showPeopleList.remove(position);
-                selectDbModel.remove(position);
-                showPeopleAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void itemLongClick(View v, Object o, int position) {
-
-            }
+        showPeopleAdapter.setClickWidget((v, o, position) -> {
+            showPeopleList.remove(position);
+            selectDbModel.remove(position);
+            showPeopleAdapter.notifyDataSetChanged();
         });
     }
 

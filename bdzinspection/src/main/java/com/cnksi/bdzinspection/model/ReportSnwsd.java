@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
 import com.cnksi.common.model.BaseModel;
+import com.cnksi.common.model.SpacingGroup;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.DateUtils;
 

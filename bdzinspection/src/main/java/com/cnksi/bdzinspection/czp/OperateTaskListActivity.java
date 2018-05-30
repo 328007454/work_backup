@@ -12,7 +12,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.activity.DownloadOperationTickActivity;
-import com.cnksi.bdzinspection.adapter.FragmentPagerAdapter;
+import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskListBinding;
 import com.cnksi.bdzinspection.emnu.OperateTaskStatus;

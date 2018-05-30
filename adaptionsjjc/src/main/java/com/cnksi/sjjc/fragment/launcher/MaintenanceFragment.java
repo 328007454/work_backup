@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseBindingAdapter;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.TaskStatus;
@@ -22,7 +23,6 @@ import com.cnksi.core.fragment.BaseCoreFragment;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.BaseBindingAdapter;
 import com.cnksi.sjjc.databinding.FragmentMaintenanceBinding;
 import com.cnksi.sjjc.databinding.NewLaunchTaskItemBinding;
 

@@ -2,13 +2,13 @@ package com.cnksi.bdzinspection.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerAdapter;
 import com.cnksi.bdzinspection.model.ChangeCopyItem;
+import com.cnksi.common.listener.ItemClickListener;
 
 import java.util.Collection;
 import java.util.List;

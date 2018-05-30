@@ -2,7 +2,6 @@ package com.cnksi.bdzinspection.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cnksi.bdzinspection.R;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.ToastUtils;

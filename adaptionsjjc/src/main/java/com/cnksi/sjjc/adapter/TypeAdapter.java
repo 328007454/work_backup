@@ -4,13 +4,13 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
 
 import java.util.Collection;
-
 /**
  * Created by lyndon on 2016/5/16.
  */
@@ -44,7 +44,7 @@ public class TypeAdapter extends BaseAdapter<String> {
         holder.getRootView().setOnClickListener(v -> {
             if (null != itemClickListener) {
                 //通过字符串传递maxPosition
-                itemClickListener.itemClick(v, item + " " + maxPosition, position);
+                itemClickListener.onClick(v, item + " " + maxPosition, position);
             }
         });
     }

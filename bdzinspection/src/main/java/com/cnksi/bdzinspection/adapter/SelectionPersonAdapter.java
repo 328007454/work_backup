@@ -7,7 +7,7 @@ import android.view.View;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerDataBindingAdapter;
 import com.cnksi.bdzinspection.adapter.holder.ItemHolder;
 import com.cnksi.bdzinspection.databinding.XsItemTaskUserBinding;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 
 import org.xutils.db.table.DbModel;
 
@@ -20,7 +20,7 @@ import java.util.Collection;
 public class SelectionPersonAdapter extends BaseRecyclerDataBindingAdapter {
     private ItemClickListener mClickListener;
 
-    public void setOnItemClickListener(com.cnksi.bdzinspection.inter.ItemClickListener itemClickListener) {
+    public void setOnItemClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
@@ -37,7 +37,7 @@ public class SelectionPersonAdapter extends BaseRecyclerDataBindingAdapter {
         taskUserBinding.ivDelete.setVisibility(TextUtils.equals("true", model.getString("delete")) ? View.VISIBLE : View.INVISIBLE);
         taskUserBinding.ivDelete.setOnClickListener(view -> {
             if (null != mClickListener) {
-                mClickListener.onItemClick(view, model, position);
+                mClickListener.onClick(view, model, position);
             }
         });
     }

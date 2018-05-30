@@ -200,7 +200,7 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
     }
 
     @Override
-    public void itemClick(View v, final Object o, final int position) {
+    public void onClick(View v, final Object o, final int position) {
         if (showPeopleList.size() == 1) {
             ToastUtils.showMessage("至少要有一个负责人!");
             return;
@@ -215,10 +215,7 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
         });
     }
 
-    @Override
-    public void itemLongClick(View v, Object o, int position) {
 
-    }
 
     private Dialog peopleDialog;
     private DialogPeople peopleBinding;

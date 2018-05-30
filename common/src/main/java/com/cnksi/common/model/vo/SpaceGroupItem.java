@@ -1,8 +1,8 @@
-package com.cnksi.bdzinspection.model.tree;
+package com.cnksi.common.model.vo;
 
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.cnksi.bdzinspection.model.SpacingGroup;
+import com.cnksi.common.model.SpacingGroup;
 
 import java.util.List;
 
@@ -14,6 +14,10 @@ import java.util.List;
  * @since 1.0
  */
 public class SpaceGroupItem extends AbstractExpandableItem<SpaceItem> implements MultiItemEntity {
+
+    public final static int SPACE_GROUP_ITEM = 0;
+    public final static int SPACE_ITEM = 1;
+    public final static int DEVICE_ITEM = 2;
     public SpacingGroup group;
 
     public SpaceGroupItem(SpacingGroup group) {

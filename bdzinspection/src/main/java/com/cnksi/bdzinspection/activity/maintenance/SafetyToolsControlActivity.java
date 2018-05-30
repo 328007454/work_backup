@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseActivity;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SafeToolsInfoAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateToolResultService;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;

@@ -16,7 +16,6 @@ import com.cnksi.common.daoservice.BatteryService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Battery;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.TaskExtend;
@@ -37,6 +36,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.ex.DbException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +65,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
     private BatteryGroup batteryGroups;
     private String type;
     private String typeName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -259,7 +260,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                         holder.getView(R.id.layout_resistance).setVisibility(View.GONE);
                     }
                 }
-                
+
                 binding.layoutBattery.addView(holder.getRootView());
                 if (i == size - 1) {
                     holder.getView(R.id.line).setVisibility(View.GONE);
@@ -271,19 +272,9 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                     recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
                     TreeSet<String> keys = new TreeSet<String>();
                     keys.addAll(imageList.keySet());
-                    BatteryReportImageAdapter imageAdapter = new BatteryReportImageAdapter(recyclerView, keys, R.layout.battery_pictures_item);
-                    imageAdapter.setItemClickListener(new ItemClickListener<List<String>>() {
-                        @Override
-                        public void itemClick(View v, List<String> imageList, int position) {
-                            ImageDetailsActivity.with(mActivity).setImageUrlList(StringUtils.addStrToListItem(imageList, Config.RESULT_PICTURES_FOLDER)).start();
-                        }
-
-                        @Override
-                        public void itemLongClick(View v, List<String> strings, int position) {
-
-                        }
-                    });
-                    recyclerView.setAdapter(imageAdapter);
+                    BatteryReportImageAdapter imageAdapter = new BatteryReportImageAdapter(R.layout.battery_pictures_item, new ArrayList<>(keys));
+                    imageAdapter.setItemClickListener((v, imageList1, position) -> ImageDetailsActivity.with(mActivity).setImageUrlList(StringUtils.addStrToListItem(imageList1, Config.RESULT_PICTURES_FOLDER)).start());
+                    imageAdapter.bindToRecyclerView(recyclerView);
                     imageAdapter.setBatteryImageMap(imageList);
                 } else {
                     holder.getView(R.id.label_image).setVisibility(View.GONE);

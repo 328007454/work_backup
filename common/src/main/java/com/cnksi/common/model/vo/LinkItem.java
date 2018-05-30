@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.model.tree;
+package com.cnksi.common.model.vo;
 
 /**
  * @version 1.0

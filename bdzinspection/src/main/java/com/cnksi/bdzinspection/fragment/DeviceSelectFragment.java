@@ -13,15 +13,14 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.adapter.DeviceSelectAdapter;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.ViewHolder;
-import com.cnksi.bdzinspection.daoservice.SpacingGroupService;
 import com.cnksi.bdzinspection.daoservice.StandardSpecialService;
-import com.cnksi.bdzinspection.model.SpacingGroup;
-import com.cnksi.bdzinspection.model.tree.SpaceGroupItem;
-import com.cnksi.bdzinspection.model.tree.SpaceItem;
 import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.SpacingGroupService;
+import com.cnksi.common.model.SpacingGroup;
 import com.cnksi.common.model.StandardSpecial;
+import com.cnksi.common.model.vo.SpaceGroupItem;
+import com.cnksi.common.model.vo.SpaceItem;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
 
 import org.xutils.db.table.DbModel;
@@ -32,6 +31,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
 
 /**
  * 设备选择设备列表及键盘
@@ -86,9 +87,7 @@ public class DeviceSelectFragment extends BaseFragment implements QWERKeyBoardUt
 
         data = new ArrayList<>();
         adapter = new DeviceSelectAdapter(currentActivity, data);
-        SparseArray<Integer> layoutMap = new SparseArray<>();
-        layoutMap.put(1, R.layout.xs_group_item);
-        layoutMap.put(2, R.layout.xs_expandable_gridview_child_item);
+
 
         adapter.setShowOnly(false);
 
@@ -102,7 +101,7 @@ public class DeviceSelectFragment extends BaseFragment implements QWERKeyBoardUt
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return adapter.getItemViewType(position) == DeviceAdapter.DEVICE_ITEM ? 1 : manager.getSpanCount();
+                return adapter.getItemViewType(position) == DEVICE_ITEM ? 1 : manager.getSpanCount();
             }
         });
         adapter.bindToRecyclerView(recyclerView);
@@ -165,7 +164,7 @@ public class DeviceSelectFragment extends BaseFragment implements QWERKeyBoardUt
             }
 
             if ("second".equals(currentFunctionModel)) {
-                Functions.buildTreeData(data, spaceGroupMap);
+                DeviceHandleFunctions.buildTreeData(data, spaceGroupMap);
             }
         }
         if (TextUtils.isEmpty(keyWord)) {

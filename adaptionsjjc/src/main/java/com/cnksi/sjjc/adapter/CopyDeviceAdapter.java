@@ -2,11 +2,11 @@ package com.cnksi.sjjc.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
@@ -16,7 +16,6 @@ import org.xutils.db.table.DbModel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 
 /**
  * Created by lyndon on 2016/9/5.
@@ -74,21 +73,21 @@ public class CopyDeviceAdapter extends BaseAdapter<DbModel> {
 
         holder.getRootView().setOnClickListener(v -> {
             if(isClickAble){
-                itemClickListener.itemClick(v, item, position);
+                itemClickListener.onClick(v, item, position);
             }
         });
     }
 
     public void pre() {
         if (currentSelectedPosition > 0) {
-            itemClickListener.itemClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
+            itemClickListener.onClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
                     currentSelectedPosition - 1);
         }
     }
 
     public void next() {
         if (currentSelectedPosition < data.size() - 1) {
-            itemClickListener.itemClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
+            itemClickListener.onClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
                     currentSelectedPosition + 1);
         }
     }

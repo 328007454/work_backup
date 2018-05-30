@@ -11,16 +11,15 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.base.FragmentPagerAdapter;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.view.PagerSlidingTabStrip;
-import com.cnksi.common.Config;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
 import com.cnksi.sjjc.databinding.ActivityTaskRemindBinding;
-import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.sjjc.fragment.TaskRemindFragment;
 import com.zhy.autolayout.utils.AutoUtils;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;

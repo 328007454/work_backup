@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.adapter.base;
+package com.cnksi.common.base;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

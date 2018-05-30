@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.sjjc.R;
@@ -76,7 +77,7 @@ public class BatteryAdapter extends BaseAdapter<String> {
         }
         holder.getView(R.id.rl_battery_container).setOnClickListener(view -> {
             if (null != itemClickListener) {
-                itemClickListener.itemClick(view, item, position);
+                itemClickListener.onClick(view, item, position);
             }
         });
 

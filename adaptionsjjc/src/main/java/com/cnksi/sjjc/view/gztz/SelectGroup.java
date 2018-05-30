@@ -13,13 +13,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cnksi.common.base.BaseBindingAdapter;
+import com.cnksi.common.databinding.DialogContentChildItemBinding;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.common.view.UnderLineLinearLayout;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.BaseAdapter;
 import com.cnksi.sjjc.service.gztz.GZTZSjlyService;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -40,7 +41,7 @@ public class SelectGroup extends UnderLineLinearLayout {
     private KeyValue keyValue;
     private String title;
     private Dialog selectDialog;
-    private BaseAdapter<KeyValue> adapter;
+    private BaseBindingAdapter<DialogContentChildItemBinding,KeyValue> adapter;
     private String type;
     private ImageButton addButton;
     private ImageButton deleteButton;
@@ -106,10 +107,10 @@ public class SelectGroup extends UnderLineLinearLayout {
         AutoUtils.autoSize(holder.getRootView());
         ListView lv = holder.getView(R.id.lv_container);
         holder.setText(R.id.tv_dialog_title, title);
-        adapter = new BaseAdapter<KeyValue>(getContext(), keyValues, R.layout.dialog_content_child_item) {
+        adapter = new BaseBindingAdapter<DialogContentChildItemBinding,KeyValue>(getContext(), keyValues, R.layout.dialog_content_child_item) {
             @Override
-            public void convert(ViewHolder holder, KeyValue item, int position) {
-                holder.setText(R.id.tv_child_item, item.getValueStr());
+            public void convert(DialogContentChildItemBinding holder, KeyValue item, int position) {
+                holder.tvChildItem.setText(item.getValueStr());
             }
         };
         //设置adapter的listView点击事件

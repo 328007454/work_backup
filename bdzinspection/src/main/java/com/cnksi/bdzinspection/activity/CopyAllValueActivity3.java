@@ -130,7 +130,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         binding.tvBatteryTestStep.setBackgroundResource(R.drawable.xs_red_button_background_selector);
 
         copyDeviceList = new ArrayList<>();
-        deviceAdapter = new CopyDeviceAdapter(this, copyDeviceList, R.layout.xs_device_item);
+        deviceAdapter = new CopyDeviceAdapter(this, copyDeviceList, R.layout.select_device_item);
         deviceAdapter.setItemClickListener((v, dbModel, position) -> {
             if (isSpread) {
                 CopyAllValueActivity3.this.setDeviceListDisplay();

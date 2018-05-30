@@ -15,7 +15,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.XunJianTypeAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.BdzDialogAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.InspectionTypeAdapter;
-import com.cnksi.bdzinspection.daoservice.LookupService;
+import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.daoservice.SwitchMenuService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddInspectionTaskBinding;

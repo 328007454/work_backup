@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.CopyDeviceAdapter;
-import com.cnksi.bdzinspection.adapter.ItemClickListener;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.databinding.XsFragmentGridlistBinding;
@@ -88,7 +87,7 @@ public class CopyValueFragment2 extends BaseFragment {
         getBundleValue();
         binding.gvContainer.setNumColumns(2);
         data = new ArrayList<>();
-        adapter = new CopyDeviceAdapter(currentActivity, data, R.layout.xs_device_item);
+        adapter = new CopyDeviceAdapter(currentActivity, data, R.layout.select_device_item);
         adapter.setCopyDeviceModel(copyDeviceIds);
         adapter.setItemClickListener((v, data, position) -> itemClickerListener.onItemClick(currentFunctionModel, data, position));
         binding.gvContainer.setAdapter(adapter);

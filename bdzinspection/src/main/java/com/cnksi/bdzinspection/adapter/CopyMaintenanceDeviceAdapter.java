@@ -3,14 +3,13 @@ package com.cnksi.bdzinspection.adapter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.base.BaseAdapter;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
+import com.cnksi.common.base.BaseAdapter;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -64,19 +63,19 @@ public class CopyMaintenanceDeviceAdapter extends BaseAdapter<CopyItem> {
 			ibCopy.setImageResource(R.drawable.ic_green_finish);
 		}
 
-		holder.getRootView().setOnClickListener(v -> itemClickListener.onItemClick(v, item, position));
+		holder.getRootView().setOnClickListener(v -> itemClickListener.onClick(v, item, position));
 	}
 
 	public void pre() {
 		if (currentSelectedPosition > 0) {
-            itemClickListener.onItemClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
+            itemClickListener.onClick(null, new ArrayList<>(data).get(currentSelectedPosition - 1),
                     currentSelectedPosition - 1);
         }
 	}
 
 	public void next() {
 		if (currentSelectedPosition < data.size() - 1) {
-            itemClickListener.onItemClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
+            itemClickListener.onClick(null, new ArrayList<>(data).get(currentSelectedPosition + 1),
                     currentSelectedPosition + 1);
         }
 	}

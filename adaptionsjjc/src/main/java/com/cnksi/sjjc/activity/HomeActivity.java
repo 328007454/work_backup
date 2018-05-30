@@ -217,17 +217,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         mPop.setOutsideTouchable(true);
         homePageBinding.setTypeClick(this);
         taskItemAdapter = new HomeTaskItemAdapter(mActivity, null, homePageBinding.dataContainer);
-        taskItemAdapter.setItemClickListener(new ItemClickListener<Task>() {
-            @Override
-            public void itemClick(View v, Task task, int position) {
-                startTask(task);
-            }
-
-            @Override
-            public void itemLongClick(View v, Task task, int position) {
-
-            }
-        });
+        taskItemAdapter.setItemClickListener((v, task, position) -> startTask(task));
         safetyToolAdapter = new HomeSafetyToolAdapter(mActivity, null, homePageBinding.dataContainer);
     }
 
@@ -343,25 +333,17 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         mPowerStationListView = holder.getView(R.id.lv_container);
         holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
         DialogBDZAdapter adapter = new DialogBDZAdapter(this, bdzList, R.layout.dialog_content_child_item);
-        adapter.setItemClickListener(new ItemClickListener<Bdz>() {
-            @Override
-            public void itemClick(View v, Bdz bdz, int position) {
-                if (!bdz.name.contains("未激活")) {
-                    homePageBinding.bdzName.setText(bdz.name);
-                    mPowerStationDialog.dismiss();
-                    currentSelectBdzId = bdzList.get(position).bdzid;
-                    homePageBinding.common.setSelected(true);
-                    homePageBinding.serious.setSelected(false);
-                    homePageBinding.crisis.setSelected(false);
-                    loadDefect();
-                } else {
-                    ToastUtils.showMessage("该变电站未激活");
-                }
-            }
-
-            @Override
-            public void itemLongClick(View v, Bdz bdz, int position) {
-
+        adapter.setItemClickListener((v, bdz, position) -> {
+            if (!bdz.name.contains("未激活")) {
+                homePageBinding.bdzName.setText(bdz.name);
+                mPowerStationDialog.dismiss();
+                currentSelectBdzId = bdzList.get(position).bdzid;
+                homePageBinding.common.setSelected(true);
+                homePageBinding.serious.setSelected(false);
+                homePageBinding.crisis.setSelected(false);
+                loadDefect();
+            } else {
+                ToastUtils.showMessage("该变电站未激活");
             }
         });
         mPowerStationListView.setAdapter(adapter);
@@ -390,7 +372,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
     }
 
     @Override
-    public void itemClick(View v, Object o, int position) {
+    public void onClick(View v, Object o, int position) {
         DefectRecord defectRecord = (DefectRecord) o;
         if (!TextUtils.isEmpty(defectRecord.pics)) {
             ArrayList<String> listPicDis = StringUtils.stringToList(defectRecord.pics, ",");
@@ -398,10 +380,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         }
     }
 
-    @Override
-    public void itemLongClick(View v, Object o, int position) {
 
-    }
 
 
     /**

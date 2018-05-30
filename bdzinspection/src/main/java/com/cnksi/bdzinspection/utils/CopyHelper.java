@@ -19,7 +19,6 @@ import com.cnksi.bdzinspection.adapter.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
-import com.cnksi.bdzinspection.inter.ItemClickListener;
 import com.cnksi.bdzinspection.model.Placed;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.TreeNode;
@@ -28,6 +27,7 @@ import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.Device;
@@ -452,7 +452,7 @@ public class CopyHelper {
                     }
 
                     final int position = index;
-                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.onItemClick(v, childItem, position));
+                    childHolder.getView(R.id.ibtn_history_data).setOnClickListener(v -> itemClickListener.onClick(v, childItem, position));
                     // 抄录项如果看不清长按弹出对话框
                     layoutRoot.setOnLongClickListener(v -> {
                         CopyResult copyResult = copyResultMap.get(childItem.id);

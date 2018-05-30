@@ -19,9 +19,9 @@ import com.cnksi.bdloc.LatLng;
 import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.SpacingService;
-import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Department;
@@ -36,7 +36,6 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.defect.adapter.DialogBDZAdapter;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.adapter.FragmentPagerAdapter;
 import com.cnksi.sjjc.databinding.ActivityLauncherNewBinding;
 import com.cnksi.sjjc.fragment.launcher.MaintenanceFragment;
 import com.cnksi.sjjc.fragment.launcher.TourFragment;
@@ -249,24 +248,16 @@ public class NewLauncherActivity extends BaseSjjcActivity {
         mPowerStationListView = holder.getView(R.id.lv_container);
         holder.setText(R.id.tv_dialog_title, getString(R.string.please_select_power_station_str));
         DialogBDZAdapter adapter = new DialogBDZAdapter(this, bdzList, R.layout.dialog_content_child_item);
-        adapter.setItemClickListener(new ItemClickListener<Bdz>() {
-            @Override
-            public void itemClick(View v, Bdz bdz, int position) {
-                if (!bdz.name.contains("未激活")) {
-                    launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
-                    PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
-                    PreferencesUtils.put(Config.LOCATION_BDZID, bdz.bdzid);
-                    PreferencesUtils.put(Config.LOCATION_BDZNAME, bdz.name);
-                    mPowerStationDialog.dismiss();
-                    locationHelper.stop();
-                } else {
-                    ToastUtils.showMessage("该变电站未激活");
-                }
-            }
-
-            @Override
-            public void itemLongClick(View v, Bdz bdz, int position) {
-
+        adapter.setItemClickListener((v, bdz, position) -> {
+            if (!bdz.name.contains("未激活")) {
+                launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
+                PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
+                PreferencesUtils.put(Config.LOCATION_BDZID, bdz.bdzid);
+                PreferencesUtils.put(Config.LOCATION_BDZNAME, bdz.name);
+                mPowerStationDialog.dismiss();
+                locationHelper.stop();
+            } else {
+                ToastUtils.showMessage("该变电站未激活");
             }
         });
         mPowerStationListView.setAdapter(adapter);
