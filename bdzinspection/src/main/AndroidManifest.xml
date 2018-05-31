@@ -186,11 +186,6 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name="com.cnksi.bdzinspection.activity.DeviceSelectActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 运维相关的Activity -->
         <activity
             android:name="com.cnksi.bdzinspection.ywyth.YunweiReportActivity"

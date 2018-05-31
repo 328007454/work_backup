@@ -10,9 +10,9 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.DeviceSelectActivity;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.PMSDeviceType;
-import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.common.ExecutorManager;
@@ -20,7 +20,6 @@ import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
-import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzqkBinding;
@@ -111,24 +110,26 @@ public class BHDZQKActivity extends BaseSjjcActivity {
         binding.ivTakePic.setOnClickListener(v -> FunctionUtil.takePicture(BHDZQKActivity.this, imageName = FunctionUtil.getCurrentImageName(BHDZQKActivity.this), Config.RESULT_PICTURES_FOLDER));
         binding.ivShowPic.setOnClickListener(v -> BHDZQKActivity.this.showImageDetails(BHDZQKActivity.this, StringUtils.addStrToListItem(photos, Config.RESULT_PICTURES_FOLDER), true));
         binding.bhsbmc.setSelectOnClickListener(v -> {
-            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
-            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.second);
-            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-            intentDevices.putExtra(Config.TITLE_NAME, "请选择二次设备");
-            BHDZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
+            DeviceSelectActivity.with(mActivity)
+                    .setTitle("请选择二次设备")
+                    .setPmsDeviceType(PMSDeviceType.second)
+                    .setBdzId(currentBdzId)
+                    .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE)
+                    .start();
+
         });
         binding.gzlbqmc.setSelectOnClickListener(v -> {
-            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
-            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.second);
-            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-            String bigIds = DeviceService.getInstance().findBigId("GZLBQ");
-            if (bigIds != null) {
-                intentDevices.putExtra(AllDeviceListActivity.BIGID, bigIds);
-                intentDevices.putExtra(Config.TITLE_NAME, "请选择故障录波器");
-            } else {
+            List<String> bigIds = DeviceService.getInstance().findBigId("GZLBQ");
+            if (bigIds.isEmpty()) {
                 ToastUtils.showMessage("没有找到别名为GZLBQ的设备大类！");
             }
-            BHDZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
+            DeviceSelectActivity.with(mActivity)
+                    .setTitle("请选择故障录波器")
+                    .setPmsDeviceType(PMSDeviceType.second)
+                    .setBdzId(currentBdzId)
+                    .setDeviceBigType(bigIds.toArray(new String[]{}))
+                    .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE+1)
+                    .start();
         });
     }
 
@@ -358,15 +359,17 @@ public class BHDZQKActivity extends BaseSjjcActivity {
                     showPic();
                     break;
                 case Config.ACTIVITY_CHOSE_DEVICE:
-                    DbModel model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    DbModel model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
                     if (model != null) {
-                        binding.bhsbmc.setKeyValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                        binding.bhsbmc.setKeyValue(new KeyValue(model.getString(DeviceService.DEVICE_ID_KEY),
+                                model.getString(DeviceService.DEVICE_NAME_KEY)));
                     }
                     break;
                 case Config.ACTIVITY_CHOSE_DEVICE + 1:
-                    model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
                     if (model != null) {
-                        binding.gzlbqmc.setKeyValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                        binding.gzlbqmc.setKeyValue(new KeyValue(model.getString(DeviceService.DEVICE_ID_KEY),
+                                model.getString(DeviceService.DEVICE_NAME_KEY)));
                         binding.gzlbqcj.setMustInput(true);
                         binding.gzlbqfx.setMustInput(true);
                     }

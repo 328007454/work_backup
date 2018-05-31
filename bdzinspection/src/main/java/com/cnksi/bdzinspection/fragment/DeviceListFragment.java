@@ -276,7 +276,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         }
         getSpaceLastly();
         // 查询设备及设备所在间隔
-        List<DbModel> deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, "");
+        List<DbModel> deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, currentReportId, "");
         LinkedHashMap<String, List<DbModel>> spacingDeviceMap = new LinkedHashMap<>();
         if (null != deviceList && !deviceList.isEmpty()) {
             for (DbModel dbModel : deviceList) {
@@ -307,7 +307,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
             }
             if ("second".equals(currentFunctionModel)) {
-                DeviceHandleFunctions.buildTreeData(data, spaceGroupMap);
+                DeviceHandleFunctions.buildSpaceTreeData(data, spaceGroupMap);
                 reportSnwsds = ReportSnwsd.getAllCopySNWSD(currentReportId);
                 adapter.setCopySNWSD(reportSnwsds);
             }

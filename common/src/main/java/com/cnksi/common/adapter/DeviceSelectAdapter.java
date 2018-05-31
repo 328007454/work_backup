@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.adapter;
+package com.cnksi.common.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.DeviceSelectActivity;
+import com.cnksi.common.R;
+import com.cnksi.common.activity.DeviceSelectActivity;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.SpacingGroup;
 import com.cnksi.common.model.vo.DeviceItem;
@@ -27,41 +27,40 @@ import com.zhy.autolayout.utils.AutoUtils;
 import org.xutils.db.table.DbModel;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
+import static com.cnksi.common.model.vo.SpaceGroupItem.SPACE_GROUP_ITEM;
+import static com.cnksi.common.model.vo.SpaceGroupItem.SPACE_ITEM;
+
 /**
- * @version 1.0
- * @auth wastrel
- * @date 2018/1/25 12:14
- * @copyRight 四川金信石信息技术有限公司
- * @since 1.0
+ * @author Wastrel
  */
 public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
-    public final static int SPACE_GROUP_ITEM = 0;
-    public final static int SPACE_ITEM = 1;
-    public final static int DEVICE_ITEM = 2;
+
     public Context context;
     private String keyWord;
     private boolean isOnlyExpandOne = false;
     private MultiItemEntity lastExpandIndex = null;
 
 
-    private ItemClickListener<DbModel> deviceClickListener;
-    private ItemClickListener<SpaceItem> groupItemClickListenner;
-
-    private Map<String, List<DbModel>> selectSpacingDeviceMap = new HashMap<>();
+    private ItemClickListener<MultiItemEntity> selectListener;
 
 
-    /**
-     * Same as QuickAdapter#QuickAdapter(Context,int) but with
-     * some initialization data.
-     *
-     * @param data A new list is created out of this one to avoid mutable list
-     */
-    public DeviceSelectAdapter(Activity context, List<MultiItemEntity> data) {
+    private Map<String, HashSet<DbModel>> selectSpacingDeviceMap = new HashMap<>();
+
+    private boolean isMultiSelect;
+    private boolean isAllowSelectSpace;
+    private boolean isSecondDevice;
+
+    public DeviceSelectAdapter(Activity context, List<MultiItemEntity> data,boolean isSecondDevice, DeviceSelectActivity.SelectConfig selectConfig) {
         super(data);
         this.context = context;
+        this.isMultiSelect = selectConfig.isMultSelect;
+        this.isAllowSelectSpace = selectConfig.isAllowSelectSpace;
+        this.isSecondDevice=isSecondDevice;
         addItemType(SPACE_GROUP_ITEM, R.layout.select_xiaoshi_item);
         addItemType(SPACE_ITEM, R.layout.select_space_item);
         addItemType(DEVICE_ITEM, R.layout.select_device_item);
@@ -95,9 +94,9 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
         helper.itemView.setOnClickListener(v -> {
             int pos = helper.getAdapterPosition();
             if (groupItem.isExpanded()) {
-                DeviceSelectAdapter.this.collapse(pos);
+                collapse(pos);
             } else {
-                DeviceSelectAdapter.this.expand(pos);
+                expand(pos);
             }
         });
     }
@@ -129,41 +128,62 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
         int childCount = spaceItem.getSubItems().size();
         spacingName += "(" + childCount + ")";
         txtSpace.setText(Html.fromHtml(spacingName));
-        List<DbModel> selectDevice = selectSpacingDeviceMap.get(spaceItem.getSpid());
-        helper.getView(R.id.tv_group_item_select).setVisibility(View.VISIBLE);
-        ((TextView) helper.getView(R.id.tv_group_item_select)).setText("全选");
-        if (null != selectDevice && childCount == selectDevice.size()) {
-            ((TextView) helper.getView(R.id.tv_group_item_select)).setText("取消全选");
+        HashSet<DbModel> selectDevice = selectSpacingDeviceMap.get(spaceItem.getSpid());
+        TextView tvGroupItemSelectTv = helper.getView(R.id.tv_group_item_select);
+        //
+        final Boolean isOnlySelect;
+        if (isMultiSelect) {
+            if (null != selectDevice && childCount == selectDevice.size()) {
+                tvGroupItemSelectTv.setText("取消全选");
+            } else {
+                tvGroupItemSelectTv.setText("全选");
+            }
+            tvGroupItemSelectTv.setVisibility(View.VISIBLE);
+            isOnlySelect = false;
+        } else if (isAllowSelectSpace) {
+            isOnlySelect = true;
+            tvGroupItemSelectTv.setText("选择");
+            tvGroupItemSelectTv.setVisibility(View.VISIBLE);
+        } else {
+            isOnlySelect = false;
+            tvGroupItemSelectTv.setVisibility(View.GONE);
         }
+        tvGroupItemSelectTv.setOnClickListener(view -> {
+             if (isOnlySelect) {
+                selectListener.onClick(view, spaceItem, getParentPosition(spaceItem));
+            } else {
+                HashSet<DbModel> dbModels = selectSpacingDeviceMap.get(spaceItem.getSpid());
+                List<DeviceItem> childDevices = spaceItem.getSubItems();
+                if (dbModels == null) {
+                    dbModels = new HashSet<>(childDevices);
+                    selectSpacingDeviceMap.put(spaceItem.getSpid(), dbModels);
+                } else if (dbModels.size() < childDevices.size()) {
+                    dbModels.addAll(childDevices);
+                } else {
+                    dbModels.clear();
+                }
+            }
+            notifyDataSetChanged();
+        });
         // 间隔展开
         imgOpen.setImageResource(spaceItem.isExpanded() ? R.drawable.xs_ic_shrink : R.drawable.xs_ic_open);
         // 间隔点击
         helper.itemView.setOnClickListener(v -> {
             int pos = helper.getAdapterPosition();
             if (spaceItem.isExpanded()) {
-                DeviceSelectAdapter.this.collapse(pos);
+                collapse(pos);
             } else {
-                DeviceSelectAdapter.this.expand(pos);
+                expand(pos);
             }
         });
-        helper.getView(R.id.tv_group_item_select).setOnClickListener(view -> {
-            if (null != groupItemClickListenner) {
-                groupItemClickListenner.onClick(view, spaceItem, DeviceSelectAdapter.this.getParentPosition(spaceItem));
-            }
-        });
-        if (!TextUtils.isEmpty(inspectionType)&&(inspectionType.contains("maintenance")||inspectionType.contains("switchover"))){
-            helper.getView(R.id.tv_group_item_select).setVisibility(View.GONE);
-        }
-
     }
 
 
     private void convertDevice(BaseViewHolder helper, final DeviceItem item) {
         final int position = helper.getAdapterPosition();
         TextView txtDevice = helper.getView(R.id.tv_device_name);
-        String deviceName = item.getString("deviceName");
+        String deviceName =  isSecondDevice ? item.getString("deviceName") : item.getString("shortName");
         String spaceId = item.getString("spid");
-        String deviceId = item.getString("deviceId");
         String devicePY = item.getString("devicePY");
         RelativeLayout relativeLayout = helper.getView(R.id.rl_device_container);
         relativeLayout.setTag("dContainer");
@@ -177,34 +197,48 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
                 deviceName = deviceName.replaceAll(pyName, "<font color=\"#FF0000\">" + pyName + "</font>");
             }
         }
-        //恢复Item默认状态
-        txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));// 默认绿色
+        // 默认绿色
+        txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));
         helper.getView(R.id.rl_device_container).setBackgroundResource(R.drawable.xs_device_green_border_background_selector);
-        helper.getView(R.id.tv_device_defect_count).setVisibility(View.GONE);// 不显示缺陷数量
-        List<DbModel> selectDevice = selectSpacingDeviceMap.get(spaceId);
-        DbModel exitDevice = DeviceSelectActivity.getSelectDevice(selectDevice, deviceId);
+        // 不显示缺陷数量
+        helper.getView(R.id.tv_device_defect_count).setVisibility(View.GONE);
+        HashSet<DbModel> selectDevice = selectSpacingDeviceMap.get(spaceId);
         // 设备选中
-        if (null != exitDevice) {
+        if (selectDevice != null && selectDevice.contains(item)) {
             helper.getView(R.id.rl_device_container).setSelected(true);
         } else {
             helper.getView(R.id.rl_device_container).setSelected(false);
         }
         txtDevice.setTextColor(context.getResources().getColor(R.color.xs_green_color));
         helper.getView(R.id.rl_device_container).setBackgroundResource(R.drawable.xs_device_green_border_background_selector);
-        helper.getView(R.id.rl_device_container).setOnClickListener(v -> deviceClickListener.onClick(v, item, position));
+        helper.getView(R.id.rl_device_container).setOnClickListener(v -> {
+            if (!isMultiSelect) {
+                selectListener.onClick(v, item, position);
+            } else {
+                HashSet<DbModel> temp = selectSpacingDeviceMap.get(spaceId);
+                if (temp == null) {
+                    temp = new HashSet<>();
+                    temp.add(item);
+                    selectSpacingDeviceMap.put(spaceId, temp);
+                } else {
+                    if (temp.contains(item)) {
+                        temp.remove(item);
+
+                    } else {
+                        temp.add(item);
+                    }
+                }
+                notifyDataSetChanged();
+            }
+        });
 
         //deviceName字段可能为null，会导致在mate7上会导致ANR，但是不会报空指针异常
         txtDevice.setText(Html.fromHtml(TextUtils.isEmpty(deviceName) ? "" : deviceName));
     }
 
 
-    public void setDeviceClickListener(ItemClickListener<DbModel> deviceClickListener) {
-        this.deviceClickListener = deviceClickListener;
-    }
-
-
-    public void setGroupItemClickListenner(ItemClickListener<SpaceItem> groupItemClickListenner) {
-        this.groupItemClickListenner = groupItemClickListenner;
+    public void setDeviceClickListener(ItemClickListener<MultiItemEntity> selectListener) {
+        this.selectListener = selectListener;
     }
 
 
@@ -245,14 +279,8 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
         this.isOnlyExpandOne = showOnly;
     }
 
-    public void setSelectSpacingDeviceMap(Map<String, List<DbModel>> selectSpacingDeviceMap) {
-        this.selectSpacingDeviceMap = selectSpacingDeviceMap;
+    public Map<String, HashSet<DbModel>> getSelectSpacingDeviceMap() {
+        return selectSpacingDeviceMap;
     }
 
-
-    private String inspectionType;
-    public void setCurrentInspectionType(String inspectionType) {
-        this.inspectionType = inspectionType;
-
-    }
 }

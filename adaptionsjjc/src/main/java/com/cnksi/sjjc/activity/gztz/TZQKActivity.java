@@ -6,12 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.DeviceSelectActivity;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.PMSDeviceType;
-import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBaseBinding;
@@ -21,6 +20,9 @@ import com.cnksi.sjjc.service.gztz.PmsXianluService;
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @version 1.0
@@ -57,17 +59,17 @@ public class TZQKActivity extends BaseSjjcActivity {
 
     private void initView() {
         binding.kgdlqbh.setSelectOnClickListener(v -> {
-            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
-            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
-            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-            String bigIds = DeviceService.getInstance().findBigId("DLQ");
-            if (bigIds != null) {
-                intentDevices.putExtra(AllDeviceListActivity.BIGID, bigIds);
-                intentDevices.putExtra(Config.TITLE_NAME, "选择断路器");
-            } else {
+            List<String> bigIds = DeviceService.getInstance().findBigId("DLQ");
+            if (bigIds.isEmpty()) {
                 ToastUtils.showMessage("没有找到别名为DLQ的设备大类！");
             }
-            TZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
+            DeviceSelectActivity.with(mActivity)
+                    .setTitle("选择断路器")
+                    .setPmsDeviceType(PMSDeviceType.one)
+                    .setBdzId(currentBdzId)
+                    .setDeviceBigType(bigIds.toArray(new String[]{}))
+                    .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE)
+                    .start();
         });
         binding.gztysb.setSelectOnClickListener(v -> {
             KeyValue keyValue = binding.tyfw.getValue();
@@ -79,22 +81,24 @@ public class TZQKActivity extends BaseSjjcActivity {
                 ToastUtils.showMessage("全站设备均停运，无需选择！");
                 return;
             }
-            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
-            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
-            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
+            List<String> bigIds = new ArrayList<>();
             if ("主变".equals(keyValue.getValueStr())) {
-                String s1 = DeviceService.getInstance().findBigId("BYQ");
-                String s2 = DeviceService.getInstance().findBigId("ZYB");
-                String rs;
-                if (s1 != null && s2 != null) {
-                    rs = s1 + "," + s2;
-                } else {
-                    rs = StringUtilsExt.nullTo(s1, s2);
-                }
-                intentDevices.putExtra(AllDeviceListActivity.BIGID, rs);
-                intentDevices.putExtra(Config.TITLE_NAME, "请选择变压器");
+                List<String> s1 = DeviceService.getInstance().findBigId("BYQ");
+                List<String> s2 = DeviceService.getInstance().findBigId("ZYB");
+                bigIds.addAll(s1);
+                bigIds.addAll(s2);
             }
-            TZQKActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + 1);
+            if (bigIds.isEmpty()) {
+                ToastUtils.showMessage("没有找到别名为BYQ、ZYB的设备大类！");
+            }
+            DeviceSelectActivity.with(mActivity)
+                    .setTitle("请选择变压器")
+                    .setPmsDeviceType(PMSDeviceType.one)
+                    .setBdzId(currentBdzId)
+                    .setDeviceBigType(bigIds.toArray(new String[]{}))
+                    .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE + 1)
+                    .start();
+
         });
         binding.gzdydj.setType("dydj");
         binding.gzlx.setType("gzlx");
@@ -287,18 +291,21 @@ public class TZQKActivity extends BaseSjjcActivity {
         if (RESULT_OK == resultCode) {
             switch (requestCode) {
                 case Config.ACTIVITY_CHOSE_DEVICE:
-                    DbModel model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    DbModel model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
                     if (model != null) {
-                        binding.kgdlqbh.setKeyValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
-                        binding.dlqtzqk.setValueStr(model.getString(Device.NAME) + "跳闸");
+                        binding.kgdlqbh.setKeyValue(new KeyValue(model.getString(DeviceService.DEVICE_ID_KEY),
+                                model.getString(DeviceService.DEVICE_NAME_KEY)));
+                        binding.dlqtzqk.setValueStr(model.getString(DeviceService.DEVICE_NAME_KEY) + "跳闸");
                     }
                     break;
                 case Config.ACTIVITY_CHOSE_DEVICE + 1:
-                    model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
                     if (model != null) {
-                        binding.gztysb.setKeyValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                        binding.gztysb.setKeyValue(new KeyValue(model.getString(DeviceService.DEVICE_ID_KEY)
+                                , model.getString(DeviceService.DEVICE_NAME_KEY)));
                     }
                     break;
+                default:
             }
         }
     }

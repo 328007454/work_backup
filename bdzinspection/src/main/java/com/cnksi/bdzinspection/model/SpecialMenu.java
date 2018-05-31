@@ -113,23 +113,6 @@ public class SpecialMenu extends BaseModel{
 	public SpecialMenu() {
 	}
 
-	public SpecialMenu(String k, String v) {
-		this.k = k;
-		this.v = v;
-	}
-
-	public SpecialMenu(String k, String v, String type) {
-		this.k = k;
-		this.v = v;
-		this.type = type;
-	}
-
-	public SpecialMenu(SwitchMenu menu) {
-		this.id = menu.id;
-		this.k = menu.k;
-		this.loo_id = menu.loo_id;
-		this.v = menu.v;
-	}
 	public static Lookup convertLookup(SpecialMenu menu) {
 		Lookup lookup = new Lookup();
 		lookup.id = menu.id;
@@ -140,5 +123,4 @@ public class SpecialMenu extends BaseModel{
 		lookup.deviceWay = menu.deviceWay;
 		return lookup;
 	}
-
 }

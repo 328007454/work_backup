@@ -3,16 +3,17 @@ package com.cnksi.sjjc.activity.gztz;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.cnksi.common.Config;
+import com.cnksi.common.activity.DeviceSelectActivity;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.enmu.PMSDeviceType;
+import com.cnksi.common.model.Device;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.common.Config;
-import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseSjjcActivity;
-import com.cnksi.common.model.Device;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjlBhdzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzjlBinding;
-import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.sjjc.service.gztz.GZTZBhdzjlService;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.view.gztz.BhdzjlGroup;
@@ -100,19 +101,14 @@ public class BHDZJLActivity extends BaseSjjcActivity {
         BhdzjlGroup group = new BhdzjlGroup(this, binding.itemDevice);
         group.setListener((group1, isBhsb) -> {
             selectGroup = group1;
-            Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
-            intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, isBhsb ? PMSDeviceType.one : PMSDeviceType.second);
-            intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-
-            intentDevices.putExtra(Config.TITLE_NAME, isBhsb ? "请选择一次设备" : "请选择二次设备");
-            if (isBhsb) {
-                if (group1.getBhsb() != null) {
-                    intentDevices.putExtra(AllDeviceListActivity.SPCAEID, group1.getBhsb().getString(Device.SPID));
-                }
-            } else {
-                intentDevices.putExtra(Config.SECOND_SPACE_AND_ONE_DEVICE, true);
-            }
-            BHDZJLActivity.this.startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0));
+            DeviceSelectActivity.with(mActivity)
+                    .setBdzId(currentBdzId)
+                    .setInspectionType(currentInspectionType)
+                    .setPmsDeviceType(isBhsb ? PMSDeviceType.one : PMSDeviceType.second)
+                    .setTitle(isBhsb ? "请选择一次设备" : "请选择二次设备")
+                    .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0))
+                    .setFilterSql(" and d.spid='".concat(group1.getBhsb().getString(Device.SPID)).concat("' "))
+                    .start();
         });
         groups.add(group);
         return group;
@@ -163,21 +159,24 @@ public class BHDZJLActivity extends BaseSjjcActivity {
         if (RESULT_OK == resultCode) {
             switch (requestCode) {
                 case Config.ACTIVITY_CHOSE_DEVICE:
-                    DbModel model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    DbModel model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
                     if (model != null) {
-                        selectGroup.setDeviceSelectValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                        selectGroup.setDeviceSelectValue(new KeyValue(model.getString(DeviceService.DEVICE_ID_KEY),
+                                model.getString(DeviceService.DEVICE_NAME_KEY)));
                         selectGroup.setBhsb(model);
                     }
                     rebuildStr();
                     break;
                 //选择保护设备
                 case Config.ACTIVITY_CHOSE_DEVICE + 1:
-                    model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                    model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
                     if (model != null) {
-                        selectGroup.setBHDeviceSelectValue(new KeyValue(model.getString(Device.DEVICEID), model.getString(Device.NAME)));
+                        selectGroup.setBHDeviceSelectValue(new KeyValue(model.getString(DeviceService.DEVICE_ID_KEY),
+                                model.getString(DeviceService.DEVICE_NAME_KEY)));
                     }
                     rebuildStr();
                     break;
+                default:
             }
         }
     }
@@ -212,7 +211,7 @@ public class BHDZJLActivity extends BaseSjjcActivity {
             return true;
         } catch (DbException e) {
             e.printStackTrace();
-            ToastUtils.showMessage( "保存失败");
+            ToastUtils.showMessage("保存失败");
         }
         return false;
     }

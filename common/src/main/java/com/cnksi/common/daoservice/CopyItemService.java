@@ -202,8 +202,7 @@ public class CopyItemService extends BaseService<CopyItem> {
      * 获取日常维护下的避雷器动作次数抄录设备
      */
     public List<DbModel> findAllDeviceHasCopyValue(String currentInspectionType, String bdzId) throws DbException {
-        String selector = "";
-        selector = "and d.deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key in ('" + getCopyType() + "') and dlt = '0' )";
+        String selector = "and deviceid in (SELECT DISTINCT(deviceid) FROM copy_item WHERE type_key in ('" + getCopyType() + "') and dlt = '0' )";
         return DeviceService.getInstance().findDeviceHasCopyValueBySelector(selector, bdzId);
 
     }

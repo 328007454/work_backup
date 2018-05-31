@@ -41,6 +41,7 @@ import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.TaskExtend;
+import com.cnksi.common.utils.ListUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -56,6 +57,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.cnksi.common.activity.DeviceSelectActivity.RESULT_SELECT_KEY;
 
 /**
  * 追加巡检任务
@@ -121,7 +124,6 @@ public class AddTaskActivity extends BaseActivity {
     private XsActivityAddInspectionTaskBinding binding;
     private List<DbModel> allPersons;
     private List<DbModel> selectPersons;
-    private String currentAcounts;
     private ArrayList<Lookup> childList;
     private List<Lookup> switchMaintenances = new ArrayList<>();
 
@@ -511,12 +513,12 @@ public class AddTaskActivity extends BaseActivity {
             try {
                 ReportService.getInstance().saveOrUpdate(mReport);
                 if ("select_device".equalsIgnoreCase(mInspectionType.deviceWay)) {
-                    // 手动选择设备
-                    Intent intent = new Intent(mActivity, DeviceSelectActivity.class);
-                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
-
-                    intent.putExtra(DeviceSelectActivity.SELECT_TYPE, DeviceSelectActivity.SELECT_TYPE_MULT);
-                    startActivityForResult(intent, MUMAL_SELECT_DEVICE);
+                    com.cnksi.common.activity.DeviceSelectActivity.with(mActivity)
+                            .setBdzId(mCurrentBdz.bdzid)
+                            .setInspectionType(mInspectionType.k)
+                            .setMultiSelect(true)
+                            .setRequestCode(MUMAL_SELECT_DEVICE)
+                            .start();
                 } else if (xudianchi) {
                     // 蓄电池电压检测
                     RadioGroup checkType = findViewById(R.id.radio_ceshi_type);
@@ -584,7 +586,8 @@ public class AddTaskActivity extends BaseActivity {
                     }
                     break;
                 case MUMAL_SELECT_DEVICE:
-                    String selectDevice = data.getStringExtra(DeviceSelectActivity.RESULT_SELECT_DEVICE);
+                    ArrayList<DbModel> selectDeviceList = (ArrayList<DbModel>) data.getSerializableExtra(RESULT_SELECT_KEY);
+                    String selectDevice= ListUtils.toString(selectDeviceList, (model, aBoolean) -> model.getString("deviceId")+(aBoolean?"":Config.COMMA_SEPARATOR));
                     mCurrentTask.selected_deviceid = selectDevice;
                     mReport.selected_deviceid = selectDevice;
                     try {
