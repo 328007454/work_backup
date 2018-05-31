@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.model.vo.SpaceGroupItem;
 import com.cnksi.common.model.vo.SpaceItem;
@@ -86,7 +87,7 @@ public class DeviceHandleFunctions extends Functions {
             ToastUtils.showMessage("没有找到对应的间隔");
             return;
         }
-        adapter.setShakeAnimationDevice(true, spid, model.getString("deviceId"));
+        adapter.setShakeAnimationDevice(true, spid, model.getString(DeviceService.DEVICE_ID_KEY));
         if (index[0] > -1) {
             adapter.expand(index[0]);
         }

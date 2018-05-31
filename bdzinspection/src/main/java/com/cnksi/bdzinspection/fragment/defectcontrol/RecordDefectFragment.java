@@ -36,6 +36,7 @@ import com.cnksi.common.Config;
 import com.cnksi.common.activity.DeviceSelectActivity;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DevicePartService;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DefectRecord;
@@ -828,12 +829,12 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     break;
                 case SELECT_DEVICE:
                     DbModel device = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
-                    String deviceName = device.getString("deviceName");
+                    String deviceName = device.getString(DeviceService.DEVICE_NAME_KEY);
                     binding.includeDefect.tvSelectDevicePart.setText(deviceName);
-                    currentDeviceId = device.getString("deviceId");
+                    currentDeviceId = device.getString(DeviceService.DEVICE_ID_KEY);
                     currentDeviceName = deviceName;
-                    currentSpacingId = device.getString("spid");
-                    currentSpacingName = device.getString("spacingName");
+                    currentSpacingId = device.getString(Device.SPID);
+                    currentSpacingName = device.getString(DeviceService.SPACING_NAME_KEY);
                     if (mofifyDefectRe != null) {
                         mofifyDefectRe.devcie = deviceName;
                         mofifyDefectRe.deviceid = currentDeviceId;

@@ -15,6 +15,7 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.XunJianTypeAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.BdzDialogAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.InspectionTypeAdapter;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.daoservice.SwitchMenuService;
@@ -587,7 +588,7 @@ public class AddTaskActivity extends BaseActivity {
                     break;
                 case MUMAL_SELECT_DEVICE:
                     ArrayList<DbModel> selectDeviceList = (ArrayList<DbModel>) data.getSerializableExtra(RESULT_SELECT_KEY);
-                    String selectDevice= ListUtils.toString(selectDeviceList, (model, aBoolean) -> model.getString("deviceId")+(aBoolean?"":Config.COMMA_SEPARATOR));
+                    String selectDevice= ListUtils.toString(selectDeviceList, (model, aBoolean) -> model.getString(DeviceService.DEVICE_ID_KEY)+(aBoolean?"":Config.COMMA_SEPARATOR));
                     mCurrentTask.selected_deviceid = selectDevice;
                     mReport.selected_deviceid = selectDevice;
                     try {

@@ -124,10 +124,7 @@ public class Device extends BaseModel {
     public static final String BIGID = "bigid";
     @Column(name = BIGID)
     public String bigid;
-    // 是否有抄录数据
-    public static final String HAS_COPY = "has_copy";
-    @Column(name = HAS_COPY)
-    public String has_copy;
+
 
     // 设备名称拼音
     public static final String NAME_PINYIN = "name_pinyin";
@@ -175,14 +172,8 @@ public class Device extends BaseModel {
     @Column(name = DEVICE_TYPE)
     public String device_type;
 
-    // 缺陷数量
-    public int defectCount = 0;
-
     // 最高缺陷级别
     public String defectLevel = "";
-
-    // 是否已巡视
-    public boolean hasInspection = false;
 
     // 判断设备的图片是否存在，不存在采用默认的图片
     public String getPic(String pic) {
@@ -192,44 +183,8 @@ public class Device extends BaseModel {
         return pic;
     }
 
-    /**
-     * 时长
-     */
-    public static final String DURATION = "duration";
-    public String duration;
-    /**
-     * 巡视频率
-     */
-    public static final String FREQUENCY = "frequency";
-    public String frequency;
 
-    /**
-     * 已巡视的次数
-     */
-    public static final String FREQUENCYED = "frequenced";
-    public String frequenced;
 
-    // 总共巡视次数
-    public static final String AMOUNT = "amount";
-    public String amount;
-
-    // 上次巡视时间
-    public static final String LAST_TRACK_TIME = "last_track_time";
-    public String last_track_time;
-
-    // 任务id
-    public static final String TASK_ID = "taskid";
-    public String taskid;
-
-    /**
-     * 是否设定了周期
-     */
-    public boolean isSetuped = false;
-
-    /**
-     * 已经巡视的次数
-     */
-    public String hasInspectionTimes = "0";
 
     public boolean isImportant() {
         return "Y".equals(isImportant);

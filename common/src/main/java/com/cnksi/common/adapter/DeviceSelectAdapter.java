@@ -16,7 +16,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.common.R;
 import com.cnksi.common.activity.DeviceSelectActivity;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.model.Device;
 import com.cnksi.common.model.SpacingGroup;
 import com.cnksi.common.model.vo.DeviceItem;
 import com.cnksi.common.model.vo.SpaceGroupItem;
@@ -116,9 +118,9 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
             ((UnderLineLinearLayout) helper.itemView).setMarginLeft(AutoUtils.getPercentHeightSize(30));
         }
         //处理间隔名称
-        String spacingName = space.getString("spacingName");
+        String spacingName = space.getString(DeviceService.SPACING_NAME_KEY);
         if (!TextUtils.isEmpty(keyWord)) {
-            String spacePY = space.getString("spacePY");
+            String spacePY = space.getString(DeviceService.SPACING_PY_KEY);
             int index = spacePY.indexOf(keyWord);
             if (-1 != index && index + keyWord.length() <= spacingName.length()) {
                 String pyName = spacingName.substring(index, index + keyWord.length());
@@ -182,9 +184,9 @@ public class DeviceSelectAdapter extends BaseMultiItemQuickAdapter<MultiItemEnti
     private void convertDevice(BaseViewHolder helper, final DeviceItem item) {
         final int position = helper.getAdapterPosition();
         TextView txtDevice = helper.getView(R.id.tv_device_name);
-        String deviceName =  isSecondDevice ? item.getString("deviceName") : item.getString("shortName");
-        String spaceId = item.getString("spid");
-        String devicePY = item.getString("devicePY");
+        String deviceName =  isSecondDevice ? item.getString(DeviceService.DEVICE_NAME_KEY) : item.getString(DeviceService.DEVICE_SHORT_NAME_KEY);
+        String spaceId = item.getString(Device.SPID);
+        String devicePY = item.getString(DeviceService.DEVICE_PY_KEY);
         RelativeLayout relativeLayout = helper.getView(R.id.rl_device_container);
         relativeLayout.setTag("dContainer");
         relativeLayout.setMinimumHeight(AutoUtils.getPercentHeightSizeBigger(105));

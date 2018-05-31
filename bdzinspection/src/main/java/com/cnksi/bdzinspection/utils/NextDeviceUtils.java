@@ -2,6 +2,8 @@ package com.cnksi.bdzinspection.utils;
 
 import android.text.TextUtils;
 
+import com.cnksi.common.daoservice.DeviceService;
+
 import org.xutils.db.table.DbModel;
 
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.List;
 
 /**
  * 用于设备列表左右滑。
+ * @author Wastrel
  * @version 1.0
  * @auth wastrel
  * @date 2018/1/27 17:01
@@ -46,7 +49,7 @@ public class NextDeviceUtils {
         }
         for (int i = 0; i < models.size(); i++) {
             DbModel model = models.get(i);
-            if (TextUtils.equals(model.getString("deviceId"), device)) {
+            if (TextUtils.equals(model.getString(DeviceService.DEVICE_ID_KEY), device)) {
                 if (i > 0) {
                     lastIndex = --i;
                     return models.get(lastIndex);
@@ -74,7 +77,7 @@ public class NextDeviceUtils {
         }
         for (int i = 0; i < models.size(); i++) {
             DbModel model = models.get(i);
-            if (TextUtils.equals(model.getString("deviceId"), device)) {
+            if (TextUtils.equals(model.getString(DeviceService.DEVICE_ID_KEY), device)) {
                 if (i < models.size() - 1) {
                     lastIndex = ++i;
                     return models.get(lastIndex);

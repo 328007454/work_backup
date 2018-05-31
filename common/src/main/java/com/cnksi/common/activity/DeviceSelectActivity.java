@@ -18,6 +18,7 @@ import com.cnksi.common.R;
 import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.base.FragmentPagerAdapter;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.StandardSpecialService;
 import com.cnksi.common.databinding.CommonActivityDeviceSelectBinding;
 import com.cnksi.common.enmu.PMSDeviceType;
@@ -157,7 +158,7 @@ public class DeviceSelectActivity extends BaseTitleActivity {
         listView.setAdapter(new BaseAdapter<DbModel>(mActivity, selectDeviceList, R.layout.dialog_content_child_item) {
             @Override
             public void convert(ViewHolder holder, DbModel item, int position) {
-                holder.setText(R.id.tv_child_item, item.getString("deviceName"));
+                holder.setText(R.id.tv_child_item, item.getString(DeviceService.DEVICE_NAME_KEY));
             }
         });
         View.OnClickListener dialogClick = v -> {

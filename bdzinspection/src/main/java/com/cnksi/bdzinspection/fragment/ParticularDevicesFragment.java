@@ -91,22 +91,22 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
         // 跳转设备详情
         adapter.setDeviceClickListener((v, dbModel, position) -> {
             Intent intent = new Intent(currentActivity, NewDeviceDetailsActivity.class);
-            intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString("deviceId"));
-            intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString("deviceName"));
+            intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString(DeviceService.DEVICE_ID_KEY));
+            intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
-            intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
+            intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
             ParticularDevicesFragment.this.startActivity(intent);
         });
         // 跳转设备抄录
         adapter.setCopyClickListener((v, dbModel, position) -> {
             Intent intent = new Intent(currentActivity, CopyValueActivity2.class);
-            intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString("deviceId"));
-            intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString("deviceName"));
+            intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString(DeviceService.DEVICE_ID_KEY));
+            intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
-            intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
+            intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
-            intent.putExtra(Config.TITLE_NAME, dbModel.getString("deviceName"));
+            intent.putExtra(Config.TITLE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             ParticularDevicesFragment.this.startActivity(intent);
         });
@@ -116,7 +116,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                 PlaySound.getIntance(currentActivity).play(R.raw.input);
                 Intent intent = new Intent(currentActivity, SingleSpaceCopyActivity.class);
                 intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
-                intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
+                intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
                 intent.putExtra(Config.CURRENT_FUNCTION_MODEL, currentFunctionModel);
                 ParticularDevicesFragment.this.startActivity(intent);
             }
@@ -212,8 +212,6 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
             });
 
         });
-
-
     }
 
 

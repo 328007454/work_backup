@@ -863,8 +863,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         }
 
         private void jumpDevice(DbModel model, int anim1) {
-            currentDeviceId = model.getString("deviceId");
-            currentDeviceName = model.getString("name");
+            currentDeviceId = model.getString(DeviceService.DEVICE_ID_KEY);
+            currentDeviceName = model.getString(DeviceService.DEVICE_NAME_KEY);
             devicedetailsBinding.getRoot().startAnimation(android.view.animation.AnimationUtils.loadAnimation(mActivity, anim1));
             if (devicePartRecylerAdapter != null) {
                 devicePartRecylerAdapter.setClickPosition(0);

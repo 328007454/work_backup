@@ -110,7 +110,6 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
         initTabs();
         TTSUtils.getInstance().startSpeaking(String.format("欢迎使用%1$s", getString(R.string.app_name)));
         ExecutorManager.executeTaskSerially(() -> {
-            DeviceService.getInstance().refreshDeviceHasCopy();
             try {
                 CustomApplication.getInstance().getDbManager().execNonQuery("create  index  if not exists index_bdzid_deviceid on copy_result(bdzid,deviceid)");
                 CustomApplication.getInstance().getDbManager().execNonQuery("create  index  if not exists index_bdzid on copy_result(bdzid)");
