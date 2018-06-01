@@ -23,7 +23,7 @@ import com.cnksi.bdzinspection.activity.CopyValueActivity2;
 import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
 import com.cnksi.common.daoservice.SpacingGroupService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;

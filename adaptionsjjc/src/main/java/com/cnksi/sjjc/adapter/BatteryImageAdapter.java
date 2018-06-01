@@ -41,24 +41,24 @@ public class BatteryImageAdapter extends BaseAdapter<BatteryRecord> {
         List<String> voltageList = StringUtils.stringToList(voltageImages);
         List<String> resistanceList = StringUtils.stringToList(resistanceImages);
         voltageList.addAll(resistanceList);
-        holder.setVisable(R.id.tv_battery_number, View.VISIBLE);
+        holder.setVisibility(R.id.tv_battery_number, View.VISIBLE);
         holder.setText(R.id.tv_battery_number, item.battary_code);
         holder.setText(R.id.image_num, voltageList.size() + "");
 
         if (1 >= voltageList.size()) {
-            holder.setVisable(R.id.image_num, View.GONE);
+            holder.setVisibility(R.id.image_num, View.GONE);
         } else {
-            holder.setVisable(R.id.image_num, View.VISIBLE);
+            holder.setVisibility(R.id.image_num, View.VISIBLE);
         }
         if (!voltageList.isEmpty()) {
-            holder.setVisable(R.id.img_battery, View.VISIBLE);
+            holder.setVisibility(R.id.img_battery, View.VISIBLE);
 //            x.image().bind(((ImageView) holder.getView(R.id.img_battery)), Config.RESULT_PICTURES_FOLDER + voltageList.get(0), CustomApplication.getImageOPtions());
             Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + voltageList.get(0));
             ((ImageView) holder.getView(R.id.img_battery)).setImageBitmap(bitmap);
         } else {
             ((ImageView) holder.getView(R.id.img_battery)).setImageBitmap(null);
-            holder.setVisable(R.id.tv_battery_number, View.GONE);
-            holder.setVisable(R.id.img_battery, View.GONE);
+            holder.setVisibility(R.id.tv_battery_number, View.GONE);
+            holder.setVisibility(R.id.img_battery, View.GONE);
         }
 //        ((ImageView) holder.getView(R.id.img_battery)).setImageURI(Uri.fromFile(new File(Config.RESULT_PICTURES_FOLDER + voltageList.get(0))));
         holder.getView(R.id.img_battery).setOnClickListener(v -> {

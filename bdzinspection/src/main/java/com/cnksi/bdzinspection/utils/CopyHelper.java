@@ -15,7 +15,7 @@ import com.baidu.location.BDLocation;
 import com.cnksi.bdloc.DistanceUtil;
 import com.cnksi.bdloc.LatLng;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
 import com.cnksi.bdzinspection.daoservice.PlacedService;
 import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;

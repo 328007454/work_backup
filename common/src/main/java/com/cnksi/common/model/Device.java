@@ -3,6 +3,7 @@ package com.cnksi.common.model;
 import android.text.TextUtils;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.core.utils.FileUtils;
 
 import org.xutils.db.annotation.Column;
@@ -240,7 +241,7 @@ public class Device extends BaseModel {
     }
 
     public static boolean isOnceDevice(DbModel model) {
-        return Config.PmsDeviceType.one.name().equals(model.getString(DEVICE_TYPE));
+        return PMSDeviceType.one.equals(model.getString(DEVICE_TYPE));
     }
 
     public static boolean hasGPSInfo(DbModel model) {

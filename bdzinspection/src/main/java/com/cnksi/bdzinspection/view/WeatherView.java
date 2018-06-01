@@ -17,11 +17,11 @@ import android.widget.TextView;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.RecyclerHolder;
+import com.cnksi.common.utils.ViewHolder;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.bdzinspection.adapter.base.BaseRecyclerAdapter;
 import com.cnksi.bdzinspection.utils.TQEnum;
-import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.utils.CalcUtils;
-import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DisplayUtils;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
 import com.zhy.autolayout.utils.AutoUtils;

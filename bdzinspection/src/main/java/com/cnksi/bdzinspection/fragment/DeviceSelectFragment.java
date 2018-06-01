@@ -4,16 +4,14 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.adapter.DeviceAdapter;
 import com.cnksi.bdzinspection.adapter.DeviceSelectAdapter;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.StandardSpecialService;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.SpacingGroupService;

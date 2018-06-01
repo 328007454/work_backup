@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.common.utils.ViewHolder;
 
 import java.util.List;
 import java.util.Stack;

@@ -138,7 +138,7 @@ public class GetSendLetterReportActivity extends BaseReportActivity {
                     AutoUtils.autoSize(holder.getRootView());
                     if (1 < imageList.size()) {
                         holder.setText(R.id.tv_exception_num, imageList.size() + "");
-                        holder.setVisable(R.id.tv_exception_num, View.VISIBLE);
+                        holder.setVisibility(R.id.tv_exception_num, View.VISIBLE);
                     }
                     String spName = SpacingService.getInstance().findSpacingByDeviceId(transceiver.deviceId);
 

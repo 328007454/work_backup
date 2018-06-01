@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseAdapter;
+import com.cnksi.common.utils.ViewHolder;
 import com.zhy.autolayout.utils.AutoUtils;
 import com.cnksi.common.utils.ViewHolder;
 import java.util.Collection;

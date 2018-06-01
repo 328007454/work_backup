@@ -23,7 +23,7 @@ import com.cnksi.bdzinspection.adapter.BigTypePreventAdapter;
 import com.cnksi.bdzinspection.adapter.DevicePartRecylerAdapter;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.StandardAdapter;
-import com.cnksi.bdzinspection.adapter.ViewHolder;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.DeviceStandardOperService;
 import com.cnksi.bdzinspection.daoservice.DeviceStandardsService;
 import com.cnksi.bdzinspection.daoservice.DeviceTypeImageService;
