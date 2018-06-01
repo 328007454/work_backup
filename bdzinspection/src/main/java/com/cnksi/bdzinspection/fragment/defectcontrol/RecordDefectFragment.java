@@ -168,7 +168,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
 
     private void initialUI() {
         getBundleValue();
-        isParticularInspection = bundle.getBoolean(Config.IS_DEVICE_PART);
+        isParticularInspection = bundle.getBoolean(Config.IS_DEVICE_PART_KEY);
         boolean isShowDeviceWidget = bundle.getBoolean(Config.IS_SHOW_DEVICE_WIDGET);
         isNeedSearchDefect = bundle.getBoolean(Config.IS_NEED_SEARCH_DEFECT_REASON);
         isAddNewDefect = bundle.getBoolean(Config.ADD_NEW_DEFECT_RECORD);
@@ -812,7 +812,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     }
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
-                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     for (String imageUrl : cancelList) {
                         mDefectImageList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
                     }

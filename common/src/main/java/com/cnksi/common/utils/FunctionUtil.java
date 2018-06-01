@@ -32,7 +32,7 @@ public class FunctionUtil{
 	 * @return yyyyMMddHHmmssSSSadfdfdsfwei.jpg
 	 */
 	public static String getCurrentImageName(Context context) {
-		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX, "");
+		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX_KEY, "");
 		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyy_MM_dd_HH_mm, Locale.CHINA);
 		String uuidStr = UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
 		if (uuidStr.length() > 8) {
@@ -44,12 +44,12 @@ public class FunctionUtil{
 	}
 
 	public static String getSignImageName(Context context, String name) {
-		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX, "");
+		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX_KEY, "");
 		return prefix + "sign" + System.currentTimeMillis() + Config.IMAGE_PNG_POSTFIX;
 	}
 
 	public static String getSignImageHead(Context context, String name) {
-		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX, "");
+		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX_KEY, "");
 		return prefix + "img" + System.currentTimeMillis() + Config.IMAGE_JPG_POSTFIX;
 	}
 

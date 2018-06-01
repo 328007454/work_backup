@@ -275,7 +275,6 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
 
     @Override
     public void allPermissionsGranted() {
-        PreferencesUtils.put(Config.PERMISSION_STASTUS, true);
         // 检测是否进行版本升级
 //        checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, Config.PCODE);
         SystemConfig.init();
@@ -290,7 +289,7 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
             if (!FileUtils.isFileExists(Config.BDZ_INSPECTION_FOLDER + bdz.folder)) {
                 FileUtils.makeDirectory(new String[]{Config.BDZ_INSPECTION_FOLDER + bdz.folder});
             }
-            PreferencesUtils.put(Config.PICTURE_PREFIX, bdz.folder + "/");
+            PreferencesUtils.put(Config.PICTURE_PREFIX_KEY, bdz.folder + "/");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -321,7 +320,7 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
                     intent.putExtra(Config.CURRENT_REPORT_ID, mReport.reportid);
                     intent.putExtra(Config.CURRENT_BDZ_NAME, mTask.bdzname);
                     intent.putExtra(Config.CURRENT_INSPECTION_TYPE, mTask.inspection);
-                    intent.putExtra(Config.CURRENT_FILENAME, PreferencesUtils.get(Config.PICTURE_PREFIX, ""));
+                    intent.putExtra(Config.CURRENT_FOLDER_KEY, PreferencesUtils.get(Config.PICTURE_PREFIX_KEY, ""));
                     intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mTask.inspection_name);
                     intent.putExtra(Config.IS_FROM_SJJC, getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false));
                     intent.setComponent(componentName);
@@ -408,7 +407,7 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
             String reportSwitchId = PreferencesUtils.get(mTask.inspection + "_" + mTask.bdzid, "");
             mReport.repSwithoverId = reportSwitchId;
             mReport.inspectionValue = mTask.inspection_name;
-            mReport.reportSource = Config.REPORT;
+            mReport.reportSource = Config.REPORT_SOURCE_REPORT;
             mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             ReportService.getInstance().saveOrUpdate(mReport);
 

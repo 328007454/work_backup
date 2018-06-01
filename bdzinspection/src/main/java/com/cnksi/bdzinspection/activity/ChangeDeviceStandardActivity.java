@@ -86,7 +86,7 @@ public class ChangeDeviceStandardActivity extends BaseActivity implements OnAdap
     private void initialUI() {
         getIntentValue();
         currentStandardId = getIntent().getStringExtra(Config.CURRENT_STANDARD_ID);
-        isAddDeviceStandard = getIntent().getBooleanExtra(Config.IS_ADD_DEVICE_STANDARD, false);
+        isAddDeviceStandard = getIntent().getBooleanExtra(Config.IS_ADD_DEVICE_STANDARD_KEY, false);
         binding.rlTakeStandardImage.setVisibility(isAddDeviceStandard ? View.VISIBLE : View.GONE);
         binding.ivStandardImage.setVisibility(isAddDeviceStandard ? View.GONE : View.VISIBLE);
         binding.btnDelete.setVisibility(isAddDeviceStandard ? View.GONE : View.VISIBLE);

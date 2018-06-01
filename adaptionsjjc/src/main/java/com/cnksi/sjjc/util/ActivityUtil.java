@@ -105,7 +105,7 @@ public class ActivityUtil {
         Intent intent = new Intent(activity, TicketDateHomeActivity.class);
         intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
-        intent.putExtra(Config.LASTTIEM_CHOOSE_BDZNAME, PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, ""));
+        intent.putExtra(Config.LAST_CHOOSE_BDZ_NAME_KEY, PreferencesUtils.get(Config.LAST_CHOOSE_BDZ_NAME_KEY, ""));
         intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
         intent.putExtra(Config.CURRENT_DEPARTMENT_NAME, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, ""));
         intent.putExtra(Config.OTHER_DEPT_USER,PreferencesUtils.get(Config.OTHER_DEPT_USER,""));

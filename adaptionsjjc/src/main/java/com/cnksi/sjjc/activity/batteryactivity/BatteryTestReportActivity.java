@@ -83,15 +83,15 @@ public class BatteryTestReportActivity extends BaseReportActivity {
             currentTaskId = bundle.getString(Config.CURRENT_TASK_ID);
             currentInspectionTypeName = InspectionType.get(currentInspectionType).value;
             type = bundle.getString(Config.CURRENT_INSPECTION_TYPE);
-            String currentFolder = bundle.getString(Config.CURRENT_FILENAME);
-            PreferencesUtils.put(Config.PICTURE_PREFIX, currentFolder);
+            String currentFolder = bundle.getString(Config.CURRENT_FOLDER_KEY);
+            PreferencesUtils.put(Config.PICTURE_PREFIX_KEY, currentFolder);
             PreferencesUtils.put(Config.CURRENT_MAINTANENCE_BATTERY, type);
             PreferencesUtils.put(Config.CURRENT_BDZ_ID, currentBdzId);
             PreferencesUtils.put(Config.CURRENT_BDZ_NAME, currentBdzName);
             PreferencesUtils.put(Config.CURRENT_REPORT_ID, currentReportId);
             PreferencesUtils.put(Config.CURRENT_TASK_ID, currentTaskId);
             PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-            PreferencesUtils.put(Config.CURRENT_INSPECTION_NAME, InspectionType.get(currentInspectionType).value);
+            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.get(currentInspectionType).value);
         } else {
             type = PreferencesUtils.get(Config.CURRENT_MAINTANENCE_BATTERY, "");
         }

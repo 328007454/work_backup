@@ -12,10 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.activity.ImageDetailsActivity;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.utils.DialogUtils;
@@ -173,7 +173,7 @@ public class EliminateDefectFragment extends BaseDefectFragment {
         selectDefect.has_remove = "Y";
         selectDefect.removeDate = DateUtils.getCurrentLongTime();
         try {
-            CommonApplication.getInstance().getDbManager().saveOrUpdate(selectDefect);
+            DefectRecordService.getInstance().saveOrUpdate(selectDefect);
             defectRecords.remove(selectDefect);
             deviceDefectAdapter.notifyDataSetChanged();
             selectDefect = null;
@@ -272,7 +272,7 @@ public class EliminateDefectFragment extends BaseDefectFragment {
                     }
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
-                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     if (TextUtils.equals(mCurrentClickPhotoModel, ELIMINATE_MODEL)) {
                         for (String imageUrl : cancelList) {
                             mDefectImageList.remove(imageUrl.replace(picParentFolder, ""));

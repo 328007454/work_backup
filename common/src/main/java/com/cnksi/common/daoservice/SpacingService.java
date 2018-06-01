@@ -224,9 +224,9 @@ public class SpacingService extends BaseService<Spacing> {
         DbManager manager = getDbManager();
         try {
             manager.beginTransaction();
-            manager.execNonQuery(sqlDevice);
-            manager.execNonQuery(sqlCopyItem);
-            manager.execNonQuery("update spacing set dlt=1 where spid='" + spacing.spid + "'");
+            execSql(sqlDevice);
+            execSql(sqlCopyItem);
+            execSql("update spacing set dlt=1 where spid='" + spacing.spid + "'");
             manager.setTransactionSuccessful();
             return true;
         } catch (DbException e) {
@@ -279,16 +279,16 @@ public class SpacingService extends BaseService<Spacing> {
             }
             insertSql.deleteCharAt(insertSql.length() - 1).append(") VALUES(").append(values.deleteCharAt(values.length() - 1).toString()).append(");");
             //保存一个新间隔
-            manager.execNonQuery(insertSql.toString());
+           execSql(insertSql.toString());
 
             //更新设备表的SPID
             sql = "update device set spid='" + newSpid + "' where deviceid in(" + deviceIds.toString() + ")";
-            manager.execNonQuery(sql);
+            execSql(sql);
             //更新抄录表的SPID
             if (copyItemIds.length() > 0) {
                 copyItemIds.deleteCharAt(copyItemIds.length() - 1);
                 sql = "update copy_item set spid='" + newSpid + "' where id in(" + copyItemIds.toString() + ")";
-                manager.execNonQuery(sql);
+                execSql(sql);
             }
             manager.setTransactionSuccessful();
             return true;

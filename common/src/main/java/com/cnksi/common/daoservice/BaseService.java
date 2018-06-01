@@ -167,6 +167,27 @@ public class BaseService<T> {
         }
     }
 
+
+    public int executeUpdateDelete(String sql) throws DbException {
+        try {
+            return getDbManager().executeUpdateDelete(sql);
+        } catch (DbException e) {
+            RecordException(e);
+            throw e;
+        }
+
+    }
+
+    public int executeUpdateDelete(SqlInfo sql) throws DbException {
+        try {
+            return getDbManager().executeUpdateDelete(sql);
+        } catch (DbException e) {
+            RecordException(e);
+            throw e;
+        }
+
+    }
+
     public void execSql(SqlInfo sqlInfo) throws DbException {
         try {
             getDbManager().execNonQuery(sqlInfo);
@@ -180,7 +201,7 @@ public class BaseService<T> {
         if (Config.DEBUG) {
             mHandler.post(() -> ToastUtils.showMessage("操作数据库出错，请确保数据库的完整性。"));
         }
-        executor.execute(() -> CrashLogUtil.writeLog(new File(Config.LOGFOLDER, "DbException-" + BaseModel.getPrimarykey() + ".txt"), "DbException",
+        executor.execute(() -> CrashLogUtil.writeLog(new File(Config.LOG_FOLDER, "DbException-" + BaseModel.getPrimarykey() + ".txt"), "DbException",
                 AbstractCrashReportHandler.buildBody(CommonApplication.getInstance()), e.getMessage(), e));
     }
 

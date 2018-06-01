@@ -180,8 +180,8 @@ public class LoginActivity extends BaseSjjcActivity implements GrantPermissionLi
                 startTime = System.currentTimeMillis();
             }
             if (count >= 5) {
-                boolean maskWifi = !PreferencesUtils.get(Config.MASK_WIFI, true);
-                PreferencesUtils.put(Config.MASK_WIFI, maskWifi);
+                boolean maskWifi = !PreferencesUtils.get(Config.MASK_WIFI_SWITCH_KEY, true);
+                PreferencesUtils.put(Config.MASK_WIFI_SWITCH_KEY, maskWifi);
                 if (maskWifi) {
                     com.cnksi.core.utils.NetWorkUtils.disableNetWork(mActivity);
                     ToastUtils.showMessage("打开WIFI屏蔽");
@@ -497,7 +497,6 @@ public class LoginActivity extends BaseSjjcActivity implements GrantPermissionLi
 
     @Override
     public void allPermissionsGranted() {
-        PreferencesUtils.put(Config.PERMISSION_STASTUS, true);
         LocationUtil.getInstance().preSearchGps(mActivity);
         CustomApplication.getInstance().initApp();
         copyBdzInspectionDb();

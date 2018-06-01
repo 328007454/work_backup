@@ -146,22 +146,21 @@ public class YWWorkflowActivity extends BaseActivity {
     XsDialogInputBinding inputBinding;
 
     private void initOnClick() {
-        binding.ibtnCancel.setOnClickListener(view -> YWWorkflowActivity.this.onBackPressed());
+        binding.ibtnCancel.setOnClickListener(view -> onBackPressed());
         binding.btnReport.setOnClickListener(view -> {
             Intent intent = new Intent(mActivity, YWBatteryActivity.class);
-            YWWorkflowActivity.this.startActivity(intent);
+            startActivity(intent);
         });
         binding.gqj.setOnClickListener(view -> {
             Intent intent = new Intent(mActivity, YWGQJActivity.class);
-            intent.putExtra(Config.YWYTHPROTYPE, 5);
-            YWWorkflowActivity.this.startActivity(intent);
+            startActivity(intent);
         });
 
         binding.btnComplete.setOnClickListener(view -> {
             if (taskStatus) {
-                YWWorkflowActivity.this.finish();
+                finish();
             } else {
-                inputBinding = XsDialogInputBinding.inflate(YWWorkflowActivity.this.getLayoutInflater());
+                inputBinding = XsDialogInputBinding.inflate(getLayoutInflater());
                 dialog = DialogUtils.createDialog(mActivity, inputBinding.getRoot(), (int) (ScreenUtils.getScreenWidth(mActivity) * 0.9),
                         LinearLayout.LayoutParams.WRAP_CONTENT);
                 dialog.show();
@@ -181,9 +180,9 @@ public class YWWorkflowActivity extends BaseActivity {
                         TaskService.getInstance().finishTask(currentTaskId);
 
                     }
-                    YWWorkflowActivity.this.startActivity(new Intent(mActivity, YunweiReportActivity.class));
+                    startActivity(new Intent(mActivity, YunweiReportActivity.class));
                     if (isfinish) {
-                        YWWorkflowActivity.this.setResult(RESULT_OK);
+                        setResult(RESULT_OK);
                         mActivity.finish();
 
                     }

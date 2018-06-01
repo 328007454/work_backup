@@ -438,7 +438,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         intent.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
         intent.putExtra(Config.CURRENT_SPACING_NAME, currentSpacingName);
         intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
-        intent.putExtra(Config.IS_DEVICE_PART, InspectionType.special_xideng.equals(currentInspectionType) || (isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin)));
+        intent.putExtra(Config.IS_DEVICE_PART_KEY, InspectionType.special_xideng.equals(currentInspectionType) || (isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin)));
     }
 
     private void initOnClick() {
@@ -662,8 +662,8 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     setDeviceImage();
                     break;
                 case SELECT_DEVICE_IMAGE:
-                    if (!data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST).isEmpty()) {
-                        currentImageName = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST).get(0).replace(Config.BDZ_INSPECTION_FOLDER, "");
+                    if (!data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY).isEmpty()) {
+                        currentImageName = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY).get(0).replace(Config.BDZ_INSPECTION_FOLDER, "");
                         // 2、保存到数据库
                         DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, currentImageName);
                         // 3、更换设备图片
@@ -699,7 +699,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     });
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
-                    List<String> list = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    List<String> list = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     if (null != list && !list.isEmpty()) {
                         for (String file : list) {
                             FileUtils.deleteFile(file);

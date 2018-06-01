@@ -168,7 +168,7 @@ public class DiscoverHoleActivity extends BaseSjjcActivity {
                 }
 
             } else if (requestCode == Config.CANCEL_RESULT_LOAD_IMAGE) {
-                ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                 for (String imageUrl : cancleImagList) {
                     picList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
                 }

@@ -170,7 +170,6 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         // 危险点
         mDangerpointFragment = new DangerContentFragment();
         args = new Bundle();
-        args.putString(Config.CURRENT_FUNCTION_MODEL, Config.DANGER_POINT_MODEL);
         args.putString(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
         args.putString(Config.CURRENT_BDZ_ID, currentBdzId);
         mDangerpointFragment.setArguments(args);
@@ -180,7 +179,6 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         if (!isParticularInspection()) {
             mToolsFragment = new ToolFragment();
             args = new Bundle();
-            args.putString(Config.CURRENT_FUNCTION_MODEL, Config.TOOLS_MODEL);
             args.putString(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
             mToolsFragment.setArguments(args);
             mFragmentList.add(mToolsFragment);
@@ -366,7 +364,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                         temperature, "", weather, task == null ? "" : task.selected_deviceid);
                 mReport.pmsJhid = task.pmsJhid;
             }
-            mReport.reportSource = Config.REPORT;
+            mReport.reportSource = Config.REPORT_SOURCE_REPORT;
             mReport.inspectionValue = currentInspectionTypeName;
             mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             ExecutorManager.executeTask(() -> {

@@ -3,6 +3,7 @@ package com.cnksi.common;
 
 import android.util.Log;
 
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.db.sqlite.SqlInfo;
@@ -75,7 +76,7 @@ public class SystemConfig {
     public static void init() {
         SqlInfo sqlInfo = new SqlInfo("select * from system_config");
         try {
-            List<DbModel> models = CommonApplication.getInstance().getDbManager().findDbModelAll(sqlInfo);
+            List<DbModel> models = BaseService.getInstance(SystemConfig.class).findDbModelAll(sqlInfo);
             if (models != null) {
                 for (DbModel model : models) {
                     SYSTEM_CONFIG.put(model.getString("k"), model.getString("v"));

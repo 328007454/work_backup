@@ -15,7 +15,7 @@ public class NetWorkDisableReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (PreferencesUtils.get(Config.MASK_WIFI, true) && NetWorkUtils.isWifiConnected(context)) {
+        if (PreferencesUtils.get(Config.MASK_WIFI_SWITCH_KEY, true) && NetWorkUtils.isWifiConnected(context)) {
             NetWorkUtils.setWifiEnabled(context, false);
         }
     }

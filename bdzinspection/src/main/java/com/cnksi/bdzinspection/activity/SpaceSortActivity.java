@@ -56,7 +56,7 @@ public class SpaceSortActivity extends TitleActivity {
                 spaceAdapter.notifyDataSetChanged();
             }
         });
-        return getString(R.string.xs_inspection_sort, getIntent().getStringExtra(Config.TITLE_NAME));
+        return getString(R.string.xs_inspection_sort, getIntent().getStringExtra(Config.TITLE_NAME_KEY));
     }
 
     @Override

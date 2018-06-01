@@ -21,6 +21,7 @@ import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.common.daoservice.BdzService;
+import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.daoservice.SpacingService;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Department;
@@ -33,7 +34,6 @@ import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.defect.adapter.DialogBDZAdapter;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ActivityLauncherNewBinding;
 import com.cnksi.sjjc.fragment.launcher.MaintenanceFragment;
@@ -54,7 +54,7 @@ public class NewLauncherActivity extends BaseSjjcActivity {
     public boolean isFromHomeActivity = true;
     private ListView mPowerStationListView;
     private Dialog mPowerStationDialog = null;
-    private ArrayList<Bdz> bdzList;
+    private List<Bdz> bdzList;
     LocationUtil.LocationHelper locationHelper;
     RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
@@ -166,15 +166,15 @@ public class NewLauncherActivity extends BaseSjjcActivity {
         ExecutorManager.executeTaskSerially(() -> {
             String deparmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             try {
-                bdzList = (ArrayList<Bdz>) CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
-                final Department department = CustomApplication.getInstance().getDbManager().selector(Department.class).where(Department.ID, "=", deparmentId).and(Department.DLT, "<>", 1).findFirst();
+                bdzList = BdzService.getInstance().findAll();
+                final Department department = DepartmentService.getInstance().findDepartmentById(deparmentId);
                 if (null != department) {
                     runOnUiThread(() -> {
                         launcherBinding.lancherTitle.txtTeam.setText(department.name);
                         initBDZDialog();
                         if (!bdzList.isEmpty()) {
                             launcherBinding.lancherTitle.txtBdz.setText(bdzList.isEmpty() ? "" : bdzList.get(0).name);
-                            PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdzList.get(0).bdzid);
+                            PreferencesUtils.put(Config.LAST_CHOOSE_BDZ_NAME_KEY, bdzList.get(0).bdzid);
                             PreferencesUtils.put(Config.LOCATION_BDZID, bdzList.get(0).bdzid);
                             PreferencesUtils.put(Config.LOCATION_BDZNAME, bdzList.get(0).name);
                             PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, department.name);
@@ -247,7 +247,7 @@ public class NewLauncherActivity extends BaseSjjcActivity {
         adapter.setItemClickListener((v, bdz, position) -> {
             if (!bdz.name.contains("未激活")) {
                 launcherBinding.lancherTitle.txtBdz.setText(bdz.name);
-                PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdz.bdzid);
+                PreferencesUtils.put(Config.LAST_CHOOSE_BDZ_NAME_KEY, bdz.bdzid);
                 PreferencesUtils.put(Config.LOCATION_BDZID, bdz.bdzid);
                 PreferencesUtils.put(Config.LOCATION_BDZNAME, bdz.name);
                 mPowerStationDialog.dismiss();

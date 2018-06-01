@@ -255,7 +255,7 @@ public class AddNewDefectActivity extends BaseActivity {
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
 
-                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     if (cancelList != null) {
                         for (String imageUrl : cancelList) {
                             mDefectImageList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));

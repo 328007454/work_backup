@@ -106,7 +106,7 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
             intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
-            intent.putExtra(Config.TITLE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
+            intent.putExtra(Config.TITLE_NAME_KEY, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             ParticularDevicesFragment.this.startActivity(intent);
         });

@@ -180,9 +180,9 @@ public abstract class BaseActivity extends BaseCoreActivity {
         if (null != intent) {
             String userName = intent.getStringExtra(Config.CURRENT_LOGIN_USER);
             String userAccount = intent.getStringExtra(Config.CURRENT_LOGIN_ACCOUNT);
-            String bdzId = intent.getStringExtra(Config.LASTTIEM_CHOOSE_BDZNAME);
+            String bdzId = intent.getStringExtra(Config.LAST_CHOOSE_BDZ_NAME_KEY);
             if (!TextUtils.isEmpty(bdzId)) {
-                PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, bdzId);
+                PreferencesUtils.put(Config.LAST_CHOOSE_BDZ_NAME_KEY, bdzId);
             }
             if (!StringUtilsExt.isHasOneEmpty(userName, userAccount)) {
                 PreferencesUtils.put(Config.CURRENT_LOGIN_USER, userName);
@@ -220,7 +220,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
     protected void getIntentValue() {
         isParticularInspection = getIntent().getBooleanExtra(Config.IS_PARTICULAR_INSPECTION, false);
-        currentTitle = getIntent().getStringExtra(Config.TITLE_NAME);
+        currentTitle = getIntent().getStringExtra(Config.TITLE_NAME_KEY);
         currentDeviceId = getIntent().getStringExtra(Config.CURRENT_DEVICE_ID);
         currentDeviceName = getIntent().getStringExtra(Config.CURRENT_DEVICE_NAME);
         currentDevicePartId = getIntent().getStringExtra(Config.CURRENT_DEVICE_PART_ID);

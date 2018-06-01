@@ -70,7 +70,7 @@ public class LogUtil {
 
 
     private static File getLogFile(String tag) {
-        return new File(Config.LOGFOLDER + tag + "-" + DateUtils.getCurrentTime("yyyyMMddHHmmssSSS") + LOG_FILE_SUFFIX);
+        return new File(Config.LOG_FOLDER + tag + "-" + DateUtils.getCurrentTime("yyyyMMddHHmmssSSS") + LOG_FILE_SUFFIX);
     }
 
     /**

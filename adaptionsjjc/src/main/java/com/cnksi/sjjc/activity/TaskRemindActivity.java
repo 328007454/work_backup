@@ -70,9 +70,9 @@ public class TaskRemindActivity extends BaseSjjcActivity {
         ////容错处理代码 避免别的地方回来拿不到type
         // start
         if (TextUtils.isEmpty(mInspectionValue)) {
-            mInspectionValue = PreferencesUtils.get( Config.CURRENT_SELECT_TASK_TYPE_INSPECTION, "");
+            mInspectionValue = PreferencesUtils.get( Config.CURRENT_SELECT_TASK_TYPE_KEY, "");
         } else {
-            PreferencesUtils.put( Config.CURRENT_SELECT_TASK_TYPE_INSPECTION, mInspectionValue);
+            PreferencesUtils.put( Config.CURRENT_SELECT_TASK_TYPE_KEY, mInspectionValue);
         }
         //end
         mInspectionType = InspectionType.get(mInspectionValue);

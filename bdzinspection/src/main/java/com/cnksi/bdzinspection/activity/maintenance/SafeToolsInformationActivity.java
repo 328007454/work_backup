@@ -420,7 +420,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
                     addWaterTextToBitmap();
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
-                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     if (cancelList != null) {
                         for (String imageUrl : cancelList) {
                             reportPicList.remove(imageUrl.replace(Config.BDZ_INSPECTION_FOLDER, ""));
@@ -452,7 +452,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        String selectPersons = PreferencesUtils.get( Config.SELECT_PERSONS, "");
+        String selectPersons = PreferencesUtils.get( Config.SELECT_PERSONS_KEY, "");
         int i = v.getId();
         if (i == R.id.btn_stop) {
             String name = dbModel.getString("name");
@@ -494,7 +494,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         }
         if (!usersList.isEmpty()) {
             userName = StringUtils.arrayListToString(usersList);
-            PreferencesUtils.put( Config.SELECT_PERSONS, userName);
+            PreferencesUtils.put( Config.SELECT_PERSONS_KEY, userName);
         }
         if (stopClick) {
             stopBinding.etInputStopperson.setText(userName);

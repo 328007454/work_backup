@@ -61,7 +61,6 @@ public class YWDeviceListActivity extends BaseActivity {
             YunweiTypeListFragment mFragment = new YunweiTypeListFragment();
             Bundle args = new Bundle();
             args.putString(Config.CURRENT_FUNCTION_MODEL, lookups.get(i).id);
-            args.putInt(Config.CURRENT_POSITION, i);
             mFragment.setArguments(args);
             mFragmentList.add(mFragment);
             titleArray.add(lookups.get(i).v);

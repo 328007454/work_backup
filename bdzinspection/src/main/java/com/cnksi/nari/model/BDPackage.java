@@ -66,6 +66,6 @@ public class BDPackage {
     }
 
     public String getDatabasePath() {
-        return Config.NARI_BASEFOLDER + packageID + "/data.db3";
+        return Config.NARI_BASE_FOLDER + packageID + "/data.db3";
     }
 }

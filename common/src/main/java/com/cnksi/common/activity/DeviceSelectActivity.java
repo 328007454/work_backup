@@ -107,7 +107,7 @@ public class DeviceSelectActivity extends BaseTitleActivity {
         selectConfig.deviceBigType = intent.getStringArrayListExtra(DEVICE_BIG_TYPE_KEY);
         selectConfig.isMultSelect = intent.getBooleanExtra(IS_MULTI_SELECT_KEY, false);
         selectConfig.isAllowSelectSpace = intent.getBooleanExtra(IS_ALLOW_SELECT_SPACE_KEY, false);
-        selectConfig.title = intent.getStringExtra(Config.TITLE_NAME);
+        selectConfig.title = intent.getStringExtra(Config.TITLE_NAME_KEY);
         selectConfig.filterSql = intent.getStringExtra(FILTER_SQL_KEY);
         if (TextUtils.isEmpty(selectConfig.title)) {
             if (selectConfig.isAllowSelectSpace) {
@@ -342,7 +342,7 @@ public class DeviceSelectActivity extends BaseTitleActivity {
                 intent.putExtra(PMS_DEVICE_TYPE_KEY, new ArrayList<>(pmsDeviceType));
             }
             if (TextUtils.isEmpty(title)) {
-                intent.putExtra(Config.TITLE_NAME, title);
+                intent.putExtra(Config.TITLE_NAME_KEY, title);
             }
             activity.startActivityForResult(intent, requestCode);
         }

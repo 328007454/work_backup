@@ -134,7 +134,7 @@ public class AddTaskActivity extends BaseSjjcActivity {
     public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
-                String bdzId = PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, "");
+                String bdzId = PreferencesUtils.get(Config.LAST_CHOOSE_BDZ_NAME_KEY, "");
                 if (!TextUtils.isEmpty(bdzId)) {
                     mTaskBDZ = BdzService.getInstance().findById(bdzId);
                 }
@@ -344,7 +344,7 @@ public class AddTaskActivity extends BaseSjjcActivity {
             if (taskExpand != null) {
                 TaskExtendService.getInstance().saveOrUpdate(taskExpand);
             }
-            PreferencesUtils.put(Config.LASTTIEM_CHOOSE_BDZNAME, mTaskBDZ.bdzid);
+            PreferencesUtils.put(Config.LAST_CHOOSE_BDZ_NAME_KEY, mTaskBDZ.bdzid);
             setResult(RESULT_OK);
             this.finish();
         } catch (DbException e) {

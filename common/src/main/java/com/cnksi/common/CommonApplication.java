@@ -73,7 +73,7 @@ public class CommonApplication extends CoreApplication {
         DisplayUtils.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
         CLog.init(Config.DEBUG);
         PlaySound.initPlay(this);
-        CrashReportUploadHandler.init(mInstance, Config.LOGFOLDER).start();
+        CrashReportUploadHandler.init(mInstance, Config.LOG_FOLDER).start();
         EssSafeUtil.checkInEmualtorOrDebuggable(getApplicationContext());
         initRuntimeVar();
         TTSUtils.init(getAppContext());
@@ -92,7 +92,7 @@ public class CommonApplication extends CoreApplication {
 
 
     public void initApp() {
-        FileUtils.makeDirectory(Config.FILEPATHARRAY);
+        FileUtils.makeDirectory(Config.FILE_PATH_ARRAY);
     }
 
 

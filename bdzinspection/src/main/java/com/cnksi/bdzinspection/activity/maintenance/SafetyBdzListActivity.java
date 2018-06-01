@@ -58,7 +58,7 @@ public class SafetyBdzListActivity extends BaseActivity {
             TTSUtils.getInstance().startSpeaking("开始" + currentItem.name + "的安全工器具检查作业");
             Intent intent = new Intent(mActivity, SafetyToolsControlActivity.class);
             intent.putExtra(Bdz.BDZID, currentItem.bdzid == null ? "-1" : currentItem.bdzid);
-            intent.putExtra(Config.TITLE_NAME, currentItem.name);
+            intent.putExtra(Config.TITLE_NAME_KEY, currentItem.name);
             intent.putExtra(SafeToolsInfor.DEPTID, deptId);
             isStart = true;
             SafetyBdzListActivity.this.startActivity(intent);

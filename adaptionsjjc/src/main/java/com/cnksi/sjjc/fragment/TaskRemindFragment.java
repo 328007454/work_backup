@@ -286,17 +286,17 @@ public class TaskRemindFragment extends BaseCoreFragment {
                 String loginUser = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                 report = new Report(task.taskid, task.bdzid, task.bdzname, task.inspection, loginUser);
                 report.inspectionValue = task.inspection_name;
-                report.reportSource = Config.SBJC;
+                report.reportSource = Config.REPORT_SOURCE_SBJC;
                 report.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
                 ReportService.getInstance().saveOrUpdate(report);
             }
             PreferencesUtils.put(Config.CURRENT_TASK_ID, task.taskid);
             PreferencesUtils.put(Config.CURRENT_REPORT_ID, report.reportid);
-            PreferencesUtils.put(Config.PICTURE_PREFIX, bdz.folder + "/");
+            PreferencesUtils.put(Config.PICTURE_PREFIX_KEY, bdz.folder + "/");
             PreferencesUtils.put(Config.CURRENT_BDZ_ID, task.bdzid);
             PreferencesUtils.put(Config.CURRENT_BDZ_NAME, task.bdzname);
             PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, task.inspection);
-            PreferencesUtils.put(Config.CURRENT_INSPECTION_NAME, task.inspection_name);
+            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE_NAME, task.inspection_name);
 
             Intent intent = new Intent();
             if (task.status.equals(TaskStatus.undo.name())) {

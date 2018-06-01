@@ -119,7 +119,7 @@ public class AddDefectActivity extends BaseTitleActivity {
         }
         Intent intent = new Intent(this, DeviceSelectActivity.class);
         intent.putExtra(Config.CURRENT_BDZ_ID, bdz.bdzid);
-        intent.putExtra(Config.TITLE_NAME, "请选择间隔");
+        intent.putExtra(Config.TITLE_NAME_KEY, "请选择间隔");
         intent.putExtra(DeviceSelectActivity.IS_ALLOW_SELECT_SPACE_KEY, true);
         startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
     }
@@ -157,7 +157,7 @@ public class AddDefectActivity extends BaseTitleActivity {
                 String pictureContent = deviceName + "\n" + binding.etInputDefectContent.getText().toString() + "\n" + DateUtils.getFormatterTime(new Date(), "yyyy-MM-dd HH:mm");
                 DrawCircleImageActivity.with(mActivity).setTxtContent(pictureContent).setPath(picParentFolder + currentImageName).setRequestCode(0x0).start();
             } else if (CANCEL_RESULT_LOAD_IMAGE == resultCode) {
-                ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                 for (String imageUrl : cancelList) {
                     mDefectImageList.remove(imageUrl.replace(picParentFolder, ""));
                 }

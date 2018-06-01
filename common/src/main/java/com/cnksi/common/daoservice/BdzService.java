@@ -45,7 +45,7 @@ public class BdzService extends BaseService<Bdz> {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", deptId));
         try {
-            models = getDbManager().findDbModelAll(sqlInfo);
+            models = findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
             return models;

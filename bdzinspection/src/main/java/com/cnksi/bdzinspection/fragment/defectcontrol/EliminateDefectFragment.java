@@ -495,7 +495,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
      * @param
      */
     private void removePicture(Intent data) {
-        ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+        ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
         for (String imageUrl : cancelList) {
             if (ELIMINATE_MODEL.equalsIgnoreCase(mCurrentClickPhotoModel)) {
                 mDefectImageList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));

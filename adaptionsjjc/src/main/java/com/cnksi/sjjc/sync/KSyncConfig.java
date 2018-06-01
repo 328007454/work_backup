@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.core.utils.DeviceUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.ksynclib.KNConfig;
@@ -113,7 +114,6 @@ public class KSyncConfig {
         uploadFolder.clear();
         downFolder.add("lib");
         downFolder.add("lib/wt");
-        //  downFolder.add("signimg");
         downFolder.add("download");
         downFolder.add("admin/jyhjc/");
 
@@ -127,7 +127,7 @@ public class KSyncConfig {
         SqlInfo info = new SqlInfo("SELECT folder_name FROM bdz where dlt=0 and dept_id=?;");
         info.addBindArg(new KeyValue("dept_id", dept_id));
         try {
-            List<DbModel> models = CustomApplication.getInstance().getDbManager().findDbModelAll(info);
+            List<DbModel> models = BdzService.getInstance().findDbModelAll(info);
             if (models != null) {
                 for (DbModel model : models) {
                     String path = model.getString("folder_name");
@@ -143,7 +143,7 @@ public class KSyncConfig {
         //增加下载APK文件夹
         info = new SqlInfo("select short_name_pinyin from city");
         try {
-            DbModel model = CustomApplication.getInstance().getDbManager().findDbModelFirst(info);
+            DbModel model = BdzService.getInstance().findDbModelFirst(info);
             if (model != null) {
                 downFolder.add("admin/" + model.getString("short_name_pinyin") + "/apk");
                 downFolder.add("admin/" + model.getString("short_name_pinyin") + "/gqj");

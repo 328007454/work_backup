@@ -24,12 +24,8 @@ import com.cnksi.core.view.photo.PhotoView;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.cnksi.common.Config.CANCEL_IMAGEURL_LIST;
+import static com.cnksi.common.Config.CANCEL_IMAGE_URL_LIST_KEY;
 import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
-import static com.cnksi.common.Config.CURRENT_IMAGE_POSITION;
-import static com.cnksi.common.Config.IMAGEURL_LIST;
-import static com.cnksi.common.Config.IS_DELETE_FILE;
-import static com.cnksi.common.Config.IS_SHOW_PHOTO_FLAG;
 
 /**
  * 查看大图的Activity界面。
@@ -37,6 +33,24 @@ import static com.cnksi.common.Config.IS_SHOW_PHOTO_FLAG;
  * @author Wastrel
  */
 public class ImageDetailsActivity extends BaseTitleActivity  {
+
+    /**
+     * 照片地址
+     */
+    public static final String IMAGE_URL_LIST_KEY = "image_url_list_key";
+
+    /**
+     * 点击图片的位置
+     */
+    public static final String CURRENT_IMAGE_POSITION_KEY = "current_image_position_key";
+    /**
+     * 是否显示照片选中标志
+     */
+    public static final String IS_SHOW_DELETE_KEY = "is_show_photo_flag_key";
+    /**
+     * 是否删除图片
+     */
+    public static final String IS_DELETE_FILE_KEY = "is_delete_file_key";
 
     /**
      * 得到的图片List
@@ -76,11 +90,11 @@ public class ImageDetailsActivity extends BaseTitleActivity  {
 
     @Override
     public void initUI() {
-        imageList = getIntent().getStringArrayListExtra(IMAGEURL_LIST);
-        currentPosition = position = getIntent().getIntExtra(CURRENT_IMAGE_POSITION, 0);
-        isShowDeleteFlag = getIntent().getBooleanExtra(IS_SHOW_PHOTO_FLAG, true);
-        isDeleteFile = getIntent().getBooleanExtra(IS_DELETE_FILE, true);
-        titleName = getIntent().getStringExtra(Config.TITLE_NAME);
+        imageList = getIntent().getStringArrayListExtra(IMAGE_URL_LIST_KEY);
+        currentPosition = position = getIntent().getIntExtra(CURRENT_IMAGE_POSITION_KEY, 0);
+        isShowDeleteFlag = getIntent().getBooleanExtra(IS_SHOW_DELETE_KEY, true);
+        isDeleteFile = getIntent().getBooleanExtra(IS_DELETE_FILE_KEY, true);
+        titleName = getIntent().getStringExtra(Config.TITLE_NAME_KEY);
         setTitleText(TextUtils.isEmpty(titleName) ? "图片查看" : titleName);
         if (isShowDeleteFlag) {
             mImageDetailsBinding.ibtnDelete.setVisibility(View.VISIBLE);
@@ -223,7 +237,7 @@ public class ImageDetailsActivity extends BaseTitleActivity  {
     public void onBackPressed() {
         if (isShowDeleteFlag || isSelectFlag) {
             Intent intent = getIntent();
-            intent.putStringArrayListExtra(CANCEL_IMAGEURL_LIST, cancelImageList);
+            intent.putStringArrayListExtra(CANCEL_IMAGE_URL_LIST_KEY, cancelImageList);
             setResult(RESULT_OK, intent);
         }
         this.finish();
@@ -286,13 +300,13 @@ public class ImageDetailsActivity extends BaseTitleActivity  {
 
         public void start() {
             Intent intent = new Intent(context, ImageDetailsActivity.class);
-            intent.putExtra(CURRENT_IMAGE_POSITION, position);
+            intent.putExtra(CURRENT_IMAGE_POSITION_KEY, position);
             if (imageUrlList != null) {
-                intent.putStringArrayListExtra(IMAGEURL_LIST, imageUrlList);
+                intent.putStringArrayListExtra(IMAGE_URL_LIST_KEY, imageUrlList);
             }
-            intent.putExtra(IS_DELETE_FILE, isDeleteFile);
-            intent.putExtra(IS_SHOW_PHOTO_FLAG, isShowDelete);
-            intent.putExtra(Config.TITLE_NAME, title);
+            intent.putExtra(IS_DELETE_FILE_KEY, isDeleteFile);
+            intent.putExtra(IS_SHOW_DELETE_KEY, isShowDelete);
+            intent.putExtra(Config.TITLE_NAME_KEY, title);
             intent.putExtra("select", isSelect);
             context.startActivityForResult(intent, requestCode);
         }

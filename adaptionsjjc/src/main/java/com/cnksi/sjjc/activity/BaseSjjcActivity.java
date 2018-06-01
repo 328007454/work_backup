@@ -12,11 +12,11 @@ import com.cnksi.common.Config;
 import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.base.BaseTitleActivity;
+import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.CustomerDialog;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.AppVersion;
 import com.cnksi.sjjc.databinding.DialogCopyTipsBinding;
 import com.cnksi.sjjc.util.AppUtils;
@@ -28,7 +28,6 @@ import org.xutils.db.table.DbModel;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static com.cnksi.sjjc.activity.LoginActivity.SHOW_UPDATE_LOG_DIALOG;
 
@@ -40,13 +39,6 @@ import static com.cnksi.sjjc.activity.LoginActivity.SHOW_UPDATE_LOG_DIALOG;
 public abstract class BaseSjjcActivity extends BaseTitleActivity {
 
 
-
-    protected static HashMap<String, Object> dataMap = new HashMap<>();
-
-
-
-
-
     /**
      * 显示大图片
      *
@@ -55,7 +47,6 @@ public abstract class BaseSjjcActivity extends BaseTitleActivity {
     public void showImageDetails(Activity context, int position, ArrayList<String> mImageUrlList,
                                  boolean isShowDelete, boolean isDeleteFile) {
         ImageDetailsActivity.with(context).setPosition(position).setImageUrlList(mImageUrlList).setDeleteFile(isDeleteFile).setShowDelete(isShowDelete).start();
-
     }
 
 
@@ -146,7 +137,7 @@ public abstract class BaseSjjcActivity extends BaseTitleActivity {
         PackageInfo info = AppUtils.getLocalPackageInfo(getApplicationContext());
         int version = info.versionCode;
         try {
-            remoteSjjcAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+            remoteSjjcAppVersion = BaseService.getInstance(AppVersion.class).selector().expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,12 +145,12 @@ public abstract class BaseSjjcActivity extends BaseTitleActivity {
             com.cnksi.sjjc.view.CustomerDialog.showProgress(mActivity, "检测到需要升级，请等待");
             ExecutorManager.executeTaskSerially(() -> {
                 try {
-                    remoteSjjcAppVersion = CustomApplication.getInstance().getDbManager().selector(AppVersion.class).where(AppVersion.DLT, "!=", "1").expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
+                    remoteSjjcAppVersion = BaseService.getInstance(AppVersion.class).selector().expr(" and version_code > '" + version + "'").expr("and file_name like '%sjjc%'").orderBy(AppVersion.VERSIONCODE, true).findFirst();
                     String apkPath = "";
                     //下载APK文件夹
                     SqlInfo info1 = new SqlInfo("select short_name_pinyin from city");
                     try {
-                        DbModel model = CustomApplication.getInstance().getDbManager().findDbModelFirst(info1);
+                        DbModel model =BaseService.getInstance(AppVersion.class).findDbModelFirst(info1);
                         if (model != null) {
                             apkPath = "admin/" + model.getString("short_name_pinyin") + "/apk";
                         }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Message;
 
-import com.cnksi.common.Config;
 import com.cnksi.common.R;
 import com.cnksi.common.databinding.CommonActivityDrawCircleBinding;
 import com.cnksi.common.utils.BitmapUtil;
@@ -26,6 +25,14 @@ import static com.cnksi.common.Config.SAVE_DATA;
  * @author Oliver
  */
 public class DrawCircleImageActivity extends BaseCoreActivity {
+    /**
+     * 照片名
+     */
+    public static final String IMAGE_PATH_KEY = "image_path_key";
+    /**
+     * 图片的内容
+     */
+    public static final String PICTURE_CONTENT_KEY = "picture_content_key";
     private PicturePaintView mPicturePaintView;
     /**
      * 图片路径
@@ -46,7 +53,7 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
     @Override
     public void initUI() {
         binding = (CommonActivityDrawCircleBinding) rootDataBinding;
-        currentImagePath = getIntent().getStringExtra(Config.CURRENT_IMAGE_NAME);
+        currentImagePath = getIntent().getStringExtra(IMAGE_PATH_KEY);
         binding.btnSaveMark.setOnClickListener(view -> saveMarkAndExit());
         binding.btnAddMark.setOnClickListener(view -> PicturePaintView.saveMark());
         binding.btnClearMark.setOnClickListener(view -> CustomerDialog.showSelectDialog(mActivity, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {
@@ -102,7 +109,7 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
             case LOAD_DATA:
                 binding.llImageContainer.removeAllViews();
                 binding.llImageContainer.addView(mPicturePaintView);
-                binding.tvPictureContent.setText(getIntent().getStringExtra(Config.PICTURE_CONTENT));
+                binding.tvPictureContent.setText(getIntent().getStringExtra(PICTURE_CONTENT_KEY));
                 break;
             default:
                 break;
@@ -165,8 +172,8 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
 
         public void start() {
             Intent intent = new Intent(activity, DrawCircleImageActivity.class);
-            intent.putExtra(Config.CURRENT_IMAGE_NAME, path);
-            intent.putExtra(Config.PICTURE_CONTENT, txtContent);
+            intent.putExtra(IMAGE_PATH_KEY, path);
+            intent.putExtra(PICTURE_CONTENT_KEY, txtContent);
             activity.startActivityForResult(intent, requestCode);
         }
     }
