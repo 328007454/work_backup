@@ -6,22 +6,27 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DeviceSelectActivity;
 import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.model.Bdz;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.defect.R;
 import com.cnksi.defect.databinding.ActivityAddDefectBinding;
+import com.cnksi.defect.defect_enum.DefectEnum;
 import com.cnksi.defect.view.PopWindowCustom;
 
 import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +54,9 @@ public class AddDefectActivity extends BaseTitleActivity {
     private String defectLevel;
     private Bdz bdz;
     private String clickMode;
+    private String influnceBdz;
+    private String spaceId;
+    private String deviceId;
 
     /**
      * 当前缺陷图片的名称
@@ -71,7 +79,8 @@ public class AddDefectActivity extends BaseTitleActivity {
 
     @Override
     protected View getChildContentView() {
-        binding = ActivityAddDefectBinding.inflate(getLayoutInflater());
+        binding = ActivityAddDefectBinding.inflate(getLayoutInflater());\
+        binding.containerRgEleInternet.setOnCheckedChangeListener(onCheckedChangeListener);
         return binding.getRoot();
     }
 
@@ -84,9 +93,10 @@ public class AddDefectActivity extends BaseTitleActivity {
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.btn_cancel) {
-
+            onBackPressed();
         } else if (id == R.id.btn_sure) {
-
+            saveData();
+            onBackPressed();
         } else if (id == R.id.txt_bdz_name) {
             clickMode = BDZ;
             showBdzWindow();
@@ -110,6 +120,45 @@ public class AddDefectActivity extends BaseTitleActivity {
                 FunctionUtil.takePicture(this, currentImageName, picParentFolder, ACTION_IMAGE);
             }
         }
+    }
+
+    private void saveData() {
+        String defectContent = binding.etInputDefectContent.getText().toString();
+        String pics = StringUtils.arrayListToString(mDefectImageList);
+        if (TextUtils.isEmpty(defectContent)) {
+            ToastUtils.showMessage("请输入缺陷内容");
+            return;
+
+        }
+        int checkedId = binding.containerRbGeneralDefect.getmCheckedId();
+        if (checkedId == R.id.rb_general_defect) {
+            defectLevel = DefectEnum.general.value;
+        } else if (checkedId == R.id.rb_serious_defect) {
+            defectLevel = DefectEnum.serious.value;
+        } else if (checkedId == R.id.rb_crisis_defect) {
+            defectLevel = DefectEnum.critical.value;
+        } else if (checkedId == R.id.rb_problem_defect) {
+            defectLevel = DefectEnum.problem.value;
+        } else if (checkedId == R.id.rb_hidden_defect) {
+            defectLevel = DefectEnum.hidden.value;
+        }
+        if (TextUtils.isEmpty(spaceName)) {
+            ToastUtils.showMessage("请选择间隔");
+            return;
+
+        }
+        if (TextUtils.isEmpty(deviceName)) {
+            ToastUtils.showMessage("请选择或者输入设备名称");
+            return;
+        }
+        DefectRecord defectRecord = new DefectRecord(bdz.bdzid, spaceId, spaceName, deviceId, deviceName, defectLevel, pics, defectContent, influnceBdz);
+        try {
+            CommonApplication.getInstance().getDbManager().saveOrUpdate(defectRecord);
+            ToastUtils.showMessage("保存成功");
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void jumpDeviceSelectActivity() {
@@ -136,6 +185,7 @@ public class AddDefectActivity extends BaseTitleActivity {
                 }).setDropDownOfView(binding.txtBdzName).setBackgroundAlpha(0.6f).showAsDropDown(0, 10);
 
     }
+
     private String spaceName;
     private String deviceName;
 
@@ -146,12 +196,15 @@ public class AddDefectActivity extends BaseTitleActivity {
             DbModel model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
             if (TextUtils.equals(clickMode, SPACE)) {
                 spaceName = model.getString("spacingName");
-                binding.txtSpaceName.setText(TextUtils.isEmpty(spaceName)?"":spaceName);
+                spaceId = model.getString("spid");
+                binding.txtSpaceName.setText(TextUtils.isEmpty(spaceName) ? "" : spaceName);
             } else if (TextUtils.equals(clickMode, DEVICE)) {
                 spaceName = model.getString("spacingName");
                 deviceName = model.getString("deviceName");
-                binding.txtSpaceName.setText(TextUtils.isEmpty(spaceName)?"":spaceName);
-                binding.etInputDevice.setText(TextUtils.isEmpty(deviceName)?"":deviceName);
+                binding.txtSpaceName.setText(TextUtils.isEmpty(spaceName) ? "" : spaceName);
+                binding.etInputDevice.setText(TextUtils.isEmpty(deviceName) ? "" : deviceName);
+                spaceId = model.getString("spid");
+                deviceId = model.getString("deviceId");
             } else if (requestCode == ACTION_IMAGE) {
                 mDefectImageList.add(currentImageName);
                 String pictureContent = deviceName + "\n" + binding.etInputDefectContent.getText().toString() + "\n" + DateUtils.getFormatterTime(new Date(), "yyyy-MM-dd HH:mm");
@@ -173,35 +226,23 @@ public class AddDefectActivity extends BaseTitleActivity {
         if (!mDefectImageList.isEmpty()) {
             bitmap = BitmapUtils.getImageThumbnailByWidth(picParentFolder + mDefectImageList.get(0), 210);
             binding.ivDefectPic.setImageBitmap(bitmap);
-           binding.tvDefectCount.setVisibility(mDefectImageList.size() <= 1 ? View.GONE : View.VISIBLE);
-           binding.tvDefectCount.setText(String.valueOf(mDefectImageList.size()));
+            binding.tvDefectCount.setVisibility(mDefectImageList.size() <= 1 ? View.GONE : View.VISIBLE);
+            binding.tvDefectCount.setText(String.valueOf(mDefectImageList.size()));
         } else {
             binding.ivDefectPic.setImageBitmap(null);
-           binding.tvDefectCount.setText("");
-           binding.tvDefectCount.setVisibility(View.GONE);
+            binding.tvDefectCount.setText("");
+            binding.tvDefectCount.setVisibility(View.GONE);
         }
     }
 
-    private String txtReasonTitle;
     RadioGroup.OnCheckedChangeListener onCheckedChangeListener = (group, checkedId) -> {
         if (checkedId == R.id.rb_influnce_yes) {
-
+            influnceBdz = "Y";
         } else if (checkedId == R.id.rb_influnce_no) {
-
-        }else if (checkedId == R.id.rb_influnce_nothing){
-
-        }else if (checkedId == R.id.rb_general_defect){
-
-        }else if (checkedId == R.id.rb_serious_defect){
-
-        }else if(checkedId == R.id.rb_crisis_defect){
-
-        }else if (checkedId == R.id.rb_problem_defect){
-
-        }else  if (checkedId == R.id.rb_hidden_defect){
-
+            influnceBdz = "N";
+        } else if (checkedId == R.id.rb_influnce_nothing) {
+            influnceBdz = "N";
         }
-
     };
 }
 
