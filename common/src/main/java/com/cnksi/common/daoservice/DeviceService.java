@@ -2,11 +2,14 @@ package com.cnksi.common.daoservice;
 
 import android.text.TextUtils;
 
+import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.model.vo.DefectInfo;
+import com.cnksi.common.utils.ListUtils;
+import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -23,6 +26,13 @@ import java.util.List;
  * Created by han on 2016/4/27.
  */
 public class DeviceService extends BaseService<Device> {
+
+    public static final String DEVICE_ID_KEY="deviceId";
+    public static final String DEVICE_NAME_KEY="deviceName";
+    public static final String DEVICE_SHORT_NAME_KEY="shortName";
+    public static final String SPACING_NAME_KEY="spacingName";
+    public static final String SPACING_PY_KEY="spacingPY";
+    public static final String DEVICE_PY_KEY="devicePY";
 
     private static DeviceService mDevices;
 
@@ -48,38 +58,6 @@ public class DeviceService extends BaseService<Device> {
         return selector().and(Device.SPID, "=", mSpacing.spid).and(Device.DEVICE_TYPE, "=", deviceType).findAll();
     }
 
-    public List<DbModel> findAllDevice(String bdzId, String keyWord, String deviceType, String inspectionType, String deviceWay) {
-        String spaceSort = "one".equals(deviceType) ? Spacing.SORT_ONE
-                : "second".equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
-        String pinyin = "second".equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
-
-        String sql = "SELECT s.name_pinyin || ' ' || d." + pinyin + " AS search_key,s.latitude as slat,s.longitude as slot,s.name_pinyin as spacePY," +
-                " d." + pinyin + " as devicePY,d.deviceid AS deviceId,"
-                + "d.name_short AS shortName,d.name AS deviceName,d.latitude,d.longitude,d.is_important,"
-                + "	s.spid,	s.name AS spacingName,s.type as spaceType,s.group_id FROM	device d " +
-                " LEFT JOIN (select ROWID as assist_sort ,* from spacing) s ON d.spid = s.spid"
-                + " WHERE d.bdzid = ?";
-        sql += "AND d.device_type = ?";
-        if ("bigtype_device".equalsIgnoreCase(deviceWay)) {
-            sql += "and d.bigid in (select bigid from standard_special where kind = '" + inspectionType + "' and dlt = 0 )";
-        }
-        sql += " and s.dlt='0' AND d.dlt != 1 ORDER BY s." + spaceSort + " , s.assist_sort, d.sort";
-
-        SqlInfo sqlInfo;
-        if (!TextUtils.isEmpty(keyWord)) {
-            sql = "select * from (" + sql + ") as t where t.search_key like '%" + keyWord + "%'";
-        }
-        sqlInfo = new SqlInfo(sql);
-        sqlInfo.addBindArg(new KeyValue("", bdzId));
-        sqlInfo.addBindArg(new KeyValue("", deviceType));
-        try {
-            return findDbModelAll(sqlInfo);
-        } catch (DbException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
 
     public DbModel findDeviceById(String deviceId) {
         try {
@@ -97,8 +75,8 @@ public class DeviceService extends BaseService<Device> {
         SqlInfo sqlInfo = new SqlInfo("SELECT COUNT(*) as ic,COUNT(pd.id) c FROM device d " +
                 "LEFT JOIN (SELECT * FROM placed_device where reportid=? and dlt=0 and placed_way='photo') pd on pd.deviceid =d.deviceid " +
                 " where is_important='Y' and d.bdzid=? ;");
-        sqlInfo.addBindArg(new KeyValue("",reportId));
-        sqlInfo.addBindArg(new KeyValue("",bdzId));
+        sqlInfo.addBindArg(new KeyValue("", reportId));
+        sqlInfo.addBindArg(new KeyValue("", bdzId));
         try {
             DbModel model = findDbModelFirst(sqlInfo);
             return model.getString("c") + "/" + model.getString("ic");
@@ -108,81 +86,78 @@ public class DeviceService extends BaseService<Device> {
         return "0/0";
     }
 
-    public List<DbModel> findAllDevice(String bdzId, String keyWord, String deviceType) {
+    public List<DbModel> findAllDevice(String bdzId, String keyWord, String deviceType, String inspectionType, String currentReportId, String deviceWay) {
+        String spaceSort = PMSDeviceType.one.equals(deviceType) ? Spacing.SORT_ONE
+                : PMSDeviceType.second.equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
+        String pinyin = PMSDeviceType.second.equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
 
-        String spacingSort = ("one".equals(deviceType)) ? Spacing.SORT_ONE
-                : ("second".equals(deviceType)) ? Spacing.SORT_SECOND : Spacing.SORT;
-        String pinyin = "second".equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
-        String sql = "select s.name_pinyin||' '||d." + pinyin + " as search_key,d.is_important,d.deviceid as deviceId,d.name_short as deviceName," +
-                "s.spid,s.name as spacingName,s.type as spaceType,s.group_id," +
-                "s.name_pinyin as spacePY, d." + pinyin + " as devicePY from device d "
-                + "left join spacing s on d.spid=s.spid where d.bdzid=? and d.device_type=? and d.dlt!=1 order by s." + spacingSort + ",d.sort";
-        if (!TextUtils.isEmpty(keyWord)) {
-            sql = "select * from (" + sql + ") as t where t.search_key like '%" + keyWord + "%'";
+        String sql = "SELECT s.name_pinyin || ' ' || d." + pinyin + " AS search_key,s.latitude as slat,s.longitude as slot," +
+                "s.name_pinyin as " + SPACING_PY_KEY +
+                ",s.name as " +SPACING_NAME_KEY+
+                ", d." + pinyin + " as " +DEVICE_PY_KEY+
+                ",d.deviceid as " +DEVICE_ID_KEY+
+                ",d.name_short as " + DEVICE_SHORT_NAME_KEY +
+                ",d.name as " +DEVICE_NAME_KEY+
+                ",d.latitude,d.longitude,d.is_important,"
+                + "	s.spid,	s.type as spaceType,s.group_id FROM	device d " +
+                " LEFT JOIN (select ROWID as assist_sort ,* from spacing) s ON d.spid = s.spid"
+                + " WHERE d.bdzid = ?";
+        sql += "AND d.device_type = ?";
+        if ("bigtype_device".equalsIgnoreCase(deviceWay)) {
+            sql += "and d.bigid in (select bigid from standard_special where kind = '" + inspectionType + "' and dlt = 0 )";
         }
-        SqlInfo sqlInfo = new SqlInfo(sql);
-        sqlInfo.addBindArg(new KeyValue("", bdzId));
-        sqlInfo.addBindArg(new KeyValue("", deviceType));
-        try {
-            return findDbModelAll(sqlInfo);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
-
-    }
-
-    public List<DbModel> findAllParticularDevice(String bdzId, String keyWord, String deviceType, String currentReportId, String deviceWay) {
-        String devices = "";
-        String sql = "";
-        String spaceSort = "one".equals(deviceType) ? Spacing.SORT_ONE
-                : "second".equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
-        String pinyin = "second".equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
         if ("select_device".equalsIgnoreCase(deviceWay)) {
             Report currentReport = ReportService.getInstance().getReportById(currentReportId);
-            devices = "'" + (currentReport == null ? "" : currentReport.selected_deviceid) + "'";
+            String devices = "'" + (currentReport == null ? "" : currentReport.selected_deviceid) + "'";
             devices = devices.replace(",", "','");
-
-            sql = "SELECT s.name_pinyin || ' ' || d." + pinyin + " AS search_key,s.name_pinyin as spacePY,s.latitude as slat,s.longitude as slot," +
-                    " d." + pinyin + " as devicePY," + "d.deviceid AS deviceId,d.name_short AS shortName,d.is_important,d.name AS deviceName,d.latitude,d.longitude,"
-                    + "	s.spid,s.name AS spacingName,s.type as spaceType,s.group_id FROM	device d LEFT JOIN spacing s ON d.spid = s.spid"
-                    + " WHERE d.bdzid = ? and d.dlt=0 and d.deviceid in (" + devices + ")";
-
+            sql += " and d.deviceid in (" + devices + ")";
         }
+        sql += " and s.dlt='0' AND d.dlt != 1 ORDER BY s." + spaceSort + " , s.assist_sort, d.sort";
 
-        sql += "AND d.device_type = ?";
-        sql += " AND d.dlt != 1 ORDER BY s." + spaceSort + ", d.sort";
-
-        SqlInfo sqlInfo = null;
         if (!TextUtils.isEmpty(keyWord)) {
             sql = "select * from (" + sql + ") as t where t.search_key like '%" + keyWord + "%'";
         }
-        sqlInfo = new SqlInfo(sql);
+        SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         sqlInfo.addBindArg(new KeyValue("", deviceType));
         try {
             return findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
+
     }
 
-    public List<DbModel> findSpaceDeviceByKeyWord(String bdzId, String keyWord, String deviceType, String... bigtypes) {
-        StringBuffer sb = new StringBuffer("(");
-        for (String bigId : bigtypes) {
-            sb.append("'").append(bigId).append("',");
+
+    public List<DbModel> findSpaceDeviceByType(String bdzId, String deviceType, List<String> bigtypes, String filter) {
+        String bigTypeStr = "";
+        if (!(bigtypes == null || bigtypes.isEmpty())) {
+            StringBuffer sb = new StringBuffer("(");
+            sb.append(ListUtils.toString(bigtypes, (s, b) -> "'".concat(s).concat("'").concat(b ? "" : ",")));
+            sb.append(")");
+            bigTypeStr = "and  d.bigid  in ".concat(sb.toString());
         }
-        if (sb.length() > 0) {
-            sb.deleteCharAt(sb.length() - 1);
-        }
-        sb.append(")");
-        String pinyin = "second".equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
-        String sql = "select * from (select s.name_pinyin||' '||d." + pinyin + " as search_key,d.deviceid as deviceId,d.name as deviceName,s.type as spaceType,s.group_id,s.spid,s.name as spacingName  from device d LEFT JOIN spacing s on d.spid=s.spid where d.bdzid=? and d.dlt=0 and d.bigid in "
-                .concat(sb.toString())
-                .concat(" order by s.sort,d.sort ) as t where t.search_key like '%" + keyWord + "%'");
+        String spaceSort = PMSDeviceType.one.equals(deviceType) ? Spacing.SORT_ONE
+                : PMSDeviceType.second.equals(deviceType) ? Spacing.SORT_SECOND : Spacing.SORT;
+        String pinyin = PMSDeviceType.second.equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
+        String sql = "select s.name_pinyin||' '||d." + pinyin + " as search_key," +
+                "d.is_important," +
+                "s.name_pinyin as " + SPACING_PY_KEY +
+                ",s.name as " +SPACING_NAME_KEY+
+                ", d." + pinyin + " as " +DEVICE_PY_KEY+
+                ",d.deviceid as " +DEVICE_ID_KEY+
+                ",d.name_short as " + DEVICE_SHORT_NAME_KEY +
+                ",d.name as " +DEVICE_NAME_KEY+
+                ",s.type as spaceType,s.group_id,s.spid" +
+                "  from device d LEFT JOIN spacing s on d.spid=s.spid " +
+                "where d.bdzid=? and d.dlt=0 and d.device_type=? "
+                .concat(bigTypeStr)
+                .concat(StringUtils.cleanString(filter))
+                .concat(" order by s.").concat(spaceSort).concat(",d.sort ");
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
+        sqlInfo.addBindArg(new KeyValue("", deviceType));
         try {
             return findDbModelAll(sqlInfo);
         } catch (DbException e) {
@@ -206,7 +181,7 @@ public class DeviceService extends BaseService<Device> {
     }
 
     public List<DbModel> getCopyDeviceDbModels(String reportId, String bdzid, String deviceType, String filter) throws DbException {
-        SqlInfo sqlInfo = null;
+        SqlInfo sqlInfo;
         String sql = "";
         sql = sql + "SELECT deviceid,spid from (";
         sql = sql + " SELECT";
@@ -293,21 +268,17 @@ public class DeviceService extends BaseService<Device> {
         return map;
     }
 
-    public String findBigId(String alias) {
+    public List<String> findBigId(String alias) {
         SqlInfo sqlInfo = new SqlInfo("SELECT * FROM `device_bigtype` where alias_pinyin like '%" + alias + "%'; ");
         try {
             List<DbModel> models = findDbModelAll(sqlInfo);
             if (models != null && models.size() > 0) {
-                StringBuilder bigids = new StringBuilder();
-                for (DbModel model : models) {
-                    bigids.append(model.getString("bigid")).append(",");
-                }
-                return bigids.deleteCharAt(bigids.length() - 1).toString();
+                return ListUtils.map(models, (m) -> m.getString("bigid"));
             }
         } catch (DbException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**
@@ -333,7 +304,6 @@ public class DeviceService extends BaseService<Device> {
      * @param bdzid,
      */
     public List<DbModel> getDevicesByNameWays(String bdzid, String kaiGuanKey, String dangWeiKey) {
-
         List<DbModel> dbModelList = null;
         String sql = "select d.deviceid deviceid,d.device_name name,d.bdzid bdzid from copy_item d where d.bdzid = '" + bdzid + "'  and  d.dlt = '0'  and (d.type_key = '" + kaiGuanKey + "' or d.type_key = '" + dangWeiKey + "')";
         try {
@@ -362,55 +332,6 @@ public class DeviceService extends BaseService<Device> {
         return dbModelList;
     }
 
-
-    //建议服务器处理 否则会引起同步问题 这里关掉触发器避免大范围的跟踪
-    public boolean refreshDeviceHasCopy() {
-        boolean isSuccess = false;
-        try {
-            dropTrigger("device");
-            String sql = "update device set has_copy ='N'";
-            getDbManager().execNonQuery(sql);
-            sql = "update device set has_copy = 'Y' where deviceid in (select distinct deviceid from copy_item);";
-            getDbManager().execNonQuery(sql);
-            createTrigger("device", "deviceid");
-            isSuccess = true;
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return isSuccess;
-    }
-
-
-    /**
-     * 删除某个表的Trigger
-     */
-    public void dropTrigger(String tableName) {
-        try {
-
-            String triggerSql = String.format("DROP TRIGGER  If Exists %s_insert_trigger", tableName);
-            execSql(triggerSql);
-            triggerSql = String.format("DROP TRIGGER If Exists %s_update_trigger", tableName);
-            execSql(triggerSql);
-
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 为表创建Trigger(2个trigger)
-     */
-    public void createTrigger(String tableName, String pk) {
-        try {
-            String triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS %s_insert_trigger After insert ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'insert','0',(datetime('now', 'localtime'))); END;", tableName, tableName, "ksync_modify_record", tableName, pk, pk);
-            execSql(triggerSql);
-            triggerSql = String.format("CREATE TRIGGER IF NOT EXISTS  %s_update_trigger After update ON %s BEGIN  INSERT INTO %s(tblname, pk,pkvalue,opera,enabled,create_time) VALUES ('%s','%s',new.%s,'update','0',(datetime('now', 'localtime'))); END;", tableName, tableName, "ksync_modify_record", tableName, pk, pk);
-            execSql(triggerSql);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<Device> findDeviceBySpidAndType(String spid, String type) throws DbException {
         return selector().and(Device.SPID, "=", spid).and(Device.DEVICE_TYPE, "=", type).orderBy(Device.SORT).findAll();
     }
@@ -421,7 +342,6 @@ public class DeviceService extends BaseService<Device> {
             return findDbModelFirst(new SqlInfo(sql));
         } catch (DbException e) {
             e.printStackTrace();
-
         }
         return null;
     }
@@ -472,7 +392,7 @@ public class DeviceService extends BaseService<Device> {
     public boolean updateDeviceLocationInfo(Device mDevice) {
         boolean isSuccess = false;
         try {
-           update(mDevice, Device.LATITUDE, Device.LONGITUDE);
+            update(mDevice, Device.LATITUDE, Device.LONGITUDE);
             isSuccess = true;
         } catch (DbException e) {
             e.printStackTrace();
@@ -486,7 +406,7 @@ public class DeviceService extends BaseService<Device> {
     public boolean updateDeviceLocationInfo(String spid, String lat, String lng) {
         boolean isSuccess = false;
         try {
-            update( WhereBuilder.b(Device.SPID, "=", spid), new KeyValue(Device.LATITUDE, lat), new KeyValue(Device.LONGITUDE, lng));
+            update(WhereBuilder.b(Device.SPID, "=", spid), new KeyValue(Device.LATITUDE, lat), new KeyValue(Device.LONGITUDE, lng));
             isSuccess = true;
         } catch (DbException e) {
             e.printStackTrace();

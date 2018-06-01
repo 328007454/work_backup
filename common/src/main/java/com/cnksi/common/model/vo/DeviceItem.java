@@ -4,6 +4,8 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import org.xutils.db.table.DbModel;
 
+import java.io.Serializable;
+
 import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
 
 /**
@@ -13,8 +15,8 @@ import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
-public class DeviceItem extends DbModel implements MultiItemEntity, LinkItem<SpaceItem> {
-    SpaceItem parent = null;
+public class DeviceItem extends DbModel implements MultiItemEntity, LinkItem<SpaceItem>, Serializable {
+    transient SpaceItem parent = null;
 
     public DeviceItem(DbModel model) {
         setDataMap(model.getDataMap());

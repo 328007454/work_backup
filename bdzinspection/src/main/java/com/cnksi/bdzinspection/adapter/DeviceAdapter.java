@@ -17,6 +17,8 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.bdzinspection.R;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.listener.ItemLongClickListener;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.ReportSnwsd;
@@ -171,7 +173,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         ImageView imgOpen = helper.getView(R.id.img_open);
         ImageView imgLocation = helper.getView(R.id.iv_haslocationed);
         final ImageView imgSpaceCopy = helper.getView(R.id.ibt_copy_pen);
-        String spaceId = space.getString("spid");
+        String spaceId = space.getString(Device.SPID);
         //如果他有上级 则调整一下缩进和字体大小
         if (spaceItem.getParent() != null) {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) txtSpace.getLayoutParams();
@@ -212,14 +214,14 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         }
 
         //处理间隔名称
-        String spacingName = space.getString("spacingName");
+        String spacingName = space.getString(DeviceService.SPACING_NAME_KEY);
 
         if ("Y".equals(space.getString("hasImportant"))) {
             spacingName = "★" + spacingName;
         }
         //二次设备间隔不参与变色 因为设备本身已经是全称
         if (!TextUtils.isEmpty(keyWord)) {
-            String spacePY = space.getString("spacePY");
+            String spacePY = space.getString(DeviceService.SPACING_PY_KEY);
             int index = spacePY.indexOf(keyWord);
             if (-1 != index && index + keyWord.length() <= spacingName.length()) {
                 String pyName = spacingName.substring(index, index + keyWord.length());
@@ -259,10 +261,10 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     private void convertDevice(BaseViewHolder helper, final DeviceItem item) {
         final int position = helper.getAdapterPosition();
         TextView txtDevice = helper.getView(R.id.tv_device_name);
-        String deviceName = isSecondDevice ? item.getString("deviceName") : item.getString("shortName");
-        String devicePY = item.getString("devicePY");
-        String spaceId = item.getString("spid");
-        String deviceId = item.getString("deviceId");
+        String deviceName = isSecondDevice ? item.getString(DeviceService.DEVICE_NAME_KEY) : item.getString(DeviceService.DEVICE_SHORT_NAME_KEY);
+        String devicePY = item.getString(DeviceService.DEVICE_PY_KEY);
+        String spaceId = item.getString(Device.SPID);
+        String deviceId = item.getString(DeviceService.DEVICE_ID_KEY);
         RelativeLayout relativeLayout = helper.getView(R.id.rl_device_container);
         relativeLayout.setMinimumHeight(AutoUtils.getPercentHeightSizeBigger(105));
         relativeLayout.setMinimumWidth(AutoUtils.getPercentWidthSizeBigger(270));
@@ -336,7 +338,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
      */
     private void showDefect(DbModel item, BaseViewHolder holder) {
         if (null != defectmap && !defectmap.isEmpty()) {
-            String deviceId = item.getString("deviceId");
+            String deviceId = item.getString(DeviceService.DEVICE_ID_KEY);
             DefectInfo defectInfo = defectmap.get(deviceId);
             if (null != defectInfo) {
                 TextView txtDefect = holder.getView(R.id.tv_device_defect_count);
@@ -409,7 +411,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         boolean spaceHasImportant = false;
         for (DbModel model : models) {
             boolean arrived;
-            String deviceId = model.getString("deviceId");
+            String deviceId = model.getString(DeviceService.DEVICE_ID_KEY);
             PlacedDevice placed = arriveDeviceList.get(deviceId);
             if (placed == null) {
                 arrived = false;
@@ -456,8 +458,8 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
     }
 
     public void setCurrentFunctionMode(String currentFunctionMode) {
-        isOneDevice = "one".equals(currentFunctionMode);
-        isSecondDevice = "second".equals(currentFunctionMode);
+        isOneDevice = PMSDeviceType.one.equals(currentFunctionMode);
+        isSecondDevice = PMSDeviceType.second.equals(currentFunctionMode);
     }
 
     public void setGroupItemClickListener(ItemClickListener<DbModel> groupItemClickListener) {

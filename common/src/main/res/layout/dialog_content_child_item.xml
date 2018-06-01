@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="match_parent"
-                    android:layout_height="120px"
-                    android:background="@drawable/list_item_background_selector"
-                    android:minHeight="120px"
-                    android:paddingBottom="@dimen/global_padding_top_bottom_px"
-                    android:paddingLeft="@dimen/global_padding_left_right_px"
-                    android:paddingRight="@dimen/global_padding_left_right_px"
-                    android:paddingTop="@dimen/global_padding_top_bottom_px">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:background="@drawable/list_item_background_selector"
+        android:minHeight="120px"
+        android:paddingBottom="@dimen/global_padding_top_bottom_px"
+        android:paddingLeft="@dimen/global_padding_left_right_px"
+        android:paddingRight="@dimen/global_padding_left_right_px"
+        android:paddingTop="@dimen/global_padding_top_bottom_px">
 
         <ImageView
             android:id="@+id/img_child_item_bt"

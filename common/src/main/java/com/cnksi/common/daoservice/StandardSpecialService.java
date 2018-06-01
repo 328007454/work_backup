@@ -1,6 +1,5 @@
-package com.cnksi.bdzinspection.daoservice;
+package com.cnksi.common.daoservice;
 
-import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.model.StandardSpecial;
 
 import org.xutils.db.Selector;

@@ -20,7 +20,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/btn_start_inspection"
+            android:id="@+id/btn_sure"
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_button_minheight"
             android:layout_gravity="center_vertical"

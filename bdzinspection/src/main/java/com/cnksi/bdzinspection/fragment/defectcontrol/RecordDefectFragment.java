@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.DeviceSelectActivity;
 import com.cnksi.bdzinspection.adapter.DefectDefineAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.BatteryDefectContentAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.DefectContentAdapter;
@@ -34,11 +33,14 @@ import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Defect;
 import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.DeviceSelectActivity;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DevicePartService;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Device;
 import com.cnksi.common.model.DevicePart;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.DialogUtils;
@@ -272,10 +274,11 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                 RecordDefectFragment.this.showDevicePartDialog();
             }
             if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
-                Intent intent = new Intent(currentActivity, DeviceSelectActivity.class);
-                intent.putExtra(DeviceSelectActivity.SELECT_TYPE, DeviceSelectActivity.SELECT_TYPE_RADIO);
-                intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-                RecordDefectFragment.this.getActivity().startActivityForResult(intent, SELECT_DEVICE);
+                DeviceSelectActivity.with(mActivity).setBdzId(currentBdzId)
+                        .setInspectionType(currentInspectionType)
+                        .setMultiSelect(false)
+                        .setRequestCode(SELECT_DEVICE)
+                        .start();
             }
         });
 
@@ -342,7 +345,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     binding.include.lvContainer.setOnItemLongClickListener((view, view1, position, l) -> {
                         deleteRecord = dataList.get(position);
                         if (!TextUtils.equals(currentReportId, deleteRecord.reportid)) {
-                            ToastUtils.showMessage( "只能删除本次记录的缺陷");
+                            ToastUtils.showMessage("只能删除本次记录的缺陷");
                             return true;
                         } else {
                             deleteDialog.show();
@@ -352,7 +355,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     binding.include.lvContainer.setOnItemClickListener((parent, view1, position, id) -> {
                         mofifyDefectRe = (DefectRecord) parent.getItemAtPosition(position);
                         if (!TextUtils.equals(currentReportId, mofifyDefectRe.reportid)) {
-                            ToastUtils.showMessage( "只能修改本次记录的缺陷");
+                            ToastUtils.showMessage("只能修改本次记录的缺陷");
                         } else {
                             modifyDefectUI();
                         }
@@ -650,7 +653,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
         String defectContent = binding.includeDefect.etInputDefectContent.getText().toString().trim();
         String departmentName = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, "");
         if (TextUtils.isEmpty(defectContent)) {
-            ToastUtils.showMessage( "请选择或输入缺陷内容");
+            ToastUtils.showMessage("请选择或输入缺陷内容");
             return;
         }
 
@@ -809,7 +812,6 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
                     }
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
-
                     ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
                     for (String imageUrl : cancelList) {
                         mDefectImageList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
@@ -826,15 +828,13 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
 
                     break;
                 case SELECT_DEVICE:
-                    String spaceName = data.getStringExtra(DeviceSelectActivity.RESULT_SELECT_SPACE);
-                    String spaceId = data.getStringExtra(DeviceSelectActivity.RESULT_SELECT_SPACE_ID);
-                    String deviceID = data.getStringExtra(DeviceSelectActivity.RESULT_SELECT_DEVICE);
-                    String deviceName = data.getStringExtra(DeviceSelectActivity.RESULT_SELECT_DEVICE_NAME);
+                    DbModel device = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
+                    String deviceName = device.getString(DeviceService.DEVICE_NAME_KEY);
                     binding.includeDefect.tvSelectDevicePart.setText(deviceName);
-                    currentDeviceId = deviceID;
+                    currentDeviceId = device.getString(DeviceService.DEVICE_ID_KEY);
                     currentDeviceName = deviceName;
-                    currentSpacingId = spaceId;
-                    currentSpacingName = spaceName;
+                    currentSpacingId = device.getString(Device.SPID);
+                    currentSpacingName = device.getString(DeviceService.SPACING_NAME_KEY);
                     if (mofifyDefectRe != null) {
                         mofifyDefectRe.devcie = deviceName;
                         mofifyDefectRe.deviceid = currentDeviceId;
@@ -855,7 +855,7 @@ public class RecordDefectFragment extends BaseFragment implements OnAdapterViewC
             String defectOrigin = define.origin;
             String dealMethod = define.dealMethod;
             if (TextUtils.isEmpty(defectOrigin) && TextUtils.isEmpty(dealMethod)) {
-                ToastUtils.showMessageLong( R.string.xs_no_defect_source_and_dealmethod_str);
+                ToastUtils.showMessageLong(R.string.xs_no_defect_source_and_dealmethod_str);
             } else {
                 showDefectSource(defectOrigin, dealMethod);
             }

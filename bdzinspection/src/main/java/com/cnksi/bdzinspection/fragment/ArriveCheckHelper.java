@@ -246,7 +246,7 @@ public class ArriveCheckHelper {
             finalPlaced = null;
             //设备到位模式下 直接标记到位不适用。
             if (!arrivedPlaces.containsKey(spid) && !SystemConfig.isDevicePlaced()) {
-                Placed placed = new Placed(currentReportId, bdzId, spid, model.getString("spacingName"), 1, location.getLatitude(), location.getLongitude());
+                Placed placed = new Placed(currentReportId, bdzId, spid, model.getString(DeviceService.SPACING_NAME_KEY), 1, location.getLatitude(), location.getLongitude());
                 arrivedPlaces.put(spid, placed);
                 finalPlaced = placed;
             }
@@ -262,12 +262,12 @@ public class ArriveCheckHelper {
         } else {
             model.add(Device.LATITUDE, String.valueOf(location.getLatitude()));
             model.add(Device.LONGITUDE, String.valueOf(location.getLongitude()));
-            DeviceService.getInstance().updateDeviceLocationInfo(new Device(model.getString("deviceId"), lat, lng));
+            DeviceService.getInstance().updateDeviceLocationInfo(new Device(model.getString(DeviceService.DEVICE_ID_KEY), lat, lng));
             for (Device device : needCheckDeviceList) {
                 if (model == null) {
                     continue;
                 }
-                if (device.deviceid.equals(model.getString("deviceId"))) {
+                if (device.deviceid.equals(model.getString(DeviceService.DEVICE_ID_KEY))) {
                     device.latitude = String.valueOf(location.getLatitude());
                     device.longitude = String.valueOf(location.getLongitude());
                     if (!arrivedDevices.containsKey(device.deviceid)) {

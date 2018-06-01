@@ -117,7 +117,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 PlaySound.getIntance(currentActivity).play(R.raw.input);
                 Intent intent = new Intent(currentActivity, SingleSpaceCopyActivity.class);
                 intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
-                intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
+                intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
                 intent.putExtra(Config.CURRENT_FUNCTION_MODEL, currentFunctionModel);
                 DeviceListFragment.this.startActivity(intent);
             }
@@ -136,22 +136,22 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         adapter.setDeviceClickListener((v, dbModel, position) -> {
             NextDeviceUtils.getInstance().setLastIndex(-1);
             Intent intent = new Intent(currentActivity, NewDeviceDetailsActivity.class);
-            intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString("deviceId"));
-            intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString("deviceName"));
+            intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString(DeviceService.DEVICE_ID_KEY));
+            intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
-            intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
+            intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
             DeviceListFragment.this.startActivity(intent);
         });
         // 跳转设备抄录
         adapter.setCopyClickListener((v, dbModel, position) -> {
             Intent intent = new Intent(currentActivity, CopyValueActivity2.class);
-            intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString("deviceId"));
-            intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString("deviceName"));
+            intent.putExtra(Config.CURRENT_DEVICE_ID, dbModel.getString(DeviceService.DEVICE_ID_KEY));
+            intent.putExtra(Config.CURRENT_DEVICE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
-            intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString("spacingName"));
+            intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
-            intent.putExtra(Config.TITLE_NAME, dbModel.getString("deviceName"));
+            intent.putExtra(Config.TITLE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             DeviceListFragment.this.startActivity(intent);
         });
@@ -276,7 +276,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         }
         getSpaceLastly();
         // 查询设备及设备所在间隔
-        List<DbModel> deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, "");
+        List<DbModel> deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, currentReportId, "");
         LinkedHashMap<String, List<DbModel>> spacingDeviceMap = new LinkedHashMap<>();
         if (null != deviceList && !deviceList.isEmpty()) {
             for (DbModel dbModel : deviceList) {
@@ -291,7 +291,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 if (!spacingIds.contains(spacingId)) {
                     spacingIds.add(spacingId);
                 }
-                deviceDbModelMap.put(dbModel.getString("deviceId"), dbModel);
+                deviceDbModelMap.put(dbModel.getString(DeviceService.DEVICE_ID_KEY), dbModel);
             }
             boolean isEmptyKey = TextUtils.isEmpty(keyWord);
             List<DbModel> sortList = new ArrayList<>(isEmptyKey ? deviceList.size() : 0);
@@ -307,7 +307,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
             }
             if ("second".equals(currentFunctionModel)) {
-                DeviceHandleFunctions.buildTreeData(data, spaceGroupMap);
+                DeviceHandleFunctions.buildSpaceTreeData(data, spaceGroupMap);
                 reportSnwsds = ReportSnwsd.getAllCopySNWSD(currentReportId);
                 adapter.setCopySNWSD(reportSnwsds);
             }
@@ -392,9 +392,9 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
 
         String content;
         if (isSpace) {
-            content = getString(R.string.xs_spacing_name_format_str, locationSpace.getString("spacingName"));
+            content = getString(R.string.xs_spacing_name_format_str, locationSpace.getString(DeviceService.SPACING_NAME_KEY));
         } else {
-            content = getString(R.string.xs_device_name_format_str, locationDevice.getString("deviceName"));
+            content = getString(R.string.xs_device_name_format_str, locationDevice.getString(DeviceService.DEVICE_NAME_KEY));
         }
         TextView txtSpaceName = holder.getView(R.id.tv_spacing_name);
         txtSpaceName.setText(StringUtils.changePartTextColor(currentActivity, content, R.color.xs_global_base_color, 5, content.length()));
