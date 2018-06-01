@@ -121,6 +121,9 @@ public class SystemConfig {
     }
 
     public static String getSwitchMenuConfirmStyle() {
+        if (SYSTEM_CONFIG.isEmpty()) {
+            return "";
+        }
         return SYSTEM_CONFIG.get(NEED_CONFIRM_EVERY_STEP);
     }
 

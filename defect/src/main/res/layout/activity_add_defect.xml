@@ -57,10 +57,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/txt_space_name">
 
                     <com.cnksi.common.view.EditTextNoEmoj
+                        android:id="@+id/et_input_device"
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
                         android:hint="请选择（按箭头）或者输入设备名称"
                         android:inputType="textMultiLine"
                         android:paddingLeft="@dimen/core_padding_30px"
@@ -156,13 +158,13 @@
                 </RelativeLayout>
 
                 <com.cnksi.defect.view.FlowRadioGroup
-                    android:paddingLeft="@dimen/core_padding_30px"
                     android:id="@+id/container_rb_general_defect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/core_bg_white_ffffff"
                     android:columnCount="3"
                     android:paddingBottom="@dimen/_20px"
+                    android:paddingLeft="@dimen/core_padding_30px"
                     android:paddingRight="@dimen/xs_global_padding_left_right_px"
                     android:paddingTop="@dimen/_20px"
                     android:rowCount="2"
