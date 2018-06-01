@@ -98,21 +98,21 @@ public class BatteryTestReportActivity extends BaseReportActivity {
         mBtnBack.setOnClickListener(v -> {
             typeName = PreferencesUtils.get("typename", "");
             boolean xudianchi = typeName.contains(Config.XUDIANCHI) && (typeName.contains(Config.DIANYA) || typeName.contains(Config.NEIZU));
-            if (xudianchi && !BatteryTestReportActivity.this.getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
+            if (xudianchi && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                 PreferencesUtils.put(Config.CURRENT_MAINTANENCE_BATTERY, "");
             }
             ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
 
-            BatteryTestReportActivity.this.onBackPressed();
+            onBackPressed();
         });
         mBtnRight.setOnClickListener(v -> {
             if ("maintenance_xdcdyjc".equalsIgnoreCase(type)) {
                 Intent intent = new Intent(BatteryTestReportActivity.this, HomeActivity.class);
-                BatteryTestReportActivity.this.startActivity(intent);
-                BatteryTestReportActivity.this.onBackPressed();
+                startActivity(intent);
+                onBackPressed();
             } else {
                 ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
-                BatteryTestReportActivity.this.onBackPressed();
+                onBackPressed();
             }
         });
         loadData();
@@ -174,7 +174,7 @@ public class BatteryTestReportActivity extends BaseReportActivity {
                             resistanceMap.put(record.battaryGroup, resistanceCount + 1);
                         }
                         if (!TextUtils.isEmpty(record.resistanceImages) || !TextUtils.isEmpty(record.voltageImages)) {
-                            List<String> imageList = BatteryTestReportActivity.this.getRecordImageList(record);
+                            List<String> imageList = getRecordImageList(record);
                             Map<String, List<String>> imageMap = groupImageList.get(record.battaryGroup);
                             if (imageMap.keySet().contains(record.battary_code)) {
                                 imageMap.get(record.battary_code).addAll(imageList);
@@ -235,9 +235,9 @@ public class BatteryTestReportActivity extends BaseReportActivity {
     private void initOnClick() {
         binding.continueInspection.setOnClickListener(view -> {
             Intent intent = new Intent(BatteryTestReportActivity.this, BatteryTestActivity.class);
-            intent.putExtra(Config.IS_FROM_SJJC, BatteryTestReportActivity.this.getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false));
-            BatteryTestReportActivity.this.startActivity(intent);
-            BatteryTestReportActivity.this.finish();
+            intent.putExtra(Config.IS_FROM_SJJC, getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false));
+            startActivity(intent);
+            finish();
         });
     }
 

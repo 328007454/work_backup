@@ -126,7 +126,7 @@ public class DiscoverHoleActivity extends BaseSjjcActivity {
             }
         });
         binding.ivTakePic.setOnClickListener(view -> FunctionUtils.takePicture(DiscoverHoleActivity.this, imgName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST));
-        binding.imgDiscoverholePic.setOnClickListener(view -> DiscoverHoleActivity.this.showImageDetails(mActivity, 0, StringUtils.addStrToListItem(picList, Config.RESULT_PICTURES_FOLDER), true, false));
+        binding.imgDiscoverholePic.setOnClickListener(view -> showImageDetails(mActivity, 0, StringUtils.addStrToListItem(picList, Config.RESULT_PICTURES_FOLDER), true, false));
         binding.btnSave.setOnClickListener(view -> {
             String picAll = StringUtils.arrayListToString(picList);
             if (TextUtils.isEmpty(binding.tvDiscoverholePosition.getText().toString())) {
@@ -148,8 +148,8 @@ public class DiscoverHoleActivity extends BaseSjjcActivity {
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            DiscoverHoleActivity.this.setResult(RESULT_OK);
-            DiscoverHoleActivity.this.finish();
+            setResult(RESULT_OK);
+            finish();
         });
     }
 

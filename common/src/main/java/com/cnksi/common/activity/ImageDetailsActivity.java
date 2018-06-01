@@ -1,27 +1,23 @@
 package com.cnksi.common.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.R;
+import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.databinding.ActivityImageDetailsBinding;
-import com.cnksi.common.databinding.DialogTipsBinding;
+import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.core.activity.BaseCoreActivity;
 import com.cnksi.core.utils.BitmapUtils;
-import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.photo.PhotoView;
 
@@ -40,7 +36,7 @@ import static com.cnksi.common.Config.IS_SHOW_PHOTO_FLAG;
  *
  * @author Wastrel
  */
-public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChangeListener {
+public class ImageDetailsActivity extends BaseTitleActivity  {
 
     /**
      * 得到的图片List
@@ -61,10 +57,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
      * 当前的位置
      */
     private int currentPosition = 0;
-    /**
-     * 提示对话框
-     */
-    protected Dialog tipsDialog = null;
+
     private ActivityImageDetailsBinding mImageDetailsBinding;
 
     @Override
@@ -73,91 +66,70 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
 
     }
 
+
     @Override
-    public void getRootDataBinding() {
+    protected View getChildContentView() {
         mImageDetailsBinding = ActivityImageDetailsBinding.inflate(getLayoutInflater());
-        setContentView(mImageDetailsBinding.getRoot());
+        return mImageDetailsBinding.getRoot();
+    }
+
+
+    @Override
+    public void initUI() {
         imageList = getIntent().getStringArrayListExtra(IMAGEURL_LIST);
         currentPosition = position = getIntent().getIntExtra(CURRENT_IMAGE_POSITION, 0);
         isShowDeleteFlag = getIntent().getBooleanExtra(IS_SHOW_PHOTO_FLAG, true);
         isDeleteFile = getIntent().getBooleanExtra(IS_DELETE_FILE, true);
         titleName = getIntent().getStringExtra(Config.TITLE_NAME);
-        mImageDetailsBinding.tvTitle.setText(TextUtils.isEmpty(titleName) ? "图片查看" : titleName);
+        setTitleText(TextUtils.isEmpty(titleName) ? "图片查看" : titleName);
         if (isShowDeleteFlag) {
             mImageDetailsBinding.ibtnDelete.setVisibility(View.VISIBLE);
         } else {
             mImageDetailsBinding.ibtnDelete.setVisibility(View.GONE);
         }
-        initView();
-        loadData();
-    }
-
-    @Override
-    public int getLayoutResId() {
-        return 0;
-    }
-
-    @Override
-    public void initUI() {
-
+        initOnClick();
+        isSelectFlag = getIntent().getBooleanExtra("select", false);
+        if (isSelectFlag) {
+            mTitleBinding.tvRight.setVisibility(View.VISIBLE);
+            mTitleBinding.tvRight.setText("确认选择");
+        }
     }
 
     @Override
     public void initData() {
-
+        loadData();
     }
 
-    public void initView() {
-        initOnClick();
-        isSelectFlag = getIntent().getBooleanExtra("select", false);
-        if (isSelectFlag) {
-            mImageDetailsBinding.tvBatteryTestStep.setVisibility(View.VISIBLE);
-            mImageDetailsBinding.tvBatteryTestStep.setText("确认选择");
-        }
-    }
 
     private void initOnClick() {
-        mImageDetailsBinding.ibtnCancel.setOnClickListener(view -> ImageDetailsActivity.this.onBackPressed());
-        mImageDetailsBinding.tvBatteryTestStep.setOnClickListener(view -> {
+        mTitleBinding.tvRight.setOnClickListener(view -> {
             cancelImageList.add(imageList.get(mImageDetailsBinding.viewPager.getCurrentItem()));
-            ImageDetailsActivity.this.onBackPressed();
+            onBackPressed();
         });
-        mImageDetailsBinding.ibtnDelete.setOnClickListener(view -> ImageDetailsActivity.this.showSureTipsDialog());
+        mImageDetailsBinding.ibtnDelete.setOnClickListener(view -> showSureTipsDialog());
     }
 
 
-    DialogTipsBinding mTipsBinding;
-
     private void showSureTipsDialog() {
-        if (tipsDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(getApplicationContext()) * 9 / 10;
-            int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
-            mTipsBinding = DialogTipsBinding.inflate(getLayoutInflater());
-            tipsDialog = DialogUtils.creatDialog(mActivity, mTipsBinding.getRoot(), dialogWidth, dialogHeight);
-        }
-        mTipsBinding.tvDialogTitle.setText(R.string.dialog_tips_str);
-        mTipsBinding.tvDialogContent.setText(R.string.dialog_tips_delete_pic_content);
-        mTipsBinding.btnSure.setText(R.string.yes_str);
-        mTipsBinding.btnCancel.setText(R.string.no_str);
-        tipsDialog.show();
-        mTipsBinding.btnCancel.setOnClickListener(view -> tipsDialog.dismiss());
-        mTipsBinding.btnSure.setOnClickListener(view -> {
-            String imageUrl = imageList.get(currentPosition);
-            if (isDeleteFile) {
-                File file = new File(imageUrl);
-                if (file.isFile() && file.exists()) {// if image is exist , delete it,
-                    file.delete();
-                }
-            }
-            imageList.remove(currentPosition);
-            cancelImageList.add(imageUrl);
-            if (imageList.size() == 0) {
-                ImageDetailsActivity.this.onBackPressed();
-            }
-            viewAdapter.notifyDataSetChanged();
 
-            mImageDetailsBinding.pageText.setText(String.valueOf(currentPosition + 1) + "/" + imageList.size());
-        });
+        DialogUtils.createTipsDialog(mActivity, getString(R.string.dialog_tips_delete_pic_content)
+                , (v) -> {
+                    String imageUrl = imageList.get(currentPosition);
+                    if (isDeleteFile) {
+                        File file = new File(imageUrl);
+                        if (file.isFile() && file.exists()) {
+                            file.delete();
+                        }
+                    }
+                    imageList.remove(currentPosition);
+                    cancelImageList.add(imageUrl);
+                    if (imageList.size() == 0) {
+                        ImageDetailsActivity.this.onBackPressed();
+                    }
+                    viewAdapter.notifyDataSetChanged();
+
+                    mImageDetailsBinding.pageText.setText(String.valueOf(currentPosition + 1) + "/" + imageList.size());
+                }, true).show();
     }
 
     @SuppressWarnings("deprecation")
@@ -165,7 +137,23 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
         viewAdapter = new ViewPagerAdapter();
         mImageDetailsBinding.viewPager.setAdapter(viewAdapter);
         mImageDetailsBinding.viewPager.setCurrentItem(position);
-        mImageDetailsBinding.viewPager.setOnPageChangeListener(this);
+        mImageDetailsBinding.viewPager.setOnPageChangeListener(new AbstractPageChangeListener(){
+
+            @Override
+            public void onPageSelected(int currentPage) {
+                currentPosition = currentPage;
+                // 每当页数发生改变时重新设定一遍当前的页数和总页数
+                mImageDetailsBinding.pageText.setText((currentPage + 1) + "/" + imageList.size());
+                if (imageList.size() > 0) {
+                    try {
+                        mImageDetailsBinding.filename.setText(new File(imageList.get(currentPosition).trim()).getName());
+                    } catch (Exception e) {
+
+                    }
+
+                }
+            }
+        });
         mImageDetailsBinding.viewPager.setEnabled(false);
         mImageDetailsBinding.viewPager.setOffscreenPageLimit(3);
         // 设定当前的页数和总页数
@@ -228,30 +216,8 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
 
     }
 
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
 
-    }
 
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-    }
-
-    @Override
-    public void onPageSelected(int currentPage) {
-        currentPosition = currentPage;
-        // 每当页数发生改变时重新设定一遍当前的页数和总页数
-        mImageDetailsBinding.pageText.setText((currentPage + 1) + "/" + imageList.size());
-        if (imageList.size() > 0) {
-            try {
-                mImageDetailsBinding.filename.setText(new File(imageList.get(currentPosition).trim()).getName());
-            } catch (Exception e) {
-
-            }
-
-        }
-    }
 
     @Override
     public void onBackPressed() {

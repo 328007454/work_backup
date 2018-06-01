@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,8 +12,6 @@ import com.cnksi.bdloc.LatLng;
 import com.cnksi.bdloc.LocationListener;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.base.FragmentPagerAdapter;
-import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.SpacingLastlyService;
 import com.cnksi.bdzinspection.databinding.XsActivityParticularInspectionBinding;
 import com.cnksi.bdzinspection.fragment.ParticularDevicesFragment;
@@ -23,9 +20,11 @@ import com.cnksi.bdzinspection.utils.ShakeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.base.FragmentPagerAdapter;
+import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.LookUpType;
-import com.cnksi.common.listener.OnViewClickListener;
+import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.DialogUtils;
@@ -52,7 +51,7 @@ import static com.cnksi.ksynclib.KSync.SYNC_SUCCESS;
  * Created by han on 2017/2/27.
  */
 
-public class ParticularDeviceListActivity extends BaseActivity implements ViewPager.OnPageChangeListener, ShakeListener.OnShakeListener {
+public class ParticularDeviceListActivity extends BaseActivity implements  ShakeListener.OnShakeListener {
 
     Task currentTask;
     private List<Lookup> lookups = null;
@@ -114,8 +113,16 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         setPagerTabStripValue(binding.tabStrip);
         binding.tabStrip.setTabPaddingLeftRight(37);
         binding.tabStrip.setShouldExpand(false);
-        binding.tabStrip.setOnPageChangeListener(this);
-        onPageSelected(0);
+        AbstractPageChangeListener pageChangeListener=new AbstractPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                currentPosition = position;
+                currentFragment = fragmentList.get(position);
+            }
+
+        };
+        binding.tabStrip.setOnPageChangeListener(pageChangeListener);
+        pageChangeListener.onPageSelected(0);
 
         locationHelper = LocationUtil.getInstance().getLocalHelper(new LocationListener() {
             @Override
@@ -147,45 +154,25 @@ public class ParticularDeviceListActivity extends BaseActivity implements ViewPa
         locationHelper.start();
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    }
 
-    @Override
-    public void onPageSelected(int position) {
-        currentPosition = position;
-        currentFragment = fragmentList.get(position);
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 
     private void initOnClick() {
 
         binding.ibtnCancel.setOnClickListener(view -> ParticularDeviceListActivity.this.onBackPressed());
 
-        binding.btnFinishInspection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (SystemConfig.isDevicePlaced()) {
-                    fragmentList.get(0).handleSpaceArrivedData();
-                }
-                if (currentTask.isMember()) {
-                    DialogUtils.showSureTipsDialog(mActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            super.onClick(v);
-                            CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
-                            KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
-                        }
-                    });
-                } else {
-                    Intent intent = new Intent(mActivity, GenerateReportActivity.class);
-                    showTipsDialog(intent);
-                }
+        binding.btnFinishInspection.setOnClickListener(view -> {
+            if (SystemConfig.isDevicePlaced()) {
+                fragmentList.get(0).handleSpaceArrivedData();
+            }
+            if (currentTask.isMember()) {
+                DialogUtils.showSureTipsDialog(mActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", v -> {
+                    CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
+                    KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
+                });
+            } else {
+                Intent intent = new Intent(mActivity, GenerateReportActivity.class);
+                showTipsDialog(intent);
             }
         });
 

@@ -3,7 +3,7 @@ package com.cnksi.nari.type;
 /**
  * 离线作业包任务状态
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/8/1 11:27
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 /**
  * @version 1.0
- * @auth luoxy
+ * @author luoxy
  * @date 16/4/20
  */
 public class CommonApplication extends CoreApplication {

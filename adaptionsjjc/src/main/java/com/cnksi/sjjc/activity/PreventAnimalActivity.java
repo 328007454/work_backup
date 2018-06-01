@@ -68,8 +68,8 @@ public class PreventAnimalActivity extends BaseSjjcActivity {
         getIntentValue();
         mInspectionType = InspectionType.get(currentInspectionType);
         mTitleBinding.btnBack.setOnClickListener(view -> {
-            PreventAnimalActivity.this.saveData();
-            PreventAnimalActivity.this.finish();
+           saveData();
+           finish();
         });
         initView();
         loadData();
@@ -141,18 +141,18 @@ public class PreventAnimalActivity extends BaseSjjcActivity {
 
     private void initOnClick() {
         binding.btnNext.setOnClickListener(view -> {
-            PreventAnimalActivity.this.saveData();
+           saveData();
             Intent intent = new Intent(mActivity, PreventAnimalSecondActivity.class);
             intent.putExtra("PreventionRecord", preventionRecord);
-            PreventAnimalActivity.this.startActivity(intent);
+           startActivity(intent);
         });
         mTitleBinding.tvRight.setOnClickListener(view -> {
             Intent intent = new Intent(mActivity, XianCunHoleActivity.class);
-            PreventAnimalActivity.this.startActivityForResult(intent, REFRESH_UI);
+           startActivityForResult(intent, REFRESH_UI);
         });
         binding.tvFindHole.setOnClickListener(view -> {
             Intent intent = new Intent(mActivity, DiscoverHoleActivity.class);
-            PreventAnimalActivity.this.startActivityForResult(intent, REFRESH_UI);
+           startActivityForResult(intent, REFRESH_UI);
         });
     }
 

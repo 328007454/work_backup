@@ -69,7 +69,7 @@ public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity {
 
     public void initView() {
         mTitleBinding.tvTitle.setText(R.string.indoor_tempreture_recoder);
-        mTitleBinding.btnBack.setOnClickListener(v -> NewIndoorHumitureRecordActivity.this.finish());
+        mTitleBinding.btnBack.setOnClickListener(v -> finish());
     }
 
     public void loadData() {
@@ -121,7 +121,7 @@ public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity {
 
 
     public void initOnclick() {
-        binding.btnConfirmSave.setOnClickListener(v -> NewIndoorHumitureRecordActivity.this.saveData());
+        binding.btnConfirmSave.setOnClickListener(v -> saveData());
     }
 
 

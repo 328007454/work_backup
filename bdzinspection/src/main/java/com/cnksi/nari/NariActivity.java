@@ -15,27 +15,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
-import com.cnksi.common.utils.ViewHolder;
-import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.common.utils.XZip;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
@@ -74,7 +73,7 @@ import java.util.List;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/8/2 10:06
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -124,12 +123,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 NariActivity.this.Toast("没有需要下载的离线作业包！");
                 return;
             }
-            DialogUtils.showSureTipsDialog(mActivity, null, "本次将会下载" + nodowns.length + "个离线作业包！", new OnViewClickListener() {
-                @Override
-                public void onClick(View v) {
-                    downLoad(nodowns);
-                }
-            });
+            DialogUtils.showSureTipsDialog(mActivity, null, "本次将会下载" + nodowns.length + "个离线作业包！", v1 -> downLoad(nodowns));
         });
         binding.btnUploadAll.setOnClickListener(v -> {
             final BDPackage[] dones = adapter.getStatus(PackageStatus.done);
@@ -137,12 +131,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 NariActivity.this.Toast("没有需要上传的离线作业包！");
                 return;
             }
-            DialogUtils.showSureTipsDialog(mActivity, null, "本次将会有" + dones.length + "个离线作业包上传到PMS！", new OnViewClickListener() {
-                @Override
-                public void onClick(View v) {
-                    upload(dones);
-                }
-            });
+            DialogUtils.showSureTipsDialog(mActivity, null, "本次将会有" + dones.length + "个离线作业包上传到PMS！", v12 -> upload(dones));
         });
     }
 
@@ -584,31 +573,16 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 switch (packageStatus) {
                     case nodown:
                         //ToDown;
-                        DialogUtils.showSureTipsDialog(mActivity, null, "是否要下载该离线作业包？", new OnViewClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                downLoad(item);
-                            }
-                        });
+                        DialogUtils.showSureTipsDialog(mActivity, null, "是否要下载该离线作业包？", v1 -> downLoad(item));
                         break;
                     case undo:
                         startTask(item);
                         break;
                     case done:
-                        DialogUtils.showSureTipsDialog(mActivity, null, StringUtils.formatPartTextColor("是否要上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                upload(item);
-                            }
-                        });
+                        DialogUtils.showSureTipsDialog(mActivity, null, StringUtils.formatPartTextColor("是否要上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), v13 -> upload(item));
                         break;
                     case upload_error:
-                        DialogUtils.showSureTipsDialog(mActivity, null, StringUtils.formatPartTextColor("是否要重新上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), new OnViewClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                upload(item);
-                            }
-                        });
+                        DialogUtils.showSureTipsDialog(mActivity, null, StringUtils.formatPartTextColor("是否要重新上传PMS离线作业包？\n%s", Color.RED, "说明：暂时上传内容不包含缺陷和抄录信息"), v12 -> upload(item));
                         break;
                     case upload:
                         Toast("该记录已经上传到PMS，快去PMS查看吧！");

@@ -6,7 +6,7 @@ import org.xutils.db.annotation.Table;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/1/30 9:21
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Wastrel
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/1/31 11:11
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

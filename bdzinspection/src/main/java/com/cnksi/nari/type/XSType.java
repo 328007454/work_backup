@@ -3,7 +3,7 @@ package com.cnksi.nari.type;
 /**
  * 巡视类型
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/7/28 15:53
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

@@ -89,7 +89,7 @@ public class BatteryDeviceDetectActivity extends BaseSjjcActivity {
     private void loadMoreData(final int pageStart, final int pageNum) {
         ExecutorManager.executeTaskSerially(() -> {
             final List<BatteryInstrument> instruments = BatteryInstrumentService.getInstance().findAllInstrument(pageStart, pageNum);
-            BatteryDeviceDetectActivity.this.runOnUiThread(() -> {
+            runOnUiThread(() -> {
                 if (!instruments.isEmpty()) {
                     datas.addAll(instruments);
                     mDefectDeviceAdapter.setNewData(datas);
@@ -139,12 +139,12 @@ public class BatteryDeviceDetectActivity extends BaseSjjcActivity {
         mDefectDeviceAdapter.notifyDataSetChanged();
         ExecutorManager.executeTaskSerially(() -> {
             if (TextUtils.isEmpty(text)) {
-                BatteryDeviceDetectActivity.this.loadMoreData(pageStart = 0, 50);
+                loadMoreData(pageStart = 0, 50);
                 mDetectBinding.springviewLayout.setEnableLoadmore(true);
                 return;
             }
             final List<BatteryInstrument> instrumentList = BatteryInstrumentService.getInstance().findAllLikeName(text);
-            BatteryDeviceDetectActivity.this.runOnUiThread(() -> {
+            runOnUiThread(() -> {
                 if (!instrumentList.isEmpty()) {
                     datas.addAll(instrumentList);
                     mDefectDeviceAdapter.setNewData(datas);

@@ -25,7 +25,7 @@ import java.util.List;
  * 权限管理工具
  *
  * @version 1.0
- * @auth lyndon
+ * @author lyndon
  * @date 2016/11/10 18:15
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

@@ -185,22 +185,22 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
 
         binding.ivEliminateDefectPhoto.setOnClickListener(view -> {
             mCurrentClickPhotoModel = ELIMINATE_MODEL;
-            EliminateDefectFragment.this.showImageDetails(mDefectImageList);
+            showImageDetails(mDefectImageList);
         });
 
         binding.ivWorkTicket.setOnClickListener(view -> {
             mCurrentClickPhotoModel = TICKETS_MODEL;
-            EliminateDefectFragment.this.showImageDetails(mWorkTicketImageList);
+            showImageDetails(mWorkTicketImageList);
         });
         binding.ivEliminateRecord.setOnClickListener(view -> {
             mCurrentClickPhotoModel = ELIMINATE_REOCRD_MODEL;
-            EliminateDefectFragment.this.showImageDetails(mEliminateRecordImageList);
+            showImageDetails(mEliminateRecordImageList);
         });
 
-        binding.btnConfirm.setOnClickListener(view -> EliminateDefectFragment.this.eliminateDefect());
+        binding.btnConfirm.setOnClickListener(view -> eliminateDefect());
 
-        binding.reasonContainer.setOnClickListener(view -> EliminateDefectFragment.this.selectDefectReason());
-        binding.tvSelectDefectReason.setOnClickListener(view -> EliminateDefectFragment.this.selectDefectReason());
+        binding.reasonContainer.setOnClickListener(view -> selectDefectReason());
+        binding.tvSelectDefectReason.setOnClickListener(view -> selectDefectReason());
 
     }
 
@@ -308,7 +308,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
                 binding.rgDefectReasonContainer.setOnCheckedChangeListener((group, checkedId) -> {
                     RadioButton mRadioButton = group.findViewById(checkedId);
                     if (mRadioButton.isChecked()) {
-                        binding.tvSelectDefectReason.setHint(EliminateDefectFragment.this.getResources().getString(R.string.xs_please_select_defect_reason_format_str, mRadioButton.getText().toString()));
+                        binding.tvSelectDefectReason.setHint(getResources().getString(R.string.xs_please_select_defect_reason_format_str, mRadioButton.getText().toString()));
                     }
                 });
 
@@ -569,7 +569,7 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
                 mCurrentSelectedDefectReason = mSelectedDefectReasonList.remove(mSelectedDefectReasonList.size() - 1);
                 List<Lookup> mDefectReasonList = LookupService.getInstance().getDefectReasonListByParentId(mCurrentSelectedDefectReason.loo_id);
                 mDefectReasonAdapter.setList(mDefectReasonList);
-                reasonBinding.tvDialogTitle.setText(EliminateDefectFragment.this.getTitle(mSelectedDefectReasonList, true));
+                reasonBinding.tvDialogTitle.setText(getTitle(mSelectedDefectReasonList, true));
                 if (mSelectedDefectReasonList.isEmpty()) {
                     reasonBinding.ibtnCancel.setVisibility(View.INVISIBLE);
                 }
@@ -580,12 +580,12 @@ public class EliminateDefectFragment extends BaseFragment implements OnAdapterVi
             mSelectedDefectReasonList.add(mCurrentSelectedDefectReason);
             List<Lookup> mDefectReasonList = LookupService.getInstance().getDefectReasonListByParentId(mCurrentSelectedDefectReason.id);
             if (mDefectReasonList != null && !mDefectReasonList.isEmpty()) {
-                reasonBinding.tvDialogTitle.setText(EliminateDefectFragment.this.getTitle(mSelectedDefectReasonList, true));
+                reasonBinding.tvDialogTitle.setText(getTitle(mSelectedDefectReasonList, true));
                 mDefectReasonAdapter.setList(mDefectReasonList);
                 reasonBinding.ibtnCancel.setVisibility(View.VISIBLE);
             } else {
                 mDefectReasonDialog.dismiss();
-                binding.tvSelectDefectReason.setText(EliminateDefectFragment.this.getTitle(mSelectedDefectReasonList, false));
+                binding.tvSelectDefectReason.setText(getTitle(mSelectedDefectReasonList, false));
                 mSelectedDefectReasonList.clear();
             }
         });

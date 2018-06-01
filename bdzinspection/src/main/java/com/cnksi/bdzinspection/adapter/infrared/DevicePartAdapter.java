@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsDevicePartItemBinding;
 import com.cnksi.common.Config;
@@ -21,9 +20,6 @@ public class DevicePartAdapter extends SimpleBaseAdapter {
 
     public DevicePartAdapter(Context context, List<? extends Object> dataList) {
         super(context, dataList);
-        initBitmapUtils(context);
-        int height = mContext.getResources().getDimensionPixelSize(R.dimen.history_defect_photo_height);
-        setBitmapSize(height, height);
     }
 
     @Override

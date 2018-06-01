@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/3/6 19:05
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -78,7 +78,7 @@ public class SelectGroup extends UnderLineLinearLayout {
             hint = attributes.getString(R.styleable.SelectGroup_select_hint_str);
             tvValue.setHint(StringUtilsExt.nullTo(hint, "请选择"));
         }
-        tvValue.setOnClickListener(v -> SelectGroup.this.show());
+        tvValue.setOnClickListener(v ->show());
     }
 
     public void setSelectOnClickListener(View.OnClickListener onClickListener) {
@@ -115,7 +115,7 @@ public class SelectGroup extends UnderLineLinearLayout {
         };
         //设置adapter的listView点击事件
         lv.setOnItemClickListener((parent, view, position, id) -> {
-            SelectGroup.this.setKeyValue((KeyValue) adapter.getItem(position));
+           setKeyValue(adapter.getItem(position));
             if (listener != null) {
                 listener.onselect(keyValue);
             }

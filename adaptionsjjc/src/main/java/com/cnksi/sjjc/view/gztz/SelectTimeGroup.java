@@ -15,7 +15,7 @@ import com.cnksi.common.view.UnderLineLinearLayout;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/3/6 19:34
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

@@ -259,8 +259,8 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
             } else {
                 intentDiff = new Intent(mActivity, IndoorHumitureRecordActivity.class);
             }
-            JZLFenJieKaiGuanReportActivity.this.startActivity(intentDiff);
-            JZLFenJieKaiGuanReportActivity.this.finish();
+            startActivity(intentDiff);
+            finish();
         });
 
     }

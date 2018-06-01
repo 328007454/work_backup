@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.daoservice.InspectionPreparedService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionTaskRemindBinding;
 import com.cnksi.bdzinspection.fragment.TaskRemindFragment;
@@ -27,6 +25,7 @@ import com.cnksi.bdzinspection.ywyth.YunweiReportActivity;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.daoservice.ReportService;
@@ -34,6 +33,7 @@ import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
+import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
@@ -63,7 +63,7 @@ import static com.cnksi.ksynclib.KSync.SYNC_SUCCESS;
  * @author terry on 2017/10/19
  */
 @SuppressLint("HandlerLeak")
-public class TaskRemindActivity extends BaseActivity implements OnPageChangeListener, OnFragmentEventListener, GrantPermissionListener {
+public class TaskRemindActivity extends BaseActivity implements  OnFragmentEventListener, GrantPermissionListener {
 
     public static final int ADD_TASK_REQUEST_CODE = 0x112;
     private static final String SWITCH_MAINTANCE_MODEL = "complex";
@@ -140,7 +140,12 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArray));
         binding.viewPager.setAdapter(fragmentPagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
-        binding.tabStrip.setOnPageChangeListener(this);
+        binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                currentSelectedPosition = position;
+            }
+        });
         setPagerTabStripValue(binding.tabStrip);
         binding.viewPager.setOffscreenPageLimit(4);
 
@@ -159,20 +164,9 @@ public class TaskRemindActivity extends BaseActivity implements OnPageChangeList
         });
     }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
 
-    }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        currentSelectedPosition = position;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

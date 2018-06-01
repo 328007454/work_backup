@@ -9,7 +9,7 @@ import java.util.UUID;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/7/26 10:04
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

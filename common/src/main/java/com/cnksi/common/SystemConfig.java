@@ -16,7 +16,7 @@ import java.util.List;
  * 系统流程 权限控制等
  *
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/1/16 11:23
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

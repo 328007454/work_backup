@@ -3,7 +3,7 @@ package com.cnksi.nari.type;
 /**
  * PMS 离线作业包类型的组织ID
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/7/21 16:39
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

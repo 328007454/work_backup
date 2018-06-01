@@ -4,17 +4,17 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityAccidentExceptionBinding;
 import com.cnksi.bdzinspection.fragment.AccidentDealFragment;
 import com.cnksi.bdzinspection.fragment.MotionRuleFragment;
 import com.cnksi.common.Config;
 import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.base.FragmentPagerAdapter;
+import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.core.view.PagerSlidingTabStrip;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -26,7 +26,7 @@ import java.util.Arrays;
  *
  * @author kkk  on 2017/10/19
  */
-public class AccidentExceptionActivity extends BaseActivity implements OnPageChangeListener {
+public class AccidentExceptionActivity extends BaseActivity  {
 
     private String[] titleArray;
     private FragmentPagerAdapter fragmentPagerAdapter = null;
@@ -64,31 +64,25 @@ public class AccidentExceptionActivity extends BaseActivity implements OnPageCha
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArray));
         binding.viewPager.setAdapter(fragmentPagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
-        binding.tabStrip.setOnPageChangeListener(this);
+        binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener(){
+            @Override
+            public void onPageSelected(int arg0) {
+                binding.includeTitle.tvTitle.setText(titleArray[arg0]);
+            }
+        });
         setPagerTabStripValue(binding.tabStrip);
         binding.viewPager.setOffscreenPageLimit(2);
     }
 
 
     private void initOnClick() {
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> AccidentExceptionActivity.this.finish());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> finish());
 
     }
 
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
 
-    }
 
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
 
-    }
-
-    @Override
-    public void onPageSelected(int arg0) {
-        binding.includeTitle.tvTitle.setText(titleArray[arg0]);
-    }
 
     /**
      * 对PagerSlidingbinding.tabStriptrip的各项属性进行赋值。

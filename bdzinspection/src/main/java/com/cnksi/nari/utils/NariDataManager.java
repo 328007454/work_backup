@@ -22,7 +22,7 @@ import java.util.List;
  * 南瑞离线作业包下载之后的数据管理 用于连接db3数据库
  *
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/8/1 9:20
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

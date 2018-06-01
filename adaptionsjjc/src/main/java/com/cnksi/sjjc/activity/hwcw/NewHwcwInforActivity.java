@@ -15,7 +15,6 @@ import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.listener.ItemClickListener;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.DialogUtils;
@@ -205,13 +204,10 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
             ToastUtils.showMessage("至少要有一个负责人!");
             return;
         }
-        DialogUtils.showSureTipsDialog(mActivity, null, "是否确认删除 " + o + "?", "确认", "取消", new OnViewClickListener() {
-            @Override
-            public void onClick(View v) {
-                czrModels.remove(position);
-                showPeopleList.remove(o);
-                showPeopleAdapter.notifyDataSetChanged();
-            }
+        DialogUtils.showSureTipsDialog(mActivity, null, "是否确认删除 " + o + "?", "确认", "取消", v1 -> {
+            czrModels.remove(position);
+            showPeopleList.remove(o);
+            showPeopleAdapter.notifyDataSetChanged();
         });
     }
 

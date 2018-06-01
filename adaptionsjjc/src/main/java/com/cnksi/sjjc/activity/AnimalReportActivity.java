@@ -276,22 +276,22 @@ public class AnimalReportActivity extends BaseReportActivity {
     private void initOnClick() {
         binding.tvContinueInspection.setOnClickListener(view -> {
             Intent intent1 = new Intent(mActivity, PreventAnimalActivity.class);
-            AnimalReportActivity.this.startActivity(intent1);
-            AnimalReportActivity.this.finish();
+           startActivity(intent1);
+           finish();
         });
         binding.imgJianchaprocess.setOnClickListener(view -> {
             watchPics = jiaChaList;
-            AnimalReportActivity.this.save();
+           save();
         });
 
         binding.imgDiscoverhole.setOnClickListener(view -> {
             watchPics = disList;
-            AnimalReportActivity.this.save();
+           save();
         });
 
         binding.imgClearhole.setOnClickListener(view -> {
             watchPics = clearList;
-            AnimalReportActivity.this.save();
+           save();
         });
     }
 

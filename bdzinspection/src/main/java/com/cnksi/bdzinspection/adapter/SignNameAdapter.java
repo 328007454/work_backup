@@ -36,7 +36,6 @@ public class SignNameAdapter extends SimpleBaseAdapter {
         super(context, dataList);
         this.listener = listener;
         this.MASK = MASK;
-        initBitmapUtils(mContext);
     }
 
     @Override

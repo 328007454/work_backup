@@ -135,8 +135,8 @@ public class TaskRemindFragment extends BaseCoreFragment {
         if (!isOnDetach) {
             ExecutorManager.executeTaskSerially(() -> {
                 try {
-                    currentFunctionModel = TaskRemindFragment.this.getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
-                    mInspectionType = InspectionType.get(TaskRemindFragment.this.getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
+                    currentFunctionModel = getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
+                    mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
                     // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                     String deparmentId = "";
                     if (null != mActivity) {

@@ -12,7 +12,7 @@ import static com.cnksi.common.model.vo.SpaceGroupItem.SPACE_ITEM;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/1/25 12:11
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

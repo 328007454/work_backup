@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ChangeCopyItemParentAdapter;
 import com.cnksi.bdzinspection.adapter.CopyTypeAdapter;
-import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.bdzinspection.daoservice.LogsService;
 import com.cnksi.bdzinspection.databinding.XsActivitySettingCopyBinding;
 import com.cnksi.bdzinspection.databinding.XsAddCopyItemBinding;
@@ -29,7 +28,7 @@ import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.OnViewClickListener;
+import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.CopyType;
@@ -745,44 +744,40 @@ public class SettingCopyTypeActivity extends BaseActivity implements ItemClickLi
             itemParentAdapter.notifyDataSetChanged();
 
         } else if (i == R.id.item_delete) {
-            DialogUtils.showSureTipsDialog(mActivity, null, "提示", "确定删除该项？", "是", "否", new OnViewClickListener() {
-                @Override
-                public void onClick(View v) {
-                    super.onClick(v);
-                    ChangeCopyItem changeCopyItem = (ChangeCopyItem) data;
-                    String typeKey = changeCopyItem.getItem().type_key;
-                    List<ChangeCopyItem> fullItems = childFullHashMap.get(changeCopyItem.getItem().type_key);
-                    List<ChangeCopyItem> routineItems = childRoutineMap.get(changeCopyItem.getItem().type_key);
-                    List<ChangeCopyItem> specialItems = childSpecialMap.get(changeCopyItem.getItem().type_key);
-                    if (changeCopyItem.setCopyItemVal(changeCopyItem)) {
-                        updateCopyItems.add(changeCopyItem.getItem());
-                    }
-                    if (changeCopyItem.getItem().version != -1) {
-                        changeCopyItem.getItem().version += 1;
-                    }
-                    changeCopyItem.getItem().isUpLoad = "N";
-                    if (null != childFullHashMap.get(changeCopyItem.getItem().type_key) && fullItems.contains(changeCopyItem)) {
-                        fullItems.remove(changeCopyItem);
-                    }
-                    if (null != childRoutineMap.get(changeCopyItem.getItem().type_key) && routineItems.contains(changeCopyItem)) {
-                        routineItems.remove(changeCopyItem);
-                    }
-                    if (null != childSpecialMap.get(changeCopyItem.getItem().type_key) && specialItems.contains(changeCopyItem)) {
-                        specialItems.remove(changeCopyItem);
-                    }
-                    if (null != fullItems && fullItems.size() == 0) {
-                        parentFullTypes.remove(copyTypeHashMap.get(typeKey));
-                    }
-                    if (null != routineItems && routineItems.size() == 0) {
-                        parentRoutineTypes.remove(copyTypeHashMap.get(typeKey));
-                    }
-                    if (null != specialItems && specialItems.size() == 0) {
-                        parentSpecialTypes.remove(copyTypeHashMap.get(typeKey));
-                    }
-
-
-                    itemParentAdapter.notifyDataSetChanged();
+            DialogUtils.showSureTipsDialog(mActivity, null, "提示", "确定删除该项？", "是", "否", v1 -> {
+                ChangeCopyItem changeCopyItem = (ChangeCopyItem) data;
+                String typeKey = changeCopyItem.getItem().type_key;
+                List<ChangeCopyItem> fullItems = childFullHashMap.get(changeCopyItem.getItem().type_key);
+                List<ChangeCopyItem> routineItems = childRoutineMap.get(changeCopyItem.getItem().type_key);
+                List<ChangeCopyItem> specialItems = childSpecialMap.get(changeCopyItem.getItem().type_key);
+                if (changeCopyItem.setCopyItemVal(changeCopyItem)) {
+                    updateCopyItems.add(changeCopyItem.getItem());
                 }
+                if (changeCopyItem.getItem().version != -1) {
+                    changeCopyItem.getItem().version += 1;
+                }
+                changeCopyItem.getItem().isUpLoad = "N";
+                if (null != childFullHashMap.get(changeCopyItem.getItem().type_key) && fullItems.contains(changeCopyItem)) {
+                    fullItems.remove(changeCopyItem);
+                }
+                if (null != childRoutineMap.get(changeCopyItem.getItem().type_key) && routineItems.contains(changeCopyItem)) {
+                    routineItems.remove(changeCopyItem);
+                }
+                if (null != childSpecialMap.get(changeCopyItem.getItem().type_key) && specialItems.contains(changeCopyItem)) {
+                    specialItems.remove(changeCopyItem);
+                }
+                if (null != fullItems && fullItems.size() == 0) {
+                    parentFullTypes.remove(copyTypeHashMap.get(typeKey));
+                }
+                if (null != routineItems && routineItems.size() == 0) {
+                    parentRoutineTypes.remove(copyTypeHashMap.get(typeKey));
+                }
+                if (null != specialItems && specialItems.size() == 0) {
+                    parentSpecialTypes.remove(copyTypeHashMap.get(typeKey));
+                }
+
+
+                itemParentAdapter.notifyDataSetChanged();
             });
 
         } else {

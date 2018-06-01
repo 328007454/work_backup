@@ -2,7 +2,7 @@ package com.cnksi.common.model;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/3/10 10:27
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

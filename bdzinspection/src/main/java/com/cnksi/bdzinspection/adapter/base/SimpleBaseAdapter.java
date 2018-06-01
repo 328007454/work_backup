@@ -8,16 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.cnksi.core.utils.BitmapUtils;
-
 import java.util.List;
 
 @SuppressWarnings("deprecation")
+@Deprecated
 public abstract class SimpleBaseAdapter extends BaseAdapter {
     protected Context mContext = null;
     protected LayoutInflater mInflater = null;
     protected List<? extends Object> dataList = null;
-    protected BitmapUtils mBitmapUtils;
     protected int width = 0;
     protected int height = 0;
 
@@ -31,27 +29,6 @@ public abstract class SimpleBaseAdapter extends BaseAdapter {
         this.dataList = dataList;
     }
 
-    /**
-     * 初始化图片加载器
-     *
-     * @param context
-     */
-    public void initBitmapUtils(Context context) {
-    }
-
-    /**
-     */
-    public void setScaleDownBitmapSize(int scaleDown) {
-    }
-
-    /**
-     * 缩放至指定宽高
-     *
-     * @param width
-     * @param height
-     */
-    public void setBitmapSize(int width, int height) {
-    }
 
     public void setList(List<? extends Object> dataList) {
         this.dataList = dataList;

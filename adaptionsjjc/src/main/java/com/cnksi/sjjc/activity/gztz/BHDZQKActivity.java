@@ -23,7 +23,7 @@ import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjl;
 import com.cnksi.sjjc.databinding.ActivityGztzBhdzqkBinding;
-import com.cnksi.sjjc.inter.SimpleTextWatcher;
+import com.cnksi.common.listener.AbstractTextWatcher;
 import com.cnksi.sjjc.service.gztz.GZTZSbgzjlService;
 import com.cnksi.sjjc.util.FunctionUtil;
 
@@ -40,7 +40,7 @@ import static com.cnksi.sjjc.activity.gztz.TZQKActivity.NULL;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/3/7 10:15
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -82,25 +82,25 @@ public class BHDZQKActivity extends BaseSjjcActivity {
         binding.btnPre.setOnClickListener(v -> BHDZQKActivity.this.onBackPressed());
         binding.chzdzqk.setType("chzdzqk");
         binding.bhmc.setType("bhmc");
-        binding.gxtzcsA.addTextChangedListener(new SimpleTextWatcher() {
+        binding.gxtzcsA.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 binding.ljtzcs.addA(CalcUtils.toInt(s.toString(), 0));
             }
         });
-        binding.gxtzcsB.addTextChangedListener(new SimpleTextWatcher() {
+        binding.gxtzcsB.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 binding.ljtzcs.addB(CalcUtils.toInt(s.toString(), 0));
             }
         });
-        binding.gxtzcsC.addTextChangedListener(new SimpleTextWatcher() {
+        binding.gxtzcsC.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 binding.ljtzcs.addC(CalcUtils.toInt(s.toString(), 0));
             }
         });
-        binding.gxtzcsO.addTextChangedListener(new SimpleTextWatcher() {
+        binding.gxtzcsO.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 binding.ljtzcs.addO(CalcUtils.toInt(s.toString(), 0));

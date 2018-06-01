@@ -63,7 +63,6 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     private LinearLayout indicator;
     private Handler handler = new Handler();
     private OnBannerClickListener listener;
-    private OnLoadImageListener imageListener;
     private OnBannerCheckedListener checkedListener;
     private String[] titles;
     private TextView bannerTitle, numIndicator;
@@ -447,7 +446,6 @@ public class Banner extends FrameLayout implements ViewPager.OnPageChangeListene
     }
 
     public void setOnBannerImageListener(OnLoadImageListener imageListener) {
-        this.imageListener = imageListener;
     }
 
     public interface OnBannerCheckedListener {

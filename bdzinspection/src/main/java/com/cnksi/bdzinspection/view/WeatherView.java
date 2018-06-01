@@ -31,7 +31,7 @@ import java.util.Collection;
 
 /**
  * @version 1.0
- * @auth luoxy
+ * @author luoxy
  * @date 16/4/20
  */
 public class WeatherView extends LinearLayout {

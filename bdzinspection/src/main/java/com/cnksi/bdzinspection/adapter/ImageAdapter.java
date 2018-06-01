@@ -27,7 +27,6 @@ public class ImageAdapter extends SimpleBaseAdapter {
 	 */
 	public ImageAdapter(Context context, List<? extends Object> dataList) {
 		super(context, dataList);
-		initBitmapUtils(context);
 	}
 
 	@Override

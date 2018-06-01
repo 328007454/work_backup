@@ -36,20 +36,19 @@ import com.cnksi.bdzinspection.databinding.PopMenuBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
 import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.common.base.BaseActivity;
-import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.bdzinspection.utils.FunctionUtil;
-import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyboardChangeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.ReportService;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.SwitchPic;
+import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.common.utils.BitmapUtil;
+import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.common.utils.RecordAudioUtils;
@@ -463,14 +462,11 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                     mAudioAdapter = new SwitchMenuAudioAdapter(R.layout.xs_item_audio, audioUrls);
                     mSwitch1Binding.recyAudio.setLayoutManager(new GridLayoutManager(mActivity, 4));
                     mSwitch1Binding.recyAudio.setAdapter(mAudioAdapter);
-                    mAudioAdapter.setItemClicListener((view, data, position) -> DialogUtils.showSureTipsDialog(mActivity, null, "确定要删除吗？", new OnViewClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            FileUtils.deleteFile(Config.AUDIO_FOLDER + audioUrls.get(position));
-                            audioUrls.remove(position);
-                            report.audioUrl = StringUtils.arrayListToString(audioUrls);
-                            saveReportAudioFile();
-                        }
+                    mAudioAdapter.setItemClicListener((view, data, position) -> DialogUtils.showSureTipsDialog(mActivity, null, "确定要删除吗？", v -> {
+                        FileUtils.deleteFile(Config.AUDIO_FOLDER + audioUrls.get(position));
+                        audioUrls.remove(position);
+                        report.audioUrl = StringUtils.arrayListToString(audioUrls);
+                        saveReportAudioFile();
                     }));
                 }
                 break;

@@ -90,8 +90,8 @@ public class IndoorHumitureRecordActivity extends BaseSjjcActivity {
 
 
     private void initOnclick() {
-        mHumitureBinding.btnCompleteRecord.setOnClickListener(v -> IndoorHumitureRecordActivity.this.saveData());
-        mTitleBinding.btnBack.setOnClickListener(v -> IndoorHumitureRecordActivity.this.finish());
+        mHumitureBinding.btnCompleteRecord.setOnClickListener(v -> saveData());
+        mTitleBinding.btnBack.setOnClickListener(v -> finish());
     }
 
     private void saveData() {

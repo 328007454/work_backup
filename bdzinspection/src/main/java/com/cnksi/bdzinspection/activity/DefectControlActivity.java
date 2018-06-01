@@ -6,11 +6,9 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityDefectControlBinding;
 import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment;
 import com.cnksi.bdzinspection.fragment.defectcontrol.EliminateDefectFragment.OnFunctionButtonClickListener;
@@ -20,6 +18,8 @@ import com.cnksi.bdzinspection.utils.FunctionUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.base.FragmentPagerAdapter;
+import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.KeyBoardUtils;
 import com.cnksi.common.utils.PlaySound;
@@ -33,9 +33,9 @@ import java.util.Arrays;
  *
  * @author terry
  */
-public class DefectControlActivity extends BaseActivity implements OnPageChangeListener, OnFunctionButtonClickListener,
-        com.cnksi.bdzinspection.fragment.defectcontrol.TrackDefectFragment.OnFunctionButtonClickListener,
-        com.cnksi.bdzinspection.fragment.defectcontrol.RecordDefectFragment.OnFunctionButtonClickListener {
+public class DefectControlActivity extends BaseActivity implements  OnFunctionButtonClickListener,
+       TrackDefectFragment.OnFunctionButtonClickListener,
+       RecordDefectFragment.OnFunctionButtonClickListener {
 
     public boolean isDefectChanged = false;
     private FragmentPagerAdapter fragmentPagerAdapter = null;
@@ -123,7 +123,12 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArray));
          binding.viewPager.setAdapter(fragmentPagerAdapter);
          binding.tabStrip.setViewPager( binding.viewPager);
-         binding.tabStrip.setOnPageChangeListener(this);
+         binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener(){
+             @Override
+             public void onPageSelected(int position) {
+                 mCurrentPagePosition = position;
+             }
+         });
         setPagerTabStripValue( binding.tabStrip);
          binding.viewPager.setOffscreenPageLimit(3);
         if (isTrackDefect) {
@@ -155,20 +160,9 @@ public class DefectControlActivity extends BaseActivity implements OnPageChangeL
     }
 
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
 
-    }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        mCurrentPagePosition = position;
-    }
 
     @Override
     public void onFunctionClick(View view, DefectRecord mDefect) {

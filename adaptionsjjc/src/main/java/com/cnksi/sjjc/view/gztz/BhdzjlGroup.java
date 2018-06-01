@@ -11,7 +11,7 @@ import com.cnksi.sjjc.activity.gztz.BHDZJLActivity;
 import com.cnksi.sjjc.bean.gztz.BhyjBean;
 import com.cnksi.sjjc.bean.gztz.SbjcGztzjlBhdzjl;
 import com.cnksi.sjjc.databinding.GztzItemBhdzjlSbBinding;
-import com.cnksi.sjjc.inter.SimpleTextWatcher;
+import com.cnksi.common.listener.AbstractTextWatcher;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.table.DbModel;
@@ -23,7 +23,7 @@ import static com.cnksi.sjjc.activity.gztz.TZQKActivity.NULL;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/3/8 21:34
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -50,7 +50,7 @@ public class BhdzjlGroup {
         binding.sbmc.getAddButton().setOnClickListener(view -> activity.addOtherDevice());
 
         binding.sbmc.getDeleteButton().setOnClickListener(view -> activity.removeView(BhdzjlGroup.this));
-        binding.bhqdsj.tvValue.addTextChangedListener(new SimpleTextWatcher() {
+        binding.bhqdsj.tvValue.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 rebulidStr();

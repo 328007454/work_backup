@@ -10,6 +10,7 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.Config;
+import com.cnksi.common.activity.DeviceSelectActivity;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.DialogUtils;
@@ -17,7 +18,6 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.activity.AllDeviceListActivity;
 import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
 import com.cnksi.sjjc.adapter.hwcw.HwcwNewHotPartAdapter;
@@ -89,7 +89,7 @@ public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDat
                     selecteDevices.add(location.deviceID);
                 }
             }
-            NewHwcwActivity.this.runOnUiThread(() -> NewHwcwActivity.this.initView());
+            runOnUiThread(() -> initView());
         });
     }
 
@@ -126,10 +126,11 @@ public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDat
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.et_hotdeivce_name:
-                Intent intentDevices = new Intent(mActivity, AllDeviceListActivity.class);
-                intentDevices.putExtra(AllDeviceListActivity.FUNCTION_MODEL, PMSDeviceType.one);
-                intentDevices.putExtra(AllDeviceListActivity.BDZID, currentBdzId);
-                startActivityForResult(intentDevices, Config.ACTIVITY_CHOSE_DEVICE);
+                DeviceSelectActivity.with(this)
+                        .setBdzId(currentBdzId)
+                        .setPmsDeviceType(PMSDeviceType.one)
+                        .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE)
+                        .start();
                 break;
             case R.id.btn_cancel:
                 String deviceName = mHwcwNewBinding.etHotdeivceName.getText().toString();

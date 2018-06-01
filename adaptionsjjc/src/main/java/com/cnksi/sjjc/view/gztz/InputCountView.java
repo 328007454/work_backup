@@ -14,7 +14,7 @@ import com.cnksi.sjjc.databinding.GztzItemAddSubBinding;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/8/24 19:57
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
