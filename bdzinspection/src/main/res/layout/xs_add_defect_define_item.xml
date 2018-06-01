@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/xs_list_item_background_selector"
+        android:minHeight="@dimen/dimen_120px"
         android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
         android:paddingLeft="@dimen/xs_global_padding_left_right_px"
         android:paddingRight="@dimen/xs_global_padding_left_right_px"
@@ -19,7 +21,7 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:textColor="@color/xs_global_text_color"
-            android:textSize="@dimen/xs_global_text_size_px" />
+            android:textSize="@dimen/xs_global_text_size_px"/>
 
         <TextView
             android:id="@+id/tv_defect_define"
@@ -30,7 +32,7 @@
             android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
             android:layout_toLeftOf="@id/tv_defect_level"
             android:textColor="@color/xs_global_text_color"
-            android:textSize="@dimen/xs_global_text_size_px" />
+            android:textSize="@dimen/xs_global_text_size_px"/>
 
     </RelativeLayout>
 </layout>

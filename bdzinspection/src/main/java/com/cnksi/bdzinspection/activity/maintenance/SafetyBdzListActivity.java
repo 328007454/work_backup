@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/7/7 8:59
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

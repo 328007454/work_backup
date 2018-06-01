@@ -22,7 +22,6 @@ import com.cnksi.common.Config;
 import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.SpacingService;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Department;
 import com.cnksi.common.model.Spacing;
@@ -111,14 +110,11 @@ public class NewLauncherActivity extends BaseSjjcActivity {
         launcherBinding.lancherTitle.exitSystem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogUtils.showSureTipsDialog(mActivity, null, "是否退出登录?", "确定", "取消", new OnViewClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        super.onClick(v);
-                        Intent intent = new Intent(mActivity, LoginActivity.class);
-                        startActivity(intent);
-                        mActivity.finish();
-                    }
+                DialogUtils.showSureTipsDialog(mActivity, null, "是否退出登录?", "确定", "取消", v -> {
+
+                    Intent intent = new Intent(mActivity, LoginActivity.class);
+                    startActivity(intent);
+                    mActivity.finish();
                 });
             }
         });
@@ -173,7 +169,7 @@ public class NewLauncherActivity extends BaseSjjcActivity {
                 bdzList = (ArrayList<Bdz>) CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
                 final Department department = CustomApplication.getInstance().getDbManager().selector(Department.class).where(Department.ID, "=", deparmentId).and(Department.DLT, "<>", 1).findFirst();
                 if (null != department) {
-                    NewLauncherActivity.this.runOnUiThread(() -> {
+                    runOnUiThread(() -> {
                         launcherBinding.lancherTitle.txtTeam.setText(department.name);
                         initBDZDialog();
                         if (!bdzList.isEmpty()) {

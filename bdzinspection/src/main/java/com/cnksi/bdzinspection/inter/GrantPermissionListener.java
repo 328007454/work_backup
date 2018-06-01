@@ -4,7 +4,7 @@ package com.cnksi.bdzinspection.inter;
  * 权限赋予监听
  *
  * @version 1.0
- * @auth lyndon
+ * @author lyndon
  * @date 2016/11/10 18:27
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

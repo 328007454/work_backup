@@ -9,7 +9,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 
 /**
  * @version 1.0
- * @auth luoxy
+ * @author luoxy
  * @date 16/4/20
  */
 public class CustomApplication extends CommonApplication {

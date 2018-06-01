@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.cnksi.common.R;
 import com.cnksi.common.databinding.DialogTipsBinding;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.view.datepicker.NumericWheelAdapter;
@@ -159,7 +158,7 @@ public class DialogUtils {
      * @param dialogContent
      * @param mOnclickListener
      */
-    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, CharSequence dialogContent, OnViewClickListener mOnclickListener) {
+    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, CharSequence dialogContent,  View.OnClickListener mOnclickListener) {
         showSureTipsDialog(mActivity, mRootContainer, null, dialogContent, null, null, mOnclickListener);
     }
 
@@ -172,7 +171,7 @@ public class DialogUtils {
      * @param cancelText
      * @param mOnclickListener
      */
-    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogContent, String sureText, String cancelText, OnViewClickListener mOnclickListener) {
+    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogContent, String sureText, String cancelText,  View.OnClickListener mOnclickListener) {
         showSureTipsDialog(mActivity, mRootContainer, null, dialogContent, sureText, cancelText, mOnclickListener);
     }
 
@@ -186,7 +185,7 @@ public class DialogUtils {
      * @param cancelText
      * @param mOnclickListener
      */
-    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogTitle, CharSequence dialogContent, String sureText, String cancelText, OnViewClickListener mOnclickListener) {
+    public static void showSureTipsDialog(Activity mActivity, ViewGroup mRootContainer, String dialogTitle, CharSequence dialogContent, String sureText, String cancelText, View.OnClickListener mOnclickListener) {
         int dialogWidth = DisplayUtils.getInstance().getWidth() * 9 / 10;
         DialogTipsBinding tipsBinding = DialogTipsBinding.inflate(mActivity.getLayoutInflater());
         dialog = createDialog(mActivity, tipsBinding.getRoot(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, false);

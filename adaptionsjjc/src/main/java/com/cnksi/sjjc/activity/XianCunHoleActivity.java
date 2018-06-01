@@ -247,7 +247,7 @@ public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickLi
                     clearPosition += record.location + "_" + record.hole_detail + "\n";
                 }
             }
-            XianCunHoleActivity.this.showClearHoleDialog(clearPosition);
+            showClearHoleDialog(clearPosition);
             clearPosition = "";
         });
     }
@@ -271,7 +271,7 @@ public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickLi
         mTipsBinding.btnCancel.setOnClickListener(view -> mClearDialog.dismiss());
 
         mTipsBinding.btnSure.setOnClickListener(view -> {
-            XianCunHoleActivity.this.saveData();
+            saveData();
             mClearDialog.dismiss();
 
         });

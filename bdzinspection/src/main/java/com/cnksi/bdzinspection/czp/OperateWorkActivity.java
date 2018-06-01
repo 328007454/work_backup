@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.czp.adapter.OperateWorkItemAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateItemService;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
@@ -25,7 +24,7 @@ import com.cnksi.bdzinspection.fragment.CameraVideoFragment;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.common.Config;
-import com.cnksi.common.listener.OnViewClickListener;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.MediaRecorderUtils;
@@ -170,12 +169,7 @@ public class OperateWorkActivity extends BaseActivity {
         binding.btnPause.setOnClickListener(view -> OperateWorkActivity.this.pauseOperateTask());
 
         binding.btnStop.setOnClickListener(view -> DialogUtils.showSureTipsDialog(mActivity, binding.llRootContainer,
-                OperateWorkActivity.this.getString(R.string.xs_sure_stop_operate_task_str), new OnViewClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        stopOperateTask();
-                    }
-                }));
+                OperateWorkActivity.this.getString(R.string.xs_sure_stop_operate_task_str), v -> stopOperateTask()));
 
         binding.btnCancel.setOnClickListener(view -> binding.rlFunctionContainer.setVisibility(View.GONE));
         binding.includeTitle.ibtnExit.setOnClickListener(view -> binding.rlFunctionContainer.setVisibility(View.VISIBLE));

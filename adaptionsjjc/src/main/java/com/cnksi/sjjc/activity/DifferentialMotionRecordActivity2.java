@@ -124,16 +124,16 @@ public class DifferentialMotionRecordActivity2 extends BaseSjjcActivity {
 
     private void initOnclick() {
         mRecordBinding.btnConfirmSave.setOnClickListener(v -> {
-            if (DifferentialMotionRecordActivity2.this.saveData()) {
+            if (saveData()) {
                 Intent intent = new Intent(mActivity, JZLFenJieKaiGuanReportActivity.class);
-                DifferentialMotionRecordActivity2.this.startActivity(intent);
-                DifferentialMotionRecordActivity2.this.setResult(RESULT_OK);
-                DifferentialMotionRecordActivity2.this.finish();
+                startActivity(intent);
+                setResult(RESULT_OK);
+                finish();
             } else {
                 ToastUtils.showMessage("输入数据有误，请核对");
             }
         });
-        mTitleBinding.btnBack.setOnClickListener(v -> DifferentialMotionRecordActivity2.this.finish());
+        mTitleBinding.btnBack.setOnClickListener(v -> finish());
     }
 
 

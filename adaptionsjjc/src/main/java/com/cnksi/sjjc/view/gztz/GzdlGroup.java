@@ -9,12 +9,12 @@ import android.widget.EditText;
 
 import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.sjjc.R;
-import com.cnksi.sjjc.inter.SimpleTextWatcher;
+import com.cnksi.common.listener.AbstractTextWatcher;
 import com.cnksi.common.view.UnderLineLinearLayout;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/3/8 16:25
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -42,7 +42,7 @@ public class GzdlGroup extends UnderLineLinearLayout {
         eddl = findViewById(R.id.et_gzdl);
         countView = findViewById(R.id.ljz);
         countView.setMin(0.0f);
-        eddl.addTextChangedListener(new SimpleTextWatcher() {
+        eddl.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 float newF = CalcUtils.String2Float(s.toString());

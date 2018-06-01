@@ -78,7 +78,7 @@ public class NewHwcwReportActivity extends BaseReportActivity {
                 if (!TextUtils.isEmpty(mBaseInfo.id)) {
                     hotLocations = NewHwcwService.getInstance().getAllLocation(mBaseInfo.id);
                 }
-                NewHwcwReportActivity.this.runOnUiThread(() -> NewHwcwReportActivity.this.refreshData());
+                runOnUiThread(() -> refreshData());
             } catch (DbException e) {
                 e.printStackTrace();
             }

@@ -15,7 +15,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/1/17 11:26
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

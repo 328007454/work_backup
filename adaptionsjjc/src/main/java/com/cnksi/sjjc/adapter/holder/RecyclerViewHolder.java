@@ -12,7 +12,7 @@ import org.xutils.x;
 
 /**
  * @version 1.0
- * @auth luoxy
+ * @author luoxy
  * @date 16/4/21
  */
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {

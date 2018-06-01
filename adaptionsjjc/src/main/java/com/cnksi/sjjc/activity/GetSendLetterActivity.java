@@ -190,17 +190,17 @@ public class GetSendLetterActivity extends BaseSjjcActivity {
     private void initOnclick() {
         mTitleBinding.btnBack.setOnClickListener(view -> {
             KeyBoardUtils.closeKeybord(mActivity);
-            GetSendLetterActivity.this.onBackPressed();
-            GetSendLetterActivity.this.finish();
+            onBackPressed();
+            finish();
         });
 
         binding.btnFinish.setOnClickListener(view -> {
-            if (GetSendLetterActivity.this.saveCurrentPage()) {
+            if (saveCurrentPage()) {
                 Dialog dialog = new Dialog(GetSendLetterActivity.this, R.style.dialog);
                 ViewHolder holder = new ViewHolder(GetSendLetterActivity.this, null, R.layout.dialog_test_conclusion, false);
                 AutoUtils.autoSize(holder.getRootView());
                 dialog.setContentView(holder.getRootView());
-                GetSendLetterActivity.this.dialogEvent(dialog, holder);
+                dialogEvent(dialog, holder);
                 dialog.show();
             }
         });
@@ -208,7 +208,7 @@ public class GetSendLetterActivity extends BaseSjjcActivity {
             imageName = FunctionUtil.getCurrentImageName(GetSendLetterActivity.this);
             FunctionUtil.takePicture(GetSendLetterActivity.this, imageName, Config.RESULT_PICTURES_FOLDER, ACTION_IMAGE);
         });
-        binding.showPic.setOnClickListener(view -> GetSendLetterActivity.this.viewPic());
+        binding.showPic.setOnClickListener(view -> viewPic());
     }
 
     @Override

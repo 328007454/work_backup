@@ -39,8 +39,6 @@ public class HistoryDefectAdapter extends SimpleBaseAdapter {
 
     public HistoryDefectAdapter(Context context, List<? extends Object> dataList) {
         super(context, dataList);
-        initBitmapUtils(context);
-        setScaleDownBitmapSize(3);
     }
 
     public void setInspectionType(boolean isParticularInspection) {

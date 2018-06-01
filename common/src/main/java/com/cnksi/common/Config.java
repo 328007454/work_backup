@@ -9,7 +9,7 @@ import com.cnksi.core.utils.SDCardUtils;
 /**
  * @author Wastrel
  * @version 1.0
- * @auth luoxy
+ * @author luoxy
  * @date 16/4/24
  */
 public class Config implements Cst {

@@ -10,7 +10,7 @@ import org.xutils.db.annotation.Table;
 /**
  * Nari Package数据实体类
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/7/21 17:34
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

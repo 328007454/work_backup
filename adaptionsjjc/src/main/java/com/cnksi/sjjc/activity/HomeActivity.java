@@ -133,9 +133,9 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
     private void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
             try {
-                HomeActivity.this.transformDefectType();
-                HomeActivity.this.runOnUiThread(() -> {
-                    HomeActivity.this.initBDZDialog();
+                transformDefectType();
+                runOnUiThread(() -> {
+                    initBDZDialog();
                     if (bdzAdapter == null) {
                         bdzAdapter = new BdzAdapter(mActivity, bdzList, R.layout.dialog_content_child_item);
                         bdzPopwindowBinding.lvBzd.setAdapter(bdzAdapter);
@@ -145,7 +145,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
                     if (!bdzList.isEmpty() && TextUtils.isEmpty(PreferencesUtils.get(Config.LOCATION_BDZID, ""))) {
                         homePageBinding.bdzName.setText(bdzList.get(0).name);
                     }
-                    HomeActivity.this.loadDefect();
+                    loadDefect();
                 });
             } catch (Exception e) {
                 e.printStackTrace();

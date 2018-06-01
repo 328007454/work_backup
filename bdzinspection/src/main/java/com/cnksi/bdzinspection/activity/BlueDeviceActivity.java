@@ -21,7 +21,7 @@ import com.cnksi.common.base.BaseActivity;
 
 /**
  *
- * @auth han
+ * @author han
  * @date 2017/1/5 17:32
  * @since 1.0
  * @version 1.0

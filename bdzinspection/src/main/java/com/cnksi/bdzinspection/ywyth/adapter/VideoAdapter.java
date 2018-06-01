@@ -29,7 +29,6 @@ public class VideoAdapter extends SimpleBaseAdapter {
 	 */
 	public VideoAdapter(Context context, List<? extends Object> dataList) {
 		super(context, dataList);
-		initBitmapUtils(context);
 	}
 
 	@Override

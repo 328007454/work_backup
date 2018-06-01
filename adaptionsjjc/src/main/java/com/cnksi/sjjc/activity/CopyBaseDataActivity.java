@@ -113,8 +113,8 @@ public class CopyBaseDataActivity extends BaseSjjcActivity {
             } catch (DbException e) {
                 Log.i("Tag", e.getMessage());
             }
-            CopyBaseDataActivity.this.startActivity(new Intent(mActivity, CopyAllValueActivity3.class));
+            startActivity(new Intent(mActivity, CopyAllValueActivity3.class));
         });
-        mTitleBinding.btnBack.setOnClickListener(view -> CopyBaseDataActivity.this.finish());
+        mTitleBinding.btnBack.setOnClickListener(view -> finish());
     }
 }

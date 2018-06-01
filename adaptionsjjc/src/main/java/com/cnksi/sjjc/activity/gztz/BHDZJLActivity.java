@@ -29,7 +29,7 @@ import java.util.List;
  * 故障保护动作记录第三页
  *
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/3/7 10:50
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

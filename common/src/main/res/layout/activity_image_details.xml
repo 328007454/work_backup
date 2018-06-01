@@ -8,57 +8,6 @@
                   android:background="@android:color/white"
                   android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/xs_title_bar_minheight_px"
-            android:background="@color/xs_global_base_color">
-
-            <ImageButton
-                android:id="@+id/ibtn_cancel"
-                style="@style/svgButtonBack"
-                android:layout_width="@dimen/xs_title_bar_minheight_px"
-                android:layout_height="@dimen/xs_title_bar_minheight_px"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
-                android:contentDescription="@null"
-                android:visibility="visible"
-                app:srcCompat="@drawable/xs_cancel_button_background"/>
-
-
-            <TextView
-                android:id="@+id/tv_battery_test_step"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-                android:background="@drawable/xs_test_step_button_background_selector"
-                android:clickable="true"
-                android:gravity="center"
-                android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
-                android:paddingLeft="@dimen/xs_grid_vertical_spacing_px"
-                android:paddingRight="@dimen/xs_grid_vertical_spacing_px"
-                android:paddingTop="@dimen/xs_global_padding_top_bottom_px"
-                android:text="@string/xs_test_step_str"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_device_item_name_text_size_px"
-                android:visibility="gone"/>
-
-
-            <me.grantland.widget.AutofitTextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/xs_title_bar_minheight_px"
-                android:layout_marginRight="@dimen/xs_title_bar_minheight_px"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_title_text_size_px"
-                app:minTextSize="26px"/>
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

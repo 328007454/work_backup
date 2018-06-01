@@ -35,7 +35,7 @@ import static java.util.Calendar.DAY_OF_WEEK;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/7/28 14:27
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

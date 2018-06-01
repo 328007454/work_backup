@@ -109,12 +109,6 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
-            android:name=".activity.AllDeviceListActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
             android:name=".activity.CopyAllValueActivity3"

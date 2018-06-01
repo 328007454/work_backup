@@ -18,7 +18,7 @@ package com.cnksi.common.listener;
 /**
  * @author Wastrel
  * @version 1.0
- * @auth lyndon
+ * @author lyndon
  * @date 16/2/29
  * @since 1.0
  */

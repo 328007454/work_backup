@@ -1,14 +1,12 @@
 package com.cnksi.bdzinspection.activity;
 
 import android.content.Intent;
-import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.SpaceSortAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivitySpacesortBinding;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.SpacingService;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
@@ -78,28 +76,25 @@ public class SpaceSortActivity extends TitleActivity {
         spaceAdapter = new SpaceSortAdapter(mActivity, mData, deviceCountMap);
         spaceAdapter.setClickListener((v, data, position) -> {
             if (data.isSubPlace()) {
-                DialogUtils.showSureTipsDialog(mActivity, null, "是否恢复设备到原间隔？", new OnViewClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CustomerDialog.showProgress(mActivity, "恢复中...");
-                        ExecutorManager.executeTask(() -> {
-                            final boolean rs = restore(data);
-                            runOnUiThread(() -> {
-                                CustomerDialog.dismissProgress();
-                                if (rs) {
-                                    ToastUtils.showMessage("恢复间隔操作成功");
-                                    Integer count = deviceCountMap.get(data.pid);
-                                    count = count + deviceCountMap.get(data.spid);
-                                    deviceCountMap.put(data.pid, count);
-                                    mData.remove(data);
-                                    spaceAdapter.notifyDataSetChanged();
-                                } else {
-                                    ToastUtils.showMessage("更新数据库失败，请检查数据库！");
-                                }
-                            });
+                DialogUtils.showSureTipsDialog(mActivity, null, "是否恢复设备到原间隔？", v1 -> {
+                    CustomerDialog.showProgress(mActivity, "恢复中...");
+                    ExecutorManager.executeTask(() -> {
+                        final boolean rs = restore(data);
+                        runOnUiThread(() -> {
+                            CustomerDialog.dismissProgress();
+                            if (rs) {
+                                ToastUtils.showMessage("恢复间隔操作成功");
+                                Integer count = deviceCountMap.get(data.pid);
+                                count = count + deviceCountMap.get(data.spid);
+                                deviceCountMap.put(data.pid, count);
+                                mData.remove(data);
+                                spaceAdapter.notifyDataSetChanged();
+                            } else {
+                                ToastUtils.showMessage("更新数据库失败，请检查数据库！");
+                            }
                         });
-                        restore(data);
-                    }
+                    });
+                    restore(data);
                 });
             } else {
                 currentPosition = position;

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.SpaceSplitAdapter;
@@ -13,7 +12,6 @@ import com.cnksi.bdzinspection.databinding.XsActivitySpaceSplitBinding;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.SpacingService;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.Device;
@@ -32,7 +30,7 @@ import java.util.List;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/1/17 11:37
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -77,28 +75,25 @@ public class SpaceSplitActivity extends TitleActivity {
                 ToastUtils.showMessage("新间隔名称与原间隔名称一致，建议修改便于区分！");
             }
             CharSequence tips = StringUtils.formatPartTextColor("您是否要将选中的%s个设备拆分到新间隔 %s ?", Color.RED, selectDevice.size() + "", newName);
-            DialogUtils.showSureTipsDialog(mActivity, null, tips, new OnViewClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CustomerDialog.showProgress(mActivity, "保存数据中...");
-                    ExecutorManager.executeTask(() -> {
-                        final boolean rs = saveData(new ArrayList<>(selectDevice));
-                        runOnUiThread(() -> {
-                            CustomerDialog.dismissProgress();
-                            if (rs) {
-                                ToastUtils.showMessage("操作成功");
-                                Intent intent = new Intent();
-                                intent.putExtra("space", spacing);
-                                intent.putExtra("count", selectDevice.size());
-                                setResult(RESULT_OK, intent);
-                                finish();
-                            } else {
-                                ToastUtils.showMessageLong("更新数据库失败！请检查数据是否完整！");
-                            }
-                        });
+            DialogUtils.showSureTipsDialog(mActivity, null, tips, v1 -> {
+                CustomerDialog.showProgress(mActivity, "保存数据中...");
+                ExecutorManager.executeTask(() -> {
+                    final boolean rs = saveData(new ArrayList<>(selectDevice));
+                    runOnUiThread(() -> {
+                        CustomerDialog.dismissProgress();
+                        if (rs) {
+                            ToastUtils.showMessage("操作成功");
+                            Intent intent = new Intent();
+                            intent.putExtra("space", spacing);
+                            intent.putExtra("count", selectDevice.size());
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        } else {
+                            ToastUtils.showMessageLong("更新数据库失败！请检查数据是否完整！");
+                        }
                     });
+                });
 
-                }
             });
 
         });

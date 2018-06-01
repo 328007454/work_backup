@@ -13,7 +13,7 @@ import java.util.List;
  * 用于设备列表左右滑。
  * @author Wastrel
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/1/27 17:01
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

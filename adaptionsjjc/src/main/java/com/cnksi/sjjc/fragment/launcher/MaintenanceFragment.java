@@ -159,7 +159,7 @@ public class MaintenanceFragment extends BaseCoreFragment {
             binding.tvStatus.setText(isDone ? "已完成" : "未完成");
             binding.tvStatus.setTextColor(isDone ? colorDone : colorUndo);
             binding.ivStatus.setBackground(isDone ? drawableDone : drawableUndo);
-            binding.getRoot().setOnClickListener(v -> TaskItemAdapter.this.startTask(item));
+            binding.getRoot().setOnClickListener(v -> startTask(item));
         }
 
         private void startTask(Task task) {

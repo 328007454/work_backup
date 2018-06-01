@@ -38,7 +38,6 @@ import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
 import com.cnksi.common.listener.ItemClickListener;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
@@ -557,24 +556,21 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
     public void removeSign(final List<ReportSignname> list, final int position) {
         if (list.size() > 1) {
-            DialogUtils.showSureTipsDialog(mActivity, null, "提示", "您确认要删除该人员吗？", "确认", "取消", new OnViewClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ReportSignname reportSignname = list.remove(position);
-                    reportSignname.setDlt("1");
-                    try {
-                        ReportSignnameService.getInstance().saveOrUpdate(reportSignname);
-                    } catch (DbException e) {
-                        e.printStackTrace();
-                    }
-                    adapterGzr.notifyDataSetChanged();
-                    adapterFzr.notifyDataSetChanged();
-                    if (clickCzr) {
-                        czrModels.remove(position);
-                        czrModelsOrigin.remove(position);
-                    } else {
-                        fzrModels.remove(position);
-                    }
+            DialogUtils.showSureTipsDialog(mActivity, null, "提示", "您确认要删除该人员吗？", "确认", "取消", v -> {
+                ReportSignname reportSignname = list.remove(position);
+                reportSignname.setDlt("1");
+                try {
+                    ReportSignnameService.getInstance().saveOrUpdate(reportSignname);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                adapterGzr.notifyDataSetChanged();
+                adapterFzr.notifyDataSetChanged();
+                if (clickCzr) {
+                    czrModels.remove(position);
+                    czrModelsOrigin.remove(position);
+                } else {
+                    fzrModels.remove(position);
                 }
             });
 

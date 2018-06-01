@@ -147,7 +147,7 @@ public class NewTransformRecordActivity extends BaseSjjcActivity {
 
     private void initOnClick() {
 
-        mTitleBinding.btnBack.setOnClickListener(view -> NewTransformRecordActivity.this.finish());
+        mTitleBinding.btnBack.setOnClickListener(view -> finish());
 
         binding.btnConfirmSave.setOnClickListener(view -> {
             List<ReportJzlbyqfjkg> saveList = new ArrayList<>();
@@ -179,7 +179,7 @@ public class NewTransformRecordActivity extends BaseSjjcActivity {
             }
             try {
                 TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
-                NewTransformRecordActivity.this.setResult(RESULT_OK);
+                setResult(RESULT_OK);
             } catch (DbException e) {
                 e.printStackTrace();
             }
@@ -190,8 +190,8 @@ public class NewTransformRecordActivity extends BaseSjjcActivity {
                 e.printStackTrace();
             }
             Intent intent = new Intent(mActivity, JZLFenJieKaiGuanReportActivity.class);
-            NewTransformRecordActivity.this.startActivity(intent);
-            NewTransformRecordActivity.this.finish();
+            startActivity(intent);
+            finish();
         });
     }
 

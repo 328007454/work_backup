@@ -31,6 +31,7 @@ import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.enmu.LookUpType;
+import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
@@ -60,7 +61,7 @@ import static com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity.UPDATE_D
  *
  * @author lyndon
  */
-public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeListener, FragmentItemClickerListener<DbModel>, KeyBordListener {
+public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemClickerListener<DbModel>, KeyBordListener {
 
     public final int LOAD_COPY_FINISH = 0x10;
     protected int currentKeyBoardState = CopyKeyBoardUtil.KEYBORAD_HIDE;
@@ -175,27 +176,20 @@ public class CopyAllValueActivity2 extends BaseActivity implements OnPageChangeL
             setPagerTabStripValue(binding.tabStrip);
             binding.tabStrip.setTabPaddingLeftRight(37);
             binding.tabStrip.setShouldExpand(false);
-            binding.tabStrip.setOnPageChangeListener(this);
+            binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener(){
+                @Override
+                public void onPageSelected(int position) {
+                    currentPosition = position;
+                    currentFragment = fragmentList.get(position);
+                }
+            });
             binding.viewPager.setOffscreenPageLimit(titleArray.size());
         }
         currentFragment = fragmentList.get(  binding.viewPager.getCurrentItem());
     }
 
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
 
-    }
 
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        currentPosition = position;
-        currentFragment = fragmentList.get(position);
-    }
 
     private void initOnClick() {
         binding.cbSelected.setOnClickListener(view -> {

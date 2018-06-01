@@ -96,20 +96,20 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         copyViewUtil.setKeyBordListener(this);
         // 抄录项长按弹出看不清输入对话框
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
-            copyDialogBinding = XsActivityCopyDialogBinding.inflate(CopyValueActivity2.this.getLayoutInflater());
+            copyDialogBinding = XsActivityCopyDialogBinding.inflate(getLayoutInflater());
             dialog = DialogUtils.createDialog(mActivity, copyDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             copyDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             // holder.etInput.setText("看不清");
 //            holder.remark = holder.etInput.getText().toString();
             //隐藏自定义键盘
-            CopyValueActivity2.this.hideKeyBord();
+            hideKeyBord();
             dialog.show();
             copyDialogBinding.btnCancel.setOnClickListener(view -> dialog.dismiss());
-            copyDialogBinding.btnSure.setOnClickListener(view -> CopyValueActivity2.this.saveRemarkData(result, copyDialogBinding.etCopyValues, item));
+            copyDialogBinding.btnSure.setOnClickListener(view -> saveRemarkData(result, copyDialogBinding.etCopyValues, item));
         });
         copyViewUtil.setItemClickListener((v, item, position) -> {
             // 显示历史曲线
-            CopyValueActivity2.this.hideKeyBord();
+            hideKeyBord();
             ShowCopyHistroyDialogUtils.showHistory(mActivity, item);
         });
 
@@ -175,7 +175,7 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     private void initialData() {
         // 查询抄录标准
         ExecutorManager.executeTask(() -> {
-            CopyValueActivity2.this.searchDefect();
+            searchDefect();
             data = copyViewUtil.loadItem();
             mHandler.sendEmptyMessage(LOAD_COPY_FINSIH);
         });
@@ -217,8 +217,8 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
     }
 
     private void initOnClick() {
-        binding.btnFinish.setOnClickListener(view -> CopyValueActivity2.this.save());
-        binding.includeTitle.ibtnCancel.setOnClickListener(view -> CopyValueActivity2.this.save());
+        binding.btnFinish.setOnClickListener(view -> save());
+        binding.includeTitle.ibtnCancel.setOnClickListener(view -> save());
     }
 
     private void save() {

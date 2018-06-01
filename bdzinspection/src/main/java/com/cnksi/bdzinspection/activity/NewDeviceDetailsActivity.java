@@ -23,7 +23,6 @@ import com.cnksi.bdzinspection.adapter.BigTypePreventAdapter;
 import com.cnksi.bdzinspection.adapter.DevicePartRecylerAdapter;
 import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.StandardAdapter;
-import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.DeviceStandardOperService;
 import com.cnksi.bdzinspection.daoservice.DeviceStandardsService;
 import com.cnksi.bdzinspection.daoservice.DeviceTypeImageService;
@@ -46,7 +45,6 @@ import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.DevicePartService;
 import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.listener.OnViewClickListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.DevicePart;
@@ -56,6 +54,7 @@ import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.common.utils.TTSUtils;
+import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.DisplayUtils;
@@ -526,28 +525,25 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     tips = "是否撤销不适用标注?";
                     mark.dlt = "1";
                 }
-                DialogUtils.showSureTipsDialog(mActivity, devicedetailsBinding.llContainer, tips, new OnViewClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            DeviceStandardOperService.getInstance().saveOrUpdate(mark);
-                            ToastUtils.showMessage("操作成功");
-                            if ("1".equals(mark.dlt)) {
-                                standard.add("isMark", "N");
-                                staidMarkMap.remove(mark.staid);
-                            } else {
-                                staidMarkMap.put(mark.staid, mark);
-                                standard.add("isMark", "Y");
-                            }
-                            //刷新界面
-                            if (devicedetailsBinding.deviceStandardLv.getAdapter() != null) {
-                                ((BaseAdapter) devicedetailsBinding.deviceStandardLv.getAdapter()).notifyDataSetChanged();
-                            }
-                        } catch (DbException e) {
-                            e.printStackTrace();
+                DialogUtils.showSureTipsDialog(mActivity, devicedetailsBinding.llContainer, tips, v1 -> {
+                    try {
+                        DeviceStandardOperService.getInstance().saveOrUpdate(mark);
+                        ToastUtils.showMessage("操作成功");
+                        if ("1".equals(mark.dlt)) {
+                            standard.add("isMark", "N");
+                            staidMarkMap.remove(mark.staid);
+                        } else {
+                            staidMarkMap.put(mark.staid, mark);
+                            standard.add("isMark", "Y");
                         }
-                        mStandardSourceDialog.dismiss();
+                        //刷新界面
+                        if (devicedetailsBinding.deviceStandardLv.getAdapter() != null) {
+                            ((BaseAdapter) devicedetailsBinding.deviceStandardLv.getAdapter()).notifyDataSetChanged();
+                        }
+                    } catch (DbException e) {
+                        e.printStackTrace();
                     }
+                    mStandardSourceDialog.dismiss();
                 });
             });
         } else {
@@ -762,12 +758,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
     @Override
     public void onBackPressed() {
         if (mCurrentDevice.isImportant() && SystemConfig.isMustPicImportantDevice() && (placedDevice == null || !placedDevice.isHasPhoto())) {
-            DialogUtils.showSureTipsDialog(mActivity, null, "当前设备是关键设备，按照规定应拍照确认！是否返回？", new OnViewClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NewDeviceDetailsActivity.super.onBackPressed();
-                }
-            });
+            DialogUtils.showSureTipsDialog(mActivity, null, "当前设备是关键设备，按照规定应拍照确认！是否返回？", v -> NewDeviceDetailsActivity.super.onBackPressed());
         } else {
             super.onBackPressed();
         }

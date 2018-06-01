@@ -46,7 +46,7 @@ import static com.cnksi.sjjc.sync.SyncMenuUtils.DeleteModel.createDEPT_ID;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/3/15 10:56
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

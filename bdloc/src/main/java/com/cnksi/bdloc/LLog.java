@@ -4,7 +4,7 @@ import android.util.Log;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2017/4/21 14:31
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0

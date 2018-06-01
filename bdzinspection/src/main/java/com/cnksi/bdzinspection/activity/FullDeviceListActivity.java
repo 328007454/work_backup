@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
@@ -38,7 +37,7 @@ import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.LookUpType;
-import com.cnksi.common.listener.OnViewClickListener;
+import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.DialogUtils;
@@ -67,10 +66,9 @@ import static com.cnksi.ksynclib.KSync.SYNC_SUCCESS;
  * @author lyndon
  * @date 2016-10-18
  */
-public class FullDeviceListActivity extends BaseActivity implements OnPageChangeListener, OnShakeListener {
+public class FullDeviceListActivity extends BaseActivity implements OnShakeListener {
     public static final int SHAKE_CODE = -16;
     public static final int FRAGMENT_POSITION = 1;
-    public static final int SPACE_POSITION = FRAGMENT_POSITION + 11;
     LocationUtil.LocationHelper locationHelper;
     private List<Lookup> deviceTypes;
     private List<DeviceListFragment> fragmentList;
@@ -136,8 +134,21 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         setPagerTabStripValue(binding.tabStrip);
         binding.tabStrip.setTabPaddingLeftRight(37);
         binding.tabStrip.setShouldExpand(false);
-        binding.tabStrip.setOnPageChangeListener(this);
-        onPageSelected(0);
+        AbstractPageChangeListener pageChangeListener = new AbstractPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPosition = position;
+                currentFragment = fragmentList.get(position);
+                if (position < FRAGMENT_POSITION && isLeader) {
+                    binding.ibtnSort.setVisibility(View.VISIBLE);
+                } else {
+                    binding.ibtnSort.setVisibility(View.GONE);
+                }
+            }
+        };
+        binding.tabStrip.setOnPageChangeListener(pageChangeListener);
+        pageChangeListener.onPageSelected(0);
         /**
          * 30s定位一次
          */
@@ -196,27 +207,6 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         });
     }
 
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
-
-    }
-
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-    }
-
-
-    @Override
-    public void onPageSelected(int position) {
-        currentPosition = position;
-        currentFragment = fragmentList.get(position);
-        if (position < FRAGMENT_POSITION && isLeader) {
-            binding.ibtnSort.setVisibility(View.VISIBLE);
-        } else {
-            binding.ibtnSort.setVisibility(View.GONE);
-        }
-    }
 
     private void initOnClick() {
         binding.ibtnCancel.setOnClickListener(view -> FullDeviceListActivity.this.onBackPressed());
@@ -252,20 +242,16 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         String tip = String.format(getText(R.string.xs_dialog_tips_finish_str1) + "", copyCount + "", totalCount + "", s);
 
         if (currentTask.isMember()) {
-            DialogUtils.showSureTipsDialog(mActivity, null, tip + "\n" + "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", new OnViewClickListener() {
-                @Override
-                public void onClick(View v) {
-                    super.onClick(v);
-                    CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
-                    KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
-                }
+            DialogUtils.showSureTipsDialog(mActivity, null, tip + "\n" + "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", v -> {
+                CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
+                KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
             });
         } else {
             if (isRoutineNotCopy()) {
-                showTipsDialog( new Intent(this, GenerateReportActivity.class));
+                showTipsDialog(new Intent(this, GenerateReportActivity.class));
             } else {
                 tip = tip + (currentTask.isGroupTask() ? "\n" + "确保分组成员已经获取过该任务，否则需通知其获取" : "");
-                showTipsDialog( new Intent(this, GenerateReportActivity.class), -1, tip, false);
+                showTipsDialog(new Intent(this, GenerateReportActivity.class), -1, tip, false);
             }
         }
     }
@@ -345,7 +331,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnPageChange
         final EditText editText = holder.getView(R.id.edit);
         TextView tvTitle = holder.getView(R.id.tv_dialog_title);
         editText.setHint("修改判断距离");
-        editText.setText(Config.COPY_MAX_DISTANCE+"");
+        editText.setText(Config.COPY_MAX_DISTANCE + "");
         tvTitle.setText("请输入判断距离(m)");
         InputFilter[] filters = {new InputFilter.LengthFilter(10)};
         editText.setFilters(filters);

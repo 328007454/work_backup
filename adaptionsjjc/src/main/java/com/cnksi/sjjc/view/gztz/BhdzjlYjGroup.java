@@ -8,11 +8,11 @@ import android.widget.LinearLayout;
 import com.cnksi.sjjc.activity.gztz.BHDZJLActivity;
 import com.cnksi.sjjc.bean.gztz.BhyjBean;
 import com.cnksi.sjjc.databinding.GztzItemBhdzjlYjlxBinding;
-import com.cnksi.sjjc.inter.SimpleTextWatcher;
+import com.cnksi.common.listener.AbstractTextWatcher;
 
 /**
  * @version 1.0
- * @auth wastrel
+ * @author wastrel
  * @date 2018/3/8 21:42
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -33,13 +33,13 @@ public class BhdzjlYjGroup {
         }
         binding.add.setOnClickListener(view -> group.addOtherYJLX());
         binding.delete.setOnClickListener(view -> group.removeView(BhdzjlYjGroup.this));
-        binding.bhdzsj.addTextChangedListener(new SimpleTextWatcher() {
+        binding.bhdzsj.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 group.rebulidStr();
             }
         });
-        binding.bhyjlx.addTextChangedListener(new SimpleTextWatcher() {
+        binding.bhyjlx.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 group.rebulidStr();

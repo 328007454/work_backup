@@ -5,14 +5,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.base.BaseActivity;
 import com.cnksi.bdzinspection.activity.DownloadOperationTickActivity;
-import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateTicketService;
 import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskListBinding;
 import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
@@ -20,6 +17,9 @@ import com.cnksi.bdzinspection.emnu.OperateTaskType;
 import com.cnksi.bdzinspection.fragment.OperateTaskListFragment;
 import com.cnksi.bdzinspection.model.OperateTick;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.base.FragmentPagerAdapter;
+import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 
@@ -38,7 +38,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  *
  * @author Oliver
  */
-public class OperateTaskListActivity extends BaseActivity implements OnPageChangeListener {
+public class OperateTaskListActivity extends BaseActivity  {
 
     public static final int DOWNLOAD_OPERATION_CODE = 0x111;
     public static final int START_OPERATE_CODE = DOWNLOAD_OPERATION_CODE + 1;
@@ -113,7 +113,12 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
           binding.tabStrip.setViewPager(  binding.viewPager);
         setPagerTabStripValue(  binding.tabStrip);
           binding.viewPager.setOffscreenPageLimit(mFragmentList.size());
-          binding.viewPager.addOnPageChangeListener(this);
+          binding.viewPager.addOnPageChangeListener(new AbstractPageChangeListener(){
+              @Override
+              public void onPageSelected(int position) {
+                  currentPosition = position;
+              }
+          });
     }
 
     @SuppressWarnings("unchecked")
@@ -162,20 +167,9 @@ public class OperateTaskListActivity extends BaseActivity implements OnPageChang
         }
     }
 
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
 
-    }
 
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
 
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        currentPosition = position;
-    }
 
     public void startOperateTask(DbModel item) {
         if (OperateTaskStatus.wwc.name().equalsIgnoreCase(item.getString(OperateTick.STATUS)) || OperateTaskStatus.yzt.name().equalsIgnoreCase(item.getString(OperateTick.STATUS))) {
