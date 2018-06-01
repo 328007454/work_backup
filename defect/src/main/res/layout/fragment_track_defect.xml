@@ -36,12 +36,14 @@
                     android:id="@+id/tv_defect_deal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
                     android:background="@color/xs_green_color"
                     android:gravity="center_vertical"
                     android:paddingBottom="@dimen/xs_text_button_padding_top_px"
                     android:paddingLeft="@dimen/xs_global_padding_left_right_px"
                     android:paddingTop="@dimen/xs_text_button_padding_top_px"
-                    android:text="@string/xs_add_defect_str"
+                    android:text="跟踪缺陷"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/xs_global_text_size_px"
                     app:layout_constraintTop_toBottomOf="@+id/include_defect" />
@@ -66,29 +68,6 @@
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@+id/container_defect_input" />
 
-                <TextView
-                    android:id="@+id/tv_track_history_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/xs_gray_background_color"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-                    android:paddingTop="@dimen/xs_text_button_padding_top_px"
-                    android:text="@string/xs_track_history_str"
-                    android:textColor="@color/xs_green_color"
-                    android:textSize="@dimen/xs_global_text_size_px"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@+id/contanier_sf6" />
-
-                <com.cnksi.core.view.InnerListView
-                    android:id="@+id/lv_track_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:cacheColorHint="@android:color/transparent"
-                    android:divider="@color/xs_line_color"
-                    android:dividerHeight="@dimen/xs_line_half_width_px"
-                    android:listSelector="@android:color/transparent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_track_history_count" />
 
             </android.support.constraint.ConstraintLayout>
         </ScrollView>

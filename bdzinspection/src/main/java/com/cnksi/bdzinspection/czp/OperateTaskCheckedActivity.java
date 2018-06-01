@@ -19,7 +19,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityOperateTaskCheckedBinding;
 import com.cnksi.bdzinspection.emnu.OperateTaskStatus;
 import com.cnksi.bdzinspection.model.OperateItem;
 import com.cnksi.bdzinspection.model.OperateTick;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.LandSignNameActivity;
 import com.cnksi.common.utils.BitmapUtil;

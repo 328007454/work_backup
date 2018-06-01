@@ -12,12 +12,12 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.PinnedHeaderSectionedAdapter;
 import com.cnksi.bdzinspection.databinding.XsGroupItemBinding;
 import com.cnksi.bdzinspection.databinding.XsReadyExistDefectItemBinding;
-import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.defect.utils.DefectUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 public class ReadyExistDefectAdapter extends PinnedHeaderSectionedAdapter<String, DefectRecord> {

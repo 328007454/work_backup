@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_120px"
     android:gravity="center_vertical"
+    android:paddingLeft="@dimen/core_padding_30px"
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView

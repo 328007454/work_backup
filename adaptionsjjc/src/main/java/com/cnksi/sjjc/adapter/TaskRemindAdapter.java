@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cnksi.common.base.BaseAdapter;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.utils.DateUtils;

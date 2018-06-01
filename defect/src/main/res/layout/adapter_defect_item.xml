@@ -19,6 +19,7 @@
             android:layout_width="280px"
             android:layout_height="210px"
             android:background="#1bbc9b"
+            android:scaleType="fitXY"
             android:contentDescription="@null"
             android:src="@mipmap/icon_nodefect"
             android:textColor="@android:color/white"

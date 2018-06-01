@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.base.SimpleBaseAdapter;
 import com.cnksi.bdzinspection.databinding.XsHistoryDefectItemBinding;
-import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.defect.utils.DefectUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;

@@ -52,4 +52,5 @@ dependencies {
     implementation files('libs/M100_RFID_API.jar')
     compile project(':tts')
     compile project(':common')
+    compile project(':defect')
 }

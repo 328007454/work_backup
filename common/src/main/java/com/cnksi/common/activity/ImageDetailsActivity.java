@@ -130,7 +130,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
 
     private void showSureTipsDialog() {
         if (tipsDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(getApplicationContext()) * 9 / 10;
+            int dialogWidth = ScreenUtils.getScreenWidth(this) * 9 / 10;
             int dialogHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
             mTipsBinding = DialogTipsBinding.inflate(getLayoutInflater());
             tipsDialog = DialogUtils.creatDialog(mActivity, mTipsBinding.getRoot(), dialogWidth, dialogHeight);
@@ -145,7 +145,7 @@ public class ImageDetailsActivity extends BaseCoreActivity implements OnPageChan
             String imageUrl = imageList.get(currentPosition);
             if (isDeleteFile) {
                 File file = new File(imageUrl);
-                if (file.isFile() && file.exists()) {// if image is exist , delete it,
+                if (file.isFile() && file.exists()) {
                     file.delete();
                 }
             }

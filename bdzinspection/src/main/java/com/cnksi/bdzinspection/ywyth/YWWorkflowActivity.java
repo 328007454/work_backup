@@ -29,7 +29,7 @@ import com.cnksi.bdzinspection.databinding.XsYunweiliuchengAdapterBinding;
 import com.cnksi.bdzinspection.model.PlanProcessStatus;
 import com.cnksi.bdzinspection.model.Process;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.TaskService;

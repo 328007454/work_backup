@@ -30,7 +30,7 @@ import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;

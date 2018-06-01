@@ -15,7 +15,7 @@ import com.cnksi.bdzinspection.adapter.DefectDefineAdapter;
 import com.cnksi.bdzinspection.daoservice.DefectDefineService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddNewDefectBinding;
 import com.cnksi.bdzinspection.model.Defect;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.base.BaseActivity;

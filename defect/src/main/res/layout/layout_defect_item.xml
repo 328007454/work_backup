@@ -1,181 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <layout>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/rlroot_defect_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/xs_history_defect_item_background_selector">
+<layout>
 
-    <ImageView
-        android:id="@+id/iv_tips"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@null"
-        android:src="@drawable/xs_ic_task_unfinish"/>
-
-    <RelativeLayout
-        android:id="@+id/rl_container"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rlroot_defect_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-        android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
-        android:layout_marginTop="@dimen/xs_line_height_px"
-        android:paddingBottom="@dimen/xs_line_height_px">
+        android:layout_marginBottom="5px"
+        android:background="@drawable/xs_history_defect_item_background_selector">
 
         <ImageView
-            android:id="@+id/iv_defect_image"
-            android:layout_width="280px"
-            android:layout_height="210px"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:background="#1bbc9b"
+            android:id="@+id/iv_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:contentDescription="@null"
-            android:gravity="center"
-            android:scaleType="centerCrop"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/xs_global_text_size_px"
-            app:layout_auto_baseheight="width"/>
+            android:src="@drawable/xs_ic_task_unfinish" />
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rl_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-            android:layout_toRightOf="@id/iv_defect_image"
-            android:orientation="horizontal">
+            android:layout_marginRight="@dimen/xs_global_padding_left_right_px"
+            android:layout_marginTop="@dimen/xs_line_height_px"
+            android:paddingBottom="@dimen/xs_line_height_px">
 
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/txt_defect_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在跟踪..."
+                android:visibility="gone"
+                android:textColor="@color/refresh_background_color"
+                android:textSize="@dimen/core_padding_30px" />
+
+            <ImageView
+                android:id="@+id/iv_defect_image"
+                android:layout_width="280px"
+                android:layout_height="210px"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="#1bbc9b"
+                android:contentDescription="@null"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px"
+                app:layout_auto_baseheight="width" />
 
             <LinearLayout
-                android:layout_width="0px"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                android:layout_toRightOf="@id/iv_defect_image"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_defect_description"
-                    android:layout_width="match_parent"
+
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="wrap_content"
-                    android:text="[I母PT] 引线表面有电晕、毛刺损伤现象"
-                    android:textColor="@color/xs_global_text_color"
-                    android:textSize="@dimen/xs_inspection_time_text_size_px"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_defect_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="[I母PT] 引线表面有电晕、毛刺损伤现象"
+                        android:textColor="@color/xs_global_text_color"
+                        android:textSize="@dimen/xs_inspection_time_text_size_px" />
 
 
-                <TextView
-                    android:id="@+id/tv_defect_discover_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#626262"
-                    android:textSize="@dimen/xs_history_defect_level_text_size_px"/>
+                    <TextView
+                        android:id="@+id/tv_defect_discover_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#626262"
+                        android:textSize="@dimen/xs_history_defect_level_text_size_px" />
 
-                <TextView
-                    android:id="@+id/tv_record_person"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5px"
-                    android:gravity="center"
-                    android:text="记录人员："
-                    android:textColor="#626262"
-                    android:textSize="@dimen/xs_history_defect_level_text_size_px"/>
+                    <TextView
+                        android:id="@+id/tv_record_person"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5px"
+                        android:gravity="center"
+                        android:text="记录人员："
+                        android:textColor="#626262"
+                        android:textSize="@dimen/xs_history_defect_level_text_size_px" />
 
-                <TextView
-                    android:id="@+id/tv_defect_space"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5px"
-                    android:text="间隔："
-                    android:textColor="#626262"
-                    android:textSize="38px"/>
+                    <TextView
+                        android:id="@+id/tv_defect_space"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5px"
+                        android:text="间隔："
+                        android:textColor="#626262"
+                        android:textSize="38px" />
 
-                <TextView
-                    android:id="@+id/tv_defect_device"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5px"
-                    android:text="设备："
-                    android:textColor="#626262"
-                    android:textSize="38px"/>
+                    <TextView
+                        android:id="@+id/tv_defect_device"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5px"
+                        android:text="设备："
+                        android:textColor="#626262"
+                        android:textSize="38px" />
 
-                <TextView
-                    android:id="@+id/tv_tracker_person"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                    android:layout_toRightOf="@id/tv_defect_level"
-                    android:textColor="#626262"
-                    android:textSize="@dimen/xs_history_defect_level_text_size_px"
-                    android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/tv_tracker_person"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
+                        android:textColor="#626262"
+                        android:textSize="@dimen/xs_history_defect_level_text_size_px"
+                        android:visibility="gone" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="66px"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/rl_container"
-        android:visibility="visible">
-
-        <TextView
-            android:id="@+id/tv_defect_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-            android:layout_toRightOf="@id/tv_defect_discover_time"
-            android:textColor="@color/xs_global_gray_text_color"
-            android:textSize="@dimen/xs_history_defect_level_text_size_px"
-            android:visibility="gone"/>
-
-        <LinearLayout
-            android:id="@+id/ll_function_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_report_defect"
-                android:layout_width="@dimen/xs_track_defect_button_minheight_px"
-                android:layout_height="@dimen/xs_track_defect_button_minheight_px"
-                android:background="@drawable/xs_green_button_background_selector"
-                android:gravity="center"
-                android:minHeight="@dimen/xs_track_defect_button_minheight_px"
-                android:minWidth="@dimen/xs_track_defect_button_minheight_px"
-                android:text="@string/xs_report_str"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_inspection_time_text_size_px"
-                android:visibility="gone"
-                />
-
-            <TextView
-                android:id="@+id/tv_track_defect"
-                android:layout_width="@dimen/xs_track_defect_button_minheight_px"
-                android:layout_height="@dimen/xs_track_defect_button_minheight_px"
-                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                android:background="@drawable/xs_grass_green_button_background_selector"
-                android:gravity="center"
-                android:minHeight="@dimen/xs_track_defect_button_minheight_px"
-                android:minWidth="@dimen/xs_track_defect_button_minheight_px"
-                android:text="@string/xs_track_str"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_inspection_time_text_size_px"
-                app:layout_auto_baseheight="width"/>
-
-            <TextView
-                android:id="@+id/tv_eliminate_defect"
-                android:layout_width="@dimen/xs_track_defect_button_minheight_px"
-                android:layout_height="@dimen/xs_track_defect_button_minheight_px"
-                android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-                android:background="@drawable/xs_red_button_background_selector"
-                android:gravity="center"
-                android:minHeight="@dimen/xs_track_defect_button_minheight_px"
-                android:minWidth="@dimen/xs_track_defect_button_minheight_px"
-                android:text="@string/xs_eliminate_str"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_inspection_time_text_size_px"
-                app:layout_auto_baseheight="width"/>
-        </LinearLayout>
-    </RelativeLayout>
-</RelativeLayout></layout>
+</layout>

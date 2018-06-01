@@ -38,7 +38,7 @@ import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.utils.AnimationUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyboardChangeListener;
 import com.cnksi.common.Config;

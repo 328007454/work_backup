@@ -20,7 +20,7 @@ import com.cnksi.bdzinspection.databinding.XsActivityChangeStandardBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddDefectDefineBinding;
 import com.cnksi.bdzinspection.model.Defect;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.Config;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.databinding.CommonInspectionTipsBinding;

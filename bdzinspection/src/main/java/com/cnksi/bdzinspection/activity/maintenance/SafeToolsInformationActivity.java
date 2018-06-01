@@ -24,7 +24,7 @@ import com.cnksi.bdzinspection.emnu.ToolStatus;
 import com.cnksi.bdzinspection.model.OperateToolResult;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
 import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PersonListUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.Bdz;

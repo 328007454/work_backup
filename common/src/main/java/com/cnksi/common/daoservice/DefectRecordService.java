@@ -374,4 +374,21 @@ public class DefectRecordService extends BaseService<DefectRecord> {
         }
         return defects;
     }
+
+    public List<DefectRecord> queryDefectByDefectId(String defectId, String bdzId) {
+        List<DefectRecord> defects = null;
+        try {
+            Selector selector = selector().and(DefectRecord.DEFECTID, "=", defectId)
+                    .and(DefectRecord.HAS_REMOVE, "=", "N").and(DefectRecord.HAS_TRACK, "=", "N")
+                    .and(DefectRecord.BDZID, "=", bdzId).and(DefectRecord.IS_COPY, "<>", "Y")
+                    .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)  AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
+                    .orderBy(DefectRecord.DISCOVERED_DATE, true);
+
+            defects = selector.findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return defects;
+
+    }
 }

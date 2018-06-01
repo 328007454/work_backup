@@ -24,7 +24,6 @@ import com.cnksi.bdzinspection.databinding.XsActivityYwBatteryBinding;
 import com.cnksi.bdzinspection.databinding.XsBatteryInputValueDialogBinding;
 import com.cnksi.bdzinspection.model.BatteryDetails;
 import com.cnksi.bdzinspection.model.BatteryReport;
-import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.BaseService;
@@ -45,6 +44,7 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.defect.utils.DefectUtils;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;

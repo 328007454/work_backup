@@ -35,7 +35,7 @@ import com.cnksi.bdzinspection.model.DeviceStandardsOper;
 import com.cnksi.bdzinspection.model.DeviceTypeImage;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.SpecialMenu;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;

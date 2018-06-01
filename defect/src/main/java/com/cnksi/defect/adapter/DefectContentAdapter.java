@@ -84,6 +84,7 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         AdapterDefectItemBinding itemBinding = (AdapterDefectItemBinding) dataBinding;
         itemBinding.tvDefectContent.setText(convert2DefectLevel(item));
         itemBinding.tvDefectDevice.setText("设备：" + (TextUtils.isEmpty(item.devcie) ? "" : item.devcie));
+        itemBinding.ivDefectImage.setImageBitmap(null);
         final ArrayList<String> listPicDis = StringUtils.stringToList(item.pics);
         if (listPicDis.size() > 0 && !TextUtils.isEmpty(listPicDis.get(0))) {
             Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)), 280);

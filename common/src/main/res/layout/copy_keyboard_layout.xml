@@ -45,7 +45,6 @@
 
             <com.cnksi.common.view.NumberSeekBar
                 android:id="@+id/number_seekbar"
-                style="@style/Widget.SeekBar.Normal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/xs_drawable_padding"

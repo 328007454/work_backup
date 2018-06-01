@@ -58,6 +58,10 @@ public class CommonApplication extends CoreApplication {
         return config;
     }
 
+    @Override
+    public DbManager getDbManager() {
+        return super.getDbManager();
+    }
 
     @Override
     public void onCreate() {

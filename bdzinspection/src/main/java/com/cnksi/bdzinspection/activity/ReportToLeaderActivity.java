@@ -15,12 +15,12 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.ReportLeaderAdapter;
 import com.cnksi.bdzinspection.databinding.XsActivityReportToLeaderBinding;
 import com.cnksi.bdzinspection.model.TestPerson;
-import com.cnksi.bdzinspection.utils.DefectUtils;
-import com.cnksi.common.base.BaseActivity;
-import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.utils.PlaySound;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.defect.utils.DefectUtils;
 
 import java.util.ArrayList;
 import java.util.List;

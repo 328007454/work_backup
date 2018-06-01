@@ -123,7 +123,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/xs_global_padding_left_right_px"
-            android:layout_toRightOf="@id/tv_defect_discover_time"
             android:textColor="@color/xs_global_gray_text_color"
             android:textSize="@dimen/xs_history_defect_level_text_size_px"
             android:visibility="gone"/>

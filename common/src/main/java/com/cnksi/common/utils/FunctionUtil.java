@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.common.utils;
 
 import android.app.Activity;
 import android.content.ContentValues;

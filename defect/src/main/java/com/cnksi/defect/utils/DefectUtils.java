@@ -1,9 +1,8 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.defect.utils;
 
 import android.graphics.Color;
 import android.text.TextUtils;
 
-import com.cnksi.bdzinspection.R;
 import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.common.model.CopyItem;
@@ -12,6 +11,7 @@ import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.CalcUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.defect.R;
 
 import java.util.List;
 

@@ -24,7 +24,6 @@ import com.cnksi.bdzinspection.databinding.XsActivitySingleSpaceCopyBinding;
 import com.cnksi.bdzinspection.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
 import com.cnksi.bdzinspection.utils.CopyViewUtil;
-import com.cnksi.bdzinspection.utils.DefectUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.CopyItemService;
@@ -42,6 +41,7 @@ import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.defect.utils.DefectUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;

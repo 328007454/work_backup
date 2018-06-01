@@ -29,7 +29,7 @@ import com.cnksi.bdzinspection.daoservice.SwitchPicService;
 import com.cnksi.bdzinspection.databinding.PopMenuBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.bdzinspection.utils.FunctionUtil;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.bdzinspection.utils.KeyboardChangeListener;
 import com.cnksi.common.Config;

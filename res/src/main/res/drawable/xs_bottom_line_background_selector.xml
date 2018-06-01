@@ -15,6 +15,6 @@
             </item>
         </layer-list>
     </item>
-    <item android:drawable="@drawable/xs_gray_bottom_line_background" android:state_pressed="true"></item>
+    <item android:drawable="@drawable/xs_gray_bottom_line_background" android:state_pressed="true"/>
 
 </selector>

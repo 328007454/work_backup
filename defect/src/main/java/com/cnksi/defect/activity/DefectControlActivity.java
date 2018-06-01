@@ -11,6 +11,7 @@ import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Users;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -34,6 +35,7 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     private ActivityDefectControlBinding defectControlBinding;
     private List<Bdz> bdzList = new ArrayList<>();
     private DefectContentAdapter defectContentAdapter;
+
     /**
      * 变电站实体model
      */
@@ -96,12 +98,14 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
                 if (defectContentAdapter == null) {
                     defectContentAdapter = new DefectContentAdapter(this, defectRecords);
                     defectControlBinding.lvDefect.setAdapter(defectContentAdapter);
+                    defectContentAdapter.setItemClickListener(this);
                 } else {
                     defectContentAdapter.setList(defectRecords);
                 }
             });
         });
     }
+
 
 
     public void onClick(View view) {
@@ -149,7 +153,16 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     @Override
     public void onClick(View v, DefectRecord data, int position) {
         Intent intent = new Intent(this, OperateDefectActivity.class);
-        intent.putExtra(DefectRecord.DEFECTID,data);
+        intent.putExtra(Device.DEVICEID,data.deviceid);
+        intent.putExtra(Bdz.BDZID,data.bdzid);
+        intent.putExtra(Config.DEFECT_COUNT_KEY,Config.SINGLE);
+        intent.putExtra(DefectRecord.DEFECTID,data.defectid);
         startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        search();
     }
 }

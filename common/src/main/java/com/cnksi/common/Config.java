@@ -477,5 +477,6 @@ public class Config implements Cst {
             Config.WWWROOT_FOLDER};
     public static String DELETED="1";
 
-
+    public static final String SINGLE="single";
+    public static final String MULTI="multi";
 }

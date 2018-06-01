@@ -66,7 +66,9 @@
                         android:id="@+id/iv_new_defect_photo"
                         android:layout_width="@dimen/xs_new_defect_photo_height_px"
                         android:layout_height="@dimen/xs_new_defect_photo_height_px"
-                        android:layout_centerInParent="true"
+                        android:scaleType="centerCrop"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
                         android:contentDescription="@null"
                         app:layout_auto_baseheight="width" />
 
@@ -117,6 +119,7 @@
 
 
         <com.cnksi.common.view.AutoRadioGroup
+            android:id="@+id/rg_defect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/xs_bottom_line_background_selector"
