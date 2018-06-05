@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fragment_record_defect_content_green_title_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_strip_minheight"
+            android:gravity="center"
+            android:text="修改服务器地址"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/xs__30px"
+            android:text="请输入MIP、PMS服务器的地址"
+            android:textColor="@color/sync_black"
+            android:textSize="16sp" />
+
+        <View style="@style/HLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/xs__30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="MIP地址："
+                android:textColor="@color/sync_black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_new_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:hint="请输入MIP服务器地址"
+                android:textColor="@color/sync_black"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <View style="@style/HLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/sjjc_30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="PMS地址："
+                android:textColor="@color/sync_black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_pms_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:hint="请输入PMS服务器地址"
+                android:textColor="@color/sync_black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View style="@style/HLine" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/global_padding_top_bottom"
+            android:layout_marginTop="@dimen/global_padding_top_bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/global_padding_left_right"
+                android:layout_marginRight="@dimen/global_padding_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/green_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/button_minheight"
+                android:text="@string/cancel_str"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/global_padding_left_right"
+                android:layout_marginRight="@dimen/global_padding_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/red_button_background_selector"
+                android:gravity="center"
+                android:minHeight="@dimen/button_minheight"
+                android:text="@string/dialog_sure_str"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
