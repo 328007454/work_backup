@@ -418,7 +418,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
 
         mSwitch1Binding.includeTitle.ibtnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(mActivity, ChangeDeviceStandardActivity.class);
-            intent.putExtra(Config.IS_ADD_DEVICE_STANDARD, true);
+            intent.putExtra(Config.IS_ADD_DEVICE_STANDARD_KEY, true);
             intent.putExtra(Config.CURRENT_DEVICE_PART_ID, currentDevicePartId);
             New1RegularSwitchActivity1.this.startActivityForResult(intent, UPDATE_DEVICE_STANDARD_REQUEST_CODE);
         });
@@ -433,7 +433,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                 intent1.putExtra(Config.CURRENT_REPORT_ID, currentReportId);
                 intent1.putExtra(Config.CURRENT_BDZ_NAME, currentBdzName);
                 intent1.putExtra(Config.CURRENT_MAINTANENCE_BATTERY, currentInspectionType);
-                intent1.putExtra(Config.CURRENT_FILENAME, PreferencesUtils.get(Config.PICTURE_PREFIX, ""));
+                intent1.putExtra(Config.CURRENT_FOLDER_KEY, PreferencesUtils.get(Config.PICTURE_PREFIX_KEY, ""));
                 intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentInspectionTypeName);
                 intent1.setComponent(componentName);
                 New1RegularSwitchActivity1.this.startActivity(intent1);
@@ -463,7 +463,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                     addWaterTextToBitmap();
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:// 删除所记录的照片后
-                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     if (cancelList != null && !cancelList.isEmpty()) {
                         for (String imageUrl : cancelList) {
                             mPictureList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));

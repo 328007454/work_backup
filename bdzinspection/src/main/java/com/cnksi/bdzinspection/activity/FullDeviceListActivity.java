@@ -220,7 +220,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnShakeListe
         binding.ibtnSort.setOnClickListener(view -> {
             Intent intent = new Intent(FullDeviceListActivity.this, SpaceSortActivity.class);
             intent.putExtra(Config.CURRENT_FUNCTION_MODEL, deviceTypes.get(currentPosition).k);
-            intent.putExtra(Config.TITLE_NAME, deviceTypes.get(currentPosition).v);
+            intent.putExtra(Config.TITLE_NAME_KEY, deviceTypes.get(currentPosition).v);
             FullDeviceListActivity.this.startActivityForResult(intent, DeviceListFragment.SORT_SPACING);
         });
         binding.btnStartInspection.setOnClickListener(view -> FullDeviceListActivity.this.finishInspection());
@@ -288,7 +288,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnShakeListe
                         CustomerDialog.dismissProgress();
                         Intent intent = new Intent(mActivity, LocationSpacingActivity.class);
                         intent.putExtra(Config.CURRENT_FUNCTION_MODEL, "one");
-                        intent.putExtra(Config.CURRENT_LATLNG, new LatLng(location));
+                        intent.putExtra(Config.CURRENT_LAT_LNG_KEY, new LatLng(location));
                         mActivity.startActivityForResult(intent, Config.SHAKE_SPACE);
                     }
 

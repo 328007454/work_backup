@@ -13,6 +13,7 @@ import com.cnksi.sjjc.databinding.ActivityTjwtBinding;
 
 /**
  * 图解五通图片详情Activity
+ * @author Wastrel
  */
 public class TJWTActivity extends BaseSjjcActivity {
     private ActivityTjwtBinding binding;

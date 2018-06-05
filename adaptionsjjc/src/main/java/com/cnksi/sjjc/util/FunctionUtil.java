@@ -25,7 +25,7 @@ public class FunctionUtil extends FunctionUtils {
      */
     public static String getCurrentImageName(Context context) {
         //获取图片目录
-        String picPrefix = PreferencesUtils.get( Config.PICTURE_PREFIX, "");
+        String picPrefix = PreferencesUtils.get( Config.PICTURE_PREFIX_KEY, "");
         //生成图片名称
         SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyyMMddHHmmssSSS, Locale.CHINA);
         String uuidStr = UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
@@ -38,7 +38,7 @@ public class FunctionUtil extends FunctionUtils {
 
     public static String getCurrentImageName(Context context, String imageName) {
         //获取图片目录
-        String picPrefix = PreferencesUtils.get(Config.PICTURE_PREFIX, "");
+        String picPrefix = PreferencesUtils.get(Config.PICTURE_PREFIX_KEY, "");
         return picPrefix + imageName;
     }
 

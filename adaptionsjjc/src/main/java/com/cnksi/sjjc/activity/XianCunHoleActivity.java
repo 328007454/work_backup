@@ -143,7 +143,7 @@ public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickLi
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                 }
             } else if (requestCode == Config.CANCEL_RESULT_LOAD_IMAGE) {//删除照片请求
-                ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                 ArrayList<String> allPicList = StringUtils.stringToList(item.clear_images);
                 for (String imageUrl : cancleImagList) {
                     allPicList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));

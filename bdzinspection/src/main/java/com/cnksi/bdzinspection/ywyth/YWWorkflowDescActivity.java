@@ -77,7 +77,7 @@ public class YWWorkflowDescActivity extends TitleActivity {
 			switch (requestCode) {
 			case Config.ACTION_SELECT_IMAGE:
 
-				List<String> mList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+				List<String> mList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
 				break;
 
 			default:

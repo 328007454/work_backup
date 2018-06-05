@@ -281,7 +281,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
 //                            String title = TextUtils.isEmpty(toolsInforList.get(0).getString("bdz_name")) ? toolsInforList.get(0).getString("dept_name") : toolsInforList.get(0).getString("bdz_name");
 //                            toolsBinding.titleInclude.tvTitle.setText(title);
 //                        } else {
-                String title = getIntent().getStringExtra(Config.TITLE_NAME);
+                String title = getIntent().getStringExtra(Config.TITLE_NAME_KEY);
                 if (!TextUtils.isEmpty(title)) {
                     toolsBinding.titleInclude.tvTitle.setText(title);
                 }
@@ -547,7 +547,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
                     addWaterTextToBitmap();
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
-                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     if (cancelList != null) {
                         for (String imageUrl : cancelList) {
                             reportPicList.remove(imageUrl.replace(Config.BDZ_INSPECTION_FOLDER, ""));
@@ -585,7 +585,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
     @Override
     public void onClick(View v, Object data, int position) {
         stopDbmodel = (DbModel) data;
-        String selectPersons = PreferencesUtils.get( Config.SELECT_PERSONS, "");
+        String selectPersons = PreferencesUtils.get( Config.SELECT_PERSONS_KEY, "");
         int i = v.getId();
         if (i == R.id.txt_stop) {
             CharSequence txtToolName = StringUtils.formatPartTextColor("请选择停用%s的原因", mActivity.getResources().getColor(R.color.xs_color_5dbf19), "工器具");
@@ -644,7 +644,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
 
     public void show(View view) {
         int selectToolCount = 0;
-        String selectPersons = PreferencesUtils.get( Config.SELECT_PERSONS, "");
+        String selectPersons = PreferencesUtils.get( Config.SELECT_PERSONS_KEY, "");
         int i = view.getId();
         if (i == R.id.btn_stop) {
             selectToolCount = selectmodels.size();
@@ -739,7 +739,7 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
         }
         if (!usersList.isEmpty()) {
             userName = StringUtils.arrayListToString(usersList);
-            PreferencesUtils.put( Config.SELECT_PERSONS, userName);
+            PreferencesUtils.put( Config.SELECT_PERSONS_KEY, userName);
         }
         if (stopClick) {
             stopBinding.etInputStopperson.setText(userName);

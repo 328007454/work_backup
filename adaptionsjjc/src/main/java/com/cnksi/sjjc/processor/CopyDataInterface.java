@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.PMSDeviceType;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.CopyItem;
@@ -12,14 +14,12 @@ import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.DevicePart;
 import com.cnksi.sjjc.bean.Lookup;
 import com.cnksi.sjjc.service.DevicePartService;
 import com.cnksi.sjjc.service.StandardService;
 
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -121,8 +121,8 @@ public abstract class CopyDataInterface {
      * @throws DbException
      */
     public void finishTask(String taskId, String remark) throws DbException {
-        CustomApplication.getInstance().getDbManager().update(Task.class, WhereBuilder.b(Task.TASKID, "=", taskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
-        CustomApplication.getInstance().getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
+        TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", taskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
+       ReportService.getInstance().update(WhereBuilder.b(Report.REPORTID, "=", reportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
     }
 
     /**
@@ -134,25 +134,6 @@ public abstract class CopyDataInterface {
         List<Lookup> lk = new ArrayList<>();
         lk.add(new Lookup(PMSDeviceType.one.name(), ""));
         return lk;
-    }
-
-    /**
-     * 获取标准的历史纪录  返回
-     *
-     * @param deviceId
-     * @param standId
-     * @param bdzId
-     * @return
-     * @throws DbException
-     */
-    public List<DbModel> findStardHistoryRecord(String deviceId, String standId, String bdzId) throws DbException {
-        SqlInfo sqlInfo = new SqlInfo("SELECT dr.val,dr.discovered_date,rp.temperature from defect_record dr " +
-                "LEFT JOIN report rp on dr.reportid=rp.reportid " +
-                " where dr.dlt<>'1'  AND dr.deviceid=? and dr.standid=? and dr.bdzid=? and dr.is_copy='Y' order by dr.discovered_date asc");
-        sqlInfo.addBindArg(new KeyValue("", deviceId));
-        sqlInfo.addBindArg(new KeyValue("", standId));
-        sqlInfo.addBindArg(new KeyValue("", bdzId));
-        return CustomApplication.getInstance().getDbManager().findDbModelAll(sqlInfo);
     }
 
     /**

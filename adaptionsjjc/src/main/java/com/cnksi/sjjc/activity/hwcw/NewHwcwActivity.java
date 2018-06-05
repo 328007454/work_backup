@@ -11,12 +11,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DeviceSelectActivity;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.enmu.PMSDeviceType;
-import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.BaseRecyclerDataBindingAdapter;
@@ -26,7 +25,8 @@ import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityHwcwNewBinding;
 import com.cnksi.sjjc.databinding.ItemHotDeviceHwcwBinding;
-import com.cnksi.sjjc.service.NewHwcwService;
+import com.cnksi.sjjc.service.HwcwBaseInfoService;
+import com.cnksi.sjjc.service.HwcwLocationService;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -44,7 +44,6 @@ import java.util.List;
 
 public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDataBindingAdapter.OnItemClickListener, HwcwNewHotPartAdapter.OnLongItemListener {
     private ActivityHwcwNewBinding mHwcwNewBinding;
-    private int realHeight;
     private int childItemNum;
     private HwcwNewHotPartAdapter mHotPartAdapter;
     private List<HwcwLocation> hotLocations = new ArrayList<>();
@@ -82,9 +81,9 @@ public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDat
 
     public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
-            mHwcwBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
+            mHwcwBaseInfo = HwcwBaseInfoService.getInstance().getBaseInfo(currentReportId);
             if (!TextUtils.isEmpty(mHwcwBaseInfo.id)) {
-                hotLocations = NewHwcwService.getInstance().getAllLocation(mHwcwBaseInfo.id);
+                hotLocations = HwcwLocationService.getInstance().getAllLocation(mHwcwBaseInfo.id);
                 for (HwcwLocation location : hotLocations) {
                     selecteDevices.add(location.deviceID);
                 }
@@ -270,10 +269,10 @@ public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDat
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case Config.ACTIVITY_CHOSE_DEVICE:
-                DbModel model = (DbModel) dataMap.get(Config.DEVICE_DATA);
+                DbModel model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
                 if (model != null) {
                     currentDevice = model;
-                    currentDeviceID = currentDevice.getString("deviceid");
+                    currentDeviceID = currentDevice.getString(DeviceService.DEVICE_ID_KEY);
                     currentSpaceID = currentDevice.getString("spid");
                     if (selecteDevices.contains(currentDeviceID)) {
                         DialogUtils.createTipsDialog(mActivity, "该设备已经被新增为发热设备，请在温度记录里点击编辑", view -> {
@@ -281,14 +280,14 @@ public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDat
                         }, false).show();
                     } else {
                         selecteDevices.add(currentDeviceID);
-                        mHwcwNewBinding.etHotdeivceName.setText(currentDevice.getString(Device.NAME));
-                        mHwcwNewBinding.txtSpaceName.setText(currentDevice.getString("spaceName"));
+                        mHwcwNewBinding.etHotdeivceName.setText(currentDevice.getString(DeviceService.DEVICE_NAME_KEY));
+                        mHwcwNewBinding.txtSpaceName.setText(currentDevice.getString(DeviceService.SPACING_NAME_KEY));
                         initHotPartItem();
                     }
                 }
                 break;
             case TO_NEWINFORACTIVITY:
-                mHwcwBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
+                mHwcwBaseInfo = HwcwBaseInfoService.getInstance().getBaseInfo(currentReportId);
                 break;
             default:
                 break;
@@ -377,12 +376,12 @@ public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDat
         mHwcwBaseInfo.setData(isAllBdz, testType, temp, shidu, fengsu, testInstrument, currentReportId, currentBdzId, currentBdzName);
         ExecutorManager.executeTaskSerially(() -> {
             try {
-                CustomApplication.getInstance().getDbManager().saveOrUpdate(mHwcwBaseInfo);
+                HwcwBaseInfoService.getInstance().saveOrUpdate(mHwcwBaseInfo);
                 if (!hotLocations.isEmpty()) {
-                    CustomApplication.getInstance().getDbManager().saveOrUpdate(hotLocations);
+                    HwcwLocationService.getInstance().saveOrUpdate(hotLocations);
                 }
                 if (!deleteLocations.isEmpty()) {
-                    CustomApplication.getInstance().getDbManager().saveOrUpdate(deleteLocations);
+                    HwcwLocationService.getInstance().saveOrUpdate(deleteLocations);
                 }
             } catch (DbException e) {
                 e.printStackTrace();

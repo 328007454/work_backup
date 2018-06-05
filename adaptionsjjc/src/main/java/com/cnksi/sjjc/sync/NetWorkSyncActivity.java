@@ -9,10 +9,10 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Department;
 import com.cnksi.core.utils.StringUtils;
@@ -22,7 +22,6 @@ import com.cnksi.ksynclib.KSync;
 import com.cnksi.ksynclib.adapter.SyncInfoAdapter;
 import com.cnksi.ksynclib.model.SyncInfo;
 import com.cnksi.ksynclib.utils.KNetUtil;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ActivityNetworkSyncBinding;
 
@@ -191,9 +190,9 @@ public class NetWorkSyncActivity extends AppCompatActivity implements View.OnCli
         executorService.execute(() -> {
             if (!KSyncConfig.getInstance().isHaveDept()) {
                 ksync.download("city", "users", "department", "pad_apk_version");
-                DbModel model = null;
+                DbModel model;
                 try {
-                    model = CustomApplication.getInstance().getDbManager().findDbModelFirst(new SqlInfo("select short_name_pinyin from city"));
+                    model = BdzService.getInstance().findDbModelFirst(new SqlInfo("select short_name_pinyin from city"));
                     String firstDownApk = "admin/" + model.getString("short_name_pinyin") + "/apk";
                     ksync.downFile(firstDownApk);
                 } catch (DbException e) {

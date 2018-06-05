@@ -449,7 +449,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         intent.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
         intent.putExtra(Config.CURRENT_SPACING_NAME, currentSpacingName);
         intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
-        intent.putExtra(Config.IS_DEVICE_PART, InspectionType.special_xideng.equals(currentInspectionType) || (isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin)));
+        intent.putExtra(Config.IS_DEVICE_PART_KEY, InspectionType.special_xideng.equals(currentInspectionType) || (isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin)));
     }
 
     private void initOnClick() {
@@ -660,70 +660,72 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ACTION_IMAGE:
-                // 更换照片 切割照片
-                if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)) {
-                    cropImageUri(Uri.fromFile(new File(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)), ScreenUtils.getScreenHeight(mActivity), ScreenUtils.getScreenHeight(mActivity), CROP_PICTURE, currentImageName);
-                }
-                break;
-            case CROP_PICTURE:
-                // 2、保存到数据库
-                DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, currentImageName);
-                // 3、更换设备图片
-                setDeviceImage();
-                break;
-            case SELECT_DEVICE_IMAGE:
-                if (!data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST).isEmpty()) {
-                    currentImageName = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST).get(0).replace(Config.BDZ_INSPECTION_FOLDER, "");
+        if (RESULT_OK == resultCode) {
+            switch (requestCode) {
+                case ACTION_IMAGE:
+                    // 更换照片 切割照片
+                    if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)) {
+                        cropImageUri(Uri.fromFile(new File(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)), ScreenUtils.getScreenHeight(mActivity), ScreenUtils.getScreenHeight(mActivity), CROP_PICTURE, currentImageName);
+                    }
+                    break;
+                case CROP_PICTURE:
                     // 2、保存到数据库
                     DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, currentImageName);
                     // 3、更换设备图片
                     setDeviceImage();
-                }
-                break;
-            case UPDATE_DEVICE_DEFECT_REQUEST_CODE:
-                // 历史缺陷
-                searchCurrentDeviceExistDefect();
-                break;
-            case PHOTO_SIGN_IMAGE:
-                CustomerDialog.showProgress(this, "处理水印中...");
-                ExecutorManager.executeTask(() -> {
-                    Bitmap bitmap = BitmapUtil.createScaledBitmapByHeight(Config.RESULT_PICTURES_FOLDER + currentImageName, ScreenUtils.getScreenHeight(mActivity));
-                    String tips = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
-                    tips = tips + "\n" + DateUtils.getCurrentLongTime();
-                    bitmap = BitmapUtil.addText2Bitmap(bitmap, tips, 60);
-                    BitmapUtil.saveBitmap(bitmap, Config.RESULT_PICTURES_FOLDER + currentImageName);
-                    if (placedDevice == null) {
-                        placedDevice = PlacedDevice.create(mCurrentDevice, currentReportId);
-                    } else {
-                        placedDevice.update_time = DateUtils.getCurrentLongTime();
+                    break;
+                case SELECT_DEVICE_IMAGE:
+                    if (!data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY).isEmpty()) {
+                        currentImageName = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY).get(0).replace(Config.BDZ_INSPECTION_FOLDER, "");
+                        // 2、保存到数据库
+                        DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, currentImageName);
+                        // 3、更换设备图片
+                        setDeviceImage();
                     }
-                    placedDevice.setPlacedWayHighest("photo");
-                    imgList.add(currentImageName);
-                    placedDevice.pic = StringUtils.arrayListToString(imgList);
-                    PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
-                    NewDeviceDetailsActivity.this.runOnUiThread(() -> {
-                        devicedetailsBinding.setHasSignPhoto(true);
-                        CustomerDialog.dismissProgress();
-                        NewDeviceDetailsActivity.this.refreshDevicePic();
+                    break;
+                case UPDATE_DEVICE_DEFECT_REQUEST_CODE:
+                    // 历史缺陷
+                    searchCurrentDeviceExistDefect();
+                    break;
+                case PHOTO_SIGN_IMAGE:
+                    CustomerDialog.showProgress(this, "处理水印中...");
+                    ExecutorManager.executeTask(() -> {
+                        Bitmap bitmap = BitmapUtil.createScaledBitmapByHeight(Config.RESULT_PICTURES_FOLDER + currentImageName, ScreenUtils.getScreenHeight(mActivity));
+                        String tips = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
+                        tips = tips + "\n" + DateUtils.getCurrentLongTime();
+                        bitmap = BitmapUtil.addText2Bitmap(bitmap, tips, 60);
+                        BitmapUtil.saveBitmap(bitmap, Config.RESULT_PICTURES_FOLDER + currentImageName);
+                        if (placedDevice == null) {
+                            placedDevice = PlacedDevice.create(mCurrentDevice, currentReportId);
+                        } else {
+                            placedDevice.update_time = DateUtils.getCurrentLongTime();
+                        }
+                        placedDevice.setPlacedWayHighest("photo");
+                        imgList.add(currentImageName);
+                        placedDevice.pic = StringUtils.arrayListToString(imgList);
+                        PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
+                        NewDeviceDetailsActivity.this.runOnUiThread(() -> {
+                            devicedetailsBinding.setHasSignPhoto(true);
+                            CustomerDialog.dismissProgress();
+                            NewDeviceDetailsActivity.this.refreshDevicePic();
+                        });
                     });
-                });
-                break;
-            case CANCEL_RESULT_LOAD_IMAGE:
-                List<String> list = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
-                if (null != list && !list.isEmpty()) {
-                    for (String file : list) {
-                        FileUtils.deleteFile(file);
-                        imgList.remove(file.replace(Config.RESULT_PICTURES_FOLDER, ""));
+                    break;
+                case CANCEL_RESULT_LOAD_IMAGE:
+                    List<String> list = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
+                    if (null != list && !list.isEmpty()) {
+                        for (String file : list) {
+                            FileUtils.deleteFile(file);
+                            imgList.remove(file.replace(Config.RESULT_PICTURES_FOLDER, ""));
+                        }
+                        refreshDevicePic();
+                        placedDevice.pic = StringUtils.arrayListToString(imgList);
+                        PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
                     }
-                    refreshDevicePic();
-                    placedDevice.pic = StringUtils.arrayListToString(imgList);
-                    PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

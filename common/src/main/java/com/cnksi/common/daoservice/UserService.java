@@ -101,10 +101,10 @@ public class UserService extends BaseService<Users> {
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", deptId));
         try {
-            dbModels = getDbManager().findDbModelAll(sqlInfo);
+            dbModels = findDbModelAll(sqlInfo);
         } catch (DbException e) {
             e.printStackTrace();
-            return new ArrayList<DbModel>();
+            return new ArrayList<>();
         }
         return dbModels;
     }

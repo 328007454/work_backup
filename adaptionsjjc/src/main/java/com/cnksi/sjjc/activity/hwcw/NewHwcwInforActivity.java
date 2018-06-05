@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
@@ -24,7 +25,6 @@ import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseSjjcActivity;
 import com.cnksi.sjjc.adapter.AddPeopleAdapter;
@@ -34,7 +34,8 @@ import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityNewhwcwInforBinding;
 import com.cnksi.sjjc.databinding.DialogPeople;
-import com.cnksi.sjjc.service.NewHwcwService;
+import com.cnksi.sjjc.service.HwcwBaseInfoService;
+import com.cnksi.sjjc.service.HwcwLocationService;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -77,9 +78,9 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
 
             @Override
             public void run() {
-                mHwcwBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
+                mHwcwBaseInfo = HwcwBaseInfoService.getInstance().getBaseInfo(currentReportId);
                 if (!TextUtils.isEmpty(mHwcwBaseInfo.id)) {
-                    hotLocations = NewHwcwService.getInstance().getAllLocation(mHwcwBaseInfo.id);
+                    hotLocations = HwcwLocationService.getInstance().getAllLocation(mHwcwBaseInfo.id);
                 }
                 String account = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
                 try {
@@ -188,9 +189,9 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
         String testPeople = StringUtils.arrayListToString(showPeopleList);
         mHwcwBaseInfo.setRecordData(testRange, testLocation, testProblem, testRemark, testPeople);
         try {
-            CustomApplication.getInstance().getDbManager().saveOrUpdate(mHwcwBaseInfo);
+            HwcwBaseInfoService.getInstance().saveOrUpdate(mHwcwBaseInfo);
             if (isUpdateReport) {
-                CustomApplication.getInstance().getDbManager().update(Report.class, WhereBuilder.b(Report.REPORTID, "=", currentReportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
+                ReportService.getInstance().update(WhereBuilder.b(Report.REPORTID, "=", currentReportId), new KeyValue(Report.ENDTIME, DateUtils.getCurrentLongTime()));
                 TaskService.getInstance().update(WhereBuilder.b(Task.TASKID, "=", currentTaskId), new KeyValue(Task.STATUS, TaskStatus.done.name()));
             }
         } catch (DbException e) {
@@ -210,7 +211,6 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
             showPeopleAdapter.notifyDataSetChanged();
         });
     }
-
 
 
     private Dialog peopleDialog;

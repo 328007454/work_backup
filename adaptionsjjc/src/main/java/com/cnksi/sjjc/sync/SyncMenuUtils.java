@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.CLog;
 import com.cnksi.core.utils.FileUtils;
@@ -206,7 +207,7 @@ public class SyncMenuUtils {
                 int delRows = 0;
                 for (DeleteModel model : tables) {
                     try {
-                        int count = CustomApplication.getInstance().getDbManager().executeUpdateDelete(model.getDeleteSql(dept_id));
+                        int count = DepartmentService.getInstance().executeUpdateDelete(model.getDeleteSql(dept_id));
                         CLog.w("delete " + model.tbl + " " + count + " rows");
                         delRows += count;
                     } catch (DbException e) {

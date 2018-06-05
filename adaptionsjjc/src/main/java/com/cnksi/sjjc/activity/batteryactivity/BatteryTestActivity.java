@@ -136,15 +136,15 @@ public class BatteryTestActivity extends BaseSjjcActivity {
             currentReportId = bundle.getString(Config.CURRENT_REPORT_ID);
             currentTaskId = bundle.getString(Config.CURRENT_TASK_ID);
             type = bundle.getString(Config.CURRENT_MAINTANENCE_BATTERY);
-            String currentFolder = bundle.getString(Config.CURRENT_FILENAME);
-            PreferencesUtils.put(Config.PICTURE_PREFIX, currentFolder);
+            String currentFolder = bundle.getString(Config.CURRENT_FOLDER_KEY);
+            PreferencesUtils.put(Config.PICTURE_PREFIX_KEY, currentFolder);
             PreferencesUtils.put(Config.CURRENT_MAINTANENCE_BATTERY, type);
             PreferencesUtils.put(Config.CURRENT_BDZ_ID, currentBdzId);
             PreferencesUtils.put(Config.CURRENT_BDZ_NAME, currentBdzName);
             PreferencesUtils.put(Config.CURRENT_REPORT_ID, currentReportId);
             PreferencesUtils.put(Config.CURRENT_TASK_ID, currentTaskId);
             PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-            PreferencesUtils.put(Config.CURRENT_INSPECTION_NAME, InspectionType.get(currentInspectionType).value);
+            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.get(currentInspectionType).value);
             PreferencesUtils.put(Config.IS_FROM_PMS, true);
         }
         getIntentValue();
@@ -717,7 +717,7 @@ public class BatteryTestActivity extends BaseSjjcActivity {
                     loadCurrentBatteryRecord();
                     break;
                 case DELETE_IMAGE:
-                    ArrayList<String> deleteImageList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> deleteImageList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     for (String image : deleteImageList) {
                         String absoluteImageName = image.replace(Config.RESULT_PICTURES_FOLDER, "");
                         String realImageName = image.substring(image.lastIndexOf(File.separatorChar) + 1, image.length());

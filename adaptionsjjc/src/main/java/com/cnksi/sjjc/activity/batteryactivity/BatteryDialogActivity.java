@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -60,7 +59,6 @@ public class BatteryDialogActivity extends BaseActivity {
      */
     private int batteryCheckType;
 
-    private String currentReportId;
 
     private BatteryRecord batteryRecord;
 
@@ -77,17 +75,7 @@ public class BatteryDialogActivity extends BaseActivity {
     private ArrayList<BatteryRecord> batteryListCode = new ArrayList<>();
     private Map<String, BatteryRecord> batteryRecordMap = new HashMap<String, BatteryRecord>();
     private String bdzName;
-    /**
-     * 当前检测类型
-     */
-    private String currentInspectionType;
 
-    /**
-     * 开启svg格式图片兼容
-     * */
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
 
     private ActivityBatteryItemDialogBinding binding;
 
@@ -308,7 +296,7 @@ public class BatteryDialogActivity extends BaseActivity {
                     break;
                 case Config.CANCEL_RESULT_LOAD_IMAGE:
                     //图片删除
-                    ArrayList<String> deleteImageList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> deleteImageList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     for (String imageUrl : deleteImageList) {
                         exitImageList.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
                     }

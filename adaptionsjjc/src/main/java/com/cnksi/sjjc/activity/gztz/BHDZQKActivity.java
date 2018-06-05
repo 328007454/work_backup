@@ -352,7 +352,7 @@ public class BHDZQKActivity extends BaseSjjcActivity {
                     });
                     break;
                 case Config.CANCEL_RESULT_LOAD_IMAGE:
-                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     for (String imageUrl : cancelList) {
                         photos.remove(imageUrl.replace(Config.RESULT_PICTURES_FOLDER, ""));
                     }

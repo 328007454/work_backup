@@ -8,10 +8,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioGroup;
 
-import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.activity.ImageDetailsActivity;
+import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
@@ -134,7 +134,7 @@ public class TrackDefectFragment extends BaseDefectFragment {
         selectDefect.has_track = "Y";
         try {
             //复制一条跟踪的缺陷保持除内容不同外其余相同,将原有的缺陷跟踪字段置为"Y"
-            CommonApplication.getInstance().getDbManager().saveOrUpdate(selectDefect);
+            DefectRecordService.getInstance().saveOrUpdate(selectDefect);
             DefectRecord newDefect = selectDefect;
             newDefect.defectid = DefectRecord.getDefectId();
             newDefect.defectlevel = defectLevel;
@@ -142,7 +142,7 @@ public class TrackDefectFragment extends BaseDefectFragment {
             newDefect.description = binding.includeAdd.etInputDefectContent.getText().toString();
             newDefect.has_track = "N";
             newDefect.discovered_date = DateUtils.getCurrentShortTime();
-            CommonApplication.getInstance().getDbManager().saveOrUpdate(newDefect);
+            DefectRecordService.getInstance().saveOrUpdate(newDefect);
             defectRecords.remove(selectDefect);
             defectRecords.add(newDefect);
             defectId = newDefect.defectid;
@@ -198,7 +198,7 @@ public class TrackDefectFragment extends BaseDefectFragment {
                     DrawCircleImageActivity.with(mActivity).setTxtContent(pictureContent).setPath(picParentFolder + currentImageName).setRequestCode(0x0).start();
                     break;
                 case CANCEL_RESULT_LOAD_IMAGE:
-                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     for (String imageUrl : cancelList) {
                         mDefectImageList.remove(imageUrl.replace(picParentFolder, ""));
                     }

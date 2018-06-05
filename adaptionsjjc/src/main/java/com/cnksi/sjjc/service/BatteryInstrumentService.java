@@ -2,7 +2,6 @@ package com.cnksi.sjjc.service;
 
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.core.utils.DateUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.bean.BatteryInstrument;
 
 import org.xutils.ex.DbException;
@@ -58,7 +57,7 @@ public class BatteryInstrumentService extends BaseService<BatteryInstrument> {
 
         try {
             String sql = "update test_instrument set select_num=" + selectDeviceNum + " , last_modify_time='" + DateUtils.getCurrentLongTime() + "' where id = '" + id + "'";
-            CustomApplication.getInstance().getDbManager().executeUpdateDelete(sql);
+           execSql(sql);
         } catch (DbException e) {
             e.printStackTrace();
         }

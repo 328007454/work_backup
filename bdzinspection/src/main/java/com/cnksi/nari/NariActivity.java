@@ -281,7 +281,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             return;
         }
         try {
-            NARIHelper.init(mActivity, users.account, AESUtil.decode(users.pwd), Config.NARI_BASEFOLDER);
+            NARIHelper.init(mActivity, users.account, AESUtil.decode(users.pwd), Config.NARI_BASE_FOLDER);
         } catch (Exception e) {
             ToastUtils.showMessage("密码解密失败！");
             e.printStackTrace();
@@ -337,7 +337,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 ids = model.getString("pms_id");
             }
             DataUtils dataUtils = new DataUtils(model, ids, names, bdPackage, report);
-            String base = Config.NARI_BASEFOLDER + bdPackage.packageID + "/uploadFile/";
+            String base = Config.NARI_BASE_FOLDER + bdPackage.packageID + "/uploadFile/";
             String fileName = base + "data.xml";
             String zipFile = fileName.replace("xml", "zip");
             dataUtils.Build(fileName);
@@ -382,7 +382,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                     Toast("没有查询到关联的报告!");
                     return;
                 }
-                String zipFile = Config.NARI_BASEFOLDER + bdPackage.packageID + "/uploadFile/data.zip";
+                String zipFile = Config.NARI_BASE_FOLDER + bdPackage.packageID + "/uploadFile/data.zip";
                 final File f = new File(zipFile);
                 if (f.exists()) {
                     f.delete();
@@ -658,7 +658,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                     delResult = "本地删除成功";
                 } else {
                     delResult = NARIHelper.deletePackageFromServer(item.packageID);
-                    FileUtils.deleteAllFiles(Config.NARI_BASEFOLDER + item.packageID);
+                    FileUtils.deleteAllFiles(Config.NARI_BASE_FOLDER + item.packageID);
                     NariActivity.this.deleteLocalData(item);
                 }
             } catch (Exception e) {

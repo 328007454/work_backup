@@ -225,7 +225,7 @@ public class GetSendLetterActivity extends BaseSjjcActivity {
                     break;
                 //删除后的图片
                 case Config.CANCEL_RESULT_LOAD_IMAGE:
-                    ArrayList<String> deleteImages = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                    ArrayList<String> deleteImages = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                     ArrayList<String> exitImages = com.cnksi.core.utils.StringUtils.string2List(currentTransceiver.images, false);
                     for (String image : deleteImages) {
                         String realImage = image.replace(Config.RESULT_PICTURES_FOLDER, "");

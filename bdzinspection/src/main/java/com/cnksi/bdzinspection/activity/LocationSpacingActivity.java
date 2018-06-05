@@ -98,7 +98,7 @@ public class LocationSpacingActivity extends BaseActivity implements OnProgressC
 
     private void initialData() {
         getIntentValue();
-        LatLng latLng = getIntent().getParcelableExtra(Config.CURRENT_LATLNG);
+        LatLng latLng = getIntent().getParcelableExtra(Config.CURRENT_LAT_LNG_KEY);
         if (latLng != null) {
             latLngs.add(latLng);
         }

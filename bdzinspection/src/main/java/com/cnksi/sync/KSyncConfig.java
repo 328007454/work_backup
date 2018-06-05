@@ -32,8 +32,8 @@ public class KSyncConfig {
     public KSyncConfig getKNConfig(Context context, Handler handler) {
         mActivity = (Activity) context;
         String deviceId = DeviceUtils.getSerialNumber(context);
-        KNConfig config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID_VALUE,
-                Config.SYNC_URL_VALUE, deviceId, CommonApplication.getInstance().getDbManager().getDatabase(), Config.BDZ_INSPECTION_FOLDER);
+        KNConfig config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
+                Config.SYNC_URL, deviceId, CommonApplication.getInstance().getDbManager().getDatabase(), Config.BDZ_INSPECTION_FOLDER);
         config.configDebug(BuildConfig.DEBUG);
         config.configDynicParam("dept_id", PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, ""));
         ksync = new KSync(config, handler);

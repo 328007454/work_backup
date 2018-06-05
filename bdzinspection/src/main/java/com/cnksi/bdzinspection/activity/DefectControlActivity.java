@@ -151,7 +151,7 @@ public class DefectControlActivity extends BaseActivity implements  OnFunctionBu
         args.putBoolean(Config.IS_SHOW_DEFECT_REASON, isShowDefectReason);
         args.putString(Config.CURRENT_STANDARD_ID, currentStandardId); // 传递巡视标准ID到Fregement中
         args.putBoolean(Config.IS_FROM_BATTERY, isFromBattery);
-        args.putBoolean(Config.IS_DEVICE_PART, getIntent().getBooleanExtra(Config.IS_DEVICE_PART, false));
+        args.putBoolean(Config.IS_DEVICE_PART_KEY, getIntent().getBooleanExtra(Config.IS_DEVICE_PART_KEY, false));
         return args;
     }
 

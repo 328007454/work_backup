@@ -17,7 +17,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
+import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.DefectRecordService;
@@ -159,7 +161,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
             mCommonMap.clear();
             mSerioutMap.clear();
             bdzList.clear();
-            bdzList = CustomApplication.getInstance().getDbManager().findAll(Bdz.class);
+            bdzList = BdzService.getInstance().findAll();
             final List<DefectRecord> defectList = DefectRecordService.getInstance().queryCurrentBdzExistDefectList();
             for (DefectRecord mDefectRecord : defectList) {
                 ArrayList<DefectRecord> temp;
@@ -442,7 +444,7 @@ public class HomeActivity extends BaseSjjcActivity implements View.OnClickListen
                         SqlInfo sqlInfo = new SqlInfo(sql);
                         sqlInfo.addBindArg(new KeyValue("dept_id", PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "")));
                         try {
-                            safetyTools = CustomApplication.getInstance().getDbManager().findDbModelAll(sqlInfo);
+                            safetyTools = SafeToolsInfoService.getInstance().findDbModelAll(sqlInfo);
                         } catch (DbException e) {
                             e.printStackTrace();
                         }

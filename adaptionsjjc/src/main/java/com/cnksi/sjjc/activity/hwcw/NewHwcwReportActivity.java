@@ -19,7 +19,8 @@ import com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo;
 import com.cnksi.sjjc.bean.hwcw.HwcwHotPart;
 import com.cnksi.sjjc.bean.hwcw.HwcwLocation;
 import com.cnksi.sjjc.databinding.ActivityNewHwcwReportBinding;
-import com.cnksi.sjjc.service.NewHwcwService;
+import com.cnksi.sjjc.service.HwcwBaseInfoService;
+import com.cnksi.sjjc.service.HwcwLocationService;
 
 import org.xutils.ex.DbException;
 
@@ -74,9 +75,9 @@ public class NewHwcwReportActivity extends BaseReportActivity {
         ExecutorManager.executeTaskSerially(() -> {
             try {
                 mReport = ReportService.getInstance().selector().and(Report.REPORTID, "=", currentReportId).findFirst();
-                mBaseInfo = NewHwcwService.getInstance().getBaseInfo(currentReportId);
+                mBaseInfo = HwcwBaseInfoService.getInstance().getBaseInfo(currentReportId);
                 if (!TextUtils.isEmpty(mBaseInfo.id)) {
-                    hotLocations = NewHwcwService.getInstance().getAllLocation(mBaseInfo.id);
+                    hotLocations = HwcwLocationService.getInstance().getAllLocation(mBaseInfo.id);
                 }
                 runOnUiThread(() -> refreshData());
             } catch (DbException e) {

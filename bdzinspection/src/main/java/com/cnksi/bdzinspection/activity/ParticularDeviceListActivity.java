@@ -100,7 +100,6 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
             Bundle bundle = new Bundle();
             bundle.putString(Config.CURRENT_FUNCTION_MODEL, look.k);
             bundle.putString(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-            bundle.putBoolean(Config.SEARCH_DEVICE_KEY, look.k.equals(Config.SEARCH_DEVICE_KEY));
             bundle.putBoolean(Config.IS_PARTICULAR_INSPECTION, true);
             // 设置键盘事件
             fragment.setArguments(bundle);
@@ -200,7 +199,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
                         CustomerDialog.dismissProgress();
                         Intent intent = new Intent(mActivity, LocationSpacingActivity.class);
                         intent.putExtra(Config.CURRENT_FUNCTION_MODEL, "one");
-                        intent.putExtra(Config.CURRENT_LATLNG, new LatLng(location));
+                        intent.putExtra(Config.CURRENT_LAT_LNG_KEY, new LatLng(location));
                         mActivity.startActivityForResult(intent, Config.SHAKE_SPACE);
                     }
 

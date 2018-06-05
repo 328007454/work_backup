@@ -25,10 +25,10 @@ public class CustomApplication extends CommonApplication {
         if (PreferencesUtils.get("DataVersion", 0) < DataVersion) {
             ExecutorManager.executeTaskSerially(() -> {
                 if (BuildConfig.HAS_WEB_ASSETS) {
-                    FileUtils.deleteAllFiles(Config.WWWROOT_FOLDER);
-                    if (FileUtils.copyAssetsToSDCard(CustomApplication.this, Config.WWWROOT_FOLDER, "src/main/assets-web/www")) {
+                    FileUtils.deleteAllFiles(Config.WWW_ROOT_FOLDER);
+                    if (FileUtils.copyAssetsToSDCard(CustomApplication.this, Config.WWW_ROOT_FOLDER, "src/main/assets-web/www")) {
                         try {
-                            XZip.UnZipFolder(Config.WWWROOT_FOLDER + "www.zip", Config.WWWROOT_FOLDER);
+                            XZip.UnZipFolder(Config.WWW_ROOT_FOLDER + "www.zip", Config.WWW_ROOT_FOLDER);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

@@ -173,7 +173,7 @@ public class AddTaskActivity extends BaseActivity {
      */
     private void initBdzData() {
         try {
-            String bdzId = PreferencesUtils.get(Config.LASTTIEM_CHOOSE_BDZNAME, "");
+            String bdzId = PreferencesUtils.get(Config.LAST_CHOOSE_BDZ_NAME_KEY, "");
             if (!TextUtils.isEmpty(bdzId)) {
                 mCurrentBdz = BdzService.getInstance().findById(bdzId);
             }
@@ -484,7 +484,6 @@ public class AddTaskActivity extends BaseActivity {
             }
             nameList.add(model.getString("username"));
             selectNames = StringUtils.arrayListToString(nameList);
-            PreferencesUtils.put( Config.TASK_SELECT_PERSONS, selectNames);
         }
         PreferencesUtils.put( Config.CURRENT_BDZ_NAME, mCurrentBdz.name);
         PreferencesUtils.put( Config.CURRENT_BDZ_ID, mCurrentBdz.bdzid);
@@ -506,7 +505,6 @@ public class AddTaskActivity extends BaseActivity {
             mReport.reportid = BaseModel.getPrimarykey();
             mReport.taskid = mCurrentTask.taskid;
             PreferencesUtils.put( Config.CURRENT_REPORT_ID, mReport.reportid);
-            PreferencesUtils.put( Config.LOO_ID, mInspectionType.loo_id);
             PreferencesUtils.put( Config.CURRENT_TASK_ID, mCurrentTask.taskid);
             PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE, mInspectionType.k);
             PreferencesUtils.put( Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.v);
@@ -546,7 +544,7 @@ public class AddTaskActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-        PreferencesUtils.put( Config.LASTTIEM_CHOOSE_BDZNAME, mCurrentBdz.bdzid);
+        PreferencesUtils.put( Config.LAST_CHOOSE_BDZ_NAME_KEY, mCurrentBdz.bdzid);
     }
 
     @Override
