@@ -158,7 +158,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
      * 振动器
      */
     protected Vibrator mVibrator;
-
+    protected String userName;
     public String currentAcounts;
 
 
@@ -242,6 +242,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         currentReportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
         currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         currentDepartmentName=PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME,"");
+         userName = PreferencesUtils.get(Config.CURRENT_LOGIN_USER,"");
     }
 
     public boolean isEmpty(TextView tv) {

@@ -16,8 +16,8 @@ import com.cnksi.defect.R;
 import java.util.List;
 
 /**
- * @version 1.0
  * @author wastrel
+ * @version 1.0
  * @date 2018/1/22 10:08
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -85,8 +85,8 @@ public class DefectUtils {
         } else {
             day = 365;
         }
-        String d=DateUtils.getAfterTime(defectRecord.discovered_date, day, "yyyy-MM-dd");
-        String s ="到期时间："+ d;
+        String d = DateUtils.getAfterTime(defectRecord.discovered_date, day, "yyyy-MM-dd");
+        String s = "到期时间：" + d;
         if (d.compareTo(DateUtils.getAfterTime(3)) > 0) {
             return s;
         } else {
@@ -114,7 +114,14 @@ public class DefectUtils {
             min = CalcUtils.parse(item.min, -99999d);
         }
 
-        double currentValue = Double.parseDouble(val);
+        double currentValue = 0;
+
+        try {
+            currentValue = Double.parseDouble(val);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
         String defectContent;
         String descript = item.description;
         if (isDZCS) {
@@ -168,21 +175,15 @@ public class DefectUtils {
     /**
      * 根据抄录的数据得到当前的缺陷等级
      *
-     * @param theBig
-     *            最大值
-     * @param theLittle
-     *            最小值
-     * @param inputValue
-     *            抄录值
-     * @param isGreaterThan
-     *            是否大于最大值
-     * @return
-     *
-     *         例如，正常数据范围为0.6-0.65 设抄录值为X，缺陷判定值为Y
-     *
-     *         当X＜0.6（即小于最小值时） Y=0.6/X 1＜Y≤1.2 一般缺陷 1.2＜Y≤1.4 严重缺陷 1.4＜Y或Y=0 危急缺陷
-     *
-     *         当X＞0.65（即大于最大值时） Y=X/0.65 1＜Y≤1.2 一般缺陷 1.2＜Y≤1.4 严重缺陷 1.4＜Y或Y=0 危急缺陷
+     * @param theBig        最大值
+     * @param theLittle     最小值
+     * @param inputValue    抄录值
+     * @param isGreaterThan 是否大于最大值
+     * @return 例如，正常数据范围为0.6-0.65 设抄录值为X，缺陷判定值为Y
+     * <p>
+     * 当X＜0.6（即小于最小值时） Y=0.6/X 1＜Y≤1.2 一般缺陷 1.2＜Y≤1.4 严重缺陷 1.4＜Y或Y=0 危急缺陷
+     * <p>
+     * 当X＞0.65（即大于最大值时） Y=X/0.65 1＜Y≤1.2 一般缺陷 1.2＜Y≤1.4 严重缺陷 1.4＜Y或Y=0 危急缺陷
      */
     public static String getDefectLevel(float theBig, float theLittle, float inputValue, boolean isGreaterThan) {
         String defectLevel = Config.GENERAL_LEVEL;

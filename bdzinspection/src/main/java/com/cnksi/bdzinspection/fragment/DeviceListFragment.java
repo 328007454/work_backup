@@ -23,6 +23,7 @@ import com.cnksi.bdzinspection.activity.CopyValueActivity2;
 import com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity;
 import com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity;
 import com.cnksi.bdzinspection.adapter.DeviceAdapter;
+import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.bdzinspection.daoservice.ReportSnwsdService;
 import com.cnksi.common.daoservice.SpacingGroupService;
@@ -152,6 +153,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
             intent.putExtra(Config.TITLE_NAME, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
+            intent.putExtra(Device.DTID, dbModel.getString("dtid"));
             PlaySound.getIntance(currentActivity).play(R.raw.input);
             DeviceListFragment.this.startActivity(intent);
         });

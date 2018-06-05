@@ -26,7 +26,7 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.defect.DeviceDefectAdapter;
+import com.cnksi.defect.adapter.DeviceDefectAdapter;
 import com.cnksi.defect.R;
 import com.cnksi.defect.adapter.DefectReasonAdapter;
 import com.cnksi.defect.databinding.FragmentEliminateDefectBinding;

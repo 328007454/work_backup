@@ -11,16 +11,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.bdzinspection.activity.DefectControlActivity;
 import com.cnksi.bdzinspection.adapter.inspectionready.ReadyExistDefectAdapter;
 import com.cnksi.bdzinspection.adapter.inspectionready.ReadyExistDefectAdapter.OnAdapterViewClickListener;
 import com.cnksi.bdzinspection.databinding.XsFragmentPinnedHeaderListBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Device;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.view.PinnedHeaderListView.OnItemClickListener;
+import com.cnksi.defect.activity.OperateDefectActivity;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -75,14 +77,11 @@ public class ReadyExistingDefectFragment extends BaseFragment implements OnAdapt
             public void onItemClick(AdapterView<?> adapterView, View view, int section, int position, long id) {
                 if (mOnFragmentEventListener != null) {
                     DefectRecord mDefectRecord = mExistDefectAdapter.getItem(section, position);
-                    Intent intent = new Intent(currentActivity, DefectControlActivity.class);
-                    intent.putExtra(Config.IS_SHOW_DEVICE_WIDGET, false);
-                    intent.putExtra(Config.ADD_NEW_DEFECT_RECORD, true);
-                    intent.putExtra(Config.IS_NEED_SEARCH_DEFECT_REASON, true);
-                    intent.putExtra(Config.TRACK_DEFECT_RECORD_ID, mDefectRecord.defectid);
-                    intent.putExtra(Config.CURRENT_DEVICE_ID, mDefectRecord.deviceid);
-                    intent.putExtra(Config.CURRENT_STANDARD_ID, mDefectRecord.standid);
-                    intent.putExtra(Config.IS_TRACK_DEFECT, true);
+                    Intent intent = new Intent(currentActivity, OperateDefectActivity.class);
+                    intent.putExtra(Device.DEVICEID, mDefectRecord.deviceid);
+                    intent.putExtra(Bdz.BDZID, mDefectRecord.bdzid);
+                    intent.putExtra(Config.DEFECT_COUNT_KEY, Config.SINGLE);
+                    intent.putExtra(DefectRecord.DEFECTID, mDefectRecord.defectid);
                     mOnFragmentEventListener.onDefectItemClick(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
                 }
             }

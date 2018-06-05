@@ -135,7 +135,7 @@ public class NewRegularReportActivity extends BaseActivity {
         ExecutorManager.executeTask(() -> {
             // 查询report数据
             try {
-                report =ReportService.getInstance().getReportById(currentReportId);
+                report = ReportService.getInstance().getReportById(currentReportId);
                 mReportSignnameListCzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.worker.name());
                 mReportSignnameListFzr = ReportSignnameService.getInstance().getSignNamesForReportAndRole(currentReportId, Role.leader.name());
                 mHandler.sendEmptyMessage(REFRESH_DATA);
@@ -296,7 +296,7 @@ public class NewRegularReportActivity extends BaseActivity {
 
             defectBinding.lvContainer.setOnItemClickListener((parent, v, position, id) -> {
                 DefectRecord mDefectRecord = (DefectRecord) parent.getItemAtPosition(position);
-                Intent intent = new Intent(mActivity, DefectControlActivity.class);
+                Intent intent = new Intent();
                 intent.putExtra(Config.TRACK_DEFECT_RECORD_ID, mDefectRecord.defectid);
                 intent.putExtra(Config.CURRENT_DEVICE_ID, mDefectRecord.deviceid);
                 intent.putExtra(Config.CURRENT_DEVICE_NAME, mDefectRecord.devcie);

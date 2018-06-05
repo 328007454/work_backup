@@ -34,6 +34,7 @@ import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.KeyBoardUtils;
@@ -41,6 +42,7 @@ import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.defect.activity.AddDefectActivity;
 import com.cnksi.defect.utils.DefectUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -419,7 +421,11 @@ public class SingleSpaceCopyActivity extends BaseActivity implements ItemClickLi
             if (currentKeyBoardState == CopyKeyBoardUtil.KEYBORAD_SHOW) {
                 mKeyBoardUtil.hideKeyboard();
             }
-            Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
+            Intent intent = new Intent(mActivity, AddDefectActivity.class);
+            intent.putExtra(Config.HAS_ALL_CHOICE, false);
+            intent.putExtra(Config.NO_DEVICE_PART,true);
+            intent.putExtra(Config.DEFECT_CONTENT,transDefectContent);
+            intent.putExtra(Device.DTID, copyHelper.device.getString("dtid"));
             SingleSpaceCopyActivity.this.setIntentValue(intent);
             SingleSpaceCopyActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });

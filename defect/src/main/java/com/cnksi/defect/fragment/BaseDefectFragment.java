@@ -11,6 +11,7 @@ import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 import com.cnksi.core.fragment.BaseCoreFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,18 +22,22 @@ import java.util.List;
 public class BaseDefectFragment extends BaseCoreFragment implements ItemClickOrLongClickListener<DefectRecord> {
     protected String deviceId;
     protected String bdzId;
-    protected List<DefectRecord> defectRecords;
+    protected List<DefectRecord> defectRecords = new ArrayList<>();
     protected DefectRecord selectDefect;
+    private boolean hasStandardSwitchDefectId;
     /**
      * 查询该设备下的所有缺陷还是单个缺陷
      */
     protected String defectCount;
     protected String defectId;
+    private String currentReportId;
+    private String standardId;
 
     /**
      * 缺陷的顶级目录
      */
     protected String picParentFolder = Config.RESULT_PICTURES_FOLDER;
+
     @Override
     public int getFragmentLayout() {
         return 0;
@@ -45,10 +50,17 @@ public class BaseDefectFragment extends BaseCoreFragment implements ItemClickOrL
 
     @Override
     protected void lazyLoad() {
-        if (TextUtils.equals(defectCount, Config.SINGLE)) {
-            defectRecords = DefectRecordService.getInstance().queryDefectByDefectId(defectId, bdzId);
+        List<DefectRecord> records = null;
+        if (TextUtils.equals(defectCount, Config.SINGLE) && !hasStandardSwitchDefectId) {
+            records = DefectRecordService.getInstance().queryDefectByDefectId(defectId, bdzId);
+        } else if (hasStandardSwitchDefectId) {
+            records = DefectRecordService.getInstance().queryDefectSwitchOverId(currentReportId, standardId);
         } else {
-            defectRecords = DefectRecordService.getInstance().queryDefectByDeviceid(deviceId, bdzId);
+            records = DefectRecordService.getInstance().queryDefectByDeviceid(deviceId, bdzId);
+        }
+        defectRecords.clear();
+        if (records != null) {
+            defectRecords.addAll(records);
         }
     }
 
@@ -59,8 +71,10 @@ public class BaseDefectFragment extends BaseCoreFragment implements ItemClickOrL
         bdzId = getArguments().getString(Bdz.BDZID);
         defectCount = getArguments().getString(Config.DEFECT_COUNT_KEY);
         defectId = getArguments().getString(DefectRecord.DEFECTID);
+        hasStandardSwitchDefectId = getArguments().getBoolean(Config.SWITCH_DEFECT);
+        standardId = getArguments().getString(Config.CURRENT_STANDARD_ID);
+        currentReportId = getArguments().getString(Config.CURRENT_REPORT_ID);
     }
-
 
 
     @Override

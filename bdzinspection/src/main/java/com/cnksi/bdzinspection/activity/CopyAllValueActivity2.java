@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Message;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
@@ -35,6 +34,7 @@ import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.common.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
@@ -44,6 +44,7 @@ import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.defect.activity.AddDefectActivity;
 import com.cnksi.defect.utils.DefectUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -104,6 +105,10 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
     private Dialog defectDialog;
     private CommonInspectionTipsBinding tipsBinding;
     private XsActivityCopyAll2Binding binding;
+    /**
+     * 设备小类id，主要用来查询设备默认的缺陷
+     */
+    private String deviceDtId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,11 +177,11 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
             }
             FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titleArray);
             binding.viewPager.setAdapter(pagerAdapter);
-            binding.tabStrip.setViewPager(  binding.viewPager);
+            binding.tabStrip.setViewPager(binding.viewPager);
             setPagerTabStripValue(binding.tabStrip);
             binding.tabStrip.setTabPaddingLeftRight(37);
             binding.tabStrip.setShouldExpand(false);
-            binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener(){
+            binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {
                     currentPosition = position;
@@ -185,10 +190,8 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
             });
             binding.viewPager.setOffscreenPageLimit(titleArray.size());
         }
-        currentFragment = fragmentList.get(  binding.viewPager.getCurrentItem());
+        currentFragment = fragmentList.get(binding.viewPager.getCurrentItem());
     }
-
-
 
 
     private void initOnClick() {
@@ -308,7 +311,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
         clickIndex++;
         if (1000 >= diffTime && 3 <= clickIndex) {
             binding.shadom1.setVisibility(View.VISIBLE);
-            ToastUtils.showMessageLong( "不要作弊哟，5秒后继续操作。");
+            ToastUtils.showMessageLong("不要作弊哟，5秒后继续操作。");
             timer.start();
             return true;
         } else {
@@ -376,9 +379,12 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
         tipsBinding.btnSure.setOnClickListener(v -> {
             CopyAllValueActivity2.this.hideKeyBord();
             defectDialog.dismiss();
-            Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
-            CopyAllValueActivity2.this.setIntentValue(intent);
-            CopyAllValueActivity2.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+            Intent intent = new Intent(mActivity, AddDefectActivity.class);
+            intent.putExtra(Config.HAS_ALL_CHOICE, false);
+            intent.putExtra(Config.NO_DEVICE_PART, true);
+            intent.putExtra(Config.DEFECT_CONTENT, transDefectContent);
+            setIntentValue(intent);
+            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
     }
 
@@ -394,11 +400,13 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
      *
      * @param intent
      */
+
     private void setIntentValue(Intent intent) {
         if (null != copyHelper && null != copyHelper.device) {
             currentDeviceName = copyHelper.device.getString("name");
             currentDeviceId = copyHelper.device.getString("deviceid");
             currentSpacingName = copyHelper.device.getString("sname");
+            deviceDtId = copyHelper.device.getString("dtid");
         }
         intent.putExtra(Config.DEFECT_COUNT_KEY, transDefectContent);
         intent.putExtra(Config.CURRENT_DEVICE_ID, currentDeviceId);
@@ -408,6 +416,7 @@ public class CopyAllValueActivity2 extends BaseActivity implements FragmentItemC
         intent.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
         intent.putExtra(Config.CURRENT_SPACING_NAME, currentSpacingName);
         intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
+        intent.putExtra(Device.DTID, deviceDtId);
     }
 
 

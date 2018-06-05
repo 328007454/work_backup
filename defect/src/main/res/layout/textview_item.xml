@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/bottom_line_background_selector"
     android:layout_height="@dimen/dimen_120px"
     android:gravity="center_vertical"
     android:paddingLeft="@dimen/core_padding_30px"

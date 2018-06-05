@@ -149,6 +149,8 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
                     }).setDropDownOfView(defectControlBinding.containerPeople).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
         } else if (i == R.id.add_defect) {
             Intent intent = new Intent(this, AddDefectActivity.class);
+            intent.putExtra(Config.HAS_ALL_CHOICE, true);
+            intent.putExtra(Config.HAS_REPORT_ID,false);
             startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
         }
     }
@@ -175,12 +177,13 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
         String userType = PreferencesUtils.get(Config.OTHER_DEPT_USER, "");
         String account = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         Dialog dialog = DialogUtils.createTipsDialog(this, "是否删除该缺陷", v1 -> {
-
+            defectRecords.remove(defectRecord);
+            defectContentAdapter.setList(defectRecords);
         }, true);
         if (!TextUtils.isEmpty(userType) && userType.contains("team_leader")) {
             dialog.show();
         } else if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(selectUserAccount) && TextUtils.equals(account, selectUserAccount)) {
-
+            dialog.show();
         }
     }
 }

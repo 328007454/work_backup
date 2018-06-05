@@ -35,6 +35,8 @@ public class OperateDefectActivity extends BaseTitleActivity implements ViewPage
     private String defecCount;
     private String defectId;
     private int selectFragmentPosition;
+    private boolean standardSwitchDefectId;
+    private String switchStandarId;
 
     @Override
     protected View getChildContentView() {
@@ -51,6 +53,9 @@ public class OperateDefectActivity extends BaseTitleActivity implements ViewPage
         bdzId = getIntent().getStringExtra(Bdz.BDZID);
         defecCount = getIntent().getStringExtra(Config.DEFECT_COUNT_KEY);
         defectId = getIntent().getStringExtra(DefectRecord.DEFECTID);
+        standardSwitchDefectId = getIntent().getBooleanExtra(Config.SWITCH_DEFECT, false);
+        currentReportId = getIntent().getStringExtra(Config.CURRENT_REPORT_ID);
+        switchStandarId = getIntent().getStringExtra(Config.CURRENT_STANDARD_ID);
         initFragments();
     }
 
@@ -60,6 +65,9 @@ public class OperateDefectActivity extends BaseTitleActivity implements ViewPage
         bundle.putString(Bdz.BDZID, bdzId);
         bundle.putString(Config.DEFECT_COUNT_KEY, defecCount);
         bundle.putString(DefectRecord.DEFECTID, defectId);
+        bundle.putBoolean(Config.SWITCH_DEFECT, standardSwitchDefectId);
+        bundle.putString(Config.CURRENT_REPORT_ID, currentReportId);
+        bundle.putString(Config.CURRENT_STANDARD_ID, switchStandarId);
         TrackDefectFragment trackDefectFragment = new TrackDefectFragment();
         trackDefectFragment.setArguments(bundle);
 
@@ -86,18 +94,21 @@ public class OperateDefectActivity extends BaseTitleActivity implements ViewPage
     @Override
     public void onPageSelected(int position) {
         selectFragmentPosition = position;
-        if (TextUtils.equals(defecCount, Config.SINGLE)) {
-            String newDefectId = ((TrackDefectFragment) fragments.get(0)).getNewDefectId();
-            if (!TextUtils.isEmpty(newDefectId)&&position==1) {
-                ((EliminateDefectFragment) fragments.get(1)).setTrackDefectNewId(newDefectId);
-            }
-
+        String newDefectId = ((TrackDefectFragment) fragments.get(0)).getNewDefectId();
+        if (!TextUtils.isEmpty(newDefectId) && position == 1) {
+            ((EliminateDefectFragment) fragments.get(1)).setTrackDefectNewId(newDefectId);
         }
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(RESULT_OK);
     }
 
     @Override

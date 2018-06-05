@@ -39,6 +39,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.GPSUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.defect.activity.AddDefectActivity;
 import com.cnksi.defect.utils.DefectUtils;
 
 import org.xutils.db.table.DbModel;
@@ -326,7 +327,10 @@ public class CopyValueActivity2 extends BaseActivity implements KeyBordListener 
         tipsBinding.btnSure.setOnClickListener(v -> {
             hideKeyBord();
             defectDialog.dismiss();
-            Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
+            Intent intent = new Intent(mActivity, AddDefectActivity.class);
+            intent.putExtra(Config.HAS_ALL_CHOICE, false);
+            intent.putExtra(Config.NO_DEVICE_PART,true);
+            intent.putExtra(Config.DEFECT_CONTENT,transDefectContent);
             setIntentValue(intent);
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });

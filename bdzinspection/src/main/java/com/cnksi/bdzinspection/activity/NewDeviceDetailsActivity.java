@@ -34,6 +34,7 @@ import com.cnksi.bdzinspection.model.DeviceStandardsOper;
 import com.cnksi.bdzinspection.model.DeviceTypeImage;
 import com.cnksi.bdzinspection.model.PlacedDevice;
 import com.cnksi.bdzinspection.model.SpecialMenu;
+import com.cnksi.common.model.Bdz;
 import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.NextDeviceUtils;
 import com.cnksi.common.Config;
@@ -64,6 +65,8 @@ import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.defect.activity.AddDefectActivity;
+import com.cnksi.defect.activity.OperateDefectActivity;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.sqlite.SqlInfo;
@@ -212,15 +215,23 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         devicedetailsBinding.deviceStandardLv.setOnItemClickListener((parent, view, position, id) -> {
             mCurrentStandard = mStandardList.get(position);
             if (NewDeviceDetailsActivity.this.isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) || (InspectionType.special_xideng.equals(currentInspectionType))) {
-                Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
+                Intent intent = new Intent(mActivity, AddDefectActivity.class);
+                intent.putExtra(Config.HAS_ALL_CHOICE, false);
+                intent.putExtra(Config.NO_DEVICE_PART, true);
+                intent.putExtra(Config.DEVICE_CHOICE, false);
+                intent.putExtra(Device.DTID, mCurrentDevice.dtid);
                 NewDeviceDetailsActivity.this.setIntentValue(intent);
                 NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
             } else {
-                Intent intent = new Intent(mActivity, DefectControlActivity.class);
-                NewDeviceDetailsActivity.this.setIntentValue(intent);
-                intent.putExtra(Config.IS_SHOW_DEFECT_REASON, true);
+
+                Intent intent = new Intent(mActivity, AddDefectActivity.class);
+                intent.putExtra(Config.HAS_ALL_CHOICE, false);
+                intent.putExtra(Config.NO_DEVICE_PART, false);
+                intent.putExtra(Config.DEVICE_CHOICE, false);
+                intent.putExtra(Device.DTID, mCurrentDevice.dtid);
                 // 传递巡视标准ID
                 intent.putExtra(Config.CURRENT_STANDARD_ID, String.valueOf(mCurrentStandard.getString(Standards.STAID)));
+                setIntentValue(intent);
                 NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
             }
         });
@@ -449,6 +460,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             intent.putExtra(Config.CURRENT_DEVICE_ID, mCurrentDevice.deviceid);
             intent.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
             intent.putExtra(Config.CURRENT_SPACING_NAME, currentSpacingName);
+            intent.putExtra(Device.DTID, mCurrentDevice.dtid);
             NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
 
@@ -471,20 +483,21 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             if (null == mExistDefectList || mExistDefectList.isEmpty()) {
                 return;
             }
-            intent = new Intent(mActivity, DefectControlActivity.class);
+            intent = new Intent(mActivity, OperateDefectActivity.class);
             NewDeviceDetailsActivity.this.setIntentValue(intent);
-            intent.putExtra(Config.ADD_NEW_DEFECT_RECORD, true);
-            intent.putExtra(Config.IS_TRACK_DEFECT, true);
-            intent.putExtra(Config.IS_SHOW_DEVICE_WIDGET, false);
-            intent.putExtra(Config.IS_NEED_SEARCH_DEFECT_REASON, true);
+            intent.putExtra(Device.DEVICEID, mCurrentDevice.deviceid);
+            intent.putExtra(Bdz.BDZID, mCurrentDevice.bdzid);
+            intent.putExtra(Config.DEFECT_COUNT_KEY, Config.MULTI);
             NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
 
         devicedetailsBinding.tvAddNewDefect.setOnClickListener(view -> {
-            Intent intent;
-            intent = new Intent(mActivity, AddNewDefectActivity.class);
-            NewDeviceDetailsActivity.this.setIntentValue(intent);
-            NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+            Intent intent = new Intent(mActivity, AddDefectActivity.class);
+            intent.putExtra(Config.NO_CHOICE, true);
+            intent.putExtra(Config.NO_DEVICE_PART, true);
+            intent.putExtra(Device.DTID, mCurrentDevice.dtid);
+            setIntentValue(intent);
+            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
         devicedetailsBinding.ibtnCancel.setOnClickListener(view -> NewDeviceDetailsActivity.this.onBackPressed());
         devicedetailsBinding.ibtnSetting.setOnClickListener(view -> {
@@ -562,7 +575,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         if (mChangePictureDialog == null) {
             int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
             changeHolder = new ViewHolder(mActivity, null, R.layout.xs_content_list_dialog, false);
-            mChangePictureDialog = DialogUtils.createDialog(mActivity,changeHolder.getRootView(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            mChangePictureDialog = DialogUtils.createDialog(mActivity, changeHolder.getRootView(), dialogWidth, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         }
         ((ListView) changeHolder.getView(R.id.lv_container)).setAdapter(mListContentDialogAdapter);
         ((TextView) changeHolder.getView(R.id.tv_dialog_title)).setText(R.string.xs_picture_function_str);
@@ -626,7 +639,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             data.add(bigTypeModel.getString("identification_prevent_measures"));
             holder = new ViewHolder(mActivity, null, R.layout.xs_content_list_dialog, false);
             BigTypePreventAdapter adapter = new BigTypePreventAdapter(mActivity, data, R.layout.xs_danger_point_item2);
-            mDangerPointDialog = DialogUtils.createDialog(mActivity,  holder.getRootView(), dialogWidth, (data != null && data.size() > 4) ? dialogHeight : LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            mDangerPointDialog = DialogUtils.createDialog(mActivity, holder.getRootView(), dialogWidth, (data != null && data.size() > 4) ? dialogHeight : LinearLayout.LayoutParams.WRAP_CONTENT, true);
             ((TextView) holder.getView(R.id.tv_dialog_title)).setText("危险点及控制措施");
             ((ListView) holder.getView(R.id.lv_container)).setAdapter(adapter);
         }
@@ -647,72 +660,70 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (RESULT_OK == resultCode) {
-            switch (requestCode) {
-                case ACTION_IMAGE:
-                    // 更换照片 切割照片
-                    if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)) {
-                        cropImageUri(Uri.fromFile(new File(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)), ScreenUtils.getScreenHeight(mActivity), ScreenUtils.getScreenHeight(mActivity), CROP_PICTURE, currentImageName);
-                    }
-                    break;
-                case CROP_PICTURE:
+        switch (requestCode) {
+            case ACTION_IMAGE:
+                // 更换照片 切割照片
+                if (FileUtils.isFileExists(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)) {
+                    cropImageUri(Uri.fromFile(new File(Config.CUSTOMER_PICTURES_FOLDER + currentImageName)), ScreenUtils.getScreenHeight(mActivity), ScreenUtils.getScreenHeight(mActivity), CROP_PICTURE, currentImageName);
+                }
+                break;
+            case CROP_PICTURE:
+                // 2、保存到数据库
+                DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, currentImageName);
+                // 3、更换设备图片
+                setDeviceImage();
+                break;
+            case SELECT_DEVICE_IMAGE:
+                if (!data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST).isEmpty()) {
+                    currentImageName = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST).get(0).replace(Config.BDZ_INSPECTION_FOLDER, "");
                     // 2、保存到数据库
                     DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, currentImageName);
                     // 3、更换设备图片
                     setDeviceImage();
-                    break;
-                case SELECT_DEVICE_IMAGE:
-                    if (!data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST).isEmpty()) {
-                        currentImageName = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST).get(0).replace(Config.BDZ_INSPECTION_FOLDER, "");
-                        // 2、保存到数据库
-                        DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, currentImageName);
-                        // 3、更换设备图片
-                        setDeviceImage();
+                }
+                break;
+            case UPDATE_DEVICE_DEFECT_REQUEST_CODE:
+                // 历史缺陷
+                searchCurrentDeviceExistDefect();
+                break;
+            case PHOTO_SIGN_IMAGE:
+                CustomerDialog.showProgress(this, "处理水印中...");
+                ExecutorManager.executeTask(() -> {
+                    Bitmap bitmap = BitmapUtil.createScaledBitmapByHeight(Config.RESULT_PICTURES_FOLDER + currentImageName, ScreenUtils.getScreenHeight(mActivity));
+                    String tips = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
+                    tips = tips + "\n" + DateUtils.getCurrentLongTime();
+                    bitmap = BitmapUtil.addText2Bitmap(bitmap, tips, 60);
+                    BitmapUtil.saveBitmap(bitmap, Config.RESULT_PICTURES_FOLDER + currentImageName);
+                    if (placedDevice == null) {
+                        placedDevice = PlacedDevice.create(mCurrentDevice, currentReportId);
+                    } else {
+                        placedDevice.update_time = DateUtils.getCurrentLongTime();
                     }
-                    break;
-                case UPDATE_DEVICE_DEFECT_REQUEST_CODE:
-                    // 历史缺陷
-                    searchCurrentDeviceExistDefect();
-                    break;
-                case PHOTO_SIGN_IMAGE:
-                    CustomerDialog.showProgress(this, "处理水印中...");
-                    ExecutorManager.executeTask(() -> {
-                        Bitmap bitmap = BitmapUtil.createScaledBitmapByHeight(Config.RESULT_PICTURES_FOLDER + currentImageName, ScreenUtils.getScreenHeight(mActivity));
-                        String tips = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
-                        tips = tips + "\n" + DateUtils.getCurrentLongTime();
-                        bitmap = BitmapUtil.addText2Bitmap(bitmap, tips, 60);
-                        BitmapUtil.saveBitmap(bitmap, Config.RESULT_PICTURES_FOLDER + currentImageName);
-                        if (placedDevice == null) {
-                            placedDevice = PlacedDevice.create(mCurrentDevice, currentReportId);
-                        } else {
-                            placedDevice.update_time = DateUtils.getCurrentLongTime();
-                        }
-                        placedDevice.setPlacedWayHighest("photo");
-                        imgList.add(currentImageName);
-                        placedDevice.pic = StringUtils.arrayListToString(imgList);
-                        PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
-                        NewDeviceDetailsActivity.this.runOnUiThread(() -> {
-                            devicedetailsBinding.setHasSignPhoto(true);
-                            CustomerDialog.dismissProgress();
-                            NewDeviceDetailsActivity.this.refreshDevicePic();
-                        });
+                    placedDevice.setPlacedWayHighest("photo");
+                    imgList.add(currentImageName);
+                    placedDevice.pic = StringUtils.arrayListToString(imgList);
+                    PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
+                    NewDeviceDetailsActivity.this.runOnUiThread(() -> {
+                        devicedetailsBinding.setHasSignPhoto(true);
+                        CustomerDialog.dismissProgress();
+                        NewDeviceDetailsActivity.this.refreshDevicePic();
                     });
-                    break;
-                case CANCEL_RESULT_LOAD_IMAGE:
-                    List<String> list = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
-                    if (null != list && !list.isEmpty()) {
-                        for (String file : list) {
-                            FileUtils.deleteFile(file);
-                            imgList.remove(file.replace(Config.RESULT_PICTURES_FOLDER, ""));
-                        }
-                        refreshDevicePic();
-                        placedDevice.pic = StringUtils.arrayListToString(imgList);
-                        PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
+                });
+                break;
+            case CANCEL_RESULT_LOAD_IMAGE:
+                List<String> list = data.getStringArrayListExtra(Config.CANCEL_IMAGEURL_LIST);
+                if (null != list && !list.isEmpty()) {
+                    for (String file : list) {
+                        FileUtils.deleteFile(file);
+                        imgList.remove(file.replace(Config.RESULT_PICTURES_FOLDER, ""));
                     }
-                    break;
-                default:
-                    break;
-            }
+                    refreshDevicePic();
+                    placedDevice.pic = StringUtils.arrayListToString(imgList);
+                    PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
+                }
+                break;
+            default:
+                break;
         }
     }
 
