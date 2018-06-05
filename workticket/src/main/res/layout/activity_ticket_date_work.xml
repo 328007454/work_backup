@@ -7,7 +7,7 @@
     <!--android:layout_height="match_parent"-->
     <!--android:background="@color/ticket_color_f0f0f0">-->
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,15 +21,34 @@
             android:id="@+id/tab_strip"
             android:layout_width="match_parent"
             android:layout_height="120px"
+            android:layout_below="@+id/include_title"
             android:background="@color/core_bg_white_ffffff" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            />
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ticket_txt_add"
+            android:layout_below="@+id/tab_strip" />
 
-    </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/ticket_txt_add"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="18px"
+            android:layout_marginEnd="@dimen/xs__30px"
+            android:layout_marginStart="@dimen/xs__30px"
+            android:layout_marginTop="18px"
+            android:background="@drawable/shape_ffa47c_ff7c89_bg"
+            android:gravity="center"
+            android:text="预约工作"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/ticket_42px" />
+
+    </RelativeLayout>
     <!--</ScrollView>-->
 </layout>

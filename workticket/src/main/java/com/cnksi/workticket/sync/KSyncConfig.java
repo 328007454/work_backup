@@ -56,12 +56,14 @@ public class KSyncConfig {
     }
 
 
-    public void upload() {
+    public KSyncConfig upload() {
         executorService.execute(() -> ksync.uploadData());
+        return this;
     }
 
-    public void downLoad() {
-        executorService.execute(() -> ksync.download("users", "bdz", "workticket_order", "", "department"));
+    public KSyncConfig downLoad() {
+        executorService.execute(() -> ksync.download("users", "bdz", "workticket_order", "department"));
+        return this;
     }
 
     public class SyncHandler extends Handler {

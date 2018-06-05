@@ -4,12 +4,12 @@
 
 <item
     android:state_checked="true"
-    android:color="#5dbf19"
+    android:color="@color/core_text_green_1bbc9b"
     />
 
 <item
     android:state_pressed="true"
-    android:color="#5dbf19"
+    android:color="@color/core_text_green_1bbc9b"
     />
 
 <item

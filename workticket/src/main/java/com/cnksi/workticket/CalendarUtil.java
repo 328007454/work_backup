@@ -64,7 +64,9 @@ public class CalendarUtil implements CalendarView.OnDateSelectedListener, Calend
 
         imgDateRight.setOnClickListener(v -> calendarView.scrollToNext(true));
 
-        txtDateToday.setOnClickListener(v -> calendarView.scrollToCalendar(calendarView.getCurYear(), calendarView.getCurMonth(), calendarView.getCurDay()));
+        txtDateToday.setOnClickListener(v -> {
+            calendarView.scrollToCalendar(calendarView.getCurYear(), calendarView.getCurMonth(), calendarView.getCurDay());
+        });
         txtDate.setText(calendarView.getCurYear() + "年" + calendarView.getCurMonth() + "月");
 
         if (group instanceof LinearLayout) {

@@ -1,7 +1,11 @@
 package com.cnksi.workticket.bean;
 
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.workticket.Config;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -57,6 +61,13 @@ public class WorkTicketOrder implements MultiItemEntity {
     private static final String WORK_UNIT = "work_unit";
     @Column(name = WORK_UNIT)
     public String workUnit;
+
+    /**
+     * 工作单位id
+     */
+    public static final String WORK_UNIT_ID= "work_unit_id";
+    @Column(name = WORK_UNIT_ID)
+    public String workUnitId;
 
     /**
      * 是否时外来班组
@@ -172,7 +183,7 @@ public class WorkTicketOrder implements MultiItemEntity {
     }
 
     public WorkTicketOrder(String deptID, String bdzId, String bdzName, String selectType, String deptName, String s, String s1, String s2,
-                           String ticketType, String selectDate, String selectTimeZoneKey, String seletTimeZone, String userAccount, String userName) {
+                           String ticketType, String selectDate, String selectTimeZoneKey, String seletTimeZone, String userAccount, String userName,String workUnitId) {
         this.deptId = deptID;
         this.bdzId = bdzId;
         this.bdzName = bdzName;
@@ -191,6 +202,12 @@ public class WorkTicketOrder implements MultiItemEntity {
         this.dlt = "0";
         this.lastModifyTime = DateUtils.getCurrentLongTime();
         this.ticketStatus = "normal";
+        this.workUnitId = workUnitId;
+        if (TextUtils.equals(Config.otherDeptUser,"other_dept_user")){
+            isOtherUnit = "Y";
+        }else{
+            isOtherUnit="N";
+        }
     }
 
     @Override

@@ -238,7 +238,6 @@
                             android:textSize="33px" />
 
                         <EditText
-                            android:inputType="phone"
                             android:id="@+id/txt_connnection_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -246,6 +245,7 @@
                             android:background="@color/core_bg_white_ffffff"
                             android:gravity="left"
                             android:hint="请输入联系方式"
+                            android:inputType="phone"
                             android:textColor="#242827"
                             android:textSize="39px" />
                     </com.cnksi.workticket.view.StyleLineLinearLayout>
@@ -328,43 +328,47 @@
                         android:orientation="horizontal"
                         android:paddingTop="24px">
 
-                        <android.support.v7.widget.AppCompatRadioButton
+                        <android.support.v7.widget.AppCompatCheckBox
                             android:id="@+id/rb_kai_typpe"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0px"
                             android:layout_height="wrap_content"
-                            android:background="@null"
+                            android:layout_weight="1"
                             android:button="@null"
                             android:clickable="true"
-                            android:drawableLeft="@drawable/ticket_5dbf19_radio_button_selector"
-                            android:drawablePadding="24px"
+                            android:drawableLeft="@drawable/checkbox_green_button_selector"
+                            android:drawablePadding="@dimen/ticket_42px"
+                            android:gravity="center_vertical"
                             android:text="开票"
-                            android:textColor="@color/ticket_type_text_selector" />
+                            android:textColor="@color/ticket_type_text_selector"
+                            android:textSize="@dimen/xs_dialog_title_textsize_px" />
 
-                        <android.support.v7.widget.AppCompatRadioButton
+                        <android.support.v7.widget.AppCompatCheckBox
                             android:id="@+id/rb_jie_type"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0px"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="180px"
-                            android:background="@null"
+                            android:layout_weight="1"
                             android:button="@null"
                             android:clickable="true"
-                            android:drawableLeft="@drawable/ticket_5dbf19_radio_button_selector"
-                            android:drawablePadding="24px"
+                            android:drawableLeft="@drawable/checkbox_green_button_selector"
+                            android:drawablePadding="@dimen/ticket_42px"
+                            android:gravity="center_vertical"
                             android:text="结票"
-                            android:textColor="@color/ticket_type_text_selector" />
+                            android:textColor="@color/ticket_type_text_selector"
+                            android:textSize="@dimen/xs_dialog_title_textsize_px" />
 
-                        <android.support.v7.widget.AppCompatRadioButton
+                        <android.support.v7.widget.AppCompatCheckBox
                             android:id="@+id/rb_other_type"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0px"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="180px"
-                            android:background="@null"
+                            android:layout_weight="1"
                             android:button="@null"
                             android:clickable="true"
-                            android:drawableLeft="@drawable/ticket_5dbf19_radio_button_selector"
-                            android:drawablePadding="24px"
+                            android:drawableLeft="@drawable/checkbox_green_button_selector"
+                            android:drawablePadding="@dimen/ticket_42px"
+                            android:gravity="center_vertical"
                             android:text="其他工作"
-                            android:textColor="@color/ticket_type_text_selector" />
+                            android:textColor="@color/ticket_type_text_selector"
+                            android:textSize="@dimen/xs_dialog_title_textsize_px" />
                     </RadioGroup>
 
                 </com.cnksi.workticket.view.StyleLineLinearLayout>
@@ -468,10 +472,10 @@
 
 
                     <TextView
-                        android:layout_marginTop="20px"
-                        android:layout_below="@id/rg_select_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/rg_select_time"
+                        android:layout_marginTop="20px"
                         android:background="#fff7f6f6"
                         android:gravity="start"
                         android:paddingBottom="10px"

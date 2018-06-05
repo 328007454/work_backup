@@ -21,6 +21,7 @@ import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.common.Config;
+import com.cnksi.common.SystemConfig;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.daoservice.BaseService;
@@ -98,6 +99,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_nari);
         account = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "").split(",")[0];
+        SystemConfig.init();
     }
 
 

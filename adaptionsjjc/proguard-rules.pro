@@ -130,7 +130,7 @@
 
 
 
--libraryjars ../bdzinspection/libs/MPChartLib.jar
+-libraryjars ../common/libs/MPChartLib.jar
 -dontwarn org.dom4j.**
 -libraryjars ../bdzinspection/libs/dom4j-2.0.0.jar
 -keep class org.dom4j.**{*;}

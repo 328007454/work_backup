@@ -62,7 +62,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
     /**
      * 开票类型
      */
-    private String ticketType;
+    private String ticketType = "";
     /**
      * 选择时间区间
      */
@@ -86,6 +86,8 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
      */
     private String save = "save";
     private boolean isSaved = true;
+    private String otherDeptUser = "other_dept_user";
+    private boolean isNeedRefreshTimeZone = true;
 
     @Override
     public int getLayoutResId() {
@@ -95,8 +97,18 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
     @Override
     public void initUI() {
         dateBinding = (ActivityTicketDateBinding) rootDataBinding;
+        if (TextUtils.equals(Config.otherDeptUser, otherDeptUser)) {
+            dateBinding.rbOtherType.setVisibility(View.GONE);
+        } else {
+            dateBinding.rbKaiTyppe.setVisibility(View.GONE);
+            dateBinding.rbJieType.setVisibility(View.GONE);
+            RadioGroup.LayoutParams rl = (RadioGroup.LayoutParams) dateBinding.rbOtherType.getLayoutParams();
+            rl.leftMargin = 0;
+            dateBinding.rbOtherType.setLayoutParams(rl);
+            dateBinding.rbOtherType.setChecked(true);
+            ticketType = TicketStatusEnum.other.name();
+        }
         initClick();
-
     }
 
     @Override
@@ -108,7 +120,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            TicketDateWorkActivity.this.runOnUiThread(() -> {
+            runOnUiThread(() -> {
                 if (TextUtils.isEmpty(department.name)) {
                     dateBinding.txtDeptName.setText(Config.deptName);
                 } else {
@@ -123,8 +135,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         dateBinding.rgSelectTime.setOnCheckedChangeListener(checkedChangeListener);
         dateBinding.rgTicketType.setOnCheckedChangeListener(checkedChangeListener);
         dateBinding.rgWorkType.setOnCheckedChangeListener(checkedChangeListener);
-
-        dateBinding.txtBdzName.setOnClickListener(v -> new DialogUtil().initBdzDialog(TicketDateWorkActivity.this, models == null ? new ArrayList<>() : models, (view, item, position) -> {
+        dateBinding.txtBdzName.setOnClickListener(v -> new DialogUtil().initBdzDialog(this, models == null ? new ArrayList<>() : models, (view, item, position) -> {
             ToastUtils.showMessage(models.get(position).getString("name"));
             bdzName = models.get(position).getString("name");
             if (!TextUtils.isEmpty(Config.otherDeptUser) && Config.OTHER_DEPT_USER.equalsIgnoreCase(Config.otherDeptUser)) {
@@ -133,55 +144,103 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             dateBinding.txtBdzName.setText(models.get(position).getString("name"));
             bdzId = models.get(position).getString("bdzid");
             if (!TextUtils.isEmpty(selectDate)) {
-                TicketDateWorkActivity.this.caculateDataCanBeSaved();
+                caculateDataCanBeSaved();
             }
         }));
 
-        dateBinding.ibtnSelectTime.setOnClickListener(v -> TicketDateWorkActivity.this.showWeekWorkDate());
+        dateBinding.ibtnSelectTime.setOnClickListener(v -> showWeekWorkDate());
 
         dateBinding.save.setOnClickListener(v -> {
-            if (!TicketDateWorkActivity.this.checkInputAllInfor()) {
+            if (!checkInputAllInfor()) {
                 return;
             }
             if (isSaved) {
                 isSaved = false;
-                TicketDateWorkActivity.this.saveData(save);
+                saveData(save);
             } else {
                 ToastUtils.showMessage("正在保存");
             }
         });
 
         dateBinding.goon.setOnClickListener(v -> {
-            if (!TicketDateWorkActivity.this.checkInputAllInfor()) {
+            if (!checkInputAllInfor()) {
                 return;
             }
             if (isSaved) {
                 isSaved = false;
-                TicketDateWorkActivity.this.saveData(goOn);
+                saveData(goOn);
             } else {
                 ToastUtils.showMessage("正在保存");
             }
         });
 
-        dateBinding.includeTitle.ticketBack.setOnClickListener(v -> TicketDateWorkActivity.this.onBackPressed());
+        dateBinding.includeTitle.ticketBack.setOnClickListener(v -> onBackPressed());
 
         dateBinding.txtSelectTime.setOnClickListener(v -> {
             if (TextUtils.isEmpty(bdzId) || TextUtils.isEmpty(selectType)) {
                 ToastUtils.showMessage("请选择变电站和工作类型");
                 return;
             }
-            new DialogUtil().showDatePickerDialog(TicketDateWorkActivity.this, (result, position) -> {
+            new DialogUtil().showDatePickerDialog(this, (result, position) -> {
+                dateBinding.rgSelectTime.clearCheck();
                 selectDate = result;
                 seletTimeZone = "";
                 dateBinding.txtSelectTime.setText("时间及日期:  " + result);
-                dateBinding.rgSelectTime.clearCheck();
-                orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate);
-                TicketDateWorkActivity.this.caculateDataCanBeSaved();
+                orders = WorkTicketOrderService.getInstance().getSelectDateOrders(Config.deptID, selectDate);
+                caculateDataCanBeSaved();
             });
+        });
+
+        dateBinding.rbKaiTyppe.setOnClickListener(v -> {
+            if (dateBinding.rbKaiTyppe.isChecked()) {
+                if (!ticketType.contains(TicketStatusEnum.kp.name())) {
+                    ticketType = ticketType + TicketStatusEnum.kp.name() + ",";
+                }
+            } else {
+                if (ticketType.contains(TicketStatusEnum.kp.name())) {
+                    ticketType = ticketType.replace(TicketStatusEnum.kp.name() + ",", "");
+                }
+            }
+        });
+        dateBinding.rbJieType.setOnClickListener(v -> {
+            if (dateBinding.rbJieType.isChecked()) {
+                if (!ticketType.contains(TicketStatusEnum.jp.name())) {
+                    ticketType = ticketType + TicketStatusEnum.jp.name() + ",";
+                }
+            } else {
+                if (ticketType.contains(TicketStatusEnum.jp.name())) {
+                    ticketType = ticketType.replace(TicketStatusEnum.jp.name() + ",", "");
+                }
+            }
+        });
+        dateBinding.rbOtherType.setOnClickListener(v -> {
+            if (dateBinding.rbOtherType.isChecked()) {
+                if (!ticketType.contains(TicketStatusEnum.other.name())) {
+                    ticketType = ticketType + TicketStatusEnum.other.name() + ",";
+                }
+            } else {
+                if (ticketType.contains(TicketStatusEnum.other.name())) {
+                    ticketType = ticketType.replace(TicketStatusEnum.other.name() + ",", "");
+                }
+            }
+            setSelectTimeEnAbled();
+        });
+
+        dateBinding.includeTitle.ibtSync.setOnClickListener(v -> {
+            CustomerDialog.showProgress(this, "正在同步数据，请确保网络畅通");
+            KSyncConfig.getInstance().setFailListener(syncSuccess -> {
+                if (!syncSuccess) {
+                    ToastUtils.showMessage("同步失败");
+                } else {
+                    ToastUtils.showMessage("同步成功，请继续操作");
+                }
+                CustomerDialog.dismissProgress();
+            }).upload().downLoad();
         });
     }
 
     Dialog weekDateWorkDialog;
+
 
     private void showWeekWorkDate() {
         TicketWeekDateBinding dateBinding = TicketWeekDateBinding.inflate(LayoutInflater.from(getApplicationContext()));
@@ -238,23 +297,23 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         KSyncConfig.getInstance().setFailListener(syncSuccess -> {
             if (syncSuccess) {
                 if (TicketStatusEnum.kp.name().equalsIgnoreCase(ticketType)) {
-                    TicketDateWorkActivity.this.caculateDataCanBeSaved();
+                    orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate);
+                    caculateDataCanBeSaved();
                     if (!isSelectTimeZone) {
-                        ToastUtils.showMessage("所选时间区冲突，请重新选择");
+                        ToastUtils.showMessage("该时间段下已经有工作了，请重新选择时间");
                         return;
                     }
                 }
                 WorkTicketOrder order = new WorkTicketOrder(department.id, bdzId, bdzName, selectType, Config.deptName, dateBinding.txtPeopleName.getText().toString(), dateBinding.txtConnnectionName.getText().toString(),
-                        dateBinding.txtContentName.getText().toString(), ticketType, selectDate, selectTimeZoneKey, seletTimeZone, Config.userAccount, Config.userName);
+                        dateBinding.txtContentName.getText().toString(), ticketType, selectDate, selectTimeZoneKey, seletTimeZone, Config.userAccount, Config.userName, Config.deptID);
                 try {
                     WorkTicketDbManager.getInstance().getTicketManager().saveOrUpdate(order);
-                    TicketDateWorkActivity.this.showDateSuccessDialog(button);
-                    TicketDateWorkActivity.this.upLoadData();
+                    showDateSuccessDialog(button);
+                    upLoadData();
                 } catch (DbException e) {
                     e.printStackTrace();
                     isSaved = true;
                 }
-
             } else {
                 ToastUtils.showMessage("同步失败，无法保存本次数据，请确保网络畅通");
                 isSaved = true;
@@ -272,20 +331,22 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         tipsBinding.yes.setText("确定");
         tipsBinding.no.setText("关闭");
         successDialog = new DialogUtil().createDialog(this, tipsBinding.getRoot(), ScreenUtils.getScreenWidth(this) * 7 / 9, ViewGroup.LayoutParams.WRAP_CONTENT);
+        successDialog.setCanceledOnTouchOutside(false);
         tipsBinding.no.setOnClickListener(v -> {
             if (TextUtils.equals(button, goOn)) {
-                TicketDateWorkActivity.this.clearAllElement();
+                clearAllElement();
             } else if (TextUtils.equals(button, save)) {
-                TicketDateWorkActivity.this.finish();
+                finish();
             }
+            isSaved = true;
             successDialog.dismiss();
         });
 
         tipsBinding.yes.setOnClickListener(v -> {
             if (TextUtils.equals(button, goOn)) {
-                TicketDateWorkActivity.this.clearAllElement();
+                clearAllElement();
             } else if (TextUtils.equals(button, save)) {
-                TicketDateWorkActivity.this.finish();
+                finish();
             }
             isSaved = true;
             successDialog.dismiss();
@@ -320,13 +381,15 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         currentBdzWorkA.clear();
         currentBdzWorkB.clear();
         for (WorkTicketOrder order : orders) {
-            if ("A".equalsIgnoreCase(order.workType)) {
+            if (a.equalsIgnoreCase(order.workType)) {
                 setWorkTypeCaculate(deptWorkA, order, currentBdzWorkA);
             } else if (b.equalsIgnoreCase(order.workType)) {
                 setWorkTypeCaculate(deptWorkB, order, currentBdzWorkB);
             }
         }
-        refreshSelectTimeStatus();
+        if (isNeedRefreshTimeZone) {
+            refreshSelectTimeStatus();
+        }
     }
 
     public void setWorkTypeCaculate(HashMap<String, Integer> workMap, WorkTicketOrder order, HashMap<String, Integer> bdzWorkTypeMap) {
@@ -336,6 +399,15 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             } else {
                 workMap.put(order.workKey, 1);
             }
+            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
+                dateBinding.txtTime1.setChecked(false);
+                dateBinding.txtTime1.setEnabled(false);
+                isNeedRefreshTimeZone = false;
+                return;
+            } else {
+                dateBinding.txtTime1.setEnabled(true);
+            }
+
             if (bdzId.equalsIgnoreCase(order.bdzId)) {
                 if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
                     bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
@@ -349,6 +421,15 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             } else {
                 workMap.put(order.workKey, 1);
             }
+            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
+                dateBinding.txtTime2.setChecked(false);
+                dateBinding.txtTime2.setEnabled(false);
+                isNeedRefreshTimeZone = false;
+                return;
+            } else {
+                dateBinding.txtTime2.setEnabled(true);
+            }
+
             if (bdzId.equalsIgnoreCase(order.bdzId)) {
                 if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
                     bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
@@ -363,13 +444,21 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             } else {
                 workMap.put(order.workKey, 1);
             }
+            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
+                dateBinding.txtTime3.setChecked(false);
+                dateBinding.txtTime3.setEnabled(false);
+                isNeedRefreshTimeZone = false;
+                return;
+            } else {
+                dateBinding.txtTime3.setEnabled(true);
+            }
+
             if (bdzId.equalsIgnoreCase(order.bdzId)) {
                 if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
                     bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
                 } else {
                     bdzWorkTypeMap.put(order.workKey, 1);
                 }
-
             }
         } else if (TicketTimeEnum.region_15to16.name().equalsIgnoreCase(order.workKey)) {
             if (workMap.keySet().contains(order.workKey)) {
@@ -377,6 +466,15 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             } else {
                 workMap.put(order.workKey, 1);
             }
+            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
+                dateBinding.txtTime4.setChecked(false);
+                dateBinding.txtTime4.setEnabled(false);
+                isNeedRefreshTimeZone = false;
+                return;
+            } else {
+                dateBinding.txtTime4.setEnabled(true);
+            }
+
             if (bdzId.equalsIgnoreCase(order.bdzId)) {
                 if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
                     bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
@@ -391,6 +489,16 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             } else {
                 workMap.put(order.workKey, 1);
             }
+
+            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
+                dateBinding.txtTime5.setChecked(false);
+                dateBinding.txtTime5.setEnabled(false);
+                isNeedRefreshTimeZone = false;
+                return;
+            } else {
+                dateBinding.txtTime5.setEnabled(true);
+            }
+
             if (bdzId.equalsIgnoreCase(order.bdzId)) {
                 if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
                     bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
@@ -399,7 +507,6 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                 }
             }
         }
-
     }
 
     private void refreshSelectTimeStatus() {
@@ -480,7 +587,6 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
                 dateBinding.txtTime1.setChecked(false);
                 dateBinding.txtTime1.setEnabled(false);
-                return;
             }
             if (a.equalsIgnoreCase(selectType) && bTo11A * 2 + bTo11B + 2 <= 2) {
                 dateBinding.txtTime1.setEnabled(true);
@@ -499,7 +605,6 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
                 dateBinding.txtTime2.setChecked(false);
                 dateBinding.txtTime2.setEnabled(false);
-                return;
             }
 
             if (a.equalsIgnoreCase(selectType) && 2 + bTo12A * 2 + bTo12B <= 2) {
@@ -520,7 +625,6 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
                 dateBinding.txtTime3.setChecked(false);
                 dateBinding.txtTime3.setEnabled(false);
-                return;
             }
             if (a.equalsIgnoreCase(selectType) && bTo15A * 2 + bTo15B + 2 <= 2) {
                 dateBinding.txtTime3.setEnabled(true);
@@ -540,7 +644,6 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
                 dateBinding.txtTime4.setChecked(false);
                 dateBinding.txtTime4.setEnabled(false);
-                return;
             }
             if (a.equalsIgnoreCase(selectType) && bTo16A * 2 + bTo16B + 2 <= 2) {
                 dateBinding.txtTime4.setEnabled(true);
@@ -560,7 +663,6 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
                 dateBinding.txtTime5.setChecked(false);
                 dateBinding.txtTime5.setEnabled(false);
-                return;
             }
 
             if (a.equalsIgnoreCase(selectType) && bTo17A * 2 + bTo17B + 2 <= 2) {
@@ -575,34 +677,22 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             dateBinding.txtTime5.setChecked(false);
             dateBinding.txtTime5.setEnabled(false);
         }
+
     }
 
 
-    private RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup radioGroup, int i) {
-            int i1 = radioGroup.getId();
-            if (i1 == R.id.rg_select_time) {
-                if (TextUtils.isEmpty(selectDate)) {
-                    ToastUtils.showMessage("请先选择时间");
-                    return;
-                }
-                TicketDateWorkActivity.this.getSelectTimeGroup(i);
-            } else if (i1 == R.id.rg_ticket_type) {
-                if (i == R.id.rb_kai_typpe) {
-                    ticketType = "kp";
-                } else if (i == R.id.rb_jie_type) {
-                    ticketType = "jp";
-                    TicketDateWorkActivity.this.setSelectTimeEnAbled();
-                } else if (i == R.id.rb_other_type) {
-                    ticketType = "other";
-                    TicketDateWorkActivity.this.setSelectTimeEnAbled();
-                }
-            } else if (i1 == R.id.rg_work_type) {
-                selectType = i == R.id.rb_a_typpe ? a : b;
-                if (!TextUtils.isEmpty(selectDate)) {
-                    TicketDateWorkActivity.this.caculateDataCanBeSaved();
-                }
+    private RadioGroup.OnCheckedChangeListener checkedChangeListener = (RadioGroup radioGroup, int i) -> {
+        int i1 = radioGroup.getId();
+        if (i1 == R.id.rg_select_time) {
+            if (TextUtils.isEmpty(selectDate)) {
+                ToastUtils.showMessage("请先选择时间");
+                return;
+            }
+            getSelectTimeGroup(i);
+        } else if (i1 == R.id.rg_work_type) {
+            selectType = i == R.id.rb_a_typpe ? a : b;
+            if (!TextUtils.isEmpty(selectDate)) {
+                caculateDataCanBeSaved();
             }
         }
     };
