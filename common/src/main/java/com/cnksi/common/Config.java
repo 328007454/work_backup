@@ -410,25 +410,6 @@ public class Config implements Cst {
     public static final String XUDIANCHI = "蓄电池";
 
     public static String DELETED = "1";
-    public static String CURRENT_DEPARTMENT_NAME = "current_department_name";
-
-    public static String[] FILEPATHARRAY = {
-            Config.BDZ_INSPECTION_FOLDER,
-            Config.DATABASE_FOLDER,
-            Config.SIGN_PICTURE_FOLDER,
-            Config.VIDEO_FOLDER,
-            Config.UPLOAD_DATABASE_FOLDER,
-            Config.LOGFOLDER,
-            Config.DOWNLOAD_APP_FOLDER,
-            //Config.PICTURES_FOLDER,
-            //Config.RESULT_PICTURES_FOLDER,
-            Config.AUDIO_FOLDER,
-            Config.BAK_FOLDER,
-            Config.NFC_FOLDER,
-            Config.WWWROOT_FOLDER};
-    public static String DELETED = "1";
-
-    public static final String SINGLE = "single";
 
 
     // 保存当前所有类型的id
