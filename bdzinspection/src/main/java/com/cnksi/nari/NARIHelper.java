@@ -56,12 +56,16 @@ import okhttp3.Response;
 
 /**
  * @version 1.0
- * @author wastrel
+ * @auth wastrel
  * @date 2017/7/21 14:11
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
 public class NARIHelper {
+    public static final String MIP_SERVER_IP_KEY = "mip_server_ip_key";
+    public static final String PMS_SERVER_IP_KEY = "pms_server_ip_key";
+    public static String MIP_SERVER = "http://127.0.0.1:18889";
+    public static String PMS_SERVER = "http://127.0.0.1:18011";
 
     private static Context context;
     private static String name;
@@ -90,7 +94,7 @@ public class NARIHelper {
         Log.e("nari", "正在登陆！");
         RequestBody body = MultipartBody.create(MediaType.parse("application/json"), buildLoginJson(name, password));
         Request request = new Request.Builder()
-                .url("http://127.0.0.1:18888/clientaccess")
+                .url(MIP_SERVER + "/clientaccess")
                 .post(body)
                 .addHeader("cmd", "LOGIN")
                 .build();
@@ -116,7 +120,7 @@ public class NARIHelper {
                         RequestBody.create(MediaType.parse("text/plain"), packageId))
                 .build();
         Request request = new Request.Builder()
-                .url("http://127.0.0.1:18011/MIPService/rest/0/package/upload")
+                .url(PMS_SERVER + "/MIPService/rest/0/package/upload")
                 .addHeader("Token", token)
                 .addHeader("UserName", name)
                 .post(body).build();
@@ -127,7 +131,7 @@ public class NARIHelper {
         HttpClient httpsClient = new DefaultHttpClient();
         httpsClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, Integer.valueOf(120000));
         httpsClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, Integer.valueOf(120000));
-        HttpPost httpPost = new HttpPost("http://127.0.0.1:18011/MIPService/rest/0/package/upload");
+        HttpPost httpPost = new HttpPost(PMS_SERVER + "/MIPService/rest/0/package/upload");
         httpPost.addHeader("Token", token);
         httpPost.addHeader("UserName", name);
         MultipartEntity multipartEntity = new MultipartEntity();
@@ -180,15 +184,13 @@ public class NARIHelper {
     }
 
     public static List<BDPackage> getPackage(Regulation regulation) throws IOException, PMSException {
-        if (TextUtils.isEmpty(token)) {
-            login();
-        }
+        if (TextUtils.isEmpty(token)) login();
         RequestBody body = new FormBody.Builder()
                 .add("appURL", "[\"app://nari.pms.app.xunshi\",\"app://PMS.PDA/GG/LXZYB\"]")
                 .add("regulationID", regulation.toString())
                 .add("version", "2.0.0").build();
         Request request = new Request.Builder()
-                .url("http://127.0.0.1:18011/MIPService/rest/1/user/" + name + "/packages")
+                .url(PMS_SERVER + "/MIPService/rest/1/user/" + name + "/packages")
                 .addHeader("Token", token)
                 .post(body)
                 .build();
@@ -232,7 +234,7 @@ public class NARIHelper {
                 .add("packageID", JsonUtil.toJSONString(new String[]{bdPackage.packageID}))
                 .build();
         Request request = new Request.Builder()
-                .url("http://127.0.0.1:18011/MIPService/rest/0/user/package/details")
+                .url(PMS_SERVER + "/MIPService/rest/0/user/package/details")
                 .addHeader("Token", token)
                 .post(body)
                 .build();
@@ -247,7 +249,7 @@ public class NARIHelper {
         Request request = new Request.Builder()
                 .addHeader("Token", token)
                 .addHeader("UserName", name)
-                .url("http://127.0.0.1:18011/MIPService/rest/0/package/" + bdPackage.packageID).build();
+                .url(PMS_SERVER + "/MIPService/rest/0/package/" + bdPackage.packageID).build();
         Response response;
         ResultSet<String> resultSet = new ResultSet<>();
         try {
@@ -298,7 +300,7 @@ public class NARIHelper {
                 .add("packageID", JsonUtil.toJSONString(new String[]{packageId}))
                 .build();
         Request request = new Request.Builder()
-                .url("http://127.0.0.1:18011/MIPService/rest/0/package/delete")
+                .url(PMS_SERVER + "/MIPService/rest/0/package/delete")
                 .addHeader("Token", token)
                 .post(body)
                 .build();
@@ -311,7 +313,7 @@ public class NARIHelper {
         JSONObject jsonObject = (JSONObject) array.get(0);
         JSONObject object = (JSONObject) jsonObject.get(packageId);
         String success = (String) object.get("isSuccessful");
-        if ("true".equalsIgnoreCase(success)) {
+        if (success.equalsIgnoreCase("true")) {
             return "OK:" + "PMS服务器数据删除成功";
         } else {
             return "FAIL:" + object.getString("exceptionInfo" + ",PMS服务器数据删除失败");
@@ -361,7 +363,7 @@ public class NARIHelper {
                 .add("version", "2.0.0")
                 .build();
         Request request = new Request.Builder()
-                .url("http://127.0.0.1:18011/MIPService/rest/0/table/query")
+                .url(PMS_SERVER + "/MIPService/rest/0/table/query")
                 .addHeader("Token", token)
                 .post(requestBody)
                 .build();
