@@ -186,7 +186,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                 selectDate = result;
                 seletTimeZone = "";
                 dateBinding.txtSelectTime.setText("时间及日期:  " + result);
-                orders = WorkTicketOrderService.getInstance().getSelectDateOrders(Config.deptID, selectDate);
+                orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate,Config.deptID);
                 caculateDataCanBeSaved();
             });
         });
@@ -297,7 +297,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         KSyncConfig.getInstance().setFailListener(syncSuccess -> {
             if (syncSuccess) {
                 if (TicketStatusEnum.kp.name().equalsIgnoreCase(ticketType)) {
-                    orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate);
+                    orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate,Config.deptID);
                     caculateDataCanBeSaved();
                     if (!isSelectTimeZone) {
                         ToastUtils.showMessage("该时间段下已经有工作了，请重新选择时间");
@@ -583,14 +583,14 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         /**
          两种工作类型
          */
-        if (department.groupCount * 2 - 1 >= (to11B + to11A * 2)) {
-            if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
+        int groupCount = department.groupCount*2;
+        if (groupCount - 1 >= (to11B + to11A * 2)) {
+            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to11B + to11A * 2)) {
                 dateBinding.txtTime1.setChecked(false);
                 dateBinding.txtTime1.setEnabled(false);
-            }
-            if (a.equalsIgnoreCase(selectType) && bTo11A * 2 + bTo11B + 2 <= 2) {
+            } else if (a.equalsIgnoreCase(selectType) && bTo11A * 2 + bTo11B + 2 <= groupCount) {
                 dateBinding.txtTime1.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && bTo11A * 2 + bTo11B + 1 <= 2) {
+            } else if (b.equalsIgnoreCase(selectType) && bTo11A * 2 + bTo11B + 1 <= groupCount) {
                 dateBinding.txtTime1.setEnabled(true);
             } else {
                 dateBinding.txtTime1.setChecked(false);
@@ -601,15 +601,13 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             dateBinding.txtTime1.setEnabled(false);
         }
         //11：00-12：00
-        if (department.groupCount * 2 - 1 >= (to12B + to12A * 2)) {
-            if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
+        if (groupCount - 1 >= (to12B + to12A * 2)) {
+            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to12B + to12A * 2)) {
                 dateBinding.txtTime2.setChecked(false);
                 dateBinding.txtTime2.setEnabled(false);
-            }
-
-            if (a.equalsIgnoreCase(selectType) && 2 + bTo12A * 2 + bTo12B <= 2) {
+            } else if (a.equalsIgnoreCase(selectType) && 2 + bTo12A * 2 + bTo12B <= groupCount) {
                 dateBinding.txtTime2.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && 1 + bTo12A * 2 + bTo12B <= 2) {
+            } else if (b.equalsIgnoreCase(selectType) && 1 + bTo12A * 2 + bTo12B <= groupCount) {
                 dateBinding.txtTime2.setEnabled(true);
             } else {
                 dateBinding.txtTime2.setChecked(false);
@@ -620,15 +618,14 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
             dateBinding.txtTime2.setEnabled(false);
         }
         //14：00-15：00
-        if (department.groupCount * 2 - 1 >= (to15B + to15A * 2)) {
+        if (groupCount - 1 >= (to15B + to15A * 2)) {
 
-            if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
+            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to15B + to15A * 2)) {
                 dateBinding.txtTime3.setChecked(false);
                 dateBinding.txtTime3.setEnabled(false);
-            }
-            if (a.equalsIgnoreCase(selectType) && bTo15A * 2 + bTo15B + 2 <= 2) {
+            } else if (a.equalsIgnoreCase(selectType) && bTo15A * 2 + bTo15B + 2 <= groupCount) {
                 dateBinding.txtTime3.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && bTo15A * 2 + bTo15B + 1 <= 2) {
+            } else if (b.equalsIgnoreCase(selectType) && bTo15A * 2 + bTo15B + 1 <= groupCount) {
                 dateBinding.txtTime3.setEnabled(true);
             } else {
                 dateBinding.txtTime3.setChecked(false);
@@ -640,14 +637,13 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         }
 
         //15：00-16：00
-        if (department.groupCount * 2 - 1 >= (to16B + to16A * 2)) {
-            if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
+        if (groupCount - 1 >= (to16B + to16A * 2)) {
+            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to16B + to16A * 2)) {
                 dateBinding.txtTime4.setChecked(false);
                 dateBinding.txtTime4.setEnabled(false);
-            }
-            if (a.equalsIgnoreCase(selectType) && bTo16A * 2 + bTo16B + 2 <= 2) {
+            } else if (a.equalsIgnoreCase(selectType) && bTo16A * 2 + bTo16B + 2 <= groupCount) {
                 dateBinding.txtTime4.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && bTo16A * 2 + bTo16B + 1 <= 2) {
+            } else if (b.equalsIgnoreCase(selectType) && bTo16A * 2 + bTo16B + 1 <= groupCount) {
                 dateBinding.txtTime4.setEnabled(true);
             } else {
                 dateBinding.txtTime4.setChecked(false);
@@ -659,15 +655,13 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         }
 
         //16：00-17：00
-        if (department.groupCount * 2 - 1 >= (to17B + to17A * 2)) {
-            if (a.equalsIgnoreCase(selectType) && department.groupCount * 2 - 1 == (to11B + to11A * 2)) {
+        if (groupCount - 1 >= (to17B + to17A * 2)) {
+            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to17B + to17A * 2)) {
                 dateBinding.txtTime5.setChecked(false);
                 dateBinding.txtTime5.setEnabled(false);
-            }
-
-            if (a.equalsIgnoreCase(selectType) && bTo17A * 2 + bTo17B + 2 <= 2) {
+            } else if (a.equalsIgnoreCase(selectType) && bTo17A * 2 + bTo17B + 2 <= groupCount) {
                 dateBinding.txtTime5.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && bTo17A * 2 + bTo17B + 1 <= 2) {
+            } else if (b.equalsIgnoreCase(selectType) && bTo17A * 2 + bTo17B + 1 <= groupCount) {
                 dateBinding.txtTime5.setEnabled(true);
             } else {
                 dateBinding.txtTime5.setChecked(false);

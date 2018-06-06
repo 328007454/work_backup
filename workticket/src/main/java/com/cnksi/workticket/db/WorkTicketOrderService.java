@@ -29,16 +29,22 @@ public class WorkTicketOrderService {
     /**
      * 根据选择的日期查询改日期下该班组的任务
      *
-     * @param deptid 部门id
-     * @param date   时间
+     * @param deptid     部门id
+     * @param date       时间
+     * @param userDeptId 人员所在的部门
      */
 
-    public List<WorkTicketOrder> getSelectDateOrders(String deptid, String date) {
+    public List<WorkTicketOrder> getSelectDateOrders(String deptid, String date, String userDeptId) {
+        String otherDeptUser = "other_dept_user";
         List<WorkTicketOrder> orders = new ArrayList<>();
         String startDate = date + " 00:00:00";
         String endDate = date + " 23:59:59";
         try {
-            orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.WORK_UNIT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            if (TextUtils.equals(Config.otherDeptUser, otherDeptUser)) {
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.WORK_UNIT_ID, "=", userDeptId).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            } else {
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            }
             return orders;
         } catch (DbException e) {
             e.printStackTrace();
