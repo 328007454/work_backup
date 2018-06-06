@@ -770,7 +770,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
 
     @Override
     public void onBackPressed() {
-        if (mCurrentDevice.isImportant() && SystemConfig.isMustPicImportantDevice() && (placedDevice == null || !placedDevice.isHasPhoto())) {
+        if (mCurrentDevice.isImportant()&&!TextUtils.isEmpty(mCurrentDevice.needPicInspection)&&mCurrentDevice.needPicInspection.contains(currentInspectionType) && SystemConfig.isMustPicImportantDevice() && (placedDevice == null || !placedDevice.isHasPhoto())) {
             DialogUtils.showSureTipsDialog(mActivity, null, "当前设备是关键设备，按照规定应拍照确认！是否返回？", v -> NewDeviceDetailsActivity.super.onBackPressed());
         } else {
             super.onBackPressed();
