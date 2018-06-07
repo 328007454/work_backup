@@ -11,6 +11,7 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.workticket.CalculateDateWork;
 import com.cnksi.workticket.Config;
 import com.cnksi.workticket.R;
 import com.cnksi.workticket.base.TicketBaseActivity;
@@ -135,6 +136,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         dateBinding.rgSelectTime.setOnCheckedChangeListener(checkedChangeListener);
         dateBinding.rgTicketType.setOnCheckedChangeListener(checkedChangeListener);
         dateBinding.rgWorkType.setOnCheckedChangeListener(checkedChangeListener);
+
         dateBinding.txtBdzName.setOnClickListener(v -> new DialogUtil().initBdzDialog(this, models == null ? new ArrayList<>() : models, (view, item, position) -> {
             ToastUtils.showMessage(models.get(position).getString("name"));
             bdzName = models.get(position).getString("name");
@@ -186,7 +188,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                 selectDate = result;
                 seletTimeZone = "";
                 dateBinding.txtSelectTime.setText("时间及日期:  " + result);
-                orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate,Config.deptID);
+                orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate, Config.deptID);
                 caculateDataCanBeSaved();
             });
         });
@@ -297,7 +299,7 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         KSyncConfig.getInstance().setFailListener(syncSuccess -> {
             if (syncSuccess) {
                 if (TicketStatusEnum.kp.name().equalsIgnoreCase(ticketType)) {
-                    orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate,Config.deptID);
+                    orders = WorkTicketOrderService.getInstance().getSelectDateOrders(department.id, selectDate, Config.deptID);
                     caculateDataCanBeSaved();
                     if (!isSelectTimeZone) {
                         ToastUtils.showMessage("该时间段下已经有工作了，请重新选择时间");
@@ -382,296 +384,12 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
         currentBdzWorkB.clear();
         for (WorkTicketOrder order : orders) {
             if (a.equalsIgnoreCase(order.workType)) {
-                setWorkTypeCaculate(deptWorkA, order, currentBdzWorkA);
+                CalculateDateWork.getInstance().setWorkTypeCaculate(deptWorkA, order, currentBdzWorkA, dateBinding, bdzId);
             } else if (b.equalsIgnoreCase(order.workType)) {
-                setWorkTypeCaculate(deptWorkB, order, currentBdzWorkB);
+                CalculateDateWork.getInstance().setWorkTypeCaculate(deptWorkB, order, currentBdzWorkB, dateBinding, bdzId);
             }
         }
-        if (isNeedRefreshTimeZone) {
-            refreshSelectTimeStatus();
-        }
-    }
-
-    public void setWorkTypeCaculate(HashMap<String, Integer> workMap, WorkTicketOrder order, HashMap<String, Integer> bdzWorkTypeMap) {
-        if (TicketTimeEnum.region_10to11.name().equalsIgnoreCase(order.workKey)) {
-            if (workMap.keySet().contains(order.workKey)) {
-                workMap.put(order.workKey, workMap.get(order.workKey) + 1);
-            } else {
-                workMap.put(order.workKey, 1);
-            }
-            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
-                dateBinding.txtTime1.setChecked(false);
-                dateBinding.txtTime1.setEnabled(false);
-                isNeedRefreshTimeZone = false;
-                return;
-            } else {
-                dateBinding.txtTime1.setEnabled(true);
-            }
-
-            if (bdzId.equalsIgnoreCase(order.bdzId)) {
-                if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
-                    bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
-                } else {
-                    bdzWorkTypeMap.put(order.workKey, 1);
-                }
-            }
-        } else if (TicketTimeEnum.region_11to12.name().equalsIgnoreCase(order.workKey)) {
-            if (workMap.keySet().contains(order.workKey)) {
-                workMap.put(order.workKey, workMap.get(order.workKey) + 1);
-            } else {
-                workMap.put(order.workKey, 1);
-            }
-            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
-                dateBinding.txtTime2.setChecked(false);
-                dateBinding.txtTime2.setEnabled(false);
-                isNeedRefreshTimeZone = false;
-                return;
-            } else {
-                dateBinding.txtTime2.setEnabled(true);
-            }
-
-            if (bdzId.equalsIgnoreCase(order.bdzId)) {
-                if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
-                    bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
-                } else {
-                    bdzWorkTypeMap.put(order.workKey, 1);
-                }
-            }
-
-        } else if (TicketTimeEnum.region_14to15.name().equalsIgnoreCase(order.workKey)) {
-            if (workMap.keySet().contains(order.workKey)) {
-                workMap.put(order.workKey, workMap.get(order.workKey) + 1);
-            } else {
-                workMap.put(order.workKey, 1);
-            }
-            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
-                dateBinding.txtTime3.setChecked(false);
-                dateBinding.txtTime3.setEnabled(false);
-                isNeedRefreshTimeZone = false;
-                return;
-            } else {
-                dateBinding.txtTime3.setEnabled(true);
-            }
-
-            if (bdzId.equalsIgnoreCase(order.bdzId)) {
-                if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
-                    bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
-                } else {
-                    bdzWorkTypeMap.put(order.workKey, 1);
-                }
-            }
-        } else if (TicketTimeEnum.region_15to16.name().equalsIgnoreCase(order.workKey)) {
-            if (workMap.keySet().contains(order.workKey)) {
-                workMap.put(order.workKey, workMap.get(order.workKey) + 1);
-            } else {
-                workMap.put(order.workKey, 1);
-            }
-            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
-                dateBinding.txtTime4.setChecked(false);
-                dateBinding.txtTime4.setEnabled(false);
-                isNeedRefreshTimeZone = false;
-                return;
-            } else {
-                dateBinding.txtTime4.setEnabled(true);
-            }
-
-            if (bdzId.equalsIgnoreCase(order.bdzId)) {
-                if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
-                    bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
-                } else {
-                    bdzWorkTypeMap.put(order.workKey, 1);
-                }
-            }
-
-        } else if (TicketTimeEnum.region_16to17.name().equalsIgnoreCase(order.workKey)) {
-            if (workMap.keySet().contains(order.workKey)) {
-                workMap.put(order.workKey, workMap.get(order.workKey) + 1);
-            } else {
-                workMap.put(order.workKey, 1);
-            }
-
-            if (Config.otherDeptUser.equalsIgnoreCase(otherDeptUser) && Config.deptID.equalsIgnoreCase(order.workUnitId)) {
-                dateBinding.txtTime5.setChecked(false);
-                dateBinding.txtTime5.setEnabled(false);
-                isNeedRefreshTimeZone = false;
-                return;
-            } else {
-                dateBinding.txtTime5.setEnabled(true);
-            }
-
-            if (bdzId.equalsIgnoreCase(order.bdzId)) {
-                if (bdzWorkTypeMap.keySet().contains(order.workKey)) {
-                    bdzWorkTypeMap.put(order.workKey, bdzWorkTypeMap.get(order.workKey) + 1);
-                } else {
-                    bdzWorkTypeMap.put(order.workKey, 1);
-                }
-            }
-        }
-    }
-
-    private void refreshSelectTimeStatus() {
-        int to11A = 0, to12A = 0, to15A = 0, to16A = 0, to17A = 0;
-        int to11B = 0, to12B = 0, to15B = 0, to16B = 0, to17B = 0;
-
-        int bTo11A = 0, bTo12A = 0, bTo15A = 0, bTo16A = 0, bTo17A = 0;
-        int bTo11B = 0, bTo12B = 0, bTo15B = 0, bTo16B = 0, bTo17B = 0;
-
-        if (deptWorkA.containsKey(TicketTimeEnum.region_10to11.name())) {
-            to11A = deptWorkA.get(TicketTimeEnum.region_10to11.name());
-        }
-        if (deptWorkA.containsKey(TicketTimeEnum.region_11to12.name())) {
-            to12A = deptWorkA.get(TicketTimeEnum.region_11to12.name());
-        }
-        if (deptWorkA.containsKey(TicketTimeEnum.region_14to15.name())) {
-            to15A = deptWorkA.get(TicketTimeEnum.region_14to15.name());
-        }
-        if (deptWorkA.containsKey(TicketTimeEnum.region_15to16.name())) {
-            to16A = deptWorkA.get(TicketTimeEnum.region_15to16.name());
-        }
-        if (deptWorkA.containsKey(TicketTimeEnum.region_16to17.name())) {
-            to17A = deptWorkA.get(TicketTimeEnum.region_16to17.name());
-        }
-
-        if (deptWorkB.containsKey(TicketTimeEnum.region_10to11.name())) {
-            to11B = deptWorkB.get(TicketTimeEnum.region_10to11.name());
-        }
-        if (deptWorkB.containsKey(TicketTimeEnum.region_11to12.name())) {
-            to12B = deptWorkB.get(TicketTimeEnum.region_11to12.name());
-        }
-        if (deptWorkB.containsKey(TicketTimeEnum.region_14to15.name())) {
-            to15B = deptWorkB.get(TicketTimeEnum.region_14to15.name());
-        }
-        if (deptWorkB.containsKey(TicketTimeEnum.region_15to16.name())) {
-            to16B = deptWorkB.get(TicketTimeEnum.region_15to16.name());
-        }
-        if (deptWorkB.containsKey(TicketTimeEnum.region_16to17.name())) {
-            to17B = deptWorkB.get(TicketTimeEnum.region_16to17.name());
-        }
-
-        if (currentBdzWorkA.containsKey(TicketTimeEnum.region_10to11.name())) {
-            bTo11A = currentBdzWorkA.get(TicketTimeEnum.region_10to11.name());
-        }
-        if (currentBdzWorkA.containsKey(TicketTimeEnum.region_11to12.name())) {
-            bTo12A = currentBdzWorkA.get(TicketTimeEnum.region_11to12.name());
-        }
-        if (currentBdzWorkA.containsKey(TicketTimeEnum.region_14to15.name())) {
-            bTo15A = currentBdzWorkA.get(TicketTimeEnum.region_14to15.name());
-        }
-        if (currentBdzWorkA.containsKey(TicketTimeEnum.region_15to16.name())) {
-            bTo16A = currentBdzWorkA.get(TicketTimeEnum.region_15to16.name());
-        }
-        if (currentBdzWorkA.containsKey(TicketTimeEnum.region_16to17.name())) {
-            bTo17A = currentBdzWorkA.get(TicketTimeEnum.region_16to17.name());
-        }
-
-        if (currentBdzWorkB.containsKey(TicketTimeEnum.region_10to11.name())) {
-            bTo11B = currentBdzWorkB.get(TicketTimeEnum.region_10to11.name());
-        }
-        if (currentBdzWorkB.containsKey(TicketTimeEnum.region_11to12.name())) {
-            bTo12B = currentBdzWorkB.get(TicketTimeEnum.region_11to12.name());
-        }
-        if (currentBdzWorkB.containsKey(TicketTimeEnum.region_14to15.name())) {
-            bTo15B = currentBdzWorkB.get(TicketTimeEnum.region_14to15.name());
-        }
-        if (currentBdzWorkB.containsKey(TicketTimeEnum.region_15to16.name())) {
-            bTo16B = currentBdzWorkB.get(TicketTimeEnum.region_15to16.name());
-        }
-        if (currentBdzWorkB.containsKey(TicketTimeEnum.region_16to17.name())) {
-            bTo17B = currentBdzWorkB.get(TicketTimeEnum.region_16to17.name());
-        }
-        //10:00-11:00按钮  ** department.group 工作组数  A 代表工作量，B 也代表工作量 A=2B 所以取最小工作量B 为单位，班组工作最大量为：工作组数*2，减1 的目的是为了处理 ABA 这种情况
-        /**
-         两种工作类型
-         */
-        int groupCount = department.groupCount*2;
-        if (groupCount - 1 >= (to11B + to11A * 2)) {
-            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to11B + to11A * 2)) {
-                dateBinding.txtTime1.setChecked(false);
-                dateBinding.txtTime1.setEnabled(false);
-            } else if (a.equalsIgnoreCase(selectType) && bTo11A * 2 + bTo11B + 2 <= groupCount) {
-                dateBinding.txtTime1.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && bTo11A * 2 + bTo11B + 1 <= groupCount) {
-                dateBinding.txtTime1.setEnabled(true);
-            } else {
-                dateBinding.txtTime1.setChecked(false);
-                dateBinding.txtTime1.setEnabled(false);
-            }
-        } else {
-            dateBinding.txtTime1.setChecked(false);
-            dateBinding.txtTime1.setEnabled(false);
-        }
-        //11：00-12：00
-        if (groupCount - 1 >= (to12B + to12A * 2)) {
-            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to12B + to12A * 2)) {
-                dateBinding.txtTime2.setChecked(false);
-                dateBinding.txtTime2.setEnabled(false);
-            } else if (a.equalsIgnoreCase(selectType) && 2 + bTo12A * 2 + bTo12B <= groupCount) {
-                dateBinding.txtTime2.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && 1 + bTo12A * 2 + bTo12B <= groupCount) {
-                dateBinding.txtTime2.setEnabled(true);
-            } else {
-                dateBinding.txtTime2.setChecked(false);
-                dateBinding.txtTime2.setEnabled(false);
-            }
-        } else {
-            dateBinding.txtTime2.setChecked(false);
-            dateBinding.txtTime2.setEnabled(false);
-        }
-        //14：00-15：00
-        if (groupCount - 1 >= (to15B + to15A * 2)) {
-
-            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to15B + to15A * 2)) {
-                dateBinding.txtTime3.setChecked(false);
-                dateBinding.txtTime3.setEnabled(false);
-            } else if (a.equalsIgnoreCase(selectType) && bTo15A * 2 + bTo15B + 2 <= groupCount) {
-                dateBinding.txtTime3.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && bTo15A * 2 + bTo15B + 1 <= groupCount) {
-                dateBinding.txtTime3.setEnabled(true);
-            } else {
-                dateBinding.txtTime3.setChecked(false);
-                dateBinding.txtTime3.setEnabled(false);
-            }
-        } else {
-            dateBinding.txtTime3.setChecked(false);
-            dateBinding.txtTime3.setEnabled(false);
-        }
-
-        //15：00-16：00
-        if (groupCount - 1 >= (to16B + to16A * 2)) {
-            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to16B + to16A * 2)) {
-                dateBinding.txtTime4.setChecked(false);
-                dateBinding.txtTime4.setEnabled(false);
-            } else if (a.equalsIgnoreCase(selectType) && bTo16A * 2 + bTo16B + 2 <= groupCount) {
-                dateBinding.txtTime4.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && bTo16A * 2 + bTo16B + 1 <= groupCount) {
-                dateBinding.txtTime4.setEnabled(true);
-            } else {
-                dateBinding.txtTime4.setChecked(false);
-                dateBinding.txtTime4.setEnabled(false);
-            }
-        } else {
-            dateBinding.txtTime4.setChecked(false);
-            dateBinding.txtTime4.setEnabled(false);
-        }
-
-        //16：00-17：00
-        if (groupCount - 1 >= (to17B + to17A * 2)) {
-            if (a.equalsIgnoreCase(selectType) && groupCount - 1 == (to17B + to17A * 2)) {
-                dateBinding.txtTime5.setChecked(false);
-                dateBinding.txtTime5.setEnabled(false);
-            } else if (a.equalsIgnoreCase(selectType) && bTo17A * 2 + bTo17B + 2 <= groupCount) {
-                dateBinding.txtTime5.setEnabled(true);
-            } else if (b.equalsIgnoreCase(selectType) && bTo17A * 2 + bTo17B + 1 <= groupCount) {
-                dateBinding.txtTime5.setEnabled(true);
-            } else {
-                dateBinding.txtTime5.setChecked(false);
-                dateBinding.txtTime5.setEnabled(false);
-            }
-        } else {
-            dateBinding.txtTime5.setChecked(false);
-            dateBinding.txtTime5.setEnabled(false);
-        }
-
+        CalculateDateWork.getInstance().refreshSelectTimeStatus(deptWorkA, deptWorkB, currentBdzWorkA, currentBdzWorkB, department, selectType, dateBinding);
     }
 
 

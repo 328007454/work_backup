@@ -41,7 +41,7 @@ public class WorkTicketOrderService {
         String endDate = date + " 23:59:59";
         try {
             if (TextUtils.equals(Config.otherDeptUser, otherDeptUser)) {
-                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.WORK_UNIT_ID, "=", userDeptId).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).or(WorkTicketOrder.WORK_UNIT_ID,"=",userDeptId).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             } else {
                 orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             }

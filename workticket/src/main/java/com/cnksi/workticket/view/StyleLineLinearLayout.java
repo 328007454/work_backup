@@ -85,6 +85,12 @@ public class StyleLineLinearLayout extends LinearLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         height = MeasureSpec.getSize(heightMeasureSpec);
         width = MeasureSpec.getSize(widthMeasureSpec);
+
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
     }
 
     @Override
