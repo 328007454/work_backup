@@ -131,6 +131,7 @@ public class BhdzjlGroup {
     public void removeView(BhdzjlYjGroup group) {
         lists.remove(group);
         binding.yjlx.removeView(group.getRoot());
+        rebulidStr();
     }
 
     public View getRoot() {

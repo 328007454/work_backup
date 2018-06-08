@@ -28,8 +28,8 @@ import java.util.List;
 /**
  * 故障保护动作记录第三页
  *
- * @version 1.0
  * @author wastrel
+ * @version 1.0
  * @date 2018/3/7 10:50
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -39,7 +39,6 @@ public class BHDZJLActivity extends BaseSjjcActivity {
     List<BhdzjlGroup> groups = new ArrayList<>();
     BhdzjlGroup selectGroup;
     SbjcGztzjl sbjcGztzjl;
-    boolean isFirstLoad = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +85,9 @@ public class BHDZJLActivity extends BaseSjjcActivity {
                         BHDZJLActivity.this.addOtherDevice().setRecord(bhdzjls.get(i));
                     }
                 }
-                isFirstLoad = false;
+                rebuildStr();
             });
         });
-        binding.gzjt.setValueStr(sbjcGztzjl.gzjt);
-        binding.bhdzqk.setValueStr(sbjcGztzjl.bhdzqk);
     }
 
 
@@ -127,31 +124,30 @@ public class BHDZJLActivity extends BaseSjjcActivity {
     }
 
     public void rebuildStr() {
-        if (!isFirstLoad) {
-            StringBuilder bhdzqk = new StringBuilder();
-            bhdzqk.append(currentBdzName).append("XXX线路").append("故障,");
-            for (BhdzjlGroup group : groups) {
-                bhdzqk.append(group.toString());
-            }
-            if (sbjcGztzjl.isTz()) {
-                bhdzqk.append("开关跳闸，").append(sbjcGztzjl.chzdzqk).append(",");
-            } else {
-                bhdzqk.append("开关未跳闸，");
-            }
-            StringBuilder gzjt = new StringBuilder(bhdzqk.toString());
-
-            bhdzqk.append("二次故障电流").append(sbjcGztzjl.ecgzdl).append("A，")
-                    .append("一次故障电流").append(sbjcGztzjl.gzdl).append("KA");
-
-            gzjt.append("故障相别").append(sbjcGztzjl.sbxb);
-            gzjt.append("故障一次电流").append(sbjcGztzjl.gzdl).append("A，")
-                    .append("二次值").append(sbjcGztzjl.ecgzdl).append("KA,");
-            gzjt.append(sbjcGztzjl.getXbGzjt());
-            gzjt.append("累积故障电流").append(sbjcGztzjl.ljz).append("KA,");
-            gzjt.append(sbjcGztzjl.getXbLjGzjt());
-            binding.bhdzqk.setValueStr(bhdzqk.toString());
-            binding.gzjt.setValueStr(gzjt.toString());
+        StringBuilder bhdzqk = new StringBuilder();
+        bhdzqk.append(currentBdzName).append("XXX线路").append("故障,");
+        for (BhdzjlGroup group : groups) {
+            bhdzqk.append(group.toString());
         }
+        if (sbjcGztzjl.isTz()) {
+            bhdzqk.append("开关跳闸，").append(sbjcGztzjl.chzdzqk).append(",");
+        } else {
+            bhdzqk.append("开关未跳闸，");
+        }
+        StringBuilder gzjt = new StringBuilder(bhdzqk.toString());
+
+        bhdzqk.append("二次故障电流").append(sbjcGztzjl.ecgzdl).append("A，")
+                .append("一次故障电流").append(sbjcGztzjl.gzdl).append("KA");
+
+        gzjt.append("故障相别").append(sbjcGztzjl.sbxb);
+        gzjt.append("故障一次电流").append(sbjcGztzjl.gzdl).append("A，")
+                .append("二次值").append(sbjcGztzjl.ecgzdl).append("KA,");
+        gzjt.append(sbjcGztzjl.getXbGzjt());
+        gzjt.append("累积故障电流").append(sbjcGztzjl.ljz).append("KA,");
+        gzjt.append(sbjcGztzjl.getXbLjGzjt());
+        binding.bhdzqk.setValueStr(bhdzqk.toString());
+        binding.gzjt.setValueStr(gzjt.toString());
+
     }
 
     @Override

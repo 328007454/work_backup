@@ -32,6 +32,7 @@
                 android:id="@+id/yyjjcqk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:default_str="站外线路故障，站内检查情况正常"
                 app:title_str="*原因及检查情况"/>
 
 
