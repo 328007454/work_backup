@@ -23,7 +23,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
                 android:visibility="visible"
-                app:srcCompat="@drawable/xs_cancel_button_background" />
+                app:srcCompat="@drawable/cancel_button_background" />
 
             <ImageButton
                 android:id="@+id/ibtn_exit"

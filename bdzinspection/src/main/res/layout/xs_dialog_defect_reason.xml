@@ -17,7 +17,7 @@
 
         <ImageButton
             style="@style/svgButtonDialogCancel"
-            app:srcCompat="@drawable/xs_cancel_button_background"
+            app:srcCompat="@drawable/cancel_button_background"
             android:id="@+id/ibtn_cancel"
             android:layout_width="@dimen/xs_tab_strip_minheight_px"
             android:layout_height="@dimen/xs_tab_strip_minheight_px"

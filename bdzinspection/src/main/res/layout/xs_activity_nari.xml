@@ -20,7 +20,7 @@
                 android:layout_height="@dimen/xs_title_bar_minheight_px"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/xs_cancel_button_background"
+                android:src="@drawable/cancel_button_background"
                 />
 
 

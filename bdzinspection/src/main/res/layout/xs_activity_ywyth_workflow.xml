@@ -22,7 +22,7 @@
                 android:layout_centerVertical="true"
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
-                android:src="@drawable/xs_cancel_button_background"
+                android:src="@drawable/cancel_button_background"
                 android:visibility="visible" />
 
             <TextView
