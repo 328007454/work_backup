@@ -141,7 +141,7 @@
                         android:contentDescription="@null"
                         android:minHeight="@dimen/xs_content_minheight_px"
                         android:minWidth="@dimen/xs_content_minheight_px"
-                        app:srcCompat="@drawable/xs_eliminate_date_button_background" />
+                        app:srcCompat="@drawable/eliminate_date_button_background" />
                 </RelativeLayout>
 
                 <RelativeLayout

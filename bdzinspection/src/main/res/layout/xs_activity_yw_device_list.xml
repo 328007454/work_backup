@@ -15,7 +15,7 @@
         android:background="@color/xs_global_base_color">
 
         <ImageButton
-            app:srcCompat="@drawable/xs_cancel_button_background"
+            app:srcCompat="@drawable/cancel_button_background"
             style="@style/svgButtonBack"
             android:id="@+id/ibtn_cancel"
             android:layout_width="@dimen/xs_title_bar_minheight_px"

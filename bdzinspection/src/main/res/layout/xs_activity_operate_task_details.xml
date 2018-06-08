@@ -191,7 +191,7 @@
                         android:paddingBottom="22px"
                         android:paddingLeft="44px"
                         android:paddingTop="22px"
-                        app:srcCompat="@drawable/xs_eliminate_date_button_background" />
+                        app:srcCompat="@drawable/eliminate_date_button_background" />
                 </LinearLayout>
 
                 <LinearLayout

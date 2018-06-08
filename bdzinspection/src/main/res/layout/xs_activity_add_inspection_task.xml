@@ -162,7 +162,7 @@
                     android:layout_height="@dimen/xs_content_minheight_px"
                     android:background="@android:color/transparent"
                     android:contentDescription="@null"
-                    app:srcCompat="@drawable/xs_eliminate_date_button_background"/>
+                    app:srcCompat="@drawable/eliminate_date_button_background"/>
             </LinearLayout>
 
             <LinearLayout

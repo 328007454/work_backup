@@ -33,7 +33,7 @@
                 android:contentDescription="@null"
                 android:onClick="onClickEvent"
                 android:visibility="visible"
-                app:srcCompat="@drawable/xs_cancel_button_background" />
+                app:srcCompat="@drawable/cancel_button_background" />
 
             <me.grantland.widget.AutofitTextView
                 android:id="@+id/tv_title"
