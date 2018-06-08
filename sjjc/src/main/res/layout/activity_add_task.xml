@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL, AndroidElementNotAllowed, AndroidElementNotAllowed -->
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:id="@+id/ll_root_container"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@android:color/white"
+                  android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.cnksi.sjjc.view.LinearLayoutIntercept
+                android:id="@+id/bdz_contanier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_line_background_selector"
+                android:orientation="horizontal">
+
+                <!--suppress AndroidElementNotAllowed -->
+                <TextView
+                    android:id="@+id/tv_select_power_station"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/layout_height"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/please_select_power_station_str"
+                    android:paddingLeft="20px"
+                    android:textColor="@color/global_text_color"
+                    android:textColorHint="@color/global_gray_text_color"
+                    android:textSize="@dimen/tv_text_size"/>
+
+                <!--suppress AndroidElementNotAllowed -->
+                <ImageView
+                    android:layout_width="28px"
+                    android:layout_height="49px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="40px"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_arrow_right"/>
+            </com.cnksi.sjjc.view.LinearLayoutIntercept>
+
+            <com.cnksi.sjjc.view.LinearLayoutIntercept
+                android:id="@+id/type_ll_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_line_background_selector"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_select_inspection_type"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/layout_height"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20px"
+                    android:paddingRight="20px"
+                    android:textColor="@color/global_text_color"
+                    android:textColorHint="@color/global_gray_text_color"
+                    android:textSize="@dimen/tv_text_size"/>
+
+                <ImageView
+                    android:id="@+id/type_xunjian_ibt"
+                    android:layout_width="28px"
+                    android:layout_height="49px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/global_padding_left_right_px"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_arrow_right"/>
+            </com.cnksi.sjjc.view.LinearLayoutIntercept>
+            <!-- 压力测试选择框-->
+
+            <com.cnksi.sjjc.view.LinearLayoutIntercept
+                android:id="@+id/type_jiance_ll_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_line_background_selector"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_yljc"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/layout_height"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/please_select_ylcs_str"
+                    android:paddingLeft="20px"
+                    android:paddingRight="20px"
+                    android:textColor="@color/global_text_color"
+                    android:textColorHint="@color/global_gray_text_color"
+                    android:textSize="@dimen/tv_text_size"
+                    android:visibility="gone"/>
+
+                <ImageView
+                    android:layout_width="28px"
+                    android:layout_height="49px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="40px"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_arrow_right"/>
+            </com.cnksi.sjjc.view.LinearLayoutIntercept>
+            <!--测试分类 -->
+            <LinearLayout
+                android:id="@+id/ll_ceshi_container"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="@drawable/bottom_line_background_selector"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="80px"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/paddingRight"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="测试分类"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/global_text_small_size_px"/>
+
+                <com.zhy.autolayout.AutoRadioGroup
+                    android:id="@+id/radio_ceshi_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal">
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/radio_puce"
+                        style="@style/RadioButtonBaseStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:button="@null"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:text="普测"
+                        android:textSize="@dimen/global_text_small_size_px"
+                        app:drawableLeft="@drawable/radio_button_selector"
+                        app:drawableSize="48px"
+                        />
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/radio_chouce"
+                        style="@style/RadioButtonBaseStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:text="抽测"
+                        android:textSize="@dimen/global_text_small_size_px"
+                        app:drawableLeft="@drawable/radio_button_selector"
+                        app:drawableSize="48px"/>
+                </com.zhy.autolayout.AutoRadioGroup>
+            </LinearLayout>
+            <!--是否检测内阻需要注销 -->
+
+            <LinearLayout
+                android:id="@+id/ll_neizu_container"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:background="@drawable/bottom_line_background_selector"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="80px"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/paddingRight"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="是否显示内阻"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/global_text_small_size_px"/>
+
+                <com.zhy.autolayout.AutoRadioGroup
+                    android:id="@+id/radio_neizu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/neizu_yes"
+                        style="@style/RadioButtonBaseStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:button="@null"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/radio_button_selector"
+                        android:text="是"
+                        android:textSize="@dimen/tv_text_size"
+                        app:drawableSize="48px"/>
+
+                    <com.cnksi.common.view.CustomRadioButton
+                        android:id="@+id/neizu_no"
+                        style="@style/RadioButtonBaseStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/radio_button_selector"
+                        android:text="否"
+                        android:textSize="@dimen/tv_text_size"
+                        app:drawableSize="48px"/>
+                </com.zhy.autolayout.AutoRadioGroup>
+            </LinearLayout>
+
+            <!-- 时间选择 -->
+            <LinearLayout
+                android:id="@+id/ll_date"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height"
+                android:background="@drawable/bottom_line_background_selector"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="20px"
+                android:paddingRight="20px">
+
+                <TextView
+                    android:id="@+id/tv_inspection_date"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/please_select_inspection_date_str"
+                    android:textColor="@color/green_color"
+                    android:textColorHint="@color/global_gray_text_color"
+                    android:textSize="@dimen/tv_text_size"/>
+
+                <ImageButton
+                    android:id="@+id/ibtn_select_inspection_date"
+                    style="@style/svgButtonDate"
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/eliminate_date_button_background"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height"
+            android:orientation="horizontal"
+            android:padding="20px">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/global_padding_half_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/red_button_background_selector"
+                android:gravity="center"
+                android:text="@string/dialog_cancel_text_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/tv_text_size"/>
+
+            <Button
+                android:id="@+id/btn_confirm"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20px"
+                android:layout_weight="1"
+                android:background="@drawable/grass_green_button_background_selector"
+                android:gravity="center"
+                android:text="@string/confirm_str"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/tv_text_size"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

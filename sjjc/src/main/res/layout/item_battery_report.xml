@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="30px"
+                  android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/battery_group"
+                android:layout_width="match_parent"
+                android:layout_height="75px"
+                android:background="@color/battery_text_background"
+                android:gravity="center"
+                android:textColor="@color/battery_text_color"
+                android:textSize="48px"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:background="@color/battery_linearlayout_color"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="20px"
+                    android:text="抄录完成情况:"
+                    android:textColor="@color/copy_battery_text_color"
+                    android:textSize="48px"/>
+
+                <TextView
+                    android:id="@+id/voltage_record"
+                    style="@style/AnimalReportTextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="20px"
+                    android:textColor="@color/red"
+                    android:textSize="48px"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/layout_voltage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        style="@style/AnimalReportTextViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="电压抄录:"/>
+
+                    <TextView
+                        style="@style/AnimalReportTextViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/green_color"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_resistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        style="@style/AnimalReportTextViewStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="内阻抄录:"/>
+
+                    <TextView
+                        android:id="@+id/resistance_record"
+                        style="@style/AnimalReportTextViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/green_color"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/label_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:hint="异常照片"
+                android:textColor="@android:color/black"
+                android:textSize="48px"
+                android:visibility="gone"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/img_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:background="@android:color/white"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <com.cnksi.sjjc.view.DotView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30px"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+</layout>

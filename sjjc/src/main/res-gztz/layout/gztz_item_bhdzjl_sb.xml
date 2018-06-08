@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20px"
+            android:background="@color/gray_background_color"/>
+
+        <com.cnksi.sjjc.view.gztz.SelectGroup
+            android:id="@+id/sbmc"
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            app:select_hint_str="请选择"
+            app:title_str="设备名称"
+            />
+
+        <com.cnksi.sjjc.view.gztz.SelectGroup
+            android:id="@+id/bhsbmc"
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            app:select_hint_str="请选择"
+            app:title_str="保护设备名称"
+            />
+
+        <com.cnksi.sjjc.view.gztz.SelectTimeGroup
+            android:id="@+id/bhqdsj"
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            app:select_type="hmsS"
+            app:title_str="保护启动时间"/>
+
+        <LinearLayout
+            android:id="@+id/yjlx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+        <com.cnksi.sjjc.view.gztz.SingleRadioGroup
+            android:id="@+id/bhdzpj"
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            android:background="@color/white"
+            app:select_str="正动|误动"
+            app:title_str="保护动作评价"/>
+
+
+    </LinearLayout>
+
+</layout>

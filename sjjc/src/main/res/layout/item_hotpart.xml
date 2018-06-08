@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:minHeight="80px"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="2px"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_hot_part_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="left"
+            android:paddingStart="@dimen/sjjc_30px"
+            android:text=""
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_electrcity_value"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="left"
+            android:paddingStart="@dimen/sjjc_30px"
+            android:text=""
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_hot_part_title"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toEndOf="@+id/txt_hot_part_title"
+            app:layout_constraintTop_toTopOf="@+id/txt_hot_part_title"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_load_electricity1"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right"
+            android:paddingEnd="@dimen/sjjc_30px"
+            android:text=""
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"
+            app:layout_constraintEnd_toStartOf="@+id/txt_load_electricity_value1"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_hot_part_title"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/txt_hot_part_title"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_load_electricity_value1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right"
+            android:paddingEnd="@dimen/sjjc_30px"
+            android:text=""
+            android:textColor="@color/global_text_color"
+            android:textSize="@dimen/tv_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_load_electricity1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_load_electricity1"
+            app:layout_constraintTop_toTopOf="@+id/txt_load_electricity1"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

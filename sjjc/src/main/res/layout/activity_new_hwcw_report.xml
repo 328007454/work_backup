@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="report"
+            type="com.cnksi.common.model.Report"/>
+
+        <variable
+            name="hwcwReport"
+            type="com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo"/>
+    </data>
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.zhy.autolayout.AutoConstraintLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18px"
+            android:background="@color/white"
+            android:paddingLeft="36px"
+            android:paddingRight="36px"
+            android:paddingTop="20px">
+
+            <android.support.constraint.Guideline
+                android:id="@+id/l4_guideline"
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.45"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="测温开始时间："
+                android:textColor="@color/global_gray_text_color"
+                android:textSize="@dimen/device_item_name_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_inspection_start_time"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/l4_guideline"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_inspection_start_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="@{report.starttime}"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/l4_guideline"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="测温结束时间："
+                android:textColor="@color/global_gray_text_color"
+                android:textSize="@dimen/device_item_name_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_inspection_end_time"
+                app:layout_constraintRight_toLeftOf="@+id/l4_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_inspection_start_time"/>
+
+            <TextView
+                android:id="@+id/tv_inspection_end_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="@{report.endtime}"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/l4_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/tv_inspection_start_time"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="测温人员"
+                android:textColor="@color/global_gray_text_color"
+                android:textSize="@dimen/device_item_name_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_inspection_person"
+                app:layout_constraintRight_toLeftOf="@+id/l4_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_inspection_end_time"/>
+
+            <TextView
+                android:id="@+id/tv_inspection_person"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="left|center_vertical"
+                android:text="@{hwcwReport.testPerson}"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/l4_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/tv_inspection_end_time"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="是否全站(区域)测温："
+                android:textColor="@color/global_gray_text_color"
+                android:textSize="@dimen/device_item_name_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_is_all_bdz"
+                app:layout_constraintRight_toLeftOf="@+id/l4_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_inspection_person"/>
+
+            <TextView
+                android:id="@+id/txt_is_all_bdz"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="left|center_vertical"
+                android:text="@{hwcwReport.isAllBdz}"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/l4_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/tv_inspection_person"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="测温类型："
+                android:textColor="@color/global_gray_text_color"
+                android:textSize="@dimen/device_item_name_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_test_type"
+                app:layout_constraintRight_toLeftOf="@+id/l4_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_is_all_bdz"/>
+
+            <TextView
+                android:id="@+id/txt_test_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="left|center_vertical"
+                android:text="@{hwcwReport.type}"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/l4_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/txt_is_all_bdz"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="测温仪器："
+                android:textColor="@color/global_gray_text_color"
+                android:textSize="@dimen/device_item_name_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_test_instrument"
+                app:layout_constraintRight_toLeftOf="@+id/l4_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_test_type"/>
+
+            <TextView
+                android:id="@+id/txt_test_instrument"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="left|center_vertical"
+                android:text="@{hwcwReport.testInstrument}"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/l4_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/txt_test_type"/>
+
+            <TextView
+                android:id="@+id/txt_temp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                app:layout_constraintEnd_toStartOf="@+id/txt_shidu"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_test_instrument"/>
+
+            <TextView
+                android:id="@+id/txt_shidu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                app:layout_constraintEnd_toEndOf="@+id/txt_fengsu"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/txt_temp"
+                app:layout_constraintTop_toBottomOf="@+id/txt_test_instrument"/>
+
+            <TextView
+                android:id="@+id/txt_fengsu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/txt_shidu"
+                app:layout_constraintTop_toBottomOf="@+id/txt_test_instrument"/>
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="设备名称："
+                android:textColor="@color/global_gray_text_color"
+                android:textSize="@dimen/device_item_name_text_size"
+                app:layout_constraintEnd_toStartOf="@+id/l4_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txt_device_name"/>
+
+            <TextView
+                android:id="@+id/txt_device_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/l4_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/txt_fengsu"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="间隔单元："
+                android:textColor="@color/global_gray_text_color"
+                android:textSize="@dimen/device_item_name_text_size"
+                app:layout_constraintEnd_toStartOf="@+id/l4_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txt_space_name"/>
+
+            <TextView
+                android:id="@+id/txt_space_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:textColor="@color/green_color"
+                android:textSize="@dimen/global_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/l4_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/txt_device_name"/>
+
+            <com.zhy.autolayout.AutoConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_background_color"
+                android:paddingBottom="24px"
+                android:paddingEnd="@dimen/_20px"
+                android:paddingStart="24px"
+                android:paddingTop="24px"
+                app:layout_constraintTop_toBottomOf="@+id/txt_space_name">
+
+                <android.support.constraint.Guideline
+
+                    android:id="@+id/ll4_guideline"
+                    android:layout_width="2px"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.45"/>
+
+                <TextView
+                    android:id="@+id/txt_record_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/red_button_background_selector"
+                    android:gravity="center"
+                    android:padding="10px"
+                    android:text="测温记录"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/device_item_name_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="测温范围："
+                    android:textColor="@color/sync_black"
+                    android:textSize="@dimen/device_item_name_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_range"
+                    app:layout_constraintEnd_toStartOf="@+id/ll4_guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_record_result"
+                    app:layout_constraintTop_toTopOf="@+id/txt_range"/>
+
+                <TextView
+                    android:id="@+id/txt_range"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20px"
+                    android:gravity="right|center_vertical"
+                    android:text="@{hwcwReport.testRange}"
+                    android:textColor="@color/green_color"
+                    android:textSize="@dimen/global_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ll4_guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_record_result"/>
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="测温位置："
+                    android:textColor="@color/sync_black"
+                    android:textSize="@dimen/device_item_name_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_location"
+                    app:layout_constraintEnd_toStartOf="@+id/ll4_guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_location"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20px"
+                    android:gravity="right|center_vertical"
+                    android:text="@{hwcwReport.testLocation}"
+                    android:textColor="@color/green_color"
+                    android:textSize="@dimen/global_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ll4_guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_range"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="发现问题："
+                    android:textColor="@color/sync_black"
+                    android:textSize="@dimen/device_item_name_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_problem"
+                    app:layout_constraintEnd_toStartOf="@+id/ll4_guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_location"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_problem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20px"
+                    android:gravity="right|center_vertical"
+                    android:text="@{hwcwReport.problem}"
+                    android:textColor="@color/green_color"
+                    android:textSize="@dimen/global_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ll4_guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_location"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20px"
+                    android:gravity="left|center_vertical"
+                    android:text="发热部位："
+                    android:textColor="@color/sync_black"
+                    android:textSize="@dimen/device_item_name_text_size"
+                    app:layout_constraintEnd_toStartOf="@+id/ll4_guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_problem"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_hot_infor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20px"
+                    android:gravity="right|center_vertical"
+                    android:textColor="@color/green_color"
+                    android:textSize="@dimen/global_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ll4_guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_problem"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="备注："
+                    android:textColor="@color/sync_black"
+                    android:textSize="@dimen/device_item_name_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_remark"
+                    app:layout_constraintEnd_toStartOf="@+id/ll4_guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_hot_infor"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_remark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|center_vertical"
+                    android:text="@{hwcwReport.remark}"
+                    android:textColor="@color/green_color"
+                    android:textSize="@dimen/global_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ll4_guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_hot_infor"/>
+
+            </com.zhy.autolayout.AutoConstraintLayout>
+        </com.zhy.autolayout.AutoConstraintLayout>
+    </ScrollView>
+</layout>

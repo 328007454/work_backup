@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@drawable/fragment_record_defect_content_green_title_background"
+                  android:minHeight="300px"
+                  android:orientation="vertical"
+                  android:paddingBottom="@dimen/global_padding_half_left_right">
+
+        <!-- 缺陷原因 -->
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:background="@drawable/bdz_title_background"
+            android:gravity="center"
+            android:text="修改上次累积跳闸次数"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/global_text_size_1"/>
+
+        <com.cnksi.common.view.UnderLineLinearLayout
+            android:id="@+id/ll_a"
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:drawUnderLine="true">
+
+            <TextView
+                style="@style/layout_gztz_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3px"
+                android:text="A相"
+                />
+
+            <com.cnksi.common.view.ContainsEmojiEditText
+                android:id="@+id/gxtzcs_a"
+                style="@style/layout_gztz_num_input"
+                android:layout_width="200px"
+                android:layout_marginLeft="30px"
+                android:layout_weight="-1"
+                android:inputType="number"
+                android:text=""
+                />
+        </com.cnksi.common.view.UnderLineLinearLayout>
+
+        <com.cnksi.common.view.UnderLineLinearLayout
+            android:id="@+id/ll_b"
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:drawUnderLine="true">
+
+            <TextView
+                style="@style/layout_gztz_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3px"
+                android:text="B相"
+                />
+
+            <com.cnksi.common.view.ContainsEmojiEditText
+                android:id="@+id/gxtzcs_b"
+                style="@style/layout_gztz_num_input"
+                android:layout_width="200px"
+                android:layout_marginLeft="30px"
+                android:layout_weight="-1"
+                android:inputType="number"
+                android:text=""
+                />
+        </com.cnksi.common.view.UnderLineLinearLayout>
+
+        <com.cnksi.common.view.UnderLineLinearLayout
+            android:id="@+id/ll_c"
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:drawUnderLine="true">
+
+            <TextView
+                style="@style/layout_gztz_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3px"
+                android:text="C相"
+                />
+
+            <com.cnksi.common.view.ContainsEmojiEditText
+                android:id="@+id/gxtzcs_c"
+                style="@style/layout_gztz_num_input"
+                android:layout_width="200px"
+                android:layout_marginLeft="30px"
+                android:layout_weight="-1"
+                android:inputType="number"
+                android:text=""
+                />
+        </com.cnksi.common.view.UnderLineLinearLayout>
+        <com.cnksi.common.view.UnderLineLinearLayout
+            android:id="@+id/ll_o"
+            android:layout_width="match_parent"
+            android:layout_height="138px"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:drawUnderLine="true">
+
+            <TextView
+                style="@style/layout_gztz_title"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3px"
+                android:text="O相"
+                />
+
+            <com.cnksi.common.view.ContainsEmojiEditText
+                android:id="@+id/gxtzcs_o"
+                style="@style/layout_gztz_num_input"
+                android:layout_width="200px"
+                android:layout_marginLeft="30px"
+                android:layout_weight="-1"
+                android:inputType="number"
+                android:text=""
+                />
+        </com.cnksi.common.view.UnderLineLinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height"
+            android:orientation="horizontal"
+            android:padding="20px">
+
+            <Button
+                android:id="@+id/btn_sure"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/global_padding_half_left_right"
+                android:layout_weight="1"
+                android:background="@drawable/red_button_background_selector"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/tv_text_size"/>
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20px"
+                android:layout_weight="1"
+                android:background="@drawable/grass_green_button_background_selector"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/tv_text_size"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

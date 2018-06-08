@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="">
+
+        <variable
+            name="event"
+            type="com.cnksi.sjjc.fragment.launcher.TourFragment"/>
+
+        <variable
+            name="result"
+            type="com.cnksi.common.model.vo.TaskStatistic"/>
+
+        <variable
+            name="rounteCount"
+            type="String"/>
+
+        <variable
+            name="fullCount"
+            type="String"/>
+
+        <variable
+            name="specailCount"
+            type="String"/>
+
+        <variable
+            name="lightCount"
+            type="String"/>
+
+        <variable
+            name="professionalCount"
+            type="String"/>
+
+        <import type="com.cnksi.common.enmu.InspectionType"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20px"
+        android:background="#f0f0f0"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#e0e0e0"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="408px"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:id="@+id/ll_container"
+                android:layout_width="match_parent"
+                android:layout_height="190px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_today_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:text="@{result.todayTaskCount+` 项`}"
+                        android:textColor="#05c8b8"
+                        android:textSize="44px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="1"
+                        android:text="今日巡视任务"
+                        android:textColor="#d2cecd"
+                        android:textSize="34px"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_today_task_finsh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+
+                        android:text="@{result.todayTaskFinish+` 项`}"
+                        android:textColor="#05c8b8"
+                        android:textSize="44px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="1"
+                        android:text="今日已完成"
+                        android:textColor="#d2cecd"
+                        android:textSize="34px"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_month_tour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:text="@{result.monthTaskCount+` 项`}"
+                        android:textColor="#05c8b8"
+                        android:textSize="44px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="1"
+                        android:text="本月巡视任务"
+                        android:textColor="#d2cecd"
+                        android:textSize="34px"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_month_finish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:text="@{result.monthTaskFinish+` 项`}"
+                        android:textColor="#05c8b8"
+                        android:textSize="44px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="1"
+                        android:text="本月已完成"
+                        android:textColor="#d2cecd"
+                        android:textSize="34px"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_alignBottom="@id/ll_container"
+                android:background="#e0e0e0"/>
+
+            <ImageView
+                android:id="@+id/iv_maintenance_list"
+                android:layout_width="90px"
+                android:layout_height="90px"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40px"
+                android:layout_marginTop="145px"
+                android:src="@mipmap/icon_more_task"
+                android:visibility="gone"/>
+
+            <com.cnksi.sjjc.view.RoundedRectProgressBar
+                android:id="@+id/progress"
+                style="@android:style/Widget.Holo.HorizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="40px"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="88px"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                app:backColor="@color/progress_backgroud"
+                app:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#e0e0e0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="26px"
+            android:background="#e0e0e0"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="550px"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:onClick="@{()->event.toTaskPlan(InspectionType.routine.name())}"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80px"
+                    android:text="例行巡视"
+                    android:textColor="#ff7356"
+                    android:textSize="44px"/>
+
+                <TextView
+                    android:id="@+id/txt_routine_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`共有`+rounteCount+`巡视任务`}"
+                    android:textColor="#c0bad9"
+                    android:textSize="36px"/>
+
+                <ImageView
+                    android:layout_width="232px"
+                    android:layout_height="232px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="68px"
+                    android:layout_marginTop="66px"
+                    android:background="@mipmap/icon_rotinue"
+                    app:layout_auto_baseheight="width"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:background="#e0e0e0"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()->event.toTaskPlan(InspectionType.full.name())}"
+                    android:orientation="horizontal"
+                    android:paddingLeft="42px">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_overall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="bottom"
+                            android:text="全面巡视"
+                            android:textColor="#45b8ff"
+                            android:textSize="44px"/>
+
+                        <TextView
+                            android:id="@+id/txt_overall_task"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@{`共有`+fullCount+`巡视任务`}"
+                            android:textColor="#c0bad9"
+                            android:textSize="36px"/>
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:layout_width="140px"
+                        android:layout_height="140px"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="38px"
+                        android:background="@mipmap/icon_overall"
+                        app:layout_auto_basewidth="height"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="#e0e0e0"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()->event.toTaskPlan(InspectionType.special.name())}"
+                    android:orientation="horizontal"
+                    android:paddingLeft="42px">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_special"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0px"
+                            android:layout_weight="1"
+                            android:gravity="bottom"
+                            android:text="特殊巡视"
+                            android:textColor="#b9d300"
+                            android:textSize="44px"/>
+
+                        <TextView
+                            android:id="@+id/txt_special_task"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@{`共有`+specailCount+`巡视任务`}"
+                            android:textColor="#c0bad9"
+                            android:textSize="36px"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="140px"
+                        android:layout_height="140px"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="38px"
+                        android:src="@mipmap/icon_special"
+                        app:layout_auto_basewidth="height"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#e0e0e0"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="271px"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="271px"
+                android:layout_weight="1"
+                android:onClick="@{()->event.toTaskPlan(InspectionType.special_xideng.name())}"
+                android:orientation="horizontal"
+                android:paddingLeft="42px">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:text="熄灯巡视"
+                        android:textColor="#889fff"
+                        android:textSize="44px"/>
+
+                    <TextView
+                        android:id="@+id/txt_night_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:text="@{`共有`+lightCount+`巡视任务`}"
+                        android:textColor="#c0bad9"
+                        android:textSize="36px"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="140px"
+                    android:layout_height="140px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="38px"
+                    android:src="@mipmap/icon_night"
+                    app:layout_auto_basewidth="height"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="273px"
+                android:background="#e0e0e0"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="271px"
+                android:layout_weight="1"
+                android:onClick="@{()->event.toTaskPlan(InspectionType.professional.name())}"
+                android:orientation="horizontal"
+                android:paddingLeft="42px">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_professional"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:text="专业巡视"
+                        android:textColor="#ffb400"
+                        android:textSize="44px"/>
+
+                    <TextView
+                        android:id="@+id/txt_professional_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:text="@{`共有`+professionalCount+`巡视任务`}"
+                        android:textColor="#c0bad9"
+                        android:textSize="36px"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="140px"
+                    android:layout_height="140px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="38px"
+                    android:src="@mipmap/icon_professionnal"
+                    app:layout_auto_basewidth="height"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#e0e0e0"/>
+
+        <TextView
+            android:id="@+id/txt_get_pms"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:background="@drawable/selector_get_pms_bg"
+            android:gravity="center"
+            android:onClick='@{()->event.toTaskPlan("")}'
+            android:text="获取PMS计划"
+            android:textColor="#05c8b8"
+            android:textSize="44px"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+</layout>
