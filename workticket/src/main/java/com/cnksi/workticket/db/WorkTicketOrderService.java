@@ -5,10 +5,8 @@ import android.text.TextUtils;
 import com.cnksi.workticket.Config;
 import com.cnksi.workticket.bean.WorkTicketOrder;
 
-import org.apache.commons.net.telnet.WindowSizeOptionHandler;
 import org.xutils.ex.DbException;
 
-import java.nio.channels.Selector;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,15 +29,22 @@ public class WorkTicketOrderService {
     /**
      * 根据选择的日期查询改日期下该班组的任务
      *
-     * @param deptid 部门id
-     * @param date   时间
+     * @param deptid     部门id
+     * @param date       时间
+     * @param userDeptId 人员所在的部门
      */
 
-    public List<WorkTicketOrder> getSelectDateOrders(String deptid, String date) {
+    public List<WorkTicketOrder> getSelectDateOrders(String deptid, String date, String userDeptId) {
+        String otherDeptUser = "other_dept_user";
         List<WorkTicketOrder> orders = new ArrayList<>();
-
+        String startDate = date + " 00:00:00";
+        String endDate = date + " 23:59:59";
         try {
-            orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", date).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            if (TextUtils.equals(Config.otherDeptUser, otherDeptUser)) {
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).or(WorkTicketOrder.WORK_UNIT_ID,"=",userDeptId).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            } else {
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+            }
             return orders;
         } catch (DbException e) {
             e.printStackTrace();
@@ -55,7 +60,7 @@ public class WorkTicketOrderService {
     public List<WorkTicketOrder> getFutureWorkOverCurrentTime(String deptid, String currentDate, String account) {
         List<WorkTicketOrder> orders = new ArrayList<>();
         try {
-            if (Config.otherDeptUser.equalsIgnoreCase("team_leader")) {
+            if (Config.otherDeptUser.contains("team_leader")) {
                 orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             } else {
                 orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.CREATE_PERSON_ACCOUNT, "=", account).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
@@ -78,7 +83,7 @@ public class WorkTicketOrderService {
 
         List<WorkTicketOrder> orders = new ArrayList<>();
         try {
-            if (Config.otherDeptUser.equalsIgnoreCase("team_leader")) {
+            if (Config.otherDeptUser.contains("team_leader")) {
                 orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, "<", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             } else {
                 orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.CREATE_PERSON_ACCOUNT, "=", account).and(WorkTicketOrder.WORK_DATE, "<", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();

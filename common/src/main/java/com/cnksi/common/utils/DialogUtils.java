@@ -359,7 +359,6 @@ public class DialogUtils {
         WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();
         windowParams.width = width;
         windowParams.height = height;
-        windowParams.alpha=0;
         dialogWindow.setAttributes(windowParams);
 
         return dialog;

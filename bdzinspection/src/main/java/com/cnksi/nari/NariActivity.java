@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +18,12 @@ import android.widget.Toast;
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.activity.TaskRemindActivity;
 import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
+import com.cnksi.bdzinspection.databinding.XsDialogModifyIphostBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
 import com.cnksi.bdzinspection.utils.MyUUID;
 import com.cnksi.common.Config;
+import com.cnksi.common.SystemConfig;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.daoservice.BaseService;
@@ -56,6 +59,7 @@ import com.cnksi.nari.utils.NariDataManager;
 import com.cnksi.nari.utils.PMSException;
 import com.cnksi.nari.utils.ResultSet;
 import com.cnksi.sync.KSyncConfig;
+import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -71,9 +75,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.cnksi.nari.NARIHelper.MIP_SERVER;
+import static com.cnksi.nari.NARIHelper.MIP_SERVER_IP_KEY;
+import static com.cnksi.nari.NARIHelper.PMS_SERVER;
+import static com.cnksi.nari.NARIHelper.PMS_SERVER_IP_KEY;
+
 /**
- * @version 1.0
  * @author wastrel
+ * @version 1.0
  * @date 2017/8/2 10:06
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -92,12 +101,17 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     Toast toast;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_nari);
         account = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "").split(",")[0];
+        MIP_SERVER = PreferencesUtils.get(MIP_SERVER_IP_KEY, MIP_SERVER);
+        PMS_SERVER = PreferencesUtils.get(PMS_SERVER_IP_KEY, PMS_SERVER);
+        SystemConfig.init();
+        initialUI();
+        init();
+        initialData();
     }
 
 
@@ -125,6 +139,42 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             }
             DialogUtils.showSureTipsDialog(mActivity, null, "本次将会下载" + nodowns.length + "个离线作业包！", v1 -> downLoad(nodowns));
         });
+
+        binding.btnVpn.setOnLongClickListener(v -> {
+            XsDialogModifyIphostBinding ipHostBinding = XsDialogModifyIphostBinding.inflate(getLayoutInflater());
+            Dialog dialog = DialogUtils.createDialog(this, ipHostBinding.getRoot(), (int) (AutoLayoutConifg.getInstance().getScreenWidth() * 0.9), ViewGroup.LayoutParams.WRAP_CONTENT);
+            ipHostBinding.etNewUrl.setText(MIP_SERVER);
+            ipHostBinding.etPmsUrl.setText(PMS_SERVER);
+            ipHostBinding.btnCancel.setOnClickListener(k -> dialog.dismiss());
+            ipHostBinding.btnSure.setOnClickListener(k -> {
+                String mipServer = ipHostBinding.etNewUrl.getText().toString();
+                if (TextUtils.isEmpty(mipServer) || !mipServer.startsWith("http")) {
+                    ToastUtils.showMessageLong("请输入一个正确的MIP服务器地址！");
+                    return;
+                }
+                if (mipServer.endsWith("/")) {
+                    mipServer = mipServer.substring(0, mipServer.length());
+                }
+
+                String pmsServer = ipHostBinding.etPmsUrl.getText().toString();
+                if (TextUtils.isEmpty(pmsServer) || !pmsServer.startsWith("http")) {
+                    ToastUtils.showMessageLong("请输入一个正确的MIP服务器地址！");
+                    return;
+                }
+                if (pmsServer.endsWith("/")) {
+                    pmsServer = pmsServer.substring(0, pmsServer.length());
+                }
+                PMS_SERVER = pmsServer;
+                MIP_SERVER = mipServer;
+                PreferencesUtils.put(MIP_SERVER_IP_KEY, MIP_SERVER);
+                PreferencesUtils.put(PMS_SERVER_IP_KEY, PMS_SERVER);
+                dialog.dismiss();
+            });
+            dialog.show();
+            return false;
+
+        });
+
         binding.btnUploadAll.setOnClickListener(v -> {
             final BDPackage[] dones = adapter.getStatus(PackageStatus.done);
             if (dones.length == 0) {
@@ -254,7 +304,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
     private boolean genData(BDPackage bdPackage, Report report) {
         try {
 
-            DbModel model =UserService.getInstance().findDbModelFirst(new SqlInfo("select * from users where account='" + account + "'"));
+            DbModel model = UserService.getInstance().findDbModelFirst(new SqlInfo("select * from users where account='" + account + "'"));
 //查询巡视人员的IDS 和Name
             SqlInfo sqlInfo = new SqlInfo("SELECT distinct u.account  account ,rs.name,u.pms_id FROM report_signname rs " +
                     "LEFT JOIN (SELECT * from users where dept_id=?) u ON rs.name = u.username WHERE report_id = ? ;");
@@ -631,7 +681,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             BaseService.getInstance(BDPackage.class).logicDeleteById(item.packageID);
             if (!TextUtils.isEmpty(item.status) && PackageStatus.undo.name().equalsIgnoreCase(item.status)) {
                 TaskService.getInstance().update(WhereBuilder.b(Task.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
-                ReportService.getInstance().update( WhereBuilder.b(Report.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
+                ReportService.getInstance().update(WhereBuilder.b(Report.PMS_JHID, "=", item.pmsJhid), new KeyValue("dlt", "1"));
             }
         } catch (DbException e) {
             e.printStackTrace();

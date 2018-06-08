@@ -131,5 +131,10 @@ public class FlowRadioGroup extends GridLayout {
     public void setOnHierarchyChangeListener(OnHierarchyChangeListener listener) {
         mPassThroughListener.mOnHierarchyChangeListener = listener;
     }
+
+    public int getmCheckedId() {
+
+        return mCheckedId;
+    }
 }
 

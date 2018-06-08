@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.ImageDetailsActivity;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.adapter.BaseAdapter;
 import com.cnksi.core.utils.BitmapUtils;
@@ -28,10 +28,10 @@ import java.util.List;
 
 public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
     DefectControlActivity activity;
-    private ItemClickListener itemClickListener;
+    private ItemClickOrLongClickListener itemClickListener;
 
 
-    public void setItemClickListener(ItemClickListener itemClickListener) {
+    public void setItemClickListener(ItemClickOrLongClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -111,6 +111,13 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
             if (itemClickListener != null) {
                 itemClickListener.onClick(v, item, position);
             }
+        });
+
+        itemBinding.getRoot().setOnLongClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onLongClick(v, item, position);
+            }
+           return false;
         });
 
     }

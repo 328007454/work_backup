@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_group_item"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/xs_gray_background_color"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/xs_device_space_larger_height_px"
+            android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/xs_text_button_padding_top_px"
+            android:textColor="@color/xs_green_color"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+    </LinearLayout>
+</layout>

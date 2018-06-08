@@ -172,6 +172,10 @@ public class Device extends BaseModel {
     @Column(name = DEVICE_TYPE)
     public String device_type;
 
+    public static final String NEED_PIC_INSPECTION = "need_pic_inspection";
+    @Column(name = NEED_PIC_INSPECTION)
+    public String needPicInspection;
+
     // 最高缺陷级别
     public String defectLevel = "";
 
@@ -182,8 +186,6 @@ public class Device extends BaseModel {
         }
         return pic;
     }
-
-
 
 
     public boolean isImportant() {

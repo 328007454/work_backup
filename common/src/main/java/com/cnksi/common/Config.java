@@ -12,8 +12,19 @@ import com.cnksi.core.utils.SDCardUtils;
  * @date 16/4/24
  */
 public class Config implements Cst {
+    /**
+     * 不选择
+     */
+    public static final String NO_CHOICE = "noChoice";
+    public static final String NO_DEVICE_PART = "noDeviePart";
+    public static final String DEFECT_CONTENT = "defectContent";
+    public static final String DEVICE_CHOICE = "deviceChoice";
+    public static final String HAS_ALL_CHOICE = "hasAllChoice";
+    public static final String SWITCH_DEFECT = "switchDefect";
+    public static final String HAS_REPORT_ID = "hasReportId";
     public static boolean DEBUG = BuildConfig.DEBUG;
-    public static final int START_ACTIVITY_FORRESULT = 0x0;
+    public static final  int START_ACTIVITY_FORRESULT=0x0;
+    public static final int SUCCESS = 0x100;
 
     /**-------------------------------目录相关-BEGIN-------------------------------------*/
 
@@ -400,8 +411,6 @@ public class Config implements Cst {
 
     public static String DELETED = "1";
 
-    public static final String SINGLE = "single";
-
 
     // 保存当前所有类型的id
     public static final String AMR_POSTFIX = ".mp3";
@@ -410,4 +419,6 @@ public class Config implements Cst {
     /**-------------------------------常量值-END-----------------------------------------*/
 
 
+    public static final String SINGLE = "single";
+    public static final String MULTI = "multi";
 }

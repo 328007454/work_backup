@@ -33,6 +33,7 @@ import com.cnksi.common.databinding.CommonInspectionTipsBinding;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.Device;
 import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.common.utils.CopyKeyBoardUtil.OnKeyBoardStateChangeListener;
 import com.cnksi.common.utils.DialogUtils;
@@ -41,6 +42,7 @@ import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.defect.activity.AddDefectActivity;
 import com.cnksi.defect.utils.DefectUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -417,7 +419,11 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         tipsBinding.btnSure.setOnClickListener(v -> {
             hideKeyBord();
             defectDialog.dismiss();
-            Intent intent = new Intent(mActivity, AddNewDefectActivity.class);
+            Intent intent = new Intent(mActivity, AddDefectActivity.class);
+            intent.putExtra(Config.HAS_ALL_CHOICE, false);
+            intent.putExtra(Config.NO_DEVICE_PART, true);
+            intent.putExtra(Config.DEFECT_CONTENT, transDefectContent);
+            intent.putExtra(Device.DTID, currentDevice.getString("dtid"));
             setIntentValue(intent);
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });

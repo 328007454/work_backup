@@ -24,7 +24,6 @@
                     android:drawableRight="@drawable/ic_arrow_right"
                     android:gravity="center_vertical"
                     android:hint="请选择变电站"
-                    android:onClick="onClick"
                     android:paddingLeft="@dimen/core_padding_30px"
                     android:paddingRight="@dimen/core_padding_30px"
                     android:textColor="@color/xs_global_text_color"
@@ -40,7 +39,6 @@
                     android:drawableRight="@drawable/ic_arrow_right"
                     android:gravity="center_vertical"
                     android:hint="请选择间隔"
-                    android:onClick="onClick"
                     android:paddingLeft="@dimen/core_padding_30px"
                     android:paddingRight="@dimen/core_padding_30px"
                     android:textColor="@color/xs_global_text_color"
@@ -76,7 +74,6 @@
                         android:id="@+id/iv_select_device"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_120px"
-                        android:onClick="onClick"
                         android:paddingBottom="@dimen/core_padding_30px"
                         android:paddingLeft="120px"
                         android:paddingRight="@dimen/core_padding_30px"
@@ -134,14 +131,14 @@
                         app:srcCompat="@drawable/xs_camera_button_background" />
 
                     <ImageView
+                        android:scaleType="centerCrop"
                         android:id="@+id/iv_defect_pic"
                         android:layout_width="@dimen/xs_new_defect_photo_height"
                         android:layout_height="@dimen/xs_new_defect_photo_height_px"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/core_padding_30px"
                         android:layout_toLeftOf="@+id/ib_take_picture"
-                        android:contentDescription="@null"
-                        android:onClick="onClick" />
+                        android:contentDescription="@null" />
 
                     <TextView
                         android:id="@+id/tv_defect_count"
@@ -217,7 +214,6 @@
                     <com.cnksi.common.view.CustomRadioButton
                         android:id="@+id/rb_problem_defect"
                         android:layout_width="wrap_content"
-
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:layout_marginTop="@dimen/_20px"
@@ -348,7 +344,6 @@
                 android:background="@drawable/xs_red_button_background_selector"
                 android:gravity="center"
                 android:minHeight="@dimen/xs_button_minheight"
-                android:onClick="onClick"
                 android:text="@string/xs_dialog_cancle_str"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/xs_global_text_size_px" />
@@ -365,7 +360,6 @@
                 android:background="@drawable/xs_button_background_blue_selector"
                 android:gravity="center"
                 android:minHeight="@dimen/xs_button_minheight"
-                android:onClick="onClick"
                 android:text="@string/xs_dialog_sure_str"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/xs_global_text_size_px" />

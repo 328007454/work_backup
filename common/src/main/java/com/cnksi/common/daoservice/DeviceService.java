@@ -27,12 +27,12 @@ import java.util.List;
  */
 public class DeviceService extends BaseService<Device> {
 
-    public static final String DEVICE_ID_KEY="deviceId";
-    public static final String DEVICE_NAME_KEY="deviceName";
-    public static final String DEVICE_SHORT_NAME_KEY="shortName";
-    public static final String SPACING_NAME_KEY="spacingName";
-    public static final String SPACING_PY_KEY="spacingPY";
-    public static final String DEVICE_PY_KEY="devicePY";
+    public static final String DEVICE_ID_KEY = "deviceId";
+    public static final String DEVICE_NAME_KEY = "deviceName";
+    public static final String DEVICE_SHORT_NAME_KEY = "shortName";
+    public static final String SPACING_NAME_KEY = "spacingName";
+    public static final String SPACING_PY_KEY = "spacingPY";
+    public static final String DEVICE_PY_KEY = "devicePY";
 
     private static DeviceService mDevices;
 
@@ -93,11 +93,12 @@ public class DeviceService extends BaseService<Device> {
 
         String sql = "SELECT s.name_pinyin || ' ' || d." + pinyin + " AS search_key,s.latitude as slat,s.longitude as slot," +
                 "s.name_pinyin as " + SPACING_PY_KEY +
-                ",s.name as " +SPACING_NAME_KEY+
-                ", d." + pinyin + " as " +DEVICE_PY_KEY+
-                ",d.deviceid as " +DEVICE_ID_KEY+
+                ",d.dtid" +
+                ",s.name as " + SPACING_NAME_KEY +
+                ", d." + pinyin + " as " + DEVICE_PY_KEY +
+                ",d.deviceid as " + DEVICE_ID_KEY +
                 ",d.name_short as " + DEVICE_SHORT_NAME_KEY +
-                ",d.name as " +DEVICE_NAME_KEY+
+                ",d.name as " + DEVICE_NAME_KEY +
                 ",d.latitude,d.longitude,d.is_important,"
                 + "	s.spid,	s.type as spaceType,s.group_id FROM	device d " +
                 " LEFT JOIN (select ROWID as assist_sort ,* from spacing) s ON d.spid = s.spid"
@@ -143,18 +144,19 @@ public class DeviceService extends BaseService<Device> {
         String pinyin = PMSDeviceType.second.equals(deviceType) ? "name_pinyin" : "name_short_pinyin";
         String sql = "select s.name_pinyin||' '||d." + pinyin + " as search_key," +
                 "d.is_important," +
+                "d.dtid dtid," +
                 "s.name_pinyin as " + SPACING_PY_KEY +
-                ",s.name as " +SPACING_NAME_KEY+
-                ", d." + pinyin + " as " +DEVICE_PY_KEY+
-                ",d.deviceid as " +DEVICE_ID_KEY+
+                ",s.name as " + SPACING_NAME_KEY +
+                ", d." + pinyin + " as " + DEVICE_PY_KEY +
+                ",d.deviceid as " + DEVICE_ID_KEY +
                 ",d.name_short as " + DEVICE_SHORT_NAME_KEY +
-                ",d.name as " +DEVICE_NAME_KEY+
+                ",d.name as " + DEVICE_NAME_KEY +
                 ",s.type as spaceType,s.group_id,s.spid" +
                 "  from device d LEFT JOIN spacing s on d.spid=s.spid " +
                 "where d.bdzid=? and d.dlt=0 and d.device_type=? "
-                .concat(bigTypeStr)
-                .concat(StringUtils.cleanString(filter))
-                .concat(" order by s.").concat(spaceSort).concat(",d.sort ");
+                        .concat(bigTypeStr)
+                        .concat(StringUtils.cleanString(filter))
+                        .concat(" order by s.").concat(spaceSort).concat(",d.sort ");
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", bdzId));
         sqlInfo.addBindArg(new KeyValue("", deviceType));

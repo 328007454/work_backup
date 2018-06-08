@@ -175,23 +175,23 @@ public class WorkDateView extends View {
             orders = WorkTicketOrderService.getInstance().getWeekDateWork(weekStartDates.get(0), weekStartDates.get(6));
             for (WorkTicketOrder order : orders) {
                 if (TextUtils.equals(order.workVal, TicketTimeEnum.region_10to11.value)) {
-                    WorkDateView.this.dispalayTimeZoneWork(order, 0);
+                    dispalayTimeZoneWork(order, 0);
 
                 } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_11to12.value)) {
-                    WorkDateView.this.dispalayTimeZoneWork(order, 1);
+                    dispalayTimeZoneWork(order, 1);
 
                 } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_14to15.value)) {
-                    WorkDateView.this.dispalayTimeZoneWork(order, 2);
+                    dispalayTimeZoneWork(order, 2);
 
                 } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_15to16.value)) {
-                    WorkDateView.this.dispalayTimeZoneWork(order, 3);
+                    dispalayTimeZoneWork(order, 3);
 
                 } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_16to17.value)) {
-                    WorkDateView.this.dispalayTimeZoneWork(order, 4);
+                    dispalayTimeZoneWork(order, 4);
                 }
             }
 
-            activity.runOnUiThread(WorkDateView.this::invalidate);
+            activity.runOnUiThread(this::invalidate);
         });
 
     }

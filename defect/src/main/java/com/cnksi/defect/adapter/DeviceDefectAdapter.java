@@ -1,4 +1,4 @@
-package com.cnksi.defect;
+package com.cnksi.defect.adapter;
 
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
@@ -15,6 +15,7 @@ import com.cnksi.common.model.DefectRecord;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
+import com.cnksi.defect.R;
 import com.cnksi.defect.utils.DefectUtils;
 
 import java.util.List;

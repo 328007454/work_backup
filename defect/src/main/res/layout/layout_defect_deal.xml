@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
+        android:orientation="vertical" >
+
+        <TextView
+            android:background="@drawable/xs_bdz_background_select"
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:gravity="center"
+            android:text="@string/xs_defect_content_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_gray_background_color"
+                    android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                    android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                    android:text="@string/xs_defect_content_title_str"
+                    android:textColor="@color/xs_green_color"
+                    android:textSize="@dimen/xs_global_text_size_px" />
+
+                <TextView
+                    android:id="@+id/tv_source_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:lineSpacingExtra="@dimen/xs_global_text_line_spacing_px"
+                    android:minHeight="@dimen/xs_tab_strip_minheight_px"
+                    android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                    android:paddingTop="@dimen/xs_global_padding_top_bottom_px"
+                    android:textColor="@color/xs_deep_grey"
+                    android:textSize="@dimen/xs_global_text_size_px" />
+
+                <TextView
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/xs_gray_background_color"
+                    android:paddingBottom="@dimen/xs_text_button_padding_top_px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                    android:paddingTop="@dimen/xs_text_button_padding_top_px"
+                    android:text="@string/xs_deal_method_title_str"
+                    android:textColor="@color/xs_green_color"
+                    android:textSize="@dimen/xs_global_text_size_px" />
+
+                <TextView
+                    android:id="@+id/tv_deal_method"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:lineSpacingExtra="@dimen/xs_global_text_line_spacing_px"
+                    android:minHeight="@dimen/xs_tab_strip_minheight_px"
+                    android:paddingBottom="@dimen/xs_global_padding_top_bottom_px"
+                    android:paddingLeft="@dimen/xs_global_padding_left_right_px"
+                    android:paddingRight="@dimen/xs_global_padding_left_right_px"
+                    android:paddingTop="@dimen/xs_global_padding_top_bottom_px"
+                    android:textColor="@color/xs_deep_grey"
+                    android:textSize="@dimen/xs_global_text_size_px" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout></layout>

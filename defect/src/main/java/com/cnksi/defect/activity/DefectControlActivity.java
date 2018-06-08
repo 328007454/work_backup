@@ -1,6 +1,8 @@
 package com.cnksi.defect.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.cnksi.common.Config;
@@ -8,11 +10,12 @@ import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.UserService;
-import com.cnksi.common.listener.ItemClickListener;
+import com.cnksi.common.listener.ItemClickOrLongClickListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Users;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
@@ -31,7 +34,7 @@ import java.util.List;
  * @author Mr.K  on 2017/4/25.
  */
 
-public class DefectControlActivity extends BaseTitleActivity implements ItemClickListener<DefectRecord> {
+public class DefectControlActivity extends BaseTitleActivity implements ItemClickOrLongClickListener<DefectRecord> {
     private ActivityDefectControlBinding defectControlBinding;
     private List<Bdz> bdzList = new ArrayList<>();
     private DefectContentAdapter defectContentAdapter;
@@ -45,6 +48,7 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     private List<String> defectTypes;
     private List<DbModel> userModels;
     private String userName = "全部";
+    private String selectUserAccount;
 
 
     @Override
@@ -107,7 +111,6 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     }
 
 
-
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.bdz_contanier) {
@@ -139,12 +142,15 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
                     .setItemClickListener((adapter, view1, position) -> {
                         DbModel userModel = userModels.get(position);
                         userName = userModel.getString(Users.USERNAME);
+                        selectUserAccount = userModel.getString(Users.ACCOUNT);
                         ToastUtils.showMessage(userModel.getString(Users.USERNAME));
                         defectControlBinding.txtPeopleName.setText(userModels.get(position).getString(Users.USERNAME));
                         search();
                     }).setDropDownOfView(defectControlBinding.containerPeople).setBackgroundAlpha(0.6f).showAsDropDown(-30, 10);
         } else if (i == R.id.add_defect) {
             Intent intent = new Intent(this, AddDefectActivity.class);
+            intent.putExtra(Config.HAS_ALL_CHOICE, true);
+            intent.putExtra(Config.HAS_REPORT_ID,false);
             startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
         }
     }
@@ -153,10 +159,10 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     @Override
     public void onClick(View v, DefectRecord data, int position) {
         Intent intent = new Intent(this, OperateDefectActivity.class);
-        intent.putExtra(Device.DEVICEID,data.deviceid);
-        intent.putExtra(Bdz.BDZID,data.bdzid);
-        intent.putExtra(Config.DEFECT_COUNT_KEY,Config.SINGLE);
-        intent.putExtra(DefectRecord.DEFECTID,data.defectid);
+        intent.putExtra(Device.DEVICEID, data.deviceid);
+        intent.putExtra(Bdz.BDZID, data.bdzid);
+        intent.putExtra(Config.DEFECT_COUNT_KEY, Config.SINGLE);
+        intent.putExtra(DefectRecord.DEFECTID, data.defectid);
         startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
     }
 
@@ -164,5 +170,20 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         search();
+    }
+
+    @Override
+    public void onLongClick(View v, DefectRecord defectRecord, int position) {
+        String userType = PreferencesUtils.get(Config.OTHER_DEPT_USER, "");
+        String account = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
+        Dialog dialog = DialogUtils.createTipsDialog(this, "是否删除该缺陷", v1 -> {
+            defectRecords.remove(defectRecord);
+            defectContentAdapter.setList(defectRecords);
+        }, true);
+        if (!TextUtils.isEmpty(userType) && userType.contains("team_leader")) {
+            dialog.show();
+        } else if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(selectUserAccount) && TextUtils.equals(account, selectUserAccount)) {
+            dialog.show();
+        }
     }
 }

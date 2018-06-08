@@ -20,7 +20,6 @@ import com.cnksi.workticket.fragment.TicketDailyWorkFragment;
 import com.cnksi.workticket.fragment.TicketWorkRecordFragment;
 import com.cnksi.workticket.sync.KSyncConfig;
 
-
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -56,7 +55,7 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
     public void initUI() {
         getIntentVaule();
         binding = (ActivityTicketDateWorkBinding) rootDataBinding;
-        binding.includeTitle.ticketTxtAdd.setVisibility(View.VISIBLE);
+        binding.includeTitle.ibtSync.setVisibility(View.VISIBLE);
         titleArrays[1] = TicketEnum.GZJL.value;
         titleArrays[0] = TicketEnum.GZRZ.value;
         initFragments();
@@ -114,6 +113,8 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
             }
             if (!syncSuccess) {
                 ToastUtils.showMessage("同步失败");
+            } else {
+                ToastUtils.showMessage("同步成功，请继续操作");
             }
             CustomerDialog.dismissProgress();
         }).downLoad();
@@ -127,13 +128,25 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
     }
 
     public void initClick() {
-        binding.includeTitle.ticketTxtAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(TicketDateHomeActivity.this, TicketDateWorkActivity.class);
-            TicketDateHomeActivity.this.startActivity(intent);
+        binding.ticketTxtAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(this, TicketDateWorkActivity.class);
+            startActivity(intent);
 
         });
 
-        binding.includeTitle.ticketBack.setOnClickListener(v -> TicketDateHomeActivity.this.onBackPressed());
+        binding.includeTitle.ticketBack.setOnClickListener(v -> onBackPressed());
+        binding.includeTitle.ibtSync.setOnClickListener(v -> {
+            CustomerDialog.showProgress(this, "正在同步数据，请确保网络畅通");
+            KSyncConfig.getInstance().setFailListener(syncSuccess -> {
+                if (!syncSuccess) {
+                    ToastUtils.showMessage("同步失败");
+                } else {
+                    ToastUtils.showMessage("同步成功，请继续操作");
+                }
+                CustomerDialog.dismissProgress();
+            }).upload().downLoad();
+        });
+
     }
 
 }

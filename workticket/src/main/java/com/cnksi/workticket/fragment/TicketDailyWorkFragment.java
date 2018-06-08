@@ -26,13 +26,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Created by Mr.K on 2018/5/8.
+ * @author Mr.K  on 2018/5/8.
+ * @decrption 工作日志
  */
 
 public class TicketDailyWorkFragment extends BaseCoreFragment implements CalendarUtil.DateSelectListener {
     TicketFragmentDailyWorkBinding binding;
     private List<WorkTicketOrder> futureOrders = new ArrayList<>();
-    private CalendarUtil calendarUtil;
     private String currentDate;
     private String maxCurrentDate;
     private RecyclerView groupRecyclerView;
@@ -52,7 +52,7 @@ public class TicketDailyWorkFragment extends BaseCoreFragment implements Calenda
     protected void initUI() {
         super.initUI();
         binding = (TicketFragmentDailyWorkBinding) fragmentDataBinding;
-        calendarUtil = new CalendarUtil(getActivity()).addCanlendarView(binding.dateContainer, 0);
+        CalendarUtil calendarUtil = new CalendarUtil(getActivity()).addCanlendarView(binding.dateContainer, 0);
         calendarUtil.setOnDateSelectListener(this);
         groupRecyclerView = calendarUtil.getGroupRecyclerView();
         currentDate = calendarUtil.getCalendarView().getCurYear() + "-" + calendarUtil.getCalendarView().getCurMonth() + "-" + calendarUtil.getCalendarView().getCurDay() + " 00:00:00";
@@ -72,44 +72,45 @@ public class TicketDailyWorkFragment extends BaseCoreFragment implements Calenda
         ExecutorManager.executeTaskSerially(() -> {
             futureOrders = WorkTicketOrderService.getInstance().getCurrentDateWork(Config.userAccount, Config.deptID, currentDate, maxCurrentDate);
             map.clear();
-            entities.clear();
-            if (futureOrders == null) {
-                return;
-            }
-            HashMap<String, TicketTimeZone> zoneHashMap = new HashMap<>();
-            for (WorkTicketOrder order : futureOrders) {
-                TicketTimeZone timeZone = null;
-                if (zoneHashMap.get(order.workVal) != null) {
-                    timeZone = zoneHashMap.get(order.workVal);
-                } else {
-                    timeZone = new TicketTimeZone(order.workVal);
-                    zoneHashMap.put(order.workVal, timeZone);
-                    entities.add(timeZone);
+            List<MultiItemEntity> datas = new ArrayList<>();
+            if (futureOrders != null && !futureOrders.isEmpty()) {
+                HashMap<String, TicketTimeZone> zoneHashMap = new HashMap<>();
+
+                for (WorkTicketOrder order : futureOrders) {
+                    TicketTimeZone timeZone;
+                    if (zoneHashMap.get(order.workVal) != null) {
+                        timeZone = zoneHashMap.get(order.workVal);
+                    } else {
+                        timeZone = new TicketTimeZone(order.workVal);
+                        zoneHashMap.put(order.workVal, timeZone);
+                        datas.add(timeZone);
+                    }
+
+
+                    if (TextUtils.equals(order.workVal, TicketTimeEnum.region_10to11.value)) {
+                        timeZone.addSubItem(order);
+                    } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_11to12.value)) {
+
+                        timeZone.addSubItem(order);
+                    } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_14to15.value)) {
+
+                        timeZone.addSubItem(order);
+                    } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_15to16.value)) {
+                        timeZone.addSubItem(order);
+
+                    } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_16to17.value)) {
+                        timeZone.addSubItem(order);
+                    }
                 }
-
-
-                if (TextUtils.equals(order.workVal, TicketTimeEnum.region_10to11.value)) {
-                    timeZone.addSubItem(order);
-                } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_11to12.value)) {
-
-                    timeZone.addSubItem(order);
-                } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_14to15.value)) {
-
-                    timeZone.addSubItem(order);
-                } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_15to16.value)) {
-                    timeZone.addSubItem(order);
-
-                } else if (TextUtils.equals(order.workVal, TicketTimeEnum.region_16to17.value)) {
-                    timeZone.addSubItem(order);
-                }
             }
 
-
-            TicketDailyWorkFragment.this.getActivity().runOnUiThread(() -> {
+            getActivity().runOnUiThread(() -> {
+                entities.clear();
+                entities.addAll(datas);
                 if (dailyWorkAdapter == null) {
                     dailyWorkAdapter = new TicketDailyWorkAdapter(entities);
                     dailyWorkAdapter.expandAll();
-                    groupRecyclerView.setLayoutManager(new LinearLayoutManager(TicketDailyWorkFragment.this.getContext()));
+                    groupRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     groupRecyclerView.setAdapter(dailyWorkAdapter);
                 } else {
                     dailyWorkAdapter.expandAll();

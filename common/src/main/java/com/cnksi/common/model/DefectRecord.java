@@ -301,6 +301,27 @@ public class DefectRecord extends BaseModel implements Serializable{
         this(mDefectRecord.reportid, mDefectRecord.bdzid, mDefectRecord.bdz, mDefectRecord.spid, mDefectRecord.spname, mDefectRecord.deviceid, mDefectRecord.devcie, mDefectRecord.duid, mDefectRecord.duname, "", "");
     }
 
+    public DefectRecord(String reportid,String bdzid, String spaceId, String spaceName, String deviceId, String deviceName, String defectLevel, String pics, String defectContent,String hasInfluenceDbz,String userName,String department) {
+       this.reportid = reportid;
+        this.bdzid = bdzid;
+       this.spid = spaceId;
+       this.spname =  spaceName;
+       this.deviceid = deviceId;
+       this.devcie = deviceName;
+       this.defectlevel = defectLevel;
+       this.pics = pics;
+       this.description = defectContent;
+       this.discovered_date = DateUtils.getCurrentLongTime();
+       this.defectid = getDefectId();
+       this.defectcode = getDefectId();
+       this.has_remove = "N";
+       this.has_track = "N";
+       this.hasInfluenceDbz = hasInfluenceDbz;
+       this.discoverer = userName;
+       this.discoverer_unit = department;
+       this.insertTime = DateUtils.getCurrentLongTime();
+    }
+
     public static String getDefectId() {
         return getPrimarykey();
     }

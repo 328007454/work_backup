@@ -4,6 +4,7 @@ package com.cnksi.workticket.adapter;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.cnksi.core.utils.StringUtils;
 import com.cnksi.workticket.R;
 import com.cnksi.workticket.bean.TicketTimeZone;
 import com.cnksi.workticket.bean.WorkTicketOrder;
@@ -43,7 +44,12 @@ public class TicketDailyWorkAdapter extends BaseMultiItemQuickAdapter<MultiItemE
                 WorkTicketOrder order = (WorkTicketOrder) item;
                 helper.setText(R.id.txt_bdz_name, order.bdzName);
                 helper.setText(R.id.txt_dept_name, "工作单位：" + order.workUnit);
-                helper.setText(R.id.txt_work_type_name, "工作类型：" + order.workType + "类工作" + (TicketStatusEnum.getValue(order.ticketType)));
+                List<String> ticketTypes = StringUtils.stringToList(order.ticketType, ",");
+                StringBuilder builder = new StringBuilder();
+                for (String str : ticketTypes) {
+                    builder.append(TicketStatusEnum.getValue(str)).append(" ");
+                }
+                helper.setText(R.id.txt_work_type_name, "工作类型：" + order.workType + "类工作" + (builder.toString()));
                 helper.setText(R.id.txt_charge_name, "工作负责人：" + order.chargePerson);
                 helper.setText(R.id.txt_phone_name, "联系方式：" + order.phoneNum);
                 break;

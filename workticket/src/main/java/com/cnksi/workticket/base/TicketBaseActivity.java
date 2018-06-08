@@ -15,10 +15,6 @@ import com.cnksi.workticket.R;
 import com.cnksi.workticket.db.WorkTicketDbManager;
 import com.cnksi.workticket.sync.KSyncConfig;
 
-import org.xutils.db.sqlite.SqlInfo;
-import org.xutils.db.table.DbModel;
-import org.xutils.ex.DbException;
-
 /**
  * @decrption 基类
  * Created by Mr.K on 2018/4/23.
@@ -69,8 +65,8 @@ public abstract class TicketBaseActivity extends BaseCoreActivity {
         Config.userAccount = intent.getStringExtra(Config.CURRENT_LOGIN_ACCOUNT);
         Config.deptID = intent.getStringExtra(Config.CURRENT_DEPARTMENT_ID);
         Config.deptName = intent.getStringExtra(Config.CURRENT_DEPARTMENT_NAME);
-        //工作票预约的appid是根据巡检appd+"orderticket"作为标志
-        Config.SYNC_APP_ID_VALUE = intent.getStringExtra(Config.KEY_SYNC_APP_ID);
+        //工作票预约的appid是根据巡检appd+"_orderticket"作为标志
+        Config.SYNC_APP_ID_VALUE = intent.getStringExtra(Config.KEY_SYNC_APP_ID) + "_orderticket";
         Config.SYNC_URL_VALUE = intent.getStringExtra(Config.KEY_SYNC_URL);
         Config.otherDeptUser = intent.getStringExtra(Config.OTHER_DEPT_USER);
     }
@@ -91,7 +87,7 @@ public abstract class TicketBaseActivity extends BaseCoreActivity {
         mPagerTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics));
         // 设置Tab标题文字的大小
         mPagerTabStrip.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelOffset(R.dimen.tab_strip_text_size), mDisplayMetrics));
-        // 设置Tab Indicator的颜色  mActivity.getResources().getColor(R.color.tab_strip_text_color)
+        // 设置Tab Indicator的颜色  _this.getResources().getColor(R.color.tab_strip_text_color)
         mPagerTabStrip.setIndicatorColor(ContextCompat.getColor(this, R.color.tab_strip_text_color));
         // 设置选中Tab文字的颜色 (这是我自定义的一个方法)_this.getResources().getColor(R.color.tab_strip_text_color)
         mPagerTabStrip.setSelectedTextColor(ContextCompat.getColor(this, R.color.tab_strip_text_color));

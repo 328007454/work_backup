@@ -342,11 +342,11 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
                 //开始任务时就生成报告 不然各处引用报告的 问题太多
                 generateReport(mTask);
                 if (mTask.inspection.contains(InspectionType.switchover.name()) || mTask.inspection.contains(InspectionType.maintenance.name()) || mTask.inspection.equalsIgnoreCase(InspectionType.battery.name())) {
-                    if (SystemConfig.NONE.equalsIgnoreCase(SystemConfig.getSwitchMenuConfirmStyle())) {
+//                    if (SystemConfig.NONE.equalsIgnoreCase(SystemConfig.getSwitchMenuConfirmStyle())) {
                         intent.setClass(mActivity, New1RegularSwitchActivity1.class);
-                    } else {
-                        intent.setClass(mActivity, New1RegularSwitchActivity2.class);
-                    }
+//                    } else {
+//                        intent.setClass(mActivity, New1RegularSwitchActivity2.class);
+//                    }
                 } else {
                     boolean containsUser = false;
                     String reportId = null;

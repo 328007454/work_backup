@@ -391,4 +391,45 @@ public class DefectRecordService extends BaseService<DefectRecord> {
         return defects;
 
     }
+
+    public List<DefectRecord> queryDefectSwitchOverId(String currentReportId, String standardId) {
+
+        List<DefectRecord> defects = null;
+        try {
+            Selector selector = selector()
+                    .and(DefectRecord.HAS_REMOVE, "=", "N").and(DefectRecord.HAS_TRACK, "=", "N")
+                    .and(DefectRecord.REPORTID, "=", currentReportId).and(DefectRecord.IS_COPY, "<>", "Y")
+                    .and(DefectRecord.STADIDSWICHERID, "=", standardId)
+                    .expr("AND (" + DefectRecord.VAL + "='' OR " + DefectRecord.VAL + " IS NULL)  AND (" + DefectRecord.DLT + "='0' OR " + DefectRecord.DLT + " IS NULL) ")
+                    .orderBy(DefectRecord.DISCOVERED_DATE, true);
+
+            defects = selector.findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return defects;
+    }
+
+    public List<DbModel> queryDefectStidByDtid(String deviceDtid, String standardId) {
+        List<DbModel> models = new ArrayList<>();
+        SqlInfo sqlInfo = new SqlInfo();
+        String sql = "";
+        if (TextUtils.isEmpty(standardId)) {
+            sql = "select * from defect where staid in (select  s.staid from standards s left join device_unit  u on s.duid = u.duid where u.dtid = ? and u.dlt = 0 and s.dlt = 0) and dlt =0";
+            sqlInfo.setSql(sql);
+            sqlInfo.addBindArg(new KeyValue("", deviceDtid));
+        } else {
+            sql = "select * from defect where staid = ? and dlt = 0";
+            sqlInfo.setSql(sql);
+            sqlInfo.addBindArg(new KeyValue("", standardId));
+        }
+
+        try {
+            models = getDbManager().findDbModelAll(sqlInfo);
+
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return models;
+    }
 }

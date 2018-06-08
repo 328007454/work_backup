@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -36,13 +35,13 @@ import com.cnksi.bdzinspection.databinding.PopMenuBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityRegularSwitch1Binding;
 import com.cnksi.bdzinspection.model.StandardStepConfirm;
 import com.cnksi.bdzinspection.model.StandardSwitchover;
-import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.KeyboardChangeListener;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.SwitchPic;
@@ -50,6 +49,7 @@ import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.common.utils.BitmapUtil;
 import com.cnksi.common.utils.CopyKeyBoardUtil;
 import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.MediaRecorderUtils;
 import com.cnksi.common.utils.RecordAudioUtils;
 import com.cnksi.common.utils.TTSUtils;
@@ -62,6 +62,8 @@ import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
+import com.cnksi.defect.activity.AddDefectActivity;
+import com.cnksi.defect.activity.OperateDefectActivity;
 
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -181,12 +183,11 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
             String standId = dbModel.getString(StandardSwitchover.ID);
             String defectLevel = dbModel.getString(DefectRecord.DEFECTLEVEL);
             if (!TextUtils.isEmpty(defectLevel)) {
-                Intent intent = new Intent(mActivity, DefectControlActivity.class);
-                intent.putExtra(Config.CURRENT_DEVICE_ID, deviceId);
-                intent.putExtra(Config.IS_NEED_SEARCH_DEFECT_REASON, true);
+                Intent intent = new Intent(mActivity, OperateDefectActivity.class);
+                intent.putExtra(Bdz.BDZID, currentBdzId);
                 intent.putExtra(Config.CURRENT_STANDARD_ID, standId);
                 intent.putExtra(Config.CURRENT_REPORT_ID, currentReportId);
-                intent.putExtra(Config.IS_TRACK_DEFECT, true);
+                intent.putExtra(Config.SWITCH_DEFECT, true);
                 startActivityForResult(intent, UPDATE_DEFECT_STATUS_REQUEST_CODE);
             }
         }
@@ -503,11 +504,11 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                         batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
                         runOnUiThread(() -> {
                             int showStr1 = R.string.xs_dialog_tips_content_maintance;
-                            showTipsDialog( intent, -1, "本次蓄电池抄录:" + (TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? 0 : batteryCopyTotal.getString("count")) + "/" + sumBatteryCode + "。" + getText(showStr1), false);
+                            showTipsDialog(intent, -1, "本次蓄电池抄录:" + (TextUtils.isEmpty(batteryCopyTotal.getString("count")) ? 0 : batteryCopyTotal.getString("count")) + "/" + sumBatteryCode + "。" + getText(showStr1), false);
                         });
                     });
                 } else {
-                    showTipsDialog( intent, -1, showStr, false);
+                    showTipsDialog(intent, -1, showStr, false);
                 }
                 break;
             default:
@@ -607,7 +608,6 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (Activity.RESULT_OK == resultCode) {
             switch (requestCode) {
                 case ACTION_IMAGE:// 拍照后返回
                     addWaterTextToBitmap();
@@ -637,7 +637,6 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                 default:
                     break;
             }
-        }
     }
 
     @Override
@@ -727,7 +726,7 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                     defectRecord.val = model.getString(DefectRecord.VAL);
                     defectRecord.oldval = model.getString(DefectRecord.OLDVAL);
                     try {
-                       DefectRecordService.getInstance().saveOrUpdate(defectRecord);
+                        DefectRecordService.getInstance().saveOrUpdate(defectRecord);
                     } catch (DbException e) {
                         e.printStackTrace();
                     }
@@ -753,10 +752,12 @@ public class New1RegularSwitchActivity2 extends BaseActivity implements Keyboard
                     saveOrUpdateInputValue(0x00);
                     String deviceId = dbModel.getString(DefectRecord.DEVICEID);
                     String standId = dbModel.getString(StandardSwitchover.ID);
-                    Intent intent = new Intent(mActivity, DefectControlActivity.class);
+                    Intent intent = new Intent(mActivity, AddDefectActivity.class);
                     intent.putExtra(Config.CURRENT_DEVICE_ID, deviceId);
                     intent.putExtra(Config.CURRENT_STANDARD_ID, standId);
-                    intent.putExtra(Config.IS_NEED_SEARCH_DEFECT_REASON, true);
+                    intent.putExtra(Config.HAS_ALL_CHOICE, false);
+                    intent.putExtra(Config.DEVICE_CHOICE, true);
+                    intent.putExtra(Config.NO_DEVICE_PART, true);
                     startActivityForResult(intent, UPDATE_DEFECT_STATUS_REQUEST_CODE);
 
                 } else if (i == R.id.id_record) {
