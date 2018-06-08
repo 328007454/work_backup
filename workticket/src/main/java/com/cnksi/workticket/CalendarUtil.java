@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
 
 /**
@@ -47,13 +46,12 @@ public class CalendarUtil implements CalendarView.OnDateSelectedListener, Calend
         this.activity = activity;
     }
 
-    public CalendarUtil addCanlendarView(ViewGroup group, int position) {
+    public CalendarUtil addCalendarView(ViewGroup group, int position) {
         View view = LayoutInflater.from(activity).inflate(R.layout.ticket_work_date, group, false);
         txtDate = view.findViewById(R.id.txt_date);
         ImageView imgDateRight = view.findViewById(R.id.date_right);
         ImageView imgDateLeft = view.findViewById(R.id.date_left);
         TextView txtDateToday = view.findViewById(R.id.date_today);
-        CalendarLayout calendarLayout = view.findViewById(R.id.calendarLayout);
         calendarView = view.findViewById(R.id.calendarView);
         groupRecyclerView = view.findViewById(R.id.recyclerView);
         calendarView.setOnDateSelectedListener(this);

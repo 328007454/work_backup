@@ -52,7 +52,7 @@ public class TicketDailyWorkFragment extends BaseCoreFragment implements Calenda
     protected void initUI() {
         super.initUI();
         binding = (TicketFragmentDailyWorkBinding) fragmentDataBinding;
-        CalendarUtil calendarUtil = new CalendarUtil(getActivity()).addCanlendarView(binding.dateContainer, 0);
+        CalendarUtil calendarUtil = new CalendarUtil(getActivity()).addCalendarView(binding.dateContainer, 0);
         calendarUtil.setOnDateSelectListener(this);
         groupRecyclerView = calendarUtil.getGroupRecyclerView();
         currentDate = calendarUtil.getCalendarView().getCurYear() + "-" + calendarUtil.getCalendarView().getCurMonth() + "-" + calendarUtil.getCalendarView().getCurDay() + " 00:00:00";

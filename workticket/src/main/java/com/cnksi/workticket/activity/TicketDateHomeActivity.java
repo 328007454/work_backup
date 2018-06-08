@@ -41,9 +41,7 @@ public class TicketDateHomeActivity extends TicketBaseActivity {
      * 引导栏标题
      */
     private String[] titleArrays = new String[2];
-    /**
-     * 承载fragment数量
-     */
+
     private List<Fragment> mFragmentList;
 
     @Override
