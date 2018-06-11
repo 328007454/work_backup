@@ -153,6 +153,8 @@ public abstract class BaseActivity extends BaseCoreActivity {
      */
     protected CopyKeyBoardUtil mKeyBoardUtil = null;
 
+    protected String currentDepartmentId;
+
     protected Dialog tipsDialog = null;
     /**
      * 振动器
@@ -243,6 +245,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
         currentDepartmentName=PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME,"");
          userName = PreferencesUtils.get(Config.CURRENT_LOGIN_USER,"");
+        currentDepartmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID,"");
     }
 
     public boolean isEmpty(TextView tv) {

@@ -3,6 +3,7 @@ package com.cnksi.bdzinspection.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +21,6 @@ import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSignViewBinding;
 import com.cnksi.bdzinspection.model.BatteryGroup;
-import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
 import com.cnksi.bdzinspection.utils.TimePickerUtils;
 import com.cnksi.common.Config;
@@ -37,14 +37,15 @@ import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.Role;
-import com.cnksi.common.listener.ItemClickListener;
-import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
+import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
+import com.cnksi.common.view.PeopleDialog;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.BitmapUtils;
@@ -71,7 +72,7 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * @author Wastrel
  * @date 创建时间：2016年8月9日 下午3:05:56 TODO
  */
-public class GenerateReportActivity extends TitleActivity implements AdapterClickListener, ItemClickListener, TimePickerUtils.TimePickerMissListener {
+public class GenerateReportActivity extends TitleActivity implements AdapterClickListener, TimePickerUtils.TimePickerMissListener {
     public final int MASKGzr = 0x0;
     public final int MASKFzr = 0xFF00;
     public final int SIGNCODEGzr = 0x300;
@@ -95,7 +96,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     String inspectionContent;
     boolean xudianchi;
     XsDialogAddPersonBinding mPersonBinding;
-    List<ReportSignname> list;
+    List<ReportSignname> listSign = new ArrayList<>();
     /**
      * 本次巡视发现缺陷总数
      */
@@ -398,7 +399,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             }
             com.cnksi.common.daoservice.ReportService.getInstance().saveOrUpdate(currentReport);
             Task mTask = new Task(currentTaskId);
-           TaskService.getInstance().update(mTask, Task.STATUS);
+            TaskService.getInstance().update(mTask, Task.STATUS);
             if (!TextUtils.isEmpty(currentReport.pmsJhid)) {
                 NariDataManager.markBdPackageStatus(currentReport.pmsJhid, PackageStatus.done);
                 NariActivity.isNeedUpdateStatus = true;
@@ -485,7 +486,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         signViewBinding.btnResign.setOnClickListener(view -> {
             currentSign = list.get(position);
             if (list == mDataCzr) {
-                GenerateReportActivity.this.takeSignName( currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEGzr);
+                GenerateReportActivity.this.takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEGzr);
             } else {
                 GenerateReportActivity.this.takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEFzr);
             }
@@ -493,43 +494,23 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         });
     }
 
+    PeopleDialog peopleDialog;
+
     public void showAddPersonDialog(final List<ReportSignname> list) {
-        if (mAddPersonDialog == null) {
-            int dialogWidth = ScreenUtils.getScreenWidth(mActivity) * 9 / 10;
-            int dialogHeight = ScreenUtils.getScreenHeight(mActivity) * 6 / 10;
-            mPersonBinding = XsDialogAddPersonBinding.inflate(getLayoutInflater());
-            mAddPersonDialog = DialogUtils.createDialog(mActivity, mPersonBinding.getRoot(), dialogWidth, dialogHeight);
-        }
-        dialogAdpeter = new AddPersonAdapter(mActivity, persons);
-        mPersonBinding.lvContainer.setAdapter(dialogAdpeter);
-        dialogAdpeter.setOnItemClickListener(this);
-        mAddPersonDialog.show();
-        this.list = list;
-        mPersonBinding.btnAddPerson.setOnClickListener(view -> {
-            String name = mPersonBinding.etName.getText().toString();
-            if (TextUtils.isEmpty(name)) {
-                ToastUtils.showMessage("名字不能为空！");
-                return;
-            }
-            DbModel model = new DbModel();
-            model.add("username", mPersonBinding.etName.getText().toString());
-            model.add(ReportSignname.DEPTID, "-1");
-            model.add(ReportSignname.DEPTNAME, "");
-            model.add(ReportSignname.ACCOUNT, BaseModel.getPrimarykey());
-            persons.add(model);
-            dialogAdpeter.notifyDataSetChanged();
-            mPersonBinding.lvContainer.smoothScrollToPosition(mPersonBinding.lvContainer.getCount());
-            mPersonBinding.etName.setText("");
-        });
+        peopleDialog = new PeopleDialog.Builder().setDeptId(currentDepartmentId).setItemClickListener((v, data, position) -> {
+            ToastUtils.showMessage(data.getString(Users.USERNAME));
+            peopleDialog.dismiss();
+            getClickPerson(v, data, position);
+        }).loadData().getPeopleDialog();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        peopleDialog.show(transaction, "peopleDialog");
     }
 
-    @Override
-    public void onClick(View v, Object o, int position) {
-        DbModel model = persons.get(position);
+    private void getClickPerson(View v, DbModel model, int position) {
         boolean hasUser = false;
         if (clickCzr) {
             if (czrModels.contains(model.getString("account"))) {
-                ToastUtils.showMessage( "已经添加了该工作人员");
+                ToastUtils.showMessage("已经添加了该工作人员");
                 return;
             }
             if (!hasUser) {
@@ -539,15 +520,15 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             czrModelsOrigin.addAll(czrModels);
         } else if (!clickCzr) {
             if (fzrModels.contains(model.getString("account"))) {
-                ToastUtils.showMessage( "已经添加了该负责人员");
+                ToastUtils.showMessage("已经添加了该负责人员");
                 return;
             }
             fzrModels.add(model.getString("account"));
         }
 
-        list.add(new ReportSignname(currentReportId, list == mDataCzr ? Role.worker.name() : Role.leader.name(), model));
+        listSign.add(new ReportSignname(currentReportId, listSign == mDataCzr ? Role.worker.name() : Role.leader.name(), model));
         mAddPersonDialog.dismiss();
-        if (list == mDataCzr) {
+        if (listSign == mDataCzr) {
             adapterGzr.notifyDataSetChanged();
         } else {
             adapterFzr.notifyDataSetChanged();
@@ -575,7 +556,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             });
 
         } else {
-            ToastUtils.showMessageLong( "至少有一个工作人员和负责人员");
+            ToastUtils.showMessageLong("至少有一个工作人员和负责人员");
         }
 
     }
@@ -601,7 +582,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 break;
             case MASKFzr | 1:
                 currentSign = mDataFzr.get(position);
-                takeSignName( currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEFzr);
+                takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEFzr);
                 break;
             case MASKFzr | 2:
                 showSignDetails(position, true, mDataFzr);

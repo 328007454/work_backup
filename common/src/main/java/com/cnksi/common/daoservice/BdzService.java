@@ -1,5 +1,7 @@
 package com.cnksi.common.daoservice;
 
+import android.text.TextUtils;
+
 import com.cnksi.common.model.Bdz;
 
 import org.xutils.common.util.KeyValue;
@@ -32,7 +34,11 @@ public class BdzService extends BaseService<Bdz> {
 
     public List<Bdz> findAllBdzByDp(String dept_id) {
         try {
-            return selector().and(Bdz.DEPTID, "=", dept_id).findAll();
+            if (TextUtils.isEmpty(dept_id)) {
+                return selector().findAll();
+            } else {
+                return selector().and(Bdz.DEPTID, "=", dept_id).findAll();
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xs_fragment_record_defect_content_green_title_background"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/xs_global_padding_half_left_right_px">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/xs_tab_strip_minheight_px"
+            android:background="@drawable/xs_bdz_background_select"
+            android:gravity="center"
+            android:text="@string/xs_gp_add_pesron"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_container"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginBottom="54px"
+            android:layout_marginLeft="24px"
+            android:layout_marginRight="24px"
+            android:layout_marginTop="54px"
+            android:background="@drawable/xs_coner_white_background"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="left|top"
+                android:hint="@string/xs_gp_add_person_tips"
+                android:padding="36px"
+                android:textSize="@dimen/xs_global_text_small_size_px" />
+
+            <TextView
+                android:id="@+id/btn_add_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="30px"
+                android:background="@drawable/xs_green_background_selector"
+                android:gravity="center"
+                android:paddingBottom="9px"
+                android:paddingLeft="45px"
+                android:paddingRight="45px"
+                android:paddingTop="9px"
+                android:text="@string/xs_gp_add_pesron1"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_history_defect_level_text_size_px" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

@@ -16,37 +16,40 @@ import org.xutils.db.table.DbModel;
 
 import java.util.List;
 
+/**
+ * 人员适配数据
+ */
 public class AddPersonAdapter extends SimpleBaseAdapter {
 
-	private ItemClickListener mClickListener;
+    private ItemClickListener mClickListener;
 
-	public AddPersonAdapter(Context context, List<? extends Object> dataList) {
-		super(context, dataList);
-	}
+    public AddPersonAdapter(Context context, List<? extends Object> dataList) {
+        super(context, dataList);
+    }
 
 
-	public void setOnItemClickListener(ItemClickListener clickListener){
-		this.mClickListener = clickListener;
-	}
+    public void setOnItemClickListener(ItemClickListener clickListener) {
+        this.mClickListener = clickListener;
+    }
 
-	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
-		final DbModel model = (DbModel) getItem(position);
-		XsAddPersonItemBinding itemBinding =null;
-		if (convertView == null) {
-			itemBinding = XsAddPersonItemBinding.inflate(LayoutInflater.from(parent.getContext()));
-			AutoUtils.autoSize(itemBinding.getRoot());
-		} else {
-			itemBinding = DataBindingUtil.findBinding(convertView);
-		}
-		itemBinding.tvChildItem.setText(model.getString(Users.USERNAME));
-		itemBinding.llContainer.setOnClickListener(view -> {
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final DbModel model = (DbModel) getItem(position);
+        XsAddPersonItemBinding itemBinding = null;
+        if (convertView == null) {
+            itemBinding = XsAddPersonItemBinding.inflate(LayoutInflater.from(parent.getContext()));
+            AutoUtils.autoSize(itemBinding.getRoot());
+        } else {
+            itemBinding = DataBindingUtil.findBinding(convertView);
+        }
+        itemBinding.tvChildItem.setText(model.getString(Users.USERNAME));
+        itemBinding.llContainer.setOnClickListener(view -> {
             if (mClickListener != null) {
                 mClickListener.onClick(view, model, position);
             }
         });
-		return itemBinding.getRoot();
-	}
+        return itemBinding.getRoot();
+    }
 
 
 }
