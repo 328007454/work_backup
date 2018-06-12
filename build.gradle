@@ -75,8 +75,7 @@ ext {
 
     //ksi引用资源
     ksi_core_version = "1.2.7.4"
-    ksi_ksynclib_version = "3.3.6-SNAPSHOT"
-    ksi_sync_version = "3.1.8.2-xj-sqlcipher"
+    ksi_sync_version = "4.1.0-0525"
     leakcanary_android = "1.5.4"
     ksi_bdloc = "1.1.7-3"
     sqlcipher_version = "3.5.7"

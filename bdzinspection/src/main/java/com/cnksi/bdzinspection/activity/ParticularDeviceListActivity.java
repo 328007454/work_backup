@@ -41,10 +41,12 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cnksi.ksynclib.KSync.SYNC_ERROR;
+import static com.cnksi.ksynclib.KSync.SYNC_DOWN_DATA_SUCCESS;
+import static com.cnksi.ksynclib.KSync.SYNC_ERROR_DATA_DOWNLOAD;
+import static com.cnksi.ksynclib.KSync.SYNC_ERROR_DATA_UPLOAD;
 import static com.cnksi.ksynclib.KSync.SYNC_INFO;
 import static com.cnksi.ksynclib.KSync.SYNC_START;
-import static com.cnksi.ksynclib.KSync.SYNC_SUCCESS;
+import static com.cnksi.ksynclib.KSync.SYNC_UP_DATA_SUCCESS;
 
 
 /**
@@ -258,13 +260,15 @@ public class ParticularDeviceListActivity extends BaseActivity implements ShakeL
                 break;
             case SYNC_INFO:
                 break;
-            case SYNC_SUCCESS:
+            case SYNC_DOWN_DATA_SUCCESS:
+            case SYNC_UP_DATA_SUCCESS:
                 String messageSuccess = (String) msg.obj;
                 ToastUtils.showMessage(messageSuccess);
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();
                 break;
-            case SYNC_ERROR:
+            case SYNC_ERROR_DATA_DOWNLOAD:
+            case SYNC_ERROR_DATA_UPLOAD:
                 ToastUtils.showMessage("请检查网络，在主页手动同步");
                 CustomerDialog.dismissProgress();
                 ExitThisAndGoLauncher();

@@ -1,17 +1,17 @@
-package com.cnksi.sjjc.sync;
+package com.cnksi.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.cnksi.common.CommonApplication;
-import com.cnksi.common.Config;
+import com.cnksi.common.activity.XJSyncActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.core.utils.DeviceUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.ksynclib.KNConfig;
-import com.cnksi.sjjc.BuildConfig;
-import com.cnksi.sjjc.CustomApplication;
+import com.cnksi.ksynclib.callback.UnLoginCallBack;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -22,10 +22,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.cnksi.ksynclib.activity.KSyncAJActivity.SYNC_APPID_KEY;
+
 
 /**
- * @version 1.0
  * @author wastrel
+ * @version 1.0
  * @date 2017/3/15 11:14
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -64,13 +66,14 @@ public class KSyncConfig {
 
     public void startNetWorkSync(Context context) {
         PreferencesUtils.put("SYNC_WAY", true);
-        Intent intent = new Intent(context, NetWorkSyncActivity.class);
+        Intent intent = new Intent(context, XJSyncActivity.class);
+        intent.putExtra(SYNC_APPID_KEY, Config.SYNC_APP_ID);
         startSync(context, intent);
     }
 
     public void startUsbWorkSync(Context context) {
         PreferencesUtils.put("SYNC_WAY", false);
-        Intent intent = new Intent(context, UsbSyncActivity.class);
+        Intent intent = new Intent(context, XJSyncActivity.class);
         startSync(context, intent);
     }
 
@@ -81,7 +84,7 @@ public class KSyncConfig {
         String deviceId = DeviceUtils.getSerialNumber(context);
         String innerDateBaseFolder = CommonApplication.getAppContext().getDatabasePath(Config.ENCRYPT_DATABASE_NAME).getParent();
         config = new KNConfig(context, Config.ENCRYPT_DATABASE_NAME, innerDateBaseFolder, Config.SYNC_APP_ID,
-                Config.SYNC_URL, deviceId, CustomApplication.getInstance().getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
+                Config.SYNC_URL, deviceId, CommonApplication.getInstance().getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
         config.configDebug(BuildConfig.DEBUG);
         config.configAppid(Config.SYNC_APP_ID);
         config.configUrl(Config.SYNC_URL);
@@ -90,6 +93,12 @@ public class KSyncConfig {
         config.configDynicParam("dept_id", dept_id);
         config.configDownFile(isHaveDept());
         config.configUploadFile(isHaveDept());
+        config.configUnLoginCallBack(new UnLoginCallBack() {
+            @Override
+            public void onUnLogin(@Nullable Activity mActivity, String message) {
+
+            }
+        });
         return config;
     }
 

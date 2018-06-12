@@ -10,13 +10,14 @@ import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KNConfig;
 import com.cnksi.ksynclib.KSync;
-import com.cnksi.ksynclib.model.SyncInfo;
 import com.cnksi.workticket.BuildConfig;
 import com.cnksi.workticket.Config;
 import com.cnksi.workticket.db.WorkTicketDbManager;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.cnksi.ksynclib.activity.KSyncAJActivity.DELETE_FINISHED;
 
@@ -27,7 +28,7 @@ import static com.cnksi.ksynclib.activity.KSyncAJActivity.DELETE_FINISHED;
 
 public class KSyncConfig {
     private final static KSyncConfig instance = new KSyncConfig();
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private ExecutorService executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     private KSync ksync;
     private SyncFailListener failListener;
 
@@ -51,7 +52,8 @@ public class KSyncConfig {
                 Config.SYNC_URL_VALUE, deviceId, WorkTicketDbManager.getInstance().getTicketManager().getDatabase(), Config.BDZ_INSPECTION_FOLDER);
         config.configDebug(BuildConfig.DEBUG);
         config.configDynicParam("dept_id", Config.deptID);
-        ksync = new KSync(config, new SyncHandler());
+        ksync = KSync.create(config);
+        ksync.configHandler(new SyncHandler());
         return this;
     }
 
@@ -62,47 +64,34 @@ public class KSyncConfig {
     }
 
     public KSyncConfig downLoad() {
-        executorService.execute(() -> ksync.download("users", "bdz", "workticket_order", "department"));
+        executorService.execute(() -> ksync.download(new String[]{"users", "bdz", "workticket_order", "department"}));
         return this;
     }
 
     public class SyncHandler extends Handler {
-        SyncInfo info = null;
+
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case KSync.SYNC_ERROR:
-                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_ERROR);
+                case KSync.SYNC_ERROR_DATA_DOWNLOAD:
+                case KSync.SYNC_ERROR_DATA_UPLOAD:
                     if (failListener != null) {
                         failListener.failCallBack(false);
                     }
                     break;
-                case KSync.SYNC_INFO:
 
-                    break;
-                case KSync.SYNC_CONNECTING:
-                case KSync.SYNC_START:
-                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_INFO);
-                    break;
-                case KSync.SYNC_SUCCESS:
-                    info = new SyncInfo(String.valueOf(msg.obj), KSync.SYNC_SUCCESS);
+                case KSync.SYNC_DOWN_DATA_SUCCESS:
+                case KSync.SYNC_UP_DATA_SUCCESS:
                     CustomerDialog.dismissProgress();
                     if (failListener != null) {
                         failListener.failCallBack(true);
                     }
                     break;
-                case KSync.SYNC_PING:
-                    return;
-                case KSync.SYNC_SERVER_TIME:
-                    return;
                 case DELETE_FINISHED:
                     ToastUtils.showMessage(String.valueOf(msg.obj), Toast.LENGTH_SHORT);
                     CustomerDialog.dismissProgress();
-                    break;
-                case KSync.SYNC_FINISH:
-                    ToastUtils.showMessage(String.valueOf(msg.obj), Toast.LENGTH_SHORT);
                     break;
                 default:
                     break;
