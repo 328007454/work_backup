@@ -3,7 +3,6 @@ package com.cnksi.bdzinspection.activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
@@ -40,20 +39,13 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cnksi.ksynclib.KSync.SYNC_DOWN_DATA_SUCCESS;
-import static com.cnksi.ksynclib.KSync.SYNC_ERROR_DATA_DOWNLOAD;
-import static com.cnksi.ksynclib.KSync.SYNC_ERROR_DATA_UPLOAD;
-import static com.cnksi.ksynclib.KSync.SYNC_INFO;
-import static com.cnksi.ksynclib.KSync.SYNC_START;
-import static com.cnksi.ksynclib.KSync.SYNC_UP_DATA_SUCCESS;
-
 
 /**
  * 特殊巡检设备列表界面
  * Created by han on 2017/2/27.
  */
 
-public class ParticularDeviceListActivity extends BaseActivity implements  ShakeListener.OnShakeListener {
+public class ParticularDeviceListActivity extends BaseActivity implements ShakeListener.OnShakeListener {
 
     Task currentTask;
     private List<Lookup> lookups = null;
@@ -114,7 +106,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
         setPagerTabStripValue(binding.tabStrip);
         binding.tabStrip.setTabPaddingLeftRight(37);
         binding.tabStrip.setShouldExpand(false);
-        AbstractPageChangeListener pageChangeListener=new AbstractPageChangeListener(){
+        AbstractPageChangeListener pageChangeListener = new AbstractPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
@@ -156,8 +148,6 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
     }
 
 
-
-
     private void initOnClick() {
 
         binding.ibtnCancel.setOnClickListener(view -> ParticularDeviceListActivity.this.onBackPressed());
@@ -169,7 +159,31 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
             if (currentTask.isMember()) {
                 DialogUtils.showSureTipsDialog(mActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", v -> {
                     CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
-                    KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
+                    KSyncConfig.getInstance().getKNConfig(new KSyncConfig.SyncListener() {
+
+                        @Override
+                        public void start() {
+                            ToastUtils.showMessage("开始上传数据！");
+                        }
+
+                        @Override
+                        public void onSuccess(KSyncConfig.Type errorType) {
+                            ToastUtils.showMessage("数据上传成功");
+                            CustomerDialog.dismissProgress();
+                            ExitThisAndGoLauncher();
+                        }
+
+                        @Override
+                        public void onError(KSyncConfig.Type errorType, String errorMsg) {
+                            if (errorType == KSyncConfig.Type.network) {
+                                ToastUtils.showMessage("请检查网络，在主页手动同步");
+                            } else {
+                                ToastUtils.showMessage("上传失败，请在主页手动同步！错误提示：" + errorMsg);
+                            }
+                            CustomerDialog.dismissProgress();
+                            ExitThisAndGoLauncher();
+                        }
+                    }).upload();
                 });
             } else {
                 Intent intent = new Intent(mActivity, GenerateReportActivity.class);
@@ -247,32 +261,6 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
         locationHelper.resume();
     }
 
-    @Override
-    protected void onRefresh(Message msg) {
-        switch (msg.what) {
-            case SYNC_START:
-                String messageStart = (String) msg.obj;
-                ToastUtils.showMessage(messageStart);
-                break;
-            case SYNC_INFO:
-                break;
-            case SYNC_DOWN_DATA_SUCCESS:
-            case SYNC_UP_DATA_SUCCESS:
-                String messageSuccess = (String) msg.obj;
-                ToastUtils.showMessage(messageSuccess);
-                CustomerDialog.dismissProgress();
-                ExitThisAndGoLauncher();
-                break;
-            case SYNC_ERROR_DATA_DOWNLOAD:
-            case SYNC_ERROR_DATA_UPLOAD:
-                ToastUtils.showMessage("请检查网络，在主页手动同步");
-                CustomerDialog.dismissProgress();
-                ExitThisAndGoLauncher();
-                break;
-            default:
-                break;
-        }
-    }
 
     @Override
     public void onBackPressed() {
