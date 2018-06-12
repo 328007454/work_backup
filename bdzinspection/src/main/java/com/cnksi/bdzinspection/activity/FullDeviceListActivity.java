@@ -263,7 +263,9 @@ public class FullDeviceListActivity extends BaseActivity implements OnShakeListe
     protected void onResume() {
         super.onResume();
         shakeListener.start();
-        currentFragment.onResume();
+        if (currentFragment != null) {
+            currentFragment.onResume();
+        }
         locationHelper.resume();
     }
 

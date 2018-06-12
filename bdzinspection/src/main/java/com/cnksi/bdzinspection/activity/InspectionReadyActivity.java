@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
@@ -130,7 +131,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     @Override
     protected void onResume() {
         super.onResume();
-        boolean needReLoad = PreferencesUtils.get( "RELOAD_DATA", false) &&
+        boolean needReLoad = PreferencesUtils.get("RELOAD_DATA", false) &&
                 ("全面巡视".equalsIgnoreCase(currentInspectionTypeName)
                         || currentInspectionTypeName.equalsIgnoreCase(InspectionType.routine.toString()));
         if (needReLoad) {
@@ -145,7 +146,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     }
 
     private void initFragmentList() {
-        task = TaskService.getInstance().findById( currentTaskId);
+        task = TaskService.getInstance().findById(currentTaskId);
         mFragmentList = new ArrayList<>();
         Bundle args = new Bundle();
         boolean hasZzht = null != zzht;
@@ -221,7 +222,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             binding.tabStrip.setTabPaddingLeftRight(28);
             binding.tabStrip.setShouldExpand(false);
         }
-        mReport= ReportService.getInstance().getReportById(currentReportId);
+        mReport = ReportService.getInstance().getReportById(currentReportId);
     }
 
     private void initClick() {
@@ -233,7 +234,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                 }
 
             });
-            InspectionReadyActivity.this.onBackPressed();
+            onBackPressed();
         });
         if (SystemConfig.isMustVerifyInspectionReady()) {
             binding.btnLeft.setOnClickListener(v -> binding.viewPager.setCurrentItem(--currentPosition, true));
@@ -254,11 +255,11 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                         ToastUtils.showMessage("请核实完所有的综自后台步骤");
                         return;
                     }
-                    InspectionReadyActivity.this.startInspection();
+                    startInspection();
                 }
             });
         } else {
-            binding.btnRight.setOnClickListener(v -> InspectionReadyActivity.this.startInspection());
+            binding.btnRight.setOnClickListener(v -> startInspection());
         }
     }
 
@@ -287,6 +288,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
      * 2.跳转到相应的巡视界面
      */
     private void startInspection() {
+        long startTime = System.currentTimeMillis();
         // 生成报告
         if (generateReport()) {
             TTSUtils.getInstance().stopSpeak();
@@ -300,6 +302,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             }
             saveInspectionAlready();
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+            Log.d(TAG, "startInspection: " + (System.currentTimeMillis() - startTime));
         }
     }
 
@@ -324,7 +327,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     private boolean generateReport() {
         if (task.isMember()) {
             if (mReport == null) {
-                ToastUtils.showMessageLong( "该任务不是由你创建,但没有获取到报告！请尝试重新同步！");
+                ToastUtils.showMessageLong("该任务不是由你创建,但没有获取到报告！请尝试重新同步！");
                 return false;
             }
             try {
@@ -332,18 +335,18 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            PreferencesUtils.put( Config.CURRENT_REPORT_ID, mReport.reportid);
+            PreferencesUtils.put(Config.CURRENT_REPORT_ID, mReport.reportid);
             return true;
         }
         String temperature = mTemperatureFragment.getCurrentTemperature();
         String weather = mTemperatureFragment.getCurrentWeater();
         if (TextUtils.isEmpty(weather) || TextUtils.isEmpty(temperature)) {
-            ToastUtils.showMessage( "请选择天气和填写温度！");
+            ToastUtils.showMessage("请选择天气和填写温度！");
             return false;
         }
         boolean needTips = !CommonUtils.testTemperature(temperature) || (-99.9f > new Float(temperature) || new Float(temperature) > 99.99);
         if (needTips) {
-            ToastUtils.showMessage( "温度在-99.9℃到99.99℃");
+            ToastUtils.showMessage("温度在-99.9℃到99.99℃");
             return false;
         } else {
             temperature = CommonUtils.getTransformTep(temperature);
@@ -375,7 +378,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                     e.printStackTrace();
                 }
             });
-            PreferencesUtils.put( Config.CURRENT_REPORT_ID, mReport.reportid);
+            PreferencesUtils.put(Config.CURRENT_REPORT_ID, mReport.reportid);
             if (mToolsFragment != null) {
                 mToolsFragment.save(mReport.reportid);
             }

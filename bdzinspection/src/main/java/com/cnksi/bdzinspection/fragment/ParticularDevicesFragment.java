@@ -39,6 +39,7 @@ import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.utils.QWERKeyBoardUtils;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
+import com.github.mikephil.charting.utils.EntryXIndexComparator;
 
 import org.xutils.db.table.DbModel;
 
@@ -57,10 +58,11 @@ import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
 
 public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBoardUtils.keyWordChangeListener {
 
-
+    public static final String TAG = "ParticularDevicesFragment";
     SpecialMenu specialMenu;
     private ViewHolder rootHolder;
-    private List<MultiItemEntity> data = new ArrayList<>();;
+    private List<MultiItemEntity> data = new ArrayList<>();
+
     private DeviceAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -72,12 +74,13 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        startTime = System.currentTimeMillis();
         isFirstLoad = true;
         rootHolder = new ViewHolder(currentActivity, container, R.layout.common_recycler_view, false);
+        startTime = System.currentTimeMillis();
         initialUI();
         initSpacingGroup();
         lazyLoad();
+        Log.d(TAG, "onCreateView: " + (System.currentTimeMillis() - startTime));
         return rootHolder.getRootView();
     }
 
@@ -169,12 +172,9 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                 arriveCheckHelper.refreshArrived();
             }
         }
-        long endTime = System.currentTimeMillis();
-        Log.d("Tag", "fragment--showTime:---" + (endTime - startTime));
-
     }
 
-    private HashSet<String> copyDeviceIdList = new HashSet<>();// 当前变电站下所有抄录设备
+    private HashSet<String> copyDeviceIdList = new HashSet<>();
     Map<String, List<String>> spaceCopyDeviceMap = new HashMap<>();
 
     private void queryInfo() {
@@ -207,15 +207,16 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
                     }
                 }
             }
-
-            getActivity().runOnUiThread(() -> {
-                if (adapter != null) {
-                    adapter.setCopyDeviceIdList(copyDeviceIdList);
-                    adapter.setDefectMap(defectmap);
-                    adapter.setCopyDeviceMap(copyedMap);
-                    adapter.notifyDataSetChanged();
-                }
-            });
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    if (adapter != null) {
+                        adapter.setCopyDeviceIdList(copyDeviceIdList);
+                        adapter.setDefectMap(defectmap);
+                        adapter.setCopyDeviceMap(copyedMap);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
 
         });
     }
@@ -295,14 +296,16 @@ public class ParticularDevicesFragment extends BaseFragment implements QWERKeyBo
 
 
     private void initSpacingGroup() {
-        if ("second".equals(currentFunctionModel) && spaceGroupMap == null) {
-            List<SpacingGroup> spacingGroups = SpacingGroupService.getInstance().findSpacingGroup(currentBdzId);
-            spaceGroupMap = new LinkedHashMap<>();
-            for (SpacingGroup spacingGroup : spacingGroups) {
-                spaceGroupMap.put(spacingGroup.id, new SpaceGroupItem(spacingGroup));
+        ExecutorManager.executeTaskSerially(() -> {
+            if ("second".equals(currentFunctionModel) && spaceGroupMap == null) {
+                List<SpacingGroup> spacingGroups = SpacingGroupService.getInstance().findSpacingGroup(currentBdzId);
+                spaceGroupMap = new LinkedHashMap<>();
+                for (SpacingGroup spacingGroup : spacingGroups) {
+                    spaceGroupMap.put(spacingGroup.id, new SpaceGroupItem(spacingGroup));
+                }
+                spaceGroupMap.put(null, new SpaceGroupItem(new SpacingGroup("未拆分小室")));
             }
-            spaceGroupMap.put(null, new SpaceGroupItem(new SpacingGroup("未拆分小室")));
-        }
+        });
     }
 
     @Override

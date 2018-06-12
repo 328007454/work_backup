@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,6 +72,7 @@ import static com.cnksi.common.model.vo.SpaceGroupItem.DEVICE_ITEM;
  * @author lyndon
  */
 public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtils.keyWordChangeListener {
+    public static final String TAG = "DeviceListFragment";
     public final static int SORT_SPACING = 0x100;
     public final static int RFID = SORT_SPACING + 1;
     Map<String, List<String>> spaceCopyDeviceMap = new HashMap<>();
@@ -96,9 +98,11 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         isFirstLoad = true;
         rootHolder = new ViewHolder(currentActivity, container, R.layout.common_recycler_view, false);
+        long startTime = System.currentTimeMillis();
         initialUI();
         initSpacingGroup();
         lazyLoad();
+        Log.d(TAG, "onCreateView: " + (System.currentTimeMillis() - startTime));
         return rootHolder.getRootView();
     }
 
@@ -119,18 +123,18 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
                 intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
                 intent.putExtra(Config.CURRENT_FUNCTION_MODEL, currentFunctionModel);
-                DeviceListFragment.this.startActivity(intent);
+                startActivity(intent);
             }
         });
         // 设置间隔长按事件,间隔定位
         adapter.setGroupItemLongClickListener((v, item, position) -> {
             locationSpace = item;
-            DeviceListFragment.this.requestLocation(true);
+            requestLocation(true);
         });
         // 设置设备长按事件,定位
         adapter.setDeviceItemLongClickListener((v, item, position) -> {
             locationDevice = item;
-            DeviceListFragment.this.requestLocation(false);
+            requestLocation(false);
         });
         // 跳转设备详情
         adapter.setDeviceClickListener((v, dbModel, position) -> {
@@ -141,7 +145,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             intent.putExtra(Config.CURRENT_SPACING_ID, dbModel.getString(Spacing.SPID));
             intent.putExtra(Config.CURRENT_SPACING_NAME, dbModel.getString(DeviceService.SPACING_NAME_KEY));
             intent.putExtra(Config.IS_PARTICULAR_INSPECTION, isParticularInspection);
-            DeviceListFragment.this.startActivity(intent);
+            startActivity(intent);
         });
         // 跳转设备抄录
         adapter.setCopyClickListener((v, dbModel, position) -> {
@@ -154,9 +158,9 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             intent.putExtra(Device.DTID, dbModel.getString("dtid"));
             intent.putExtra(Config.TITLE_NAME_KEY, dbModel.getString(DeviceService.DEVICE_NAME_KEY));
             PlaySound.getIntance(currentActivity).play(R.raw.input);
-            DeviceListFragment.this.startActivity(intent);
+            startActivity(intent);
         });
-        adapter.setGroupItemListener((v, data, position) -> DeviceListFragment.this.showCopyWSDDialog(data, position));
+        adapter.setGroupItemListener((v, data, position) -> showCopyWSDDialog(data, position));
         recyclerView = rootHolder.getView(R.id.elv_container);
         final GridLayoutManager manager = new GridLayoutManager(currentActivity, "second".equals(currentFunctionModel) ? 2 : 3);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -199,8 +203,6 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     protected void lazyLoad() {
         if (isPrepared && isVisible && isFirstLoad) {
             searChData("");
-            queryInfo();
-
         }
     }
 
@@ -256,14 +258,16 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     }
 
     private void initSpacingGroup() {
-        if ("second".equals(currentFunctionModel) && spaceGroupMap == null) {
-            List<SpacingGroup> spacingGroups = SpacingGroupService.getInstance().findSpacingGroup(currentBdzId);
-            spaceGroupMap = new LinkedHashMap<>();
-            for (SpacingGroup spacingGroup : spacingGroups) {
-                spaceGroupMap.put(spacingGroup.id, new SpaceGroupItem(spacingGroup));
+        ExecutorManager.executeTaskSerially(() -> {
+            if ("second".equals(currentFunctionModel) && spaceGroupMap == null) {
+                List<SpacingGroup> spacingGroups = SpacingGroupService.getInstance().findSpacingGroup(currentBdzId);
+                spaceGroupMap = new LinkedHashMap<>();
+                for (SpacingGroup spacingGroup : spacingGroups) {
+                    spaceGroupMap.put(spacingGroup.id, new SpaceGroupItem(spacingGroup));
+                }
+                spaceGroupMap.put(null, new SpaceGroupItem(new SpacingGroup("未拆分小室")));
             }
-            spaceGroupMap.put(null, new SpaceGroupItem(new SpacingGroup("未拆分小室")));
-        }
+        });
     }
 
     private void searChData(String keyWord) {
@@ -271,69 +275,76 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         adapter.notifyDataSetChanged();
         adapter.setKeyWord(keyWord);
         adapter.setCurrentInspection(currentInspectionType);
-        if (spacingLastly == null) {
-            spacingLastly = SpacingLastlyService.getInstance().findSpacingLastly(currentAcounts, currentReportId, currentFunctionModel);
-        }
-        getSpaceLastly();
-        // 查询设备及设备所在间隔
-        List<DbModel> deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, currentReportId, "");
-        LinkedHashMap<String, List<DbModel>> spacingDeviceMap = new LinkedHashMap<>();
-        if (null != deviceList && !deviceList.isEmpty()) {
-            for (DbModel dbModel : deviceList) {
-                String spacingId = dbModel.getString("spid");
-                if (!spacingDeviceMap.keySet().contains(spacingId)) {
-                    List<DbModel> treeNodeList = new ArrayList<>();
-                    treeNodeList.add(dbModel);
-                    spacingDeviceMap.put(spacingId, treeNodeList);
-                } else {
-                    spacingDeviceMap.get(spacingId).add(dbModel);
-                }
-                if (!spacingIds.contains(spacingId)) {
-                    spacingIds.add(spacingId);
-                }
-                deviceDbModelMap.put(dbModel.getString(DeviceService.DEVICE_ID_KEY), dbModel);
+        ExecutorManager.executeTaskSerially(() -> {
+
+
+            if (spacingLastly == null) {
+                spacingLastly = SpacingLastlyService.getInstance().findSpacingLastly(currentAcounts, currentReportId, currentFunctionModel);
             }
-            boolean isEmptyKey = TextUtils.isEmpty(keyWord);
-            List<DbModel> sortList = new ArrayList<>(isEmptyKey ? deviceList.size() : 0);
-            for (Map.Entry<String, List<DbModel>> entry : spacingDeviceMap.entrySet()) {
-                SpaceItem parentNode = new SpaceItem(entry.getValue().get(0));
-                parentNode.addAll(entry.getValue());
-                data.add(parentNode);
-                if (isEmptyKey) {
-                    sortList.addAll(entry.getValue());
-                }
-            }
-            if (isEmptyKey) {
-                NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
-            }
-            if ("second".equals(currentFunctionModel)) {
-                DeviceHandleFunctions.buildSpaceTreeData(data, spaceGroupMap);
-                reportSnwsds = ReportSnwsd.getAllCopySNWSD(currentReportId);
-                adapter.setCopySNWSD(reportSnwsds);
-            }
-        }
-        if (!data.isEmpty()) {
-            if (!TextUtils.isEmpty(keyWord)) {
-                adapter.setShowOnly(false);
-                adapter.expandAll();
-            } else {
-                adapter.setShowOnly(true);
-                if (!qwerKeyBoardUtils.isCharMode() && spacingLastly != null) {
-                    int[] index = DeviceHandleFunctions.findSpaceIndex(spacingLastly.spid, data);
-                    if (-1 != index[0]) {
-                        adapter.expand(index[0]);
-                    }
-                    if (-1 != index[1]) {
-                        adapter.expand(index[1]);
-                        recyclerView.scrollToPosition(index[1]);
+            getSpaceLastly();
+            // 查询设备及设备所在间隔
+            List<DbModel> deviceList = DeviceService.getInstance().findAllDevice(currentBdzId, keyWord, currentFunctionModel, currentInspectionType, currentReportId, "");
+            LinkedHashMap<String, List<DbModel>> spacingDeviceMap = new LinkedHashMap<>();
+            if (null != deviceList && !deviceList.isEmpty()) {
+                for (DbModel dbModel : deviceList) {
+                    String spacingId = dbModel.getString("spid");
+                    if (!spacingDeviceMap.keySet().contains(spacingId)) {
+                        List<DbModel> treeNodeList = new ArrayList<>();
+                        treeNodeList.add(dbModel);
+                        spacingDeviceMap.put(spacingId, treeNodeList);
                     } else {
-                        adapter.notifyDataSetChanged();
+                        spacingDeviceMap.get(spacingId).add(dbModel);
                     }
-                } else {
-                    adapter.notifyDataSetChanged();
+                    if (!spacingIds.contains(spacingId)) {
+                        spacingIds.add(spacingId);
+                    }
+                    deviceDbModelMap.put(dbModel.getString(DeviceService.DEVICE_ID_KEY), dbModel);
+                }
+                boolean isEmptyKey = TextUtils.isEmpty(keyWord);
+                List<DbModel> sortList = new ArrayList<>(isEmptyKey ? deviceList.size() : 0);
+                for (Map.Entry<String, List<DbModel>> entry : spacingDeviceMap.entrySet()) {
+                    SpaceItem parentNode = new SpaceItem(entry.getValue().get(0));
+                    parentNode.addAll(entry.getValue());
+                    data.add(parentNode);
+                    if (isEmptyKey) {
+                        sortList.addAll(entry.getValue());
+                    }
+                }
+                if (isEmptyKey) {
+                    NextDeviceUtils.getInstance().put(currentFunctionModel, sortList);
+                }
+                if ("second".equals(currentFunctionModel)) {
+                    DeviceHandleFunctions.buildSpaceTreeData(data, spaceGroupMap);
+                    reportSnwsds = ReportSnwsd.getAllCopySNWSD(currentReportId);
+                    adapter.setCopySNWSD(reportSnwsds);
                 }
             }
-        }
+            if (!data.isEmpty()) {
+                getActivity().runOnUiThread(() -> {
+                    if (!TextUtils.isEmpty(keyWord)) {
+                        adapter.setShowOnly(false);
+                        adapter.expandAll();
+                    } else {
+                        adapter.setShowOnly(true);
+                        if (!qwerKeyBoardUtils.isCharMode() && spacingLastly != null) {
+                            int[] index = DeviceHandleFunctions.findSpaceIndex(spacingLastly.spid, data);
+                            if (-1 != index[0]) {
+                                adapter.expand(index[0]);
+                            }
+                            if (-1 != index[1]) {
+                                adapter.expand(index[1]);
+                                recyclerView.scrollToPosition(index[1]);
+                            } else {
+                                adapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                    queryInfo();
+                });
+            }
+        });
     }
 
     @Override
