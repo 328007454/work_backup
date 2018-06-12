@@ -51,10 +51,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.cnksi.ksynclib.KSync.SYNC_ERROR;
+import static com.cnksi.ksynclib.KSync.SYNC_DOWN_DATA_SUCCESS;
+import static com.cnksi.ksynclib.KSync.SYNC_ERROR_DATA_DOWNLOAD;
+import static com.cnksi.ksynclib.KSync.SYNC_ERROR_DATA_UPLOAD;
 import static com.cnksi.ksynclib.KSync.SYNC_INFO;
 import static com.cnksi.ksynclib.KSync.SYNC_START;
-import static com.cnksi.ksynclib.KSync.SYNC_SUCCESS;
+import static com.cnksi.ksynclib.KSync.SYNC_UP_DATA_SUCCESS;
 
 
 /**
@@ -63,7 +65,7 @@ import static com.cnksi.ksynclib.KSync.SYNC_SUCCESS;
  * @author terry on 2017/10/19
  */
 @SuppressLint("HandlerLeak")
-public class TaskRemindActivity extends BaseActivity implements  OnFragmentEventListener, GrantPermissionListener {
+public class TaskRemindActivity extends BaseActivity implements OnFragmentEventListener, GrantPermissionListener {
 
     public static final int ADD_TASK_REQUEST_CODE = 0x112;
     private static final String SWITCH_MAINTANCE_MODEL = "complex";
@@ -140,7 +142,7 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(), mFragmentList, Arrays.asList(titleArray));
         binding.viewPager.setAdapter(fragmentPagerAdapter);
         binding.tabStrip.setViewPager(binding.viewPager);
-        binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener(){
+        binding.tabStrip.setOnPageChangeListener(new AbstractPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 currentSelectedPosition = position;
@@ -163,9 +165,6 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
             TaskRemindActivity.this.startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
         });
     }
-
-
-
 
 
     @Override
@@ -222,21 +221,21 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
                 break;
             case SYNC_INFO:
                 break;
-            case SYNC_SUCCESS://同步成功后刷新列表界面
+            case SYNC_UP_DATA_SUCCESS:
                 String messageSuccess = (String) msg.obj;
                 Log.d("Tag", messageSuccess);
-                if (messageSuccess.contains("上传完成")) {
-                    KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).downLoad();
-                } else if (messageSuccess.contains("同步完成")) {
-                    ToastUtils.showMessage("数据同步完成");
-                    CustomerDialog.dismissProgress();
-                    for (TaskRemindFragment taskRemindFragment : mFragmentList) {
-                        taskRemindFragment.searchData();
-                    }
-                }
-
+                KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).downLoad();
                 break;
-            case SYNC_ERROR://同步错误
+            case SYNC_DOWN_DATA_SUCCESS:
+                ToastUtils.showMessage("数据同步完成");
+                CustomerDialog.dismissProgress();
+                for (TaskRemindFragment taskRemindFragment : mFragmentList) {
+                    taskRemindFragment.searchData();
+                }
+                break;
+            case SYNC_ERROR_DATA_DOWNLOAD:
+            case SYNC_ERROR_DATA_UPLOAD:
+                //同步错误
                 String messageError = (String) msg.obj;
                 ToastUtils.showMessage(messageError);
                 CustomerDialog.dismissProgress();
@@ -282,7 +281,7 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
 
     @Override
     public void startTask(Task mTask) {
-        Bdz bdz = null;
+        Bdz bdz;
         try {
             bdz = BdzService.getInstance().findById(mTask.bdzid);
             // 创建变电站下目录
@@ -343,7 +342,7 @@ public class TaskRemindActivity extends BaseActivity implements  OnFragmentEvent
                 generateReport(mTask);
                 if (mTask.inspection.contains(InspectionType.switchover.name()) || mTask.inspection.contains(InspectionType.maintenance.name()) || mTask.inspection.equalsIgnoreCase(InspectionType.battery.name())) {
 //                    if (SystemConfig.NONE.equalsIgnoreCase(SystemConfig.getSwitchMenuConfirmStyle())) {
-                        intent.setClass(mActivity, New1RegularSwitchActivity1.class);
+                    intent.setClass(mActivity, New1RegularSwitchActivity1.class);
 //                    } else {
 //                        intent.setClass(mActivity, New1RegularSwitchActivity2.class);
 //                    }

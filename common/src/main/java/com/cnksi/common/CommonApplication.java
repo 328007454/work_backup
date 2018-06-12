@@ -15,19 +15,22 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.utils.crash.CrashReportUploadHandler;
+import com.cnksi.ksynclib.IKSync;
+import com.cnksi.ksynclib.KSync;
 import com.squareup.leakcanary.LeakCanary;
 
 import org.xutils.DbManager;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @version 1.0
  * @author luoxy
+ * @version 1.0
  * @date 16/4/20
  */
-public class CommonApplication extends CoreApplication {
+public class CommonApplication extends CoreApplication  implements IKSync {
     //数据库管理者
     private static CommonApplication mInstance = null;
 
@@ -43,16 +46,21 @@ public class CommonApplication extends CoreApplication {
      * @return
      */
     DbManager.DaoConfig config;
+    int dbVersion = 1;
 
     @Override
     public DbManager.DaoConfig getDaoConfig() {
         if (config == null) {
-            config = new DbManager.DaoConfig(this).setDbDir(new File(CommonApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/")).setDbName(Config.ENCRYPT_DATABASE_NAME).setDbVersion(1)
+            config = new DbManager.DaoConfig(this)
+                    .setDbDir(new File(CommonApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/"))
+                    .setDbName(Config.ENCRYPT_DATABASE_NAME)
+                    .setDbVersion(1)
                     .setDbOpenListener(db -> {
                     })
                     .setUseEncrypt(true)
                     .setKey("com.cnksi")
                     .setDbUpgradeListener((db, oldVersion, newVersion) -> {
+                        dbVersion = oldVersion;
                     }).setAllowTransaction(true);
         }
         return config;
@@ -112,6 +120,14 @@ public class CommonApplication extends CoreApplication {
         Config.SYNC_URL = PreferencesUtils.get(Config.KEY_SYNC_URL, Config.SYNC_URL);
         Config.SYNC_APP_ID = PreferencesUtils.get(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
     }
+    Map<String, KSync> map;
 
-
+    @Override
+    public Map<String, KSync> getKSyncMap() {
+        if (map == null) {
+            map = new HashMap<>();
+            map.put(Config.SYNC_APP_ID, KSync.create(KSyncConfig.getInstance().getKNConfig(this)));
+        }
+        return map;
+    }
 }

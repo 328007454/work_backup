@@ -8,8 +8,8 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 
 /**
- * @version 1.0
  * @author luoxy
+ * @version 1.0
  * @date 16/4/20
  */
 public class CustomApplication extends CommonApplication {
@@ -39,4 +39,6 @@ public class CustomApplication extends CommonApplication {
             });
         }
     }
+
+
 }

@@ -35,8 +35,9 @@ public class KSyncConfig {
         KNConfig config = new KNConfig(context, Config.DATABASE_NAME, Config.DATABASE_FOLDER, Config.SYNC_APP_ID,
                 Config.SYNC_URL, deviceId, CommonApplication.getInstance().getDbManager().getDatabase(), Config.BDZ_INSPECTION_FOLDER);
         config.configDebug(BuildConfig.DEBUG);
-        config.configDynicParam("dept_id", PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, ""));
-        ksync = new KSync(config, handler);
+        config.configDynicParam("dept_id", PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
+        ksync = KSync.create(config);
+        ksync.configHandler(handler);
         return this;
     }
 
@@ -46,7 +47,7 @@ public class KSyncConfig {
     }
 
     public void downLoad() {
-        executorService.execute(() -> ksync.download("report", "task", "copy_item", "copy_result", "defect_record", "placed"));
+        executorService.execute(() -> ksync.download(new String[]{"report", "task", "copy_item", "copy_result", "defect_record", "placed"}));
     }
 
 }

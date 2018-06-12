@@ -1,3 +1,4 @@
+/*
 package com.cnksi.sjjc.sync;
 
 import android.text.TextUtils;
@@ -36,13 +37,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+*/
 /**
  * @version 1.0
  * @author wastrel
  * @date 2017/12/14 16:26
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
- */
+ *//*
+
 public class HttpUtilsProxy extends KOkHttpUtil {
     OkHttpClient clientProxy;
     private KNConfig knConfig;
@@ -100,12 +103,14 @@ public class HttpUtilsProxy extends KOkHttpUtil {
         return responseContent;
     }
 
-    /**
+    */
+/**
      * 设定请求参数
      * * @param params
      *
      * @return
-     */
+     *//*
+
     private void setUrlParamsProxy(StringBuilder urlBuilder, KMap params) {
         if (params == null) {
             params = new KMap();
@@ -213,13 +218,15 @@ public class HttpUtilsProxy extends KOkHttpUtil {
     }
 
 
-    /**
+    */
+/**
      * 添加password
      *
      * @param password
      * @return
      * @throws GeneralSecurityException
-     */
+     *//*
+
     private KeyStore newEmptyKeyStoreProxy(char[] password) throws GeneralSecurityException {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType()); // 这里添加自定义的密码，默认
@@ -231,3 +238,4 @@ public class HttpUtilsProxy extends KOkHttpUtil {
         }
     }
 }
+*/

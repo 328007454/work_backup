@@ -36,7 +36,7 @@ import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ActivityLoginBinding;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
-import com.cnksi.sjjc.sync.KSyncConfig;
+import com.cnksi.common.KSyncConfig;
 import com.cnksi.sjjc.util.AESUtil;
 import com.cnksi.sjjc.util.AccountUtil;
 import com.cnksi.sjjc.util.ActivityUtil;
