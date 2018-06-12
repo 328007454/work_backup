@@ -11,14 +11,12 @@ import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.AdapterClickListener;
-import com.cnksi.bdzinspection.adapter.AddPersonAdapter;
 import com.cnksi.bdzinspection.adapter.SignNameAdapter;
 import com.cnksi.bdzinspection.adapter.defectcontrol.HistoryDefectAdapter;
 import com.cnksi.bdzinspection.daoservice.BatteryGroupService;
 import com.cnksi.bdzinspection.daoservice.StandardSwitchOverService;
 import com.cnksi.bdzinspection.databinding.XsActivityGenerateReportBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.bdzinspection.databinding.XsDialogAddPersonBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSignViewBinding;
 import com.cnksi.bdzinspection.model.BatteryGroup;
 import com.cnksi.bdzinspection.utils.PushNewTaskUtil;
@@ -41,7 +39,6 @@ import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
-import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
@@ -78,7 +75,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     public final int SIGNCODEGzr = 0x300;
     public final int SIGNCODEFzr = 0x301;
 
-    List<ReportSignname> mDataCzr = new ArrayList<ReportSignname>();
+    List<ReportSignname> mDataCzr = new ArrayList<>();
     List<ReportSignname> mDataFzr = new ArrayList<ReportSignname>();
     SignNameAdapter adapterGzr;
     SignNameAdapter adapterFzr;
@@ -86,16 +83,12 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     String currentHeadPath;
     ReportSignname currentSign;
     Report currentReport;
-    Dialog mAddPersonDialog;
-    //    DialogViewHolder dialogViewHolder;
-    AddPersonAdapter dialogAdpeter;
     List<DbModel> persons;
     Dialog mSignDetailDialog;
     String inspectionMark;
     String inspectionResult;
     String inspectionContent;
     boolean xudianchi;
-    XsDialogAddPersonBinding mPersonBinding;
     List<ReportSignname> listSign = new ArrayList<>();
     /**
      * 本次巡视发现缺陷总数
@@ -241,7 +234,6 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             }
 
             try {
-//                    DbModel model = XunshiApplication.getDbUtils().findDbModelFirst(new SqlInfo("SELECT inspection_content FROM 'lookup' where k=?;", currentInspectionType));
                 String sql = "SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;";
                 SqlInfo sqlInfo = new SqlInfo(sql);
                 sqlInfo.addBindArg(new KeyValue("", currentInspectionType));
@@ -331,12 +323,12 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     private void initOnClick() {
         binding.btnAddPerson.setOnClickListener(view -> {
             clickCzr = true;
-            GenerateReportActivity.this.showAddPersonDialog(mDataCzr);
+            showAddPersonDialog();
         });
 
         binding.btnAddPerson1.setOnClickListener(view -> {
             clickCzr = false;
-            GenerateReportActivity.this.showAddPersonDialog(mDataFzr);
+            showAddPersonDialog();
         });
 
         binding.llEliminateDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
@@ -496,9 +488,8 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
     PeopleDialog peopleDialog;
 
-    public void showAddPersonDialog(final List<ReportSignname> list) {
+    public void showAddPersonDialog() {
         peopleDialog = new PeopleDialog.Builder().setDeptId(currentDepartmentId).setItemClickListener((v, data, position) -> {
-            ToastUtils.showMessage(data.getString(Users.USERNAME));
             peopleDialog.dismiss();
             getClickPerson(v, data, position);
         }).loadData().getPeopleDialog();
@@ -518,7 +509,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             }
             czrModelsOrigin.clear();
             czrModelsOrigin.addAll(czrModels);
+            listSign = mDataCzr;
         } else if (!clickCzr) {
+            listSign = mDataFzr;
             if (fzrModels.contains(model.getString("account"))) {
                 ToastUtils.showMessage("已经添加了该负责人员");
                 return;
@@ -527,7 +520,6 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         }
 
         listSign.add(new ReportSignname(currentReportId, listSign == mDataCzr ? Role.worker.name() : Role.leader.name(), model));
-        mAddPersonDialog.dismiss();
         if (listSign == mDataCzr) {
             adapterGzr.notifyDataSetChanged();
         } else {

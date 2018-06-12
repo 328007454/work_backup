@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -51,7 +52,7 @@ import static com.cnksi.ksynclib.KSync.SYNC_SUCCESS;
  * Created by han on 2017/2/27.
  */
 
-public class ParticularDeviceListActivity extends BaseActivity implements  ShakeListener.OnShakeListener {
+public class ParticularDeviceListActivity extends BaseActivity implements ShakeListener.OnShakeListener {
 
     Task currentTask;
     private List<Lookup> lookups = null;
@@ -65,8 +66,11 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
 
     private XsActivityParticularInspectionBinding binding;
 
+    long startTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        startTime = System.currentTimeMillis();
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(mActivity, R.layout.xs_activity_particular_inspection);
         getIntentValue();
@@ -112,7 +116,7 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
         setPagerTabStripValue(binding.tabStrip);
         binding.tabStrip.setTabPaddingLeftRight(37);
         binding.tabStrip.setShouldExpand(false);
-        AbstractPageChangeListener pageChangeListener=new AbstractPageChangeListener(){
+        AbstractPageChangeListener pageChangeListener = new AbstractPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
@@ -152,8 +156,6 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
         }).setKeep(true);
         locationHelper.start();
     }
-
-
 
 
     private void initOnClick() {
@@ -243,6 +245,8 @@ public class ParticularDeviceListActivity extends BaseActivity implements  Shake
     protected void onResume() {
         super.onResume();
         locationHelper.resume();
+        long endTime = System.currentTimeMillis();
+        Log.d("Tag", "showTime:---" + (endTime - startTime));
     }
 
     @Override
