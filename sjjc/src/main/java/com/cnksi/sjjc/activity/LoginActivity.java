@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
+import com.cnksi.common.KSyncConfig;
+import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.DateCalcUtils;
@@ -31,12 +33,12 @@ import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.ksynclib.KSync;
 import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ActivityLoginBinding;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
-import com.cnksi.common.KSyncConfig;
 import com.cnksi.sjjc.util.AESUtil;
 import com.cnksi.sjjc.util.AccountUtil;
 import com.cnksi.sjjc.util.ActivityUtil;
@@ -48,12 +50,14 @@ import org.xutils.common.util.DatabaseUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.cnksi.common.Config.LOAD_DATA;
 
 
 /**
  * 登录界面
+ *
  * @author Wastrel
  */
 public class LoginActivity extends BaseSjjcActivity implements GrantPermissionListener {
@@ -234,7 +238,13 @@ public class LoginActivity extends BaseSjjcActivity implements GrantPermissionLi
             Config.SYNC_URL = url;
             String appId = LoginActivity.this.getText(binding.etAppId);
             if (!TextUtils.isEmpty(appId)) {
+                //更新MAP的配置
+                Map<String, KSync> map = CommonApplication.getInstance().getKSyncMap();
+                KSync kSync = map.remove(Config.SYNC_APP_ID);
                 Config.SYNC_APP_ID = appId;
+                KSyncConfig.getInstance().update(appId, url);
+                map.put(Config.SYNC_APP_ID, kSync);
+
             }
             PreferencesUtils.put(Config.KEY_SYNC_URL, Config.SYNC_URL);
             PreferencesUtils.put(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
@@ -460,7 +470,7 @@ public class LoginActivity extends BaseSjjcActivity implements GrantPermissionLi
         }
         PreferencesUtils.put(Config.CURRENT_LOGIN_USER, username);
         PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
-        PreferencesUtils.put(Config.OTHER_DEPT_USER,mCurrentUserOne.type);
+        PreferencesUtils.put(Config.OTHER_DEPT_USER, mCurrentUserOne.type);
         PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, mCurrentUserOne.deptName);
         //保存登录班组和账号
         Intent intent = new Intent(mActivity, HomeActivity.class);
@@ -471,7 +481,7 @@ public class LoginActivity extends BaseSjjcActivity implements GrantPermissionLi
         if ("-1".equals(dept_id)) {
             ToastUtils.showMessage("当前登录帐号无任何班组信息！");
         } else {
-//            ExecutorManager.executeTaskSerially(() -> DepartmentService.getInstance().deleteOtherDataByDept(dept_id));
+            ExecutorManager.executeTaskSerially(() -> DepartmentService.getInstance().deleteOtherDataByDept(dept_id));
         }
     }
 
@@ -507,6 +517,7 @@ public class LoginActivity extends BaseSjjcActivity implements GrantPermissionLi
         inUI();
         initOnClick();
     }
+
     /**
      * 备份数据库
      */

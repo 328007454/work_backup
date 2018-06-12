@@ -5,11 +5,9 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
@@ -50,13 +48,6 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.cnksi.ksynclib.KSync.SYNC_DOWN_DATA_SUCCESS;
-import static com.cnksi.ksynclib.KSync.SYNC_ERROR_DATA_DOWNLOAD;
-import static com.cnksi.ksynclib.KSync.SYNC_ERROR_DATA_UPLOAD;
-import static com.cnksi.ksynclib.KSync.SYNC_INFO;
-import static com.cnksi.ksynclib.KSync.SYNC_START;
-import static com.cnksi.ksynclib.KSync.SYNC_UP_DATA_SUCCESS;
 
 
 /**
@@ -157,7 +148,38 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
         binding.includeTitle.ibtnCancel.setOnClickListener(v -> TaskRemindActivity.this.onBackPressed());
         binding.includeTitle.ibtnExit.setOnClickListener(view -> {
             CustomerDialog.showProgress(mActivity, "正在同步任务...", true, false);
-            KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
+            final KSyncConfig ksync = KSyncConfig.getInstance();
+            ksync.getKNConfig(new KSyncConfig.SyncListener() {
+
+                @Override
+                public void start() {
+
+                }
+
+                @Override
+                public void onSuccess(KSyncConfig.Type type) {
+                    if (type == KSyncConfig.Type.upload) {
+                        ksync.downLoad();
+                    } else {
+                        CustomerDialog.dismissProgress();
+                        ToastUtils.showMessage("同步完成！");
+                        for (TaskRemindFragment taskRemindFragment : mFragmentList) {
+                            taskRemindFragment.searchData();
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(KSyncConfig.Type errorType, String errorMsg) {
+                    if (errorType == KSyncConfig.Type.network) {
+                        ToastUtils.showMessage("请检查网络，在主页手动同步");
+                    } else {
+                        ToastUtils.showMessage("任务同步失败！错误提示：" + errorMsg);
+                    }
+                    CustomerDialog.dismissProgress();
+                }
+            });
+            ksync.upload();
         });
         binding.addTask.setOnClickListener(view -> {
             Intent intent = new Intent(mActivity, AddTaskActivity.class);
@@ -209,45 +231,7 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
         }
     }
 
-    @Override
-    protected void onRefresh(Message msg) {
-        super.onRefresh(msg);
-        switch (msg.what) {
-            case SYNC_START://开始同步
-                String messageStart = (String) msg.obj;
-                if (messageStart.contains("开始上传数据")) {
-                    ToastUtils.showMessage("开始同步数据");
-                }
-                break;
-            case SYNC_INFO:
-                break;
-            case SYNC_UP_DATA_SUCCESS:
-                String messageSuccess = (String) msg.obj;
-                Log.d("Tag", messageSuccess);
-                KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).downLoad();
-                break;
-            case SYNC_DOWN_DATA_SUCCESS:
-                ToastUtils.showMessage("数据同步完成");
-                CustomerDialog.dismissProgress();
-                for (TaskRemindFragment taskRemindFragment : mFragmentList) {
-                    taskRemindFragment.searchData();
-                }
-                break;
-            case SYNC_ERROR_DATA_DOWNLOAD:
-            case SYNC_ERROR_DATA_UPLOAD:
-                //同步错误
-                String messageError = (String) msg.obj;
-                ToastUtils.showMessage(messageError);
-                CustomerDialog.dismissProgress();
-                for (TaskRemindFragment taskRemindFragment : mFragmentList) {
-                    taskRemindFragment.searchData();
-                }
-                break;
-            default:
-                break;
-        }
 
-    }
 
     @Override
     public void updateTaskStatus() {

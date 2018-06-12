@@ -81,11 +81,14 @@ public class KSyncConfig {
 
     public KNConfig getKNConfig(Context context) {
         initFolder();
-        String deviceId = DeviceUtils.getSerialNumber(context);
-        String innerDateBaseFolder = CommonApplication.getAppContext().getDatabasePath(Config.ENCRYPT_DATABASE_NAME).getParent();
-        config = new KNConfig(context, Config.ENCRYPT_DATABASE_NAME, innerDateBaseFolder, Config.SYNC_APP_ID,
-                Config.SYNC_URL, deviceId, CommonApplication.getInstance().getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
-        config.configDebug(BuildConfig.DEBUG);
+        if (config == null) {
+            String deviceId = DeviceUtils.getSerialNumber(context);
+            String innerDateBaseFolder = CommonApplication.getAppContext().getDatabasePath(Config.ENCRYPT_DATABASE_NAME).getParent();
+            config = new KNConfig(context, Config.ENCRYPT_DATABASE_NAME, innerDateBaseFolder, Config.SYNC_APP_ID,
+                    Config.SYNC_URL, deviceId, CommonApplication.getInstance().getDbManager().getDatabase(), Config.SYNC_BASE_FOLDER);
+            config.configDebug(BuildConfig.DEBUG);
+        }
+
         config.configAppid(Config.SYNC_APP_ID);
         config.configUrl(Config.SYNC_URL);
         config.configDownFolder(getFolderString(downFolder));
@@ -100,6 +103,12 @@ public class KSyncConfig {
             }
         });
         return config;
+    }
+
+
+
+    public void update(String appid, String url) {
+        getKNConfig(CommonApplication.getAppContext()).configUrl(url).configAppid(appid);
     }
 
     public boolean isHaveDept() {

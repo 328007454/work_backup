@@ -171,7 +171,31 @@ public class ParticularDeviceListActivity extends BaseActivity implements ShakeL
             if (currentTask.isMember()) {
                 DialogUtils.showSureTipsDialog(mActivity, null, "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", v -> {
                     CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
-                    KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
+                    KSyncConfig.getInstance().getKNConfig(new KSyncConfig.SyncListener() {
+
+                        @Override
+                        public void start() {
+                            ToastUtils.showMessage("开始上传数据！");
+                        }
+
+                        @Override
+                        public void onSuccess(KSyncConfig.Type errorType) {
+                            ToastUtils.showMessage("数据上传成功");
+                            CustomerDialog.dismissProgress();
+                            ExitThisAndGoLauncher();
+                        }
+
+                        @Override
+                        public void onError(KSyncConfig.Type errorType, String errorMsg) {
+                            if (errorType == KSyncConfig.Type.network) {
+                                ToastUtils.showMessage("请检查网络，在主页手动同步");
+                            } else {
+                                ToastUtils.showMessage("上传失败，请在主页手动同步！错误提示：" + errorMsg);
+                            }
+                            CustomerDialog.dismissProgress();
+                            ExitThisAndGoLauncher();
+                        }
+                    }).upload();
                 });
             } else {
                 Intent intent = new Intent(mActivity, GenerateReportActivity.class);
@@ -251,32 +275,6 @@ public class ParticularDeviceListActivity extends BaseActivity implements ShakeL
         Log.d("Tag", "showTime:---" + (endTime - startTime));
     }
 
-    @Override
-    protected void onRefresh(Message msg) {
-        switch (msg.what) {
-            case SYNC_START:
-                String messageStart = (String) msg.obj;
-                ToastUtils.showMessage(messageStart);
-                break;
-            case SYNC_INFO:
-                break;
-            case SYNC_DOWN_DATA_SUCCESS:
-            case SYNC_UP_DATA_SUCCESS:
-                String messageSuccess = (String) msg.obj;
-                ToastUtils.showMessage(messageSuccess);
-                CustomerDialog.dismissProgress();
-                ExitThisAndGoLauncher();
-                break;
-            case SYNC_ERROR_DATA_DOWNLOAD:
-            case SYNC_ERROR_DATA_UPLOAD:
-                ToastUtils.showMessage("请检查网络，在主页手动同步");
-                CustomerDialog.dismissProgress();
-                ExitThisAndGoLauncher();
-                break;
-            default:
-                break;
-        }
-    }
 
     @Override
     public void onBackPressed() {

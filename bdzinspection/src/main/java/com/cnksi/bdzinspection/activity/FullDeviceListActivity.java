@@ -246,7 +246,32 @@ public class FullDeviceListActivity extends BaseActivity implements OnShakeListe
         if (currentTask.isMember()) {
             DialogUtils.showSureTipsDialog(mActivity, null, tip + "\n" + "作为分组巡视成员,点击确认后会同步本次巡视任务", "确认并同步", "取消", v -> {
                 CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
-                KSyncConfig.getInstance().getKNConfig(mActivity, mHandler).upload();
+                CustomerDialog.showProgress(mActivity, "正在上传任务", true, false);
+                KSyncConfig.getInstance().getKNConfig(new KSyncConfig.SyncListener() {
+
+                    @Override
+                    public void start() {
+                        ToastUtils.showMessage("开始上传数据！");
+                    }
+
+                    @Override
+                    public void onSuccess(KSyncConfig.Type errorType) {
+                        ToastUtils.showMessage("数据上传成功");
+                        CustomerDialog.dismissProgress();
+                        ExitThisAndGoLauncher();
+                    }
+
+                    @Override
+                    public void onError(KSyncConfig.Type errorType, String errorMsg) {
+                        if (errorType == KSyncConfig.Type.network) {
+                            ToastUtils.showMessage("请检查网络，在主页手动同步");
+                        } else {
+                            ToastUtils.showMessage("上传失败，请在主页手动同步！错误提示：" + errorMsg);
+                        }
+                        CustomerDialog.dismissProgress();
+                        ExitThisAndGoLauncher();
+                    }
+                }).upload();
             });
         } else {
             if (isRoutineNotCopy()) {
