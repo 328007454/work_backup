@@ -1,6 +1,7 @@
 package com.cnksi.sjjc.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
@@ -8,11 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-
+import com.cnksi.bdzinspection.activity.maintenance.SafetyToolsRemindActivity;
+import com.cnksi.common.Config;
 import com.cnksi.core.utils.DateUtils;
+import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.ItemHomeSafetyToolBinding;
-import com.cnksi.sjjc.util.ActivityUtil;
 
 import org.xutils.db.table.DbModel;
 
@@ -31,7 +33,7 @@ public class HomeSafetyToolAdapter extends BaseLinearBindingAdapter<ItemHomeSafe
     public HomeSafetyToolAdapter(final Activity context, List<DbModel> data, final LinearLayout container) {
         super(context, data, container, R.layout.item_home_safety_tool);
         lookMore = LayoutInflater.from(context).inflate(R.layout.item_look_more, null, false);
-        lookMore.setOnClickListener(v -> ActivityUtil.startSafetyRemindActivity(context));
+        lookMore.setOnClickListener(v -> startSafetyRemindActivity(context));
     }
 
     @Override
@@ -71,5 +73,15 @@ public class HomeSafetyToolAdapter extends BaseLinearBindingAdapter<ItemHomeSafe
         if (getCount() > 0) {
             container.addView(lookMore);
         }
+    }
+
+    public static void startSafetyRemindActivity(Activity activity) {
+        Intent intent = new Intent();
+//        intent.setComponent(new ComponentName("com.cnksi.bdzinspection", "com.cnksi.safetool.activity.SafetyToolsRemindActivity"));
+        intent.setClass(activity, SafetyToolsRemindActivity.class);
+        intent.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get( Config.CURRENT_LOGIN_USER, ""));
+        intent.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get( Config.CURRENT_LOGIN_ACCOUNT, ""));
+        intent.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get( Config.CURRENT_DEPARTMENT_ID, ""));
+        activity.startActivity(intent);
     }
 }

@@ -24,12 +24,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
-        android:name=".CustomApplication"
-        android:allowBackup="false"
-        android:icon="@drawable/ic_app"
-        android:label="@string/app_bdyw"
-        android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup,android:label">
+     >
 
         <meta-data
             android:name="design_width"
@@ -38,31 +33,18 @@
             android:name="design_height"
             android:value="1920"/>
 
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="qpXBSFGkHytABR7n2Gz2jjOl7e3omC7A"/>
+
+
 
         <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/app_bdyw"
-            android:screenOrientation="portrait"
-            android:theme="@style/LoginActivityTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activity.NewLauncherActivity"
+            android:name="com.cnksi.login.activity.NewLauncherActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- 首页-->
         <activity
-            android:name=".activity.HomeActivity"
+            android:name="com.cnksi.login.activity.HomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"

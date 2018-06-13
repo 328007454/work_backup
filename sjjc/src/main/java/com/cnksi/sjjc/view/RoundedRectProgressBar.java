@@ -34,17 +34,14 @@ public class RoundedRectProgressBar extends View {
         int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
-            switch (attr) {
-                case R.styleable.RoundedRectProgressBar_backColor:
-                    backColor = a.getColor(attr, getResources().getColor(R.color.progress_backgroud));
-                    break;
-                case R.styleable.RoundedRectProgressBar_barColor:
-                    barColor = a.getColor(attr, Color.GREEN);
-                    break;
-                case R.styleable.RoundedRectProgressBar_textColor:
-                    textColor = a.getColor(attr, Color.WHITE);
-                    break;
+            if (attr == R.styleable.RoundedRectProgressBar_backColor) {
+                backColor = a.getColor(attr, getResources().getColor(R.color.progress_backgroud));
 
+            } else if (attr == R.styleable.RoundedRectProgressBar_barColor) {
+                barColor = a.getColor(attr, Color.GREEN);
+
+            } else if (attr == R.styleable.RoundedRectProgressBar_textColor) {
+                textColor = a.getColor(attr, Color.WHITE);
             }
 
         }

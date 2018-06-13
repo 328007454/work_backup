@@ -1,0 +1,164 @@
+apply plugin: "com.android.application"
+apply plugin: "org.sonarqube"
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+def uuid() {
+    return "---" + UUID.randomUUID().toString()
+}
+
+def branch() {
+    try {
+        Process process = Runtime.getRuntime().exec("git status")
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()))
+        String line
+        String matchBranch = "On branch "
+        String matchTag = "HEAD detached at "
+        while ((line = bufferedReader.readLine()) != null) {
+            int index = line.indexOf(matchBranch)
+            if (index >= 0) index += matchBranch.length()
+            else if (index < 0) {
+                index = line.indexOf(matchTag)
+                if (index >= 0) index += matchTag.length()
+            }
+            if (index >= 0) {
+                StringBuilder sb = new StringBuilder()
+                for (int i = index; i < line.length(); i++) {
+                    char c = line.charAt(i)
+                    if (c == ' ')
+                        if (sb.length == 0) continue
+                        else {
+                            return sb.toString()
+                        }
+                    sb.append(c)
+                }
+                return sb.toString()
+            }
+        }
+    } catch (Exception e) {
+        return "unknown"
+    }
+}
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        applicationId "com.cnksi.sjjc"
+        minSdkVersion 21
+        targetSdkVersion 23
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
+        vectorDrawables.useSupportLibrary = true
+        buildConfigField 'boolean', "HAS_WEB_ASSETS", HAS_WEB_ASSETS
+        ndk {
+            abiFilters 'armeabi'
+        }
+        multiDexEnabled true
+    }
+    dataBinding {
+        enabled true
+    }
+    signingConfigs {
+        release {
+            keyAlias "四川金信石技术有限公司"
+            keyPassword "kingston"
+            storeFile file("kingston.keystore")
+            storePassword "kingston"
+        }
+    }
+    // 移除lint检查的error
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            shrinkResources true//需要同minifyEnabled 共同使用
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                //修改apk输出路径
+                // variant.getPackageApplication().outputDirectory = new File("${project.rootDir}/out/")
+                variant.outputs.all { output ->
+                    if (variant.buildType.name == "release") {
+                        def fileName = "sjjc-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}-release.apk"
+                        outputFileName = fileName
+                    } else {
+                        def fileName = "sjjc-${defaultConfig.versionCode}-${defaultConfig.versionName}-debug.apk"
+                        outputFileName = fileName
+                    }
+                }
+            }
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+//需要编译的源码
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            java.srcDirs = ['src/main/java']
+            aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
+            res.srcDirs = ['src/main/res', 'src/main/res-gztz']
+            if ("ture" == HAS_WEB_ASSETS)
+                assets.srcDirs = ['src/main/assets', 'src/main/assets-web']
+            else assets.srcDirs = ['src/main/assets']
+        }
+    }
+//打开泛型和过时API编译报警�?相关知识 http://blog.csdn.net/lzhw1985/article/details/3870391
+    tasks.withType(JavaCompile) {
+        //-Xlint:none 关闭所有警�?
+//        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        options.compilerArgs << "-Xlint:none"
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+
+}
+
+repositories { flatDir { dirs 'libs' } }
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation "com.android.support:cardview-v7:${appcompat_v7_version}"
+    compile project(":sjjc")
+    compile project(':common')
+    compile project(':bdzinspection')
+    compile project(':defect')
+    if (WorkTicketLibrary.toBoolean()) {
+        compile project(path: ':workticket')
+    }
+    compile "com.scwang.smartrefresh:SmartRefreshLayout:$SmartRefreshLayout_version"
+    compile "com.android.support:multidex:$multidex_version"
+    configurations.all {
+        resolutionStrategy {
+            force "com.android.support:support-v4:$support_v4_version"
+            force "com.android.support:appcompat-v7:$appcompat_v7_version"
+        }
+    }
+    implementation "com.prolificinteractive:material-calendarview:$material_calendarview"
+
+
+    implementation "com.android.support:design:$design_version"
+}

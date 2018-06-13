@@ -99,15 +99,14 @@ public class NewIndoorHumitureRecordActivity extends BaseSjjcActivity {
             case LOAD_DATA:
                 indoorWeatherAdapter = new IndoorWeathearAdapter(mActivity, mReportList, binding.llContainer, R.layout.adapter_indoor_item);
                 indoorWeatherAdapter.setImgClickListener((v, o, position) -> {
-                    switch (v.getId()) {
-                        case add_indoor_weather:
-                            mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
-                            break;
-                        case R.id.delete_indoor_weather:
-                            mReportList.remove(position);
-                            break;
-                        default:
-                            break;
+                    int i = v.getId();
+                    if (i == add_indoor_weather) {
+                        mReportList.add(new ReportSnwsd(currentReportId, currentBdzId, currentBdzName));
+
+                    } else if (i == R.id.delete_indoor_weather) {
+                        mReportList.remove(position);
+
+                    } else {
                     }
                     indoorWeatherAdapter.setList(mReportList);
 

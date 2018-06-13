@@ -9,9 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cnksi.common.utils.AnimationUtils;
-import com.cnksi.core.common.ScreenManager;
-import com.cnksi.sjjc.R;
 import com.cnksi.common.utils.PlaySound;
+import com.cnksi.sjjc.R;
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**
@@ -61,11 +60,11 @@ public abstract class BaseReportActivity extends BaseSjjcActivity {
         mBtnBack = findViewById(R.id.btn_back);
         mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionTypeName));
         mBtnBack.setOnClickListener(v -> {
-            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+//            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
             BaseReportActivity.this.onBackPressed();
         });
         mBtnRight.setOnClickListener(v -> {
-            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+//            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
             BaseReportActivity.this.onBackPressed();
         });
     }
@@ -99,7 +98,7 @@ public abstract class BaseReportActivity extends BaseSjjcActivity {
 
     @Override
     public void onBackPressed() {
-        ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+//        ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
         super.onBackPressed();
     }
 
@@ -107,7 +106,7 @@ public abstract class BaseReportActivity extends BaseSjjcActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+//                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
                 break;
             default:
                 break;

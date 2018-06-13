@@ -56,27 +56,26 @@ public class PreventAnimalSecondActivity extends BaseSjjcActivity {
     private RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
-            switch (radioGroup.getId()) {
-                case R.id.radio_switch:
-                    preventionRecord.switchStatus = (i == R.id.switch_yes) ? 0 : 1;
-                    break;
-                case R.id.radio_indoor:
-                    preventionRecord.inroomStatus = (i == R.id.indoor_yes) ? 0 : 1;
-                    break;
-                case R.id.radio_outdoor:
-                    preventionRecord.outroomStatus = (i == R.id.outdoor_yes) ? 0 : 1;
-                    break;
-                case R.id.radio_window:
-                    preventionRecord.doorWindowStatus = (i == R.id.window_yes) ? 0 : 1;
-                    break;
-                case R.id.radio_ratsbane:
-                    preventionRecord.ratsbaneStatus = (i == R.id.ratsbane_yes) ? 0 : 1;
-                    break;
-                case R.id.radio_mousetrap:
-                    preventionRecord.mousetrapStatus = (i == R.id.mousetrap_yes) ? 0 : 1;
-                    break;
-                    default:
-                        break;
+            int i1 = radioGroup.getId();
+            if (i1 == R.id.radio_switch) {
+                preventionRecord.switchStatus = (i == R.id.switch_yes) ? 0 : 1;
+
+            } else if (i1 == R.id.radio_indoor) {
+                preventionRecord.inroomStatus = (i == R.id.indoor_yes) ? 0 : 1;
+
+            } else if (i1 == R.id.radio_outdoor) {
+                preventionRecord.outroomStatus = (i == R.id.outdoor_yes) ? 0 : 1;
+
+            } else if (i1 == R.id.radio_window) {
+                preventionRecord.doorWindowStatus = (i == R.id.window_yes) ? 0 : 1;
+
+            } else if (i1 == R.id.radio_ratsbane) {
+                preventionRecord.ratsbaneStatus = (i == R.id.ratsbane_yes) ? 0 : 1;
+
+            } else if (i1 == R.id.radio_mousetrap) {
+                preventionRecord.mousetrapStatus = (i == R.id.mousetrap_yes) ? 0 : 1;
+
+            } else {
             }
         }
     };

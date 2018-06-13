@@ -21,13 +21,11 @@ import com.cnksi.common.model.Report;
 import com.cnksi.common.model.TaskExtend;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
-import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.activity.BaseReportActivity;
-import com.cnksi.sjjc.activity.HomeActivity;
 import com.cnksi.sjjc.adapter.BatteryReportImageAdapter;
 import com.cnksi.sjjc.bean.BatteryRecord;
 import com.cnksi.sjjc.databinding.BatteryTestLayoutBinding;
@@ -101,17 +99,17 @@ public class BatteryTestReportActivity extends BaseReportActivity {
             if (xudianchi && !getIntent().getBooleanExtra(Config.IS_FROM_SJJC, false)) {
                 PreferencesUtils.put(Config.CURRENT_MAINTANENCE_BATTERY, "");
             }
-            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+//            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
 
             onBackPressed();
         });
         mBtnRight.setOnClickListener(v -> {
             if ("maintenance_xdcdyjc".equalsIgnoreCase(type)) {
-                Intent intent = new Intent(BatteryTestReportActivity.this, HomeActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(BatteryTestReportActivity.this, HomeActivity.class);
+//                startActivity(intent);
                 onBackPressed();
             } else {
-                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+//                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
                 onBackPressed();
             }
         });

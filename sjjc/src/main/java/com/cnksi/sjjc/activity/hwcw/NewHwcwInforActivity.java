@@ -163,20 +163,19 @@ public class NewHwcwInforActivity extends BaseSjjcActivity implements ItemClickL
     boolean isUpdateReport = false;
 
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_produce_record:
-                isUpdateReport = true;
-                saveData();
-                isNeedUpdateTaskStatus = true;
-                Intent intent = new Intent(mActivity, NewHwcwReportActivity.class);
-                startActivity(intent);
-                mActivity.finish();
-                break;
-            case R.id.txt_new_person:
-                showPeopleDialog();
-                break;
-            default:
-                break;
+        int i = view.getId();
+        if (i == R.id.btn_produce_record) {
+            isUpdateReport = true;
+            saveData();
+            isNeedUpdateTaskStatus = true;
+            Intent intent = new Intent(mActivity, NewHwcwReportActivity.class);
+            startActivity(intent);
+            mActivity.finish();
+
+        } else if (i == R.id.txt_new_person) {
+            showPeopleDialog();
+
+        } else {
         }
 
     }

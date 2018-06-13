@@ -1,53 +1,12 @@
-apply plugin: "com.android.application"
-apply plugin: "org.sonarqube"
-def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
-}
-
-def uuid() {
-    return "---" + UUID.randomUUID().toString()
-}
-
-def branch() {
-    try {
-        Process process = Runtime.getRuntime().exec("git status")
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()))
-        String line
-        String matchBranch = "On branch "
-        String matchTag = "HEAD detached at "
-        while ((line = bufferedReader.readLine()) != null) {
-            int index = line.indexOf(matchBranch)
-            if (index >= 0) index += matchBranch.length()
-            else if (index < 0) {
-                index = line.indexOf(matchTag)
-                if (index >= 0) index += matchTag.length()
-            }
-            if (index >= 0) {
-                StringBuilder sb = new StringBuilder()
-                for (int i = index; i < line.length(); i++) {
-                    char c = line.charAt(i)
-                    if (c == ' ')
-                        if (sb.length == 0) continue
-                        else {
-                            return sb.toString()
-                        }
-                    sb.append(c)
-                }
-                return sb.toString()
-            }
-        }
-    } catch (Exception e) {
-        return "unknown"
-    }
-}
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
 
     defaultConfig {
-        applicationId "com.cnksi.sjjc"
+//        applicationId "com.cnksi.sjjc"
         minSdkVersion 21
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode VERSION_CODE as int
         versionName VERSION_NAME
         vectorDrawables.useSupportLibrary = true
@@ -74,24 +33,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlignEnabled true
-            shrinkResources true//需要同minifyEnabled 共同使用
-            signingConfig signingConfigs.release
-            applicationVariants.all { variant ->
-                //修改apk输出路径
-                // variant.getPackageApplication().outputDirectory = new File("${project.rootDir}/out/")
-                variant.outputs.all { output ->
-                    if (variant.buildType.name == "release") {
-                        def fileName = "sjjc-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}-release.apk"
-                        outputFileName = fileName
-                    } else {
-                        def fileName = "sjjc-${defaultConfig.versionCode}-${defaultConfig.versionName}-debug.apk"
-                        outputFileName = fileName
-                    }
-                }
-            }
+            zipAlignEnabled false
         }
         debug {
             signingConfig signingConfigs.release
@@ -142,7 +86,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation "com.android.support:cardview-v7:${appcompat_v7_version}"
-   
+
     compile project(':common')
     compile project(':bdzinspection')
     compile project(':defect')
@@ -161,7 +105,7 @@ dependencies {
         }
     }
     implementation "com.prolificinteractive:material-calendarview:$material_calendarview"
-   
+
 
     implementation "com.android.support:design:$design_version"
 }

@@ -8,12 +8,10 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.utils.ScreenUtils;
-import com.cnksi.sjjc.CustomApplication;
 import com.cnksi.sjjc.R;
 import com.cnksi.sjjc.databinding.PermissionBinding;
 import com.cnksi.sjjc.inter.GrantPermissionListener;
@@ -132,7 +130,7 @@ public class PermissionUtil {
         permissionBinding.btnCancel.setOnClickListener(v -> {
 //                退出系统
             permissionDialog.dismiss();
-            CustomApplication.getInstance().exitApplication();
+//            CustomApplication.getInstance().exitApplication();
         });
         permissionDialog.show();
         permissionDialog.setCanceledOnTouchOutside(false);

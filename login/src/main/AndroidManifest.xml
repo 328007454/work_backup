@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cnksi.login">
+
+    <application
+        android:name=".CustomApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_app"
+        android:label="@string/app_bdyw"
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup,android:label">
+
+        <meta-data
+            android:name="design_width"
+            android:value="1080"/>
+        <meta-data
+            android:name="design_height"
+            android:value="1920"/>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="qpXBSFGkHytABR7n2Gz2jjOl7e3omC7A"/>
+
+        <activity
+            android:name="com.cnksi.login.activity.LoginActivity"
+            android:label="@string/app_bdyw"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

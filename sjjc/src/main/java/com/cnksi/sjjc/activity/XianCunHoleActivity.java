@@ -168,45 +168,43 @@ public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickLi
      */
     @Override
     public void itemClick(View v, Object o, int position, View iView, View view) {
-        switch (v.getId()) {
-            case R.id.iv_take_pic:
-                item = (HoleRecord) o;
-                currentHole = item.location + "_" + item.hole_detail;
-                FunctionUtils.takePicture(this, imgName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.iv_take_pic) {
+            item = (HoleRecord) o;
+            currentHole = item.location + "_" + item.hole_detail;
+            FunctionUtils.takePicture(this, imgName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, TAKEPIC_REQUEST);
+
+        } else {
         }
     }
 
     @Override
     public void itemClick(View v, Object o, int position) {
-        switch (v.getId()) {
-            case R.id.iv_delet_pic://删除清除孔洞所有
-                item = (HoleRecord) o;
-                if (!TextUtils.isEmpty(item.clear_images)) {
-                    showClearAllPicDialog();
-                }
-                break;
-            case R.id.img_clearhole_pic://删除清除孔洞照片
-                ArrayList<String> listPicClear = null;
-                item = (HoleRecord) o;
-                if (!TextUtils.isEmpty(item.clear_images)) {
-                    listPicClear = StringUtils.stringToList(item.clear_images);
-                    showImageDetails(mActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicClear, Config.RESULT_PICTURES_FOLDER), true);
-                }
+        int i = v.getId();
+        if (i == R.id.iv_delet_pic) {
+            item = (HoleRecord) o;
+            if (!TextUtils.isEmpty(item.clear_images)) {
+                showClearAllPicDialog();
+            }
 
-                break;
-            case R.id.img_discoverhole_pic://查看清除孔洞的照片
-                ArrayList<String> listPicDis = null;
-                item = (HoleRecord) o;
-                if (!TextUtils.isEmpty(item.hole_images)) {
-                    listPicDis = StringUtils.stringToList(item.hole_images);
-                    showImageDetails(mActivity, 0, com.cnksi.core.utils.StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
-                }
-                break;
-            default:
-                break;
+        } else if (i == R.id.img_clearhole_pic) {
+            ArrayList<String> listPicClear = null;
+            item = (HoleRecord) o;
+            if (!TextUtils.isEmpty(item.clear_images)) {
+                listPicClear = StringUtils.stringToList(item.clear_images);
+                showImageDetails(mActivity, 0, StringUtils.addStrToListItem(listPicClear, Config.RESULT_PICTURES_FOLDER), true);
+            }
+
+
+        } else if (i == R.id.img_discoverhole_pic) {
+            ArrayList<String> listPicDis = null;
+            item = (HoleRecord) o;
+            if (!TextUtils.isEmpty(item.hole_images)) {
+                listPicDis = StringUtils.stringToList(item.hole_images);
+                showImageDetails(mActivity, 0, StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
+            }
+
+        } else {
         }
     }
 

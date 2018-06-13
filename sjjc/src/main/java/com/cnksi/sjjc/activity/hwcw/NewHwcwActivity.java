@@ -123,68 +123,67 @@ public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDat
     }
 
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.et_hotdeivce_name:
-                DeviceSelectActivity.with(this)
-                        .setBdzId(currentBdzId)
-                        .setPmsDeviceType(PMSDeviceType.one)
-                        .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE)
-                        .start();
-                break;
-            case R.id.btn_cancel:
-                String deviceName = mHwcwNewBinding.etHotdeivceName.getText().toString();
-                if (!TextUtils.isEmpty(deviceName)) {
-                    DialogUtils.createTipsDialog(mActivity, getString(R.string.have_not_save_data), v -> {
-                        mHwcwNewBinding.setSetNull(false);
-                        mHwcwNewBinding.llHotPart.removeAllViews();
-                        hotRecordClickPositon = -1;
-                        childItemNum = 0;
-                        mHotPartAdapter.setCurrentClickPosition(true, hotRecordClickPositon);
-                    }, false).show();
+        int i1 = view.getId();
+        if (i1 == R.id.et_hotdeivce_name) {
+            DeviceSelectActivity.with(this)
+                    .setBdzId(currentBdzId)
+                    .setPmsDeviceType(PMSDeviceType.one)
+                    .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE)
+                    .start();
+
+        } else if (i1 == R.id.btn_cancel) {
+            String deviceName = mHwcwNewBinding.etHotdeivceName.getText().toString();
+            if (!TextUtils.isEmpty(deviceName)) {
+                DialogUtils.createTipsDialog(mActivity, getString(R.string.have_not_save_data), v -> {
+                    mHwcwNewBinding.setSetNull(false);
+                    mHwcwNewBinding.llHotPart.removeAllViews();
+                    hotRecordClickPositon = -1;
+                    childItemNum = 0;
+                    mHotPartAdapter.setCurrentClickPosition(true, hotRecordClickPositon);
+                }, false).show();
+            }
+
+        } else if (i1 == R.id.btn_confirm) {
+            saveNewLocation();
+
+        } else if (i1 == R.id.btn_confirm_save) {
+            if (saveData()) {
+                Intent intent = new Intent(mActivity, NewHwcwInforActivity.class);
+                startActivityForResult(intent, TO_NEWINFORACTIVITY);
+            } else {
+                ToastUtils.showMessage("请完成所有的基本信息填写！");
+            }
+
+        } else if (i1 == R.id.txt_hot_part) {
+            initHotPartItem();
+
+        } else if (i1 == R.id.aib_delete_hotpart) {
+            int num = (int) view.getTag();
+            mHwcwNewBinding.llHotPart.removeViewAt(num);
+            childItemNum--;
+            for (int i = 0; i < mHwcwNewBinding.llHotPart.getChildCount(); i++) {
+                ItemHotDeviceHwcwBinding deviceHwcwBinding = (ItemHotDeviceHwcwBinding) mHwcwNewBinding.llHotPart.getChildAt(i).getTag();
+                int tagNum = (int) deviceHwcwBinding.aibDeleteHotpart.getTag();
+                if (tagNum > num) {
+                    deviceHwcwBinding.aibDeleteHotpart.setTag(tagNum - 1);
                 }
-                break;
-            case R.id.btn_confirm:
-                saveNewLocation();
-                break;
-            case R.id.btn_confirm_save:
-                if (saveData()) {
-                    Intent intent = new Intent(mActivity, NewHwcwInforActivity.class);
-                    startActivityForResult(intent, TO_NEWINFORACTIVITY);
-                } else {
-                    ToastUtils.showMessage("请完成所有的基本信息填写！");
-                }
-                break;
-            case R.id.txt_hot_part:
-                initHotPartItem();
-                break;
-            case R.id.aib_delete_hotpart:
-                int num = (int) view.getTag();
-                mHwcwNewBinding.llHotPart.removeViewAt(num);
-                childItemNum--;
-                for (int i = 0; i < mHwcwNewBinding.llHotPart.getChildCount(); i++) {
-                    ItemHotDeviceHwcwBinding deviceHwcwBinding = (ItemHotDeviceHwcwBinding) mHwcwNewBinding.llHotPart.getChildAt(i).getTag();
-                    int tagNum = (int) deviceHwcwBinding.aibDeleteHotpart.getTag();
-                    if (tagNum > num) {
-                        deviceHwcwBinding.aibDeleteHotpart.setTag(tagNum - 1);
-                    }
 //                    if (i == childItemNum - 1) {
 //                        deviceHwcwBinding.aibDeleteHotpart.setVisibility(View.VISIBLE);
 //                    } else {
 //                        deviceHwcwBinding.aibDeleteHotpart.setVisibility(View.INVISIBLE);
 //                    }
-                }
-                break;
-            case R.id.txt_baseinfo:
-                if (mHwcwNewBinding.containerBaseinfo.getVisibility() == View.VISIBLE) {
-                    mHwcwNewBinding.txtBaseinfo.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.mipmap.icon_down), null);
-                    mHwcwNewBinding.containerBaseinfo.setVisibility(View.GONE);
-                } else {
-                    mHwcwNewBinding.txtBaseinfo.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.mipmap.icon_up), null);
-                    mHwcwNewBinding.containerBaseinfo.setVisibility(View.VISIBLE);
-                }
-                break;
-            default:
-                break;
+            }
+
+        } else if (i1 == R.id.txt_baseinfo) {
+            if (mHwcwNewBinding.containerBaseinfo.getVisibility() == View.VISIBLE) {
+                mHwcwNewBinding.txtBaseinfo.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.mipmap.icon_down), null);
+                mHwcwNewBinding.containerBaseinfo.setVisibility(View.GONE);
+            } else {
+                mHwcwNewBinding.txtBaseinfo.setCompoundDrawablesWithIntrinsicBounds(null, null, mActivity.getResources().getDrawable(R.mipmap.icon_up), null);
+                mHwcwNewBinding.containerBaseinfo.setVisibility(View.VISIBLE);
+            }
+
+        } else {
         }
     }
 

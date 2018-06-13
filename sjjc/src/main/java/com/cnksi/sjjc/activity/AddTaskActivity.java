@@ -65,23 +65,22 @@ public class AddTaskActivity extends BaseSjjcActivity {
     private RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
-            switch (radioGroup.getId()) {
-                case R.id.radio_ceshi_type:
-                    if (R.id.radio_puce == i) {
-                        mTaskBinding.radioCeshiType.check(R.id.radio_puce);
-                    } else {
-                        mTaskBinding.radioCeshiType.check(R.id.radio_chouce);
-                    }
-                    break;
-                case R.id.radio_neizu:
-                    if (R.id.neizu_yes == i) {
-                        mTaskBinding.radioCeshiType.check(R.id.neizu_yes);
-                    } else {
-                        mTaskBinding.radioCeshiType.check(R.id.neizu_no);
-                    }
-                    break;
-                default:
-                    break;
+            int i1 = radioGroup.getId();
+            if (i1 == R.id.radio_ceshi_type) {
+                if (R.id.radio_puce == i) {
+                    mTaskBinding.radioCeshiType.check(R.id.radio_puce);
+                } else {
+                    mTaskBinding.radioCeshiType.check(R.id.radio_chouce);
+                }
+
+            } else if (i1 == R.id.radio_neizu) {
+                if (R.id.neizu_yes == i) {
+                    mTaskBinding.radioCeshiType.check(R.id.neizu_yes);
+                } else {
+                    mTaskBinding.radioCeshiType.check(R.id.neizu_no);
+                }
+
+            } else {
             }
         }
     };
