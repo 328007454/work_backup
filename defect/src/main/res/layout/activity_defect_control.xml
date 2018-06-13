@@ -36,6 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:hint="变电站"
                     android:textColor="#958c8c"
                     android:textSize="@dimen/txt_size36px" />
 
@@ -69,6 +70,7 @@
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_pull"
                     android:gravity="center_vertical"
+                    android:hint="缺陷类型"
                     android:paddingRight="@dimen/_20px"
                     android:textColor="#958c8c"
                     android:textSize="@dimen/txt_size36px" />
@@ -95,6 +97,7 @@
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_pull"
                     android:gravity="center_vertical"
+                    android:hint="人员"
                     android:paddingRight="@dimen/_20px"
                     android:textColor="#958c8c"
                     android:textSize="@dimen/txt_size36px" />

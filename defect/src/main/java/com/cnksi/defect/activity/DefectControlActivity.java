@@ -79,10 +79,7 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
             mHandler.post(() -> {
                 if (bdzList.size() > 0) {
                     bdzModel = bdzList.get(bdzList.size() - 1);
-                    defectControlBinding.bdzName.setText(bdzModel.name);
                 }
-                defectControlBinding.txtPeopleName.setText(userModels.get(userModels.size() - 1).getString(Users.USERNAME));
-                defectControlBinding.defectType.setText(defectTypes.get(0));
                 search();
             });
         });

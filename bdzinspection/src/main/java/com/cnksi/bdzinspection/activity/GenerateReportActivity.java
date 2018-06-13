@@ -44,7 +44,6 @@ import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.common.view.PeopleDialog;
 import com.cnksi.core.common.ExecutorManager;
-import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -249,7 +248,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 inspectionMark = "";
             }
             // 显示 发现的缺陷 跟踪的缺陷 以及 消除的缺陷
-            GenerateReportActivity.this.runOnUiThread(() -> {
+           runOnUiThread(() -> {
                 binding.tvNewDefectCount.setText(String.valueOf(mNewDefectList == null ? 0 : mNewDefectList.size()));
                 binding.tvTrackDefectCount.setText(String.valueOf(mTrackDefectList == null ? 0 : mTrackDefectList.size()));
                 binding.tvEliminateDefectCount.setText(String.valueOf(mEliminateDefectList == null ? 0 : mEliminateDefectList.size()));
@@ -340,7 +339,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         binding.tvNewDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
         binding.llNewDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
 
-        binding.btnComplete.setOnClickListener(view -> GenerateReportActivity.this.finishReport());
+        binding.btnComplete.setOnClickListener(view ->finishReport());
         binding.llCopyResult.setOnClickListener(view -> {
             PlaySound.getIntance(mActivity).play(R.raw.input);
             Intent intent = new Intent(mActivity, CopyAllValueActivity2.class);
@@ -402,7 +401,6 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 intent = new Intent(mActivity, InspectionReportActivity.class);
             }
             PushNewTaskUtil.getTaskUtilInstance().createNewTaskByPeriod(currentTaskId, currentInspectionType);
-            ScreenManager.getScreenManager().popAllActivityExceptOne(null);
             startActivity(intent);
         } catch (DbException e) {
             e.printStackTrace();

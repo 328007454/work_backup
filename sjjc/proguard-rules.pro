@@ -140,6 +140,13 @@
 -keep class android.support.v7.widget.SearchView { *; }
 
 
+###
+-keep class com.cnksi.common.model.**{*;}
+-keep class com.cnksi.common.view.**{*;}
+
+
+
+
 
 
 

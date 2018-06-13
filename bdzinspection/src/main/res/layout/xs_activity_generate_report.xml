@@ -68,7 +68,7 @@
                         android:background="@color/xs_white"
                         android:gravity="left|top"
                         android:hint="请输巡视结果"
-                        android:minHeight="@dimen/xs_gp_textview_minHeight_px"
+                        android:minHeight="100px"
                         android:padding="36px"
                         android:textSize="@dimen/xs_global_text_small_size_px" />
                 </LinearLayout>
@@ -93,7 +93,7 @@
                         android:background="@color/xs_white"
                         android:gravity="left|top"
                         android:hint="@string/xs_gp_remark_tips"
-                        android:minHeight="@dimen/xs_gp_textview_minHeight_px"
+                        android:minHeight="100px"
                         android:padding="36px"
                         android:textSize="@dimen/xs_global_text_small_size_px" />
                 </LinearLayout>
@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="@dimen/xs_global_padding_left_right_px">
+                        android:padding="@dimen/sjjc_30px">
 
                         <LinearLayout
                             android:id="@+id/ll_new_defect_count"
@@ -178,6 +178,67 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/txt_pms"
+                    style="@style/GPLableTextStyle"
+                    android:text="上传PMS" />
+
+                <LinearLayout
+                    android:id="@+id/layout_upload_pms"
+                    android:layout_width="match_parent"
+                    android:layout_height="150px"
+                    android:background="@color/xs_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/xs__30px">
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/rb_kai_typpe"
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/checkbox_green_button_selector"
+                        android:drawablePadding="@dimen/xs__42px"
+                        android:gravity="center_vertical"
+                        android:text="报告记录"
+                        android:textColor="@color/radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px" />
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/rb_jie_type"
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/checkbox_green_button_selector"
+                        android:drawablePadding="@dimen/xs__42px"
+                        android:gravity="center_vertical"
+                        android:text="抄录数据"
+                        android:textColor="@color/radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px" />
+
+                    <android.support.v7.widget.AppCompatCheckBox
+                        android:id="@+id/rb_other_type"
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/checkbox_green_button_selector"
+                        android:drawablePadding="@dimen/xs__42px"
+                        android:gravity="center_vertical"
+                        android:text="缺陷记录"
+                        android:textColor="@color/radio_button_text_selector"
+                        android:textSize="@dimen/xs_dialog_title_textsize_px" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -216,7 +277,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:listSelector="@android:color/transparent"
-                        android:numColumns="3"></com.cnksi.bdzinspection.view.NoScrollGridView>
+                        android:numColumns="3" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -258,7 +319,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:listSelector="@android:color/transparent"
-                        android:numColumns="3"></com.cnksi.bdzinspection.view.NoScrollGridView>
+                        android:numColumns="3" />
                 </LinearLayout>
 
                 <LinearLayout

@@ -154,7 +154,7 @@
                         android:visibility="invisible" />
                 </RelativeLayout>
 
-                <com.cnksi.defect.view.FlowRadioGroup
+                <com.cnksi.common.view.FlowRadioGroup
                     android:id="@+id/container_rb_general_defect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
                         app:drawableLeft="@drawable/xs_radio_button_selector"
                         app:drawableSize="48px" />
 
-                </com.cnksi.defect.view.FlowRadioGroup>
+                </com.cnksi.common.view.FlowRadioGroup>
 
 
                 <TextView
