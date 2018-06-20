@@ -20,6 +20,8 @@ import com.cnksi.ksynclib.IKSync;
 import com.cnksi.ksynclib.KSync;
 import com.squareup.leakcanary.LeakCanary;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 import org.xutils.DbManager;
 
 import java.io.File;
@@ -69,7 +71,21 @@ public class CommonApplication extends CoreApplication implements IKSync {
 
     @Override
     public DbManager getDbManager() {
-        return super.getDbManager();
+        if (dbVersion > 1) {
+            /**
+             * 由于同步会动态的更新数据库版本号，但是打开数据库的时候会重置为1，因此需要在第一次获取DbManger是恢复回去。
+             */
+            DbManager db = super.getDbManager();
+            if (db.getDatabase() instanceof SQLiteDatabase) {
+                ((SQLiteDatabase) db.getDatabase()).setVersion(dbVersion);
+            } else if (db.getDatabase() instanceof android.database.sqlite.SQLiteDatabase) {
+                ((android.database.sqlite.SQLiteDatabase) db.getDatabase()).setVersion(dbVersion);
+            }
+            dbVersion = 1;
+            return db;
+        } else {
+            return super.getDbManager();
+        }
     }
 
     @Override
