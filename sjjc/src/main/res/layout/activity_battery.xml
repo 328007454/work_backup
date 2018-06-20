@@ -89,7 +89,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/et_current_tempreture"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -126,7 +127,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/et_fact_voltage"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -171,7 +173,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/et_system_voltage"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -208,7 +211,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/et_load_electric"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -251,7 +255,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/et_fuchong_electricty"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -288,7 +293,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/et_zheng_muxian_voltage"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -331,7 +337,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/et_fu_muxian_voltage"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -410,7 +417,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/group_voltage"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -447,7 +455,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/charge_current"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -492,7 +501,8 @@
                             android:textColor="@color/global_text_color"
                             android:textSize="@dimen/new_global_text_size"/>
 
-                        <EditText
+                        <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                             android:id="@+id/single_voltage"
                             style="@style/NewHeatPointEditTextStyle"
                             android:layout_width="match_parent"
@@ -537,7 +547,8 @@
                                 android:textColor="@color/global_text_color"
                                 android:textSize="@dimen/new_global_text_size"/>
 
-                            <EditText
+                            <com.cnksi.common.view.ContainsEmojiEditText
+                            android:background="@null"
                                 android:id="@+id/et_test_instrument"
                                 style="@style/NewHeatPointEditTextStyle"
                                 android:layout_width="match_parent"

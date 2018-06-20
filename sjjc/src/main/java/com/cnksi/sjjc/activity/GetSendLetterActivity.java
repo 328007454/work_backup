@@ -147,13 +147,10 @@ public class GetSendLetterActivity extends BaseSjjcActivity {
             //设置item的格式和点击动画
             View view = LayoutInflater.from(this).inflate(R.layout.item_tab, null, false);
             TextView textView = view.findViewById(R.id.tv_tab);
-//            textView.setTextSize(AutoUtils.getPercentHeightSizeBigger(44));
             AutoUtils.autoSize(view);
             textView.setTag(transceiverDevice);
-//            textView.setText(Html.fromHtml(transceiverDevice.name));
             textView.setText(transceiverDevice.name);
             LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(AutoUtils.getPercentWidthSizeBigger(400), LinearLayout.LayoutParams.MATCH_PARENT);
-//            textView.setLayoutParams(p);
             p.leftMargin = AutoUtils.getPercentHeightSizeBigger(30);
             view.setLayoutParams(p);
             binding.tabContainer.addView(view);
@@ -216,6 +213,10 @@ public class GetSendLetterActivity extends BaseSjjcActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case ACTION_IMAGE:
+                    if (currentTransceiver == null) {
+                        ToastUtils.showMessage("数据不存在，后续操作");
+                        return;
+                    }
                     String picRemark = DateUtils.getCurrentLongTime() + "\n" + report.persons + "\n" + binding.tvSpacing.getText().toString() + "----" + currentTransceiver.deviceName;
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imageName, picRemark);
                     break;
@@ -290,7 +291,6 @@ public class GetSendLetterActivity extends BaseSjjcActivity {
             View childView = binding.tabContainer.getChildAt(i);
             TextView tvView = childView.findViewById(R.id.tv_tab);
             if (v.equals(childView)) {
-//                childView.setSelected(true);
                 tvView.setSelected(true);
                 currentDevice = (Device) tvView.getTag();
                 try {
@@ -309,7 +309,6 @@ public class GetSendLetterActivity extends BaseSjjcActivity {
                     e.printStackTrace();
                 }
             } else {
-//                childView.setSelected(false);
                 tvView.setSelected(false);
             }
         }
@@ -362,8 +361,8 @@ public class GetSendLetterActivity extends BaseSjjcActivity {
      * 查看大图
      */
     private void viewPic() {
-        ArrayList<String> images =  StringUtils.string2List(currentTransceiver.images, false);
-        showImageDetails(this,StringUtils.addStrToListItem(images,Config.RESULT_PICTURES_FOLDER),true);
+        ArrayList<String> images = StringUtils.string2List(currentTransceiver.images, false);
+        showImageDetails(this, StringUtils.addStrToListItem(images, Config.RESULT_PICTURES_FOLDER), true);
     }
 
     /**

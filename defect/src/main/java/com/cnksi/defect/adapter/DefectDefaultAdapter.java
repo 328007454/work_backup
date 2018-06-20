@@ -50,6 +50,10 @@ public class DefectDefaultAdapter extends BaseQuickAdapter<DbModel, BaseViewHold
 
         } else if (TextUtils.equals(item.getString("level"), DefectEnum.critical_text.value)) {
             result = StringUtils.changePartTextColor("[" + Config.CRISIS_LEVEL + "]" + item.getString("description"), Color.RED, 0, 6);
+        }else if (TextUtils.equals(item.getString("level"), DefectEnum.problem_text.value)) {
+            result = StringUtils.changePartTextColor("[" + Config.PROBLEM_LEVEL + "]" + item.getString("description"), Color.parseColor("#F1B55B"), 0, 4);
+        }else if (TextUtils.equals(item.getString("level"), DefectEnum.hidden_text.value)) {
+            result = StringUtils.changePartTextColor("[" + Config.HIDDEN_LEVEL + "]" + item.getString("description"), Color.parseColor("#F1B55B"), 0, 4);
         }
 
         return result;

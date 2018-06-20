@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,21 +14,19 @@ import com.cnksi.bdzinspection.R;
 import com.cnksi.bdzinspection.adapter.XunJianTypeAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.BdzDialogAdapter;
 import com.cnksi.bdzinspection.adapter.addtask.InspectionTypeAdapter;
-import com.cnksi.common.daoservice.DeviceService;
-import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.bdzinspection.daoservice.SpecialMenuService;
 import com.cnksi.bdzinspection.daoservice.SwitchMenuService;
 import com.cnksi.bdzinspection.databinding.XsActivityAddInspectionTaskBinding;
 import com.cnksi.bdzinspection.databinding.XsActivityAddinpsectionTypeDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
-import com.cnksi.common.base.BaseActivity;
-import com.cnksi.common.utils.DialogUtils;
-import com.cnksi.bdzinspection.utils.MyUUID;
-import com.cnksi.bdzinspection.utils.SelectPersonUtil;
+import com.cnksi.common.utils.MyUUID;
 import com.cnksi.bdzinspection.ywyth.YWDeviceListActivity;
 import com.cnksi.common.Config;
+import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.daoservice.LookupService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskExtendService;
 import com.cnksi.common.daoservice.TaskService;
@@ -42,7 +39,9 @@ import com.cnksi.common.model.Lookup;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.TaskExtend;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.ListUtils;
+import com.cnksi.common.utils.SelectPersonUtil;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
@@ -135,6 +134,7 @@ public class AddTaskActivity extends BaseActivity {
         initialUI();
         initialData();
         initOnClick();
+
     }
 
     private void initialUI() {
@@ -265,7 +265,8 @@ public class AddTaskActivity extends BaseActivity {
         binding.includeTitle.ibtnCancel.setOnClickListener(view -> AddTaskActivity.this.finish());
         binding.btnCancel.setOnClickListener(view -> AddTaskActivity.this.finish());
         binding.btnConfirm.setOnClickListener(view -> AddTaskActivity.this.saveTask());
-        binding.ibtnSelectInspectionDate.setOnClickListener(view -> CustomerDialog.showDatePickerDialog(mActivity, (result, position) -> binding.tvInspectionDate.setText(result)));
+        binding.ibtnSelectInspectionDate.setOnClickListener(view ->
+                CustomerDialog.showDatePickerDialog(mActivity, (result, position) -> binding.tvInspectionDate.setText(result)));
         binding.bdzContanier.setOnClickListener(view -> {
             binding.bdzContanier.setPressed(true);
             if (isBdzDataPrepared) {
@@ -323,8 +324,8 @@ public class AddTaskActivity extends BaseActivity {
                 binding.tvSelectInspectionType.setText(mInspectionType.v);
                 break;
             case INIT_PERSONS:
-                SelectPersonUtil.getInstance().setRecyWidget(mActivity, binding.recPersonContainer, selectPersons, R.layout.xs_item_task_user, new GridLayoutManager(getApplicationContext(), 4))
-                        .disPlayAllPerson(allPersons, binding.ibSelectPerson);
+//                SelectPersonUtil.getInstance().setRecyWidget(mActivity, binding.recPersonContainer, selectPersons, R.layout.xs_item_task_user, new GridLayoutManager(getApplicationContext(), 4))
+//                        .disPlayAllPerson(allPersons, binding.ibSelectPerson);
                 break;
             default:
                 break;

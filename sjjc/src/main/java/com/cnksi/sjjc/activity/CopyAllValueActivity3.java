@@ -384,7 +384,9 @@ public class CopyAllValueActivity3 extends BaseSjjcActivity {
                     deviceAdapter.next();
                 }
             } else {
-//                onClick(findViewById(R.id.tv_right));
+                CopyAllValueActivity3.this.saveAll();
+                String tip = String.format(CopyAllValueActivity3.this.getText(R.string.dialog_tips_finish_str) + "", processor.getCopyResult(currentBdzId));
+                CopyAllValueActivity3.this.showTipsDialog(binding.llRootContainer, tip);
             }
         });
         binding.btnPre.setOnClickListener(view -> {

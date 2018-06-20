@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.cnksi.common.Config;
@@ -41,7 +42,9 @@ public class OperateDefectActivity extends BaseTitleActivity implements ViewPage
     @Override
     protected View getChildContentView() {
         binding = ActivityOperateDefectBinding.inflate(getLayoutInflater());
-
+        mTitleBinding.btnBack.setOnClickListener(v -> {
+            onBackPressed();
+        });
         return binding.getRoot();
     }
 
@@ -107,13 +110,21 @@ public class OperateDefectActivity extends BaseTitleActivity implements ViewPage
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         setResult(RESULT_OK);
+        this.finish();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         fragments.get(selectFragmentPosition).onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK){
+            onBackPressed();
+        }
+        return false;
     }
 }

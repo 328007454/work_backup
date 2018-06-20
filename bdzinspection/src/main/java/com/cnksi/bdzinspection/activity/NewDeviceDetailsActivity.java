@@ -214,14 +214,15 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         devicedetailsBinding.devicePartRecy.setVisibility(View.GONE);
         devicedetailsBinding.deviceStandardLv.setOnItemClickListener((parent, view, position, id) -> {
             mCurrentStandard = mStandardList.get(position);
-            if (NewDeviceDetailsActivity.this.isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) || (InspectionType.special_xideng.equals(currentInspectionType))) {
+            if (isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) || (InspectionType.special_xideng.equals(currentInspectionType))) {
                 Intent intent = new Intent(mActivity, AddDefectActivity.class);
                 intent.putExtra(Config.HAS_ALL_CHOICE, false);
                 intent.putExtra(Config.NO_DEVICE_PART, true);
                 intent.putExtra(Config.DEVICE_CHOICE, false);
                 intent.putExtra(Device.DTID, mCurrentDevice.dtid);
-                NewDeviceDetailsActivity.this.setIntentValue(intent);
-                NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+                intent.putExtra(Config.CURRENT_STANDARD_ID, String.valueOf(mCurrentStandard.getString(Standards.STAID)));
+                setIntentValue(intent);
+                startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
             } else {
 
                 Intent intent = new Intent(mActivity, AddDefectActivity.class);
@@ -232,17 +233,17 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 // 传递巡视标准ID
                 intent.putExtra(Config.CURRENT_STANDARD_ID, String.valueOf(mCurrentStandard.getString(Standards.STAID)));
                 setIntentValue(intent);
-                NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+                startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
             }
         });
         devicedetailsBinding.deviceStandardLv.setOnItemLongClickListener((parent, view, position, id) -> {
-            NewDeviceDetailsActivity.this.showStandardSource(mStandardList.get(position));
+            showStandardSource(mStandardList.get(position));
             return true;
         });
         devicedetailsBinding.btPhotoSign.setOnClickListener(v -> FunctionUtil.takePicture(mActivity, currentImageName = FunctionUtil.getCurrentImageName(mActivity), Config.RESULT_PICTURES_FOLDER, PHOTO_SIGN_IMAGE));
         devicedetailsBinding.imgArrived.setOnClickListener(v -> {
 //                showImageDetails(currentActivity, Config.RESULT_PICTURES_FOLDER + placedDevice.pic, true);
-            NewDeviceDetailsActivity.this.showImageDetails(mActivity, Config.RESULT_PICTURES_FOLDER, imgList, true);
+            showImageDetails(mActivity, Config.RESULT_PICTURES_FOLDER, imgList, true);
         });
     }
 
@@ -263,13 +264,13 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 // 查询设备所属类型
                 dbModel = DevicePartService.getInstance().getDeviceType(mCurrentDevice.dtid);
                 mHandler.sendEmptyMessage(DEVICE_INFORMATION);
-                if (!NewDeviceDetailsActivity.this.isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) && !(InspectionType.special_xideng.equals(currentInspectionType))) {
+                if (!isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) && !(InspectionType.special_xideng.equals(currentInspectionType))) {
                     // 1、从库中查询设备部件
                     mDevicePartList = DevicePartService.getInstance().getDevicePart(mCurrentDevice.dtid, currentInspectionType, currentBdzId, mCurrentDevice.deviceid);
                     mHandler.sendEmptyMessage(DEVICE_PART_INFORMATION);
                     // 2、根据部件查询巡检标准，默认查询第一个
                     if (!mDevicePartList.isEmpty()) {
-                        NewDeviceDetailsActivity.this.initStandardList(mDevicePartList.get(0).getString(DevicePart.DUID));
+                        initStandardList(mDevicePartList.get(0).getString(DevicePart.DUID));
                     }
                 } else {
                     mStandardList = DeviceStandardsService.getInstance().findStandardsListFromSpecial(mCurrentDevice.bigid, currentInspectionType);
@@ -281,7 +282,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 // 历史缺陷
                 mExistDefectList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
                 if (!mExistDefectList.isEmpty()) {
-                    TTSUtils.getInstance().startSpeaking(NewDeviceDetailsActivity.this.getResources().getString(R.string.xs_current_device_has_defect_format_str, mExistDefectList.size() + ""));
+                    TTSUtils.getInstance().startSpeaking(getResources().getString(R.string.xs_current_device_has_defect_format_str, mExistDefectList.size() + ""));
                 }
                 mHandler.sendEmptyMessage(DEVICE_EXIST_DEFECT);
                 //控制点及危险措施
@@ -294,10 +295,10 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         ExecutorManager.executeTask(() -> {
             placedDevice = PlacedDeviceService.getInstance().findDevicePlaced(currentReportId, currentDeviceId);
             if (placedDevice != null && placedDevice.isHasPhoto()) {
-                NewDeviceDetailsActivity.this.runOnUiThread(() -> {
+                runOnUiThread(() -> {
                     devicedetailsBinding.setHasSignPhoto(true);
                     imgList = StringUtils.stringToList(placedDevice.pic, ",");
-                    NewDeviceDetailsActivity.this.refreshDevicePic();
+                    refreshDevicePic();
                 });
             }
         });
@@ -426,7 +427,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         devicedetailsBinding.tvProductDate.setText("投产日期：" + date);
         setDeviceImage();
         devicedetailsBinding.ivDeviceImage.setOnLongClickListener(v -> {
-            NewDeviceDetailsActivity.this.showChangePictureDialog(v);
+            showChangePictureDialog(v);
             return true;
         });
     }
@@ -435,7 +436,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         int maxWidth = AutoUtils.getPercentWidthSizeBigger(480);
         int maxHeight = AutoUtils.getPercentHeightSizeBigger(330);
         String picPath = TextUtils.isEmpty(mCurrentDevice.change_pic) ? (TextUtils.isEmpty(mCurrentDevice.pic) ? "" : mCurrentDevice.pic) : mCurrentDevice.change_pic;
-        devicedetailsBinding.ivDeviceImage.setImageBitmap(BitmapUtil.getImageThumbnail(mCurrentDevice.getPic(picPath), maxWidth, maxHeight));
+        devicedetailsBinding.ivDeviceImage.setImageBitmap(BitmapUtil.getImageThumbnail(Config.BDZ_INSPECTION_FOLDER+mCurrentDevice.getPic(picPath), maxWidth, maxHeight));
     }
 
     /**
@@ -461,12 +462,12 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             intent.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
             intent.putExtra(Config.CURRENT_SPACING_NAME, currentSpacingName);
             intent.putExtra(Device.DTID, mCurrentDevice.dtid);
-            NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
 
         devicedetailsBinding.ibtnDanger.setOnClickListener(view -> {
             if (null != bigTypeModel && !TextUtils.isEmpty(bigTypeModel.getString("identification_prevent_measures"))) {
-                NewDeviceDetailsActivity.this.showDangerPointDialog();
+                showDangerPointDialog();
             } else {
                 ToastUtils.showMessage("该设备暂无危险点及控制措施");
             }
@@ -475,7 +476,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         devicedetailsBinding.btAccidentDeal.setOnClickListener(view -> {
             Intent intentAccident = new Intent(mActivity, AccidentExceptionActivity.class);
             intentAccident.putExtra(Config.CURRENT_DEVICE_ID, currentDeviceId);
-            NewDeviceDetailsActivity.this.startActivity(intentAccident);
+            startActivity(intentAccident);
         });
 
         devicedetailsBinding.tvDefectCount.setOnClickListener(view -> {
@@ -484,11 +485,11 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                 return;
             }
             intent = new Intent(mActivity, OperateDefectActivity.class);
-            NewDeviceDetailsActivity.this.setIntentValue(intent);
+            setIntentValue(intent);
             intent.putExtra(Device.DEVICEID, mCurrentDevice.deviceid);
             intent.putExtra(Bdz.BDZID, mCurrentDevice.bdzid);
             intent.putExtra(Config.DEFECT_COUNT_KEY, Config.MULTI);
-            NewDeviceDetailsActivity.this.startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
+            startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
 
         devicedetailsBinding.tvAddNewDefect.setOnClickListener(view -> {
@@ -499,14 +500,14 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             setIntentValue(intent);
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
-        devicedetailsBinding.ibtnCancel.setOnClickListener(view -> NewDeviceDetailsActivity.this.onBackPressed());
+        devicedetailsBinding.ibtnCancel.setOnClickListener(view -> onBackPressed());
         devicedetailsBinding.ibtnSetting.setOnClickListener(view -> {
             Intent intent1 = new Intent(mActivity, SettingCopyTypeActivity.class);
             intent1.putExtra(Config.CURRENT_DEVICE_NAME, mCurrentDevice.name);
             intent1.putExtra(Config.CURRENT_DEVICE_ID, mCurrentDevice.deviceid);
             intent1.putExtra(Config.CURRENT_SPACING_ID, currentSpacingId);
             intent1.putExtra(Config.CURRENT_SPACING_NAME, currentSpacingName);
-            NewDeviceDetailsActivity.this.startActivity(intent1);
+            startActivity(intent1);
         });
     }
 
@@ -587,19 +588,19 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                     // 1、清空数据库中更换图片
                     DeviceService.getInstance().updateDeviceChangePic(mCurrentDevice, "");
                     // 2、设置设备图片
-                    NewDeviceDetailsActivity.this.setDeviceImage();
+                    setDeviceImage();
                     break;
                 // 更换图片
                 case 1:
-                    FunctionUtil.takePicture(mActivity, (currentImageName = FunctionUtil.getCurrentImageName(mActivity)), Config.CUSTOMER_PICTURES_FOLDER);
+                    FunctionUtil.takePicture(mActivity, (currentImageName = "/"+FunctionUtil.getCurrentImageName(mActivity)), Config.CUSTOMER_PICTURES_FOLDER);
                     break;
                 // 查看大图片
                 case 0:
                     String picPath;
                     picPath = TextUtils.isEmpty(mCurrentDevice.change_pic) ? (TextUtils.isEmpty(mCurrentDevice.pic) ? "" : mCurrentDevice.pic) : mCurrentDevice.change_pic;
-                    picPath = mCurrentDevice.getPic(picPath);
+                    picPath = Config.BDZ_INSPECTION_FOLDER+mCurrentDevice.getPic(picPath);
                     if (FileUtils.isFileExists(picPath)) {
-                        NewDeviceDetailsActivity.this.showImageDetails(mActivity, picPath);
+                        showImageDetails(mActivity, picPath);
                     }
                     break;
                 case 3:
@@ -704,10 +705,10 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
                         imgList.add(currentImageName);
                         placedDevice.pic = StringUtils.arrayListToString(imgList);
                         PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
-                        NewDeviceDetailsActivity.this.runOnUiThread(() -> {
+                        runOnUiThread(() -> {
                             devicedetailsBinding.setHasSignPhoto(true);
                             CustomerDialog.dismissProgress();
-                            NewDeviceDetailsActivity.this.refreshDevicePic();
+                            refreshDevicePic();
                         });
                     });
                     break;
@@ -751,10 +752,10 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
         ExecutorManager.executeTask(() -> {
             mExistDefectList = DefectRecordService.getInstance().queryDefectByDeviceid(currentDeviceId, currentBdzId);
             if (mExistDefectList != null && !mExistDefectList.isEmpty()) {
-                TTSUtils.getInstance().startSpeaking(NewDeviceDetailsActivity.this.getResources().getString(R.string.xs_current_device_has_defect_format_str, mExistDefectList.size()));
+                TTSUtils.getInstance().startSpeaking(getResources().getString(R.string.xs_current_device_has_defect_format_str, mExistDefectList.size()));
             }
             mHandler.sendEmptyMessage(DEVICE_EXIST_DEFECT);
-            if (!NewDeviceDetailsActivity.this.isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) && !(InspectionType.special_xideng.equals(currentInspectionType))) {
+            if (!isParticularInspection((null == specialMenu) ? "" : specialMenu.standardsOrigin) && !(InspectionType.special_xideng.equals(currentInspectionType))) {
                 // 更新设备部件的缺陷数量显示
                 // 1、从库中查询设备部件
                 mDevicePartList = DevicePartService.getInstance().getDevicePart(mCurrentDevice.dtid, currentInspectionType, currentBdzId, mCurrentDevice.deviceid);

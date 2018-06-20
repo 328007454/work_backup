@@ -4,11 +4,14 @@ import android.text.TextUtils;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
+
+import java.util.UUID;
 
 
 @Table(name = "report")
@@ -69,12 +72,14 @@ public class Report extends BaseModel {
     public static final String REPORT_SOURCE = "report_source";
     public static final String DEPARTMENTID = "dept_id";
     public static final String AUDIO_URL = "audio_url";
+
+    public static final String IS_SBJCREPORT = "is_sbjcreport";
     /**
      * 是否普测(只适用于蓄电池测试、内阻测试)<br>
      * 0/普，1/抽
      */
     public static final String CSLX = "cslx";
-    @Column(name = REPORTID,isId = true)
+    @Column(name = REPORTID, isId = true)
     public String reportid;
     @Column(name = BDZID)
     public String bdzid;
@@ -134,7 +139,10 @@ public class Report extends BaseModel {
     @Column(name = DEPARTMENTID)
     public String departmentId;
     @Column(name = CSLX)
-    public int checkType;
+    public String checkType;
+
+    @Column(name = IS_SBJCREPORT)
+    public int isSbjcReport;
     /**
      * 试验维护整个任务录音文件地址
      */
@@ -174,7 +182,7 @@ public class Report extends BaseModel {
 
     public Report(String taskid, String bdzid, String bdz, String inspection, String persons) {
         this();
-        this.reportid =getPrimarykey();
+        this.reportid = getPrimarykey();
         this.starttime = DateUtils.getCurrentLongTime();
         this.taskid = taskid;
         this.bdz = bdz;
@@ -185,6 +193,27 @@ public class Report extends BaseModel {
         this.humidity = "";
         this.insertTime = DateUtils.getCurrentLongTime();
         this.placedWay = SystemConfig.getPlacedWay();
+    }
+
+    public Report(Task saveTask, Bdz bdz) {
+        this.reportid = UUID.randomUUID().toString();
+        this.departmentId = bdz.deptId;
+        this.bdzid = bdz.bdzid;
+        this.dlt = "0";
+        this.bdz = bdz.name;
+        this.inspection = saveTask.inspection;
+        this.persons = saveTask.createPersonName;
+        this.starttime = DateUtils.getCurrentLongTime();
+        this.taskid = saveTask.taskid;
+        this.insertTime = DateUtils.getCurrentLongTime();
+        this.isSbjcReport = 0;
+        this.inspectionValue = saveTask.inspection_name;
+        if (inspection.contains(InspectionType.SBJC.name())) {
+            this.reportSource = "sbjc";
+        } else {
+            this.reportSource = "report";
+        }
+        this.selected_deviceid = saveTask.selected_deviceid;
     }
 
     public void setReport(String bdzid, String bdz, String inspection, String temperature,

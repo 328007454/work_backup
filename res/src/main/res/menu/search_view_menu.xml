@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
+<menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--右侧搜索操作条目-->
     <item
         android:id="@+id/action_search"
         android:title="@string/menu_search"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always"
-        />
+        android:actionViewClass="android.support.v7.widget.SearchView"
+        android:showAsAction="always"
+        tools:ignore="AppCompatResource" />
 
 </menu>

@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.view;
+package com.cnksi.common.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

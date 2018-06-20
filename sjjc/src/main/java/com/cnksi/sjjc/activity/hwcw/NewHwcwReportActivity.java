@@ -67,7 +67,6 @@ public class NewHwcwReportActivity extends BaseReportActivity {
 
     public void initView() {
         mTvTitle.setText(currentBdzName + currentInspectionTypeName + "报告");
-        mBtnRight.setVisibility(View.VISIBLE);
     }
 
 

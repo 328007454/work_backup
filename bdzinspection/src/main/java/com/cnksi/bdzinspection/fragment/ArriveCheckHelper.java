@@ -37,8 +37,8 @@ import java.util.Set;
 import static com.cnksi.common.model.vo.SpaceGroupItem.SPACE_ITEM;
 
 /**
- * @version 1.0
  * @author wastrel
+ * @version 1.0
  * @date 2018/1/19 19:02
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -50,7 +50,7 @@ public class ArriveCheckHelper {
     public HashMap<String, PlacedDevice> arrivedDevices = new HashMap<>();
 
     float DISTANCE;
-    static  boolean isPrepare = false;
+    static boolean isPrepare = false;
     Placed finalPlaced = null;
 
     private long lastCheckTime;
@@ -68,7 +68,7 @@ public class ArriveCheckHelper {
         deviceAdapter = adapter;
         currentFunctionModel = mode;
         this.bdzId = bdzId;
-        DISTANCE = PreferencesUtils.get( Config.COPY_DISTANCE_KEY, 100f);
+        DISTANCE = PreferencesUtils.get(Config.COPY_DISTANCE_KEY, 100f);
         if (SystemConfig.isDevicePlaced()) {
             ExecutorManager.executeTask(() -> {
                 List<PlacedDevice> result = PlacedDeviceService.getInstance().findPlacedDevice(currentReportId);
@@ -308,7 +308,9 @@ public class ArriveCheckHelper {
     public void handleSpaceArrivedData() {
         if (SystemConfig.isDevicePlaced() && "one".equals(currentFunctionModel)) {
             List<Placed> saveList = new ArrayList<>();
-            for (MultiItemEntity node : deviceAdapter.getData()) {
+            Iterator<MultiItemEntity> itemEntityIterator = deviceAdapter.getData().iterator();
+            while (itemEntityIterator.hasNext()) {
+                MultiItemEntity node = itemEntityIterator.next();
                 if (node.getItemType() == SPACE_ITEM && deviceAdapter.handleDevicePlaced((SpaceItem) node)) {
                     DbModel model = ((SpaceItem) node).spacing;
                     String spid = model.getString("spid");

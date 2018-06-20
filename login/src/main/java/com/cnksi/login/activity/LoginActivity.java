@@ -3,7 +3,6 @@ package com.cnksi.login.activity;
 import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cnksi.bdloc.LocationUtil;
 import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
@@ -34,14 +34,15 @@ import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
+import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KSync;
+import com.cnksi.login.CustomApplication;
 import com.cnksi.login.R;
 import com.cnksi.login.databinding.ActivityLoginBinding;
 import com.cnksi.login.inter.GrantPermissionListener;
 import com.cnksi.login.util.AESUtil;
 import com.cnksi.login.util.ActivityUtil;
 import com.cnksi.login.util.PermissionUtil;
-import com.cnksi.login.CustomApplication;
 import com.cnksi.sjjc.dialog.ModifySyncUrlBinding;
 import com.cnksi.sjjc.util.AccountUtil;
 
@@ -217,6 +218,12 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
             } else {
                 binding.txtUserLayout.setVisibility(View.VISIBLE);
             }
+        });
+
+        binding.user2Img.setOnClickListener(v -> {
+            CustomerDialog.showProgress(this);
+            FileUtils.copyFile(getApplicationContext().getFilesDir().getAbsolutePath() + "/database/" + Config.ENCRYPT_DATABASE_NAME, Config.BDZ_INSPECTION_FOLDER + "bdzinspection.db");
+            CustomerDialog.dismissProgress();
         });
     }
 
@@ -432,7 +439,8 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
                 //保存登录班组和账号
                 PreferencesUtils.put(Config.CURRENT_DEPARTMENT_ID, user.dept_id);
                 KSyncConfig.getInstance().setDept_id(user.dept_id);
-                startActivity(new Intent(this, HomeActivity.class));
+//                startActivity(new Intent(this, HomeActivity.class));
+                ARouter.getInstance().build("/login/HomeActivity").navigation();
                 finish();
                 return true;
             } else {
@@ -472,10 +480,7 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
         PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
         PreferencesUtils.put(Config.OTHER_DEPT_USER, mCurrentUserOne.type);
         PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, mCurrentUserOne.deptName);
-        //保存登录班组和账号
-        Intent intent = new Intent(mActivity, HomeActivity.class);
-        startActivity(intent);
-        LoginActivity.this.finish();
+        ARouter.getInstance().build("/login/HomeActivity").navigation();
         final String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
         KSyncConfig.getInstance().setDept_id(dept_id);
         if ("-1".equals(dept_id)) {

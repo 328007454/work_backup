@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 
+import com.cnksi.common.R;
 import com.cnksi.common.utils.StringUtilsExt;
 import com.cnksi.core.utils.ToastUtils;
 
@@ -24,6 +25,7 @@ public class EditTextNoEmoj extends AppCompatEditText {
     public EditTextNoEmoj(Context context, AttributeSet attrs) {
         super(context,attrs);
         addOnTextChangeListen();
+        setBackgroundColor(getContext().getResources().getColor(R.color.white));
     }
 
     public EditTextNoEmoj(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -55,5 +57,8 @@ public class EditTextNoEmoj extends AppCompatEditText {
         });
     }
 
-
+    @Override
+    public void setBackgroundColor(int color) {
+        super.setBackgroundColor(color);
+    }
 }

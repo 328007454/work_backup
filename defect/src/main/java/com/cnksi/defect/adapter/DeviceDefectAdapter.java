@@ -95,6 +95,11 @@ public class DeviceDefectAdapter extends BaseQuickAdapter<DefectRecord, BaseView
 
             }
         });
+        defectImage.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onClick(v, item, holder.getAdapterPosition());
+            }
+        });
     }
 
     private String defectId;

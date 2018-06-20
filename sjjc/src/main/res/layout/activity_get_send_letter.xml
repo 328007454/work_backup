@@ -121,7 +121,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/layout_height"
-
                 android:layout_marginTop="2px"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -136,7 +135,8 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size" />
 
-                <EditText
+                <com.cnksi.common.view.ContainsEmojiEditText
+                    android:background="@null"
                     android:maxLength="8"
                     android:id="@+id/edit_send_level"
                     style="@style/NewHeatPointEditTextStyle"
@@ -153,10 +153,11 @@
                 android:layout_marginTop="2px"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:paddingLeft="20px"
                 android:paddingRight="20px">
 
                 <TextView
+                    android:paddingLeft="20px"
+                    android:background="@color/core_bg_white_ffffff"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -164,7 +165,8 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size" />
 
-                <EditText
+                <com.cnksi.common.view.ContainsEmojiEditText
+                    android:background="@null"
                     android:maxLength="8"
                     android:id="@+id/edit_receive_level"
                     style="@style/NewHeatPointEditTextStyle"
@@ -273,13 +275,13 @@
                     app:layout_auto_baseheight="width">
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/show_pic"
                         android:layout_width="100px"
                         android:layout_height="100px"
                         android:layout_alignParentBottom="true"
                         android:layout_centerVertical="true"
                         android:scaleType="center"
-                        android:src="@mipmap/ic_launcher"
                         app:layout_auto_baseheight="width"
                         tools:ignore="ContentDescription" />
 

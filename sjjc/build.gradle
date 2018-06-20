@@ -15,6 +15,11 @@ android {
             abiFilters 'armeabi'
         }
         multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     dataBinding {
         enabled true
@@ -108,4 +113,6 @@ dependencies {
 
 
     implementation "com.android.support:design:$design_version"
+    api "com.alibaba:arouter-api:$arouter_api"
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
 }

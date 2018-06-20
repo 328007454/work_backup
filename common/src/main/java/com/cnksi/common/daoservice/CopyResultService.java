@@ -120,7 +120,7 @@ public class CopyResultService extends BaseService<CopyResult> {
     }
 
     public long getReportCopyCount(String reportId) {
-        String sql = "select count(1) as count" + " from copy_result result WHERE result.dlt='0' and result.reportid=? and ( result.val is not null or result.val_a is not null or result.val_b is not null or result.val_c is not null or result.val_o is not null)";
+        String sql = "select count(1) as count" + " from copy_result result WHERE result.dlt='0' and result.reportid=? and ( result.val is not null or result.val_a is not null or result.val_b is not null or result.val_c is not null or result.val_o is not null OR result.val_special IS NOT NULL)";
         SqlInfo sqlInfo = new SqlInfo(sql);
         sqlInfo.addBindArg(new KeyValue("", reportId));
         try {

@@ -8,6 +8,7 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 import org.xutils.db.table.DbModel;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -136,6 +137,24 @@ public class ReportSignname extends BaseModel {
         this.name = name;
         this.id = getPrimarykey();
         this.createTime = DateUtils.getCurrentLongTime();
+    }
+
+    public ReportSignname(String account, List<DbModel> allSelectUser, Report report) {
+        String[] accounts = account.split(",");
+        for (int userSize = 0; userSize < accounts.length; userSize++) {
+            DbModel model = allSelectUser.get(userSize);
+            this.id = UUID.randomUUID().toString();
+            this.reportId = report.reportid;
+            this.dpetId = report.departmentId;
+            this.dpetName = model.getString(Users.DEPT_NAME);
+            this.signerRole = "worker";
+            this.name = model.getString(Users.USERNAME);
+            this.dlt = "0";
+            this.createTime = DateUtils.getCurrentLongTime();
+            this.inserTime = DateUtils.getCurrentLongTime();
+            this.account = model.getString(Users.ACCOUNT);
+        }
+
     }
 
 

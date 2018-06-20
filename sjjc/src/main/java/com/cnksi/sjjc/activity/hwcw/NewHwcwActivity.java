@@ -268,6 +268,9 @@ public class NewHwcwActivity extends BaseSjjcActivity implements BaseRecyclerDat
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case Config.ACTIVITY_CHOSE_DEVICE:
+                if (data==null){
+                    return;
+                }
                 DbModel model = (DbModel) data.getSerializableExtra(DeviceSelectActivity.RESULT_SELECT_KEY);
                 if (model != null) {
                     currentDevice = model;

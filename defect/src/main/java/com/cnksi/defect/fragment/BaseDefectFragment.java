@@ -43,7 +43,7 @@ public class BaseDefectFragment extends BaseCoreFragment implements ItemClickOrL
         return 0;
     }
 
-    protected void setClickDefectData(DefectRecord record) {
+    protected void setClickDefectData(View view,DefectRecord record) {
 
     }
 
@@ -80,7 +80,7 @@ public class BaseDefectFragment extends BaseCoreFragment implements ItemClickOrL
     @Override
     public void onClick(View v, DefectRecord data, int position) {
         selectDefect = data;
-        setClickDefectData(data);
+        setClickDefectData(v,data);
     }
 
     @Override

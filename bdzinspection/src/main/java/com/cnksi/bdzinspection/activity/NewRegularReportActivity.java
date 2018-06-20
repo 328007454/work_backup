@@ -182,7 +182,6 @@ public class NewRegularReportActivity extends BaseActivity {
         switch (msg.what) {
             case ANIMATION:
                 PlaySound.getIntance(mActivity).play(R.raw.print_out);
-//			translateAnimRun(binding.llReportContentContainer, 0.0f, binding.llReportContentContainer.getHeight() * 92 / 100);
                 LinearLayout.MarginLayoutParams marginLayoutParams = (LinearLayout.MarginLayoutParams) binding.llReportContentContainer.getLayoutParams();
                 AnimationUtils.translateAnimRun(binding.llReportContentContainer, 0.0f, Math.abs(marginLayoutParams.topMargin));
                 break;
@@ -254,18 +253,18 @@ public class NewRegularReportActivity extends BaseActivity {
 
     private void initOnClick() {
 
-        binding.ibtnCancel.setOnClickListener(view -> NewRegularReportActivity.this.onBackPressed());
+        binding.ibtnCancel.setOnClickListener(view ->ExitThisAndGoLauncher());
 
-        binding.tvEliminateDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
-        binding.llEliminateDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.tvEliminateDefectCount.setOnClickListener(view ->showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.llEliminateDefectCount.setOnClickListener(view ->showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
 
-        binding.tvTrackDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
-        binding.llTrackDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.tvTrackDefectCount.setOnClickListener(view ->showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.llTrackDefectCount.setOnClickListener(view ->showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
 
-        binding.tvNewDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
-        binding.llNewDefectCount.setOnClickListener(view -> NewRegularReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.tvNewDefectCount.setOnClickListener(view ->showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.llNewDefectCount.setOnClickListener(view ->showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
 
-        binding.ibtnExit.setOnClickListener(view -> NewRegularReportActivity.this.ExitThisAndGoLauncher());
+        binding.ibtnExit.setOnClickListener(view ->ExitThisAndGoLauncher());
 
     }
 

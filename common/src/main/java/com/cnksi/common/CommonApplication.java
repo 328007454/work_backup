@@ -2,6 +2,7 @@ package com.cnksi.common;
 
 import android.util.Pair;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cnksi.DebugDB;
 import com.cnksi.bdloc.LLog;
 import com.cnksi.bdloc.LocationUtil;
@@ -30,7 +31,7 @@ import java.util.Map;
  * @version 1.0
  * @date 16/4/20
  */
-public class CommonApplication extends CoreApplication  implements IKSync {
+public class CommonApplication extends CoreApplication implements IKSync {
     //数据库管理者
     private static CommonApplication mInstance = null;
 
@@ -88,6 +89,12 @@ public class CommonApplication extends CoreApplication  implements IKSync {
         LocationUtil.init(getAppContext());
         LLog.isLog = Config.DEBUG;
         initDebugDb();
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog();
+            ARouter.openDebug();
+        }
+        ARouter.init(this);
+
     }
 
     private void initDebugDb() {
@@ -120,6 +127,7 @@ public class CommonApplication extends CoreApplication  implements IKSync {
         Config.SYNC_URL = PreferencesUtils.get(Config.KEY_SYNC_URL, Config.SYNC_URL);
         Config.SYNC_APP_ID = PreferencesUtils.get(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
     }
+
     Map<String, KSync> map;
 
     @Override

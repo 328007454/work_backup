@@ -39,8 +39,6 @@ import static com.cnksi.common.Config.LOAD_DATA;
 public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
 
 
-
-
     /**
      * 当前报告
      */
@@ -117,6 +115,7 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
         mJzlfenjieLayoutBinding.lvReportContent.setVisibility(View.VISIBLE);
         mJzlfenjieLayoutBinding.tvInspectionTemperature.setVisibility(View.GONE);
         mJzlfenjieLayoutBinding.tvInspectionHumidity.setVisibility(View.GONE);
+        mJzlfenjieLayoutBinding.tvInspectionHumidityTitle.setVisibility(View.GONE);
         mJzlfenjieLayoutBinding.tvInspectionWeather.setVisibility(View.GONE);
         mJzlfenjieLayoutBinding.tvInspectionTemperatureTitle.setVisibility(View.GONE);
         mJzlfenjieLayoutBinding.tvInspectionTemperatureTitle.setVisibility(View.GONE);
@@ -127,47 +126,47 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
 
     public void loadData() {
         ExecutorManager.executeTaskSerially(() -> {
-            try {
-                report = ReportService.getInstance().findById(currentReportId);
-            } catch (DbException e) {
-                e.printStackTrace(System.out);
-            }
-            if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
-                listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
-                copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
-            }
+                    try {
+                        report = ReportService.getInstance().findById(currentReportId);
+                    } catch (DbException e) {
+                        e.printStackTrace(System.out);
+                    }
+                    if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
+                        listDbModel = ReportJzlbyqfjkgService.getInstance().getJzlfjkgCopyRecord(currentBdzId, currentReportId);
+                        copyTotalDbmodel = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.TANSFORMADJUSTMENT_KAIGUAN, Config.TANSFORMADJUSTMENT_DANGWEI);
+                    }
 
-            if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
-                try {
-                    listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
-                    exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(currentBdzId, currentReportId);
-                    for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
-                        CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
+                    if (currentInspectionType.equals(InspectionType.SBJC_04.name())) {
+                        try {
+                            listDevice = DeviceService.getInstance().getDevicesByNameWays(currentBdzId, Config.DIFFERENTIAL_RECORD_KEY);
+                            exitCdbhclList = ReportCdbhclService.getInstance().getReportCdbhclList(currentBdzId, currentReportId);
+                            for (ReportCdbhcl reportCdbhcl : exitCdbhclList) {
+                                CdbhclValue.reportChangeValue(reportCdbhcl, cdbhclValueList);
+                            }
+                            for (DbModel modle : listDevice) {
+                                if (modle.getString(CopyItem.VAL).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                                if (modle.getString(CopyItem.VAL_A).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                                if (modle.getString(CopyItem.VAL_B).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                                if (modle.getString(CopyItem.VAL_C).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                                if (modle.getString(CopyItem.VAL_O).equalsIgnoreCase("Y")) {
+                                    countCopyCdbhcl += 1;
+                                }
+                            }
+                        } catch (DbException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    for (DbModel modle : listDevice) {
-                        if (modle.getString(CopyItem.VAL).equalsIgnoreCase("Y")) {
-                            countCopyCdbhcl += 1;
-                        }
-                        if (modle.getString(CopyItem.VAL_A).equalsIgnoreCase("Y")) {
-                            countCopyCdbhcl += 1;
-                        }
-                        if (modle.getString(CopyItem.VAL_B).equalsIgnoreCase("Y")) {
-                            countCopyCdbhcl += 1;
-                        }
-                        if (modle.getString(CopyItem.VAL_C).equalsIgnoreCase("Y")) {
-                            countCopyCdbhcl += 1;
-                        }
-                        if (modle.getString(CopyItem.VAL_O).equalsIgnoreCase("Y")) {
-                            countCopyCdbhcl += 1;
-                        }
-                    }
-                } catch (DbException e) {
-                    e.printStackTrace();
+
+                    mHandler.sendEmptyMessage(LOAD_DATA);
                 }
-            }
-
-            mHandler.sendEmptyMessage(LOAD_DATA);
-        }
 
         );
     }
@@ -182,9 +181,15 @@ public class JZLFenJieKaiGuanReportActivity extends BaseReportActivity {
                 mJzlfenjieLayoutBinding.tvInspectionEndTime.setText(report.endtime);
 
                 mJzlfenjieLayoutBinding.tvInspectionPerson.setText(report.persons);
-                mJzlfenjieLayoutBinding.tvInspectionTemperature.setText(report.temperature.contains(getString(R.string.temperature_unit_str)) ? report.temperature : report.temperature + getString(R.string.temperature_unit_str));
-                mJzlfenjieLayoutBinding.tvInspectionHumidity.setText(report.humidity.contains(getString(R.string.humidity_unit_str)) ? report.humidity : report.humidity + getString(R.string.humidity_unit_str));
-                mJzlfenjieLayoutBinding.tvInspectionWeather.setText(report.tq);
+                if (!TextUtils.isEmpty(report.temperature)) {
+                    mJzlfenjieLayoutBinding.tvInspectionTemperature.setText(report.temperature.contains(getString(R.string.temperature_unit_str)) ? report.temperature : report.temperature + getString(R.string.temperature_unit_str));
+                }
+                if (!TextUtils.isEmpty(report.humidity)) {
+                    mJzlfenjieLayoutBinding.tvInspectionHumidity.setText(report.humidity.contains(getString(R.string.humidity_unit_str)) ? report.humidity : report.humidity + getString(R.string.humidity_unit_str));
+                }
+                if (!TextUtils.isEmpty(report.tq)) {
+                    mJzlfenjieLayoutBinding.tvInspectionWeather.setText(report.tq);
+                }
                 if (currentInspectionType.equals(InspectionType.SBJC_05.name())) {
                     int i = 0;
                     for (DbModel model : listDbModel) {

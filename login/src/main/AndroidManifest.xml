@@ -13,14 +13,14 @@
 
         <meta-data
             android:name="design_width"
-            android:value="1080"/>
+            android:value="1080" />
         <meta-data
             android:name="design_height"
-            android:value="1920"/>
+            android:value="1920" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="qpXBSFGkHytABR7n2Gz2jjOl7e3omC7A"/>
+            android:value="qpXBSFGkHytABR7n2Gz2jjOl7e3omC7A" />
 
         <activity
             android:name="com.cnksi.login.activity.LoginActivity"
@@ -28,11 +28,23 @@
             android:screenOrientation="portrait"
             android:theme="@style/LoginActivityTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.cnksi.login.activity.NewLauncherActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!-- 首页-->
+        <activity
+            android:name="com.cnksi.login.activity.HomeActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
     </application>
 
 </manifest>

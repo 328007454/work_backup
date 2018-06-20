@@ -5,11 +5,14 @@ import android.text.TextUtils;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.utils.MyUUID;
 import com.cnksi.common.utils.StringUtilsExt;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
+import org.xutils.db.table.DbModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,7 +62,18 @@ public class Task extends BaseModel {
      * 是否作废；0：表示正常 ，1：表示作废
      */
     public static final String IS_INVALID = "is_invalid";
-    @Column(name = TASKID,isId = true)
+
+    /**
+     * 创建者姓名
+     */
+    public static final String CREATEPERSONNAME = "create_person_name";
+
+    /**
+     * 创建者姓名
+     */
+    public static final String DEPT_ID = "dept_id";
+
+    @Column(name = TASKID, isId = true)
     public String taskid;
     @Column(name = INSPECTION)
     public String inspection;
@@ -85,10 +99,16 @@ public class Task extends BaseModel {
     public String selected_deviceid;
     @Column(name = CRAETE_ACCOUNT)
     public String createAccount;
+    @Column(name = CREATEPERSONNAME)
+    public String createPersonName;
     @Column(name = MEMBERS_ACCOUNT)
     public String membersAccount;
     @Column(name = IS_INVALID)
     public int isInvalid;
+
+    @Column(name = DEPT_ID)
+    public String deptId;
+
 
     public transient boolean hasNewDefect = false;
 
@@ -103,6 +123,7 @@ public class Task extends BaseModel {
         this.taskid = taskid;
         this.status = TaskStatus.done.name();
     }
+
     public Task(String taskid, String bdzid, String bdzname, String inspection, String inspection_name, String schedule_time, String status) {
         this.taskid = taskid;
         this.inspection = inspection;
@@ -112,6 +133,7 @@ public class Task extends BaseModel {
         this.status = status;
         this.inspection_name = inspection_name;
     }
+
     public Task(String taskid, String bdzid, String bdzname, String inspection, String inspection_name,
                 String schedule_time, String status, String creatUser, String membersUser) {
         this.taskid = taskid;
@@ -135,6 +157,48 @@ public class Task extends BaseModel {
         this.status = status;
         this.inspection_name = inspection_name;
         this.createAccount = createAccount;
+    }
+
+    public Task(Bdz bdz, String inspectionType, String currentAcounts, String inspectionValue, List<DbModel> allSelectUser, String selectDeviceIds, String type) {
+        this.taskid = MyUUID.id(4);
+        this.inspection = inspectionType;
+        this.bdzid = bdz.bdzid;
+        this.bdzname = bdz.name;
+        this.deptId = bdz.deptId;
+        this.schedule_time = DateUtils.getCurrentLongTime();
+        this.inspection_name = inspectionValue;
+        String[] accounts = currentAcounts.split(",");
+        for (int accountSize = 0; accountSize < accounts.length; accountSize++) {
+
+        }
+        StringBuilder createUsers = new StringBuilder();
+        StringBuilder memberUsers = new StringBuilder();
+        StringBuilder createUserNames = new StringBuilder();
+        for (int userSize = 0; userSize < allSelectUser.size(); userSize++) {
+            DbModel model = allSelectUser.get(userSize);
+            if (userSize <= accounts.length - 1) {
+                if (userSize == 0) {
+                    createUsers.append(model.getString(Users.ACCOUNT));
+                    createUserNames.append(model.getString(Users.USERNAME));
+                } else {
+                    createUsers.append(",").append(model.getString(Users.ACCOUNT));
+                    createUserNames.append(",").append(model.getString(Users.USERNAME));
+                }
+            } else {
+                if (userSize == accounts.length) {
+                    memberUsers.append(model.getString(Users.ACCOUNT));
+                } else {
+                    memberUsers.append(",").append(model.getString(Users.ACCOUNT));
+                }
+            }
+        }
+        this.createAccount = createUsers.toString();
+        this.membersAccount = memberUsers.toString();
+        this.createPersonName = createUserNames.toString();
+        this.dlt = "0";
+        this.status = TaskStatus.undo.name();
+        this.selected_deviceid = selectDeviceIds;
+        this.type = type;
     }
 
     /**

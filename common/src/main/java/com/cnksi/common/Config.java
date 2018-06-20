@@ -363,6 +363,18 @@ public class Config implements Cst {
     public static final String CRISIS_LEVEL = "危急缺陷";
     public static final String CRISIS_LEVEL_CODE = "6";
 
+    /**
+     * 问题
+     */
+    public static final String PROBLEM_LEVEL = "问题";
+    public static final String PROBLEM_LEVEL_CODE = "8";
+
+    /**
+     * 隐患
+     */
+    public static final String HIDDEN_LEVEL = "隐患";
+    public static final String HIDDEN_LEVEL_CODE = "10";
+
     public final static boolean PLACED_BY_COPY = true;
 
     /**

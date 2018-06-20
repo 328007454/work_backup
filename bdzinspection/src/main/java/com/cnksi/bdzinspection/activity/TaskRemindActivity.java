@@ -95,6 +95,7 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
         binding = DataBindingUtil.setContentView(this, R.layout.xs_activity_inspection_task_remind);
         initialUI();
         initOnClick();
+        SystemConfig.init();
     }
 
     private void initialUI() {
@@ -182,8 +183,8 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
             ksync.upload();
         });
         binding.addTask.setOnClickListener(view -> {
-            Intent intent = new Intent(mActivity, AddTaskActivity.class);
-            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, currentSelectInspectionType.name());
+            Intent intent = new Intent(mActivity, com.cnksi.common.activity.AddTaskActivity.class);
+            intent.putExtra(Config.CURRENT_INSPECTION_TYPE, currentSelectInspectionType.name());
             TaskRemindActivity.this.startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
         });
     }
@@ -232,7 +233,6 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
     }
 
 
-
     @Override
     public void updateTaskStatus() {
         for (int i = 0, count = mFragmentList.size(); i < count; i++) {
@@ -258,9 +258,6 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
 
     @Override
     public void allPermissionsGranted() {
-        // 检测是否进行版本升级
-//        checkUpdateVersion(Config.DOWNLOAD_APP_FOLDER, Config.PCODE);
-        SystemConfig.init();
     }
 
     @Override
@@ -325,11 +322,11 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
                 //开始任务时就生成报告 不然各处引用报告的 问题太多
                 generateReport(mTask);
                 if (mTask.inspection.contains(InspectionType.switchover.name()) || mTask.inspection.contains(InspectionType.maintenance.name()) || mTask.inspection.equalsIgnoreCase(InspectionType.battery.name())) {
-//                    if (SystemConfig.NONE.equalsIgnoreCase(SystemConfig.getSwitchMenuConfirmStyle())) {
-                    intent.setClass(mActivity, New1RegularSwitchActivity1.class);
-//                    } else {
-//                        intent.setClass(mActivity, New1RegularSwitchActivity2.class);
-//                    }
+                    if (SystemConfig.NONE.equalsIgnoreCase(SystemConfig.getSwitchMenuConfirmStyle())) {
+                        intent.setClass(mActivity, New1RegularSwitchActivity1.class);
+                    } else {
+                        intent.setClass(mActivity, New1RegularSwitchActivity2.class);
+                    }
                 } else {
                     boolean containsUser = false;
                     String reportId = null;

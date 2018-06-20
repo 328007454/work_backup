@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center_vertical">
 
         <LinearLayout
@@ -23,12 +23,13 @@
                 android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:textColor="@color/global_text_color"
-                android:textSize="@dimen/global_text_size_1"/>
+                android:textSize="@dimen/global_text_size_1" />
 
 
             <EditText
                 android:id="@+id/et_test_instrument"
                 style="@style/NewHeatPointEditTextStyle"
+                android:background="@null"
                 android:layout_width="0dp"
                 android:layout_weight="1.1"
                 android:focusable="true"
@@ -36,7 +37,7 @@
                 android:maxLength="8"
                 android:paddingRight="30px"
                 android:textSize="@dimen/global_text_size_1"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
         </LinearLayout>
 
@@ -45,8 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:layout_below="@id/ll_container"
-            android:background="@color/gray_background_color"
-            />
+            android:background="@color/gray_background_color" />
 
     </RelativeLayout>
 </layout>

@@ -104,7 +104,7 @@ public class BHDZJLActivity extends BaseSjjcActivity {
                     .setPmsDeviceType(isBhsb ? PMSDeviceType.one : PMSDeviceType.second)
                     .setTitle(isBhsb ? "请选择一次设备" : "请选择二次设备")
                     .setRequestCode(Config.ACTIVITY_CHOSE_DEVICE + (isBhsb ? 1 : 0))
-                    .setFilterSql(" and d.spid='".concat(group1.getBhsb().getString(Device.SPID)).concat("' "))
+                    .setFilterSql(group1.getBhsb()==null?"":" and d.spid='".concat(group1.getBhsb().getString(Device.SPID)).concat("' "))
                     .start();
         });
         groups.add(group);

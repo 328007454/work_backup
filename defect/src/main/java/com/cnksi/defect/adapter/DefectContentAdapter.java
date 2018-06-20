@@ -17,6 +17,7 @@ import com.cnksi.core.utils.StringUtils;
 import com.cnksi.defect.R;
 import com.cnksi.defect.activity.DefectControlActivity;
 import com.cnksi.defect.databinding.AdapterDefectItemBinding;
+import com.cnksi.defect.utils.DefectUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,28 +62,10 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         }
     }
 
-    /**
-     * 转换缺陷等级为 一般 严重 危机
-     *
-     * @param item
-     * @return
-     */
-    public CharSequence convert2DefectLevel(DefectRecord item) {
-        CharSequence result;
-        if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
-            result = StringUtils.changePartTextColor("[" + Config.GENERAL_LEVEL + "]" + item.description, Color.parseColor("#F1B55B"), 0, 6);
-        } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
-            result = StringUtils.changePartTextColor("[" + Config.SERIOUS_LEVEL + "]" + item.description, Color.parseColor("#F18815"), 0, 6);
-        } else {
-            result = StringUtils.changePartTextColor("[" + Config.CRISIS_LEVEL + "]" + item.description, Color.RED, 0, 6);
-        }
-        return result;
-    }
-
     @Override
     public void convert(ViewDataBinding dataBinding, DefectRecord item, int position) {
         AdapterDefectItemBinding itemBinding = (AdapterDefectItemBinding) dataBinding;
-        itemBinding.tvDefectContent.setText(convert2DefectLevel(item));
+        itemBinding.tvDefectContent.setText(DefectUtils.convert2DefectDesc(item));
         itemBinding.tvDefectDevice.setText("设备：" + (TextUtils.isEmpty(item.devcie) ? "" : item.devcie));
         itemBinding.ivDefectImage.setImageBitmap(null);
         final ArrayList<String> listPicDis = StringUtils.stringToList(item.pics);

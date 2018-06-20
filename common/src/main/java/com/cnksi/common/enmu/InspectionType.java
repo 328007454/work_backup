@@ -112,5 +112,4 @@ public enum InspectionType {
         return InspectionType.valueOf(value);
     }
 
-
 }

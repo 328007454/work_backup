@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import com.cnksi.common.CommonApplication;
 import com.cnksi.common.KSyncConfig;
+import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.model.Department;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.ksynclib.activity.KSyncAJActivity;
-
 import com.zhy.autolayout.utils.AutoUtils;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -31,48 +31,40 @@ import net.sqlcipher.database.SQLiteDatabase;
 public class XJSyncActivity extends KSyncAJActivity {
 
     private String mSyncAppId;
+    private TextView textViewDept;
+    private TextView textViewVersion;
+    private String deptName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LinearLayout layout = (LinearLayout) findViewById(com.cnksi.ksynclib.R.id.tv_download).getParent().getParent().getParent();
         mSyncAppId = getIntent().getStringExtra(SYNC_APPID_KEY);
-        String dept_id = KSyncConfig.getInstance().getDept_id();
-        String deptName = "";
-        if (!"-1".equals(dept_id)) {
-            Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
-            if (department != null) {
-                deptName = StringUtils.NullToDefault(department.name, department.dept_name, department.pms_name, dept_id);
-            }
-            KSyncConfig.getInstance().getKNConfig(this);
-        } else {
-            deptName = "未登录";
-        }
-        TextView textView = new TextView(this);
-        textView.setText("当前班组:" + deptName);
-        textView.setGravity(Gravity.CENTER_VERTICAL);
+        textViewDept = new TextView(this);
+        textViewDept.setGravity(Gravity.CENTER_VERTICAL);
+        setDeptInfor();
         int padding = AutoUtils.getPercentHeightSize(36);
-        textView.setPadding(padding, 0, padding, padding / 2);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(Color.WHITE);
-        layout.addView(textView);
+        textViewDept.setPadding(padding, 0, padding, padding / 2);
+        textViewDept.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        textViewDept.setTextColor(Color.WHITE);
+        layout.addView(textViewDept);
 
-        textView = new TextView(this);
+        textViewVersion = new TextView(this);
         Object sqlite = CommonApplication.getInstance().getDbManager().getDatabase();
         if (sqlite instanceof SQLiteDatabase) {
-            textView.setText("数据版本号:" + ((SQLiteDatabase) sqlite).getVersion());
+            textViewVersion.setText("数据版本号:" + ((SQLiteDatabase) sqlite).getVersion());
         } else {
-            textView.setText("数据版本号:" + ((android.database.sqlite.SQLiteDatabase) sqlite).getVersion());
+            textViewVersion.setText("数据版本号:" + ((android.database.sqlite.SQLiteDatabase) sqlite).getVersion());
         }
 
-        textView.append("\t\t 当前APPID：" + mSyncAppId);
+        textViewVersion.append("\t\t 当前APPID：" + mSyncAppId);
 
-        textView.setGravity(Gravity.CENTER_VERTICAL);
-        textView.setPadding(padding, 0, padding, padding / 2);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTextColor(Color.WHITE);
-        layout.addView(textView);
-
+        textViewVersion.setGravity(Gravity.CENTER_VERTICAL);
+        textViewVersion.setPadding(padding, 0, padding, padding / 2);
+        textViewVersion.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        textViewVersion.setTextColor(Color.WHITE);
+        layout.addView(textViewVersion);
+        SystemConfig.init();
     }
 
     @Override
@@ -93,7 +85,23 @@ public class XJSyncActivity extends KSyncAJActivity {
                     finish();
                 }
                 break;
+            case KSyncAJActivity.DELETE_FINISHED:
+                break;
             default:
         }
+    }
+
+    private void setDeptInfor() {
+        String dept_id = KSyncConfig.getInstance().getDept_id();
+        if (!"-1".equals(dept_id)) {
+            Department department = DepartmentService.getInstance().findDepartmentById(dept_id);
+            if (department != null) {
+                deptName = StringUtils.NullToDefault(department.name, department.dept_name, department.pms_name, dept_id);
+            }
+            KSyncConfig.getInstance().getKNConfig(this);
+        } else {
+            deptName = "未登录";
+        }
+        textViewDept.setText("当前班组:" + deptName);
     }
 }

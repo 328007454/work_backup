@@ -20,6 +20,7 @@ import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
@@ -126,7 +127,7 @@ public class AddDefectActivity extends BaseTitleActivity {
     }
 
     private boolean hasAllChoice;
-    private boolean hasDevicePart;
+    private boolean noDevicePart;
     private boolean hasDeviceChoice;
     private boolean hasReportId;
     private String remark;
@@ -135,7 +136,7 @@ public class AddDefectActivity extends BaseTitleActivity {
         getIntentValue();
         Intent intent = getIntent();
         hasAllChoice = intent.getBooleanExtra(Config.HAS_ALL_CHOICE, false);
-        hasDevicePart = intent.getBooleanExtra(Config.NO_DEVICE_PART, true);
+        noDevicePart = intent.getBooleanExtra(Config.NO_DEVICE_PART, true);
         hasDeviceChoice = intent.getBooleanExtra(Config.DEVICE_CHOICE, false);
         hasReportId = intent.getBooleanExtra(Config.HAS_REPORT_ID, true);
         deviceDtId = intent.getStringExtra(Device.DTID);
@@ -153,7 +154,7 @@ public class AddDefectActivity extends BaseTitleActivity {
             binding.ivSelectDevice.setVisibility(View.GONE);
             binding.etInputDefectContent.setText(TextUtils.isEmpty(defectContent) ? "" : defectContent);
         }
-        if (!hasDevicePart) {
+        if (!noDevicePart) {
             binding.txtDevicePartName.setVisibility(View.VISIBLE);
             binding.txtDevicePartName.setText(devicePartName);
         }
@@ -172,7 +173,7 @@ public class AddDefectActivity extends BaseTitleActivity {
         if (!TextUtils.isEmpty(defectContent)) {
             remark = defectContent;
         }
-        if (!hasDevicePart) {
+        if (noDevicePart) {
             standardId = intent.getStringExtra(Config.CURRENT_STANDARD_ID);
         }
     }
@@ -180,7 +181,7 @@ public class AddDefectActivity extends BaseTitleActivity {
     private void initOnClick() {
         binding.etInputDefectContent.requestFocus();
         binding.etInputDefectContent.setOnClickListener(v -> {
-            if (!hasDevicePart) {
+            if (!noDevicePart) {
                 KeyBoardUtils.closeKeybord(this);
                 createDefectDialog();
             } else {
@@ -205,6 +206,11 @@ public class AddDefectActivity extends BaseTitleActivity {
         }
         if (hasAllChoice || hasDeviceChoice) {
             binding.txtSpaceName.setOnClickListener(v -> {
+                String bdzName = binding.txtBdzName.getText().toString();
+                if (TextUtils.isEmpty(bdzName)) {
+                    ToastUtils.showMessage("请先选择变电站");
+                    return;
+                }
                 binding.etInputDevice.setText("");
                 clickMode = SPACE;
                 jumpDeviceSelectActivity();
@@ -213,6 +219,11 @@ public class AddDefectActivity extends BaseTitleActivity {
 
         if (hasAllChoice || hasDeviceChoice) {
             binding.ivSelectDevice.setOnClickListener(v -> {
+                String bdzName = binding.txtBdzName.getText().toString();
+                if (TextUtils.isEmpty(bdzName)) {
+                    ToastUtils.showMessage("请先选择变电站");
+                    return;
+                }
                 clickMode = DEVICE;
                 jumpDeviceSelectActivity();
             });
@@ -301,7 +312,7 @@ public class AddDefectActivity extends BaseTitleActivity {
     private void creatDefectOriginDialog(DbModel model) {
         if (dialogTips == null) {
             LayoutDefectDealBinding dealBinding = LayoutDefectDealBinding.inflate(getLayoutInflater());
-            dialogTips = DialogUtils.createDialog(this, dealBinding.getRoot(), ScreenUtils.getScreenWidth(this)*9/10, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialogTips = DialogUtils.createDialog(this, dealBinding.getRoot(), ScreenUtils.getScreenWidth(this) * 9 / 10, LinearLayout.LayoutParams.WRAP_CONTENT);
             String contentOrigin = model.getString("origin");
             String dealContent = model.getString("dealMethod");
             dealBinding.tvDialogTitle.setText(R.string.xs_defect_source_str);
@@ -345,12 +356,14 @@ public class AddDefectActivity extends BaseTitleActivity {
             return;
         }
         DefectRecord defectRecord = new DefectRecord(hasAllChoice && !hasReportId ? null : currentReportId, currentBdzId, spaceId, spaceName, deviceId, deviceName, defectLevel, pics, defectContent, influnceBdz, userName, currentDepartmentName);
-        if (!hasDevicePart) {
+        if (!noDevicePart) {
             defectRecord.duid = devicePartId;
             defectRecord.duname = devicePartName;
             defectRecord.standid = standardId;
         }
-        defectRecord.standSwitchId = standardId;
+        if (currentInspectionType.contains(InspectionType.maintenance.name()) || currentInspectionType.contains(InspectionType.switchover.name())) {
+            defectRecord.standSwitchId = standardId;
+        }
         defectRecord.remark = remark;
         try {
             CommonApplication.getInstance().getDbManager().saveOrUpdate(defectRecord);
@@ -375,7 +388,7 @@ public class AddDefectActivity extends BaseTitleActivity {
     }
 
     private void showBdzWindow() {
-        new PopWindowCustom.PopWindowBuilder<Bdz>(this).setPopWindowBuilder(bdz -> currentBdzName)
+        new PopWindowCustom.PopWindowBuilder<Bdz>(this).setPopWindowBuilder(bdz -> bdz.name)
                 .setWidth(binding.txtBdzName.getWidth())
                 .setList(bdzList)
                 .setOutSideCancelable(true).

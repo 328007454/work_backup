@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cnksi.common.Config;
 import com.cnksi.common.R;
 import com.cnksi.common.activity.ImageDetailsActivity;
@@ -231,6 +232,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
         currentSpacingName = getIntent().getStringExtra(Config.CURRENT_SPACING_NAME);
         // 巡视标准ID
         currentStandardId = getIntent().getStringExtra(Config.CURRENT_STANDARD_ID);
+
 
         // 是否是从巡检任务提醒界面跳转过去的
         isFromTaskRemind = getIntent().getBooleanExtra(Config.IS_FROM_TASK_REMIND, false);
@@ -453,7 +455,7 @@ public abstract class BaseActivity extends BaseCoreActivity {
     }
 
     public void ExitThisAndGoLauncher() {
-        this.finish();
+        ARouter.getInstance().build("/login/HomeActivity").navigation();
     }
 
     public boolean isParticularInspection() {

@@ -82,18 +82,22 @@ public class PeopleDialog extends BaseDialogFragment {
                     peopleDialog.personBinding.btnAddPerson.setOnClickListener(v -> {
                         String newName = peopleDialog.personBinding.etName.getText().toString().trim();
                         if (TextUtils.isEmpty(newName)) {
-                            ToastUtils.showMessage("请输入名字");
-                            return;
+                            ToastUtils.showMessage("请输入姓名");
+                        } else {
+                            DbModel model = new DbModel();
+                            model.add("username", newName);
+                            model.add("account", "-1");
+                            model.add("name", "");
+                            model.add("dept_id", "-1");
+                            model.add("delete", "true");
+                            model.add(ReportSignname.DEPTID, "-1");
+                            model.add(ReportSignname.DEPTNAME, "");
+                            model.add(ReportSignname.ACCOUNT, BaseModel.getPrimarykey());
+                            usersList.add(model);
+                            peopleAdapter.setData(usersList.size() - 1, model);
+                            peopleDialog.personBinding.lvContainer.scrollToPosition(usersList.size() - 1);
+                            peopleDialog.personBinding.etName.setText("");
                         }
-                        DbModel model = new DbModel();
-                        model.add("username", newName);
-                        model.add(ReportSignname.DEPTID, "-1");
-                        model.add(ReportSignname.DEPTNAME, "");
-                        model.add(ReportSignname.ACCOUNT, BaseModel.getPrimarykey());
-                        usersList.add(model);
-                        peopleAdapter.setData(usersList.size() - 1, model);
-                        peopleDialog.personBinding.lvContainer.scrollToPosition(usersList.size() - 1);
-                        peopleDialog.personBinding.etName.setText("");
                     });
                     peopleAdapter = new PeopleAdapter(R.layout.textview_item, usersList);
                     peopleAdapter.setOnItemClickListener((adapter, view, position) -> {

@@ -17,6 +17,7 @@ import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.DefectRecordService;
 import com.cnksi.common.daoservice.LookupService;
+import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Lookup;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.FunctionUtil;
@@ -26,9 +27,10 @@ import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.defect.adapter.DeviceDefectAdapter;
+import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.defect.R;
 import com.cnksi.defect.adapter.DefectReasonAdapter;
+import com.cnksi.defect.adapter.DeviceDefectAdapter;
 import com.cnksi.defect.databinding.FragmentEliminateDefectBinding;
 import com.cnksi.defect.databinding.LayoutDefectReasonItemBinding;
 
@@ -83,6 +85,8 @@ public class EliminateDefectFragment extends BaseDefectFragment {
     @Override
     protected void lazyLoad() {
         super.lazyLoad();
+        List<Lookup> mDefectReasonList = LookupService.getInstance().getDefectReasonListByParentId(String.valueOf(101));
+        reasonList.addAll(mDefectReasonList);
         getActivity().runOnUiThread(() -> {
             if (defectRecords != null) {
                 if (deviceDefectAdapter == null) {
@@ -123,7 +127,7 @@ public class EliminateDefectFragment extends BaseDefectFragment {
 
 
         binding.ibSelectTime.setOnClickListener(v -> {
-
+            CustomerDialog.showDatePickerDialog(mActivity, (result, position) -> binding.txtDate.setText(result));
         });
 
         binding.ibTakeTicketPicture.setOnClickListener(v -> {
@@ -171,14 +175,21 @@ public class EliminateDefectFragment extends BaseDefectFragment {
     private void saveData() {
         PlaySound.getIntance(getActivity()).play(R.raw.clear);
         selectDefect.has_remove = "Y";
-        selectDefect.removeDate = DateUtils.getCurrentLongTime();
+        String removeTime = binding.txtDate.getText().toString();
+        selectDefect.removeDate = TextUtils.isEmpty(removeTime) ? DateUtils.getCurrentLongTime() : removeTime;
         try {
             DefectRecordService.getInstance().saveOrUpdate(selectDefect);
             defectRecords.remove(selectDefect);
             deviceDefectAdapter.notifyDataSetChanged();
             selectDefect = null;
+            binding.ivDefectTicketElimatePic.setImageBitmap(null);
+            binding.txtDate.setText("");
+            binding.txtDate.setHint("请选择消除缺陷日期");
+            binding.ivDefectTicketPic.setImageBitmap(null);
+            binding.ivDefectPic.setImageBitmap(null);
         } catch (DbException e) {
             e.printStackTrace();
+            ToastUtils.showMessage("保存异常");
         }
 
     }
@@ -267,7 +278,15 @@ public class EliminateDefectFragment extends BaseDefectFragment {
                         DrawCircleImageActivity.with(mActivity).setTxtContent(pictureContent).setPath(picParentFolder + currentImageName).setRequestCode(0x0).start();
                     } else if (TextUtils.equals(mCurrentClickPhotoModel, TICKETS_MODEL)) {
                         mTicketImageList.add(currentImageName);
+                        Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(picParentFolder + currentImageName, 210);
+                        if (bitmap != null) {
+                            binding.ivDefectTicketPic.setImageBitmap(bitmap);
+                        }
                     } else {
+                        Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(picParentFolder + currentImageName, 210);
+                        if (bitmap != null) {
+                            binding.ivDefectTicketElimatePic.setImageBitmap(bitmap);
+                        }
                         mDefectRecordImageList.add(currentImageName);
                     }
                     break;
@@ -345,10 +364,19 @@ public class EliminateDefectFragment extends BaseDefectFragment {
         return sb.toString();
     }
 
-    public void setTrackDefectNewId(String defectNewId){
+    public void setTrackDefectNewId(String defectNewId) {
         defectId = defectNewId;
         if (!isFirstLoad) {
             lazyLoad();
+        }
+    }
+
+    @Override
+    protected void setClickDefectData(View v, DefectRecord record) {
+        if (v.getId() == R.id.iv_defect_image) {
+            final ArrayList<String> listPicDis = StringUtils.stringToList(record.pics);
+            ImageDetailsActivity.with(getActivity()).setPosition(0).setImageUrlList(StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER))
+                    .setDeleteFile(false).setShowDelete(false).start();
         }
     }
 }

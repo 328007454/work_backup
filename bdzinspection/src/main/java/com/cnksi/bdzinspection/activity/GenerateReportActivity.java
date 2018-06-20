@@ -183,7 +183,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 currentReport = ReportService.getInstance().getReportById(currentReportId);
                 inspectionMark = currentReport.inspectionRemark;
                 inspectionResult = currentReport.inspectionResult;
-                if ((!GenerateReportActivity.this.isParticularInspection()) && (!GenerateReportActivity.this.isRoutineNotCopy())) {
+                if ((!isParticularInspection()) && (!isRoutineNotCopy())) {
                     copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
                     totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
                     if (xudianchi) {
@@ -248,7 +248,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 inspectionMark = "";
             }
             // 显示 发现的缺陷 跟踪的缺陷 以及 消除的缺陷
-           runOnUiThread(() -> {
+            runOnUiThread(() -> {
                 binding.tvNewDefectCount.setText(String.valueOf(mNewDefectList == null ? 0 : mNewDefectList.size()));
                 binding.tvTrackDefectCount.setText(String.valueOf(mTrackDefectList == null ? 0 : mTrackDefectList.size()));
                 binding.tvEliminateDefectCount.setText(String.valueOf(mEliminateDefectList == null ? 0 : mEliminateDefectList.size()));
@@ -256,8 +256,8 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 binding.inspectionContent.setText(inspectionContent);
                 binding.etRemark.setText(TextUtils.isEmpty(inspectionMark) ? "" : inspectionMark);
                 binding.etResult.setText(TextUtils.isEmpty(inspectionResult) ? "" : inspectionResult);
-                GenerateReportActivity.this.returnDateTime(currentReport.starttime, true);
-                GenerateReportActivity.this.returnDateTime(currentReport.endtime, false);
+                returnDateTime(currentReport.starttime, true);
+                returnDateTime(currentReport.endtime, false);
             });
 
             try {
@@ -283,7 +283,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             } catch (DbException e) {
                 e.printStackTrace();
             }
-            GenerateReportActivity.this.runOnUiThread(() -> {
+            runOnUiThread(() -> {
                 adapterGzr = new SignNameAdapter(mActivity, mDataCzr, GenerateReportActivity.this, MASKGzr);
                 adapterGzr.setUserCount(totalCountUser);
                 adapterFzr = new SignNameAdapter(mActivity, mDataFzr, GenerateReportActivity.this, MASKFzr);
@@ -330,22 +330,26 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             showAddPersonDialog();
         });
 
-        binding.llEliminateDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
-        binding.tvEliminateDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.llEliminateDefectCount.setOnClickListener(view -> showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.tvEliminateDefectCount.setOnClickListener(view -> showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
 
-        binding.tvTrackDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
-        binding.llTrackDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.tvTrackDefectCount.setOnClickListener(view -> showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.llTrackDefectCount.setOnClickListener(view -> showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
 
-        binding.tvNewDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
-        binding.llNewDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.tvNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.llNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
 
-        binding.btnComplete.setOnClickListener(view ->finishReport());
+        binding.btnComplete.setOnClickListener(view -> finishReport());
         binding.llCopyResult.setOnClickListener(view -> {
+            if (currentInspectionType.contains(InspectionType.switchover.name()) || currentInspectionType.contains(InspectionType.maintenance.name()))
+            {
+                return;
+            }
             PlaySound.getIntance(mActivity).play(R.raw.input);
             Intent intent = new Intent(mActivity, CopyAllValueActivity2.class);
-            GenerateReportActivity.this.startActivityForResult(intent, LOAD_DATA);
+            startActivityForResult(intent, LOAD_DATA);
         });
-        binding.llNewDefectCount.setOnClickListener(view -> GenerateReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.llNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
 
         initOnLongClick();
     }
@@ -430,14 +434,14 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         }
         if (isStartTime) {
             currentReport.starttime = dateString;
-            binding.txtStartTime.setText(StringUtils.formatPartTextColor("开始时间：%s", Color.parseColor("#FFE3E9E8"), dateString));
+            binding.txtStartTime.setText(StringUtils.formatPartTextColor("开始时间：%s", Color.parseColor("#03B9A0"), dateString));
         } else {
             if (DateUtils.compareDate(binding.txtStartTime.getText().toString().replace("开始时间：", ""), dateString, DateUtils.yyyy_MM_dd_HH_mm_ss)) {
                 ToastUtils.showMessage("开始时间不能大于结束时间");
                 return;
             }
             currentReport.endtime = dateString;
-            binding.txtEndTime.setText(StringUtils.formatPartTextColor("结束时间：%s", Color.parseColor("#FFE3E9E8"), dateString));
+            binding.txtEndTime.setText(StringUtils.formatPartTextColor("结束时间：%s", Color.parseColor("#03B9A0"), dateString));
         }
         if (null != TimePickerUtils.getPickerUtils().pvCustomTime) {
             TimePickerUtils.getPickerUtils().pvCustomTime.dismiss();
@@ -469,16 +473,16 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
         signViewBinding.btnDelete.setOnClickListener(view -> {
             if (isShowDelete) {
-                GenerateReportActivity.this.removeSign(list, position);
+                removeSign(list, position);
             }
             mSignDetailDialog.dismiss();
         });
         signViewBinding.btnResign.setOnClickListener(view -> {
             currentSign = list.get(position);
             if (list == mDataCzr) {
-                GenerateReportActivity.this.takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEGzr);
+                takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEGzr);
             } else {
-                GenerateReportActivity.this.takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEFzr);
+                takeSignName(currentSign.getName(), currentSignNamePath = FunctionUtil.getSignImageName(mActivity, currentSign.getName()), currentHeadPath = FunctionUtil.getSignImageHead(mActivity, currentSign.getName()), SIGNCODEFzr);
             }
             mSignDetailDialog.dismiss();
         });

@@ -3,6 +3,7 @@ package com.cnksi.common.daoservice;
 import android.text.TextUtils;
 
 import com.cnksi.common.enmu.PMSDeviceType;
+import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Device;
 import com.cnksi.common.model.Report;
@@ -414,5 +415,23 @@ public class DeviceService extends BaseService<Device> {
             e.printStackTrace();
         }
         return isSuccess;
+    }
+
+    /**
+     * 修改后的查询抄录方式
+     *
+     * @param
+     */
+    public List<CopyItem> getDevicesByNameWays1(String bdzId, String key) {
+        List<CopyItem> items = null;
+        try {
+            items = getInstance(CopyItem.class).selector().and(CopyItem.BDZID, "=", bdzId).and(CopyItem.TYPE_KEY, "=", key).orderBy(CopyItem.DEVICEID, false).findAll();
+            for (CopyItem item : items) {
+                item.focus = false;
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 }

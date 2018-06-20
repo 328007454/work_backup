@@ -1,10 +1,14 @@
 package com.cnksi.common.daoservice;
 
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.LookUpType;
 import com.cnksi.common.model.Lookup;
 
+import org.xutils.common.util.KeyValue;
 import org.xutils.db.Selector;
+import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
+import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -42,8 +46,6 @@ public class LookupService extends BaseService<Lookup> {
     }
 
 
-
-
     /**
      * 根据LookupType查询
      *
@@ -53,7 +55,7 @@ public class LookupService extends BaseService<Lookup> {
     public List<Lookup> findLookupByType(String type, boolean hasSearch) {
         List<Lookup> lookups = null;
         try {
-            Selector selector =selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
+            Selector selector = selector().and(Lookup.TYPE, "=", type).and(Lookup.K, "<>", "other")
                     .orderBy(Lookup.SORT, false);
 
             lookups = selector.findAll();
@@ -135,9 +137,6 @@ public class LookupService extends BaseService<Lookup> {
     }
 
 
-
-
-
     /**
      * 根据ParentId 查询缺陷原因
      *
@@ -158,9 +157,6 @@ public class LookupService extends BaseService<Lookup> {
 
     /**
      * 根据ParentId 查询缺陷原因
-     *
-     * @param
-     * @return
      */
     public List<Lookup> getDefectReasonType() {
         List<Lookup> lookupList = null;
@@ -174,6 +170,47 @@ public class LookupService extends BaseService<Lookup> {
         return lookupList;
     }
 
+    /**
+     * 根据变电站和巡视或者维护类型，查询条件下的子项
+     *
+     * @param type
+     * @param bdzId
+     * @return
+     */
+    public List<DbModel> findAllTypeModel(String bdzId, String type) {
+        List<DbModel> models = new ArrayList<>();
+        String sql = "";
+        SqlInfo sqlInfo = null;
+        if (type.contains(InspectionType.maintenance.name()) || type.contains(InspectionType.switchover.name())) {
+            sql = "select * from switch_menu where bdzid =? and k like '" + type + "%' and dlt = 0 order by sort";
+            sqlInfo = new SqlInfo(sql);
+            sqlInfo.addBindArg(new KeyValue("", bdzId));
+        } else if (type.contains(InspectionType.special.name())) {
+            sql = "select * from special_menu where k like '" + type + "%' and dlt = 0 order by sort";
+            sqlInfo = new SqlInfo(sql);
+        }
+        try {
+            if (!InspectionType.SBJC_06.name().equalsIgnoreCase(type)) {
+                models = findDbModelAll(sqlInfo);
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+        if (InspectionType.SBJC_06.name().equalsIgnoreCase(type)) {
+            final String[] types = {InspectionType.SBJC_06_sf6.name(), InspectionType.SBJC_06_water.name(), InspectionType.SBJC_06_gas.name()};
+            final String[] names = {InspectionType.SBJC_06_sf6.value, InspectionType.SBJC_06_water.value, InspectionType.SBJC_06_gas.value};
+            for (int typePosition = 0; typePosition < types.length; typePosition++) {
+                String typeModel = types[typePosition];
+                String typeName = names[typePosition];
+                DbModel dbModel = new DbModel();
+                dbModel.add("k", typeModel);
+                dbModel.add("v", typeName);
+                models.add(dbModel);
+            }
+        }
 
+        return models;
+    }
 
 }

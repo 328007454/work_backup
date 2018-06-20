@@ -81,10 +81,9 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     private List<MultiItemEntity> data;
     private DeviceAdapter adapter;
     private RecyclerView recyclerView;
-    private HashSet<String> copyDeviceIdList = new HashSet<>();// 当前变电站下所有抄录设备
+    private HashSet<String> copyDeviceIdList = new HashSet<>();
     private DbModel locationSpace;
     private DbModel locationDevice;
-    //间隔id
     private HashSet<String> spacingIds = new HashSet<>();
 
     //设备id与对应的DbModel
@@ -173,6 +172,17 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         recyclerView.setLayoutManager(manager);
         isPrepared = true;
         arriveCheckHelper = new ArriveCheckHelper(currentActivity, adapter, currentReportId, currentInspectionType, currentBdzId, currentFunctionModel);
+
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (behindPosition&& RecyclerView.SCROLL_STATE_IDLE == newState) {
+//                    behindPosition = false;
+//                    smoothMoveToPosition(recyclerView, mToPosition);
+//                }
+//            }
+//        });
     }
 
     private void requestLocation(final boolean isSpace) {
@@ -332,8 +342,10 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                                 adapter.expand(index[0]);
                             }
                             if (-1 != index[1]) {
+                                mToPosition = index[1];
+//                                recyclerView.scrollToPosition(index[1]);
+                                smoothMoveToPosition(recyclerView, mToPosition);
                                 adapter.expand(index[1]);
-                                recyclerView.scrollToPosition(index[1]);
                             } else {
                                 adapter.notifyDataSetChanged();
                             }
@@ -522,6 +534,36 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
             }
         });
 
+    }
+
+
+    private boolean behindPosition;
+    private int mToPosition;
+
+    /**
+     * 滑动到指定位置
+     */
+    private void smoothMoveToPosition(RecyclerView mRecyclerView, final int position) {
+        // 第一个可见位置
+        int firstItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(0));
+        // 最后一个可见位置
+        int lastItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1));
+        if (position < firstItem) {
+            // 第一种可能:跳转位置在第一个可见位置之前
+            mRecyclerView.smoothScrollToPosition(position);
+        } else if (position <= lastItem) {
+            // 第二种可能:跳转位置在第一个可见位置之后
+            int movePosition = position - firstItem;
+            if (movePosition >= 0 && movePosition < mRecyclerView.getChildCount()) {
+                int top = mRecyclerView.getChildAt(movePosition).getTop();
+                mRecyclerView.smoothScrollBy(0, top);
+            }
+        } else {
+            // 第三种可能:跳转位置在最后可见项之后
+            mRecyclerView.smoothScrollToPosition(position);
+            mToPosition = position;
+            behindPosition = true;
+        }
     }
 
 }

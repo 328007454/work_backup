@@ -72,7 +72,7 @@ public class DepartmentService extends BaseService<Department> {
         if (u.length() > 0) {
             u = u.substring(0, u.length() - 1);
         }
-        String sql = "SELECT u.account,u.type, u.username,dp.name,u.dept_id FROM users u LEFT JOIN department dp on u.dept_id=dp.id where u.account IN("
+        String sql = "SELECT u.account,u.type, u.username,dp.name dept_name,u.dept_id FROM users u LEFT JOIN department dp on u.dept_id=dp.id where u.account IN("
                 + u + ")";
         return findDbModelAll(new SqlInfo(sql));
     }

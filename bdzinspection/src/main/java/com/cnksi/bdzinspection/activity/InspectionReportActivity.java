@@ -144,13 +144,12 @@ public class InspectionReportActivity extends BaseActivity {
         mHandler.sendEmptyMessageDelayed(VIBRATOR, 500);
         mHandler.sendEmptyMessageDelayed(ANIMATION, 2000);
         binding.ibtnExit.setVisibility(View.GONE);
+        binding.btXunjianLine.setVisibility(View.VISIBLE);
         if (currentInspectionType.equals(InspectionType.full.name())
                 || currentInspectionType.equalsIgnoreCase(InspectionType.professional.name())
                 || currentInspectionType.equals(InspectionType.day.name())
                 || currentInspectionType.equals(InspectionType.routine.name())) {
-            binding.btXunjianLine.setVisibility(View.VISIBLE);
         } else {
-            binding.btXunjianLine.setVisibility(View.GONE);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.svContainer.getLayoutParams();
             params.height = params.height + getResources().getDimensionPixelOffset(R.dimen.xs_playback_button_height);
             params.setMargins(0, 0, 0, 36);

@@ -35,7 +35,7 @@ import java.util.Calendar;
  */
 public class DialogUtils {
 
-    private static Dialog dialog = null;
+    public static Dialog dialog = null;
 
     /**
      * 创建dialog
@@ -201,6 +201,7 @@ public class DialogUtils {
         tipsBinding.btnSure.setOnClickListener(v -> {
             if (mOnclickListener != null) {
                 mOnclickListener.onClick(v);
+                dialog.dismiss();
             }
         });
 

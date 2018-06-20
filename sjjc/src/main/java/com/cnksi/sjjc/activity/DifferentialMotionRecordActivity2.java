@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 
 import com.cnksi.common.Config;
+import com.cnksi.common.daoservice.DeviceService;
 import com.cnksi.common.daoservice.ReportService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.TaskStatus;
@@ -40,17 +41,11 @@ import static com.cnksi.common.Config.LOAD_DATA;
  * 差动保护差流界面
  */
 public class DifferentialMotionRecordActivity2 extends BaseSjjcActivity {
-    //根据变电站id，报告id查询出差动保护相应的数据
     private Map<String, ReportCdbhcl> reportCdbhclsMap = new HashMap<String, ReportCdbhcl>();
-    //当前报告id
     private String reportId;
-    //当前变电站id
     private String bdzId;
-    //差动保护差流Adapter
     private DifferentialMotionRecordAdapter4 mDifferentRecordAdapter4;
-
     private List<CopyItem> listDevices = new ArrayList<CopyItem>();
-    //当前的Report表
     private Report mReport;
     private List<CdbhclValue> cdbhclValueList = new ArrayList<>();
 
@@ -88,7 +83,7 @@ public class DifferentialMotionRecordActivity2 extends BaseSjjcActivity {
                 mReport = ReportService.getInstance().findById(currentReportId);
                 bdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
                 reportId = PreferencesUtils.get(Config.CURRENT_REPORT_ID, "");
-
+                listDevices = DeviceService.getInstance().getDevicesByNameWays1(bdzId, Config.DIFFERENTIAL_RECORD_KEY);
                 for (CopyItem item : listDevices) {
                     CdbhclValue.addObject(item, cdbhclValueList);
                 }

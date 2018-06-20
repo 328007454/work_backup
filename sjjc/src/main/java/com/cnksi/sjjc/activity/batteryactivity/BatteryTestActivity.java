@@ -197,7 +197,7 @@ public class BatteryTestActivity extends BaseSjjcActivity {
                 return;
             }
             try {
-                currentReport.checkType = taskExpand.sbjcIsAllCheck;
+                currentReport.checkType = String.valueOf(taskExpand.sbjcIsAllCheck);
                 ReportService.getInstance().saveOrUpdate(currentReport);
             } catch (DbException e) {
                 e.printStackTrace();
@@ -667,7 +667,7 @@ public class BatteryTestActivity extends BaseSjjcActivity {
     private String selectDeviceNum;
 
     private void saveOrUpdateReport() {
-        currentReport.checkType = taskExpand.sbjcIsAllCheck;
+        currentReport.checkType = String.valueOf(taskExpand.sbjcIsAllCheck);
         currentReport.endtime = DateUtils.getCurrentLongTime();
         String valueTemp = binding.etCurrentTempreture.getText().toString();
         if (TextUtils.isEmpty(valueTemp)) {
@@ -686,7 +686,7 @@ public class BatteryTestActivity extends BaseSjjcActivity {
             return;
         }
         currentReport.temperature = binding.etCurrentTempreture.getText().toString();
-        currentReport.checkType = taskExpand.sbjcIsAllCheck;
+        currentReport.checkType = String.valueOf(taskExpand.sbjcIsAllCheck);
         if (inspectionType == InspectionType.SBJC_10) {
             currentReport.resistanceIsCheck = taskExpand.sbjcResistanceCheck;
         }

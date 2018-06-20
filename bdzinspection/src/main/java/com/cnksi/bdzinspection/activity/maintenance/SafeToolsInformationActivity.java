@@ -23,6 +23,7 @@ import com.cnksi.bdzinspection.databinding.XsSafetyToolResultItemBinding;
 import com.cnksi.bdzinspection.emnu.ToolStatus;
 import com.cnksi.bdzinspection.model.OperateToolResult;
 import com.cnksi.bdzinspection.model.SafeToolsInfor;
+import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.bdzinspection.utils.PersonListUtils;
@@ -54,7 +55,7 @@ import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
 
 /**
  * 工器具详情列表
- * Created by han on 2017/6/29.
+ * @author Mr.K on 2017/6/29.
  */
 
 public class SafeToolsInformationActivity extends BaseActivity implements View.OnClickListener, PersonListUtils.SelectPersonListener {
@@ -96,6 +97,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         final String toolId = getIntent().getStringExtra(SafeToolsInfor.ID);
         final String dept = getIntent().getStringExtra(Department.DEPT_ID);
         final String bdzId = getIntent().getStringExtra(Bdz.BDZID);
+        currentBdzId = bdzId;
         String title = getIntent().getStringExtra("title");
         informationBinding.tvInclude.tvTitle.setText(title);
 
@@ -103,6 +105,12 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
         PersonListUtils.getInsance().setPersonRatioListener(this);
 
         ExecutorManager.executeTask(() -> {
+            try {
+                Bdz bdz = BdzService.getInstance().findById(currentBdzId);
+                currentBdzName = bdz.name;
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
             cityModel = SafeToolsInfoService.getInstance().findToolCity();
             if (cityModel != null) {
                 city = cityModel.getString("short_name_pinyin");
@@ -142,7 +150,7 @@ public class SafeToolsInformationActivity extends BaseActivity implements View.O
             String resultValue = ToolStatus.getValue(result.result);
             itemBinding.txtToolQualify.setText(resultValue);
             itemBinding.txtToolQualify.setTextColor(getResources().getColor(R.color.xs__5dbf19_color));
-            itemBinding.txtTestTime.setText(TextUtils.isEmpty(result.operTime) ? "" : DateUtils.getFormatterTime(result.operTime, DateUtils.yyyy_MM_dd));
+            itemBinding.txtTestTime.setText(TextUtils.isEmpty(result.operTime) ? "" :result.operTime);
             String pics = result.pic;
             if (!TextUtils.isEmpty(pics)) {
                 String[] toolPics = pics.split(Config.COMMA_SEPARATOR);

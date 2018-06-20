@@ -117,25 +117,45 @@ public class NewTransformRecordActivity extends BaseSjjcActivity {
                     holder.setText(R.id.jzl_title, model.getString("name"));
                     EditText txtBcds = holder.getView(R.id.et_put_bcds);
                     listBcds.add(txtBcds);
-                    holder.setText(R.id.et_put_dzcs, dzcs == null ? "" : dzcs);
                     EditText txtDzcs = holder.getView(R.id.et_put_dzcs);
+                    if (!TextUtils.isEmpty(dzcs)) {
+                        holder.setText(R.id.et_put_dzcs, dzcs);
+                    }else{
+                        holder.setTextHint(R.id.et_put_dzcs,"请输入");
+                    }
                     listDzcs.add(txtDzcs);
                     if (keys.size() == 1) {
                         if (key.equalsIgnoreCase(Config.TANSFORMADJUSTMENT_DANGWEI)) {
                             holder.setVisibility(R.id.ll_dongzuo_container, View.GONE);
                             holder.setText(R.id.copy_part_one, description);
-                            holder.setText(R.id.et_put_bcds, bcds == null ? "" : bcds);
+                            if (!TextUtils.isEmpty(bcds)) {
+                                holder.setText(R.id.et_put_bcds, bcds);
+                            }else{
+                            holder.setTextHint(R.id.et_put_bcds,"请输入");
+                        }
                         } else {
                             holder.setVisibility(R.id.ll_bcds_container, View.GONE);
                             holder.setText(R.id.copy_part_two, description);
-                            holder.setText(R.id.et_put_dzcs, TextUtils.isEmpty(dzcs) ? "" : dzcs);
+                            if (!TextUtils.isEmpty(dzcs)) {
+                                holder.setText(R.id.et_put_dzcs, dzcs);
+                            }else{
+                            holder.setTextHint(R.id.et_put_dzcs,"请输入");
+                        }
                         }
                     } else {
                         ArrayList<String> descriptionList = com.cnksi.core.utils.StringUtils.stringToList(description);
                         holder.setText(R.id.copy_part_one, descriptionList.get(1));
                         holder.setText(R.id.copy_part_two, descriptionList.get(0));
-                        holder.setText(R.id.et_put_dzcs, TextUtils.isEmpty(dzcs) ? "" : dzcs);
-                        holder.setText(R.id.et_put_bcds, bcds == null ? "" : bcds);
+                        if (!TextUtils.isEmpty(dzcs)) {
+                            holder.setText(R.id.et_put_dzcs, dzcs);
+                        }else{
+                            holder.setTextHint(R.id.et_put_dzcs,"请输入");
+                        }
+                        if (!TextUtils.isEmpty(bcds)) {
+                            holder.setText(R.id.et_put_bcds, bcds);
+                        }else{
+                            holder.setTextHint(R.id.et_put_bcds,"请输入");
+                        }
                     }
                     binding.llContainer.addView(holder.getRootView());
                 }

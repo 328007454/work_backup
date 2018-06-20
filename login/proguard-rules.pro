@@ -140,7 +140,10 @@
 -keep class android.support.v7.widget.SearchView { *; }
 
 
-###
+### common
 -keep class com.cnksi.common.model.**{*;}
 -keep class com.cnksi.common.view.**{*;}
 
+### ARouter
+-keep public class com.alibaba.android.arouter.routes.**{*;}
+-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}

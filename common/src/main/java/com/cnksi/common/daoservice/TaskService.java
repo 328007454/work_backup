@@ -277,8 +277,6 @@ public class TaskService extends BaseService<Task> {
     }
 
 
-
-
     public List<Task> findTaskListByLimit(int limit, String... inspections) {
         StringBuilder expr = new StringBuilder();
         expr.append(" and (");
@@ -439,5 +437,16 @@ public class TaskService extends BaseService<Task> {
             return false;// TODO: handle exception
         }
 
+    }
+
+    public Task findTaskByTypeAndTodayTime(String typeValue, String currentShortTime) {
+        Task task;
+        try {
+            task = selector().and(Task.INSPECTION_NAME, "=", typeValue).and(Task.SCHEDULE_TIME, "=", currentShortTime).findFirst();
+            return task;
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

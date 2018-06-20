@@ -36,19 +36,7 @@
 
 
 
-        <activity
-            android:name="com.cnksi.login.activity.NewLauncherActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <!-- 首页-->
-        <activity
-            android:name="com.cnksi.login.activity.HomeActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+
         <activity
             android:name=".activity.TaskRemindActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"

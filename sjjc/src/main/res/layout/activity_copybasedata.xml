@@ -91,7 +91,8 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/new_global_text_size"/>
 
-                <EditText
+                <com.cnksi.common.view.ContainsEmojiEditText
+                    android:background="@null"
                     android:id="@+id/et_test_instrument"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0dp"
@@ -121,7 +122,8 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/new_global_text_size"/>
 
-                <EditText
+                <com.cnksi.common.view.ContainsEmojiEditText
+                    android:background="@null"
                     android:id="@+id/et_current_humidity"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0dp"

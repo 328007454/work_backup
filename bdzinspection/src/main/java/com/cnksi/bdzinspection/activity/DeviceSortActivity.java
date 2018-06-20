@@ -48,7 +48,7 @@ public class DeviceSortActivity extends TitleActivity {
                 spaceAdapter.notifyDataSetChanged();
             }
         });
-        return getString(R.string.xs_inspection_sort, spacing.name);
+        return getString(R.string.xs_inspection_device_sort, spacing.name);
     }
 
     @Override

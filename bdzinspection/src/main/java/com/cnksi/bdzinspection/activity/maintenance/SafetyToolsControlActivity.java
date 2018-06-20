@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 
 import com.cnksi.bdzinspection.R;
 import com.cnksi.common.base.BaseActivity;
+import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.bdzinspection.adapter.SafeToolsInfoAdapter;
 import com.cnksi.bdzinspection.daoservice.OperateToolResultService;
@@ -267,6 +268,12 @@ public class SafetyToolsControlActivity extends BaseActivity implements ItemClic
     public void initData(final String keyWord) {
 
         ExecutorManager.executeTask(() -> {
+            try {
+                Bdz bdz = BdzService.getInstance().findById(currentBdzId);
+                currentBdzName = bdz.name;
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
             if (!TextUtils.isEmpty(keyWord) && String.valueOf(R.id.bt_inmonth).equalsIgnoreCase(keyWord)) {
                 toolsInforList = SafeToolsInfoService.getInstance().findInMonthTools(deptId, DateUtils.getCurrentLongTime(), currentBdzId);
             } else if (!TextUtils.isEmpty(keyWord) && String.valueOf(R.id.bt_inmaintenance).equalsIgnoreCase(keyWord)) {

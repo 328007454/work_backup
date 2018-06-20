@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.cnksi.common.utils.AnimationUtils;
 import com.cnksi.common.utils.PlaySound;
 import com.cnksi.sjjc.R;
@@ -60,12 +61,12 @@ public abstract class BaseReportActivity extends BaseSjjcActivity {
         mBtnBack = findViewById(R.id.btn_back);
         mTvTitle.setText(getString(R.string.report_title_format_str, currentBdzName + currentInspectionTypeName));
         mBtnBack.setOnClickListener(v -> {
-//            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
-            BaseReportActivity.this.onBackPressed();
+            ARouter.getInstance().build("/login/HomeActivity").navigation();
+            onBackPressed();
         });
         mBtnRight.setOnClickListener(v -> {
-//            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
-            BaseReportActivity.this.onBackPressed();
+            ARouter.getInstance().build("/login/HomeActivity").navigation();
+            onBackPressed();
         });
     }
 
@@ -98,7 +99,7 @@ public abstract class BaseReportActivity extends BaseSjjcActivity {
 
     @Override
     public void onBackPressed() {
-//        ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+        ExitThisAndGoLauncher();
         super.onBackPressed();
     }
 
@@ -106,7 +107,7 @@ public abstract class BaseReportActivity extends BaseSjjcActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-//                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                ExitThisAndGoLauncher();
                 break;
             default:
                 break;

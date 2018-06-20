@@ -51,6 +51,7 @@ public class TrackDefectFragment extends BaseDefectFragment {
      * 缺陷照片的集合
      */
     private ArrayList<String> mDefectImageList = new ArrayList<>();
+    private String infulenceEleNet;
 
 
     @Override
@@ -94,7 +95,7 @@ public class TrackDefectFragment extends BaseDefectFragment {
     }
 
     private void initOnClick() {
-        binding.includeAdd.rgDefect.setOnCheckedChangeListener(onCheckedChangeListener);
+        binding.containerRgEleInternet.setOnCheckedChangeListener(onCheckedChangeListener);
 
         binding.includeAdd.ibtnTakePicture.setOnClickListener(v -> {
             if (selectDefect == null) {
@@ -132,6 +133,18 @@ public class TrackDefectFragment extends BaseDefectFragment {
     private void saveData() {
         PlaySound.getIntance(getActivity()).play(R.raw.track);
         selectDefect.has_track = "Y";
+        int checkedId = binding.includeAdd.containerRbGeneralDefect.getmCheckedId();
+        if (checkedId == R.id.rb_general_defect) {
+            defectLevel = DefectEnum.general.value;
+        } else if (checkedId == R.id.rb_serious_defect) {
+            defectLevel = DefectEnum.serious.value;
+        } else if (checkedId == R.id.rb_crisis_defect) {
+            defectLevel = DefectEnum.critical.value;
+        } else if (checkedId == R.id.rb_problem_defect) {
+            defectLevel = DefectEnum.problem.value;
+        } else if (checkedId == R.id.rb_hidden_defect) {
+            defectLevel = DefectEnum.hidden.value;
+        }
         try {
             //复制一条跟踪的缺陷保持除内容不同外其余相同,将原有的缺陷跟踪字段置为"Y"
             DefectRecordService.getInstance().saveOrUpdate(selectDefect);
@@ -142,6 +155,7 @@ public class TrackDefectFragment extends BaseDefectFragment {
             newDefect.description = binding.includeAdd.etInputDefectContent.getText().toString();
             newDefect.has_track = "N";
             newDefect.discovered_date = DateUtils.getCurrentShortTime();
+            newDefect.hasInfluenceDbz = infulenceEleNet;
             DefectRecordService.getInstance().saveOrUpdate(newDefect);
             defectRecords.remove(selectDefect);
             defectRecords.add(newDefect);
@@ -159,30 +173,45 @@ public class TrackDefectFragment extends BaseDefectFragment {
     }
 
     @Override
-    protected void setClickDefectData(DefectRecord record) {
-        mDefectImageList.clear();
-        binding.includeAdd.etInputDefectContent.setText(TextUtils.isEmpty(record.description) ? "" : record.description);
-        if (TextUtils.equals(record.defectlevel, DefectEnum.critical.value)) {
-            binding.includeAdd.rbCrisisDefect.setChecked(true);
-            defectLevel = DefectEnum.critical.value;
-        } else if (TextUtils.equals(record.defectlevel, DefectEnum.serious.value)) {
-            binding.includeAdd.rbSeriousDefect.setChecked(true);
-            defectLevel = DefectEnum.serious.value;
+    protected void setClickDefectData(View v, DefectRecord record) {
+        if (v.getId() == R.id.iv_defect_image) {
+            final ArrayList<String> listPicDis = StringUtils.stringToList(record.pics);
+            ImageDetailsActivity.with(getActivity()).setPosition(0).setImageUrlList(StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER))
+                    .setDeleteFile(false).setShowDelete(false).start();
         } else {
-            binding.includeAdd.rbGeneralDefect.setChecked(true);
-            defectLevel = DefectEnum.general.value;
+            mDefectImageList.clear();
+            binding.includeAdd.etInputDefectContent.setText(TextUtils.isEmpty(record.description) ? "" : record.description);
+            if (TextUtils.equals(record.defectlevel, DefectEnum.critical.value)) {
+                binding.includeAdd.rbCrisisDefect.setChecked(true);
+                defectLevel = DefectEnum.critical.value;
+            } else if (TextUtils.equals(record.defectlevel, DefectEnum.serious.value)) {
+                binding.includeAdd.rbSeriousDefect.setChecked(true);
+                defectLevel = DefectEnum.serious.value;
+            } else {
+                binding.includeAdd.rbGeneralDefect.setChecked(true);
+                defectLevel = DefectEnum.general.value;
+            }
+
+            if (TextUtils.equals(record.hasInfluenceDbz, "Y")) {
+                infulenceEleNet = "Y";
+                binding.rbInflunceYes.setChecked(true);
+            } else if (TextUtils.equals(record.hasInfluenceDbz, "N")) {
+                binding.rbInflunceNo.setChecked(true);
+            } else {
+                binding.rbInflunceNothing.setChecked(true);
+            }
         }
     }
 
     RadioGroup.OnCheckedChangeListener onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (checkedId == R.id.rb_general_defect) {
-                defectLevel = DefectEnum.general.value;
-            } else if (checkedId == R.id.rb_serious_defect) {
-                defectLevel = DefectEnum.serious.value;
+            if (checkedId == R.id.rb_influnce_yes) {
+                infulenceEleNet = "Y";
+            } else if (checkedId == R.id.rb_influnce_no) {
+                infulenceEleNet = "N";
             } else {
-                defectLevel = DefectEnum.critical.value;
+                infulenceEleNet = "NOT KNOW";
             }
         }
     };

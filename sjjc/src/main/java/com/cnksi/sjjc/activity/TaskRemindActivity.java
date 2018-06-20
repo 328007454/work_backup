@@ -127,8 +127,8 @@ public class TaskRemindActivity extends BaseSjjcActivity {
     public void iniOnClick(){
         mTitleBinding.btnBack.setOnClickListener(view -> TaskRemindActivity.this.finish());
         mRemindBinding.addTask.setOnClickListener(v -> {
-            Intent intent = new Intent(TaskRemindActivity.this, AddTaskActivity.class);
-            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
+            Intent intent = new Intent(this, com.cnksi.common.activity.AddTaskActivity.class);
+            intent.putExtra(Config.CURRENT_INSPECTION_TYPE, mInspectionType.name());
             TaskRemindActivity.this.startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
         });
 

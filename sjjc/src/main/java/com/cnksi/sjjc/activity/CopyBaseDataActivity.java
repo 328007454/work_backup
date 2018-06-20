@@ -72,9 +72,11 @@ public class CopyBaseDataActivity extends BaseSjjcActivity {
         switch (msg.what) {
             case LOAD_DATA:
                 binding.weatherView1.setCurrentWeather(mReport.tq);
-                binding.etCurrentHumidity.setText(mReport.temperature);
+                binding.etTestInstrument.setText(mReport.temperature);
                 binding.etCurrentHumidity.setText(mReport.humidity);
                 break;
+                default:
+                    break;
         }
     }
 

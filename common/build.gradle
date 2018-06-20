@@ -13,6 +13,12 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+
     }
     dataBinding {
         enabled true
@@ -21,7 +27,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-              buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
+            buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "String", "SYNC_APP_ID", "\"${SYNC_APP_ID}\""
             buildConfigField "String", "SYNC_URL", "\"${SYNC_URL}\""
@@ -62,4 +68,7 @@ dependencies {
     api "me.grantland:autofittextview:$autofittextview"
 
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
+
+    api "com.alibaba:arouter-api:$arouter_api"
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
 }

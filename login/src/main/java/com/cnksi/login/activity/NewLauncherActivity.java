@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.baidu.location.BDLocation;
 import com.cnksi.bdloc.DistanceUtil;
 import com.cnksi.bdloc.LatLng;
@@ -48,6 +49,7 @@ import org.xutils.ex.DbException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Route(path="/login/NewLauncherActivity")
 public class NewLauncherActivity extends BaseSjjcActivity {
     private ActivityLauncherNewBinding launcherBinding;
     private ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -107,6 +109,7 @@ public class NewLauncherActivity extends BaseSjjcActivity {
 
 
     public void inUI() {
+        getIntentValue();
         launcherBinding.mainRadioGroup.setOnCheckedChangeListener(checkedChangeListener);
         launcherBinding.lancherTitle.exitSystem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +170,7 @@ public class NewLauncherActivity extends BaseSjjcActivity {
         ExecutorManager.executeTaskSerially(() -> {
             String deparmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             try {
-                bdzList = BdzService.getInstance().findAll();
+                bdzList = BdzService.getInstance().findAllBdzByDp(currentDepartmentId);
                 final Department department = DepartmentService.getInstance().findDepartmentById(deparmentId);
                 if (null != department) {
                     runOnUiThread(() -> {
@@ -182,7 +185,8 @@ public class NewLauncherActivity extends BaseSjjcActivity {
                         }
                     });
                 }
-            } catch (DbException e) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }

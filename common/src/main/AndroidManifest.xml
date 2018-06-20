@@ -27,5 +27,8 @@
         <activity
             android:name=".activity.XJSyncActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AddTaskActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

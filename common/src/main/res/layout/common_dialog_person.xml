@@ -9,6 +9,7 @@
         android:paddingBottom="@dimen/xs_global_padding_half_left_right_px">
 
         <TextView
+            android:id="@+id/txt_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_tab_strip_minheight_px"
             android:background="@drawable/xs_bdz_background_select"
@@ -24,6 +25,7 @@
             android:layout_weight="1" />
 
         <LinearLayout
+            android:id="@+id/container_name"
             android:layout_width="match_parent"
             android:layout_height="150px"
             android:layout_marginBottom="54px"
@@ -61,6 +63,22 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/xs_history_defect_level_text_size_px" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="110px"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30px"
+            android:layout_marginEnd="30px"
+            android:layout_marginStart="30px"
+            android:background="@drawable/xs_grass_green_button_background_selector"
+            android:gravity="center"
+            android:text="@string/xs_confirm_str"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/xs_global_text_size_px"
+            android:visibility="gone" />
 
     </LinearLayout>
 </layout>

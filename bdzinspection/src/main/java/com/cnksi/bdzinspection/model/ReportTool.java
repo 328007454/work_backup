@@ -4,6 +4,7 @@ package com.cnksi.bdzinspection.model;
 import com.cnksi.common.model.BaseModel;
 
 import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
 
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
  */
+@Table(name = "xs_gqj_tool")
 public class ReportTool extends BaseModel {
     public final static String ID = "id";
     @Column(name = "id",isId = true)

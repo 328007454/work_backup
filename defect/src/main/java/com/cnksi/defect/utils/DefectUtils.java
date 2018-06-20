@@ -40,6 +40,10 @@ public class DefectUtils {
             result = StringUtils.changePartTextColor("[" + Config.GENERAL_LEVEL + "]" + item.description, COMMON_COLOR, 0, 6);
         } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
             result = StringUtils.changePartTextColor("[" + Config.SERIOUS_LEVEL + "]" + item.description, SERIOUS_COLOR, 0, 6);
+        } else if (Config.PROBLEM_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
+            result = StringUtils.changePartTextColor("[" + Config.PROBLEM_LEVEL + "]" + item.description, COMMON_COLOR, 0, 4);
+        } else if (Config.HIDDEN_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
+            result = StringUtils.changePartTextColor("[" + Config.HIDDEN_LEVEL + "]" + item.description, COMMON_COLOR, 0, 4);
         } else {
             result = StringUtils.changePartTextColor("[" + Config.CRISIS_LEVEL + "]" + item.description, CRISIS_COLOR, 0, 6);
         }
@@ -57,6 +61,12 @@ public class DefectUtils {
             return R.drawable.xs_ic_crisis_defect;
         } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(StringUtils.cleanString(item))) {
             return R.drawable.xs_ic_serious_defect;
+        } else if (Config.PROBLEM_LEVEL_CODE.equalsIgnoreCase(StringUtils.cleanString(item))) {
+
+            return R.drawable.xs_ic_general_defect;
+        } else if (Config.HIDDEN_LEVEL_CODE.equalsIgnoreCase(StringUtils.cleanString(item))) {
+
+            return R.drawable.xs_ic_general_defect;
         } else {
             return R.drawable.xs_ic_general_defect;
         }

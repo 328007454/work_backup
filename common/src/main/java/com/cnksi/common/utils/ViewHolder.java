@@ -124,6 +124,19 @@ public class ViewHolder {
     }
 
     /**
+     * 为TextView设置字符串
+     *
+     * @param viewId
+     * @param text
+     * @return
+     */
+    public ViewHolder setTextHint(int viewId, CharSequence text) {
+        TextView view = getView(viewId);
+        view.setHint(text);
+        return this;
+    }
+
+    /**
      * 为ImageView设置图片
      *
      * @param viewId

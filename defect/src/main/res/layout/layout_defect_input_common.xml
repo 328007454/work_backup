@@ -66,10 +66,10 @@
                         android:id="@+id/iv_new_defect_photo"
                         android:layout_width="@dimen/xs_new_defect_photo_height_px"
                         android:layout_height="@dimen/xs_new_defect_photo_height_px"
-                        android:scaleType="centerCrop"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:contentDescription="@null"
+                        android:scaleType="centerCrop"
                         app:layout_auto_baseheight="width" />
 
                     <TextView
@@ -118,26 +118,81 @@
         </RelativeLayout>
 
 
-        <com.cnksi.common.view.AutoRadioGroup
-            android:id="@+id/rg_defect"
+        <!--<com.cnksi.common.view.AutoRadioGroup-->
+            <!--android:id="@+id/rg_defect"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/xs_bottom_line_background_selector"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:minHeight="@dimen/xs_content_minheight_px"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingLeft="@dimen/xs_global_padding_left_right_px"-->
+            <!--android:paddingRight="@dimen/xs_global_padding_left_right_px">-->
+
+            <!--<com.cnksi.common.view.CustomRadioButton-->
+                <!--android:id="@+id/rb_general_defect"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@null"-->
+                <!--android:checked="true"-->
+                <!--android:clickable="true"-->
+                <!--android:drawableLeft="@drawable/xs_radio_button_selector"-->
+                <!--android:text="@string/xs_general_defect_str"-->
+                <!--android:textColor="@color/xs_radio_button_text_selector"-->
+                <!--android:textSize="@dimen/xs_dialog_title_textsize_px"-->
+                <!--app:drawableLeft="@drawable/xs_radio_button_selector"-->
+                <!--app:drawableSize="48px" />-->
+
+            <!--<com.cnksi.common.view.CustomRadioButton-->
+                <!--android:id="@+id/rb_serious_defect"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@null"-->
+                <!--android:clickable="true"-->
+                <!--android:text="@string/xs_serious_defect_str"-->
+                <!--android:textColor="@color/xs_radio_button_text_selector"-->
+                <!--android:textSize="@dimen/xs_dialog_title_textsize_px"-->
+                <!--app:drawableLeft="@drawable/xs_radio_button_selector"-->
+                <!--app:drawableSize="48px" />-->
+
+            <!--<com.cnksi.common.view.CustomRadioButton-->
+                <!--android:id="@+id/rb_crisis_defect"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@null"-->
+                <!--android:clickable="true"-->
+                <!--android:text="@string/xs_crisis_defect_str"-->
+                <!--android:textColor="@color/xs_radio_button_text_selector"-->
+                <!--android:textSize="@dimen/xs_dialog_title_textsize_px"-->
+                <!--app:drawableLeft="@drawable/xs_radio_button_selector"-->
+                <!--app:drawableSize="48px" />-->
+        <!--</com.cnksi.common.view.AutoRadioGroup>-->
+
+        <com.cnksi.common.view.FlowRadioGroup
+            android:id="@+id/container_rb_general_defect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/xs_bottom_line_background_selector"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/xs_content_minheight_px"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/xs_global_padding_left_right_px"
-            android:paddingRight="@dimen/xs_global_padding_left_right_px">
+            android:background="@color/core_bg_white_ffffff"
+            android:columnCount="3"
+            android:paddingBottom="@dimen/_20px"
+            android:paddingLeft="@dimen/core_padding_30px"
+            android:paddingRight="@dimen/xs_global_padding_left_right_px"
+            android:paddingTop="@dimen/_20px"
+            android:rowCount="2"
+            app:layout_constraintTop_toBottomOf="@+id/container_defect">
 
             <com.cnksi.common.view.CustomRadioButton
                 android:id="@+id/rb_general_defect"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:button="@null"
                 android:checked="true"
                 android:clickable="true"
-                android:drawableLeft="@drawable/xs_radio_button_selector"
                 android:text="@string/xs_general_defect_str"
                 android:textColor="@color/xs_radio_button_text_selector"
                 android:textSize="@dimen/xs_dialog_title_textsize_px"
@@ -146,9 +201,10 @@
 
             <com.cnksi.common.view.CustomRadioButton
                 android:id="@+id/rb_serious_defect"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:button="@null"
                 android:clickable="true"
                 android:text="@string/xs_serious_defect_str"
@@ -159,9 +215,11 @@
 
             <com.cnksi.common.view.CustomRadioButton
                 android:id="@+id/rb_crisis_defect"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
                 android:button="@null"
                 android:clickable="true"
                 android:text="@string/xs_crisis_defect_str"
@@ -169,7 +227,39 @@
                 android:textSize="@dimen/xs_dialog_title_textsize_px"
                 app:drawableLeft="@drawable/xs_radio_button_selector"
                 app:drawableSize="48px" />
-        </com.cnksi.common.view.AutoRadioGroup>
+
+            <com.cnksi.common.view.CustomRadioButton
+                android:id="@+id/rb_problem_defect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginTop="@dimen/_20px"
+                android:layout_rowWeight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:text="问题"
+                android:textColor="@color/xs_radio_button_text_selector"
+                android:textSize="@dimen/xs_dialog_title_textsize_px"
+                app:drawableLeft="@drawable/xs_radio_button_selector"
+                app:drawableSize="48px" />
+
+            <com.cnksi.common.view.CustomRadioButton
+                android:id="@+id/rb_hidden_defect"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginTop="@dimen/_20px"
+                android:layout_rowWeight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:text="隐患"
+                android:textColor="@color/xs_radio_button_text_selector"
+                android:textSize="@dimen/xs_dialog_title_textsize_px"
+                app:drawableLeft="@drawable/xs_radio_button_selector"
+                app:drawableSize="48px" />
+
+        </com.cnksi.common.view.FlowRadioGroup>
 
     </LinearLayout>
 </layout>

@@ -280,6 +280,9 @@ public class CopyItemService extends BaseService<CopyItem> {
     }
 
 
+
+
+
     public List<CopyItem> findAllMaintenanceHasCopyValue(String currentInspectionType, String currentBdzId) throws DbException {
 
         return selector().and(CopyItem.BDZID, "=", currentBdzId).and(CopyItem.KIND, "=", currentInspectionType)

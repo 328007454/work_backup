@@ -19,6 +19,12 @@ android {
         ndk {
             abiFilters 'armeabi'
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     dataBinding {
         enabled true
@@ -52,4 +58,6 @@ dependencies {
     compile project(':tts')
     api project(':common')
     compile project(':defect')
+    api "com.alibaba:arouter-api:$arouter_api"
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
 }

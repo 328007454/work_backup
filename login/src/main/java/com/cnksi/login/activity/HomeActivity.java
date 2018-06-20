@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.cnksi.bdzinspection.czp.OperateTaskListActivity;
 import com.cnksi.bdzinspection.daoservice.SafeToolsInfoService;
 import com.cnksi.common.Config;
@@ -36,6 +37,7 @@ import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.TTSUtils;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.common.ScreenManager;
 import com.cnksi.core.utils.DisplayUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.StringUtils;
@@ -70,6 +72,7 @@ import java.util.Map;
  *
  * @author han on 2017/3/24.
  */
+@Route(path = "/login/HomeActivity")
 public class HomeActivity extends BaseLoginActivity implements View.OnClickListener, ItemClickListener {
     private ActivityHomePageBinding homePageBinding;
     //变电站弹出popwindow
@@ -123,6 +126,7 @@ public class HomeActivity extends BaseLoginActivity implements View.OnClickListe
                 e.printStackTrace();
             }
         });
+        ScreenManager.getScreenManager().popActivity(LoginActivity.class);
     }
 
     @Override
@@ -379,8 +383,6 @@ public class HomeActivity extends BaseLoginActivity implements View.OnClickListe
             showImageDetails(mActivity, StringUtils.addStrToListItem(listPicDis, Config.RESULT_PICTURES_FOLDER), false);
         }
     }
-
-
 
 
     /**

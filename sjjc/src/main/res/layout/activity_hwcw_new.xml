@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="setNull"
-            type="boolean"/>
+            type="boolean" />
 
         <variable
             name="TextUtils"
-            type="android.text.TextUtils"/>
+            type="android.text.TextUtils" />
 
         <variable
             name="location"
-            type="com.cnksi.sjjc.bean.hwcw.HwcwLocation"/>
+            type="com.cnksi.sjjc.bean.hwcw.HwcwLocation" />
 
         <variable
             name="baseInfo"
-            type="com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo"/>
+            type="com.cnksi.sjjc.bean.hwcw.HwcwBaseInfo" />
     </data>
 
     <ScrollView
@@ -39,18 +37,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5"/>
+                app:layout_constraintGuide_percent="0.5" />
 
             <android.support.v7.widget.AppCompatTextView
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="32px"
                 android:id="@+id/txt_baseinfo"
-                android:onClick="onClick"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/label_height"
+                android:layout_marginTop="32px"
                 android:background="@color/green_color"
                 android:drawableEnd="@mipmap/icon_up"
                 android:gravity="center_vertical"
+                android:onClick="onClick"
                 android:paddingEnd="@dimen/sjjc_30px"
                 android:paddingStart="@dimen/sjjc_30px"
                 android:text="基础信息"
@@ -58,9 +55,11 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.zhy.autolayout.AutoConstraintLayout
+
                 android:id="@+id/container_baseinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.5"/>
+                    app:layout_constraintGuide_percent="0.5" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_all_bdz"
@@ -87,7 +86,7 @@
                     android:textSize="@dimen/tv_text_size"
                     app:layout_constraintEnd_toEndOf="@+id/center_guideline1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/container_baseinfo"/>
+                    app:layout_constraintTop_toTopOf="@+id/container_baseinfo" />
 
                 <com.zhy.autolayout.AutoRadioGroup
                     android:layout_width="0dp"
@@ -97,6 +96,7 @@
                     android:paddingStart="30px"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintLeft_toRightOf="@+id/txt_all_bdz"
+                    app:layout_constraintStart_toEndOf="@+id/center_guideline1"
                     app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo">
 
                     <android.support.v7.widget.AppCompatRadioButton
@@ -108,12 +108,13 @@
                         android:checked="true"
                         android:drawablePadding="10px"
                         android:drawableStart="@drawable/radio_button_selector"
+                        android:gravity="center_vertical"
                         android:text="是"
                         android:textColor="@color/radio_button_text_selector"
                         android:textSize="@dimen/tv_text_size"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toRightOf="@+id/txt_all_bdz"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo"/>
+                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo" />
 
                     <android.support.v7.widget.AppCompatRadioButton
                         android:id="@+id/cb_all_no"
@@ -123,12 +124,13 @@
                         android:button="@null"
                         android:drawablePadding="10px"
                         android:drawableStart="@drawable/radio_button_selector"
+                        android:gravity="center_vertical"
                         android:text="否"
                         android:textColor="@color/radio_button_text_selector"
                         android:textSize="@dimen/tv_text_size"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toRightOf="@+id/txt_all_bdz"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo"/>
+                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo" />
                 </com.zhy.autolayout.AutoRadioGroup>
 
 
@@ -145,7 +147,7 @@
                     android:textSize="@dimen/tv_text_size"
                     app:layout_constraintEnd_toStartOf="@+id/center_guideline1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_all_bdz"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_all_bdz" />
 
                 <com.zhy.autolayout.AutoRadioGroup
                     android:layout_width="0px"
@@ -155,7 +157,7 @@
                     android:orientation="horizontal"
                     android:paddingStart="30px"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/center_guideline1"
+                    app:layout_constraintStart_toEndOf="@+id/center_guideline1"
                     app:layout_constraintTop_toBottomOf="@+id/txt_all_bdz">
 
                     <android.support.v7.widget.AppCompatRadioButton
@@ -167,12 +169,13 @@
                         android:checked="true"
                         android:drawablePadding="10px"
                         android:drawableStart="@drawable/radio_button_selector"
+                        android:gravity="center_vertical"
                         android:text="普测"
                         android:textColor="@color/radio_button_text_selector"
                         android:textSize="@dimen/tv_text_size"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toRightOf="@+id/txt_all_bdz"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo"/>
+                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo" />
 
                     <android.support.v7.widget.AppCompatRadioButton
                         android:id="@+id/cb_jingque"
@@ -182,26 +185,27 @@
                         android:button="@null"
                         android:drawablePadding="10px"
                         android:drawableStart="@drawable/radio_button_selector"
+                        android:gravity="center_vertical"
                         android:text="精确测温"
                         android:textColor="@color/radio_button_text_selector"
                         android:textSize="@dimen/tv_text_size"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toRightOf="@+id/txt_all_bdz"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo"/>
+                        app:layout_constraintTop_toBottomOf="@+id/txt_baseinfo" />
                 </com.zhy.autolayout.AutoRadioGroup>
 
                 <com.cnksi.common.view.EditTextNoEmoj
-                    android:inputType="numberSigned|numberDecimal"
-                    android:maxLength="5"
                     android:id="@+id/et_temperature"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0px"
                     android:layout_height="138px"
                     android:background="@color/white"
+                    android:inputType="numberSigned|numberDecimal"
+                    android:maxLength="5"
                     android:text="@{baseInfo.temp}"
-                    app:layout_constraintRight_toLeftOf="@+id/center_guideline1"
+                    app:layout_constraintEnd_toStartOf="@+id/center_guideline1"
                     app:layout_constraintStart_toEndOf="@+id/txt_temperature"
-                    app:layout_constraintTop_toTopOf="@+id/txt_temperature"/>
+                    app:layout_constraintTop_toTopOf="@+id/txt_temperature" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_temperature"
@@ -215,7 +219,7 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_test_type"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_test_type" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_humidity"
@@ -229,20 +233,20 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
                     app:layout_constraintStart_toEndOf="@+id/center_guideline1"
-                    app:layout_constraintTop_toTopOf="@id/txt_temperature"/>
+                    app:layout_constraintTop_toTopOf="@id/txt_temperature" />
 
                 <com.cnksi.common.view.EditTextNoEmoj
-                    android:inputType="numberDecimal"
-                    android:maxLength="5"
                     android:id="@+id/et_humidity"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0px"
                     android:layout_height="138px"
                     android:background="@color/white"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
                     android:text="@{baseInfo.shidu}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txt_humidity"
-                    app:layout_constraintTop_toTopOf="@id/txt_humidity"/>
+                    app:layout_constraintTop_toTopOf="@id/txt_humidity" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_wind"
@@ -255,7 +259,7 @@
                     android:text="风速(m/s)"
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_humidity"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_humidity" />
 
                 <com.cnksi.common.view.EditTextNoEmoj
                     android:id="@+id/et_wind"
@@ -268,7 +272,7 @@
                     android:text="@{baseInfo.fengsu}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txt_wind"
-                    app:layout_constraintTop_toTopOf="@+id/txt_wind"/>
+                    app:layout_constraintTop_toTopOf="@+id/txt_wind" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_temperature_device"
@@ -281,7 +285,7 @@
                     android:text="测温仪器(型号/编号)"
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/tv_text_size"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_wind"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_wind" />
 
                 <com.cnksi.common.view.EditTextNoEmoj
                     android:id="@+id/et_test_instrument"
@@ -292,7 +296,7 @@
                     android:text="@{baseInfo.testInstrument}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txt_temperature_device"
-                    app:layout_constraintTop_toTopOf="@+id/txt_temperature_device"/>
+                    app:layout_constraintTop_toTopOf="@+id/txt_temperature_device" />
 
             </com.zhy.autolayout.AutoConstraintLayout>
 
@@ -309,7 +313,7 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/container_baseinfo"/>
+                app:layout_constraintTop_toBottomOf="@+id/container_baseinfo" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_hot_device"
@@ -322,7 +326,7 @@
                 android:text="设备名称"
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/txt_add_location"/>
+                app:layout_constraintTop_toBottomOf="@+id/txt_add_location" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/et_hotdeivce_name"
@@ -340,7 +344,7 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_hot_device"
-                app:layout_constraintTop_toTopOf="@+id/txt_hot_device"/>
+                app:layout_constraintTop_toTopOf="@+id/txt_hot_device" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_hot_space"
@@ -353,7 +357,7 @@
                 android:text="间隔单元"
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/txt_hot_device"/>
+                app:layout_constraintTop_toBottomOf="@+id/txt_hot_device" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_space_name"
@@ -367,7 +371,7 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_hot_space"
-                app:layout_constraintTop_toTopOf="@+id/txt_hot_space"/>
+                app:layout_constraintTop_toTopOf="@+id/txt_hot_space" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_electrcity"
@@ -380,7 +384,7 @@
                 android:text="额定电流(A)"
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/txt_hot_space"/>
+                app:layout_constraintTop_toBottomOf="@+id/txt_hot_space" />
 
             <com.cnksi.common.view.EditTextNoEmoj
                 android:id="@+id/et_electricity"
@@ -389,14 +393,14 @@
                 android:layout_height="138px"
                 android:background="@color/white"
                 android:drawablePadding="@dimen/sjjc_30px"
+                android:hint="请输入额定电流"
                 android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:hint="请输入额定电流"
                 android:paddingEnd="@dimen/sjjc_30px"
                 android:text='@{setNull==false?"":location.ratedCurrent}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_electrcity"
-                app:layout_constraintTop_toTopOf="@+id/txt_electrcity"/>
+                app:layout_constraintTop_toTopOf="@+id/txt_electrcity" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_load_electricity"
@@ -409,7 +413,7 @@
                 android:text="负荷电流(A)"
                 android:textColor="@color/global_text_color"
                 android:textSize="@dimen/tv_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/txt_electrcity"/>
+                app:layout_constraintTop_toBottomOf="@+id/txt_electrcity" />
 
             <com.cnksi.common.view.EditTextNoEmoj
                 android:id="@+id/et_load_electricity"
@@ -425,7 +429,7 @@
                 android:text='@{setNull==false?"":location.fhdl}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_load_electricity"
-                app:layout_constraintTop_toTopOf="@+id/txt_load_electricity"/>
+                app:layout_constraintTop_toTopOf="@+id/txt_load_electricity" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_hot_part"
@@ -443,7 +447,7 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_load_electricity"/>
+                app:layout_constraintTop_toBottomOf="@+id/txt_load_electricity" />
 
             <LinearLayout
                 android:id="@+id/ll_hot_part"
@@ -452,8 +456,7 @@
                 android:background="@color/white"
                 android:divider="@color/layout_color_gray"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/txt_hot_part"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/txt_hot_part" />
 
             <Button
                 android:id="@+id/btn_cancel"
@@ -470,7 +473,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btn_confirm"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_hot_part"/>
+                app:layout_constraintTop_toBottomOf="@+id/ll_hot_part" />
 
             <Button
                 android:id="@+id/btn_confirm"
@@ -486,7 +489,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@+id/btn_cancel"
-                app:layout_constraintTop_toTopOf="@+id/btn_cancel"/>
+                app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_hot_record"
@@ -501,13 +504,13 @@
                 android:textSize="@dimen/tv_text_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_cancel"/>
+                app:layout_constraintTop_toBottomOf="@+id/btn_cancel" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rl_hotrecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/txt_hot_record"/>
+                app:layout_constraintTop_toBottomOf="@+id/txt_hot_record" />
 
             <Button
                 android:id="@+id/btn_confirm_save"
@@ -523,7 +526,7 @@
                 android:onClick="onClick"
                 android:text="@string/complete_test_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rl_hotrecord"/>
+                app:layout_constraintTop_toBottomOf="@id/rl_hotrecord" />
         </com.zhy.autolayout.AutoConstraintLayout>
     </ScrollView>
 </layout>

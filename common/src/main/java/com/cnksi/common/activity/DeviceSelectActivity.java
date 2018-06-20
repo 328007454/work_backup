@@ -96,6 +96,9 @@ public class DeviceSelectActivity extends BaseTitleActivity {
         setPagerTabStripValue(binding.tabStrip);
         binding.tabStrip.setTabPaddingLeftRight(37);
         binding.tabStrip.setShouldExpand(false);
+        if (selectConfig.pmsDeviceType.size()==1){
+            binding.tabStrip.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -116,7 +119,7 @@ public class DeviceSelectActivity extends BaseTitleActivity {
                 selectConfig.title = "请选择设备";
             }
         }
-        if (selectConfig.pmsDeviceType == null || !selectConfig.pmsDeviceType.isEmpty()) {
+        if (selectConfig.pmsDeviceType == null || selectConfig.pmsDeviceType.isEmpty()) {
             selectConfig.pmsDeviceType = Arrays.asList(PMSDeviceType.values());
         }
 
@@ -341,7 +344,7 @@ public class DeviceSelectActivity extends BaseTitleActivity {
             if (!pmsDeviceType.isEmpty()) {
                 intent.putExtra(PMS_DEVICE_TYPE_KEY, new ArrayList<>(pmsDeviceType));
             }
-            if (TextUtils.isEmpty(title)) {
+            if (!TextUtils.isEmpty(title)) {
                 intent.putExtra(Config.TITLE_NAME_KEY, title);
             }
             activity.startActivityForResult(intent, requestCode);

@@ -135,9 +135,9 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         deviceAdapter = new CopyDeviceAdapter(this, copyDeviceList, R.layout.select_device_item);
         deviceAdapter.setItemClickListener((v, dbModel, position) -> {
             if (isSpread) {
-                CopyAllValueActivity3.this.setDeviceListDisplay();
+                setDeviceListDisplay();
             }
-            if (!CopyAllValueActivity3.this.showShadom()) {
+            if (!showShadom()) {
                 if (null != dbModel) {
                     deviceAdapter.setCurrentSelectedPosition(position);
                     currentDevice = dbModel;
@@ -145,8 +145,8 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
                         isFinish = false;
                         binding.btnNext.setText(R.string.xs_next);
                     }
-                    CopyAllValueActivity3.this.saveAll();
-                    CopyAllValueActivity3.this.setCurrentDevice(position);
+                    saveAll();
+                    setCurrentDevice(position);
 
                 } else {
                     data.clear();
@@ -160,15 +160,15 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
         copyViewUtil = new CopyViewUtil();
         copyViewUtil.setKeyBordListener(this);
         copyViewUtil.setItemLongClickListener((v, result, position, item) -> {
-            XsActivityCopyDialogBinding copyDialogBinding = XsActivityCopyDialogBinding.inflate(CopyAllValueActivity3.this.getLayoutInflater());
+            XsActivityCopyDialogBinding copyDialogBinding = XsActivityCopyDialogBinding.inflate(getLayoutInflater());
             copyDialogBinding.etCopyValues.setText(TextUtils.isEmpty(result.remark) ? "看不清" : result.remark.subSequence(0, result.remark.length()));
             dialog = DialogUtils.createDialog(mActivity, copyDialogBinding.getRoot(), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             dialog.show();
             copyDialogBinding.btnCancel.setOnClickListener(view -> dialog.dismiss());
-            copyDialogBinding.btnSure.setOnClickListener(view -> CopyAllValueActivity3.this.saveRemarkData(result, copyDialogBinding.etCopyValues, item));
+            copyDialogBinding.btnSure.setOnClickListener(view -> saveRemarkData(result, copyDialogBinding.etCopyValues, item));
         });
         copyViewUtil.setItemClickListener((v, copyItem, position) -> {
-            CopyAllValueActivity3.this.hideKeyBord();
+            hideKeyBord();
             ShowCopyHistroyDialogUtils.showHistory(mActivity, copyItem);
         });
     }
@@ -454,17 +454,27 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
 
     private void initOnClick() {
         binding.tvBatteryTestStep.setOnClickListener(view -> {
-            CopyAllValueActivity3.this.saveAll();
+            saveAll();
             String tip = String.format(getText(R.string.xs_dialog_tips_finish_str) + "", CopyResultService.getInstance().getCopyResult(currentBdzId, currentReportId, CopyItemService.getInstance().getCopyType()));
-            CopyAllValueActivity3.this.showTipsDialog(binding.llRootContainer, tip);
+            showTipsDialog(binding.llRootContainer, tip);
         });
 
 
-        binding.ibtnCancel.setOnClickListener(view -> CopyAllValueActivity3.this.onBackPressed());
-        binding.btnNext.setOnClickListener(view -> CopyAllValueActivity3.this.operateNextDevice());
+        binding.ibtnCancel.setOnClickListener(view -> onBackPressed());
+        binding.btnNext.setOnClickListener(view -> operateNextDevice());
+        binding.btnPre.setOnClickListener(v -> {
+            saveAll();
+            if (!deviceAdapter.isFirst()) {
+                deviceAdapter.pre();
+            }
+            if (isFinish) {
+                isFinish = false;
+                binding.btnNext.setText(R.string.next);
+            }
+        });
 
         binding.ibtnSpread.setOnClickListener(view -> {
-            CopyAllValueActivity3.this.saveAll();
+            saveAll();
             if (!deviceAdapter.isFirst()) {
                 deviceAdapter.pre();
             }
@@ -472,7 +482,7 @@ public class CopyAllValueActivity3 extends BaseActivity implements KeyBordListen
                 isFinish = false;
                 binding.btnNext.setText(R.string.xs_next);
             }
-            CopyAllValueActivity3.this.setDeviceListDisplay();
+            setDeviceListDisplay();
         });
     }
 

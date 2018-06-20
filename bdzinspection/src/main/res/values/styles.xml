@@ -381,7 +381,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:background">@android:color/transparent</item>
+
         <item name="android:minWidth">200px</item>
         <item name="android:minHeight">60px</item>
         <item name="android:textColor">@color/xs_green_color</item>

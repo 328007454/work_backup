@@ -104,18 +104,17 @@ public class FullDeviceListActivity extends BaseActivity implements OnShakeListe
     }
 
     private void initialUI() {
+        getIntentValue();
         shakeListener = new ShakeListener(this);
         shakeListener.setOnShakeListener(this);
         binding.ibtnAdd.setVisibility(View.VISIBLE);
         binding.ibtnAdd.setImageResource(R.drawable.xs_copy_button_background);
         binding.ibtnAdd.setOnLongClickListener(v -> {
-            FullDeviceListActivity.this.showChangeDistanceDialog();
+            showChangeDistanceDialog();
             return false;
         });
 
         binding.btnStartInspection.setText(R.string.xs_finish_inspection_str);
-
-        getIntentValue();
         TTSUtils.getInstance().startSpeaking(getString(R.string.xs_speak_content_format_str, currentInspectionTypeName));
         binding.tvTitle.setText(currentBdzName + "" + currentInspectionTypeName);
         deviceTypes = LookupService.getInstance().findLookupByType(LookUpType.pmsDeviceType.name(), true);
@@ -197,7 +196,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnShakeListe
                     }
                 }
                 if (isLeader) {
-                    FullDeviceListActivity.this.runOnUiThread(() -> {
+                    runOnUiThread(() -> {
                         if (currentPosition < 2) {
                             binding.ibtnSort.setVisibility(View.VISIBLE);
                         }
@@ -211,24 +210,24 @@ public class FullDeviceListActivity extends BaseActivity implements OnShakeListe
 
 
     private void initOnClick() {
-        binding.ibtnCancel.setOnClickListener(view -> FullDeviceListActivity.this.onBackPressed());
+        binding.ibtnCancel.setOnClickListener(view -> onBackPressed());
 
         binding.ibtnAdd.setOnClickListener(view -> {
             PlaySound.getIntance(mActivity).play(R.raw.input);
             Intent intent = new Intent(mActivity, CopyAllValueActivity2.class);
-            FullDeviceListActivity.this.startActivity(intent);
+            startActivity(intent);
         });
 
         binding.ibtnSort.setOnClickListener(view -> {
-            Intent intent = new Intent(FullDeviceListActivity.this, SpaceSortActivity.class);
+            Intent intent = new Intent(this, SpaceSortActivity.class);
             intent.putExtra(Config.CURRENT_FUNCTION_MODEL, deviceTypes.get(currentPosition).k);
             intent.putExtra(Config.TITLE_NAME_KEY, deviceTypes.get(currentPosition).v);
-            FullDeviceListActivity.this.startActivityForResult(intent, DeviceListFragment.SORT_SPACING);
+            startActivityForResult(intent, DeviceListFragment.SORT_SPACING);
         });
-        binding.btnStartInspection.setOnClickListener(view -> FullDeviceListActivity.this.finishInspection());
+        binding.btnStartInspection.setOnClickListener(view -> finishInspection());
         binding.ibtnBluetooth.setOnClickListener(view -> {
-            Intent intent1 = new Intent(FullDeviceListActivity.this, BTDemoActivity.class);
-            FullDeviceListActivity.this.startActivityForResult(intent1, DeviceListFragment.RFID);
+            Intent intent1 = new Intent(this, BTDemoActivity.class);
+            startActivityForResult(intent1, DeviceListFragment.RFID);
         });
     }
 
@@ -238,7 +237,7 @@ public class FullDeviceListActivity extends BaseActivity implements OnShakeListe
             fragmentList.get(0).handleSpaceArrivedData();
         }
         long copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-        long totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
+        long totalCount = CopyItemService.getInstance().getCopyTotalCount(currentBdzId, currentInspectionType);
 
         String s = DeviceService.getInstance().groupImportantDevicePhoto(currentBdzId, currentReportId);
         String tip = String.format(getText(R.string.xs_dialog_tips_finish_str1) + "", copyCount + "", totalCount + "", s);

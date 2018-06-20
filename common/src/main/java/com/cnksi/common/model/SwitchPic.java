@@ -11,7 +11,7 @@ public class SwitchPic extends BaseModel{
 
 	// ID
 	public static final String ID = "id";
-	@Column(name = ID)
+	@Column(name = ID,isId = true)
 	public String id = UUID.randomUUID().toString();
 
 	// 报告编号
