@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -55,7 +56,7 @@ public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickLi
 
     //当前拍照孔洞位置
     private String currentHole;
-    private static final int TAKEPIC_REQUEST = LOAD_DATA + 1;
+    private static final int TAKEPIC_REQUEST = LOAD_DATA + 100;
     private static final int VIDEO_REQUEST = TAKEPIC_REQUEST + 1;
     private static final int REFRESH_UI = VIDEO_REQUEST + 1;
     //点击当前清除拍照时对应的HoleRecord
@@ -125,24 +126,26 @@ public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickLi
                 } else {
                     mXCHoleAdapter.setList(holeRecords);
                 }
+                Log.d("Tag---show", "" + (System.currentTimeMillis() - startTime));
                 break;
             default:
                 break;
         }
     }
+    private long startTime;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_OK) {
-            if (requestCode == TAKEPIC_REQUEST) {//拍照返回请求
+            if (requestCode == TAKEPIC_REQUEST) {
                 File file = new File(Config.RESULT_PICTURES_FOLDER, imgName);
                 if (file.exists()) {
                     BitmapUtils.compressImage(file.getAbsolutePath(), 3);
                     String pictureContent = DateUtils.getFormatterTime(new Date(), DateUtils.yyyy_MM_dd_HH_mm) + "\n" + currentHole + "\n" + PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
                     drawCircle(Config.RESULT_PICTURES_FOLDER + imgName, pictureContent);
                 }
-            } else if (requestCode == Config.CANCEL_RESULT_LOAD_IMAGE) {//删除照片请求
+            } else if (requestCode == Config.CANCEL_RESULT_LOAD_IMAGE) {
                 ArrayList<String> cancleImagList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
                 ArrayList<String> allPicList = StringUtils.stringToList(item.clear_images);
                 for (String imageUrl : cancleImagList) {
@@ -152,6 +155,7 @@ public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickLi
                 clearPicMap.put(item.id, item);
                 mHandler.sendEmptyMessage(LOAD_DATA);
             } else if (requestCode == LOAD_DATA) {
+                startTime=System.currentTimeMillis();
                 if (TextUtils.isEmpty(item.clear_images)) {
                     item.clear_images = "" + imgName;
                 } else {
@@ -163,6 +167,7 @@ public class XianCunHoleActivity extends BaseSjjcActivity implements ItemClickLi
             }
         }
     }
+
     /**
      * 现存孔洞清除孔洞时候的拍照
      */

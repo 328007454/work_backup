@@ -25,24 +25,20 @@ import com.cnksi.common.SystemConfig;
 import com.cnksi.common.base.BaseActivity;
 import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.common.daoservice.BdzService;
-import com.cnksi.common.daoservice.DepartmentService;
 import com.cnksi.common.daoservice.ReportService;
-import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.enmu.Role;
 import com.cnksi.common.listener.AbstractPageChangeListener;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
-import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.sync.KSyncConfig;
 
-import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -102,12 +98,12 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
         getIntentValue();
         binding.includeTitle.ibtnExit.setVisibility(View.VISIBLE);
         binding.includeTitle.ibtnExit.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.xs_icon_sync_selector));
-        String inspectionName = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE_NAME);
+        String inspectionName = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE);
         // 防止由于系统垃圾回收导致其他界面返回获取不到当前巡检类型报错
         if (!TextUtils.isEmpty(inspectionName)) {
-            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionName);
+            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, inspectionName);
         } else {
-            PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE_NAME, "full");
+            PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE, "full");
             inspectionName = InspectionType.full.value.toString();
         }
         currentSelectInspectionType = InspectionType.get(inspectionName);
@@ -127,7 +123,7 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
             mTaskFragment.setOnFragmentEventListener(this);
             Bundle args = new Bundle();
             args.putString(Config.CURRENT_FUNCTION_MODEL, functionModelArray[i]);
-            args.putString(Config.CURRENT_INSPECTION_TYPE_NAME, currentSelectInspectionType.name());
+            args.putString(Config.CURRENT_INSPECTION_TYPE, currentSelectInspectionType.name());
             mTaskFragment.setArguments(args);
             mFragmentList.add(mTaskFragment);
         }
@@ -379,27 +375,11 @@ public class TaskRemindActivity extends BaseActivity implements OnFragmentEventL
     private void generateReport(Task mTask) {
         try {
             Report mReport = ReportService.getInstance().getReportByTask(mTask.taskid);
-            String loginPerson = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
-            if (mReport == null) {
-                mReport = new Report(mTask.taskid, mTask.bdzid, mTask.bdzname, mTask.inspection, loginPerson);
-            }
-            mReport.setOtherReport(mTask.bdzid, mTask.bdzname, mTask.inspection, loginPerson);
-            String reportSwitchId = PreferencesUtils.get(mTask.inspection + "_" + mTask.bdzid, "");
-            mReport.repSwithoverId = reportSwitchId;
             mReport.inspectionValue = mTask.inspection_name;
             mReport.reportSource = Config.REPORT_SOURCE_REPORT;
             mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
+            mReport.starttime = DateUtils.getCurrentLongTime();
             ReportService.getInstance().saveOrUpdate(mReport);
-
-            ReportSignname reportSignname = ReportSignnameService.getInstance().getSignNamesForReportFirst(currentReportId);
-            if (reportSignname == null) {
-                String currentAcounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
-                List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAcounts);
-                for (DbModel dbModel : defaultUesrs) {
-                    reportSignname = new ReportSignname(mReport.reportid, Role.worker.name(), dbModel);
-                    ReportSignnameService.getInstance().saveOrUpdate(reportSignname);
-                }
-            }
             if (mReport != null) {
                 PreferencesUtils.put(Config.CURRENT_REPORT_ID, mReport.reportid);
             }

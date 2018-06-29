@@ -84,7 +84,7 @@ public class TaskService extends BaseService<Task> {
         long count = 0;
         try {
 
-            count = selector().expr(" and " + DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId).count();
+            count = getDbManager().selector(DefectRecord.class).where(DefectRecord.DLT,"=",0).expr(" and " + DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId).count();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -439,10 +439,10 @@ public class TaskService extends BaseService<Task> {
 
     }
 
-    public Task findTaskByTypeAndTodayTime(String typeValue, String currentShortTime) {
+    public Task findTaskByTypeAndTodayTime(String bdzId,String typeValue, String currentShortTime) {
         Task task;
         try {
-            task = selector().and(Task.INSPECTION_NAME, "=", typeValue).and(Task.SCHEDULE_TIME, "=", currentShortTime).findFirst();
+            task = selector().and(Task.BDZID,"=",bdzId).and(Task.INSPECTION, "=", typeValue).and(Task.SCHEDULE_TIME, ">", currentShortTime+" 00:00:00").and(Task.SCHEDULE_TIME,"<",currentShortTime+" 23:59:59").and(Task.STATUS,"<>","done").findFirst();
             return task;
         } catch (DbException e) {
             e.printStackTrace();

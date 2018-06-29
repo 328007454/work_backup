@@ -93,8 +93,8 @@ public enum InspectionType {
     SBJC_KGGZTZJL("开关故障跳闸"),
     JYHYS("精益化验收"),
     JYHPJ("精益化评价"),
-    TJWT("教育培训");
-
+    TJWT("教育培训"),
+    ERROR("错误");
 
     public final String value;
 
@@ -109,7 +109,11 @@ public enum InspectionType {
 
 
     public static InspectionType get(String value) {
-        return InspectionType.valueOf(value);
+        try {
+            return InspectionType.valueOf(value);
+        } catch (Exception ex) {
+            return InspectionType.valueOf(InspectionType.ERROR.name());
+        }
     }
 
 }

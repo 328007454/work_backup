@@ -2,13 +2,14 @@
 <layout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                  xmlns:autofit="http://schemas.android.com/apk/res-auto"
-                  android:id="@+id/ll_root_container"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@android:color/white"
-                  android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:autofit="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ll_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/battery_color_type"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,7 +26,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
                 android:visibility="visible"
-                app:srcCompat="@drawable/cancel_button_background"/>
+                app:srcCompat="@drawable/cancel_button_background" />
 
 
             <ImageButton
@@ -38,7 +39,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@null"
                 android:src="@drawable/xs_icon_bluetooth"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
             <me.grantland.widget.AutofitTextView
@@ -51,7 +52,7 @@
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/xs_title_text_size_px"
-                autofit:minTextSize="10px"/>
+                autofit:minTextSize="10px" />
 
         </RelativeLayout>
 
@@ -59,17 +60,19 @@
             android:id="@+id/tab_strip"
             android:layout_width="match_parent"
             android:layout_height="@dimen/xs_tab_strip_minheight_px"
-            android:background="@color/xs_tab_strip_background_color"/>
+            android:background="@color/xs_tab_strip_background_color" />
 
         <com.cnksi.bdzinspection.view.NoScrollViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@color/core_bg_white_ffffff" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/core_bg_white_ffffff"
             android:orientation="horizontal">
 
             <Button
@@ -86,7 +89,7 @@
                 android:gravity="center"
                 android:minHeight="@dimen/xs_button_minheight"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_global_text_size_px"/>
+                android:textSize="@dimen/xs_global_text_size_px" />
 
             <Button
                 android:id="@+id/btn_right"
@@ -102,7 +105,7 @@
                 android:gravity="center"
                 android:minHeight="@dimen/xs_button_minheight"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/xs_global_text_size_px"/>
+                android:textSize="@dimen/xs_global_text_size_px" />
         </LinearLayout>
     </LinearLayout>
 </layout>

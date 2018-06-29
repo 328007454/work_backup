@@ -357,4 +357,13 @@ public class DateCalcUtils {
     public static String getNowPre(int t, TimeUnit unit,String format){
       return getFormatterTime(new Date(System.currentTimeMillis()+unit.toMillis(t)),format);
     }
+
+    /**
+     * 获取24小时制的时分秒
+     */
+    public static String get24h(){
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        return dateFormat.format(date);
+    }
 }

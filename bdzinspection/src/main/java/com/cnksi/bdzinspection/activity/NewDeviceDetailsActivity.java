@@ -489,6 +489,7 @@ public class NewDeviceDetailsActivity extends BaseActivity implements DevicePart
             intent.putExtra(Device.DEVICEID, mCurrentDevice.deviceid);
             intent.putExtra(Bdz.BDZID, mCurrentDevice.bdzid);
             intent.putExtra(Config.DEFECT_COUNT_KEY, Config.MULTI);
+            intent.putExtra(Config.CURRENT_REPORT_ID,currentReportId);
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
         });
 

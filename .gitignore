@@ -11,4 +11,5 @@ sjjc/release
 .vscode
 .project
 .classpath
+*.log
 

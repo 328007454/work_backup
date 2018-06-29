@@ -54,7 +54,6 @@ import com.cnksi.nari.NariActivity;
 import com.cnksi.nari.type.PackageStatus;
 import com.cnksi.nari.utils.NariDataManager;
 
-import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
@@ -143,7 +142,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         if (!isFirstEnter) {
             if (currentInspectionType.equalsIgnoreCase(InspectionType.routine.name()) || currentInspectionType.equalsIgnoreCase(InspectionType.full.name())) {
                 copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-                totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
+                totalCount = CopyItemService.getInstance().getCopyTotalCount(currentBdzId, currentInspectionType);
                 binding.tvCopyResult.setText(String.valueOf(copyCount) + "/" + String.valueOf(totalCount));
             }
         } else {
@@ -157,6 +156,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
         getIntentValue();
         if (!TextUtils.isDigitsOnly(currentInspectionType)) {
             if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
+                binding.etSwitchoverResult.setVisibility(View.VISIBLE);
                 runOnUiThread(() -> {
                     binding.layoutResult.setVisibility(View.GONE);
                     binding.layoutMessageInput.setVisibility(View.GONE);
@@ -185,7 +185,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 inspectionResult = currentReport.inspectionResult;
                 if ((!isParticularInspection()) && (!isRoutineNotCopy())) {
                     copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-                    totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
+                    totalCount = CopyItemService.getInstance().getCopyTotalCount(currentBdzId, currentInspectionType);
                     if (xudianchi) {
                         List<DbModel> batteryDbmodelList = BatteryGroupService.getInstance().findBatteryGroup(currentBdzId);
                         DbModel batteryCopyTotal = BatteryGroupService.getInstance().findAllBatteryCodeCount(currentBdzId, currentReportId);
@@ -233,9 +233,8 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             }
 
             try {
-                String sql = "SELECT xjnr,remark,xsjg FROM 'lookup_local' where k=?;";
+                String sql = "SELECT xjnr,remark,xsjg FROM lookup_local where bdzid='" + currentBdzId + "' and k= '" + currentInspectionType + "' and dlt =0 ;";
                 SqlInfo sqlInfo = new SqlInfo(sql);
-                sqlInfo.addBindArg(new KeyValue("", currentInspectionType));
                 DbModel model = LookupService.getInstance().findDbModelFirst(sqlInfo);
                 inspectionContent = TextUtils.isEmpty(currentReport.inspectionContent) ? model == null ? "" : model.getString("xjnr") : currentReport.inspectionContent;
                 if (model != null) {
@@ -256,6 +255,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 binding.inspectionContent.setText(inspectionContent);
                 binding.etRemark.setText(TextUtils.isEmpty(inspectionMark) ? "" : inspectionMark);
                 binding.etResult.setText(TextUtils.isEmpty(inspectionResult) ? "" : inspectionResult);
+                binding.etSwitchoverResult.setText(TextUtils.isEmpty(inspectionResult) ? "" : inspectionResult);
                 returnDateTime(currentReport.starttime, true);
                 returnDateTime(currentReport.endtime, false);
             });
@@ -341,8 +341,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
 
         binding.btnComplete.setOnClickListener(view -> finishReport());
         binding.llCopyResult.setOnClickListener(view -> {
-            if (currentInspectionType.contains(InspectionType.switchover.name()) || currentInspectionType.contains(InspectionType.maintenance.name()))
-            {
+            if (currentInspectionType.contains(InspectionType.switchover.name()) || currentInspectionType.contains(InspectionType.maintenance.name())) {
                 return;
             }
             PlaySound.getIntance(mActivity).play(R.raw.input);
@@ -404,8 +403,9 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             } else {
                 intent = new Intent(mActivity, InspectionReportActivity.class);
             }
-            PushNewTaskUtil.getTaskUtilInstance().createNewTaskByPeriod(currentTaskId, currentInspectionType);
+            PushNewTaskUtil.getTaskUtilInstance().createNewTaskByPeriod(currentTaskId, currentInspectionType, currentInspectionTypeName);
             startActivity(intent);
+            finish();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -433,8 +433,10 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             return;
         }
         if (isStartTime) {
-            currentReport.starttime = dateString;
-            binding.txtStartTime.setText(StringUtils.formatPartTextColor("开始时间：%s", Color.parseColor("#03B9A0"), dateString));
+            if (!TextUtils.isEmpty(dateString)) {
+                currentReport.starttime = dateString;
+                binding.txtStartTime.setText(StringUtils.formatPartTextColor("开始时间：%s", Color.parseColor("#03B9A0"), dateString));
+            }
         } else {
             if (DateUtils.compareDate(binding.txtStartTime.getText().toString().replace("开始时间：", ""), dateString, DateUtils.yyyy_MM_dd_HH_mm_ss)) {
                 ToastUtils.showMessage("开始时间不能大于结束时间");
@@ -489,9 +491,10 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
     }
 
     PeopleDialog peopleDialog;
+    PeopleDialog.Builder builder = new PeopleDialog.Builder();
 
     public void showAddPersonDialog() {
-        peopleDialog = new PeopleDialog.Builder().setDeptId(currentDepartmentId).setItemClickListener((v, data, position) -> {
+        peopleDialog = builder.setDeptId(currentDepartmentId).setItemClickListener((v, data, position) -> {
             peopleDialog.dismiss();
             getClickPerson(v, data, position);
         }).loadData().getPeopleDialog();
@@ -609,7 +612,7 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
                 break;
             case LOAD_DATA:
                 copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-                totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
+                totalCount = CopyItemService.getInstance().getCopyTotalCount(currentBdzId, currentInspectionType);
                 binding.tvCopyResult.setText(String.valueOf(copyCount) + "/" + String.valueOf(totalCount));
                 break;
             default:

@@ -60,6 +60,7 @@
                         layout="@layout/layout_defect_input_common" />
                 </RelativeLayout>
 
+
                 <TextView
                     android:id="@+id/title_ele_internet"
                     android:layout_width="match_parent"

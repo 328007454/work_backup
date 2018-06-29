@@ -5,9 +5,9 @@ import android.text.TextUtils;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.utils.DateCalcUtils;
 import com.cnksi.common.utils.MyUUID;
 import com.cnksi.common.utils.StringUtilsExt;
-import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 
 import org.xutils.db.annotation.Column;
@@ -135,7 +135,7 @@ public class Task extends BaseModel {
     }
 
     public Task(String taskid, String bdzid, String bdzname, String inspection, String inspection_name,
-                String schedule_time, String status, String creatUser, String membersUser) {
+                String schedule_time, String status, String creatUser, String membersUser,String deptId) {
         this.taskid = taskid;
         this.inspection = inspection;
         this.bdzid = bdzid;
@@ -145,6 +145,7 @@ public class Task extends BaseModel {
         this.inspection_name = inspection_name;
         this.createAccount = creatUser;
         this.membersAccount = membersUser;
+        this.deptId = deptId;
     }
 
     public Task(String taskid, String bdzid, String bdzname, String inspection, String inspection_name,
@@ -159,13 +160,14 @@ public class Task extends BaseModel {
         this.createAccount = createAccount;
     }
 
-    public Task(Bdz bdz, String inspectionType, String currentAcounts, String inspectionValue, List<DbModel> allSelectUser, String selectDeviceIds, String type) {
+    public Task(Bdz bdz, String inspectionType, String currentAcounts, String inspectionValue, List<DbModel> allSelectUser, String selectDeviceIds, String type, String scheduleTime) {
+
         this.taskid = MyUUID.id(4);
         this.inspection = inspectionType;
         this.bdzid = bdz.bdzid;
         this.bdzname = bdz.name;
         this.deptId = bdz.deptId;
-        this.schedule_time = DateUtils.getCurrentLongTime();
+        this.schedule_time = scheduleTime + " " + DateCalcUtils.get24h();
         this.inspection_name = inspectionValue;
         String[] accounts = currentAcounts.split(",");
         for (int accountSize = 0; accountSize < accounts.length; accountSize++) {

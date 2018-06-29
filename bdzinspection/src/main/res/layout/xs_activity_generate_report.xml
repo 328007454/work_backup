@@ -178,12 +178,26 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <com.cnksi.common.view.EditTextNoEmoj
+                    android:id="@+id/et_switchover_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/xs_white"
+                    android:gravity="left|top"
+                    android:hint="请输维护或试验结果"
+                    android:minHeight="100px"
+                    android:padding="36px"
+                    android:visibility="gone"
+                    android:textSize="@dimen/xs_global_text_small_size_px" />
+
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/txt_pms"
                     style="@style/GPLableTextStyle"
                     android:text="上传PMS" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/layout_upload_pms"
                     android:layout_width="match_parent"
                     android:layout_height="150px"

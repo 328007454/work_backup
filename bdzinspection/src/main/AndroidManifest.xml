@@ -8,246 +8,200 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
     <application>
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.TaskRemindActivity"
-            android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/App.Theme.Launch" />
         <activity
             android:name="com.cnksi.nari.NariActivity"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
-
             android:name="com.cnksi.bdzinspection.activity.maintenance.SafetyToolsRemindActivity"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
-
             android:name="com.cnksi.bdzinspection.activity.maintenance.SafetyBdzListActivity"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.maintenance.SafetyToolsControlActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
 
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.maintenance.SafeToolsInformationActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.InspectionReadyActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/App.Theme.Launch"
+          
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.FullDeviceListActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/App.Theme.Launch" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.NewDeviceDetailsActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.InspectionReportActivity"
-            android:exported="true"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/App.Theme.Launch" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.DefectControlActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.AddTaskActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.CopyValueActivity2"
-            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.ReportToLeaderActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.cnksi.bdzinspection.com.cnksi.common.activity.DrawCircleImageActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name="com.cnksi.bdzinspection.activity.ParticularDeviceListActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.CopyAllValueActivity2"
-            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.SingleSpaceCopyActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.CopyAllValueActivity3"
-            android:exported="true"
+
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.SpaceSortActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.DeviceSortActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.SpaceSplitActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.GenerateReportActivity"
-            android:exported="true"
             android:screenOrientation="portrait" />
 
         <!--new -->
         <activity
             android:name="com.cnksi.bdzinspection.activity.New1RegularSwitchActivity1"
             android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.New1RegularSwitchActivity2"
             android:configChanges="keyboard|keyboardHidden"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.NewRegularReportActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/App.Theme.Launch"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.AddNewDefectActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.ChangeDeviceStandardActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <!-- 操作票相关的Activity -->
         <activity
             android:name="com.cnksi.bdzinspection.czp.OperateTaskCheckedActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.czp.OperateTaskDetailsActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.czp.OperateTaskListActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.czp.OperateTicketReportActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.czp.OperateWorkActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.DownloadOperationTickActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.LocationSpacingActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 运维相关的Activity -->
         <activity
             android:name="com.cnksi.bdzinspection.ywyth.YunweiReportActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.ywyth.YWBatteryActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.ywyth.YWGQJActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.ywyth.YWWorkflowActivity"
-            android:exported="true"
+
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.ywyth.YWWorkflowDescActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.ywyth.YWDeviceListActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.ywyth.VideoPlayer"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 典型故障和异常处理 -->
         <activity
             android:name="com.cnksi.bdzinspection.activity.AccidentExceptionActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.BlueDeviceActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.cnksi.bdzinspection.activity.BTDemoActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.SettingCopyTypeActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/CopyTypeTheme" />
 
         <activity
             android:name="com.cnksi.bdzinspection.activity.CopyMaintenanceDeviceActivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 

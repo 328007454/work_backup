@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.defect.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,31 +11,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baidu.location.BDLocation;
-import com.cnksi.bdloc.DistanceUtil;
-import com.cnksi.bdloc.LatLng;
-import com.cnksi.bdzinspection.R;
-import com.cnksi.common.utils.CopyViewUtil;
-import com.cnksi.common.utils.ViewHolder;
-import com.cnksi.bdzinspection.daoservice.PlacedDeviceService;
-import com.cnksi.bdzinspection.daoservice.PlacedService;
-import com.cnksi.common.listener.CopyItemLongClickListener;
-import com.cnksi.bdzinspection.model.Placed;
-import com.cnksi.bdzinspection.model.PlacedDevice;
-import com.cnksi.common.model.TreeNode;
-import com.cnksi.common.Config;
-import com.cnksi.common.SystemConfig;
 import com.cnksi.common.daoservice.CopyItemService;
 import com.cnksi.common.daoservice.CopyResultService;
 import com.cnksi.common.daoservice.CopyTypeService;
+import com.cnksi.common.listener.CopyItemLongClickListener;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
-import com.cnksi.common.model.Device;
-import com.cnksi.common.model.Spacing;
+import com.cnksi.common.model.TreeNode;
 import com.cnksi.common.utils.CommonUtils;
-import com.cnksi.core.utils.GPSUtils;
-import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.common.utils.CopyViewUtil;
+import com.cnksi.common.utils.ViewHolder;
+import com.cnksi.defect.R;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import org.xutils.db.table.DbModel;
@@ -47,30 +34,28 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @version 1.0
- * @author wastrel
- * @date 2018/2/1 11:07
- * @copyRight 四川金信石信息技术有限公司
- * @since 1.0
+ * Created by Mr.K on 2018/6/22.
  */
+
 public class CopyHelper {
-    Activity activity;
-    Map<String, String> copyType;
-    String currentReportId;
-    String currentBdzId;
-    String currentInspectionType;
-    List<CopyResult> reportResultList;
-    HashSet<String> copyDeviceIdList;
-    public DbModel device;
-    List<EditText> requestEdtits = new ArrayList<>();
-    List<CopyItem> copyItems = new ArrayList<>();
-    private PlacedDevice placedDevice;
-    private Placed placed;
-    private boolean saveCurrentData;
-    private Map<String, CopyResult> copyResultMap;
+
+    private Activity activity;
+    private String currentReportId;
+    private String currentBdzId;
+    private String currentInspectionType;
+    private Map<String, String> copyType;
+    private HashSet<String> copyDeviceIdList;
     private CopyViewUtil.KeyBordListener keyBordListener;
+    public DbModel device;
+
+    private Map<String, CopyResult> copyResultMap;
+    List<CopyResult> reportResultList;
     private ItemClickListener<CopyItem> itemClickListener;
     private CopyItemLongClickListener<CopyResult> itemLongClickListener;
+    List<EditText> requestEdtits = new ArrayList<>();
+    List<CopyItem> copyItems = new ArrayList<>();
+    private boolean saveCurrentData;
+    private boolean tips = false;
 
     public CopyHelper(Activity activity, String reportId, String currentBdzId, String inspectionType) {
         this.activity = activity;
@@ -81,27 +66,20 @@ public class CopyHelper {
         copyDeviceIdList = CopyResultService.getInstance().getCopyDeviceIdListIds(reportId, currentInspectionType);
     }
 
-    public Map<String, CopyResult> getCopyResultMap() {
-        return copyResultMap;
+    public void setKeyBordListener(CopyViewUtil.KeyBordListener keyBordListener) {
+        this.keyBordListener = keyBordListener;
     }
 
-
-    public HashSet<String> getCopyDeviceIdList() {
-        return copyDeviceIdList;
+    public void setItemClickListener(ItemClickListener<CopyItem> itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     public void setSaveCurrentData(boolean saveCurrentData) {
         this.saveCurrentData = saveCurrentData;
     }
 
-    public void loadDevice(DbModel device) {
-        this.device = device;
-        saveCurrentData = true;
-        if (SystemConfig.isDevicePlaced()) {
-            placedDevice = PlacedDeviceService.getInstance().findDevicePlaced(currentReportId, device.getString("deviceid"));
-        } else {
-            placed = PlacedService.getInstance().findPlaced(currentReportId, device.getString("spid"));
-        }
+    public void valueNullTips(boolean tips) {
+        this.tips = tips;
     }
 
     public List<TreeNode> loadItem() {
@@ -227,150 +205,6 @@ public class CopyHelper {
         return newData;
     }
 
-    private boolean tips=false;
-
-    public void valueNullTips(boolean tips) {
-        this.tips = tips;
-    }
-
-    public boolean saveAll() {
-        if (copyResultMap == null || !saveCurrentData) {
-            return false;
-        }
-        boolean savePlaced = false;
-        boolean rs = false;
-        for (CopyResult result : copyResultMap.values()) {
-            if (TextUtils.isEmpty(result.val)) {
-                result.val = null;
-            }
-            if (TextUtils.isEmpty(result.val_a)) {
-                result.val_a = null;
-            }
-            if (TextUtils.isEmpty(result.val_b)) {
-                result.val_b = null;
-            }
-            if (TextUtils.isEmpty(result.val_c)) {
-                result.val_c = null;
-            }
-            if (TextUtils.isEmpty(result.val_o)) {
-                result.val_o = null;
-            }
-            if (TextUtils.isEmpty(result.valSpecial)) {
-                result.valSpecial = null;
-            }
-            if ("youwei".equalsIgnoreCase(result.type_key) && !TextUtils.isEmpty(result.valSpecial)) {
-                result.val = null;
-            }
-            if (tips) {
-                if (TextUtils.isEmpty(result.val) && TextUtils.isEmpty(result.val_a) && TextUtils.isEmpty(result.val_b) && TextUtils.isEmpty(result.val_c) && TextUtils.isEmpty(result.val_o)) {
-                    return false;
-                }
-            }
-
-            if (!TextUtils.isEmpty(result.val)) {
-                savePlaced = true;
-            } else if (!TextUtils.isEmpty(result.val_a)) {
-                savePlaced = true;
-            } else if (!TextUtils.isEmpty(result.val_b)) {
-                savePlaced = true;
-            } else if (!TextUtils.isEmpty(result.val_c)) {
-                savePlaced = true;
-            } else if (!TextUtils.isEmpty(result.val_o)) {
-                savePlaced = true;
-            } else if (!TextUtils.isEmpty(result.valSpecial)) {
-                savePlaced = true;
-            }
-
-            // 初始化动作次数等值
-            result.initArresterActionValue();
-            if (reportResultList.contains(result) || result.isHasCopyData()) {
-                CopyResultService.getInstance().saveOrUpdate(result);
-                copyDeviceIdList.add(result.deviceid);
-                rs = true;
-            } else if (!result.isHasCopyData()) {
-                copyDeviceIdList.remove(result.deviceid);
-            }
-        }
-
-        //需要保存到位 且能通过抄录到位 且是一次设备
-        if (savePlaced && Config.PLACED_BY_COPY) {
-            //设备到位模式 且当前设备不是重点设备，或者是重点设备但不要求强制签到。
-            if (SystemConfig.isDevicePlaced()) {
-                if ((!Device.isImportant(device) || !SystemConfig.isMustPicImportantDevice())) {
-                    if (placedDevice == null) {
-                        placedDevice = PlacedDevice.create(device, currentReportId);
-                    }
-                    placedDevice.setPlacedWayHighest("copy");
-                    PlacedDeviceService.getInstance().saveOrUpdate(placedDevice);
-                }
-            } else {
-                if (Device.isOnceDevice(device)) {
-                    if (placed == null) {
-                        placed = new Placed(currentReportId, currentBdzId, device.getString(Device.SPID), device.getString(Spacing.SNAME), 1, 0, 0);
-                    }
-                    PlacedService.getInstance().saveOrUpdate(placed);
-                }
-            }
-        }
-        return rs;
-    }
-
-    public void judgeDistance(BDLocation currentLocation, View shadowLayout, TextView shadomTip) {
-        if (null == currentLocation || null == device || !GPSUtils.isOPen(activity)) {
-            return;
-        }
-        String latitude = device.getString("latitude");
-        String longitude = device.getString("longitude");
-        if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longitude)) {
-            LatLng location = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            LatLng deviceLocation = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
-            // 在范围内不显示遮挡
-            if (DistanceUtil.isInCirle(location, deviceLocation, PreferencesUtils.get( Config.COPY_DISTANCE_KEY, 100f))) {
-                shadomTip.setVisibility(View.GONE);
-                if (SystemConfig.isDevicePlaced()) {
-                    if (placedDevice == null) {
-                        placedDevice = PlacedDevice.create(device, currentReportId);
-                    }
-                    placedDevice.latitude = String.valueOf(currentLocation.getLatitude());
-                    placedDevice.longtitude = String.valueOf(currentLocation.getLongitude());
-                    placedDevice.setPlacedWayHighest("gps");
-                } else {
-                    if (null == placed) {
-                        placed = new Placed(currentReportId, currentBdzId, device.getString(Device.SPID), device.getString(Spacing.SNAME), 1, currentLocation.getLatitude(), currentLocation.getLongitude());
-                    } else {
-                        placed.latitude = currentLocation.getLatitude();
-                        placed.longtitude = currentLocation.getLongitude();
-                    }
-                }
-            } else {
-                // 到位通过抄录判断
-                if (Config.PLACED_BY_COPY) {
-                    saveCurrentData = false;
-                    shadowLayout.setVisibility(View.VISIBLE);
-                    shadomTip.setTextSize(48);
-                    shadomTip.setText("你距离该设备较远!");
-
-                } else {
-                    shadowLayout.setVisibility(View.GONE);
-                }
-            }
-        } else {
-            shadowLayout.setVisibility(View.GONE);
-        }
-    }
-
-    public void setItemLongClickListener(CopyItemLongClickListener<CopyResult> itemLongClickListener) {
-        this.itemLongClickListener = itemLongClickListener;
-    }
-
-    public void setKeyBordListener(CopyViewUtil.KeyBordListener keyBordListener) {
-        this.keyBordListener = keyBordListener;
-    }
-
-    public void setItemClickListener(ItemClickListener<CopyItem> itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     public synchronized void createCopyView(final Activity context, List<TreeNode> data, LinearLayout parentLayout) {
         parentLayout.removeAllViews();
@@ -381,14 +215,14 @@ public class CopyHelper {
             if (tree.isParent()) {
                 String remark = "";
                 // 添加根节点数据
-                ViewHolder parentHolder = new ViewHolder(context, null, R.layout.xs_group_item2, false);
+                ViewHolder parentHolder = new ViewHolder(context, null, R.layout.layout_group_item, false);
                 CopyItem parentItem = (CopyItem) tree.bindObject;
                 parentLayout.addView(parentHolder.getRootView());
                 index++;
                 for (TreeNode child : tree.childTreeNodes) {
                     // 添加抄录节点数据
                     final CopyItem childItem = (CopyItem) child.bindObject;
-                    ViewHolder childHolder = new ViewHolder(context, null, R.layout.xs_copy_value_child_item2, false);
+                    ViewHolder childHolder = new ViewHolder(context, null, R.layout.layout_copy_value_child_item, false);
                     AutoUtils.autoSize(childHolder.getRootView());
                     RelativeLayout layoutRoot = (RelativeLayout) childHolder.getRootView();
                     if ("youwei".equalsIgnoreCase(childItem.type_key)) {
@@ -457,7 +291,9 @@ public class CopyHelper {
                     // 抄录项如果看不清长按弹出对话框
                     layoutRoot.setOnLongClickListener(v -> {
                         CopyResult copyResult = copyResultMap.get(childItem.id);
-                        itemLongClickListener.onItemLongClick(v, copyResult, position, childItem);
+                        if (itemLongClickListener != null) {
+                            itemLongClickListener.onItemLongClick(v, copyResult, position, childItem);
+                        }
                         return true;
                     });
                     parentLayout.addView(childHolder.getRootView());
@@ -476,12 +312,50 @@ public class CopyHelper {
         }
     }
 
-    public List<CopyItem> getAllItems() {
-        return copyItems;
-    }
 
-    public List<EditText> getAllEditText() {
-        return requestEdtits;
+    public boolean saveAll() {
+        if (copyResultMap == null || !saveCurrentData) {
+            return false;
+        }
+        boolean rs = false;
+        for (CopyResult result : copyResultMap.values()) {
+            if (TextUtils.isEmpty(result.val)) {
+                result.val = null;
+            }
+            if (TextUtils.isEmpty(result.val_a)) {
+                result.val_a = null;
+            }
+            if (TextUtils.isEmpty(result.val_b)) {
+                result.val_b = null;
+            }
+            if (TextUtils.isEmpty(result.val_c)) {
+                result.val_c = null;
+            }
+            if (TextUtils.isEmpty(result.val_o)) {
+                result.val_o = null;
+            }
+            if (TextUtils.isEmpty(result.valSpecial)) {
+                result.valSpecial = null;
+            }
+            if ("youwei".equalsIgnoreCase(result.type_key) && !TextUtils.isEmpty(result.valSpecial)) {
+                result.val = null;
+            }
+            if (tips) {
+                if (TextUtils.isEmpty(result.val) && TextUtils.isEmpty(result.val_a) && TextUtils.isEmpty(result.val_b) && TextUtils.isEmpty(result.val_c) && TextUtils.isEmpty(result.val_o)) {
+                    return false;
+                }
+            }
+            // 初始化动作次数等值
+            result.initArresterActionValue();
+            if (reportResultList.contains(result) || result.isHasCopyData()) {
+                CopyResultService.getInstance().saveOrUpdate(result);
+                copyDeviceIdList.add(result.deviceid);
+                rs = true;
+            } else if (!result.isHasCopyData()) {
+                copyDeviceIdList.remove(result.deviceid);
+            }
+        }
+        return rs;
     }
 
     public class CopyTextWatcher implements TextWatcher {

@@ -26,9 +26,9 @@ import com.cnksi.bdzinspection.databinding.XsFragmentRecordDefectContentDialogBi
 import com.cnksi.bdzinspection.databinding.XsFragmentTrackDefectBinding;
 import com.cnksi.bdzinspection.fragment.BaseFragment;
 import com.cnksi.bdzinspection.model.Defect;
-import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.model.TreeNode;
 import com.cnksi.bdzinspection.utils.CopyHelper;
-import com.cnksi.bdzinspection.utils.CopyViewUtil;
+import com.cnksi.common.utils.CopyViewUtil;
 import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;

@@ -21,7 +21,6 @@ import com.cnksi.bdzinspection.databinding.XsActivityNariBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogModifyIphostBinding;
 import com.cnksi.bdzinspection.databinding.XsDialogSelectBinding;
 import com.cnksi.bdzinspection.inter.GrantPermissionListener;
-import com.cnksi.common.utils.MyUUID;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.base.BaseActivity;
@@ -29,14 +28,17 @@ import com.cnksi.common.base.BaseAdapter;
 import com.cnksi.common.daoservice.BaseService;
 import com.cnksi.common.daoservice.BdzService;
 import com.cnksi.common.daoservice.ReportService;
+import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Bdz;
 import com.cnksi.common.model.Report;
+import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.DialogUtils;
+import com.cnksi.common.utils.MyUUID;
 import com.cnksi.common.utils.ViewHolder;
 import com.cnksi.common.utils.XZip;
 import com.cnksi.core.common.ExecutorManager;
@@ -495,6 +497,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             }
             String tid = MyUUID.id(4);
             Task t;
+            Report report;
+            ReportSignname saveReportSignName;
             try {
                 Bdz bdz = BdzService.getInstance().findByPmsId(xsjh.BDZ);
                 if (bdz == null) {
@@ -504,6 +508,9 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                 t = new Task(tid, bdz.bdzid, bdz.name, xsType.name(), xsType.zhName, xsjh.JHSJ, TaskStatus.undo.name(), account);
                 t.pmsJhSource = "pms_app";
                 t.pmsJhid = xsjh.OBJ_ID;
+                report = new Report(t, bdz, null);
+                saveReportSignName = new ReportSignname();
+                saveReportSignName.setFromPMSTask(account, report);
             } catch (DbException e) {
                 e.printStackTrace();
                 Toast("查询变电站出错！");
@@ -515,6 +522,8 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
                     bdPackage.taskId = tid;
                     bdPackage.status = PackageStatus.undo.name();
                     NariDataManager.getPackageManager().saveOrUpdate(bdPackage);
+                    ReportService.getInstance().saveOrUpdate(report);
+                    ReportSignnameService.getInstance().saveOrUpdate(saveReportSignName);
                     Toast("任务生成成功");
                     return true;
                 } catch (DbException e) {
@@ -594,7 +603,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
 
             holder.setText(R.id.tv_date, TextUtils.isEmpty(item.createTime) ? "" : item.createTime);
             holder.getRootView().setOnLongClickListener(view -> {
-                int width = ScreenUtils.getScreenWidth(NariActivity.this.getApplicationContext()) * 9 / 10;
+                int width = ScreenUtils.getScreenWidth(NariActivity.this) * 9 / 10;
                 XsDialogSelectBinding selectBinding = XsDialogSelectBinding.inflate(NariActivity.this.getLayoutInflater());
                 Dialog dialog = DialogUtils.createDialog(mActivity, selectBinding.getRoot(), width, LinearLayout.LayoutParams.WRAP_CONTENT);
                 selectBinding.tvDialogContent.setText(R.string.xs_pms_task_delete_tips);

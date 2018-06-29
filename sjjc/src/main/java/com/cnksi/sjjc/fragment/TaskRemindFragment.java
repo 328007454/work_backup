@@ -136,7 +136,7 @@ public class TaskRemindFragment extends BaseCoreFragment {
             ExecutorManager.executeTaskSerially(() -> {
                 try {
                     currentFunctionModel = getArguments().getString(Config.CURRENT_FUNCTION_MODEL);
-                    mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE_NAME));
+                    mInspectionType = InspectionType.get(getArguments().getString(Config.CURRENT_INSPECTION_TYPE));
                     // 如果点击待巡视任务时currentInspetionType为null，系统查询所有的任务
                     String deparmentId = "";
                     if (null != mActivity) {
@@ -303,16 +303,13 @@ public class TaskRemindFragment extends BaseCoreFragment {
                 switch (InspectionType.get(task.inspection)) {
                     //红外测温
                     case SBJC_13:
-//                        intent.setClass(getContext(), HWCWMainActivity.class);
                         intent.setClass(getContext(), NewHwcwActivity.class);
                         break;
                     //保护屏红外成像
                     case SBJC_02:
-//                        intent.setClass(getContext(), HWCWMainActivity.class);
                         break;
                     //室内温湿度记录
                     case SBJC_03:
-//                        intent.setClass(getContext(), IndoorHumitureRecordActivity.class);
                         intent.setClass(getContext(), NewIndoorHumitureRecordActivity.class);
                         break;
                     //差动保护
@@ -326,7 +323,6 @@ public class TaskRemindFragment extends BaseCoreFragment {
                     case SBJC_06_gas:
                     case SBJC_06_sf6:
                     case SBJC_06_water:
-
                         intent.setClass(getContext(), CopyBaseDataActivity.class);
                         break;
                     case SBJC_07:
@@ -366,7 +362,6 @@ public class TaskRemindFragment extends BaseCoreFragment {
                         break;
                     //保护屏红外成像
                     case SBJC_02:
-//                        intent.setClass(getContext(), HongWaiCeWenReportActivity.class);
                         break;
                     //室内温湿度记录
                     case SBJC_03:

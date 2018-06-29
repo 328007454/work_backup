@@ -563,7 +563,7 @@
     <string name="xs_save_success_str">保存成功</string>
     <string name="xs_save_failed_str">保存失败</string>
     <string name="xs_inspection_sort">%1$s间隔排序</string>
-    <string name="xs_inspection_device_sort">%1$设备排序</string>
+    <string name="xs_inspection_device_sort">%1$s设备排序</string>
     <string name="xs_cant_modify_polling">请在全面巡检中编辑或删除标准。</string>
     <string name="xs_czp_download_operate_ticket_tips">请将终端放在NFC写卡器上下载操作票</string>
     <string name="xs_operate_task_list_str">操作任务列表</string>

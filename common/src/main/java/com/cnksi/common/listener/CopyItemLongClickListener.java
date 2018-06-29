@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.inter;
+package com.cnksi.common.listener;
 
 import android.view.View;
 

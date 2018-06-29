@@ -67,7 +67,7 @@ public class SpaceSortActivity extends TitleActivity {
         currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         // TODO: 2017/3/22
         try {
-            mData = SpacingService.getInstance().findByFunctionModel(currentBdzId, functionMode, sort);
+            mData = SpacingService.getInstance().findByFunctionModel(currentReportId,currentBdzId, functionMode, sort,currentInspectionType);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -105,6 +105,8 @@ public class ZzhtResult {
     @Column(name = LAST_MODIFY_TIME)
     public String lastModifyTime;
 
+    public ZzhtResult(){}
+
     public ZzhtResult(DbModel model, String reportId) {
         if (!TextUtils.isEmpty(model.getString("rid"))) {
             this.id = model.getString("rid");

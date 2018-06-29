@@ -74,8 +74,8 @@ ext {
     BaseRecyclerViewAdapterHelper_version = "2.9.35"
 
     //ksi引用资源
-    ksi_core_version = "1.2.7.4"
-    ksi_sync_version = "4.1.0-0525"
+    ksi_core_version = "1.2.7.6"
+    ksi_sync_version = "4.1.0-0615"
     leakcanary_android = "1.5.4"
     ksi_bdloc = "1.1.7-3"
     sqlcipher_version = "3.5.7"

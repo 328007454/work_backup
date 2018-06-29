@@ -63,8 +63,8 @@ import java.util.Map;
 
 /**
  * @author yj
- * 蓄电池检测界面
- * 2016/8/9 15:56
+ *         蓄电池检测界面
+ *         2016/8/9 15:56
  */
 public class BatteryTestActivity extends BaseSjjcActivity {
     public static final String TAG = "BatteryTestActivity";
@@ -123,6 +123,7 @@ public class BatteryTestActivity extends BaseSjjcActivity {
         binding = ActivityBatteryBinding.inflate(getLayoutInflater());
         setChildView(binding.getRoot());
         Bundle bundle = getIntent().getExtras();
+        getIntentValue();
         /*
          * <b>NOTE :</b>设备检测CURRENT_TASK_ID不能存放在intent中传递，通过缓存传递
          */
@@ -143,11 +144,11 @@ public class BatteryTestActivity extends BaseSjjcActivity {
             PreferencesUtils.put(Config.CURRENT_BDZ_NAME, currentBdzName);
             PreferencesUtils.put(Config.CURRENT_REPORT_ID, currentReportId);
             PreferencesUtils.put(Config.CURRENT_TASK_ID, currentTaskId);
-            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
-            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.get(currentInspectionType).value);
+//            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, currentInspectionType);
+//            PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.get(currentInspectionType).value);
             PreferencesUtils.put(Config.IS_FROM_PMS, true);
         }
-        getIntentValue();
+
         inspectionType = InspectionType.get(currentInspectionType);
         initView();
         loadData();

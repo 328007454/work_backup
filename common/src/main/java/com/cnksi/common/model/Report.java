@@ -195,7 +195,7 @@ public class Report extends BaseModel {
         this.placedWay = SystemConfig.getPlacedWay();
     }
 
-    public Report(Task saveTask, Bdz bdz) {
+    public Report(Task saveTask, Bdz bdz,String reportSwitchId) {
         this.reportid = UUID.randomUUID().toString();
         this.departmentId = bdz.deptId;
         this.bdzid = bdz.bdzid;
@@ -203,7 +203,7 @@ public class Report extends BaseModel {
         this.bdz = bdz.name;
         this.inspection = saveTask.inspection;
         this.persons = saveTask.createPersonName;
-        this.starttime = DateUtils.getCurrentLongTime();
+        this.starttime =saveTask.schedule_time;
         this.taskid = saveTask.taskid;
         this.insertTime = DateUtils.getCurrentLongTime();
         this.isSbjcReport = 0;
@@ -214,6 +214,7 @@ public class Report extends BaseModel {
             this.reportSource = "report";
         }
         this.selected_deviceid = saveTask.selected_deviceid;
+        this.repSwithoverId = reportSwitchId;
     }
 
     public void setReport(String bdzid, String bdz, String inspection, String temperature,

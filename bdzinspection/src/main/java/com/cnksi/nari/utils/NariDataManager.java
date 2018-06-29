@@ -21,8 +21,8 @@ import java.util.List;
 /**
  * 南瑞离线作业包下载之后的数据管理 用于连接db3数据库
  *
- * @version 1.0
  * @author wastrel
+ * @version 1.0
  * @date 2017/8/1 9:20
  * @copyRight 四川金信石信息技术有限公司
  * @since 1.0
@@ -64,12 +64,12 @@ public class NariDataManager {
     }
 
     public static void markBdPackageStatus(String pmsJhId, PackageStatus status) throws DbException {
-        getPackageManager().update(BDPackage.class, WhereBuilder.b("pms_jhid", "=", pmsJhId),new KeyValue("status",status.name()));
+        getPackageManager().update(BDPackage.class, WhereBuilder.b("pms_jhid", "=", pmsJhId), new KeyValue("status", status.name()));
     }
 
 
     public static void unBindingTask(String taskid) throws DbException {
-        getPackageManager().update(BDPackage.class, WhereBuilder.b("taskId", "=", taskid),new KeyValue("status",PackageStatus.undo.name()),new KeyValue("taskId",null));
+        getPackageManager().update(BDPackage.class, WhereBuilder.b("taskId", "=", taskid), new KeyValue("status", PackageStatus.undo.name()), new KeyValue("taskId", null));
     }
 
     public static BDPackage getPackageByTaskId(String taskId) throws DbException {
@@ -77,7 +77,7 @@ public class NariDataManager {
     }
 
     private static DbManager.DaoConfig buildConfig(String parent, String name) {
-        DbManager.DaoConfig daoConfig = CommonApplication.getInstance().getDaoConfig();
+        DbManager.DaoConfig daoConfig = new DbManager.DaoConfig();
         daoConfig.setDbDir(new File(parent));
         daoConfig.setDbName(name);
         return daoConfig;

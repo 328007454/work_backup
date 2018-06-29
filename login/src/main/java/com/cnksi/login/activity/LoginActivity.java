@@ -34,7 +34,6 @@ import com.cnksi.core.utils.AppUtils;
 import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.core.view.CustomerDialog;
 import com.cnksi.ksynclib.KSync;
 import com.cnksi.login.CustomApplication;
 import com.cnksi.login.R;
@@ -95,7 +94,6 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
      * 屏蔽Wifi计数器
      */
     private int count = 0;
-    private long startTime1 = 0;
     private boolean isGrantPermission = false;
     private String userOnePassword;
     private String userTwoPassword;
@@ -107,9 +105,9 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startTime1 = System.currentTimeMillis();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         PermissionUtil.getInstance().setGrantPermissionListener(this).checkPermissions(this, permissions);
+        Log.d("Tag", Config.SYNC_APP_ID);
     }
 
     @Override
@@ -221,9 +219,9 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
         });
 
         binding.user2Img.setOnClickListener(v -> {
-            CustomerDialog.showProgress(this);
-            FileUtils.copyFile(getApplicationContext().getFilesDir().getAbsolutePath() + "/database/" + Config.ENCRYPT_DATABASE_NAME, Config.BDZ_INSPECTION_FOLDER + "bdzinspection.db");
-            CustomerDialog.dismissProgress();
+//            CustomerDialog.showProgress(this);
+//            FileUtils.copyFile(getApplicationContext().getFilesDir().getAbsolutePath() + "/database/" + Config.ENCRYPT_DATABASE_NAME, Config.BDZ_INSPECTION_FOLDER + "bdzinspection.db");
+//            CustomerDialog.dismissProgress();
         });
     }
 
@@ -345,7 +343,6 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
         super.onResume();
         //清空当前登录信息
         if (isGrantPermission) {
-            Log.i("message", (System.currentTimeMillis() - startTime1) + "");
         }
     }
 
@@ -539,8 +536,15 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
                     DatabaseUtils.copyDatabase(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME), "", new File(innerDateBaseFolder + Config.ENCRYPT_DATABASE_NAME), "com.cnksi");
                     FileUtils.deleteFile(Config.DATABASE_FOLDER + Config.DATABASE_NAME);
                 }
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + "drop.db")) {
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + "drop.db");
+                }
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + "bdzinspection.db-journal")) {
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + "drop.db");
+                }
                 runOnUiThread(() -> {
-                    checkUpdate();
+                    KSync kSync = CommonApplication.getInstance().getKSyncMap().get(Config.SYNC_APP_ID);
+                    kSync.checkUpgrade(this, AppUtils.getVersionCode(getApplicationContext()));
                     KSyncConfig.getInstance().setDept_id("-1");
                 });
             } catch (Exception e) {

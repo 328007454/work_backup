@@ -6,28 +6,39 @@ import android.graphics.Bitmap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.cnksi.common.Config;
 import com.cnksi.common.activity.DrawCircleImageActivity;
 import com.cnksi.common.activity.ImageDetailsActivity;
 import com.cnksi.common.daoservice.DefectRecordService;
+import com.cnksi.common.daoservice.DeviceService;
+import com.cnksi.common.model.CopyItem;
+import com.cnksi.common.model.CopyResult;
 import com.cnksi.common.model.DefectRecord;
+import com.cnksi.common.model.TreeNode;
+import com.cnksi.common.utils.CopyViewUtil;
 import com.cnksi.common.utils.FunctionUtil;
 import com.cnksi.common.utils.PlaySound;
+import com.cnksi.common.utils.ShowCopyHistroyDialogUtils;
+import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.core.utils.ToastUtils;
-import com.cnksi.defect.adapter.DeviceDefectAdapter;
 import com.cnksi.defect.R;
+import com.cnksi.defect.adapter.DeviceDefectAdapter;
 import com.cnksi.defect.databinding.FragmentTrackDefectBinding;
 import com.cnksi.defect.defect_enum.DefectEnum;
+import com.cnksi.defect.utils.CopyHelper;
 
+import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.cnksi.common.Config.CANCEL_RESULT_LOAD_IMAGE;
 import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
@@ -37,7 +48,7 @@ import static com.cnksi.core.utils.Cst.ACTION_IMAGE;
  * @decrption 跟踪缺陷
  */
 
-public class TrackDefectFragment extends BaseDefectFragment {
+public class TrackDefectFragment extends BaseDefectFragment implements CopyViewUtil.KeyBordListener {
 
     private FragmentTrackDefectBinding binding;
     private DeviceDefectAdapter deviceDefectAdapter;
@@ -52,7 +63,11 @@ public class TrackDefectFragment extends BaseDefectFragment {
      */
     private ArrayList<String> mDefectImageList = new ArrayList<>();
     private String infulenceEleNet;
-
+    /**
+     * 查询数据
+     */
+    List<TreeNode> data;
+    private CopyHelper copyViewUtil;
 
     @Override
     public int getFragmentLayout() {
@@ -62,18 +77,28 @@ public class TrackDefectFragment extends BaseDefectFragment {
     @Override
     protected void lazyLoad() {
         super.lazyLoad();
-        getActivity().runOnUiThread(() -> {
-            if (defectRecords != null) {
-                if (deviceDefectAdapter == null) {
-                    deviceDefectAdapter = new DeviceDefectAdapter(R.layout.layout_defect_item, defectRecords);
-                    binding.includeDefect.lvContainer.setLayoutManager(new LinearLayoutManager(getContext()));
-                    binding.includeDefect.lvContainer.setAdapter(deviceDefectAdapter);
-                    deviceDefectAdapter.setCurrentModel(Config.TRACK_DEFECT_MODEL);
-                    deviceDefectAdapter.setItemClickListener(this);
-                } else {
-                    deviceDefectAdapter.setList(defectRecords);
-                }
+        ExecutorManager.executeTaskSerially(() -> {
+            DbModel deviceModel = DeviceService.getInstance().findCopySF6DefectDevice(deviceId, bdzId);
+            if (null != deviceModel) {
+                copyViewUtil.device = deviceModel;
+                data = copyViewUtil.loadItem();
             }
+            getActivity().runOnUiThread(() -> {
+                if (defectRecords != null) {
+                    if (deviceDefectAdapter == null) {
+                        deviceDefectAdapter = new DeviceDefectAdapter(R.layout.layout_defect_item, defectRecords);
+                        binding.includeDefect.lvContainer.setLayoutManager(new LinearLayoutManager(getContext()));
+                        binding.includeDefect.lvContainer.setAdapter(deviceDefectAdapter);
+                        deviceDefectAdapter.setCurrentModel(Config.TRACK_DEFECT_MODEL);
+                        deviceDefectAdapter.setItemClickListener(this);
+                    } else {
+                        deviceDefectAdapter.setList(defectRecords);
+                    }
+                }
+                if (data!=null&&!data.isEmpty()) {
+                    copyViewUtil.createCopyView(getActivity(), data, binding.contanierSf6);
+                }
+            });
         });
     }
 
@@ -83,6 +108,13 @@ public class TrackDefectFragment extends BaseDefectFragment {
         binding = (FragmentTrackDefectBinding) fragmentDataBinding;
         binding.includeAdd.tvSelectDevicePart.setVisibility(View.GONE);
         initOnClick();
+        copyViewUtil = new CopyHelper(getActivity(), currentReportId, bdzId, "full");
+        copyViewUtil.setKeyBordListener(this);
+        copyViewUtil.setItemClickListener((v, item, position) -> {
+            // 显示历史曲线
+            TrackDefectFragment.this.hideKeyBord();
+            ShowCopyHistroyDialogUtils.showHistory(getActivity(), item);
+        });
     }
 
 
@@ -131,6 +163,15 @@ public class TrackDefectFragment extends BaseDefectFragment {
     }
 
     private void saveData() {
+        if (data != null && !data.isEmpty()) {
+            copyViewUtil.setSaveCurrentData(true);
+            copyViewUtil.valueNullTips(true);
+            if (!copyViewUtil.saveAll()) {
+                ToastUtils.showMessage("请填写设备抄录数据");
+                return;
+            }
+        }
+
         PlaySound.getIntance(getActivity()).play(R.raw.track);
         selectDefect.has_track = "Y";
         int checkedId = binding.includeAdd.containerRbGeneralDefect.getmCheckedId();
@@ -262,4 +303,18 @@ public class TrackDefectFragment extends BaseDefectFragment {
     }
 
 
+    @Override
+    public void onViewFocus(EditText v, CopyItem item, CopyResult result, List<EditText> editTexts, List<CopyItem> copyItems) {
+
+    }
+
+    @Override
+    public void hideKeyBord() {
+
+    }
+
+    @Override
+    public void onViewFocusChange(EditText v, CopyItem item, CopyResult result, boolean hasFocus, String descript, List<EditText> editTexts) {
+
+    }
 }

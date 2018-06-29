@@ -103,8 +103,13 @@ public class PlaySound {
         float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         float currentVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         float rate = currentVolume / maxVolume;
-        currentStreamID = mSoundPool.play(soundMap.get(resId), rate, rate, 1, 0, 1);
+        try {
+            currentStreamID = mSoundPool.play(soundMap.get(resId), rate, rate, 1, 0, 1);
+        } catch (Exception e) {
+
+        }
     }
+
 
     /**
      * 停止播放

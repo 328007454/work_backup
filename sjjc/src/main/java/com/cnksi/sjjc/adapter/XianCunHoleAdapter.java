@@ -81,7 +81,7 @@ public class XianCunHoleAdapter extends BaseAdapter<HoleRecord> {
         if (listPicClear != null && !listPicClear.isEmpty()) {
             long time = System.currentTimeMillis();
 
-            Bitmap bitmap = BitmapUtils.compressImage(Config.RESULT_PICTURES_FOLDER + listPicClear.get(0));
+            Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + listPicClear.get(0),1080);
             Log.d("Tag", (System.currentTimeMillis() - time) + "");
             if (bitmap != null) {
                 ((ImageView) holder.getView(R.id.img_clearhole_pic)).setImageBitmap(bitmap);

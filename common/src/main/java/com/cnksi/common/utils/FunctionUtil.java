@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 
 import com.cnksi.common.Config;
 import com.cnksi.core.utils.DateUtils;
@@ -33,7 +34,7 @@ public class FunctionUtil{
 	 */
 	public static String getCurrentImageName(Context context) {
 		String prefix = PreferencesUtils.get( Config.PICTURE_PREFIX_KEY, "");
-		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyy_MM_dd_HH_mm, Locale.CHINA);
+		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyyMMdd_HHmmss, Locale.CHINA);
 		String uuidStr = UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
 		if (uuidStr.length() > 8) {
 			uuidStr = uuidStr.substring(0, 8);
@@ -61,7 +62,7 @@ public class FunctionUtil{
 	 * @return yyyyMMddHHmmssSSSadfdfdsfwei.jpg
 	 */
 	public static String getCurrentImageName() {
-		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyy_MM_dd_HH_mm, Locale.CHINA);
+		SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.yyyyMMdd_HHmmss, Locale.CHINA);
 		String uuidStr = UUID.randomUUID().toString().replace(Config.DASH_SEPARATOR, "");
 		if (uuidStr.length() > 8) {
 			uuidStr = uuidStr.substring(0, 8);
@@ -91,7 +92,7 @@ public class FunctionUtil{
 			FileUtils.makeDirectory(imageFolder);
 		}
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		currentImageName = (null == currentImageName) ? getCurrentImageName() : currentImageName;
+		currentImageName = TextUtils.isEmpty(currentImageName) ? getCurrentImageName() : currentImageName;
 		File imageFile = new File(imageFolder, currentImageName);
 		ContentValues values = new ContentValues();
 		values.put(MediaStore.Images.Media.TITLE, imageFile.getAbsolutePath());

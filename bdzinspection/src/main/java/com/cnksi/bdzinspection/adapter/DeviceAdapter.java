@@ -209,7 +209,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             imgSpaceCopy.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(inspectionType)&&inspectionType.contains(InspectionType.special.name())&&!SystemConfig.isSpecialInspectionNeedCopy()){
+        if (!TextUtils.isEmpty(inspectionType) && inspectionType.contains(InspectionType.special.name()) && !SystemConfig.isSpecialInspectionNeedCopy()) {
             imgSpaceCopy.setVisibility(View.GONE);
         }
 
@@ -379,7 +379,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
             ibCopy.setVisibility(View.INVISIBLE);
             btCopy.setVisibility(View.GONE);
         }
-        if (!TextUtils.isEmpty(inspectionType)&&inspectionType.contains(InspectionType.special.name())&&!SystemConfig.isSpecialInspectionNeedCopy()){
+        if (!TextUtils.isEmpty(inspectionType) && inspectionType.contains(InspectionType.special.name()) && !SystemConfig.isSpecialInspectionNeedCopy()) {
             ibCopy.setVisibility(View.INVISIBLE);
         }
     }
@@ -505,8 +505,11 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
 
 
     public void setCopySNWSD(HashSet<ReportSnwsd> groupSnwsds) {
+        this.groupSnwsds.clear();
         for (ReportSnwsd snwsd : groupSnwsds) {
-            this.groupSnwsds.add(snwsd.groupID);
+            if (!TextUtils.isEmpty(snwsd.sd) && !TextUtils.isEmpty(snwsd.wd)) {
+                this.groupSnwsds.add(snwsd.groupID);
+            }
         }
     }
 
@@ -529,7 +532,7 @@ public class DeviceAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Ba
         shakeDeviceId = rfId;
     }
 
-    public void setCurrentInspectionType(String inspectionType){
+    public void setCurrentInspectionType(String inspectionType) {
         this.inspectionType = inspectionType;
     }
 

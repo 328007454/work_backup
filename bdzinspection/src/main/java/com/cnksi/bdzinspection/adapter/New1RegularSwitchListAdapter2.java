@@ -53,6 +53,8 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
     private static CharSequence CRISIS;
     private static CharSequence SERIOUS;
     private static CharSequence GENERAL;
+    private static CharSequence PROBLEM;
+    private static CharSequence HIDDEN;
 
     private SwitchItemChild1 itemBind1;
 
@@ -79,6 +81,8 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
         CRISIS = StringUtils.changePartTextColor(mContext, s = "[" + Config.CRISIS_LEVEL + "]", R.color.xs_red_color, 0, s.length());
         SERIOUS = StringUtils.changePartTextColor(mContext, s = "[" + Config.SERIOUS_LEVEL + "]", R.color.xs_orange_color, 0, s.length());
         GENERAL = StringUtils.changePartTextColor(mContext, s = "[" + Config.GENERAL_LEVEL + "]", R.color.xs_yellow_color, 0, s.length());
+        PROBLEM = StringUtils.changePartTextColor(mContext, s = "[" + Config.PROBLEM_LEVEL + "]", R.color.xs_yellow_color, 0, s.length());
+        HIDDEN = StringUtils.changePartTextColor(mContext, s = "[" + Config.HIDDEN_LEVEL + "]", R.color.xs_yellow_color, 0, s.length());
     }
 
     public void setClickListener(AdapterClickListener clickListener) {
@@ -177,6 +181,10 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
                     itemBind1.tvDesc.append(SERIOUS);
                 } else if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
                     itemBind1.tvDesc.append(GENERAL);
+                } else if (Config.PROBLEM_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
+                    itemBind1.tvDesc.append(PROBLEM);
+                } else if (Config.HIDDEN_LEVEL_CODE.equalsIgnoreCase(defectLevel)) {
+                    itemBind1.tvDesc.append(HIDDEN);
                 } else {
                     itemBind1.tvDesc.setOnClickListener(null);
                 }
@@ -370,7 +378,7 @@ public class New1RegularSwitchListAdapter2 extends BaseMapListExpandableAdapter<
         public void afterTextChanged(Editable s) {
             if (StringUtilsExt.hasEmoji(s.toString())) {
                 mEditText.setText(TextUtils.isEmpty(beforeText) ? "" : beforeText);
-                ToastUtils.showMessage( "请不要输入表情符号");
+                ToastUtils.showMessage("请不要输入表情符号");
                 return;
             }
             DbModel mDbmodel = getChild(groupPosition, childPosition);

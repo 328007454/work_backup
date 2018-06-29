@@ -75,8 +75,8 @@ public class CopyBaseDataActivity extends BaseSjjcActivity {
                 binding.etTestInstrument.setText(mReport.temperature);
                 binding.etCurrentHumidity.setText(mReport.humidity);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 
@@ -85,14 +85,14 @@ public class CopyBaseDataActivity extends BaseSjjcActivity {
         super.onResume();
         if (null != mReport) {
             binding.etCurrentHumidity.setText(mReport.humidity);
-            binding.etCurrentHumidity.setText(mReport.temperature);
+            binding.etTestInstrument.setText(mReport.temperature);
         }
     }
 
     private void initOnClick() {
         binding.btnCompleteRecord.setOnClickListener(view -> {
             String weather = binding.weatherView1.getSelectWeather();
-            String tempreture = binding.etCurrentHumidity.getText().toString();
+            String tempreture = binding.etTestInstrument.getText().toString();
             String sd = binding.etCurrentHumidity.getText().toString();
             if (TextUtils.isEmpty(tempreture) || TextUtils.isEmpty(sd) || weather.isEmpty()) {
                 ToastUtils.showMessageLong("请输入完整信息");

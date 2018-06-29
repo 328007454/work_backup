@@ -6,11 +6,9 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.cnksi.bdzinspection.R;
-import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.bdzinspection.daoservice.InspectionPreparedService;
 import com.cnksi.bdzinspection.daoservice.ZzhtService;
 import com.cnksi.bdzinspection.databinding.XsActivityInspectionReadyBinding;
@@ -26,15 +24,11 @@ import com.cnksi.bdzinspection.model.zzht.Zzht;
 import com.cnksi.common.Config;
 import com.cnksi.common.SystemConfig;
 import com.cnksi.common.base.BaseActivity;
-import com.cnksi.common.daoservice.DepartmentService;
+import com.cnksi.common.base.FragmentPagerAdapter;
 import com.cnksi.common.daoservice.ReportService;
-import com.cnksi.common.daoservice.ReportSignnameService;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.enmu.InspectionType;
-import com.cnksi.common.enmu.Role;
-import com.cnksi.common.model.BaseModel;
 import com.cnksi.common.model.Report;
-import com.cnksi.common.model.ReportSignname;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.common.utils.TTSUtils;
@@ -44,7 +38,6 @@ import com.cnksi.core.utils.ToastUtils;
 
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.SqlInfoBuilder;
-import org.xutils.db.table.DbModel;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
@@ -94,6 +87,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changedStatusColor();
         binding = XsActivityInspectionReadyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initialUI();
@@ -113,6 +107,7 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             binding.btnRight.setText(getString(R.string.xs_sure_and_next));
             binding.btnRight.setBackgroundResource(R.drawable.xs_green_background_selector);
             binding.viewPager.setNoScroll(true);
+            binding.tabStrip.setNoScroll(true);
         } else {
             binding.btnRight.setText(getString(R.string.xs_start_inspection_button_format_str, currentInspectionTypeName));
         }
@@ -288,7 +283,6 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
      * 2.跳转到相应的巡视界面
      */
     private void startInspection() {
-        long startTime = System.currentTimeMillis();
         // 生成报告
         if (generateReport()) {
             TTSUtils.getInstance().stopSpeak();
@@ -302,7 +296,6 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             }
             saveInspectionAlready();
             startActivityForResult(intent, UPDATE_DEVICE_DEFECT_REQUEST_CODE);
-            Log.d(TAG, "startInspection: " + (System.currentTimeMillis() - startTime));
         }
     }
 
@@ -330,12 +323,6 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
                 ToastUtils.showMessageLong("该任务不是由你创建,但没有获取到报告！请尝试重新同步！");
                 return false;
             }
-            try {
-                saveReportSign();
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
-            PreferencesUtils.put(Config.CURRENT_REPORT_ID, mReport.reportid);
             return true;
         }
         String temperature = mTemperatureFragment.getCurrentTemperature();
@@ -356,29 +343,19 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
             mTemperatureFragment.setCurrentTempert(temperature);
         }
         try {
-            String loginPerson = PreferencesUtils.get(Config.CURRENT_LOGIN_USER, "");
-            if (mReport == null) {
-                mReport = new Report(currentTaskId, currentBdzId, currentBdzName, currentInspectionType, loginPerson,
-                        temperature, "", weather, task == null ? "" : task.selected_deviceid);
-                mReport.pmsJhid = task.pmsJhid;
-                mReport.reportid = BaseModel.getPrimarykey();
-            } else {
-                mReport.setReport(currentBdzId, currentBdzName, currentInspectionType,
-                        temperature, "", weather, task == null ? "" : task.selected_deviceid);
-                mReport.pmsJhid = task.pmsJhid;
-            }
+            mReport.temperature = temperature;
+            mReport.tq = weather;
+            mReport.pmsJhid = task.pmsJhid;
             mReport.reportSource = Config.REPORT_SOURCE_REPORT;
             mReport.inspectionValue = currentInspectionTypeName;
             mReport.departmentId = PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, "");
             ExecutorManager.executeTask(() -> {
                 try {
-                    InspectionReadyActivity.this.saveReportSign();
                     ReportService.getInstance().saveOrUpdate(mReport);
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
             });
-            PreferencesUtils.put(Config.CURRENT_REPORT_ID, mReport.reportid);
             if (mToolsFragment != null) {
                 mToolsFragment.save(mReport.reportid);
             }
@@ -389,30 +366,6 @@ public class InspectionReadyActivity extends BaseActivity implements OnFragmentE
         return false;
     }
 
-    private void saveReportSign() throws DbException {
-        List<ReportSignname> reportSignnames = ReportSignnameService.getInstance().getSignNamesForReportAll(mReport.reportid);
-        String currentAccounts = PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, "");
-        List<DbModel> defaultUesrs = DepartmentService.getInstance().findUserForCurrentUser(currentAccounts);
-        if (reportSignnames == null || reportSignnames.isEmpty()) {
-            for (DbModel dbModel : defaultUesrs) {
-                ReportSignname reportSignname = new ReportSignname(mReport.reportid, Role.worker.name(), dbModel);
-                ReportSignnameService.getInstance().saveOrUpdate(reportSignname);
-            }
-        } else {
-            StringBuilder accountBuilder = new StringBuilder();
-            for (ReportSignname signname : reportSignnames) {
-                accountBuilder.append(signname.getAccount()).append(",");
-            }
-            for (DbModel dbModel : defaultUesrs) {
-                if (accountBuilder.toString().contains(dbModel.getString("account"))) {
-                    continue;
-                } else {
-                    ReportSignname reportSignname = new ReportSignname(mReport.reportid, Role.worker.name(), dbModel);
-                    ReportSignnameService.getInstance().saveOrUpdate(reportSignname);
-                }
-            }
-        }
-    }
 
     @Override
     protected void onRefresh(Message msg) {

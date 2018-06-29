@@ -2,6 +2,7 @@ package com.cnksi.common.model;
 
 import android.text.TextUtils;
 
+import com.cnksi.common.daoservice.UserService;
 import com.cnksi.core.utils.DateUtils;
 
 import org.xutils.db.annotation.Column;
@@ -157,6 +158,24 @@ public class ReportSignname extends BaseModel {
 
     }
 
+    public void setFromPMSTask(String account, Report report) {
+        Users user = UserService.getInstance().findUserByAccount(account);
+        String userName = "";
+        if (user != null) {
+            userName = user.username;
+        }
+        this.id = UUID.randomUUID().toString();
+        this.reportId = report.reportid;
+        this.dpetId = report.departmentId;
+        this.dpetName = user.deptName;
+        this.signerRole = "worker";
+        this.name = userName;
+        this.dlt = "0";
+        this.createTime = DateUtils.getCurrentLongTime();
+        this.inserTime = DateUtils.getCurrentLongTime();
+        this.account = account;
+    }
+
 
     /**
      * @return the id
@@ -295,4 +314,6 @@ public class ReportSignname extends BaseModel {
     public void setAccount(String account) {
         this.account = account;
     }
+
+
 }

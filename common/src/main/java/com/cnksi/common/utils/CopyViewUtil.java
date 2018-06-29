@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.utils;
+package com.cnksi.common.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,14 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cnksi.bdzinspection.R;
-import com.cnksi.common.utils.ViewHolder;
-import com.cnksi.bdzinspection.inter.CopyItemLongClickListener;
-import com.cnksi.bdzinspection.model.TreeNode;
+import com.cnksi.common.R;
+import com.cnksi.common.listener.CopyItemLongClickListener;
 import com.cnksi.common.listener.ItemClickListener;
 import com.cnksi.common.model.CopyItem;
 import com.cnksi.common.model.CopyResult;
-import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.common.model.TreeNode;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -63,14 +61,14 @@ public class CopyViewUtil {
             if (tree.isParent()) {
                 String remark = "";
                 // 添加根节点数据
-                ViewHolder parentHolder = new ViewHolder(context, null, R.layout.xs_group_item2, false);
+                ViewHolder parentHolder = new ViewHolder(context, null, R.layout.common_group_item, false);
                 CopyItem parentItem = (CopyItem) tree.bindObject;
                 parentLayout.addView(parentHolder.getRootView());
                 index++;
                 for (TreeNode child : tree.childTreeNodes) {
                     // 添加抄录节点数据
                     final CopyItem childItem = (CopyItem) child.bindObject;
-                    ViewHolder childHolder = new ViewHolder(context, null, R.layout.xs_copy_value_child_item2, false);
+                    ViewHolder childHolder = new ViewHolder(context, null, R.layout.common_copy_value_child_item, false);
                     AutoUtils.autoSize(childHolder.getRootView());
                     RelativeLayout layoutRoot = (RelativeLayout) childHolder.getRootView();
                     if ("youwei".equalsIgnoreCase(childItem.type_key)) {

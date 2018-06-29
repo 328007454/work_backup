@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -173,16 +174,6 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
         isPrepared = true;
         arriveCheckHelper = new ArriveCheckHelper(currentActivity, adapter, currentReportId, currentInspectionType, currentBdzId, currentFunctionModel);
 
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (behindPosition&& RecyclerView.SCROLL_STATE_IDLE == newState) {
-//                    behindPosition = false;
-//                    smoothMoveToPosition(recyclerView, mToPosition);
-//                }
-//            }
-//        });
     }
 
     private void requestLocation(final boolean isSpace) {
@@ -213,6 +204,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
     protected void lazyLoad() {
         if (isPrepared && isVisible && isFirstLoad) {
             searChData("");
+            queryInfo();
         }
     }
 
@@ -342,10 +334,8 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                                 adapter.expand(index[0]);
                             }
                             if (-1 != index[1]) {
-                                mToPosition = index[1];
-//                                recyclerView.scrollToPosition(index[1]);
-                                smoothMoveToPosition(recyclerView, mToPosition);
                                 adapter.expand(index[1]);
+                                ((LinearLayoutManager)recyclerView.getLayoutManager()).scrollToPositionWithOffset(index[1],0);
                             } else {
                                 adapter.notifyDataSetChanged();
                             }
@@ -353,7 +343,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                             adapter.notifyDataSetChanged();
                         }
                     }
-                    queryInfo();
+//                    queryInfo();
                 });
             }
         });
@@ -517,7 +507,7 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
                 } else {
                     snwsd = new ReportSnwsd(currentReportId, currentBdzId, currentBdzName, data, wd, sd);
                 }
-                if (!snwsd.judgeValueNormal(wd, sd)) {
+                if (!update && !snwsd.judgeValueNormal(wd, sd)) {
                     ToastUtils.showMessage("温度：-99.9-99.9；湿度：0-100");
                     return;
                 }
@@ -536,34 +526,5 @@ public class DeviceListFragment extends BaseFragment implements QWERKeyBoardUtil
 
     }
 
-
-    private boolean behindPosition;
-    private int mToPosition;
-
-    /**
-     * 滑动到指定位置
-     */
-    private void smoothMoveToPosition(RecyclerView mRecyclerView, final int position) {
-        // 第一个可见位置
-        int firstItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(0));
-        // 最后一个可见位置
-        int lastItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1));
-        if (position < firstItem) {
-            // 第一种可能:跳转位置在第一个可见位置之前
-            mRecyclerView.smoothScrollToPosition(position);
-        } else if (position <= lastItem) {
-            // 第二种可能:跳转位置在第一个可见位置之后
-            int movePosition = position - firstItem;
-            if (movePosition >= 0 && movePosition < mRecyclerView.getChildCount()) {
-                int top = mRecyclerView.getChildAt(movePosition).getTop();
-                mRecyclerView.smoothScrollBy(0, top);
-            }
-        } else {
-            // 第三种可能:跳转位置在最后可见项之后
-            mRecyclerView.smoothScrollToPosition(position);
-            mToPosition = position;
-            behindPosition = true;
-        }
-    }
 
 }

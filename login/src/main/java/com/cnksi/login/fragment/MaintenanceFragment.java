@@ -65,18 +65,18 @@ public class MaintenanceFragment extends BaseCoreFragment {
     /**
      * XML中调用方法
      *
-     * @param typeName
+     * @param type
      */
-    public void gotoTaskList(String typeName) {
+    public void gotoTaskList(String type) {
         Intent intent4 = new Intent();
-//        ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
         intent4.setClass(getActivity(), TaskRemindActivity.class);
-        intent4.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
+        intent4.putExtra(Config.CURRENT_INSPECTION_TYPE, type);
         intent4.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         intent4.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
         intent4.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
-//        intent4.setComponent(componentName4);
         startActivity(intent4);
+        PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, type);
+        PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.valueOf(type).value);
     }
 
     protected void initData() {

@@ -113,17 +113,14 @@ public class TourFragment extends BaseCoreFragment {
         intent.putExtra(Config.CURRENT_DEPARTMENT_NAME, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_NAME, ""));
         intent.putExtra(Config.KEY_SYNC_URL, Config.SYNC_URL);
         intent.putExtra(Config.KEY_SYNC_APP_ID, Config.SYNC_APP_ID);
+        PreferencesUtils.put(Config.CURRENT_INSPECTION_TYPE, inspectionType);
+        PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE_NAME, InspectionType.get(inspectionType).value);
         if (TextUtils.isEmpty(inspectionType)) {
-//            ComponentName componentName5 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.nari.NariActivity");
-//            intent.setComponent(componentName5);
             intent.setClass(getActivity(), NariActivity.class);
         } else {
-//            ComponentName componentName4 = new ComponentName("com.cnksi.bdzinspection", "com.cnksi.bdzinspection.activity.TaskRemindFragment");
-//            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionType);
-//            intent.setComponent(componentName4);
 
-            intent.setClass(getActivity(),TaskRemindActivity.class);
-            intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, inspectionType);
+            intent.setClass(getActivity(), TaskRemindActivity.class);
+            intent.putExtra(Config.CURRENT_INSPECTION_TYPE, inspectionType);
         }
         startActivity(intent);
     }

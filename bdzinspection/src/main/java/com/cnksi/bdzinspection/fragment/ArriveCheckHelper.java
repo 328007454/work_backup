@@ -305,7 +305,7 @@ public class ArriveCheckHelper {
     /**
      * 在设备到位模式下 间隔下所有设备到位则将间隔标记为到位
      */
-    public void handleSpaceArrivedData() {
+    public synchronized void  handleSpaceArrivedData() {
         if (SystemConfig.isDevicePlaced() && "one".equals(currentFunctionModel)) {
             List<Placed> saveList = new ArrayList<>();
             Iterator<MultiItemEntity> itemEntityIterator = deviceAdapter.getData().iterator();

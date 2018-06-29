@@ -66,7 +66,7 @@ public class TaskRemindActivity extends BaseSjjcActivity {
         mTitleBinding.tvRight.setVisibility(View.GONE);
         mTitleBinding.btnRight.setImageResource(R.drawable.add_task_button_background);
         titleArray = getResources().getStringArray(R.array.TaskTitleArray);
-        String mInspectionValue = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE_NAME);
+        String mInspectionValue = getIntent().getStringExtra(Config.CURRENT_INSPECTION_TYPE);
         ////容错处理代码 避免别的地方回来拿不到type
         // start
         if (TextUtils.isEmpty(mInspectionValue)) {
@@ -92,11 +92,10 @@ public class TaskRemindActivity extends BaseSjjcActivity {
         String[] functionModelArray = {Config.UNFINISH_MODEL, Config.FINISHED_MODEL, Config.ALL_TASK_MODEL, Config.OVER_DUE_MODEL};
         for (int i = 0; i < titleArray.length; i++) {
             TaskRemindFragment mTaskFragment = new TaskRemindFragment();
-//            mTaskFragment.setOnFragmentEventListener(this);
             mTaskFragment.setOnFragmentEventListener(() -> updateTaskStatus());
             Bundle args = new Bundle();
             args.putString(Config.CURRENT_FUNCTION_MODEL, functionModelArray[i]);
-            args.putString(Config.CURRENT_INSPECTION_TYPE_NAME, mInspectionType.name());
+            args.putString(Config.CURRENT_INSPECTION_TYPE, mInspectionType.name());
             mTaskFragment.setArguments(args);
             mFragmentList.add(mTaskFragment);
         }

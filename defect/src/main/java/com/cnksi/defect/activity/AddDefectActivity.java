@@ -234,7 +234,7 @@ public class AddDefectActivity extends BaseTitleActivity {
                 ToastUtils.showMessage("无缺陷照片");
                 return;
             }
-            new ImageDetailsActivity.Builder(this).setImageUrlList(StringUtils.addStrToListItem(mDefectImageList, picParentFolder)).setShowDelete(true).setDeleteFile(true).start();
+            new ImageDetailsActivity.Builder(this).setImageUrlList(StringUtils.addStrToListItem(mDefectImageList, picParentFolder)).setSelect(true).setShowDelete(true).setDeleteFile(true).start();
 
         });
         binding.ibTakePicture.setOnClickListener(v -> {
@@ -265,7 +265,8 @@ public class AddDefectActivity extends BaseTitleActivity {
     private HashMap<String, DefectType> map = new HashMap<>();
 
     private void createDefectDialog() {
-        if (originModels.isEmpty()) {
+        originModels.clear();
+        if (defaultDefectModels!=null) {
             for (DbModel model : defaultDefectModels) {
                 if (!map.keySet().isEmpty() && map.containsKey(model.getString("level"))) {
                     DefectType defectType = map.get(model.getString("level"));
@@ -431,7 +432,7 @@ public class AddDefectActivity extends BaseTitleActivity {
             mDefectImageList.add(currentImageName);
             String pictureContent = deviceName + "\n" + binding.etInputDefectContent.getText().toString() + "\n" + DateUtils.getFormatterTime(new Date(), "yyyy-MM-dd HH:mm");
             DrawCircleImageActivity.with(mActivity).setTxtContent(pictureContent).setPath(picParentFolder + currentImageName).setRequestCode(0x01).start();
-        } else if (CANCEL_RESULT_LOAD_IMAGE == resultCode) {
+        } else if (CANCEL_RESULT_LOAD_IMAGE == requestCode) {
             ArrayList<String> cancelList = data.getStringArrayListExtra(Config.CANCEL_IMAGE_URL_LIST_KEY);
             for (String imageUrl : cancelList) {
                 mDefectImageList.remove(imageUrl.replace(picParentFolder, ""));
@@ -454,6 +455,7 @@ public class AddDefectActivity extends BaseTitleActivity {
             binding.tvDefectCount.setText("");
             binding.tvDefectCount.setVisibility(View.GONE);
         }
+        currentImageName="";
     }
 
     RadioGroup.OnCheckedChangeListener onCheckedChangeListener = (group, checkedId) -> {

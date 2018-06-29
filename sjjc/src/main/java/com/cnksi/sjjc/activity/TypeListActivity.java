@@ -180,7 +180,7 @@ public class TypeListActivity extends BaseSjjcActivity {
                     break;
                 case SBJC:
                     intent.setClass(mActivity, TaskRemindActivity.class);
-                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, SBJCInspectionMap.get(s));
+                    intent.putExtra(Config.CURRENT_INSPECTION_TYPE, SBJCInspectionMap.get(s));
                     break;
                 case switchover:
                     return;

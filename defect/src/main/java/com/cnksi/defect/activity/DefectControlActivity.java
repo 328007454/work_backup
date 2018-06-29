@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.cnksi.common.CommonApplication;
 import com.cnksi.common.Config;
 import com.cnksi.common.base.BaseTitleActivity;
 import com.cnksi.common.daoservice.BdzService;
@@ -25,14 +26,15 @@ import com.cnksi.defect.databinding.ActivityDefectControlBinding;
 import com.cnksi.defect.view.PopWindowCustom;
 
 import org.xutils.db.table.DbModel;
+import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * @decrption 缺陷列表
  * @author Mr.K  on 2017/4/25.
+ * @decrption 缺陷列表
  */
 
 public class DefectControlActivity extends BaseTitleActivity implements ItemClickOrLongClickListener<DefectRecord> {
@@ -148,7 +150,7 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
         } else if (i == R.id.add_defect) {
             Intent intent = new Intent(this, AddDefectActivity.class);
             intent.putExtra(Config.HAS_ALL_CHOICE, true);
-            intent.putExtra(Config.HAS_REPORT_ID,false);
+            intent.putExtra(Config.HAS_REPORT_ID, false);
             startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
         }
     }
@@ -161,6 +163,7 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
         intent.putExtra(Bdz.BDZID, data.bdzid);
         intent.putExtra(Config.DEFECT_COUNT_KEY, Config.SINGLE);
         intent.putExtra(DefectRecord.DEFECTID, data.defectid);
+        intent.putExtra(Config.CURRENT_REPORT_ID, data.reportid);
         startActivityForResult(intent, Config.START_ACTIVITY_FORRESULT);
     }
 
@@ -177,11 +180,21 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
         Dialog dialog = DialogUtils.createTipsDialog(this, "是否删除该缺陷", v1 -> {
             defectRecords.remove(defectRecord);
             defectContentAdapter.setList(defectRecords);
+            defectRecord.dlt = "1";
+            try {
+                CommonApplication.getInstance().getDbManager().saveOrUpdate(defectRecord);
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
         }, true);
         if (!TextUtils.isEmpty(userType) && userType.contains("team_leader")) {
             dialog.show();
         } else if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(selectUserAccount) && TextUtils.equals(account, selectUserAccount)) {
             dialog.show();
+        } else if (TextUtils.isEmpty(selectUserAccount)) {
+            ToastUtils.showMessage("请先选择人员");
+        } else {
+            ToastUtils.showMessage("这个不是你记录的缺陷，您无法删除。");
         }
     }
 }

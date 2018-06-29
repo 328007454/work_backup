@@ -104,7 +104,7 @@ public class RoadMapFragment extends BaseFragment {
         currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
         try {
 
-            spaceList = SpacingService.getInstance().findByFunctionModel(currentBdzId,fucntionModel,sort);
+            spaceList = SpacingService.getInstance().findByFunctionModel(currentReportId,currentBdzId,fucntionModel,sort,currentInspectionType);
         } catch (DbException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

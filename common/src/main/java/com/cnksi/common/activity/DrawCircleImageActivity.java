@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Message;
+import android.util.Log;
 
 import com.cnksi.common.R;
 import com.cnksi.common.databinding.CommonActivityDrawCircleBinding;
@@ -43,7 +44,7 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
      */
     private boolean isSavePicture = false;
     private CommonActivityDrawCircleBinding binding;
-
+    private long startTime;
 
     @Override
     public int getLayoutResId() {
@@ -54,7 +55,9 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
     public void initUI() {
         binding = (CommonActivityDrawCircleBinding) rootDataBinding;
         currentImagePath = getIntent().getStringExtra(IMAGE_PATH_KEY);
-        binding.btnSaveMark.setOnClickListener(view -> saveMarkAndExit());
+        binding.btnSaveMark.setOnClickListener(view -> {
+            saveMarkAndExit();
+        });
         binding.btnAddMark.setOnClickListener(view -> PicturePaintView.saveMark());
         binding.btnClearMark.setOnClickListener(view -> CustomerDialog.showSelectDialog(mActivity, "确认要清除所有标记吗?", new CustomerDialog.DialogClickListener() {
 
@@ -120,6 +123,7 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
      * 保存标记
      */
     private void saveMarkAndExit() {
+        startTime = System.currentTimeMillis();
         isSavePicture = true;
         CustomerDialog.showProgress(mActivity, "正在保存图片...");
         ExecutorManager.executeTask(() -> {
@@ -139,6 +143,7 @@ public class DrawCircleImageActivity extends BaseCoreActivity {
         } else {
             saveMarkAndExit();
         }
+        Log.d("Tag---save", "" + (System.currentTimeMillis() - startTime));
     }
 
     public static Builder with(Activity activity) {

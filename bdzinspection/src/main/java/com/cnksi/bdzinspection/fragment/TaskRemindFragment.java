@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.cnksi.bdzinspection.R;
@@ -16,7 +15,6 @@ import com.cnksi.bdzinspection.adapter.ListContentDialogAdapter;
 import com.cnksi.bdzinspection.adapter.TaskRemindAdapter;
 import com.cnksi.bdzinspection.databinding.XsContentListDialogBinding;
 import com.cnksi.bdzinspection.databinding.XsFragmentListBinding;
-import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.daoservice.TaskService;
 import com.cnksi.common.daoservice.UserService;
@@ -25,6 +23,7 @@ import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Task;
 import com.cnksi.common.model.Users;
 import com.cnksi.common.utils.CommonUtils;
+import com.cnksi.common.utils.DialogUtils;
 import com.cnksi.core.common.ExecutorManager;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ScreenUtils;
@@ -100,7 +99,7 @@ public class TaskRemindFragment extends BaseFragment {
 
     private void initialUI() {
         getBundleValue();
-        inspectionName = bundle.getString(Config.CURRENT_INSPECTION_TYPE_NAME);
+        inspectionName = bundle.getString(Config.CURRENT_INSPECTION_TYPE);
         currentSelectInspectionType = InspectionType.get(inspectionName);
         if (mInspectionTaskAdapter == null) {
             mInspectionTaskAdapter = new TaskRemindAdapter(getActivity(), mDataList);
@@ -141,7 +140,7 @@ public class TaskRemindFragment extends BaseFragment {
                     return;
                 }
                 if (TextUtils.isEmpty(inspectionName)) {
-                    inspectionName = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE_NAME, "full");
+                    inspectionName = PreferencesUtils.get(Config.CURRENT_INSPECTION_TYPE, "full");
                     currentSelectInspectionType = InspectionType.get(inspectionName);
                 }
                 String deptId = "";

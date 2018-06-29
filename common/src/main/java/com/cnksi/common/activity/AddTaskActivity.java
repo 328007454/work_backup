@@ -84,7 +84,7 @@ public class AddTaskActivity extends BaseTitleActivity {
         mTitleBinding.tvTitle.setText(R.string.xs_add_inspection_task_str);
         isSelectInspectionType = currentInspectionType.contains(InspectionType.maintenance.name()) || currentInspectionType.contains(InspectionType.switchover.name()) ||
                 (currentInspectionType.contains(InspectionType.special.name()) && !TextUtils.equals(currentInspectionType, InspectionType.special_xideng.name()) || currentInspectionType.contains(InspectionType.SBJC_06.name()));
-        isSelectPersons = TextUtils.equals(currentInspectionType, InspectionType.full.name())
+        isSelectPersons = TextUtils.equals(currentInspectionType, InspectionType.full.name()) || TextUtils.equals(currentInspectionType, InspectionType.routine.name())
                 || currentInspectionType.contains(InspectionType.special.name()) || TextUtils.equals(currentInspectionType, InspectionType.professional.name());
 
         String inspectionValue = InspectionType.get(currentInspectionType).value;
@@ -127,7 +127,9 @@ public class AddTaskActivity extends BaseTitleActivity {
                 e.printStackTrace();
             }
             runOnUiThread(() -> {
-                binding.tvSelectPowerStation.setText(bdz.name);
+                if (bdz != null) {
+                    binding.tvSelectPowerStation.setText(bdz.name);
+                }
                 selectPersonUtil = SelectPersonUtil.getInstance().setRecyWidget(mActivity, getSupportFragmentManager(), binding.recPersonContainer, selectPersons, new GridLayoutManager(getApplicationContext(), 4), currentDepartmentId);
 
             });
@@ -155,6 +157,9 @@ public class AddTaskActivity extends BaseTitleActivity {
 
         binding.btnCancel.setOnClickListener(v -> onBackPressed());
         binding.btnConfirm.setOnClickListener(v -> {
+            if (bdz == null) {
+                return;
+            }
             if (isSelectDevice) {
                 com.cnksi.common.activity.DeviceSelectActivity.with(mActivity)
                         .setBdzId(bdz.bdzid)
@@ -245,6 +250,7 @@ public class AddTaskActivity extends BaseTitleActivity {
     private List<Task> saveTasks = new ArrayList<>();
     private List<Report> saveReports = new ArrayList<>();
     private List<ReportSignname> saveReportSignNames = new ArrayList<>();
+    private List<TaskExtend> taskExtendArrayList = new ArrayList<>();
 
     public void saveReady() {
         if (bdz == null) {
@@ -259,26 +265,32 @@ public class AddTaskActivity extends BaseTitleActivity {
             StringBuilder builder = new StringBuilder();
             for (DbModel model : selectTypeModels) {
                 String type = model.getString("k");
-                Task task = TaskService.getInstance().findTaskByTypeAndTodayTime(type, DateUtils.getCurrentShortTime());
+                Task task = TaskService.getInstance().findTaskByTypeAndTodayTime(bdz.bdzid, type, binding.tvInspectionDate.getText().toString());
                 if (task != null) {
                     builder.append(model.getString("v")).append("\n");
+                    continue;
                 }
-                createTaskAndReportAndSignName(model.getString("k"), model.getString("v"));
+                boolean isMaintance = !TextUtils.isEmpty(type) && (type.contains(InspectionType.switchover.name()) || type.contains(InspectionType.maintenance.name()));
+                if (isMaintance) {
+                    createTaskAndReportAndSignName(model.getString("k"), model.getString("v"), model.getString("rep_swithover_id"));
+                } else {
+                    createTaskAndReportAndSignName(model.getString("k"), model.getString("v"), null);
+                }
             }
             if (!judgeTodayTaskExisted(builder.toString())) {
                 saveData();
             }
         } else {
             StringBuilder builder = new StringBuilder();
-            Task task = TaskService.getInstance().findTaskByTypeAndTodayTime(currentInspectionType, DateUtils.getCurrentShortTime());
+            Task task = TaskService.getInstance().findTaskByTypeAndTodayTime(bdz.bdzid, currentInspectionType, binding.tvInspectionDate.getText().toString());
             if (task != null) {
                 builder.append(InspectionType.get(currentInspectionType).value).append("\n");
             }
             if (!judgeTodayTaskExisted(builder.toString())) {
                 if (InspectionType.operation.name().equalsIgnoreCase(currentInspectionType)) {
-                    createTaskAndReportAndSignName(selectInspectionType, currentInspectionTypeName);
+                    createTaskAndReportAndSignName(selectInspectionType, currentInspectionTypeName, null);
                 } else {
-                    createTaskAndReportAndSignName(currentInspectionType, InspectionType.get(currentInspectionType).value);
+                    createTaskAndReportAndSignName(currentInspectionType, InspectionType.get(currentInspectionType).value, null);
                 }
                 saveData();
             }
@@ -292,8 +304,8 @@ public class AddTaskActivity extends BaseTitleActivity {
             if (!currentInspectionType.contains(InspectionType.SBJC.name()) || isXuDianChi) {
                 CommonApplication.getInstance().getDbManager().saveOrUpdate(saveReportSignNames);
             }
-            if (taskExpand != null) {
-                CommonApplication.getInstance().getDbManager().saveOrUpdate(taskExpand);
+            if (!taskExtendArrayList.isEmpty()) {
+                CommonApplication.getInstance().getDbManager().saveOrUpdate(taskExtendArrayList);
             }
             setResult(RESULT_OK);
             this.finish();
@@ -302,17 +314,19 @@ public class AddTaskActivity extends BaseTitleActivity {
         }
     }
 
-    private void createTaskAndReportAndSignName(String inspectionType, String inspectionValue) {
-        Task saveTask = new Task(bdz, inspectionType, currentAcounts, inspectionValue, selectPersonUtil.getAllSelectUser(), selectDeviceId, yunWeiYiTiHua);
-        if (currentInspectionType.equals(InspectionType.SBJC_11.name()) || currentInspectionType.equals(InspectionType.SBJC_10.name())||inspectionValue.contains("电压")||inspectionValue.contains("蓄电池")||inspectionValue.contains("内阻")) {
+    private void createTaskAndReportAndSignName(String inspectionType, String inspectionValue, String reportSwitchId) {
+        String taskStartTime = binding.tvInspectionDate.getText().toString();
+        Task saveTask = new Task(bdz, inspectionType, currentAcounts, inspectionValue, selectPersonUtil.getAllSelectUser(), selectDeviceId, yunWeiYiTiHua, taskStartTime);
+        if (currentInspectionType.equals(InspectionType.SBJC_11.name()) || currentInspectionType.equals(InspectionType.SBJC_10.name()) || inspectionValue.contains("电压") || inspectionValue.contains("蓄电池") || inspectionValue.contains("内阻")) {
             taskExpand = new TaskExtend(saveTask.taskid);
             if (binding.radioChouce.isChecked()) {
                 taskExpand.sbjcIsAllCheck = 1;
             } else if (binding.radioPuce.isChecked()) {
                 taskExpand.sbjcIsAllCheck = 0;
             }
+            taskExtendArrayList.add(taskExpand);
         }
-        Report saveReport = new Report(saveTask, bdz);
+        Report saveReport = new Report(saveTask, bdz, reportSwitchId);
         if (isXuDianChi) {
             xuDianChiTest = TextUtils.isEmpty(xuDianChiTest) ? "0" : "1";
             saveReport.checkType = xuDianChiTest;

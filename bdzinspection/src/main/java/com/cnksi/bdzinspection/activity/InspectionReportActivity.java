@@ -159,20 +159,20 @@ public class InspectionReportActivity extends BaseActivity {
 
 
     private void initOnClick() {
-        binding.btXunjianLine.setOnClickListener(view -> InspectionReportActivity.this.showXunJianLineDialog());
+        binding.btXunjianLine.setOnClickListener(view -> showXunJianLineDialog());
 
-        binding.tvNewDefectCount.setOnClickListener(view -> InspectionReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
-        binding.llNewDefectCount.setOnClickListener(view -> InspectionReportActivity.this.showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.tvNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
+        binding.llNewDefectCount.setOnClickListener(view -> showDefectDialog(mNewDefectList, R.string.xs_new_defect_count_str));
 
-        binding.tvTrackDefectCount.setOnClickListener(view -> InspectionReportActivity.this.showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
-        binding.llTrackDefectCount.setOnClickListener(view -> InspectionReportActivity.this.showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.tvTrackDefectCount.setOnClickListener(view -> showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
+        binding.llTrackDefectCount.setOnClickListener(view -> showDefectDialog(mTrackDefectList, R.string.xs_track_count_str));
 
-        binding.tvEliminateDefectCount.setOnClickListener(view -> InspectionReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
-        binding.llEliminateDefectCount.setOnClickListener(view -> InspectionReportActivity.this.showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.tvEliminateDefectCount.setOnClickListener(view -> showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
+        binding.llEliminateDefectCount.setOnClickListener(view -> showDefectDialog(mEliminateDefectList, R.string.xs_clear_count_str));
 
-        binding.btnPlayback.setOnClickListener(view -> InspectionReportActivity.this.showPlaybackDialog());
-        binding.ibtnExit.setOnClickListener(view -> InspectionReportActivity.this.ExitThisAndGoLauncher());
-        binding.ibtnCancel.setOnClickListener(view -> InspectionReportActivity.this.ExitThisAndGoLauncher());
+        binding.btnPlayback.setOnClickListener(view -> showPlaybackDialog());
+        binding.ibtnExit.setOnClickListener(view -> ExitThisAndGoLauncher());
+        binding.ibtnCancel.setOnClickListener(view -> ExitThisAndGoLauncher());
     }
 
     private void initialData() {
@@ -185,9 +185,9 @@ public class InspectionReportActivity extends BaseActivity {
             status = TaskService.getInstance().getTaskStatus(currentTaskId);
             // 查询数据抄录数量
 
-            if (!InspectionReportActivity.this.isParticularInspection()) {
+            if (!isParticularInspection()) {
                 copyCount = CopyResultService.getInstance().getReportCopyCount(currentReportId);
-                totalCount = CopyItemService.getInstance().getCopyItemCount(currentBdzId, currentInspectionType);
+                totalCount = CopyItemService.getInstance().getCopyTotalCount(currentBdzId, currentInspectionType);
             }
             // 查询本次发现的缺陷
             mNewDefectList = DefectRecordService.getInstance().findCurrentTaskNewDefectList(currentBdzId,
@@ -213,21 +213,22 @@ public class InspectionReportActivity extends BaseActivity {
             if (currentInspectionType.equals(InspectionType.full.name())
                     || currentInspectionType.equals(InspectionType.day.name())
                     || currentInspectionType.equalsIgnoreCase(InspectionType.professional.name())
-                    || currentInspectionType.equals(InspectionType.routine.name())) {
+                    || currentInspectionType.equals(InspectionType.routine.name())
+                    || currentInspectionType.contains(InspectionType.special.name())) {
                 String sort = "one".equals(fucntionModel) ? Spacing.SORT_ONE
                         : "second".equals(fucntionModel) ? Spacing.SORT_SECOND : Spacing.SORT;
                 currentBdzId = PreferencesUtils.get(Config.CURRENT_BDZ_ID, "");
 
                 try {
 
-                    spacingList = SpacingService.getInstance().findByFunctionModel(currentBdzId, fucntionModel, sort);
+                    spacingList = SpacingService.getInstance().findByFunctionModel(currentReportId,currentBdzId, fucntionModel, sort,currentInspectionType);
                 } catch (DbException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
             }
-            InspectionReportActivity.this.placedSpacing();
+            placedSpacing();
         });
 
     }
@@ -266,7 +267,7 @@ public class InspectionReportActivity extends BaseActivity {
      * 已到间隔
      */
     private void placedSpacing() {
-        if (!isParticularInspection()) {
+//        if (!isParticularInspection()) {
             List<Placed> placedList = PlacedService.getInstance().findPlacedSpace(currentReportId);
             if (null != placedList && !placedList.isEmpty()) {
                 placedSpacing = new ArrayList<String>();
@@ -274,7 +275,7 @@ public class InspectionReportActivity extends BaseActivity {
                     placedSpacing.add(p.spId);
                 }
             }
-        }
+//        }
 
     }
 

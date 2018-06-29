@@ -30,7 +30,7 @@ public class BaseDefectFragment extends BaseCoreFragment implements ItemClickOrL
      */
     protected String defectCount;
     protected String defectId;
-    private String currentReportId;
+    protected String currentReportId;
     private String standardId;
 
     /**

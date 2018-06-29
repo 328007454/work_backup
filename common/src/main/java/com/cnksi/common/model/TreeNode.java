@@ -1,4 +1,4 @@
-package com.cnksi.bdzinspection.model;
+package com.cnksi.common.model;
 
 import java.util.ArrayList;
 import java.util.List;

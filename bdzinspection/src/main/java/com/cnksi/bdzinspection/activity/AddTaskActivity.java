@@ -498,7 +498,7 @@ public class AddTaskActivity extends BaseActivity {
             }
             mCurrentTask = new Task(MyUUID.id(4), mCurrentBdz.bdzid, mCurrentBdz.name, mInspectionType.k, mInspectionType.v,
                     DateUtils.getFormatterTime(inspectionDate + " 00:00:00", DateUtils.yyyy_MM_dd_HH_mm_ss),
-                    TaskStatus.undo.name(), creatUser.toString(), membersUser.toString());
+                    TaskStatus.undo.name(), creatUser.toString(), membersUser.toString(),"");
             mReport = new Report();
             mReport.persons = selectNames;
             mReport.bdzid = mCurrentBdz.bdzid;

@@ -613,7 +613,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                             audioFileName = voice;
                             FileUtils.deleteFile(Config.AUDIO_FOLDER + audioFileName);
                         }
-                        audioFileName = DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm) + Config.AMR_POSTFIX;
+                        audioFileName = DateUtils.getCurrentTime(DateUtils.yyyyMMdd_HHmmss) + Config.AMR_POSTFIX;
                         recordAudioUtils.startRecord(Config.AUDIO_FOLDER + audioFileName, () -> {
                             String recordTime = recordAudioUtils.getAllRecordTime(Config.AUDIO_FOLDER + audioFileName);
                             dbModel.add(SwitchPic.VOICELENGTH, recordTime);

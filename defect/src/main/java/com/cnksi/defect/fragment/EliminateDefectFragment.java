@@ -85,7 +85,13 @@ public class EliminateDefectFragment extends BaseDefectFragment {
     @Override
     protected void lazyLoad() {
         super.lazyLoad();
-        List<Lookup> mDefectReasonList = LookupService.getInstance().getDefectReasonListByParentId(String.valueOf(101));
+        List<Lookup> mDefectReasonList = null;
+        if (binding.rbInflunceNo.isChecked()) {
+            mDefectReasonList = LookupService.getInstance().getDefectReasonListByParentId(String.valueOf(102));
+        } else {
+            mDefectReasonList = LookupService.getInstance().getDefectReasonListByParentId(String.valueOf(101));
+        }
+        reasonList.clear();
         reasonList.addAll(mDefectReasonList);
         getActivity().runOnUiThread(() -> {
             if (defectRecords != null) {
@@ -335,7 +341,7 @@ public class EliminateDefectFragment extends BaseDefectFragment {
 
     private boolean isSelectDefect() {
         if (selectDefect == null) {
-            ToastUtils.showMessage("请点击需要跟踪的缺陷");
+            ToastUtils.showMessage("请点击需要验收的缺陷");
             return false;
         }
         return true;

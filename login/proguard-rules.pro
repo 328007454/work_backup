@@ -111,6 +111,7 @@
   public *;
 }
 -keep class com.cnksi.bdzinspection.model.**{*;}
+-keep class com.cnksi.nari.model.**{*;}
 -keepattributes Exceptions,InnerClasses,...
 -keep  class com.cnksi.bdzinspection.adapter.**$*{*;}
 -keepattributes Exceptions,InnerClasses,...
@@ -138,7 +139,8 @@
 -libraryjars ../bdzinspection/libs/httpmime-4.1.3.jar
 
 -keep class android.support.v7.widget.SearchView { *; }
-
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }
 
 ### common
 -keep class com.cnksi.common.model.**{*;}

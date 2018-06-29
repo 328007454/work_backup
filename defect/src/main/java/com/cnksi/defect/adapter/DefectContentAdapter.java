@@ -4,6 +4,7 @@ import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.cnksi.common.Config;
@@ -90,6 +91,11 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         itemBinding.tvRecordPerson.setText("记录人员：" + (TextUtils.isEmpty(item.discoverer) ? "" : item.discoverer));
         itemBinding.tvDefectDiscoverTime.setText("时间：" + (TextUtils.isEmpty(item.discovered_date) ? "" : (DateUtils.getFormatterTime(item.insertTime, DateUtils.yyyy_MM_dd))));
         itemBinding.tvDefectRemindTime.setText(calculateRemindTime(item));
+        if (Config.PROBLEM_LEVEL_CODE.equalsIgnoreCase(item.defectlevel) || Config.HIDDEN_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
+            itemBinding.tvDefectRemindTime.setVisibility(View.GONE);
+        } else {
+            itemBinding.tvDefectRemindTime.setVisibility(View.VISIBLE);
+        }
         itemBinding.getRoot().setOnClickListener(v -> {
             if (itemClickListener != null) {
                 itemClickListener.onClick(v, item, position);
@@ -100,7 +106,7 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
             if (itemClickListener != null) {
                 itemClickListener.onLongClick(v, item, position);
             }
-           return false;
+            return false;
         });
 
     }

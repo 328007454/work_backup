@@ -1,5 +1,9 @@
 package com.cnksi.common.daoservice;
 
+import android.text.TextUtils;
+
+import com.cnksi.common.CommonApplication;
+import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.Spacing;
 import com.cnksi.core.utils.DateUtils;
@@ -78,13 +82,13 @@ public class SpacingService extends BaseService<Spacing> {
                 String devices = "'" + (currentReport.selected_deviceid == null ? "" : currentReport.selected_deviceid)
                         + "'";
                 devices = devices.replace(",", "','");
-                selector =selector().and(Spacing.BDZID, "=", bdzId)
+                selector = selector().and(Spacing.BDZID, "=", bdzId)
                         .expr(" and spid in(SELECT DISTINCT(spid) from device d where d.deviceid in(" + devices
                                 + ")and d.device_type='" + type + "' )")
                         .orderBy(sort, false);
             } else {
                 // 根据类型自动查设备
-                selector =selector().and(Spacing.BDZID, "=", bdzId)
+                selector = selector().and(Spacing.BDZID, "=", bdzId)
                         .expr("and spid in (SELECT DISTINCT(spid) from device d where d.bigid in (SELECT DISTINCT(ss.bigid) from standard_special ss where ss.kind='"
                                 + inspectionType + "') and d.device_type='" + type + "' )")
                         .orderBy(sort, false);
@@ -104,13 +108,14 @@ public class SpacingService extends BaseService<Spacing> {
     public boolean updateSpacingLocationInfo(String spid, String lat, String lng) {
         boolean isSuccess = false;
         try {
-           update(WhereBuilder.b(Spacing.SPID, "=", spid), new KeyValue(Spacing.LATITUDE, lat), new KeyValue(Spacing.LONGITUDE, lng));
+            update(WhereBuilder.b(Spacing.SPID, "=", spid), new KeyValue(Spacing.LATITUDE, lat), new KeyValue(Spacing.LONGITUDE, lng));
             isSuccess = true;
         } catch (DbException e) {
             e.printStackTrace();
         }
         return isSuccess;
     }
+
     public String findSpacingByDeviceId(String deviceId) {
         SqlInfo sqlInfo = new SqlInfo("SELECT s.name from device d LEFT JOIN spacing s on d.spid=s.spid where d.dlt='0' and  d.deviceid=?");
         sqlInfo.addBindArg(new KeyValue("deviceId", deviceId));
@@ -165,6 +170,7 @@ public class SpacingService extends BaseService<Spacing> {
         }
         return new ArrayList<>();
     }
+
     /**
      * 通过间隔查询当前变电站
      */
@@ -211,11 +217,39 @@ public class SpacingService extends BaseService<Spacing> {
     }
 
 
-    public List<Spacing> findByFunctionModel(String bdzId, String functionModel, String sort) throws DbException {
-        return selector().and(Spacing.BDZID, "=", bdzId)
-                .expr("and spid in (select distinct(spid) spid from device where device_type = '" + functionModel
-                        + "' and bdzid = '" + bdzId + "' and dlt<>1)")
-                .orderBy(sort, false).findAll();
+    public List<Spacing> findByFunctionModel(String reportID, String bdzId, String functionModel, String sort, String inspectionType) throws DbException {
+        if (!TextUtils.isEmpty(inspectionType) && inspectionType.contains(InspectionType.special.name())) {
+            String sql = "select * from special_menu where dlt =0 and k = ?";
+            SqlInfo sqlInfo = new SqlInfo(sql);
+            sqlInfo.addBindArg(new KeyValue("", inspectionType));
+            DbModel dbModel = CommonApplication.getInstance().getDbManager().findDbModelFirst(sqlInfo);
+            if (TextUtils.equals("select_device", dbModel.getString("device_way"))) {
+                Report report = ReportService.getInstance().getReportById(reportID);
+                String devices = "'" + (report == null ? "" : report.selected_deviceid) + "'";
+                devices = devices.replace(",", "','");
+                return selector().and(Spacing.BDZID, "=", bdzId)
+                        .expr("and spid in (select distinct(spid) spid from device where device_type = '" + functionModel
+                                + "' and bdzid = '" + bdzId + "' and deviceid in (" + devices + ") and dlt<>1)")
+                        .orderBy(sort, false).findAll();
+            }
+            return findNormalSpacing(bdzId, functionModel, sort);
+        } else {
+            return findNormalSpacing(bdzId, functionModel, sort);
+        }
+    }
+
+    public List<Spacing> findNormalSpacing(String bdzId, String functionModel, String sort) {
+        List<Spacing> spacings = null;
+        try {
+            spacings = selector().and(Spacing.BDZID, "=", bdzId)
+                    .expr("and spid in (select distinct(spid) spid from device where device_type = '" + functionModel
+                            + "' and bdzid = '" + bdzId + "' and dlt<>1)")
+                    .orderBy(sort, false).findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        return spacings;
     }
 
     public boolean restore(Spacing spacing) {
@@ -279,7 +313,7 @@ public class SpacingService extends BaseService<Spacing> {
             }
             insertSql.deleteCharAt(insertSql.length() - 1).append(") VALUES(").append(values.deleteCharAt(values.length() - 1).toString()).append(");");
             //保存一个新间隔
-           execSql(insertSql.toString());
+            execSql(insertSql.toString());
 
             //更新设备表的SPID
             sql = "update device set spid='" + newSpid + "' where deviceid in(" + deviceIds.toString() + ")";

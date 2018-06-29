@@ -76,6 +76,9 @@ public class PeopleDialog extends BaseDialogFragment {
         public Builder loadData() {
             ExecutorManager.executeTaskSerially(() -> {
                 List<DbModel> usersList = UserService.getInstance().getAllUserByDeptId(departmentId);
+                if (peopleDialog.getActivity() == null) {
+                    return;
+                }
                 peopleDialog.getActivity().runOnUiThread(() -> {
                     peopleDialog.personBinding = (CommonDialogPersonBinding) peopleDialog.dataBinding;
                     peopleDialog.personBinding.lvContainer.setLayoutManager(new LinearLayoutManager(peopleDialog.getContext()));
