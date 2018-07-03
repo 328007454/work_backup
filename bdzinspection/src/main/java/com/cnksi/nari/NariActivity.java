@@ -311,7 +311,7 @@ public class NariActivity extends BaseActivity implements GrantPermissionListene
             SqlInfo sqlInfo = new SqlInfo("SELECT distinct u.account  account ,rs.name,u.pms_id FROM report_signname rs " +
                     "LEFT JOIN (SELECT * from users where dept_id=?) u ON rs.name = u.username WHERE report_id = ? ;");
             sqlInfo.addBindArg(new KeyValue("", model.getString("dept_id")));
-            sqlInfo.addBindArg(new KeyValue("", model.getString(report.reportid)));
+            sqlInfo.addBindArg(new KeyValue("",report.reportid));
             List<DbModel> users = UserService.getInstance().findDbModelAll(sqlInfo);
             String ids = "";
             String names = "";

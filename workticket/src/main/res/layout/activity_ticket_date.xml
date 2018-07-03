@@ -64,7 +64,7 @@
                 <com.cnksi.workticket.view.StyleLineLinearLayout
                     android:id="@+id/work_container"
                     android:layout_width="match_parent"
-                    android:layout_height="309px"
+                    android:layout_height="370px"
                     android:background="@color/core_bg_white_ffffff"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/core_padding_30px"
@@ -121,15 +121,17 @@
                     </RadioGroup>
 
                     <TextView
+                        android:padding="27px"
                         android:id="@+id/txt_tips"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="45px"
+                        android:layout_marginTop="25px"
+                        android:background="#fff7f6f6"
                         android:gravity="start"
-                        android:text="提示："
-                        android:textColor="#576362"
+                        android:text="A类：需要布置（拆除）大量安全措施、现场环境复杂的工作;\nB类：需要布置（拆除）少量安全措施，可在半小时内完成工作票许可开工手续的工作"
+                        android:textColor="#3C4950"
                         android:textSize="33px"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                 </com.cnksi.workticket.view.StyleLineLinearLayout>
 

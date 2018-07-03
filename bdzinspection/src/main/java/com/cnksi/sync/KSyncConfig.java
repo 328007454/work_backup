@@ -47,6 +47,9 @@ public class KSyncConfig {
 
 
     public void upload() {
+        if (ksync==null){
+            ksync = CommonApplication.getInstance().getKSyncMap().get(Config.SYNC_APP_ID);
+        }
         executorService.execute(() -> ksync.uploadData());
     }
 
