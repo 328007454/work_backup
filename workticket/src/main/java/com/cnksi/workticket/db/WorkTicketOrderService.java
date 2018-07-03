@@ -41,7 +41,7 @@ public class WorkTicketOrderService {
         String endDate = date + " 23:59:59";
         try {
             if (TextUtils.equals(Config.otherDeptUser, otherDeptUser)) {
-                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).or(WorkTicketOrder.WORK_UNIT_ID,"=",userDeptId).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DLT, "=", "0").expr("and (dept_id = '"+deptid+"'or  work_unit_id = '"+ userDeptId+"') ").and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).findAll();
             } else {
                 orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", startDate).and(WorkTicketOrder.WORK_DATE, "<", endDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             }
@@ -61,7 +61,7 @@ public class WorkTicketOrderService {
         List<WorkTicketOrder> orders = new ArrayList<>();
         try {
             if (Config.otherDeptUser.contains("team_leader")) {
-                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_UNIT_ID,"=",deptid).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             } else {
                 orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.CREATE_PERSON_ACCOUNT, "=", account).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             }
@@ -84,7 +84,7 @@ public class WorkTicketOrderService {
         List<WorkTicketOrder> orders = new ArrayList<>();
         try {
             if (Config.otherDeptUser.contains("team_leader")) {
-                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_DATE, "<", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptid).and(WorkTicketOrder.WORK_UNIT_ID,"=",deptid).and(WorkTicketOrder.WORK_DATE, "<", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             } else {
                 orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.CREATE_PERSON_ACCOUNT, "=", account).and(WorkTicketOrder.WORK_DATE, "<", currentDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             }
@@ -107,11 +107,12 @@ public class WorkTicketOrderService {
         List<WorkTicketOrder> orders = new ArrayList<>();
 
         try {
-            if (!TextUtils.isEmpty(Config.otherDeptUser) && Config.otherDeptUser.contains("team_leader")) {
-                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptId).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.WORK_DATE, "<", currentMaxDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
-            } else {
-                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.CREATE_PERSON_ACCOUNT, "=", account).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.WORK_DATE, "<", currentMaxDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
-            }
+//            if (!TextUtils.isEmpty(Config.otherDeptUser) && Config.otherDeptUser.contains("team_leader")) {
+//                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.DEPT_ID, "=", deptId).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.WORK_DATE, "<", currentMaxDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+//            } else {
+//                orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.CREATE_PERSON_ACCOUNT, "=", account).and(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.WORK_DATE, "<", currentMaxDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
+//            }
+            orders = WorkTicketDbManager.getInstance().getTicketManager().selector(WorkTicketOrder.class).where(WorkTicketOrder.WORK_DATE, ">", currentDate).and(WorkTicketOrder.WORK_DATE, "<", currentMaxDate).and(WorkTicketOrder.DLT, "=", "0").findAll();
             return orders;
         } catch (DbException e) {
             e.printStackTrace();

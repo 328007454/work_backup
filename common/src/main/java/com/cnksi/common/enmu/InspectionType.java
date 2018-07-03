@@ -7,7 +7,7 @@ public enum InspectionType {
     SBXS("设备巡视"),
     GZP("工作票"),
     operation("运维一体化"),
-    full("全面巡检"),
+    full("全面巡视"),
     day("日常巡检"),
     routine("例行巡视"),
     special("特殊巡检"),

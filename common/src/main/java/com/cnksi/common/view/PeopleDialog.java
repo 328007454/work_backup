@@ -76,6 +76,11 @@ public class PeopleDialog extends BaseDialogFragment {
         public Builder loadData() {
             ExecutorManager.executeTaskSerially(() -> {
                 List<DbModel> usersList = UserService.getInstance().getAllUserByDeptId(departmentId);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 if (peopleDialog.getActivity() == null) {
                     return;
                 }

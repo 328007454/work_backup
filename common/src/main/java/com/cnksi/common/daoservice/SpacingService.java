@@ -223,7 +223,7 @@ public class SpacingService extends BaseService<Spacing> {
             SqlInfo sqlInfo = new SqlInfo(sql);
             sqlInfo.addBindArg(new KeyValue("", inspectionType));
             DbModel dbModel = CommonApplication.getInstance().getDbManager().findDbModelFirst(sqlInfo);
-            if (TextUtils.equals("select_device", dbModel.getString("device_way"))) {
+            if (null!=dbModel&&TextUtils.equals("select_device", dbModel.getString("device_way"))) {
                 Report report = ReportService.getInstance().getReportById(reportID);
                 String devices = "'" + (report == null ? "" : report.selected_deviceid) + "'";
                 devices = devices.replace(",", "','");

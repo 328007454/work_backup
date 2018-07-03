@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.cnksi.core.common.ExecutorManager;
+import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.ScreenUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.core.view.CustomerDialog;
@@ -184,6 +185,11 @@ public class TicketDateWorkActivity extends TicketBaseActivity {
                 return;
             }
             new DialogUtil().showDatePickerDialog(this, (result, position) -> {
+                boolean sureTime = !TextUtils.isEmpty(result) && DateUtils.compareDate(result, DateUtils.getCurrentShortTime(), DateUtils.yyyy_MM_dd);
+                if (!sureTime) {
+                    ToastUtils.showMessage("选择时间小于当前时间请重新选择");
+                    return;
+                }
                 dateBinding.rgSelectTime.clearCheck();
                 selectDate = result;
                 seletTimeZone = "";

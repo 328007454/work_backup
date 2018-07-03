@@ -446,7 +446,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
 
         mSwitch1Binding.tvTips.setOnClickListener(view -> {
             if (!MediaRecorderUtils.getInstance().isRecording()) {
-                audioFileName = DateUtils.getCurrentTime(DateUtils.yyyy_MM_dd_HH_mm) + Config.AMR_POSTFIX;
+                audioFileName = DateUtils.getCurrentTime(DateUtils.yyyyMMddHHmmssSSS) + Config.AMR_POSTFIX;
                 recordAudioUtils.startRecord(Config.AUDIO_FOLDER + audioFileName, () -> New1RegularSwitchActivity1.this.saveReportAudioFile());
             } else {
                 ToastUtils.showMessage("当前正在录音");
@@ -613,7 +613,7 @@ public class New1RegularSwitchActivity1 extends BaseActivity implements Keyboard
                             audioFileName = voice;
                             FileUtils.deleteFile(Config.AUDIO_FOLDER + audioFileName);
                         }
-                        audioFileName = DateUtils.getCurrentTime(DateUtils.yyyyMMdd_HHmmss) + Config.AMR_POSTFIX;
+                        audioFileName = DateUtils.getCurrentTime(DateUtils.yyyyMMddHHmmssSSS) + Config.AMR_POSTFIX;
                         recordAudioUtils.startRecord(Config.AUDIO_FOLDER + audioFileName, () -> {
                             String recordTime = recordAudioUtils.getAllRecordTime(Config.AUDIO_FOLDER + audioFileName);
                             dbModel.add(SwitchPic.VOICELENGTH, recordTime);

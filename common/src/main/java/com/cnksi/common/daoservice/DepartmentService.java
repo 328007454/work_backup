@@ -52,15 +52,13 @@ public class DepartmentService extends BaseService<Department> {
     public void deleteOtherDataByDept(String id) {
         if (!TextUtils.isEmpty(id) && !"-1".equals(id)) {
             try {
-                getDbManager().delete(Users.class, WhereBuilder.b().expr(" dept_id <>'" + id + "' or dept_id is null"));
+                getDbManager().delete(Users.class, WhereBuilder.b().expr(" dept_id <>'" + id + "'  or dept_id is null"));
                 getDbManager().delete(Bdz.class, WhereBuilder.b().expr(" dept_id <>'" + id + "' "));
             } catch (DbException e) {
                 e.printStackTrace();
             }
         }
     }
-
-
 
 
     public List<DbModel> findUserForCurrentUser(String users) throws DbException {

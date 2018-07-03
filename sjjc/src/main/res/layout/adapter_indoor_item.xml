@@ -59,7 +59,7 @@
                     app:srcCompat="@drawable/icon_indoor_delete" />
 
 
-                <EditText
+                <com.cnksi.common.view.ContainsEmojiEditText
                     android:id="@+id/et_location"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0dp"
@@ -95,7 +95,7 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/new_global_text_size" />
 
-                <EditText
+                <com.cnksi.common.view.ContainsEmojiEditText
                     android:maxLength="5"
                     android:id="@+id/et_tempreture"
                     style="@style/NewHeatPointEditTextStyle"
@@ -130,7 +130,7 @@
                     android:textColor="@color/global_text_color"
                     android:textSize="@dimen/new_global_text_size" />
 
-                <EditText
+                <com.cnksi.common.view.ContainsEmojiEditText
                     android:id="@+id/et_current_humidity"
                     style="@style/NewHeatPointEditTextStyle"
                     android:layout_width="0dp"

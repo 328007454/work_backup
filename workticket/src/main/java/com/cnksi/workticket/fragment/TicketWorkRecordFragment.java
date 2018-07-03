@@ -51,6 +51,9 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
     protected void initUI() {
         super.initUI();
         binding = (TicketFragmentWorkRecordBinding) fragmentDataBinding;
+        if (Config.OTHER_DEPT_USER.equalsIgnoreCase(Config.otherDeptUser)) {
+            binding.txtTips.setVisibility(View.GONE);
+        }
         initData();
         initOnClick();
         initCancelTicketDialog();
@@ -68,8 +71,8 @@ public class TicketWorkRecordFragment extends BaseCoreFragment implements Ticket
 
     private void initData() {
         ExecutorManager.executeTaskSerially(() -> {
-            futureOrders = WorkTicketOrderService.getInstance().getFutureWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(),Config.userAccount);
-            historyOrders = WorkTicketOrderService.getInstance().getHistoryWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(),Config.userAccount);
+            futureOrders = WorkTicketOrderService.getInstance().getFutureWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(), Config.userAccount);
+            historyOrders = WorkTicketOrderService.getInstance().getHistoryWorkOverCurrentTime(Config.deptID, DateUtils.getCurrentLongTime(), Config.userAccount);
             if (futureOrders != null && !futureOrders.isEmpty()) {
                 orders.clear();
                 orders.addAll(futureOrders);
