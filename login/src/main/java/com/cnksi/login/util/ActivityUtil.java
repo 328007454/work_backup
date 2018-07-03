@@ -42,7 +42,7 @@ public class ActivityUtil {
         Intent intent1 = new Intent();
         intent1.setClass(activity, TaskRemindActivity.class);
         String typeName = InspectionType.operation.name();
-        intent1.putExtra(Config.CURRENT_INSPECTION_TYPE_NAME, typeName);
+        intent1.putExtra(Config.CURRENT_INSPECTION_TYPE, typeName);
         intent1.putExtra(Config.CURRENT_LOGIN_USER, PreferencesUtils.get(Config.CURRENT_LOGIN_USER, ""));
         intent1.putExtra(Config.CURRENT_LOGIN_ACCOUNT, PreferencesUtils.get(Config.CURRENT_LOGIN_ACCOUNT, ""));
         intent1.putExtra(Config.CURRENT_DEPARTMENT_ID, PreferencesUtils.get(Config.CURRENT_DEPARTMENT_ID, ""));
