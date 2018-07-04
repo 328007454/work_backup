@@ -163,6 +163,7 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
             LoginActivity.this.modifySyncURL();
             return true;
         });
+
     }
 
     private void initOnClick() {
@@ -223,6 +224,9 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
 //            FileUtils.copyFile(getApplicationContext().getFilesDir().getAbsolutePath() + "/database/" + Config.ENCRYPT_DATABASE_NAME, Config.BDZ_INSPECTION_FOLDER + "bdzinspection.db");
 //            CustomerDialog.dismissProgress();
         });
+        if (AppUtils.getVersionCode(getApplicationContext()) == 65) {
+            Config.SYNC_URL = "http://127.0.0.1:58888/v410";
+        }
     }
 
     /**
@@ -527,6 +531,12 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
         ProgressDialog dialog = ProgressDialog.show(this, "提示", "正在加密数据，请稍等...请不要强行取消，耐心等待", false, false);
         ExecutorManager.executeTaskSerially(() -> {
             try {
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + "dbVersion.prop")) {
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + "dbVersion.prop");
+                }
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + "bdzinspection.db-journal")) {
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + "bdzinspection.db-journal");
+                }
                 String innerDateBaseFolder = CommonApplication.getAppContext().getFilesDir().getAbsolutePath() + "/database/";
                 File innerFile = new File(innerDateBaseFolder);
                 if (!innerFile.exists()) {
@@ -536,12 +546,7 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
                     DatabaseUtils.copyDatabase(new File(Config.DATABASE_FOLDER + Config.DATABASE_NAME), "", new File(innerDateBaseFolder + Config.ENCRYPT_DATABASE_NAME), "com.cnksi");
                     FileUtils.deleteFile(Config.DATABASE_FOLDER + Config.DATABASE_NAME);
                 }
-                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + "drop.db")) {
-                    FileUtils.deleteFile(Config.DATABASE_FOLDER + "drop.db");
-                }
-                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + "bdzinspection.db-journal")) {
-                    FileUtils.deleteFile(Config.DATABASE_FOLDER + "drop.db");
-                }
+
                 runOnUiThread(() -> {
                     KSync kSync = CommonApplication.getInstance().getKSyncMap().get(Config.SYNC_APP_ID);
                     kSync.checkUpgrade(this, AppUtils.getVersionCode(getApplicationContext()));
@@ -552,6 +557,15 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
                 e.printStackTrace();
             } finally {
                 dialog.cancel();
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + "dbVersion.prop")) {
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + "dbVersion.prop");
+                }
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + "bdzinspection.db-journal")) {
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + "bdzinspection.db-journal");
+                }
+                if (FileUtils.isFileExists(Config.DATABASE_FOLDER + Config.DATABASE_NAME)) {
+                    FileUtils.deleteFile(Config.DATABASE_FOLDER + Config.DATABASE_NAME);
+                }
             }
         });
 

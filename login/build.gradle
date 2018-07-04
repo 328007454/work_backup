@@ -100,9 +100,7 @@ android {
                 }
             }
         }
-        debug {
-            signingConfig signingConfigs.release
-        }
+
     }
 
 //需要编译的源码

@@ -334,7 +334,7 @@ public class Config implements Cst {
      * 项目code
      */
     public static final String PCODE = "E6F70F55-48A6-4F8A-A5C1-4B3AE6135B85";
-    public static String SYNC_APP_ID = BuildConfig.SYNC_APP_ID;
+    public static String SYNC_APP_ID =BuildConfig.SYNC_APP_ID;
     public static String SYNC_BASE_FOLDER = BDZ_INSPECTION_FOLDER;
     public static String SYNC_URL = BuildConfig.SYNC_URL;
 

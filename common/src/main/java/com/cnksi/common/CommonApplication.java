@@ -94,6 +94,7 @@ public class CommonApplication extends CoreApplication implements IKSync {
         mInstance = this;
         LeakCanary.install(mInstance);
         PreferencesUtils.init(getApplicationContext());
+        PreferencesUtils.setDefaultName("config");
         ToastUtils.init(getApplicationContext());
         DisplayUtils.getInstance().setStandHeight(1920).setStandWidth(1080).init(getApplicationContext());
         CLog.init(Config.DEBUG);
