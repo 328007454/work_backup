@@ -433,4 +433,8 @@ public class Config implements Cst {
 
     public static final String SINGLE = "single";
     public static final String MULTI = "multi";
+//    public static final String WEEK="本周";
+//    public static final String WEEK="本周";
+//    public static final String WEEK="本周";
+//    public static final String WEEK="本周";
 }

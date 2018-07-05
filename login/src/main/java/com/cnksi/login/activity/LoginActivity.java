@@ -35,6 +35,7 @@ import com.cnksi.core.utils.FileUtils;
 import com.cnksi.core.utils.PreferencesUtils;
 import com.cnksi.core.utils.ToastUtils;
 import com.cnksi.ksynclib.KSync;
+import com.cnksi.login.BuildConfig;
 import com.cnksi.login.CustomApplication;
 import com.cnksi.login.R;
 import com.cnksi.login.databinding.ActivityLoginBinding;
@@ -220,11 +221,8 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
         });
 
         binding.user2Img.setOnClickListener(v -> {
-//            CustomerDialog.showProgress(this);
-//            FileUtils.copyFile(getApplicationContext().getFilesDir().getAbsolutePath() + "/database/" + Config.ENCRYPT_DATABASE_NAME, Config.BDZ_INSPECTION_FOLDER + "bdzinspection.db");
-//            CustomerDialog.dismissProgress();
         });
-        if (AppUtils.getVersionCode(getApplicationContext()) == 65) {
+        if (AppUtils.getVersionCode(getApplicationContext()) == 65 && !BuildConfig.DEBUG) {
             Config.SYNC_URL = "http://127.0.0.1:58888/v410";
         }
     }
@@ -440,8 +438,8 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
                 //保存登录班组和账号
                 PreferencesUtils.put(Config.CURRENT_DEPARTMENT_ID, user.dept_id);
                 KSyncConfig.getInstance().setDept_id(user.dept_id);
-//                startActivity(new Intent(this, HomeActivity.class));
-                ARouter.getInstance().build("/login/HomeActivity").navigation();
+//                ARouter.getInstance().build("/login/HomeActivity").navigation();
+                ARouter.getInstance().build("/login/XHomeActivity").navigation();
                 finish();
                 return true;
             } else {
@@ -481,7 +479,7 @@ public class LoginActivity extends BaseLoginActivity implements GrantPermissionL
         PreferencesUtils.put(Config.CURRENT_LOGIN_ACCOUNT, userAccount);
         PreferencesUtils.put(Config.OTHER_DEPT_USER, mCurrentUserOne.type);
         PreferencesUtils.put(Config.CURRENT_DEPARTMENT_NAME, mCurrentUserOne.deptName);
-        ARouter.getInstance().build("/login/HomeActivity").navigation();
+        ARouter.getInstance().build("/login/XHomeActivity").navigation();
         final String dept_id = mCurrentUserOne != null ? mCurrentUserOne.dept_id : mCurrentUserTwo != null ? mCurrentUserTwo.dept_id : "-1";
         KSyncConfig.getInstance().setDept_id(dept_id);
         if ("-1".equals(dept_id)) {

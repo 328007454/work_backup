@@ -256,6 +256,8 @@ public class HomeActivity extends BaseLoginActivity implements View.OnClickListe
         switch (view.getId()) {
             //跳转到设备巡视或者设备维护界面
             case R.id.device_xunshi:
+                ActivityUtil.startTourActivity(mActivity);
+                break;
             case R.id.device_weihu:
                 ActivityUtil.startDeviceTourActivity(mActivity, view.getId());
                 break;

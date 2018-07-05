@@ -432,4 +432,17 @@ public class DefectRecordService extends BaseService<DefectRecord> {
         }
         return models;
     }
+
+    public List<DefectRecord> findAllDefectRecords() {
+        List<DefectRecord> defectRecords = new ArrayList<>();
+        try {
+            defectRecords = selector().findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+            return defectRecords;
+        }
+        return defectRecords;
+
+
+    }
 }

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="675px"
+                android:background="#019bfb" />
+
+            <TextView
+                android:id="@+id/txt_login_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/xs__39px"
+                android:layout_marginTop="48px"
+                android:text="运维一班 张万顺 欢迎您"
+                android:textColor="@color/core_bg_white_ffffff"
+                android:textSize="42px"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_scan"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_marginEnd="@dimen/xs__39px"
+                android:layout_marginTop="20px"
+                android:padding="@dimen/_20px"
+                android:src="@mipmap/icon_scan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <LinearLayout
+                android:id="@+id/container_scan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/txt_size36px"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/xs__39px"
+                android:paddingStart="@dimen/xs__39px"
+                app:layout_constraintLeft_toLeftOf="@+id/txt_login_name"
+                app:layout_constraintTop_toBottomOf="@+id/txt_login_name">
+
+                <com.cnksi.common.view.ContainsEmojiEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:background="@drawable/search_shape"
+                    android:drawableLeft="@drawable/icon_search"
+                    android:paddingStart="@dimen/xs__39px" />
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/txt_size36px"
+                    android:background="@drawable/search_shape"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_banner"
+                android:layout_width="match_parent"
+                android:layout_height="435px"
+                android:layout_marginTop="24px"
+                android:src="@drawable/xs_banner"
+                app:layout_constraintTop_toBottomOf="@+id/container_scan" />
+
+            <LinearLayout
+                android:id="@+id/container_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/xs__30px"
+                android:layout_marginRight="@dimen/xs__30px"
+                android:layout_marginTop="300px"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="@+id/iv_banner">
+
+                <include
+                    android:id="@+id/include_type"
+                    layout="@layout/login_layout_inclue_version_two" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_week_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40px"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:paddingBottom="27px"
+                android:paddingTop="27px"
+                android:text="本周工作"
+                android:textColor="#FF019BFB"
+                android:textSize="40px"
+                app:layout_constraintTop_toBottomOf="@+id/container_type" />
+
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/st_week"
+                android:layout_width="match_parent"
+                android:layout_height="99px"
+                android:background="#EDF6FC"
+                app:layout_constraintTop_toBottomOf="@id/txt_week_title"
+                app:tl_indicator_color="#019BFB"
+                app:tl_indicator_height="5px"
+                app:tl_indicator_width_equal_title="true"
+                app:tl_tab_padding="66px"
+                app:tl_tab_space_equal="true"
+                app:tl_textSelectColor="#019BFB"
+                app:tl_textUnselectColor="#879DAB" />
+
+            <com.cnksi.common.view.ViewPagerToScrollView
+                android:background="@color/white"
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/st_week" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</layout>

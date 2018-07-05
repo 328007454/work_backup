@@ -109,7 +109,7 @@ android {
             jniLibs.srcDirs = ['libs']
             java.srcDirs = ['src/main/java']
             aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
-            res.srcDirs = ['src/main/res', 'src/main/res-gztz']
+            res.srcDirs = ['src/main/res', 'src/main/res-gztz', 'src/main/res-xian']
             if ("ture" == HAS_WEB_ASSETS)
                 assets.srcDirs = ['src/main/assets', 'src/main/assets-web']
             else assets.srcDirs = ['src/main/assets']

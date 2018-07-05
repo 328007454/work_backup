@@ -1,5 +1,7 @@
 package com.cnksi.common.enmu;
 
+import android.text.TextUtils;
+
 /**
  * 巡视类型
  */
@@ -71,6 +73,9 @@ public enum InspectionType {
     exclusive_06("GIS隐患专项排查"),
     exclusive_07("防小动物专项检查"),
     exclusive_08("五防系统专项检查"),
+    RCWH("日常维护"),
+    QXGL("缺陷管理"),
+    LHSY("轮换、试验"),
 
     SBJC("数据抄录"),
     NEWSBJC("数据抄录"),
@@ -115,5 +120,23 @@ public enum InspectionType {
             return InspectionType.valueOf(InspectionType.ERROR.name());
         }
     }
+
+    public static String getTypeFromValue(String value) {
+        try {
+            if (TextUtils.equals(value, InspectionType.SBXS.value)) {
+                return InspectionType.SBXS.name();
+            } else if (TextUtils.equals(value, InspectionType.RCWH.value)) {
+                return InspectionType.RCWH.name();
+            } else if (TextUtils.equals(value, InspectionType.LHSY.value)) {
+                return InspectionType.LHSY.name();
+            } else if (TextUtils.equals(value, InspectionType.QXGL.value)) {
+                return InspectionType.QXGL.name();
+            }
+        } catch (Exception ex) {
+            return (InspectionType.ERROR.name());
+        }
+        return (InspectionType.ERROR.name());
+    }
+
 
 }

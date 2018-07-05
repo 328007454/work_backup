@@ -38,6 +38,12 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            resources.srcDirs = ['src/main/resources', 'src/main/resources/']
+            res.srcDirs = ['src/main/res', 'src/main/res-xian']
+        }
+    }
 }
 
 dependencies {

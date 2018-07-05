@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_019bfb"
+        android:fitsSystemWindows="true">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="675px"
+                android:background="#019bfb" />
+
+            <TextView
+                android:id="@+id/txt_login_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/xs__39px"
+                android:layout_marginTop="48px"
+                android:text="运维一班 张万顺 欢迎您"
+                android:textColor="@color/core_bg_white_ffffff"
+                android:textSize="42px"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_scan"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_marginEnd="@dimen/xs__39px"
+                android:padding="@dimen/xs__39px"
+                android:src="@mipmap/icon_scan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txt_login_name" />
+
+
+            <LinearLayout
+                android:id="@+id/container_scan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/txt_size36px"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/xs__39px"
+                android:paddingStart="@dimen/xs__39px"
+                app:layout_constraintLeft_toLeftOf="@+id/txt_login_name"
+                app:layout_constraintTop_toBottomOf="@+id/txt_login_name">
+
+                <com.cnksi.common.view.ContainsEmojiEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:background="@drawable/search_shape"
+                    android:drawableLeft="@drawable/icon_search"
+                    android:paddingStart="@dimen/xs__39px" />
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/txt_size36px"
+                    android:background="@drawable/search_shape"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="435px"
+                android:layout_marginTop="24px"
+                android:src="@drawable/xs_banner"
+                app:layout_constraintTop_toBottomOf="@+id/container_scan" />
+
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="400px"-->
+            <!--android:background="@color/red" />-->
+
+            <!--<com.flyco.tablayout.SlidingTabLayout-->
+            <!--android:id="@+id/tl_2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:background="#EEEEEE"-->
+            <!--tl:tl_divider_color="#1A000000"-->
+            <!--tl:tl_divider_padding="13dp"-->
+            <!--tl:tl_divider_width="1dp"-->
+            <!--tl:tl_indicator_color="#000000"-->
+            <!--tl:tl_indicator_height="1.5dp"-->
+            <!--tl:tl_indicator_width_equal_title="true"-->
+            <!--tl:tl_tab_padding="22dp"-->
+            <!--tl:tl_tab_space_equal="true"-->
+            <!--tl:tl_textSelectColor="#000000"-->
+            <!--tl:tl_textUnselectColor="#66000000"-->
+            <!--tl:tl_underline_color="#1A000000"-->
+            <!--tl:tl_underline_height="1dp" />-->
+
+            <!--<android.support.v4.view.ViewPager-->
+            <!--android:id="@+id/viewPager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0px"-->
+            <!--android:layout_weight="1" />-->
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</layout>

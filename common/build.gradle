@@ -35,8 +35,8 @@ android {
         debug {
             buildConfigField 'boolean', "USE_NETWORK_SYNC", "true"
             buildConfigField "boolean", "LOG_DEBUG", "true"
-            buildConfigField "String", "SYNC_APP_ID", "\"${SYNC_APP_ID}\""
-            buildConfigField "String", "SYNC_URL", "\"${SYNC_URL}\""
+            buildConfigField "String", "SYNC_APP_ID", "\"pms_test\""
+            buildConfigField "String", "SYNC_URL", "\"http://172.16.101.254:58888/v410\""
             resValue("string", "PORT_NUMBER", "8081")
         }
     }
@@ -71,4 +71,5 @@ dependencies {
 
     api "com.alibaba:arouter-api:$arouter_api"
     annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 }

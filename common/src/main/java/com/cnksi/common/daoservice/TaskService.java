@@ -84,7 +84,7 @@ public class TaskService extends BaseService<Task> {
         long count = 0;
         try {
 
-            count = getDbManager().selector(DefectRecord.class).where(DefectRecord.DLT,"=",0).expr(" and " + DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId).count();
+            count = getDbManager().selector(DefectRecord.class).where(DefectRecord.DLT, "=", 0).expr(" and " + DefectRecord.VAL + " is not null").and(DefectRecord.REPORTID, "=", currentReportId).count();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -439,14 +439,36 @@ public class TaskService extends BaseService<Task> {
 
     }
 
-    public Task findTaskByTypeAndTodayTime(String bdzId,String typeValue, String currentShortTime) {
+    public Task findTaskByTypeAndTodayTime(String bdzId, String typeValue, String currentShortTime) {
         Task task;
         try {
-            task = selector().and(Task.BDZID,"=",bdzId).and(Task.INSPECTION, "=", typeValue).and(Task.SCHEDULE_TIME, ">", currentShortTime+" 00:00:00").and(Task.SCHEDULE_TIME,"<",currentShortTime+" 23:59:59").and(Task.STATUS,"<>","done").findFirst();
+            task = selector().and(Task.BDZID, "=", bdzId).and(Task.INSPECTION, "=", typeValue).and(Task.SCHEDULE_TIME, ">", currentShortTime + " 00:00:00").and(Task.SCHEDULE_TIME, "<", currentShortTime + " 23:59:59").and(Task.STATUS, "<>", "done").findFirst();
             return task;
         } catch (DbException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Task> getWeekTasks(String inspectionBigType) {
+        List<Task> tasks = new ArrayList<>();
+        String extraSql = "";
+        if (TextUtils.equals(inspectionBigType, InspectionType.SBXS.name())) {
+            extraSql = " and (inspection in('full','routine','professional') or inspection like '%special%')";
+        } else if (TextUtils.equals(inspectionBigType, InspectionType.RCWH.name())) {
+            extraSql = " and inspection like '%maintenance%')";
+        } else if (TextUtils.equals(inspectionBigType, InspectionType.LHSY.name())) {
+            extraSql = " and inspection like '%switchover%')";
+        }
+
+
+        try {
+            tasks = selector().expr("and  schedule_time > (select datetime('now','localtime','start of day','-6 day','weekday 1') )  AND" +
+                    " schedule_time < (select datetime('now','localtime','start of day','23 hours','59 minutes','59 seconds','weekday 0') ) " + extraSql + " order by schedule_time asc").findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+            return tasks;
+        }
+        return tasks;
     }
 }

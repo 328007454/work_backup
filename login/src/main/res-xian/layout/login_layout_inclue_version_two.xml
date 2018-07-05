@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class=""></data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="700px"
+        android:background="@drawable/rectangle_21px_corner"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="190px"
+            android:layout_marginTop="@dimen/xs__30px"
+            android:onClick="goToInspectionPage"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_tour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_tour"
+                android:gravity="center_horizontal"
+                android:text="设备巡视"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_maintance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_maintance"
+                android:gravity="center_horizontal"
+                android:text="日常维护"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_switchover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_switchover"
+                android:gravity="center_horizontal"
+                android:text="轮换、试验"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_copy"
+                android:gravity="center_horizontal"
+                android:text="数据抄录"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="190px"
+            android:layout_marginTop="@dimen/xs__30px"
+            android:onClick="goToInspectionPage"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_defect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_defect"
+                android:gravity="center_horizontal"
+                android:text="缺陷管理"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_work_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_ticket"
+                android:gravity="center_horizontal"
+                android:text="工作票"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_operation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_ticket"
+                android:gravity="center_horizontal"
+                android:text="操作票"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_safety_tool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_safety_tool"
+                android:gravity="center_horizontal"
+                android:text="安全工器具"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="@dimen/xs__30px"
+            android:layout_width="match_parent"
+            android:layout_height="190px"
+            android:layout_marginTop="@dimen/xs__39px"
+            android:onClick="goToInspectionPage"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_modfy_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_modify"
+                android:gravity="center_horizontal"
+                android:text="修试记录"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_education"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_education"
+                android:gravity="center_horizontal"
+                android:text="教育培训"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_sync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawablePadding="15px"
+                android:drawableTop="@mipmap/x_ic_sync"
+                android:gravity="center_horizontal"
+                android:text="数据同步"
+                android:textColor="@color/color_626262"
+                android:textSize="34px" />
+
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="260px"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingBottom="40px">-->
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/device_defect"-->
+        <!--android:layout_width="0px"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="130px"-->
+        <!--android:layout_height="130px"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginTop="30px"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@mipmap/icon_defct" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:text="缺陷管理"-->
+        <!--android:textColor="@color/color_626262"-->
+        <!--android:textSize="34px" />-->
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/device_copy"-->
+        <!--android:layout_width="0px"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="130px"-->
+        <!--android:layout_height="130px"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginTop="30px"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@mipmap/icon_copy" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:text="数据抄录"-->
+        <!--android:textColor="@color/color_626262"-->
+        <!--android:textSize="34px" />-->
+        <!--</RelativeLayout>-->
+
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/device_tjwt"-->
+        <!--android:layout_width="0px"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="130px"-->
+        <!--android:layout_height="130px"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginTop="30px"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@mipmap/icon_education" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:text="教育培训"-->
+        <!--android:textColor="@color/color_626262"-->
+        <!--android:textSize="34px" />-->
+        <!--</RelativeLayout>-->
+
+
+        <!--<RelativeLayout-->
+
+        <!--android:id="@+id/device_sycn"-->
+        <!--android:layout_width="0px"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="130px"-->
+        <!--android:layout_height="130px"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginTop="30px"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@mipmap/icon_sync" />-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:text="数据同步"-->
+        <!--android:textColor="@color/color_626262"-->
+        <!--android:textSize="34px" />-->
+        <!--</RelativeLayout>-->
+        <!--</LinearLayout>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/txt_ticket_launcher"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:layout_marginBottom="@dimen/core_padding_40px"-->
+        <!--android:layout_marginLeft="55px"-->
+        <!--android:drawablePadding="10px"-->
+        <!--android:drawableTop="@mipmap/icon_ticket_launcher"-->
+        <!--android:text="工作票预约"-->
+        <!--android:textColor="@color/color_626262"-->
+        <!--android:textSize="34px" />-->
+    </LinearLayout>
+</layout>
