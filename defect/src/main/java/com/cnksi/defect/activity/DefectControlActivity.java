@@ -2,6 +2,7 @@ package com.cnksi.defect.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -53,18 +54,22 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     private String userName = "全部";
     private String selectUserAccount;
 
-
     @Override
-    protected View getChildContentView() {
-        defectControlBinding = ActivityDefectControlBinding.inflate(getLayoutInflater());
-        return defectControlBinding.getRoot();
+    public void getRootDataBinding() {
+        changedStatusColor();
+        defectControlBinding = DataBindingUtil.setContentView(this,R.layout.activity_defect_control);
     }
+
+
+
 
     @Override
     public void initUI() {
-        setTitleText("缺陷管理");
-        mTitleBinding.btnBack.setImageResource(R.drawable.ic_hompage_selector);
-        mTitleBinding.btnBack.setVisibility(View.GONE);
+        defectControlBinding.includeTitle.tvTitle.setText("缺陷管理");
+        defectControlBinding.includeTitle.btnBack.setImageResource(R.drawable.ic_hompage_selector);
+        defectControlBinding.includeTitle.btnBack.setOnClickListener(v -> {
+            this.finish();
+        });
     }
 
     @Override

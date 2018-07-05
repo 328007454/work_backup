@@ -51,6 +51,40 @@ public class DefectUtils {
     }
 
     /**
+     * 转换缺陷等级为 一般 严重 危机
+     *
+     * @param item
+     * @return
+     */
+    public static Object[] convert2DefectDescBackground(DefectRecord item) {
+        Object[] objects = new Object[2];
+        String colors = "#f00";
+        CharSequence result;
+        if (Config.GENERAL_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
+            result = Config.GENERAL_LEVEL;
+            objects[0] = result;
+            objects[1] = "#FFC000";
+        } else if (Config.SERIOUS_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
+            result = Config.SERIOUS_LEVEL;
+            objects[0] = result;
+            objects[1] = "#FF9147";
+        } else if (Config.PROBLEM_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
+            result = Config.PROBLEM_LEVEL;
+            objects[0] = result;
+            objects[1] = "#A08BFE";
+        } else if (Config.HIDDEN_LEVEL_CODE.equalsIgnoreCase(item.defectlevel)) {
+            result = Config.HIDDEN_LEVEL;
+            objects[0] = result;
+            objects[1] = "#D08DFE";
+        } else {
+            result = Config.CRISIS_LEVEL;
+            objects[0] = result;
+            objects[1] = "#F96A6A";
+        }
+        return objects;
+    }
+
+    /**
      * 转换缺陷等级的右上角角标
      *
      * @param item

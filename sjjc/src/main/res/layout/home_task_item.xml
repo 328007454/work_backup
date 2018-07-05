@@ -6,8 +6,9 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="180px"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:minHeight="180px"
         android:orientation="horizontal">
 
         <TextView
@@ -16,9 +17,9 @@
             android:layout_height="96px"
             android:layout_margin="30px"
             android:gravity="center"
-            app:layout_auto_basewidth="height"
             android:textColor="@color/white"
-            android:textSize="40px" />
+            android:textSize="40px"
+            app:layout_auto_basewidth="height" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -42,8 +43,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:maxLines="1"
-                        android:text="220KV桥沟变电站"
+                        android:text=""
                         android:textColor="#626262"
                         android:textSize="40px" />
 
@@ -51,7 +51,8 @@
                         android:id="@+id/tv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="待执行"
+                        android:layout_marginLeft="@dimen/_20px"
+                        android:text=""
                         android:textSize="34px" />
                 </LinearLayout>
 

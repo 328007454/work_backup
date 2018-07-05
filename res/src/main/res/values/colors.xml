@@ -347,7 +347,11 @@
     <color name="xs__ff9912_color">#FF9912</color>
 
     <color name="color_019bfb">#019bfb</color>
+    <color name="color_999999">#999999</color>
 
+
+    <color name="black_overlay">#66000000</color>
+    <color name="color_hover_019bfb">#019fff</color>
 
 
 </resources>

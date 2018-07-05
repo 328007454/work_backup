@@ -1,5 +1,6 @@
 package com.cnksi.defect.adapter;
 
+import android.app.Activity;
 import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -16,7 +17,6 @@ import com.cnksi.core.utils.BitmapUtils;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
 import com.cnksi.defect.R;
-import com.cnksi.defect.activity.DefectControlActivity;
 import com.cnksi.defect.databinding.AdapterDefectItemBinding;
 import com.cnksi.defect.utils.DefectUtils;
 
@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
-    DefectControlActivity activity;
+    Activity activity;
     private ItemClickOrLongClickListener itemClickListener;
 
 
@@ -37,7 +37,7 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         this.itemClickListener = itemClickListener;
     }
 
-    public DefectContentAdapter(DefectControlActivity context, Collection data) {
+    public DefectContentAdapter(Activity context, Collection data) {
         super(context, data, R.layout.adapter_defect_item);
         activity = context;
     }
@@ -59,16 +59,20 @@ public class DefectContentAdapter extends BaseAdapter<DefectRecord> {
         if (d.compareTo(DateUtils.getAfterTime(3)) > 0) {
             return s;
         } else {
-            return StringUtils.changeTextColor(s, Color.RED);
+            return s;
         }
     }
 
     @Override
     public void convert(ViewDataBinding dataBinding, DefectRecord item, int position) {
         AdapterDefectItemBinding itemBinding = (AdapterDefectItemBinding) dataBinding;
-        itemBinding.tvDefectContent.setText(DefectUtils.convert2DefectDesc(item));
+        Object[] result = DefectUtils.convert2DefectDescBackground(item);
+        itemBinding.tvDefectContent.setText((CharSequence) result[0]);
+        itemBinding.tvDefectContent.setBackgroundColor(Color.parseColor((String) result[1]));
+        itemBinding.tvDefect.setText(TextUtils.isEmpty(item.description) ? "" : item.description);
         itemBinding.tvDefectDevice.setText("设备：" + (TextUtils.isEmpty(item.devcie) ? "" : item.devcie));
         itemBinding.ivDefectImage.setImageBitmap(null);
+
         final ArrayList<String> listPicDis = StringUtils.stringToList(item.pics);
         if (listPicDis.size() > 0 && !TextUtils.isEmpty(listPicDis.get(0))) {
             Bitmap bitmap = BitmapUtils.getImageThumbnailByWidth(Config.RESULT_PICTURES_FOLDER + StringUtils.cleanString(listPicDis.get(0)), 280);

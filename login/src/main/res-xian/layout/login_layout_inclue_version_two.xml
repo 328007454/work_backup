@@ -13,12 +13,11 @@
             android:layout_width="match_parent"
             android:layout_height="190px"
             android:layout_marginTop="@dimen/xs__30px"
-            android:onClick="goToInspectionPage"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_tour"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
@@ -33,7 +32,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_maintance"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
@@ -48,7 +47,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_switchover"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
@@ -63,7 +62,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_copy"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
@@ -82,15 +81,13 @@
             android:layout_width="match_parent"
             android:layout_height="190px"
             android:layout_marginTop="@dimen/xs__30px"
-            android:onClick="goToInspectionPage"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="4">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_defect"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:drawablePadding="15px"
@@ -100,27 +97,24 @@
                 android:textColor="@color/color_626262"
                 android:textSize="34px" />
 
+
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_work_ticket"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:drawablePadding="15px"
                 android:drawableTop="@mipmap/x_ic_ticket"
                 android:gravity="center_horizontal"
                 android:text="工作票"
-                android:textColor="@color/color_626262"
-                android:textSize="34px" />
+                android:textColor="@color/color_626262" />
+
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_operation"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:drawablePadding="15px"
@@ -132,10 +126,8 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_safety_tool"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:drawablePadding="15px"
@@ -148,17 +140,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/xs__30px"
             android:layout_width="match_parent"
             android:layout_height="190px"
+            android:layout_marginBottom="@dimen/xs__30px"
             android:layout_marginTop="@dimen/xs__39px"
-            android:onClick="goToInspectionPage"
             android:orientation="horizontal"
-            android:weightSum="5">
+            android:weightSum="4">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_modfy_record"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
@@ -173,7 +164,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_education"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
@@ -188,7 +179,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txt_sync"
-                android:layout_width="wrap_content"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"

@@ -28,15 +28,15 @@ import java.util.List;
 
 public class WeekTaskFragment extends BaseFragment {
     LoginFragmentWeekTaskBinding weekTaskBinding;
-    private String title;
+    private   String title;
     private List<Task> tasks;
     private List<DefectRecord> defectRecords;
     private HomeWeekTaskAdapter taskAdapter;
     private HomeWeekDefectAdapter defectAdapter;
 
-    public static WeekTaskFragment getFragment(String title) {
+    public static WeekTaskFragment getFragment(String titleName) {
         WeekTaskFragment weekTaskFragment = new WeekTaskFragment();
-        weekTaskFragment.title = title;
+        weekTaskFragment.title =titleName.split("（")[0];
         return weekTaskFragment;
     }
 
@@ -55,14 +55,14 @@ public class WeekTaskFragment extends BaseFragment {
                 tasks = TaskService.getInstance().getWeekTasks(InspectionType.getTypeFromValue(title));
             }
             getActivity().runOnUiThread(() -> {
-                if (tasks == null && tasks.isEmpty()) {
-                    return;
-                }
-                if (defectRecords!=null&&!defectRecords.isEmpty()&&TextUtils.equals(InspectionType.getTypeFromValue(title), InspectionType.QXGL.name())) {
-                    defectAdapter = new HomeWeekDefectAdapter(R.layout.home_task_item, defectRecords);
+                if (defectRecords != null && !defectRecords.isEmpty() && TextUtils.equals(InspectionType.getTypeFromValue(title), InspectionType.QXGL.name())) {
+                    defectAdapter = new HomeWeekDefectAdapter(mActivity,R.layout.adapter_defect_item, defectRecords);
                     weekTaskBinding.rcy.setLayoutManager(new LinearLayoutManager(getContext()));
                     weekTaskBinding.rcy.setAdapter(defectAdapter);
                 } else {
+                    if (tasks==null) {
+                        return;
+                    }
                     taskAdapter = new HomeWeekTaskAdapter(R.layout.home_task_item, tasks);
                     weekTaskBinding.rcy.setLayoutManager(new LinearLayoutManager(getContext()));
                     weekTaskBinding.rcy.setAdapter(taskAdapter);

@@ -251,4 +251,6 @@
         <item name="android:maxHeight">@dimen/sync_progressbar_width_height</item>
     </style>
 
+
+
 </resources>

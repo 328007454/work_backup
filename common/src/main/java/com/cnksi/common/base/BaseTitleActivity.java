@@ -24,7 +24,7 @@ public abstract class BaseTitleActivity extends BaseActivity {
     @Override
     public void getRootDataBinding() {
         if (isDefaultTitle) {
-            mTitleBinding = DataBindingUtil.setContentView(mActivity, R.layout.include_title);
+            mTitleBinding = DataBindingUtil.setContentView(mActivity,getTitleLayout());
             View v = getChildContentView();
             if (v != null) {
                 setChildView(v);
@@ -32,6 +32,10 @@ public abstract class BaseTitleActivity extends BaseActivity {
         } else {
             super.getRootDataBinding();
         }
+    }
+    public int getTitleLayout(){
+
+        return R.layout.include_title;
     }
 
     /**

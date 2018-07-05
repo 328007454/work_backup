@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -12,9 +13,9 @@ import java.util.ArrayList;
 
 public class WeekTaskPagerAdapter<T> extends android.support.v4.app.FragmentPagerAdapter {
     private ArrayList<Fragment> fragments;
-    private String[] titles;
+    private List<String> titles;
 
-    public WeekTaskPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments, String[] titles) {
+    public WeekTaskPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments, List<String> titles) {
         super(fm);
         this.fragments = fragments;
         this.titles = titles;
@@ -22,7 +23,7 @@ public class WeekTaskPagerAdapter<T> extends android.support.v4.app.FragmentPage
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles[position];
+        return titles.get(position);
     }
 
     @Override

@@ -456,9 +456,9 @@ public class TaskService extends BaseService<Task> {
         if (TextUtils.equals(inspectionBigType, InspectionType.SBXS.name())) {
             extraSql = " and (inspection in('full','routine','professional') or inspection like '%special%')";
         } else if (TextUtils.equals(inspectionBigType, InspectionType.RCWH.name())) {
-            extraSql = " and inspection like '%maintenance%')";
+            extraSql = " and inspection like '%maintenance%'";
         } else if (TextUtils.equals(inspectionBigType, InspectionType.LHSY.name())) {
-            extraSql = " and inspection like '%switchover%')";
+            extraSql = " and inspection like '%switchover%'";
         }
 
 

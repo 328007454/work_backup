@@ -9,6 +9,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcy"
             android:layout_width="match_parent"
+            android:minHeight="300px"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

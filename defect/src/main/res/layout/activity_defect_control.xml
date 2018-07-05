@@ -6,135 +6,151 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/core_padding_30px">
+        android:background="@color/color_019bfb"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/type_container"
-            android:layout_width="match_parent"
-            android:layout_height="170px"
-            android:background="#fef0ef"
-            android:orientation="horizontal"
-            android:padding="30px">
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/blue_include_title" />
 
-            <LinearLayout
-                android:id="@+id/bdz_contanier"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10px"
-                android:layout_marginLeft="30px"
-                android:layout_marginTop="10px"
-                android:layout_weight="2"
-                android:background="@drawable/home_include_background"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/_20px">
-
-                <TextView
-                    android:id="@+id/bdz_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:hint="变电站"
-                    android:textColor="#958c8c"
-                    android:textSize="@dimen/txt_size36px" />
-
-                <ImageView
-                    android:layout_width="20px"
-                    android:layout_height="20px"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20px"
-                    android:src="@mipmap/icon_pull" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/defect_type_container"
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10px"
-                android:layout_marginLeft="30px"
-                android:layout_marginRight="30px"
-                android:layout_marginTop="10px"
-                android:layout_weight="1"
-                android:background="@drawable/home_include_background"
-                android:onClick="onClick"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/_20px">
-
-
-                <TextView
-                    android:id="@+id/defect_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/icon_pull"
-                    android:gravity="center_vertical"
-                    android:hint="缺陷类型"
-                    android:paddingRight="@dimen/_20px"
-                    android:textColor="#958c8c"
-                    android:textSize="@dimen/txt_size36px" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/container_people"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10px"
-                android:layout_marginTop="10px"
-                android:layout_weight="1"
-                android:background="@drawable/home_include_background"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/_20px">
-
-                <TextView
-                    android:id="@+id/txt_people_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/icon_pull"
-                    android:gravity="center_vertical"
-                    android:hint="人员"
-                    android:paddingRight="@dimen/_20px"
-                    android:textColor="#958c8c"
-                    android:textSize="@dimen/txt_size36px" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/add_defect"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="118px"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="18px"
-            android:layout_marginEnd="@dimen/xs__30px"
-            android:layout_marginStart="@dimen/xs__30px"
-            android:layout_marginTop="18px"
-            android:background="@drawable/xs_grass_green_button_background_selector"
-            android:gravity="center"
-            android:onClick="onClick"
-            android:text="新建缺陷"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/xs_global_text_size_px" />
-
-        <ListView
-            android:id="@+id/lv_defect"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/add_defect"
-            android:layout_below="@id/type_container"
-            android:layout_marginBottom="@dimen/_20px"
-            android:layout_weight="1"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@color/line_color"
-            android:dividerHeight="2px"
-            android:listSelector="@android:color/transparent" />
+            android:layout_below="@id/include_title"
+            android:background="#f3f4f4"
+            android:paddingBottom="@dimen/core_padding_30px">
 
+            <LinearLayout
+                android:background="@color/white"
+                android:id="@+id/type_container"
+                android:layout_width="match_parent"
+                android:layout_height="170px"
+                android:orientation="horizontal"
+                android:padding="30px">
+
+                <LinearLayout
+                    android:id="@+id/bdz_contanier"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginTop="10px"
+                    android:layout_weight="2"
+                    android:background="@drawable/home_include_background"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_20px">
+
+                    <TextView
+                        android:id="@+id/bdz_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:hint="变电站"
+                        android:textColor="#958c8c"
+                        android:textSize="@dimen/txt_size36px" />
+
+                    <ImageView
+                        android:layout_width="20px"
+                        android:layout_height="20px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20px"
+                        android:src="@mipmap/icon_pull" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/defect_type_container"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_marginTop="10px"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_include_background"
+                    android:onClick="onClick"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_20px">
+
+
+                    <TextView
+                        android:id="@+id/defect_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@mipmap/icon_pull"
+                        android:gravity="center_vertical"
+                        android:hint="缺陷类型"
+                        android:paddingRight="@dimen/_20px"
+                        android:textColor="#958c8c"
+                        android:textSize="@dimen/txt_size36px" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/container_people"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10px"
+                    android:layout_marginTop="10px"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_include_background"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_20px">
+
+                    <TextView
+                        android:id="@+id/txt_people_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@mipmap/icon_pull"
+                        android:gravity="center_vertical"
+                        android:hint="人员"
+                        android:paddingRight="@dimen/_20px"
+                        android:textColor="#958c8c"
+                        android:textSize="@dimen/txt_size36px" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_defect"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="118px"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="18px"
+                android:layout_marginEnd="@dimen/xs__30px"
+                android:layout_marginStart="@dimen/xs__30px"
+                android:layout_marginTop="18px"
+                android:background="@drawable/selector_019bfb"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="新建缺陷"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/xs_global_text_size_px" />
+
+
+
+            <ListView
+                android:layout_marginTop="40px"
+                android:background="@color/white"
+                android:id="@+id/lv_defect"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/add_defect"
+                android:layout_below="@id/type_container"
+                android:layout_marginBottom="@dimen/_20px"
+                android:layout_weight="1"
+                android:divider="@color/white"
+                android:listSelector="@android:color/transparent" />
+
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

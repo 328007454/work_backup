@@ -436,7 +436,15 @@ public class DefectRecordService extends BaseService<DefectRecord> {
     public List<DefectRecord> findAllDefectRecords() {
         List<DefectRecord> defectRecords = new ArrayList<>();
         try {
-            defectRecords = selector().findAll();
+            defectRecords = selector().expr("AND has_track = 'N'\n" +
+                    "        AND has_remove = 'N'\n" +
+                    "        and is_copy <> 'Y'\n" +
+                    "        and (val = '' or val is NULL)\n" +
+                    "        and discovered_date > (select datetime('now','localtime','start of day','-6 days','weekday 1'))\n" +
+                    "        and discovered_date < (select datetime('now','localtime','start of day','23 hours','59 minutes','59 seconds','0 day','weekday 0') \n" +
+                    ")\n" +
+                    "        ORDER BY\n" +
+                    "        discovered_date DESC").findAll();
         } catch (DbException e) {
             e.printStackTrace();
             return defectRecords;
