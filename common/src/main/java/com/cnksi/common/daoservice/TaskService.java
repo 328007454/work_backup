@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.cnksi.common.Config;
 import com.cnksi.common.enmu.InspectionType;
 import com.cnksi.common.enmu.TaskStatus;
+import com.cnksi.common.enmu.WeekTime;
 import com.cnksi.common.model.DefectRecord;
 import com.cnksi.common.model.Report;
 import com.cnksi.common.model.SwitchPic;
@@ -12,9 +13,11 @@ import com.cnksi.common.model.Task;
 import com.cnksi.common.model.vo.TaskStatistic;
 import com.cnksi.common.utils.CommonUtils;
 import com.cnksi.core.utils.PreferencesUtils;
+import com.cnksi.core.utils.SqliteUtils;
 import com.cnksi.core.utils.StringUtils;
 
 import org.xutils.common.util.KeyValue;
+import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.db.table.DbModel;
@@ -470,5 +473,29 @@ public class TaskService extends BaseService<Task> {
             return tasks;
         }
         return tasks;
+    }
+
+    public List<Task> findTaskByTime(String inspectionType, String tyeName) {
+        List<Task> tasks = new ArrayList<>();
+        try {
+            Selector selector = selector().expr(" and inspection like '%" + inspectionType + "%'");
+            if (TextUtils.equals(tyeName, WeekTime.today.name())) {
+                selector.expr(" and schedule_time >(select datetime('now','localtime','start of day')) and schedule_time < (select datetime('now','start of day','23 hours','59 minutes','59 seconds'))");
+            } else if (TextUtils.equals(tyeName, WeekTime.week.name())) {
+                selector.expr("and schedule_time > (SELECT datetime('now', 'localtime','start of day',  '-6 day','weekday 1')) and  schedule_time< (select datetime('now', 'localtime','start of day','23 hours','59 minutes','59 seconds', 'weekday 0'))");
+            } else if (TextUtils.equals(tyeName, WeekTime.month.name())) {
+                selector.expr("and schedule_time > (select datetime('now','localtime','start of month')) and schedule_time < (select datetime('now','start of month','+1 month','-1 day','23 hours','59 minutes','59 seconds'))");
+            }else {
+                selector = selector.expr("AND " + Task.SCHEDULE_TIME + "< " + SqliteUtils.getDaysPreTimeEndOfDay(1) + " AND (status = 'doing' OR status = 'undo') ");
+            }
+            tasks = selector.orderBy(Task.SCHEDULE_TIME, false).findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+            return new ArrayList<Task>();
+        }
+
+
+        return tasks;
+
     }
 }

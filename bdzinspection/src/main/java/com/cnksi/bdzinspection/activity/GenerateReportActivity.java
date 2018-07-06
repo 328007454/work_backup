@@ -387,7 +387,11 @@ public class GenerateReportActivity extends TitleActivity implements AdapterClic
             ReportSignnameService.getInstance().saveOrUpdate(mDataFzr);
             currentReport.inspectionContent = binding.inspectionContent.getText().toString();
             currentReport.inspectionRemark = binding.etRemark.getText().toString();
-            currentReport.inspectionResult = binding.etResult.getText().toString();
+            if (currentInspectionType.contains("switchover") || currentInspectionType.contains("maintenance")) {
+                currentReport.inspectionResult = binding.etSwitchoverResult.getText().toString();
+            } else {
+                currentReport.inspectionResult = binding.etResult.getText().toString();
+            }
             if (TextUtils.isEmpty(currentReport.endtime)) {
                 currentReport.endtime = DateUtils.getCurrentLongTime();
             }

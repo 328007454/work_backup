@@ -352,6 +352,7 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="color_hover_019bfb">#019fff</color>
+    <color name="color_ff8b47">#ff8b47</color>
 
 
 </resources>

@@ -66,7 +66,6 @@ public class DefectControlActivity extends BaseTitleActivity implements ItemClic
     @Override
     public void initUI() {
         defectControlBinding.includeTitle.tvTitle.setText("缺陷管理");
-        defectControlBinding.includeTitle.btnBack.setImageResource(R.drawable.ic_hompage_selector);
         defectControlBinding.includeTitle.btnBack.setOnClickListener(v -> {
             this.finish();
         });

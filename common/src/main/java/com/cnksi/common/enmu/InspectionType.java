@@ -131,6 +131,16 @@ public enum InspectionType {
                 return InspectionType.LHSY.name();
             } else if (TextUtils.equals(value, InspectionType.QXGL.value)) {
                 return InspectionType.QXGL.name();
+            } else if (TextUtils.equals(value, InspectionType.routine.value)) {
+                return InspectionType.routine.name();
+            } else if (TextUtils.equals(value, InspectionType.full.value)) {
+                return InspectionType.full.name();
+            } else if (TextUtils.equals(value, InspectionType.special.value)) {
+                return InspectionType.special.name();
+            } else if (TextUtils.equals(value, InspectionType.special_xideng.value)) {
+                return InspectionType.special_xideng.name();
+            } else if (TextUtils.equals(value, InspectionType.professional.value)) {
+                return InspectionType.professional.name();
             }
         } catch (Exception ex) {
             return (InspectionType.ERROR.name());

@@ -69,6 +69,7 @@ public class XHomeActivity extends BaseTitleActivity implements OnTabSelectListe
 
     public void getData() {
         ExecutorManager.executeTaskSerially(() -> {
+            weekTitles.clear();
             for (int i = 0; i < titleTypes.length; i++) {
                 String title = titleTypes[i];
                 if (TextUtils.equals(title, InspectionType.QXGL.value)) {

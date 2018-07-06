@@ -82,19 +82,6 @@ public class HomeWeekDefectAdapter extends BaseQuickAdapter<DefectRecord, BaseVi
         } else {
             tvDefectRemindTime.setVisibility(View.VISIBLE);
         }
-        helper.itemView.setOnClickListener(v -> {
-//            if (itemClickListener != null) {
-//                itemClickListener.onClick(v, item, position);
-//            }
-        });
-
-        helper.itemView.setOnLongClickListener(v -> {
-//            if (itemClickListener != null) {
-//                itemClickListener.onLongClick(v, item, position);
-//            }
-            return false;
-        });
-
     }
 
 

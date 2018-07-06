@@ -1,4 +1,4 @@
-package com.cnksi.login.adapter;
+package com.cnksi.bdzinspection.adapter.xian;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.cnksi.bdzinspection.R;
 import com.cnksi.common.enmu.TaskStatus;
 import com.cnksi.common.model.Task;
 import com.cnksi.core.utils.DateUtils;
 import com.cnksi.core.utils.StringUtils;
-import com.cnksi.login.R;
 
 import java.util.List;
 
@@ -24,6 +24,8 @@ import java.util.List;
 
 public class HomeWeekTaskAdapter extends BaseQuickAdapter<Task, BaseViewHolder> {
     int colorDone = Color.parseColor("#78CE61"), colorUndo = Color.parseColor("#F96A6A"), colorDoing = Color.parseColor("#019BFB");
+
+
 
     public HomeWeekTaskAdapter(int layoutResId, @Nullable List<Task> data) {
         super(layoutResId, data);
